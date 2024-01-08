@@ -24,13 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 
 public class Inward_Tanker extends AppCompatActivity {
 
-//    LinearLayout linearLayout,linearLayout2;
-//    CardView one,two,three,four,five,six,wone;
-
-//    CardView cardView;
-//    CardView cardView2;
-//
-//    CardView cardview3;
 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String userRole="default";
     @Override
