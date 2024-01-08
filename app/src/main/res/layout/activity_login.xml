@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".Login"
+    android:background="#F2F3F5">
+
+
+<!--   <ImageView-->
+<!--       android:layout_width="385dp"-->
+<!--       android:layout_height="150dp"-->
+<!--       android:layout_margin="5dp"-->
+<!--       android:foregroundGravity="center"-->
+<!--       android:src="@drawable/img1"-->
+<!--       android:layout_marginTop="10dp"-->
+<!--       />-->
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="75dp"
+        android:gravity="top"
+        android:layout_marginTop="15dp"
+        android:layout_above="@+id/flip">
+      <ImageView
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:src="@drawable/gandharcolour"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="395dp"
+        android:layout_height="65dp"
+        android:text="Vehicle Management System"
+        android:textColor="@color/blue"
+        android:textColorHighlight="#141313"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.403"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.084"
+        android:layout_marginTop="2dp"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/flip"
+        android:layout_width="match_parent"
+        android:layout_height="210dp"
+        android:layout_marginTop="120dp"
+        android:gravity="top|center_vertical"
+      android:layout_above="@id/emaillayout"
+        >
+        <ViewFlipper
+            android:id="@+id/viewfliper"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:autoStart="true"
+            android:flipInterval="2000"
+            >
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:background="@drawable/slider1" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:background="@drawable/slider2" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:background="@drawable/slider3" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:background="@drawable/slider4" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:background="@drawable/slider5" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:background="@drawable/slider6" />
+
+
+        </ViewFlipper>
+
+    </LinearLayout>
+ 
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="90dp"
+        android:id="@+id/emaillayout"
+        >
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Empl ID"
+            android:id="@+id/emplid"
+            android:inputType="number"
+            android:textStyle="bold"
+            android:textSize="21dp"
+            />
+
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_below="@+id/emaillayout"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/passwordlayout"
+        app:passwordToggleEnabled="true"
+        app:passwordToggleTint="#000"
+        >
+
+        <EditText
+            android:id="@+id/etpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Password"
+            android:inputType="textPassword"
+            android:textSize="21dp"
+            android:textStyle="bold"/>
+
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Login"
+        android:textColor="@color/white"
+        android:id="@+id/btnlogin"
+        android:background="@color/blue"
+        android:layout_below="@id/passwordlayout"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Not register create your account"
+        android:layout_below="@id/btnlogin"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="5dp"
+        android:id="@+id/registerlink"
+        />
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:layout_below="@+id/registerlink"
+       android:gravity="center_horizontal"
+       android:text="Developed By : Techlink Infoware Pvt.ltd"
+       android:textSize="20dp"
+       android:layout_marginTop="60dp"
+       android:textStyle="bold"
+       android:textColor="@color/blue"
+       />
+
+</RelativeLayout>

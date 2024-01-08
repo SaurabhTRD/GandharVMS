@@ -1,0 +1,567 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Outward_Tanker_Laboratory">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="650dp"
+
+        android:layout_marginTop="10dp"
+
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+            >
+            <EditText
+                android:id="@+id/etintime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="In Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+            >
+            <EditText
+                android:id="@+id/etserialnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Serial Number"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+            <EditText
+                android:id="@+id/etvehicleno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Vehicle Number"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/elblendingratio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Blending Ratio"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etapperance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Appearance"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etcolor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Color"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etodor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Odor"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etdensity25"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Density at 29.5°C"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etviscosity40"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="KV 40°C"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etvisocity100"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="KV 100°C"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etviscosityindex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Viscosity Index"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/ettabtan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="TBN/TAN"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etanlinepoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Aniline Point"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etbreakvol"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="BreakDown Voltage"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etddf"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="DDF at 90°C"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etwatercontent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Water Content "
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etinterfacial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Interfacial Tension"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etflashpoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Flash Point"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etpourpoint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Pour Point"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etrcstest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="RCS Test"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <AutoCompleteTextView
+                android:id="@+id/etremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Remark"
+                android:inputType="none"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etapprove"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Approved by QC Manager"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etdatetime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date/Time "
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="25dp"
+
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/OUM."
+                    android:layout_marginLeft="25dp"
+                    android:text="Cancel"
+                    android:textSize="22dp"
+                    android:textStyle="bold">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/samplingview"
+                    android:layout_marginLeft="15dp"
+                    android:text="View"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:onClick="Viewclick">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/etssubmit"
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/OUM."
+                    android:layout_marginLeft="10dp"
+                    android:text="SUBMIT"
+
+                    android:textSize="22dp"
+                    android:textStyle="bold">
+
+                </androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+    </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

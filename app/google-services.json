@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "772719579049",
+    "project_id": "gandharvms",
+    "storage_bucket": "gandharvms.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:772719579049:android:437e77b082a11886573eb8",
+        "android_client_info": {
+          "package_name": "com.android.gandharvms"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCivG8lU8qP3o09ESM9iV_h9uiO-4DAjjY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

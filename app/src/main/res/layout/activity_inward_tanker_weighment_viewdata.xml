@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_TotalCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Count: "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginLeft="200dp"
+        android:padding="8dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+
+</androidx.appcompat.widget.LinearLayoutCompat>

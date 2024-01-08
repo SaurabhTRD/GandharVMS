@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InwardOut_Tanker_Weighment">
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="5dp"
+        android:gravity="top"
+        >
+        <Button
+            android:onClick="btn_clicktoViewLabReport"
+            android:text="View Weighment Slip"
+            android:id="@+id/btn_Viewweigmentslip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp">
+        </Button>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            >
+            <EditText
+                android:id="@+id/etintime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="In Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:clickable="false"
+                android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/regno"
+
+            >
+            <EditText
+                android:id="@+id/ettareweight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tare Weight"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="10dp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Out Vehicle"
+                android:gravity="start"
+                android:layout_gravity="start"
+                android:paddingStart="18dp"
+                android:paddingEnd="8dp"
+                android:textStyle="bold"
+                android:layout_marginLeft="20dp"
+                android:textSize="19dp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Out Driver"
+                android:gravity="end"
+                android:layout_gravity="end"
+                android:paddingStart="8dp"
+                android:paddingEnd="8dp"
+                android:layout_marginLeft="120dp"
+                android:textStyle="bold"
+                android:textSize="19dp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imgtr"
+                android:layout_width="175dp"
+                android:layout_height="105dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/camera"
+                    android:clickable="true"
+                    android:onClick="captureImageFromCamera1"
+
+                    />
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="175dp"
+                android:layout_height="105dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="29dp"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/camera"
+                    android:clickable="true"
+                    android:onClick="captureImageFromCamera2"
+                    />
+
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="15dp"
+            >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="115dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@id/OUM."
+                    android:layout_marginLeft="25dp"
+                    android:text="Cancel"
+                    android:textStyle="bold"
+                    android:textSize="22dp">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/view"
+                    android:layout_marginLeft="15dp"
+                    android:text="View"
+                    android:textSize="22dp"
+                    android:textStyle="bold"
+                    android:onClick="Viewclick">
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/prosubmit"
+                    android:layout_width="115dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@id/OUM."
+                    android:layout_marginLeft="25dp"
+                    android:text="SUBMIT"
+                    android:textStyle="bold"
+                    android:textSize="22dp"
+                    >
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

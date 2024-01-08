@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.GandharVMS"
+        tools:targetApi="31">
+        <activity
+            android:name=".OutwardOut_Truck_Billing"
+            android:exported="false" />
+        <activity
+            android:name=".OutwardOut_Truck_Weighment"
+            android:exported="false" />
+        <activity
+            android:name=".OutwardOut_Truck_Security"
+            android:exported="false" />
+        <activity
+            android:name=".OutwardOut_Truck"
+            android:exported="false" />
+        <activity
+            android:name=".OutwardOut_Tanker_Weighment"
+            android:exported="false" />
+        <activity
+            android:name=".OutwardOut_Tanker_Security"
+            android:exported="false" />
+        <activity
+            android:name=".OutwardOut_Tanker"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Logistics"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Dispatch"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Billing"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Production"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Laboratory"
+            android:exported="false" />
+        <activity
+            android:name=".InwardOut_Truck_Security"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Truck_Out"
+            android:exported="false" />
+        <activity
+            android:name=".InwardOut_Truck_Weighment"
+            android:exported="false" />
+        <activity
+            android:name=".submenu.submenu_Inward_Truck"
+            android:exported="false" />
+        <activity
+            android:name=".InwardOut_Tanker_Security"
+            android:exported="false" />
+        <activity
+            android:name=".InwardOut_Tanker_Weighment"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Out"
+            android:exported="false" />
+        <activity
+            android:name=".submenu.submenu_Inward_Tanker"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Production.Tanker_Production_Lab_Report_Data"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_weighment"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Security"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck"
+            android:exported="false" />
+        <activity
+            android:name=".submenu.Submenu_Outward_Truck"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Tanker_Billing"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Tanker_Production"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Tanker_Laboratory"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Tanker_weighment"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Tanker_Security"
+            android:exported="false" />
+        <activity
+            android:name=".submenu.Submenu_outward_tanker"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Tanker"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Truck_store.Inward_Truck_Store_viewdata"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Truck_Weighment.Inward_Truck_Weighment_Viewdata"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Truck_Security.Inward_Truck_Security_viewdata"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Laboratory.Inward_Tanker_Lab_Viewdata"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Production.Inward_Tanker_Production_Viewdata"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Sampling.Inward_Tanker_saampling_View_data"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Sampling.Inward_Tanker_Sampling_View_data"
+            android:exported="false" /> <!-- Add any additional attributes or intent filters here -->
+        <activity
+            android:name=".Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Security.Inward_Tanker_Security_Viewdata"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Truck_store.Inward_Truck_Store"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Truck_Weighment.Inward_Truck_weighment"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Truck_Security.Inward_Truck_Security"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Laboratory.Inward_Tanker_Laboratory"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Production.Inward_Tanker_Production"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Sampling.Inward_Tanker_Sampling"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Weighment.Inward_Tanker_Weighment"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Security.Inward_Tanker_Security"
+            android:exported="false"
+            android:windowSoftInputMode="adjustPan" />
+        <activity
+            android:name=".Inward_Truck"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker"
+            android:exported="false" />
+        <activity
+            android:name=".Menu"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Login"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".FirebaseMessagingService"
+            android:exported="true"
+            android:permission="TODO"
+            tools:ignore="ExportedService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+    </application>
+
+</manifest>

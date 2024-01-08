@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <Button
+        android:id="@+id/startdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="start of Date" />
+    <EditText
+        android:id="@+id/et_VehicleNumber"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:hint="FilterByVehicleNumber"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:layout_marginTop="-50dp"
+        android:layout_marginLeft="140dp"
+        android:inputType="textCapCharacters"/>
+    <Button
+        android:id="@+id/btn_vehnumberbutton_clear"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="-43dp"
+        android:layout_marginLeft="345dp"
+        android:background="@drawable/baseline_cancel_24" />
+
+    <Button
+        android:id="@+id/enddate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startdate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="End of Data" />
+    <EditText
+        android:id="@+id/et_MaterialName"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:hint="FilterByMaterial"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:layout_marginTop="-50dp"
+        android:layout_marginLeft="140dp"/>
+    <Button
+        android:id="@+id/btn_materialnamebutton_clear"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="-43dp"
+        android:layout_marginLeft="345dp"
+        android:background="@drawable/baseline_cancel_24" />
+    <Button
+        android:id="@+id/btn_clearDateSelectionfields"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Selection"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/tv_TotalCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total Count: "
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:layout_marginTop="-40dp"
+        android:layout_marginLeft="200dp"
+        android:padding="8dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/labrecyclerview"
+        android:layout_width="409dp"
+        android:layout_height="900dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="1dp"
+        tools:ignore="MissingConstraints" />
+
+    </ScrollView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

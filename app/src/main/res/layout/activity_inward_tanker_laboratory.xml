@@ -1,0 +1,584 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Inward_Tanker_Laboratory.Inward_Tanker_Laboratory">
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp">
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            >
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+
+                >
+                <EditText
+                    android:id="@+id/etintime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="In Time"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:clickable="false"
+                    android:focusable="false"
+                   />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp">
+                <EditText
+                    android:id="@+id/et_materialname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Material"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/regno"
+
+            >
+            <EditText
+                android:id="@+id/etpsample"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sample Receiving Date"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_below="@id/regno"
+
+                >
+                <EditText
+                    android:id="@+id/vehiclenumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Vehicle Number"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            >
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/vehicalno"
+            android:layout_below="@id/regno"
+
+            >
+            <EditText
+                android:id="@+id/etpapperance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Appearance"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/invoiceno"
+                android:layout_below="@id/vehicalno"
+
+                >
+                <EditText
+                    android:id="@+id/etpodor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Odor"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/Date"
+            android:layout_below="@id/invoiceno"
+
+            >
+            <EditText
+                android:id="@+id/etpcolour"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Color"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_below="@id/invoiceno"
+
+                >
+                <EditText
+                    android:id="@+id/qtycolor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Qty"
+                    android:inputType="numberDecimal"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="200dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/party_name"
+            android:layout_below="@id/Date"
+
+            >
+            <EditText
+                android:id="@+id/etpdensity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Density"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/material"
+                android:layout_below="@id/party_name"
+
+                >
+                <EditText
+                    android:id="@+id/etPrcstest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="RCS test"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/intime"
+            android:layout_below="@id/material"
+
+            >
+            <EditText
+                android:id="@+id/etpkv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="KV 40°C"
+                android:inputType="numberDecimal"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_below="@id/material"
+
+                >
+                <EditText
+                    android:id="@+id/hundered"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="KV 100°C"
+                    android:inputType="numberDecimal"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_below="@id/material"
+
+                >
+                <EditText
+                    android:id="@+id/anline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Aniline Point"
+                    android:inputType="numberDecimal"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_below="@id/material"
+
+                >
+                <EditText
+                    android:id="@+id/flash"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Flash Point"
+                    android:inputType="numberDecimal"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:id="@+id/netweight"
+            android:layout_below="@id/intime"
+
+            >
+            <EditText
+                android:id="@+id/etpaddtest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Additional test"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/QTY."
+                android:layout_below="@id/netweight"
+
+                >
+                <EditText
+                    android:id="@+id/etpsamplere"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Result Release Dt"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:focusable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/remark"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/QTY."
+
+            >
+            <AutoCompleteTextView
+               android:id="@+id/etpremark"
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                android:hint="Remark"
+                android:inputType="none"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+
+                >
+                <EditText
+                    android:id="@+id/etpsignQc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Sign of QC/R &amp; D"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+                android:layout_below="@id/intime"
+
+                >
+                <EditText
+                    android:id="@+id/supplier"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Supplier"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+           android:id="@+id/datetime"
+            android:layout_width="185dp"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="200dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+
+            >
+            <EditText
+                android:id="@+id/etpdatesignofsign"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date and Time Of signature"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+          android:id="@+id/datetiming"
+            android:layout_width="405dp"
+            android:layout_height="wrap_content"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="115dp"
+                    android:layout_height="55dp"
+                    android:layout_below="@id/OUM."
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="5dp"
+                    android:text="Cancel"
+                    android:textStyle="bold"
+                    android:textSize="19dp"
+
+                    >
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="115dp"
+                    android:layout_height="55dp"
+                    android:id="@+id/viewclick"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="5dp"
+                    android:text="View"
+                    android:textStyle="bold"
+                    android:onClick="viewclick"
+                    android:textSize="19dp"
+                    >
+
+                </androidx.appcompat.widget.AppCompatButton>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/etlabsub"
+                    android:layout_width="115dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:text="SUBMIT"
+                    android:textSize="19dp"
+                    android:textStyle="bold">
+
+                </androidx.appcompat.widget.AppCompatButton>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+    </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

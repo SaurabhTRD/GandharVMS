@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Menu"
+    android:background="@color/white">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="45dp"
+        android:background="#283593"
+        android:text="Select Menu"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:gravity="center"
+        />
+
+  <LinearLayout
+      android:layout_width="match_parent"
+      android:layout_height="450dp"
+      android:orientation="vertical"
+      android:layout_marginTop="100dp"
+      android:weightSum="4"
+      >
+      <TextView
+          android:id="@+id/inward_Tanker"
+          android:layout_width="match_parent"
+          android:layout_height="55dp"
+          android:layout_marginTop="50dp"
+          android:elevation="5dp"
+          android:layout_marginRight="25dp"
+          android:layout_marginLeft="25dp"
+          android:background="#283593"
+          android:text="Inward Process Tanker"
+          android:gravity="center"
+          android:textSize="25dp"
+          android:textColor="@color/white"
+          android:textStyle="bold"
+          android:onClick="Inward_Tanker"
+
+          />
+      <TextView
+          android:id="@+id/Inward_Truck"
+          android:layout_width="match_parent"
+          android:layout_height="55dp"
+          android:layout_marginTop="50dp"
+          android:elevation="5dp"
+          android:layout_marginRight="25dp"
+          android:layout_marginLeft="25dp"
+          android:background="#283593"
+          android:text="Inward Process Truck"
+          android:gravity="center"
+          android:textSize="25dp"
+          android:textStyle="bold"
+          android:textColor="@color/white"
+          android:onClick="Inward_process_Truckclick"
+          />
+      <TextView
+          android:id="@+id/outward_Tanker"
+          android:layout_width="match_parent"
+          android:layout_height="55dp"
+          android:layout_marginTop="50dp"
+          android:elevation="5dp"
+          android:layout_marginRight="25dp"
+          android:layout_marginLeft="25dp"
+          android:background="#283593"
+          android:text="Outward Process Tanker"
+          android:gravity="center"
+          android:textSize="25dp"
+          android:textStyle="bold"
+          android:textColor="@color/white"
+          android:onClick="Outward_process_Tankerclick"
+
+          />
+      <TextView
+          android:id="@+id/Outward_Truck"
+          android:layout_width="match_parent"
+          android:layout_height="55dp"
+          android:layout_marginTop="50dp"
+          android:elevation="5dp"
+          android:layout_marginRight="25dp"
+          android:layout_marginLeft="25dp"
+          android:background="#283593"
+          android:text="Outward Process Truck"
+          android:gravity="center"
+          android:textSize="25dp"
+          android:textStyle="bold"
+          android:textColor="@color/white"
+          android:onClick="Outward_process_Truckclick"
+          />
+
+  </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="290dp"
+        android:layout_marginTop="600dp"
+        android:src="@drawable/image2" />
+
+</RelativeLayout>
