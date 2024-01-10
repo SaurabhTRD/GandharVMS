@@ -29,8 +29,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class Inward_Tanker_Sampling extends AppCompatActivity {
@@ -46,6 +49,15 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     DatePickerDialog pickertr;
     TimePickerDialog tpicker;
     private final int MAX_LENGTH=10;
+
+    Calendar currentTime = Calendar.getInstance();
+    int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
+    int currentMinute = currentTime.get(Calendar.MINUTE);
+
+    Date currentDate = Calendar.getInstance().getTime();
+    String dateFormatPattern = "dd-MM-yyyy";
+    SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,16 +105,23 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                 int mins = calendar.get(Calendar.MINUTE);
 
 
-                tpicker = new TimePickerDialog(Inward_Tanker_Sampling.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-                        etssignofproduction.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+//                tpicker = new TimePickerDialog(Inward_Tanker_Sampling.this, new TimePickerDialog.OnTimeSetListener() {
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                        Calendar c = Calendar.getInstance();
+//                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+//                        c.set(Calendar.MINUTE,minute);
+//                        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+//                        String formattedTime = sdf.format(calendar.getTime());
+//
+//                        etssignofproduction.setText(hourOfDay +":"+ minute );
+//                    }
+//                },hours,mins,false);
+//                tpicker.show();
+
+                String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", currentHour, currentMinute);
+                etssignofproduction.setText(formattedTime);
+
             }
         });
 
@@ -115,19 +134,22 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                 int mins = calendar.get(Calendar.MINUTE);
 
 
-                tpicker = new TimePickerDialog(Inward_Tanker_Sampling.this, new TimePickerDialog.OnTimeSetListener() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-                        // SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
-                        // etinvoiceno.setText(sdf.format(hourOfDay +":"+ minute));
-                        etinvoiceno.setText(hourOfDay + ":" + minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+//                tpicker = new TimePickerDialog(Inward_Tanker_Sampling.this, new TimePickerDialog.OnTimeSetListener() {
+//                    @SuppressLint("SetTextI18n")
+//                    @Override
+//                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+//                        Calendar c = Calendar.getInstance();
+//                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+//                        c.set(Calendar.MINUTE,minute);
+//                        // SimpleDateFormat sdf = new SimpleDateFormat("hh:mm a");
+//                        // etinvoiceno.setText(sdf.format(hourOfDay +":"+ minute));
+//                        etinvoiceno.setText(hourOfDay + ":" + minute );
+//                    }
+//                },hours,mins,false);
+//                tpicker.show();
+                String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", currentHour, currentMinute);
+                etinvoiceno.setText(formattedTime);
+
             }
         });
 
@@ -157,26 +179,28 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
             }
         });
 
-        etsdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
-                // Array of month abbreviations
-                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-                picker = new DatePickerDialog(Inward_Tanker_Sampling.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Use the month abbreviation from the array
-                        String monthAbbreviation = monthAbbreviations[month];
-                        etsdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                    }
-                }, year, month, day);
-                picker.show();
-            }
-        });
+//        etsdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final Calendar calendar = Calendar.getInstance();
+//                int day = calendar.get(Calendar.DAY_OF_MONTH);
+//                int month = calendar.get(Calendar.MONTH);
+//                int year = calendar.get(Calendar.YEAR);
+//                // Array of month abbreviations
+//                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+//                picker = new DatePickerDialog(Inward_Tanker_Sampling.this, new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+//                        // Use the month abbreviation from the array
+//                        String monthAbbreviation = monthAbbreviations[month];
+//                        etsdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+//                    }
+//                }, year, month, day);
+//                picker.show();
+//            }
+//        });
+        String formattedDate = dateFormat.format(currentDate);
+        etsdate.setText(formattedDate);
 
 
         etssubmit=(Button) findViewById(R.id.etssubmit);

@@ -22,10 +22,6 @@
       tools:ignore="MissingConstraints">
 
 
-
-
-
-
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +35,7 @@
           android:id="@+id/etsdate"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="Date"
+          android:hint="तारीख"
           android:inputType="text"
           android:textSize="17dp"
           android:textStyle="bold"
@@ -58,7 +54,7 @@
           android:id="@+id/etvehicleno"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="Vehicle Number"
+          android:hint="गाडी नंबर"
           android:inputType="text"
           android:textSize="17dp"
           android:textStyle="bold"/>
@@ -78,7 +74,7 @@
           android:id="@+id/etreciving"
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
-          android:hint="Sample Receiving Time"
+          android:hint="नमूना प्राप्त करने का समय"
           android:inputType="text"
           android:textSize="17dp"
           android:textStyle="bold"
@@ -101,7 +97,7 @@
             android:id="@+id/etsubmitted"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Sample Submitted Time"
+            android:hint="नमूना प्रस्तुत करने का समय"
             android:inputType="text"
             android:textSize="17dp"
             android:textStyle="bold"

@@ -2,14 +2,14 @@ package com.android.gandharvms.Inward_Tanker_Laboratory;
 
 public class In_Tanker_lab_list {
 
-    String In_Time, sample_reciving,Vehicle_Number,apperance,odor,color,Qty,density,Rcs_Test,Anline_Point,Flash_Point,Additional_test,sample_test,Remark,sign_of,Date_and_Time,outTime,Supplier;
+    String In_Time, sample_reciving,Vehicle_Number,apperance,odor,color,Qty,density,Rcs_Test,Anline_Point,Flash_Point,Additional_test,sample_test,Remark,sign_of,Date_and_Time,outTime,Supplier,Remark_Discription,Viscosity_Index;
     String kv40Value= "40°KV", kv100value = "100°KV";
 
     public In_Tanker_lab_list() {
 
     }
 
-    public In_Tanker_lab_list( String in_Time, String sample_reciving, String vehicle_Number, String apperance, String odor, String color, String qty, String density, String rcs_Test, String anline_Point, String flash_Point, String additional_test, String sample_test, String remark, String sign_of, String date_and_Time, String kv40Value, String kv100value,String outTime,String supplier) {
+    public In_Tanker_lab_list( String in_Time, String sample_reciving, String vehicle_Number, String apperance, String odor, String color, String qty, String density, String rcs_Test, String anline_Point, String flash_Point, String additional_test, String sample_test, String remark, String sign_of, String date_and_Time, String kv40Value, String kv100value,String outTime,String supplier,String remark_Discription,String viscosity_Index) {
         this.In_Time = in_Time;
         this.sample_reciving = sample_reciving;
         Vehicle_Number = vehicle_Number;
@@ -30,6 +30,8 @@ public class In_Tanker_lab_list {
         this.kv100value = kv100value;
         this.outTime=outTime;
         this.Supplier = supplier;
+        this.Remark_Discription = remark_Discription;
+        this.Viscosity_Index = viscosity_Index;
     }
 
     public String getIn_Time(){
@@ -185,5 +187,21 @@ public class In_Tanker_lab_list {
 
     public void setSupplier(String supplier) {
         Supplier = supplier;
+    }
+
+    public String getRemark_Discription() {
+        return Remark_Discription;
+    }
+
+    public void setRemark_Discription(String remark_Discription) {
+        Remark_Discription = remark_Discription;
+    }
+
+    public String getViscosity_Index() {
+        return Viscosity_Index;
+    }
+
+    public void setViscosity_Index(String viscosity_Index) {
+        Viscosity_Index = viscosity_Index;
     }
 }

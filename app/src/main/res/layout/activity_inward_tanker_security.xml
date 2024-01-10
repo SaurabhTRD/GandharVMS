@@ -15,28 +15,46 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
+      <LinearLayout
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:orientation="horizontal">
+
+          <CheckBox
+              android:id="@+id/isreporting"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_marginLeft="35dp"
+              android:layout_marginRight="25dp"
+              android:layout_weight="1"
+              android:textSize="16dp"
+              android:text="Is Reporting ?" />
+
+      </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/OUM."
-            android:layout_below="@id/QTY."
+            android:layout_marginTop="2dp"
+            android:id="@+id/Date"
+            android:layout_below="@id/invoiceno"
+
             >
             <EditText
-                android:id="@+id/etintime"
+                android:id="@+id/etdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="In Time"
-                android:inputType="text"
+                android:hint="Date"
+                android:inputType="date"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 android:focusable="false"
-                android:clickable="false"
                 />
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -92,6 +110,66 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="2dp"
+
+
+            >
+            <EditText
+                android:id="@+id/edtreportingremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Reporting Remark"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+       <LinearLayout
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content"
+           android:orientation="horizontal"
+           >
+           <Button
+               android:layout_width="100dp"
+               android:layout_height="wrap_content"
+               android:layout_marginLeft="250dp"
+               android:id="@+id/saveButton"
+               android:text="Save"
+              />
+       </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+            android:id="@+id/OUM."
+            android:layout_below="@id/QTY."
+            >
+            <EditText
+                android:id="@+id/etintime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="In Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:focusable="false"
+                android:clickable="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
             android:id="@+id/invoiceno"
             android:layout_below="@id/vehicalno"
 
@@ -101,7 +179,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Invoice No"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 />
@@ -114,21 +192,22 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="2dp"
-            android:id="@+id/Date"
-            android:layout_below="@id/invoiceno"
+
+            android:layout_below="@id/vehicalno"
 
             >
+
             <EditText
-                android:id="@+id/etdate"
+                android:id="@+id/etcontactnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Date"
-                android:inputType="date"
+                android:hint="Driver Mobile No"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
-                android:textStyle="bold"
-                android:focusable="false"
-                />
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -146,7 +225,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Supplier"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 />
@@ -169,10 +248,33 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Material"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+
+            android:layout_below="@id/party_name"
+
+            >
+
+            <EditText
+                android:id="@+id/etpooa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="OA/PO Number"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <LinearLayout
             android:id="@+id/wthree"
@@ -196,15 +298,15 @@
             android:layout_below="@id/material"
 
             >
+
             <EditText
                 android:id="@+id/etqty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Qty"
-                android:inputType="numberDecimal"
+                android:hint="Type of Packeging"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -275,7 +377,7 @@
                 android:id="@+id/etnetweight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Net Weight"
+                android:hint="Invoice QTY"
                 android:inputType="numberDecimal"
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -304,6 +406,27 @@
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+
+            android:layout_below="@id/Date"
+
+            >
+            <EditText
+                android:id="@+id/edtremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Remark"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"

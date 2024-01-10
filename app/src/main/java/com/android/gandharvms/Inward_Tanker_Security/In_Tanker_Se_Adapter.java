@@ -56,6 +56,11 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
         holder.netweightuom.setText(inTankerSecurityListArrayList.get(position).getNetweightuom());
         holder.extramaterials.setText(inTankerSecurityListArrayList.get(position).getExtramaterials());
 
+        holder.remark.setText(inTankerSecurityListArrayList.get(position).getRemark());
+        holder.oapo.setText(inTankerSecurityListArrayList.get(position).getOA_PO_Number());
+        holder.mob.setText(inTankerSecurityListArrayList.get(position).getDriver_Mobile_No());
+        holder.reoprtingre.setText(inTankerSecurityListArrayList.get(position).getReporting_Remark());
+
 
 
 
@@ -84,7 +89,8 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
 
     public static class myviewHolder extends RecyclerView.ViewHolder{
 
-        TextView serialnumber,vehiclenumber,invoiceno,date,partyname,material,qty,uom,netweight,intime,outTime,qtyuom,netweightuom,extramaterials;
+        TextView serialnumber,vehiclenumber,invoiceno,date,partyname,material,qty,uom,netweight,intime,outTime,qtyuom,netweightuom,extramaterials,remark,oapo,mob
+                ,reoprtingre;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
 
@@ -103,6 +109,13 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
             qtyuom= itemView.findViewById(R.id.listuom);
             netweightuom=itemView.findViewById(R.id.listnetweightuom);
             extramaterials=itemView.findViewById(R.id.listextramaterials);
+
+            remark = itemView.findViewById(R.id.listremark);
+            oapo=itemView.findViewById(R.id.listoaponum);
+            mob =itemView.findViewById(R.id.listdrivernumber);
+            reoprtingre = itemView.findViewById(R.id.listreportingremark);
+
+
 
         }
     }

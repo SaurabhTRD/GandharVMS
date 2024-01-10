@@ -2,7 +2,7 @@ package com.android.gandharvms.Inward_Tanker_Security;
 
 public class In_Tanker_Security_list {
 
-    String SerialNumber,date,intime,invoiceno,material,netweight,partyname,qty,uom,vehicalnumber,outTime,qtyuom,netweightuom,extramaterials;
+    String SerialNumber,date,intime,invoiceno,material,netweight,partyname,qty,uom,vehicalnumber,outTime,qtyuom,netweightuom,extramaterials,Remark,OA_PO_Number,Driver_Mobile_No,Reporting_Remark;
 
     public In_Tanker_Security_list(){
 
@@ -10,7 +10,7 @@ public class In_Tanker_Security_list {
 
 
 
-    public In_Tanker_Security_list(String serialNumber, String date, String intime,String supplier, String invoiceno, String material, String netweight, String qty, String uom, String vehicalnumber , String outTime, String qtyuom, String netweightuom,String extramaterials,String partyname) {
+    public In_Tanker_Security_list(String serialNumber, String date, String intime,String supplier, String invoiceno, String material, String netweight, String qty, String uom, String vehicalnumber , String outTime, String qtyuom, String netweightuom,String extramaterials,String partyname,String remark,String OA_PO_Number,String driver_Mobile_No,String reporting_Remark) {
 
         this.SerialNumber = serialNumber;
         this.date = date;
@@ -26,6 +26,11 @@ public class In_Tanker_Security_list {
         this.qtyuom=qtyuom;
         this.netweightuom=netweightuom;
         this.extramaterials=extramaterials;
+
+        this.Remark=remark;
+        this.OA_PO_Number=OA_PO_Number;
+        this.Driver_Mobile_No = driver_Mobile_No;
+        this.Reporting_Remark = reporting_Remark;
     }
 
 
@@ -122,4 +127,36 @@ public class In_Tanker_Security_list {
     public String getExtramaterials(){return  extramaterials;}
 
     public void setExtramaterials(String extraMaterials){this.extramaterials=extraMaterials;}
+
+    public String getRemark() {
+        return Remark;
+    }
+
+    public void setRemark(String remark) {
+        Remark = remark;
+    }
+
+    public String getOA_PO_Number() {
+        return OA_PO_Number;
+    }
+
+    public void setOA_PO_Number(String OA_PO_Number) {
+        this.OA_PO_Number = OA_PO_Number;
+    }
+
+    public String getDriver_Mobile_No() {
+        return Driver_Mobile_No;
+    }
+
+    public void setDriver_Mobile_No(String driver_Mobile_No) {
+        Driver_Mobile_No = driver_Mobile_No;
+    }
+
+    public String getReporting_Remark() {
+        return Reporting_Remark;
+    }
+
+    public void setReporting_Remark(String reporting_Remark) {
+        Reporting_Remark = reporting_Remark;
+    }
 }
