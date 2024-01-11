@@ -53,6 +53,8 @@ public class In_Tanker_lab_Adapter extends RecyclerView.Adapter<In_Tanker_lab_Ad
         holder.outTime.setText(datalist.get(position).getOuttime());
 
         holder.etsupplier.setText(datalist.get(position).getSupplier());
+        holder.discp.setText(datalist.get(position).getRemark_Discription());
+        holder.visco.setText(datalist.get(position).getViscosity_Index());
 
 
 
@@ -68,7 +70,7 @@ public class In_Tanker_lab_Adapter extends RecyclerView.Adapter<In_Tanker_lab_Ad
     class myviewholder extends RecyclerView.ViewHolder
     {
         TextView ettime, etpsample,etvehiclenumber,etpapperance,etpodor,etpcolour,etpdensity,etqty,etPrcstest,etpkv,ethundred,
-                etanline,etflash,etpaddtest,etpsamplere,etpremark,etpsignQc,etpdatesignofsign,outTime,etsupplier;
+                etanline,etflash,etpaddtest,etpsamplere,etpremark,etpsignQc,etpdatesignofsign,outTime,etsupplier,discp,visco;
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +94,8 @@ public class In_Tanker_lab_Adapter extends RecyclerView.Adapter<In_Tanker_lab_Ad
             etpdatesignofsign = itemView.findViewById(R.id.listdtsign);
             outTime=itemView.findViewById(R.id.listouttime);
             etsupplier=itemView.findViewById(R.id.listsupplier);
+            discp = itemView.findViewById(R.id.listdiscription);
+            visco = itemView.findViewById(R.id.listviscosity);
         }
     }
 }

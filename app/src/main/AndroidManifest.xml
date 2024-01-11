@@ -174,7 +174,7 @@
         <activity
             android:name=".Inward_Tanker_Security.Inward_Tanker_Security"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan" />
+            />
         <activity
             android:name=".Inward_Truck"
             android:exported="false" />

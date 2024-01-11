@@ -339,7 +339,9 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
         recyclerView.setAdapter(in_tanker_se_adapter);
 
         db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Security").get()
+        db.collection("Inward Tanker Security")
+                .orderBy("date", Query.Direction.DESCENDING)
+                .get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {

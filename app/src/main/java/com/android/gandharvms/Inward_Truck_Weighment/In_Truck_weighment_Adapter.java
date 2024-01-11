@@ -15,7 +15,7 @@ import java.util.ArrayList;
 
 public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_weighment_Adapter.myviewholder> {
 
-    //Checking git commits @Sunil please remove and commit the code
+    //ok
     ArrayList<In_Truck_weigment_list> datalist;
 
     public In_Truck_weighment_Adapter(ArrayList<In_Truck_weigment_list> datalist) {

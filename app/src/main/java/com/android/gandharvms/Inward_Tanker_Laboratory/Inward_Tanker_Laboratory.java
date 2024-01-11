@@ -42,7 +42,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     String [] remark = {"Accepted","Rejected"};
     AutoCompleteTextView regAutoCompleteTextView;
     ArrayAdapter<String> remarkarray;
-    EditText etintime, etpsample,etvehiclenumber,etpapperance,etpodor,etpcolour,etpdensity,etqty,etPrcstest,etpkv,ethundred,etanline,etflash,etpaddtest,etpsamplere,etpremark,etpsignQc,etpdatesignofsign,etMaterial,etsupplier;
+    EditText etintime, etpsample,etvehiclenumber,etpapperance,etpodor,etpcolour,etpdensity,etqty,etPrcstest,etpkv,ethundred,etanline,etflash,etpaddtest,etpsamplere,etpremark,etpsignQc,etpdatesignofsign,etMaterial,etsupplier,disc,etviscosity;
     Button etlabsub;
     Button view;
     TimePickerDialog tpicker;
@@ -94,6 +94,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etMaterial=(EditText) findViewById(R.id.et_materialname);
 
         etsupplier = (EditText) findViewById(R.id.supplier);
+        disc = (EditText) findViewById(R.id.remarkdisc);
+        etviscosity = (EditText) findViewById(R.id.etviscosityindex);
 
 
 
@@ -273,6 +275,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String edsupplier= etsupplier.getText().toString().trim();
 
 
+
         if ( intime.isEmpty() || sample.isEmpty() || vehicle.isEmpty() ||  apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty()||  anline.isEmpty()|| flash.isEmpty()|| density.isEmpty() || rcsTest.isEmpty() ||
                 kv.isEmpty() || addTest.isEmpty() || sampleTest.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty()|| edsupplier.isEmpty()){
 
@@ -305,6 +308,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             labitems.put("Material",etMaterial.getText().toString().trim());
 
             labitems.put("Supplier",etsupplier.getText().toString().trim());
+            labitems.put("Remark_Discription",disc.getText().toString().trim());
+            labitems.put("Viscosity_Index",etviscosity.getText().toString().trim());
 
 
 
@@ -334,6 +339,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                             etpdatesignofsign.setText("");
                             etMaterial.setText("");
                             etsupplier.setText("");
+                            disc.setText("");
+                            etviscosity.setText("");
 
                             Toast.makeText(Inward_Tanker_Laboratory.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
 
