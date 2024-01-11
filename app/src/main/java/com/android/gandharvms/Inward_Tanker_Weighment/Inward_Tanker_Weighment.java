@@ -72,7 +72,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int CAMERA_REQUEST_CODE1 = 103;
-    private final TextWatcher textWatcher = new TextWatcher() {
+    /*private final TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -88,10 +88,10 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
 
             calculateNetWeight();
         }
-    };
+    };*/
     private final int MAX_LENGTH = 10;
     EditText etint, etserialnumber, etvehicalno, etsuppliername, etmaterialname, etdriverno, etoano, etdate,
-            etgrossweight, ettareweight, etnetweight, etremark, etsignby, etcontainer, etshortagedip, etshortageweight;
+            etgrossweight, etremark, etsignby, etcontainer, etshortagedip, etshortageweight;
     Button wesubmit;
     FirebaseFirestore wedbroot;
     Calendar calendar = Calendar.getInstance();
@@ -133,8 +133,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etoano = findViewById(R.id.etoano);
         etdate = findViewById(R.id.etdate);
         etgrossweight = findViewById(R.id.etgrossweight);
-        ettareweight = findViewById(R.id.ettareweight);
-        etnetweight = findViewById(R.id.etnetweight);
+        /*ettareweight = findViewById(R.id.ettareweight);
+        etnetweight = findViewById(R.id.etnetweight);*/
 
         etremark = findViewById(R.id.etremark);
         etsignby = findViewById(R.id.etsignby);
@@ -145,8 +145,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("TankerWeighment", MODE_PRIVATE);
 
         // Adding Gross weight and Tare weight
-        etgrossweight.addTextChangedListener(textWatcher);
-        ettareweight.addTextChangedListener(textWatcher);
+        /*etgrossweight.addTextChangedListener(textWatcher);*/
+        /*ettareweight.addTextChangedListener(textWatcher);*/
 
         /*FirebaseStorage  storage = FirebaseStorage.getInstance();
         StorageReference storageRef = storage.getReference();*/
@@ -476,8 +476,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         String oan = etoano.getText().toString().trim();
         String date = dateTimeString;
         String grossweight = etgrossweight.getText().toString().trim();
-        String tareweight = ettareweight.getText().toString().trim();
-        String netweight = etnetweight.getText().toString().trim();
+        /*String tareweight = ettareweight.getText().toString().trim();
+        String netweight = etnetweight.getText().toString().trim();*/
         String remark = etremark.getText().toString().trim();
         String signby = etsignby.getText().toString().trim();
         String container = etcontainer.getText().toString().trim();
@@ -487,7 +487,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
 
         if (inte.isEmpty() || serialnumber.isEmpty() || vehicelnumber.isEmpty() || suppliername.isEmpty() || materialname.isEmpty() ||
                 driverno.isEmpty() || oan.isEmpty() || grossweight.isEmpty() ||
-                tareweight.isEmpty() || netweight.isEmpty() || signby.isEmpty() || container.isEmpty()) {
+                signby.isEmpty() || container.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
             Map<String, String> weitems = new HashMap<>();
@@ -500,8 +500,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             weitems.put("OA_number", etoano.getText().toString().trim());
             weitems.put("Date", dateTimeString);
             weitems.put("Gross_Weight", etgrossweight.getText().toString().trim());
-            weitems.put("Tare_Weight", ettareweight.getText().toString().trim());
-            weitems.put("Net_Weight", etnetweight.getText().toString().trim());
+            /*weitems.put("Tare_Weight", ettareweight.getText().toString().trim());
+            weitems.put("Net_Weight", etnetweight.getText().toString().trim());*/
             weitems.put("Batch_Number", etremark.getText().toString().trim());
             weitems.put("Sign_By", etsignby.getText().toString().trim());
             weitems.put("Container_No", etcontainer.getText().toString().trim());
@@ -528,8 +528,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                             etoano.setText("");
                             etdate.setText("");
                             etgrossweight.setText("");
-                            ettareweight.setText("");
-                            etnetweight.setText("");
+                            /*ettareweight.setText("");
+                            etnetweight.setText("");*/
                             etremark.setText("");
                             etsignby.setText("");
                             etcontainer.setText("");
@@ -579,18 +579,20 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         }
     }
 
-    public void calculateNetWeight() {
+    /*public void calculateNetWeight() {
 
         String grossweightStr = etgrossweight.getText().toString().trim();
-        String tareweightStr = ettareweight.getText().toString().trim();
+        *//*String tareweightStr = ettareweight.getText().toString().trim();*//*
 
         double grossWeight = grossweightStr.isEmpty() ? 0.0 : Double.parseDouble(grossweightStr);
+*//*
         double tareWeight = tareweightStr.isEmpty() ? 0.0 : Double.parseDouble(tareweightStr);
+*//*
 
         double netweight = grossWeight - tareWeight;
 
         etnetweight.setText("" + netweight);
-    }
+    }*/
 
     //  image upload firebase
     public void captureImageFromCamera1(android.view.View view) {
@@ -667,25 +669,26 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                         In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
                         // Check if the object already exists to avoid duplicates
                         if (totalCount > 0) {
-
                             etvehicalno.setText(obj.getVehicalnumber());
-                            etvehicalno.setFocusable(true);
+                            etvehicalno.setEnabled(false);
 
                             etsuppliername.setText(obj.getPartyname());
-                            etsuppliername.setFocusable(true);
+                            etsuppliername.setEnabled(false);
 
                             etmaterialname.setText(obj.getMaterial());
-                            etmaterialname.setFocusable(true);
-
+                            etmaterialname.setEnabled(false);
 
                             etoano.setText(obj.getInvoiceno());
-                            etoano.setFocusable(true);
+                            etoano.setEnabled(false);
 
                             etdate.setText(obj.getDate());
-                            etdate.setFocusable(true);
+                            etdate.setEnabled(false);
 
-                            etnetweight.setText(obj.getNetweight());
-                            etnetweight.setFocusable(true);
+                            /*etnetweight.setText(obj.getNetweight());
+                            etnetweight.setEnabled(false);*/
+
+                            etdriverno.setText(obj.getDriver_Mobile_No());
+                            etdriverno.setEnabled(false);
                         }
                     }
                 } else {

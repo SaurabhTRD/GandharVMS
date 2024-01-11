@@ -3,12 +3,12 @@ package com.android.gandharvms.Inward_Tanker_Weighment;
 public class In_Tanker_Weighment_list {
 
     String   In_Time,serial_number,vehicle_number,supplier_name,material_name,Driver_Number,OA_number,Date,
-            Gross_Weight,Tare_Weight,Net_Weight,Batch_Number,Sign_By,Container_No,shortage_Dip,shortage_weight,outTime,InVehicleImage,InDriverImage;
+            Gross_Weight,Batch_Number,Sign_By,Container_No,shortage_Dip,shortage_weight,outTime,InVehicleImage,InDriverImage;
 
     public In_Tanker_Weighment_list() {
     }
 
-    public In_Tanker_Weighment_list( String in_Time,  String serial_number, String vehicle_number, String supplier_name, String material_name, String customer_Name, String driver_Number, String OA_number, String date, String gross_Weight, String tare_Weight, String net_Weight, String density, String batch_Number, String sign_By, String we_Date_Time, String container_No, String shortage_Dip, String shortage_weight ,String outTime
+    public In_Tanker_Weighment_list( String in_Time,  String serial_number, String vehicle_number, String supplier_name, String material_name, String customer_Name, String driver_Number, String OA_number, String date, String gross_Weight, String batch_Number, String sign_By, String we_Date_Time, String container_No, String shortage_Dip, String shortage_weight ,String outTime
     ,String InVehicleImage,String InDriverImage) {
         this.In_Time = in_Time;
         this.serial_number = serial_number;
@@ -19,8 +19,8 @@ public class In_Tanker_Weighment_list {
         this.OA_number = OA_number;
         this.Date = date;
         this.Gross_Weight = gross_Weight;
-        this.Tare_Weight = tare_Weight;
-        this.Net_Weight = net_Weight;
+        /*this.Tare_Weight = tare_Weight;
+        this.Net_Weight = net_Weight;*/
         this.Batch_Number = batch_Number;
         this.Sign_By = sign_By;
         this.Container_No = container_No;
@@ -102,7 +102,7 @@ public class In_Tanker_Weighment_list {
         Gross_Weight = gross_Weight;
     }
 
-    public String getTare_Weight() {
+    /*public String getTare_Weight() {
         return Tare_Weight;
     }
 
@@ -116,7 +116,7 @@ public class In_Tanker_Weighment_list {
 
     public void setNet_Weight(String net_Weight) {
         Net_Weight = net_Weight;
-    }
+    }*/
 
     public String getBatch_Number() {
         return Batch_Number;

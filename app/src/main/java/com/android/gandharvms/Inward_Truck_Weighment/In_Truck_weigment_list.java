@@ -2,30 +2,34 @@ package com.android.gandharvms.Inward_Truck_Weighment;
 
 public class In_Truck_weigment_list {
 
-    String In_Time, Serial_Number,Vehicle_Number,Supplier,Material,Driver_No,Customer,Oa_Number,Date,Gross_Weight,Tare_Weight,Net_Weight,Density,Batch_No,Sign_By,Date_Time,outTime;
+    String In_Time, Serial_Number, Vehicle_Number, Supplier, Material,
+            Driver_No, Customer, Oa_Number, Date, Gross_Weight, Density, Batch_No, Sign_By, Date_Time, outTime,InVehicleImage,InDriverImage;
 
     public In_Truck_weigment_list() {
     }
 
-    public In_Truck_weigment_list( String in_Time, String serial_Number, String vehicle_Number, String supplier, String material,String driver_No, String customer,
-                                  String oa_Number, String date, String gross_Weight, String tare_Weight, String net_Weight, String density, String batch_No, String sign_By, String date_Time,String outTime) {
+    public In_Truck_weigment_list(String in_Time, String serial_Number, String vehicle_Number, String supplier, String material, String driver_No, String customer,
+                                  String oa_Number, String date, String gross_Weight,String density, String batch_No,
+                                  String sign_By, String date_Time, String outTime,String InVehicleImage,String InDriverImage) {
         In_Time = in_Time;
         Serial_Number = serial_Number;
         Vehicle_Number = vehicle_Number;
         Supplier = supplier;
         Material = material;
-       this.Driver_No = driver_No;
+        this.Driver_No = driver_No;
         Customer = customer;
-       this.Oa_Number = oa_Number;
+        this.Oa_Number = oa_Number;
         Date = date;
         Gross_Weight = gross_Weight;
-        Tare_Weight = tare_Weight;
-        this.Net_Weight = net_Weight;
+        /*Tare_Weight = tare_Weight;
+        this.Net_Weight = net_Weight;*/
         Density = density;
         Batch_No = batch_No;
         this.Sign_By = sign_By;
         Date_Time = date_Time;
-        this.outTime=outTime;
+        this.outTime = outTime;
+        this.InVehicleImage=InVehicleImage;
+        this.InDriverImage=InDriverImage;
     }
 
     public String getIn_Time() {
@@ -68,11 +72,11 @@ public class In_Truck_weigment_list {
         Material = material;
     }
 
-    public String getDriver_No(){
+    public String getDriver_No() {
         return Driver_No;
     }
 
-    public void setDriver(String driver_No){
+    public void setDriver(String driver_No) {
         Driver_No = driver_No;
     }
 
@@ -119,7 +123,7 @@ public class In_Truck_weigment_list {
         Gross_Weight = gross_Weight;
     }
 
-    public String getTare_Weight() {
+    /*public String getTare_Weight() {
         return Tare_Weight;
     }
 
@@ -133,7 +137,7 @@ public class In_Truck_weigment_list {
 
     public void setNet_Weight(String net_Weight) {
         Net_Weight = net_Weight;
-    }
+    }*/
 
     public String getDensity() {
         return Density;
@@ -175,4 +179,9 @@ public class In_Truck_weigment_list {
     public void setOutTime(String outTime) {
         this.outTime = outTime;
     }
+    public String getInVehicleImage(){return InVehicleImage;}
+    public void setInVehicleImage(String invehicleImage){this.InVehicleImage=invehicleImage;}
+
+    public String getInDriverImage(){return  InDriverImage;}
+    public void setInDriverImage(String indriverImage){this.InDriverImage=indriverImage;}
 }

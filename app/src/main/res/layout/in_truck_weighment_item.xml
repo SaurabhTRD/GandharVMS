@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="520dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="8dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
+    android:layout_margin="10dp"
     app:cardCornerRadius="8dp"
-    android:layout_margin="10dp">
+    app:cardElevation="8dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
         android:layout_marginVertical="8dp"
-        android:orientation="vertical"
+        android:layout_marginStart="5dp"
         android:layout_marginTop="10dp"
-        >
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -26,20 +25,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="In Time: "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/listintime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listintime"
                 android:layout_marginStart="20dp"
                 android:text="Capital Register"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
 
@@ -52,27 +51,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Serial Number: "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/listserailnumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listserailnumber"
                 android:layout_marginStart="20dp"
                 android:text="Capital Register"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -83,27 +82,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Vehicle Number  : "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/vehiclenumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/vehiclenumber"
                 android:layout_marginStart="20dp"
                 android:text="12345"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -113,27 +113,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Supplier Name:"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/suppliername"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/suppliername"
                 android:layout_marginStart="20dp"
                 android:text="MH/03/1234"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -144,27 +144,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Material Name :"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/materialname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/materialname"
                 android:layout_marginStart="20dp"
                 android:text="00000"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -175,28 +175,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Customer Name :"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/custname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/custname"
                 android:layout_marginStart="20dp"
                 android:text="12/02/2023"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -207,12 +207,11 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Driver No"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/listdriver"
@@ -227,8 +226,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -239,27 +238,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="OA Number : "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/oanumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/oanumber"
                 android:layout_marginStart="20dp"
                 android:text="Crude Oil"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -270,27 +269,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5sp"
                 android:text="Date : "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5sp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/date"
                 android:layout_marginStart="20dp"
                 android:text="20"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -301,29 +300,29 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Gross Weight  : "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/grossweight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/grossweight"
                 android:layout_marginStart="20dp"
                 android:text="Tone"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
-        <LinearLayout
+        <!--&lt;!&ndash;<LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -332,27 +331,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Tare Weight : "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/tareweight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/tareweight"
                 android:layout_marginStart="20dp"
                 android:text="20"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -363,27 +362,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Net Weight: "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/etnetweight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/etnetweight"
                 android:layout_marginStart="20dp"
                 android:text="12:03"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>&ndash;&gt;
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />-->
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -394,27 +393,27 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Density: "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/density"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/density"
                 android:layout_marginStart="20dp"
                 android:text="12:03"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -425,28 +424,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Batch Number: "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/batchnumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/batchnumber"
                 android:layout_marginStart="20dp"
                 android:text="12:03"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -457,27 +456,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="sign by "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/signby"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/signby"
                 android:layout_marginStart="20dp"
                 android:text="12:03"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -487,20 +487,20 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Date/Time"
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
             <TextView
+                android:id="@+id/datetime"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/datetime"
                 android:layout_marginStart="20dp"
                 android:text="12:03"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textSize="20sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -508,24 +508,91 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
                 android:text="Out Time : "
                 android:textColor="@color/black"
                 android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/listouttime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="20dp"
+                android:text="12:03"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/listouttime"
-                android:layout_marginStart="20dp"
-                android:text="12:03"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
+                android:layout_marginStart="5dp"
+                android:text="InVehicleImage  : "
+                android:textColor="@color/black"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/listtrInVehicleImage"
+                android:layout_width="150dp"
+                android:layout_height="75dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/gandhar" />
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:text="InDriverImage   : "
+                android:textColor="@color/black"
+                android:textSize="21sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/listtrInDriverImage"
+                android:layout_width="150dp"
+                android:layout_height="75dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img1" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/black" />
 
     </LinearLayout>
 
