@@ -230,7 +230,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                FetchVehicleDetails(etvehicalno.getText().toString());
+                //FetchVehicleDetails(etvehicalno.getText().toString());
             }
         });
 
@@ -259,6 +259,14 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                     etdriverno.setError(null);
                 }
             }
+        });
+        etvehicalno.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    FetchVehicleDetails(etvehicalno.getText().toString().trim());
+                }
+            }
+
         });
 
         wesubmit = findViewById(R.id.wesubmit);
@@ -665,7 +673,43 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     int totalCount = task.getResult().size();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
+                    if(totalCount == 0) {
+                        etserialnumber.setText("");
+                        etvehicalno.setText("");
+                        etsuppliername.setText("");
+                        etmaterialname.setText("");
+                        etoano.setText("");
+                        etdriverno.setText("");
+                        etdate.setText("");
+                        /*etnetweight.setText("");*/
+                        etvehicalno.requestFocus();
+                        Toast.makeText(Inward_Tanker_Weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+                            // Check if the object already exists to avoid duplicates
+                            if (totalCount > 0) {
+                                etserialnumber.setText(obj.getSerialNumber());
+                                etserialnumber.setEnabled(true);
+                                etvehicalno.setText(obj.getVehicalnumber());
+                                etvehicalno.setEnabled(true);
+                                etsuppliername.setText(obj.getPartyname());
+                                etsuppliername.setEnabled(false);
+                                etmaterialname.setText(obj.getMaterial());
+                                etmaterialname.setEnabled(false);
+                                etoano.setText(obj.getInvoiceno());
+                                etoano.setEnabled(false);
+                                etdriverno.setText(obj.getDriver_Mobile_No());
+                                etdriverno.setEnabled(false);
+                                etdate.setText(obj.getDate());
+                                etdate.setEnabled(false);
+                                /*etnetweight.setText(obj.getNetweight());
+                                etnetweight.setEnabled(false);*/
+                                etgrossweight.requestFocus();
+                            }
+                        }
+                    /*for (QueryDocumentSnapshot document : task.getResult()) {
                         In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
                         // Check if the object already exists to avoid duplicates
                         if (totalCount > 0) {
@@ -684,12 +728,12 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                             etdate.setText(obj.getDate());
                             etdate.setEnabled(false);
 
-                            /*etnetweight.setText(obj.getNetweight());
-                            etnetweight.setEnabled(false);*/
+                            *//*etnetweight.setText(obj.getNetweight());
+                            etnetweight.setEnabled(false);*//*
 
                             etdriverno.setText(obj.getDriver_Mobile_No());
                             etdriverno.setEnabled(false);
-                        }
+                        }*/
                     }
                 } else {
                     Log.w("FirestoreData", "Error getting documents.", task.getException());
