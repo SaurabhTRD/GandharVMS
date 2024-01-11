@@ -40,10 +40,14 @@ public class Im_Truck_Store_Adapter extends RecyclerView.Adapter<Im_Truck_Store_
         holder.etmaterialrdate.setText(datalist.get(position).getMaterial_Rec_Date());
         holder.etmaterial.setText(datalist.get(position).getMaterial());
         holder.etqty.setText(datalist.get(position).getQty());
-        holder.etoum.setText(datalist.get(position).getOum());
+        holder.etoum.setText(datalist.get(position).getReceiveQTY_Uom());
         holder.etremark.setText(datalist.get(position).getRemarks());
         holder.outTime.setText(datalist.get(position).getOutTime());
-
+        holder.etinvQty.setText(datalist.get(position).getInvoice_Quantity());
+        holder.etinvqtyuom.setText(datalist.get(position).getInv_QuantityUom());
+        holder.etinvDate.setText(datalist.get(position).getInvoice_Date());
+        holder.etinvNum.setText(datalist.get(position).getInvoice_Number());
+        holder.extramaterials.setText(datalist.get(position).getExtramaterials());
     }
 
     @Override
@@ -53,7 +57,8 @@ public class Im_Truck_Store_Adapter extends RecyclerView.Adapter<Im_Truck_Store_
 
     class myviewholder extends RecyclerView.ViewHolder{
 
-        TextView etintime,etserialnumber,etvehicalnum,etpo,etdate,etmaterialrdate,etmaterial,etqty,etoum,etremark,outTime;
+        TextView etintime,etinvqtyuom,etserialnumber,etvehicalnum,etpo,etdate,etmaterialrdate,
+                etmaterial,etqty,etoum,etremark,outTime,etinvQty,etinvDate,etinvNum,extramaterials;
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             etintime =itemView.findViewById(R.id.listintime);
@@ -67,6 +72,11 @@ public class Im_Truck_Store_Adapter extends RecyclerView.Adapter<Im_Truck_Store_
             etoum = itemView.findViewById(R.id.listuom);
             etremark = itemView.findViewById(R.id.listremark);
             outTime=itemView.findViewById(R.id.listouttime);
+            etinvQty=itemView.findViewById(R.id.listinvQty);
+            etinvqtyuom=itemView.findViewById(R.id.listinvqtyuom);
+            etinvDate=itemView.findViewById(R.id.listinvDate);
+            etinvNum=itemView.findViewById(R.id.listinvNum);
+            extramaterials=itemView.findViewById(R.id.listextramaterials);
         }
     }
 }

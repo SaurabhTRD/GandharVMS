@@ -518,7 +518,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             items.put("invoiceno", etinvoice.getText().toString().trim());
             items.put("date", etdate.getText().toString().trim());
             items.put("partyname", etsupplier.getText().toString());
-            items.put("extramaterials",materialList.toString());
+            items.put("extramaterials", materialList.toString().replace("[]",""));
             items.put("material", etmaterial.getText().toString().trim());
             items.put("qty", etintime.getText().toString().trim());
             items.put("netweight", etnetweight.getText().toString().trim());

@@ -71,6 +71,4 @@ public class Inward_Truck extends AppCompatActivity {
             Toast.makeText(Inward_Truck.this, "You are not in Store Department", Toast.LENGTH_SHORT).show();
         }
     }
-
-
 }

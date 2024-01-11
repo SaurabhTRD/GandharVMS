@@ -1,32 +1,74 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AndroidLayouts">
+    <shared>
+      <config />
+    </shared>
+  </component>
   <component name="AutoImportSettings">
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52192a9d-3fc5-426a-b1f7-2dcfd03fc17b" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="52192a9d-3fc5-426a-b1f7-2dcfd03fc17b" name="Changes" comment="Remove Comment Parts from Inward_Tanker.java">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/In_Tanker_Pro_Adapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/In_Tanker_Pro_Adapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/In_Tanker_Production_list.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/In_Tanker_Production_list.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/Inward_Tanker_Production.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/Inward_Tanker_Production.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/Inward_Tanker_Production_Viewdata.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/Inward_Tanker_Production_Viewdata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security_Viewdata.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security_Viewdata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/In_Tanker_Weighment_list.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/In_Tanker_Weighment_list.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/In_Tanker_we_Adapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/In_Tanker_we_Adapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment_Viewdata.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment_Viewdata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Weighment/Inward_Truck_weighment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Weighment/Inward_Truck_weighment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Im_Truck_Store_Adapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Im_Truck_Store_Adapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/In_Truck_Store_list.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/In_Truck_Store_list.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store_viewdata.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store_viewdata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_production.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_production.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_production_viewdata.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_production_viewdata.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_weighment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_weighment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_weighment_viewdata.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_weighment_viewdata.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_store.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_store.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_store_viewdata.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_store_viewdata.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_weighment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_weighment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/in_ta_pro_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/in_ta_pro_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/in_tr_we_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/in_tr_we_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/in_truck_store_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/in_truck_store_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/colors.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\admin\.android\avd\Pixel_XL_API_33.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[GIEEMZS4MVAINBLR]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
     </projectState>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="layoutResourceFile" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="GithubDefaultAccount">
+    <option name="defaultAccountId" value="674d074b-e94e-48b2-b5e8-ccd52033a47c" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2afAD9cDISh2gKG5H8pvSodq4cb" />
   <component name="ProjectViewState">
@@ -121,6 +163,14 @@
       <option name="presentableId" value="Default" />
       <updated>1704699138325</updated>
     </task>
+    <task id="LOCAL-00001" summary="Remove Comment Parts from Inward_Tanker.java">
+      <created>1704701544101</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1704701544101</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -133,5 +183,30 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Remove Comment Parts from Inward_Tanker.java" />
+    <option name="LAST_COMMIT_MESSAGE" value="Remove Comment Parts from Inward_Tanker.java" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
+          <line>492</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>656</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>663</line>
+          <option name="timeStamp" value="14" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

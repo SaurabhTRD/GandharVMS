@@ -85,20 +85,6 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_security_viewdata);
 
-//        ProgressDialog progressDialog1 = new ProgressDialog(this);
-//        AlertDialog.Builder alertDialog1 = new AlertDialog.Builder(this);
-//        alertDialog1.setCancelable(false);
-//        alertDialog1.setMessage("Fetching Data.....");
-//        alertDialog1.show();
-
-
-//        progressDialog.setCancelable(false);
-//        progressDialog.setMessage("Fetching Data.....");
-//        progressDialog.show();
-
-
-        // datepickervice data
-
         startDatePicker = findViewById(R.id.startdate);
         endDatePicker = findViewById(R.id.enddate);
         btnsrnumclear=findViewById(R.id.btn_srnumberbutton_clear);
@@ -121,13 +107,6 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
             }
         });
         fetchDataFromFirestore(null, null);
-
-
-
-
-
-
-
 
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
 //        recyclerView.setHasFixedSize(true);

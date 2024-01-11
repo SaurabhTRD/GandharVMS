@@ -34,17 +34,13 @@ public class In_Tanker_Pro_Adapter extends RecyclerView.Adapter<In_Tanker_Pro_Ad
         holder.etint.setText(datalist.get(position).getIn_Time());
         holder.etreq.setText(datalist.get(position).getReq_to_unload());
         holder.ettankno.setText(datalist.get(position).getTank_Number_Request());
-        holder.etreqtoDt.setText(datalist.get(position).getReq_to_op_DT());
         holder.etconbyop.setText(datalist.get(position).getConfirm_unload());
         holder.tanknoun.setText(datalist.get(position).getTank_Number());
-        holder.etconunloadDateTime.setText(datalist.get(position).getCon_unload_DT());
         holder.outTime.setText(datalist.get(position).getOutTime());
         holder.Material.setText(datalist.get(position).getMaterial());
         holder.Vehicle_Number.setText(datalist.get(position).getVehicle_Number());
-
+        holder.etconunloadDateTime.setText(datalist.get(position).getCon_unload_DT());
     }
-
-
     @Override
     public int getItemCount() {
         return datalist.size();
@@ -53,20 +49,18 @@ public class In_Tanker_Pro_Adapter extends RecyclerView.Adapter<In_Tanker_Pro_Ad
     class myviewholder extends RecyclerView.ViewHolder
     {
 
-        TextView etint, etreq,ettankno,etreqtoDt,etconbyop,tanknoun,etconunloadDateTime,outTime,Material,Vehicle_Number;
+        TextView etint, etreq,ettankno,etconbyop,tanknoun,outTime,etconunloadDateTime,Material,Vehicle_Number;
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             etint= itemView.findViewById(R.id.listintime);
             etreq=itemView.findViewById(R.id.opunload);
             ettankno=itemView.findViewById(R.id.tanklist);
-            etreqtoDt=itemView.findViewById(R.id.oprationdt);
             etconbyop=itemView.findViewById(R.id.unloadop);
             tanknoun = itemView.findViewById(R.id.tanknun);
-            etconunloadDateTime = itemView.findViewById(R.id.condt);
             outTime=itemView.findViewById(R.id.listouttime);
             Material=itemView.findViewById(R.id.listmaterial);
             Vehicle_Number=itemView.findViewById(R.id.listvehNumber);
-
+            etconunloadDateTime = itemView.findViewById(R.id.condt);
         }
     }
 }

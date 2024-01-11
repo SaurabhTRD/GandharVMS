@@ -2,8 +2,8 @@ package com.android.gandharvms.Inward_Tanker_Weighment;
 
 public class In_Tanker_Weighment_list {
 
-    String   In_Time,serial_number,vehicle_number,supplier_name,material_name,Customer_Name,Driver_Number,OA_number,Date,
-            Gross_Weight,Tare_Weight,Net_Weight,Density,Batch_Number,Sign_By,We_Date_Time,Container_No,shortage_Dip,shortage_weight,outTime,InVehicleImage,InDriverImage;
+    String   In_Time,serial_number,vehicle_number,supplier_name,material_name,Driver_Number,OA_number,Date,
+            Gross_Weight,Tare_Weight,Net_Weight,Batch_Number,Sign_By,Container_No,shortage_Dip,shortage_weight,outTime,InVehicleImage,InDriverImage;
 
     public In_Tanker_Weighment_list() {
     }
@@ -15,17 +15,14 @@ public class In_Tanker_Weighment_list {
         this.vehicle_number = vehicle_number;
         this.supplier_name = supplier_name;
         this.material_name = material_name;
-       this.Customer_Name = customer_Name;
         this.Driver_Number = driver_Number;
         this.OA_number = OA_number;
         this.Date = date;
         this.Gross_Weight = gross_Weight;
         this.Tare_Weight = tare_Weight;
         this.Net_Weight = net_Weight;
-        this.Density = density;
         this.Batch_Number = batch_Number;
         this.Sign_By = sign_By;
-        this.We_Date_Time = we_Date_Time;
         this.Container_No = container_No;
         this.shortage_Dip = shortage_Dip;
         this.shortage_weight = shortage_weight;
@@ -71,14 +68,6 @@ public class In_Tanker_Weighment_list {
 
     public void setMaterial_name(String material_name) {
         this.material_name = material_name;
-    }
-
-    public String getCustomer_Name() {
-        return Customer_Name;
-    }
-
-    public void setCustomer_Name(String customer_Name) {
-        Customer_Name = customer_Name;
     }
 
     public String getDriver_Number() {
@@ -129,14 +118,6 @@ public class In_Tanker_Weighment_list {
         Net_Weight = net_Weight;
     }
 
-    public String getDensity() {
-        return Density;
-    }
-
-    public void setDensity(String density) {
-        Density = density;
-    }
-
     public String getBatch_Number() {
         return Batch_Number;
     }
@@ -151,14 +132,6 @@ public class In_Tanker_Weighment_list {
 
     public void setSign_By(String sign_By) {
         Sign_By = sign_By;
-    }
-
-    public String getWe_Date_Time() {
-        return We_Date_Time;
-    }
-
-    public void setWe_Date_Time(String we_Date_Time) {
-        We_Date_Time = we_Date_Time;
     }
 
     public String getContainer_No() {

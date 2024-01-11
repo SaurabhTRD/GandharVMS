@@ -2,26 +2,25 @@ package com.android.gandharvms.Inward_Tanker_Production;
 
 public class In_Tanker_Production_list {
 
-String  In_Time, Req_to_unload,Tank_Number_Request,Req_to_op_DT,confirm_unload,Tank_Number,con_unload_DT,outTime,Material,Vehicle_Number;
+    String In_Time, Req_to_unload, Tank_Number_Request, confirm_unload, Tank_Number,con_unload_DT, outTime, Material, Vehicle_Number;
 
     public In_Tanker_Production_list() {
     }
 
-    public In_Tanker_Production_list( String in_Time, String req_to_unload, String tank_Number_Request, String req_to_op_DT, String confirm_unload, String tank_Number, String con_unload_DT,String outTime,String Material,String Vehicle_Number) {
+    public In_Tanker_Production_list(String in_Time, String req_to_unload, String tank_Number_Request, String confirm_unload, String tank_Number, String con_unload_DT, String outTime, String Material, String Vehicle_Number) {
         this.In_Time = in_Time;
         this.Req_to_unload = req_to_unload;
-       this.Tank_Number_Request = tank_Number_Request;
-        this.Req_to_op_DT = req_to_op_DT;
+        this.Tank_Number_Request = tank_Number_Request;
         this.confirm_unload = confirm_unload;
         this.Tank_Number = tank_Number;
-        this.con_unload_DT = con_unload_DT;
-        this.outTime=outTime;
-        this.Material= Material;
-        this.Vehicle_Number=Vehicle_Number;
+        this.outTime = outTime;
+        this.Material = Material;
+        this.Vehicle_Number = Vehicle_Number;
+        this.con_unload_DT=con_unload_DT;
     }
 
 
-    public String getIn_Time(){
+    public String getIn_Time() {
         return In_Time;
     }
 
@@ -43,14 +42,6 @@ String  In_Time, Req_to_unload,Tank_Number_Request,Req_to_op_DT,confirm_unload,T
 
     public void setTank_Number_Request(String tank_Number_Request) {
         Tank_Number_Request = tank_Number_Request;
-    }
-
-    public String getReq_to_op_DT() {
-        return Req_to_op_DT;
-    }
-
-    public void setReq_to_op_DT(String req_to_op_DT) {
-        Req_to_op_DT = req_to_op_DT;
     }
 
     public String getConfirm_unload() {
@@ -85,10 +76,19 @@ String  In_Time, Req_to_unload,Tank_Number_Request,Req_to_op_DT,confirm_unload,T
         this.outTime = outTime;
     }
 
-    public String getMaterial(){ return Material; }
+    public String getMaterial() {
+        return Material;
+    }
 
-    public void setMaterial(String material){this.Material=material;}
+    public void setMaterial(String material) {
+        this.Material = material;
+    }
 
-    public String getVehicle_Number(){return Vehicle_Number;}
-    public void setVehicle_Number(String vehicle_Number){ this.Vehicle_Number=vehicle_Number; }
+    public String getVehicle_Number() {
+        return Vehicle_Number;
+    }
+
+    public void setVehicle_Number(String vehicle_Number) {
+        this.Vehicle_Number = vehicle_Number;
+    }
 }

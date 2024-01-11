@@ -4,8 +4,67 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Inward_Truck_store.Inward_Truck_Store_viewdata"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".Inward_Truck_store.Inward_Truck_Store_viewdata">
+    <include layout="@layout/header_layout"></include>
+    <Button
+        android:id="@+id/startdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="start of Date" />
+
+    <EditText
+        android:id="@+id/et_SerialNumber"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:hint="FilterBySerialNumber"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:layout_marginTop="-50dp"
+        android:layout_marginLeft="140dp"
+        android:inputType="textCapCharacters"/>
+    <Button
+        android:id="@+id/btn_srnumberbutton_clear"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="-43dp"
+        android:layout_marginLeft="345dp"
+        android:background="@drawable/baseline_cancel_24" />
+
+    <Button
+        android:id="@+id/enddate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/startdate"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="End of Data" />
+    <EditText
+        android:id="@+id/et_PartyName"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:hint="FilterByMaterial"
+        android:drawableStart="@android:drawable/ic_menu_search"
+        android:layout_marginTop="-50dp"
+        android:layout_marginLeft="140dp"/>
+    <Button
+        android:id="@+id/btn_partytnamebutton_clear"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:textColor="@color/black"
+        android:layout_marginTop="-43dp"
+        android:layout_marginLeft="345dp"
+        android:background="@drawable/baseline_cancel_24" />
+
+    <Button
+        android:id="@+id/btn_clearDateSelectionfields"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear Selection"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"/>
 
     <TextView
         android:id="@+id/tv_TotalCount"
@@ -14,21 +73,34 @@
         android:text="Total Count: "
         android:textSize="15sp"
         android:textStyle="bold"
+        android:layout_marginTop="-40dp"
         android:layout_marginLeft="200dp"
         android:padding="8dp"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview"
-        android:layout_width="409dp"
-        android:layout_height="900dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="1dp" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fillViewport="true"
+            android:scrollbars="none">
 
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="MissingConstraints"
+                    tools:layout_editor_absoluteY="1dp" />
+            </RelativeLayout>
+        </HorizontalScrollView>
     </ScrollView>
 </androidx.appcompat.widget.LinearLayoutCompat>

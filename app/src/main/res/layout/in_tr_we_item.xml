@@ -210,38 +210,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Customer:"
-                android:textColor="@color/black"
-                android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/custname"
-                android:layout_marginStart="20dp"
-                android:text="12/02/2023"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
-
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:text="Driver Mobile No"
                 android:textColor="@color/black"
                 android:textSize="21sp"
@@ -427,37 +395,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Density: "
-                android:textColor="@color/black"
-                android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/density"
-                android:layout_marginStart="20dp"
-                android:text="12:03"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Batch Number: "
+                android:text="Remark: "
                 android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold"
@@ -487,7 +425,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Container No "
+                android:text="Container No : "
                 android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold"
@@ -517,7 +455,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sign By "
+                android:text="Sign By :"
                 android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold"
@@ -547,37 +485,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date/Time"
-                android:textColor="@color/black"
-                android:textSize="21sp"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/datetime"
-                android:layout_marginStart="20dp"
-                android:text="12:03"
-                android:textSize="20sp"
-                android:textColor="@color/black"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Shortage Dip"
+                android:text="Shortage Dip :"
                 android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold"
@@ -607,7 +515,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Shortage Weight"
+                android:text="Shortage Weight :"
                 android:textColor="@color/black"
                 android:textSize="21sp"
                 android:textStyle="bold"
@@ -684,18 +592,6 @@
             android:layout_height="0.5dp"
             android:background="@color/black"
             android:layout_marginTop="1dp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/black"
-            android:layout_marginTop="1dp" />
-
-
 
     </LinearLayout>
 

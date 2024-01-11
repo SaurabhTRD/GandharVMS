@@ -35,16 +35,13 @@ import java.util.Map;
 
 public class Inward_Tanker_Production extends AppCompatActivity {
 
-    EditText etint,etreq,ettankno,etreqtoDt,etconbyop,tanknoun,etconunloadDateTime,etMaterial,etVehicleNumber;
+    EditText etint, etreq, ettankno, etconbyop, tanknoun, etconunloadDateTime, etMaterial, etVehicleNumber;
+    /*  Button viewdata;*/
     Button prosubmit;
-    Button viewdata;
-
     FirebaseFirestore prodbroot;
-
-   EditText datetimeTextview,datetimeTextview1;
-   Calendar calendar = Calendar.getInstance();
-    TimePickerDialog tpicker;private final int MAX_LENGTH=10;
-
+    EditText datetimeTextview;
+    Calendar calendar = Calendar.getInstance();
+    TimePickerDialog tpicker;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,42 +51,25 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic("cZO18soMQ7K8D3CkVdUA9i:APA91bFdQxHnryIGp1ZSaMMZggvyev0DbgwMqvuHOPzdi_CnUGJeGds6aIK9_2cZdb6e246Ju5a6erKkwkWHQmUKeYTYm_tO2NEsM-GiPsWlqFQK3E--ArUx99-UwGtsnZHgm7_jAFSs");
 
+        etMaterial = (EditText) findViewById(R.id.etMaterial);
+        etVehicleNumber = (EditText) findViewById(R.id.etvehicleNumber);
         etint = (EditText) findViewById(R.id.etintime);
-        etreq= (EditText) findViewById(R.id.etreq);
-        ettankno=(EditText) findViewById(R.id.ettankno);
-        etreqtoDt=(EditText) findViewById(R.id.etreqtoDt);
-        etconbyop=(EditText) findViewById(R.id.etconbyop);
-        tanknoun=(EditText) findViewById(R.id.tanknoun);
-        etconunloadDateTime=(EditText) findViewById(R.id.etconunloadDateTime);
+        etreq = (EditText) findViewById(R.id.etreq);
+        ettankno = (EditText) findViewById(R.id.ettankno);
+        etconbyop = (EditText) findViewById(R.id.etconbyop);
+        tanknoun = (EditText) findViewById(R.id.tanknoun);
+        etconunloadDateTime = (EditText) findViewById(R.id.etconunloadDateTime);
 
-        prosubmit=(Button) findViewById(R.id.prosubmit);
-        etMaterial=(EditText) findViewById(R.id.etMaterial);
-        etVehicleNumber=(EditText)findViewById(R.id.etvehicleNumber);
+        prosubmit = (Button) findViewById(R.id.prosubmit);
+
 
         //datetimepickertesting
-        datetimeTextview =findViewById(R.id.etreqtoDt);
-        datetimeTextview1 = findViewById(R.id.etconunloadDateTime);
-
-
-        viewdata = findViewById(R.id.view);
-        viewdata.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Inward_Tanker_Production.this,Inward_Tanker_Production_Viewdata.class));
-            }
-        });
+        datetimeTextview = findViewById(R.id.etconunloadDateTime);
 
         datetimeTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker();
-            }
-        });
-
-        datetimeTextview1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePicker1();
             }
         });
         etint.setOnClickListener(new View.OnClickListener() {
@@ -102,24 +82,26 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
+                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        c.set(Calendar.MINUTE, minute);
 
                         // Set the formatted time to the EditText
-                        etint.setText(hourOfDay +":"+ minute );
+                        etint.setText(hourOfDay + ":" + minute);
                     }
-                },hours,mins,false);
+                }, hours, mins, false);
                 tpicker.show();
             }
         });
 
-        etVehicleNumber.addTextChangedListener(new TextWatcher() {
+        /*etVehicleNumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
                 if (editable.length() > MAX_LENGTH) {
@@ -128,7 +110,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                     etVehicleNumber.setText(trimmedText);
                     etVehicleNumber.setSelection(MAX_LENGTH); // Move cursor to the end
                     etVehicleNumber.addTextChangedListener(this);
-                }else if (editable.length() < MAX_LENGTH) {
+                } else if (editable.length() < MAX_LENGTH) {
                     // Show an error message for less than 10 digits
                     etVehicleNumber.setError("Invalid format. Enter 10 Character. \n Vehicle No Format - ST00AA9999 OR YYBR9999AA");
                 } else {
@@ -136,9 +118,9 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                     etVehicleNumber.setError(null);
                 }
             }
-        });
+        });*/
 
-        prodbroot=FirebaseFirestore.getInstance();
+        prodbroot = FirebaseFirestore.getInstance();
 
         prosubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -149,9 +131,9 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
     }
 
+    // Time and date for confirm unload
+    public void showDatePicker() {
 
-
-    public void showDatePicker(){
         DatePickerDialog datePickerDialog = new DatePickerDialog(Inward_Tanker_Production.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -168,9 +150,10 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
         datePickerDialog.show();
+
     }
 
-    public void showTimePicker(){
+    public void showTimePicker() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(Inward_Tanker_Production.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -179,55 +162,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                 calendar.set(Calendar.MINUTE, minute);
 
                 handleDateTimeSelection(calendar.getTime());
-            }
-        }, calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
-                true
-        );
-        timePickerDialog.show();
-    }
-
-    private void handleDateTimeSelection(java.util.Date dateTime){
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault());
-        etreqtoDt.setText(dateFormat.format(dateTime.getTime()));
-//        etconunloadDateTime.setText(dateFormat.format(dateTime.getTime()));
-
-    }
-
-
-
-                          // Time and date for confirm unload
-    public void showDatePicker1(){
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(Inward_Tanker_Production.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                showTimePicker1();
-            }
-        },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
-
-    }
-
-    public void showTimePicker1(){
-        TimePickerDialog timePickerDialog = new TimePickerDialog(Inward_Tanker_Production.this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-
-                handleDateTimeSelection1(calendar.getTime());
 
             }
         }, calendar.get(Calendar.HOUR_OF_DAY),
@@ -237,14 +171,13 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         timePickerDialog.show();
     }
 
-    public void handleDateTimeSelection1(java.util.Date dateTime)
-    {
+    public void handleDateTimeSelection(java.util.Date dateTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault());
         etconunloadDateTime.setText(dateFormat.format(dateTime.getTime()));
 
     }
 
-    public void makeNotification(String vehicleNo,String outTime){
+    public void makeNotification(String vehicleNo, String outTime) {
         FcmNotificationsSender notificationsSender = new FcmNotificationsSender("cZO18soMQ7K8D3CkVdUA9i:APA91bFdQxHnryIGp1ZSaMMZggvyev0DbgwMqvuHOPzdi_CnUGJeGds6aIK9_2cZdb6e246Ju5a6erKkwkWHQmUKeYTYm_tO2NEsM-GiPsWlqFQK3E--ArUx99-UwGtsnZHgm7_jAFSs",
                 "Inward Tanker Production Process Done..!",
                 "Vehicle Number:-" + vehicleNo + " has completed Laboratory process at " + outTime,
@@ -252,8 +185,13 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         notificationsSender.SendNotifications();
     }
 
-    public void btn_clicktoViewLabReport(View view){
-        Intent intent= new Intent(this, Tanker_Production_Lab_Report_Data.class);
+    public void btn_clicktoViewLabReport(View view) {
+        Intent intent = new Intent(this, Tanker_Production_Lab_Report_Data.class);
+        startActivity(intent);
+    }
+
+    public void weViewclick(View view) {
+        Intent intent = new Intent(this, Inward_Tanker_Production_Viewdata.class);
         startActivity(intent);
     }
 
@@ -262,45 +200,35 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
-    public void proinsertdata()
 
-    {
+    public void proinsertdata() {
         String intime = etint.getText().toString().trim();
         String reqtounload = etreq.getText().toString().trim();
         String tanknumber = ettankno.getText().toString().trim();
-        String rwqdt = etreqtoDt.getText().toString().trim();
-        String  confirmunload = etconbyop.getText().toString().trim();
+        String confirmunload = etconbyop.getText().toString().trim();
         String tanknumbers = tanknoun.getText().toString().trim();
         String conunload = etconunloadDateTime.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
-        String material=etMaterial.getText().toString().trim();
-        String vehicleNumber=etVehicleNumber.getText().toString().trim();
+        String material = etMaterial.getText().toString().trim();
+        String vehicleNumber = etVehicleNumber.getText().toString().trim();
 
-        if ( intime.isEmpty() || reqtounload.isEmpty()|| tanknumber.isEmpty()||rwqdt.isEmpty()|| confirmunload.isEmpty()|| tanknumbers.isEmpty()|| conunload.isEmpty() || material.isEmpty() ||vehicleNumber.isEmpty()  ){
+        if (intime.isEmpty() || reqtounload.isEmpty() || tanknumber.isEmpty() || confirmunload.isEmpty() || tanknumbers.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
             Toast.makeText(this, "All Fields must be filled", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Map<String,String> proitems = new HashMap<>();
+        } else {
+            Map<String, String> proitems = new HashMap<>();
 
-            proitems.put("In_Time",etint.getText().toString().trim());
-            proitems.put("Req_to_unload",etreq.getText().toString().trim());
-            proitems.put("Tank_Number_Request",ettankno.getText().toString().trim());
-            proitems.put("Req_to_op_DT",etreqtoDt.getText().toString().trim());
-            proitems.put("confirm_unload",etconbyop.getText().toString().trim());
-            proitems.put("Tank_Number",tanknoun.getText().toString().trim());
-            proitems.put("con_unload_DT",etconunloadDateTime.getText().toString().trim());
-            proitems.put("outTime",outTime.toString());
-            proitems.put("Material",etMaterial.getText().toString().trim());
-            proitems.put("Vehicle_Number",etVehicleNumber.getText().toString().trim());
+            proitems.put("In_Time", etint.getText().toString().trim());
+            proitems.put("Req_to_unload", etreq.getText().toString().trim());
+            proitems.put("Tank_Number_Request", ettankno.getText().toString().trim());
+            proitems.put("confirm_unload", etconbyop.getText().toString().trim());
+            proitems.put("Tank_Number", tanknoun.getText().toString().trim());
+            proitems.put("con_unload_DT", etconunloadDateTime.getText().toString().trim());
+            proitems.put("outTime", outTime);
+            proitems.put("Material", etMaterial.getText().toString().trim());
+            proitems.put("Vehicle_Number", etVehicleNumber.getText().toString().trim());
 
 
-
-
-
-
-
-
-            makeNotification(etVehicleNumber.getText().toString(),outTime.toString());
+            makeNotification(etVehicleNumber.getText().toString(), outTime);
             prodbroot.collection("Inward Tanker Production").add(proitems)
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
@@ -309,7 +237,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                             etint.setText("");
                             etreq.setText("");
                             ettankno.setText("");
-                            etreqtoDt.setText("");
                             etconbyop.setText("");
                             tanknoun.setText("");
                             etconunloadDateTime.setText("");
@@ -319,16 +246,16 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                             Toast.makeText(Inward_Tanker_Production.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
 
 
-
                         }
                     });
-            Intent intent= new Intent(this, Inward_Tanker.class);
+            Intent intent = new Intent(this, Inward_Tanker.class);
             startActivity(intent);
 
 
         }
     }
-    public void onBackPressed(){
+
+    public void onBackPressed() {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();

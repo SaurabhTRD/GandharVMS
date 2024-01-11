@@ -34,12 +34,17 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -47,6 +52,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -65,7 +72,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int CAMERA_REQUEST_CODE1 = 103;
-    private String imgPath1,imgPath2;
     private final TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -84,11 +90,10 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         }
     };
     private final int MAX_LENGTH = 10;
-    EditText etint, etserialnumber, etvehicalno, etsuppliername, etmaterialname, etcustname, etdriverno, etoano, etdate,
-            etgrossweight, ettareweight, etnetweight, etdensity, etbatchno, etsignby, etweDatetime, etcontainer, etshortagedip, etshortageweight;
+    EditText etint, etserialnumber, etvehicalno, etsuppliername, etmaterialname, etdriverno, etoano, etdate,
+            etgrossweight, ettareweight, etnetweight, etremark, etsignby, etcontainer, etshortagedip, etshortageweight;
     Button wesubmit;
     FirebaseFirestore wedbroot;
-    EditText datetimeTextview;
     Calendar calendar = Calendar.getInstance();
     DatePickerDialog picker;
     Button view;
@@ -96,6 +101,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     ImageView img1, img2;
     Uri image1, image2;
     TimePickerDialog tpicker;
+    private String dateTimeString = "";
+    private String imgPath1, imgPath2;
     //    private static final int REQUEST_IMAGE_CAPTURE_2 = 2;
     private ImageView imageView1, imageView2;
     //    private ImageView imageView2;
@@ -122,24 +129,21 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etvehicalno = findViewById(R.id.etvehicalno);
         etsuppliername = findViewById(R.id.etsuppliername);
         etmaterialname = findViewById(R.id.etmaterialname);
-        etcustname = findViewById(R.id.etcustname);
         etdriverno = findViewById(R.id.etdriverno);
         etoano = findViewById(R.id.etoano);
         etdate = findViewById(R.id.etdate);
         etgrossweight = findViewById(R.id.etgrossweight);
         ettareweight = findViewById(R.id.ettareweight);
         etnetweight = findViewById(R.id.etnetweight);
-        etdensity = findViewById(R.id.etdensity);
-        etbatchno = findViewById(R.id.etbatchno);
+
+        etremark = findViewById(R.id.etremark);
         etsignby = findViewById(R.id.etsignby);
-        etweDatetime = findViewById(R.id.etweDatetime);
         etcontainer = findViewById(R.id.container);
         etshortagedip = findViewById(R.id.shortagedip);
         etshortageweight = findViewById(R.id.shortageweight);
 
         sharedPreferences = getSharedPreferences("TankerWeighment", MODE_PRIVATE);
 
-        datetimeTextview = findViewById(R.id.etweDatetime);
         // Adding Gross weight and Tare weight
         etgrossweight.addTextChangedListener(textWatcher);
         ettareweight.addTextChangedListener(textWatcher);
@@ -157,12 +161,12 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             }
         });
 
-        datetimeTextview.setOnClickListener(new View.OnClickListener() {
+       /* datetimeTextview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePicker();
             }
-        });
+        });*/
 
         etint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -185,6 +189,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             }
         });
 
+
         etdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -193,21 +198,27 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
 
-                // Array of month abbreviations
                 String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
                 picker = new DatePickerDialog(Inward_Tanker_Weighment.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Use the month abbreviation from the array
                         String monthAbbreviation = monthAbbreviations[month];
-                        etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+
+                        // Formatted date string in "dd/MMM/yyyy" style
+                        String formattedDate = String.format(Locale.ENGLISH, "%02d/%s/%d", dayOfMonth, monthAbbreviation, year);
+
+                        // Get the current time in HH:mm format
+                        String time = new SimpleDateFormat("HH:mm", Locale.getDefault()).format(new Date());
+
+                        // Combine formatted date and time
+                        dateTimeString = formattedDate + " " + time;
+                        etdate.setText(dateTimeString);
                     }
                 }, year, month, day);
                 picker.show();
             }
         });
-
         etvehicalno.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -219,19 +230,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.length() > MAX_LENGTH) {
-                    etvehicalno.removeTextChangedListener(this);
-                    String trimmedText = editable.toString().substring(0, MAX_LENGTH);
-                    etvehicalno.setText(trimmedText);
-                    etvehicalno.setSelection(MAX_LENGTH); // Move cursor to the end
-                    etvehicalno.addTextChangedListener(this);
-                } else if (editable.length() < MAX_LENGTH) {
-                    // Show an error message for less than 10 digits
-                    etvehicalno.setError("Invalid format. Enter 10 digits");
-                } else {
-                    // Clear any previous error message when valid
-                    etvehicalno.setError(null);
-                }
+                FetchVehicleDetails(etvehicalno.getText().toString());
             }
         });
 
@@ -271,7 +270,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 /*Bitmap bitmap1 = ((BitmapDrawable) imageView1.getDrawable()).getBitmap();
                 Bitmap bitmap2 = ((BitmapDrawable) imageView2.getDrawable()).getBitmap();
                 weinsertdata(bitmap1, bitmap2);*/
-                uploadimg(image1,image2);
+                uploadimg(image1, image2);
                 weinsertdata();
 
             }
@@ -412,7 +411,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         }
     }
 
-    public void showDatePicker() {
+    /*public void showDatePicker() {
         DatePickerDialog datePickerDialog = new DatePickerDialog(Inward_Tanker_Weighment.this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
@@ -426,9 +425,9 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 calendar.get(Calendar.DAY_OF_MONTH)
         );
         datePickerDialog.show();
-    }
+    }*/
 
-    public void showTimePicker() {
+    /*public void showTimePicker() {
         TimePickerDialog timePickerDialog = new TimePickerDialog(Inward_Tanker_Weighment.this, new TimePickerDialog.OnTimeSetListener() {
             @Override
             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -445,13 +444,13 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 true
         );
         timePickerDialog.show();
-    }
+    }*/
 
-    public void handleDateTimeSelection(java.util.Date dateTime) {
+    /*public void handleDateTimeSelection(java.util.Date dateTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault());
         etweDatetime.setText(dateFormat.format(dateTime.getTime()));
 
-    }
+    }*/
 
     public void makeNotification(String vehicleNo, String outTime) {
         FcmNotificationsSender notificationsSender = new FcmNotificationsSender("c5ksoJqFReiaRo2BbwF8K1:APA91bHwQAX1oUYuFz8yBAMnpNw-9CbZ0I9l60-HkDFB-k37KBqv77tcym67TKPNGUv2T3J6lijZH5SaJbDYFzBS6GWe2LIvMx9ylnLCk2BDyuOuX_GaN3u7jMRluhLVQM7g9G2O9z_j",
@@ -473,28 +472,22 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         String vehicelnumber = etvehicalno.getText().toString().trim();
         String suppliername = etsuppliername.getText().toString().trim();
         String materialname = etmaterialname.getText().toString().trim();
-        String custname = etcustname.getText().toString().trim();
         String driverno = etdriverno.getText().toString().trim();
         String oan = etoano.getText().toString().trim();
-        String date = etdate.getText().toString().trim();
+        String date = dateTimeString;
         String grossweight = etgrossweight.getText().toString().trim();
         String tareweight = ettareweight.getText().toString().trim();
         String netweight = etnetweight.getText().toString().trim();
-        String density = etdensity.getText().toString().trim();
-        String batchno = etbatchno.getText().toString().trim();
+        String remark = etremark.getText().toString().trim();
         String signby = etsignby.getText().toString().trim();
-        String datetime = etweDatetime.getText().toString().trim();
         String container = etcontainer.getText().toString().trim();
         String shortagedip = etshortagedip.getText().toString().trim();
         String shortageweight = etshortageweight.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
-        // Get a reference to store the images
-
 
         if (inte.isEmpty() || serialnumber.isEmpty() || vehicelnumber.isEmpty() || suppliername.isEmpty() || materialname.isEmpty() ||
-                custname.isEmpty() || driverno.isEmpty() || oan.isEmpty() || date.isEmpty() || grossweight.isEmpty() ||
-                tareweight.isEmpty() || netweight.isEmpty() || density.isEmpty() || batchno.isEmpty() ||
-                signby.isEmpty() || datetime.isEmpty() || container.isEmpty()) {
+                driverno.isEmpty() || oan.isEmpty() || grossweight.isEmpty() ||
+                tareweight.isEmpty() || netweight.isEmpty() || signby.isEmpty() || container.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
             Map<String, String> weitems = new HashMap<>();
@@ -503,17 +496,14 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             weitems.put("vehicle_number", etvehicalno.getText().toString().trim());
             weitems.put("supplier_name", etsuppliername.getText().toString().trim());
             weitems.put("material_name", etmaterialname.getText().toString().trim());
-            weitems.put("Customer_Name", etcustname.getText().toString().trim());
             weitems.put("Driver_Number", etdriverno.getText().toString().trim());
             weitems.put("OA_number", etoano.getText().toString().trim());
-            weitems.put("Date", etdate.getText().toString().trim());
+            weitems.put("Date", dateTimeString);
             weitems.put("Gross_Weight", etgrossweight.getText().toString().trim());
             weitems.put("Tare_Weight", ettareweight.getText().toString().trim());
             weitems.put("Net_Weight", etnetweight.getText().toString().trim());
-            weitems.put("Density", etdensity.getText().toString().trim());
-            weitems.put("Batch_Number", etbatchno.getText().toString().trim());
+            weitems.put("Batch_Number", etremark.getText().toString().trim());
             weitems.put("Sign_By", etsignby.getText().toString().trim());
-            weitems.put("We_Date_Time", etweDatetime.getText().toString().trim());
             weitems.put("Container_No", etcontainer.getText().toString().trim());
             weitems.put("shortage_Dip", etshortagedip.getText().toString().trim());
             weitems.put("shortage_weight", etshortageweight.getText().toString().trim());
@@ -533,7 +523,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                             etvehicalno.setText("");
                             etsuppliername.setText("");
                             etmaterialname.setText("");
-                            etcustname.setText("");
                             etdriverno.setText("");
                             etvehicalno.setText("");
                             etoano.setText("");
@@ -541,10 +530,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                             etgrossweight.setText("");
                             ettareweight.setText("");
                             etnetweight.setText("");
-                            etdensity.setText("");
-                            etbatchno.setText("");
+                            etremark.setText("");
                             etsignby.setText("");
-                            etweDatetime.setText("");
                             etcontainer.setText("");
                             etshortagedip.setText("");
                             etshortageweight.setText("");
@@ -563,7 +550,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         if (Image1 != null) {
             String InVehicleImage = "image1_" + UUID.randomUUID().toString() + ".jpeg";
             StorageReference imgref1 = storageReference.child("/WeighmentImage1" + "/" + InVehicleImage);
-            imgPath1="/WeighmentImage1%2F"+InVehicleImage;
+            imgPath1 = "/WeighmentImage1%2F" + InVehicleImage;
             imgref1.putFile(Image1)
                     .addOnSuccessListener(taskSnapshot -> {
                         imgref1.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -579,7 +566,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         if (Image2 != null) {
             String InDriverImage = "image2_" + UUID.randomUUID().toString() + ".jpeg";
             StorageReference imgref2 = storageReference.child("/WeighmentImage2" + "/" + InDriverImage);
-            imgPath2="/WeighmentImage2%2F"+InDriverImage;
+            imgPath2 = "/WeighmentImage2%2F" + InDriverImage;
             imgref2.putFile(Image2)
                     .addOnSuccessListener(taskSnapshot -> {
                         imgref2.getDownloadUrl().addOnSuccessListener(uri -> {
@@ -660,9 +647,51 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         }
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
+    }
+
+    public void FetchVehicleDetails(@NonNull String VehicleNo) {
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
+        String searchText = VehicleNo.trim();
+        Query query = collectionReference.whereEqualTo("vehicalnumber", searchText)
+                .whereNotEqualTo("intime","" );
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int totalCount = task.getResult().size();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+                        // Check if the object already exists to avoid duplicates
+                        if (totalCount > 0) {
+
+                            etvehicalno.setText(obj.getVehicalnumber());
+                            etvehicalno.setFocusable(true);
+
+                            etsuppliername.setText(obj.getPartyname());
+                            etsuppliername.setFocusable(true);
+
+                            etmaterialname.setText(obj.getMaterial());
+                            etmaterialname.setFocusable(true);
+
+
+                            etoano.setText(obj.getInvoiceno());
+                            etoano.setFocusable(true);
+
+                            etdate.setText(obj.getDate());
+                            etdate.setFocusable(true);
+
+                            etnetweight.setText(obj.getNetweight());
+                            etnetweight.setFocusable(true);
+                        }
+                    }
+                } else {
+                    Log.w("FirestoreData", "Error getting documents.", task.getException());
+                }
+            }
+        });
     }
 }

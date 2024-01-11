@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -16,6 +17,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.gandharvms.Inward_Truck;
+import com.android.gandharvms.Login;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -38,7 +41,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
     ArrayList<In_Tanker_Production_list> datalist;
     FirebaseFirestore db;
     In_Tanker_Pro_Adapter inTankerProAdapter;
-    Button btntanknumclear, btnmaterialnumclear, startDatePicker, endDatePicker, btnclearSelectedDates;
+    Button btntanknumclear, btnmaterialnumclear, startDatePicker, endDatePicker, btnclearSelectedDates,btnlogout;
     EditText etTankNumber, etMaterialName;
     String date_start, date_end;
     TextView txtTotalCount;
@@ -51,6 +54,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
         startDatePicker = findViewById(R.id.startdate);
         endDatePicker = findViewById(R.id.enddate);
 
+        btnlogout=findViewById(R.id.btn_logoutButton);
         txtTotalCount = findViewById(R.id.tv_TotalCount);
         btnclearSelectedDates = findViewById(R.id.btn_clearDateSelectionfields);
         btntanknumclear = findViewById(R.id.btn_sTnnumberbutton_clear);
@@ -82,6 +86,12 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                     }
                 });
 
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Tanker_Production_Viewdata.this, Login.class));
+            }
+        });
         startDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
