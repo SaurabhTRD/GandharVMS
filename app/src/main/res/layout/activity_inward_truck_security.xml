@@ -13,65 +13,203 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+
+        android:layout_marginTop="2dp"
+      android:layout_margin="5dp"
         android:layout_marginBottom="10dp"
         android:orientation="vertical"
         >
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="405dp"
-            android:layout_height="75dp"
+            <CheckBox
+                android:id="@+id/isreporting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:textSize="16dp"
+                android:text="Is Reporting ?" />
 
-            android:layout_weight="2">
+        </LinearLayout>
+
+
+
+        <!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="185dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:id="@+id/regno"-->
+<!--                -->
+
+<!--                >-->
+<!--                <TextView-->
+
+<!--                    android:layout_width="185dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="In Time"-->
+<!--                    android:inputType="text"-->
+<!--                    android:textSize="17dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    android:layout_marginTop="12dp"/>-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+
+
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                android:id="@+id/regno"
-
-                >
-                <TextView
-
-                    android:layout_width="185dp"
-                    android:layout_height="wrap_content"
-                    android:text="In Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:layout_marginTop="12dp"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="200dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
 
                 >
                 <EditText
-                    android:id="@+id/etintime"
-                    android:layout_width="185dp"
+                    android:id="@+id/etsdate"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint=""
+                    android:hint="Date"
                     android:inputType="text"
                     android:textSize="17dp"
                     android:textStyle="bold"
                     android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
-        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etserialnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Serial Number"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:focusable="false"
+                android:clickable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+
+            >
+            <EditText
+                android:id="@+id/etvehicalnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Vehicle Number"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+
+
+            >
+            <EditText
+                android:id="@+id/edtreportingremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Reporting Remark"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="250dp"
+                android:id="@+id/saveButton"
+                android:text="Save"
+                />
+        </LinearLayout>
+
+
+
+         <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            >
+            <EditText
+                android:id="@+id/etsinvocieno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Invoice No"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+
+            >
+            <EditText
+                android:id="@+id/etintime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="In Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -83,65 +221,70 @@
                 android:paddingEnd="8dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="20dp"
+                android:textSize="15dp"
                 />
 
-            <TextView
+
+            <RadioGroup
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Delivery Challan"
-                android:gravity="end"
-                android:layout_gravity="end"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginLeft="70dp"
-                android:textStyle="bold"
-                />
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="40dp"
+                android:orientation="horizontal">
+                <RadioButton
+                    android:id="@+id/rb_LRCopyYes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="Yes"/>
+                <RadioButton
+                    android:id="@+id/rb_LRCopyNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="No"/>
+            </RadioGroup>
+
 
         </LinearLayout>
 
-
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="115dp"
-        android:weightSum="2"
-        android:orientation="horizontal">
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Delivery Challan"
+            android:gravity="start"
+            android:layout_gravity="start"
+            android:paddingStart="18dp"
+            android:paddingEnd="8dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            android:textSize="15dp"
+            />
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp">
-            <RadioButton
-                android:id="@+id/rb_LRCopyYes"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:checked="true"
-                android:text="Yes"/>
-            <RadioButton
-                android:id="@+id/rb_LRCopyNo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="No"/>
-        </RadioGroup>
-
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp">
+            android:layout_marginLeft="40dp"
+            android:orientation="horizontal">
             <RadioButton
                 android:id="@+id/rb_DeliveryYes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Yes"/>
+                android:text="Yes"
+                android:layout_marginLeft="15dp"/>
             <RadioButton
                 android:id="@+id/rb_DeliveryNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="No"/>
+                android:text="No"
+                android:layout_marginLeft="25dp"/>
         </RadioGroup>
-
-
-
 
     </LinearLayout>
 
@@ -149,6 +292,7 @@
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:orientation="horizontal"
+            android:layout_marginTop="10dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -159,65 +303,73 @@
                 android:paddingStart="18dp"
                 android:paddingEnd="8dp"
                 android:textStyle="bold"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="20dp"
                 />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_gravity="end"
-                android:layout_marginLeft="120dp"
-                android:gravity="end"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:text="E-Way Bill"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="115dp"
-            android:weightSum="2"
-            android:orientation="horizontal">
 
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp">
+                android:layout_marginLeft="40dp"
+                android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/rb_TaxInvoiceYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="45dp"
                     android:checked="true"
-                    android:text="Yes"/>
+                    android:text="Yes" />
                 <RadioButton
                     android:id="@+id/rb_TaxInvoiceNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No"/>
+                    android:text="No"
+                    android:layout_marginLeft="25dp"/>
             </RadioGroup>
-
-            <RadioGroup
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="150dp">
-                <RadioButton
-                    android:id="@+id/rb_EwaybillYes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="Yes"/>
-                <RadioButton
-                    android:id="@+id/rb_EwaybillNo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="No"/>
-            </RadioGroup>
-
-
 
         </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="E-Way Bill"
+            android:gravity="start"
+            android:layout_gravity="start"
+            android:paddingStart="18dp"
+            android:paddingEnd="8dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="20dp"
+            />
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="40dp"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/rb_EwaybillYes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:text="Yes"
+                android:layout_marginLeft="45dp"/>
+            <RadioButton
+                android:id="@+id/rb_EwaybillNo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No"
+                android:layout_marginRight="25dp"/>
+        </RadioGroup>
+
+
+       </LinearLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -237,121 +389,20 @@
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/wsix"
-            android:layout_width="405dp"
-            android:layout_height="75dp"
-            android:layout_weight="2"
-            >
+
+
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
-                <EditText
-                     android:id="@+id/etserialnumber"
-                    android:layout_width="185dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Serial Number"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:focusable="false"
-                    android:clickable="false"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="200dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-                >
-                <EditText
-                    android:id="@+id/etvehicalnumber"
-                    android:layout_width="185dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Vehicle Number"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/wseven"
-            android:layout_width="405dp"
-            android:layout_height="75dp"
-
-            android:layout_weight="2"
-            >
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
-                <EditText
-                   android:id="@+id/etsinvocieno"
-                    android:layout_width="185dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Invoice No"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="200dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-                >
-                <EditText
-                  android:id="@+id/etsdate"
-                    android:layout_width="185dp"
-                    android:layout_height="wrap_content"
-                    android:hint="Date"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:focusable="false"/>
-            </com.google.android.material.textfield.TextInputLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/w_eight"
-            android:layout_width="405dp"
-            android:layout_height="75dp"
-
-            android:layout_weight="2"
-            >
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="5dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
 
                 >
                 <EditText
                     android:id="@+id/etssupplier"
-                    android:layout_width="185dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Supplier"
                     android:inputType="text"
@@ -360,17 +411,17 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="200dp"
-                android:layout_marginRight="30dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:layout_marginTop="10dp"
 
                 >
                 <EditText
                     android:id="@+id/etsmaterial"
-                    android:layout_width="185dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Material"
                     android:inputType="text"
@@ -379,7 +430,7 @@
                    />
             </com.google.android.material.textfield.TextInputLayout>
 
-        </androidx.cardview.widget.CardView>
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
@@ -393,8 +444,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
+                android:layout_marginTop="5dp"
                 >
                 <EditText
                     android:id="@+id/etsqty"
@@ -412,7 +462,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                 android:layout_marginLeft="200dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
 
                 >
                 <AutoCompleteTextView
@@ -442,7 +492,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="5dp"
 
                 >
                 <EditText

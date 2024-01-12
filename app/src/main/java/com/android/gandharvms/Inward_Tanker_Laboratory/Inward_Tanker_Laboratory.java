@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_saampling_View_data;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -241,6 +243,14 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 "Vehicle Number:-" + vehicleNo + " has completed Laboratory process at " + outTime,
                 getApplicationContext(), Inward_Tanker_Laboratory.this);
         notificationsSender.SendNotifications();
+    }
+    public void btn_clicktoViewSAMPLEREPORT(View view){
+        Intent intent = new Intent(this, Inward_Tanker_saampling_View_data.class);
+        startActivity(intent);
+    }
+    public void weViewclick(View view){
+        Intent intent = new Intent(this, Inward_Tanker_Weighment_Viewdata.class);
+        startActivity(intent);
     }
 
     private String getCurrentTime() {

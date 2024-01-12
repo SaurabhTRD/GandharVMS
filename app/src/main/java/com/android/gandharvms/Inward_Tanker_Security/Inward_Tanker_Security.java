@@ -328,7 +328,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
            etvehical.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                 public void onFocusChange(View v, boolean hasFocus) {
                     if(!hasFocus) {
-                        FetchVehicleDetails(etvehical.getText().toString().trim());
+                                FetchVehicleDetails(etvehical.getText().toString().trim());
                     }
                 }
 
