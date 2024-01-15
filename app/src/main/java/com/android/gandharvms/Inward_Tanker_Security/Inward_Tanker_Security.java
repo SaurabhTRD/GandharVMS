@@ -732,7 +732,11 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
  public void updateData() {
    //  String vehiclnumber = "0JTDOizXVgFrAuOeosCy";
      //etvehical.getText().toString().trim();
+
+     String outTime = getCurrentTime();
      if(DocId != ""){
+
+
          Map<String, Object> updates = new HashMap<>();
          updates.put("intime", etintime.getText().toString().trim());
          updates.put("invoiceno", etinvoice.getText().toString().trim());
@@ -744,6 +748,36 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
          updates.put("qtyuom", etqtyoum.getText().toString().trim());
          updates.put("netweight", etnetweight.getText().toString().trim());
          updates.put("netweightuom", etnetoum.getText().toString().trim());
+
+         updates.put("outTime",outTime);
+
+         List<Map<String, String>> materialList = new ArrayList<>();
+         for (int i = 0; i < linearLayout.getChildCount(); i++) {
+             View childView = linearLayout.getChildAt(i);
+             if (childView != null) {
+                 EditText materialEditText = childView.findViewById(R.id.editmaterial);
+                 EditText qtyEditText = childView.findViewById(R.id.editqty);
+                 AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+
+                 String dynamaterial = materialEditText.getText().toString().trim();
+                 String dynaqty = qtyEditText.getText().toString().trim();
+                 String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+
+                 // Check if both material and quantity fields are not empty
+                 if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+                     Map<String, String> materialMap = new HashMap<>();
+                     materialMap.put("material", dynamaterial);
+                     materialMap.put("qty", dynaqty);
+                     materialMap.put("qtyuom",dynaqtyuom);
+                     // Add material data to the list
+                     materialList.add(materialMap);
+                 }
+             }
+         }
+
+
+         updates.put("extramaterials", materialList.toString().replace("[]",""));
+
          DocumentReference documentReference = dbroot.collection("Inward Tanker Security").document(DocId);
          updates.put("Remark", etremark.getText().toString().trim());
          documentReference.update(updates)
@@ -763,6 +797,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                          edpooa.setText("");
                          etmobilenum.setText("");
                          etremark.setText("");
+
                          Toast.makeText(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
                      }
                  })

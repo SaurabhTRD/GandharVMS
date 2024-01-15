@@ -5,6 +5,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -24,6 +25,7 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -61,6 +63,9 @@ public class Inward_Truck_Security extends AppCompatActivity {
     String [] items = {"Ton","Litre","KL","Kgs","pcs"};
     String [] items1 = {"Ton","Litre","KL","Kgs","pcs"};
     String [] regitems = {"Capital Register", "General Register","Inward Register"};
+    List<String> teamList = new ArrayList<>();
+
+    LinearLayout linearLayout;
     AutoCompleteTextView autoCompleteTextView,regAutoCompleteTextView;
     AutoCompleteTextView autoCompleteTextView1;
     ArrayAdapter<String> adapterItems;
@@ -85,7 +90,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
     private CheckBox isReportingCheckBox;
     private EditText reportingRemarkLayout;
-    Button saveButton;
+    Button saveButton,button1;
     CheckBox cbox;
     String DocId = "";
 
@@ -176,6 +181,17 @@ public class Inward_Truck_Security extends AppCompatActivity {
         etregister=(AutoCompleteTextView)findViewById(R.id.etregister);
 
 
+        //for add material
+
+        linearLayout= findViewById(R.id.layout_list);
+        button1=findViewById(R.id.button_add);
+       button1.setOnClickListener(this::onClick);
+
+        teamList.add("Ton");
+        teamList.add("Litre");
+        teamList.add("KL");
+        teamList.add("Kgs");
+        teamList.add("Pcs");
 
         repremark = (EditText) findViewById(R.id.edtreportingremark);
         cbox = (CheckBox) findViewById(R.id.isreporting);
@@ -189,17 +205,10 @@ public class Inward_Truck_Security extends AppCompatActivity {
         ewaybillYes=(RadioButton)findViewById(R.id.rb_EwaybillYes);
         ewaybillNo=(RadioButton)findViewById(R.id.rb_EwaybillNo);
 
-
-
-
         storage = FirebaseStorage.getInstance();
-
-
 //      for imgpicker
 
-
                                                     // listing button
-
         view= findViewById(R.id.viewdb);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -479,6 +488,37 @@ public class Inward_Truck_Security extends AppCompatActivity {
         }
     }
 
+    public void onClick(View v){
+        addview();
+    }
+    private void addview(){
+        View materialview = getLayoutInflater().inflate(R.layout.row_add_material,null,false);
+
+        EditText editText = (EditText) materialview.findViewById(R.id.editmaterial);
+        EditText editqty = (EditText) materialview.findViewById(R.id.editqty);
+        AppCompatSpinner spinner =  (AppCompatSpinner) materialview.findViewById(R.id.spinner_team);
+        ImageView img = (ImageView) materialview.findViewById(R.id.editcancel);
+
+        linearLayout.addView(materialview);
+
+        ArrayAdapter arrayAdapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,teamList);
+        spinner.setAdapter(arrayAdapter);
+
+        img.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removeView(materialview);
+            }
+        });
+
+    }
+
+    private void removeView(View view){
+
+        linearLayout.removeView(view);
+    }
+
+
 
 
     public void makeNotification(String vehicleNo,String outTime){
@@ -513,6 +553,33 @@ public class Inward_Truck_Security extends AppCompatActivity {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }
         else {
+
+
+            List<Map<String, String>> materialList = new ArrayList<>();
+
+            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                View childView = linearLayout.getChildAt(i);
+                if (childView != null) {
+                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
+                    EditText qtyEditText = childView.findViewById(R.id.editqty);
+                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+
+                    String dynamaterial = materialEditText.getText().toString().trim();
+                    String dynaqty = qtyEditText.getText().toString().trim();
+                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+
+                    // Check if both material and quantity fields are not empty
+                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+                        Map<String, String> materialMap = new HashMap<>();
+                        materialMap.put("material", dynamaterial);
+                        materialMap.put("qty", dynaqty);
+                        materialMap.put("qtyuom",dynaqtyuom);
+                        // Add material data to the list
+                        materialList.add(materialMap);
+                    }
+                }
+            }
+
 
             Map<String,String> trseitems = new HashMap<>();
             trseitems.put("Intime",etintime.getText().toString().trim());
@@ -705,6 +772,32 @@ public class Inward_Truck_Security extends AppCompatActivity {
             updates.put("Qty",etsqty.getText().toString().trim());
             updates.put("UOM",etsuom.getText().toString().trim());
             updates.put("UOM2",etsuom2.getText().toString().trim());
+
+            List<Map<String, String>> materialList = new ArrayList<>();
+            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                View childView = linearLayout.getChildAt(i);
+                if (childView != null) {
+                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
+                    EditText qtyEditText = childView.findViewById(R.id.editqty);
+                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+
+                    String dynamaterial = materialEditText.getText().toString().trim();
+                    String dynaqty = qtyEditText.getText().toString().trim();
+                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+
+                    // Check if both material and quantity fields are not empty
+                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+                        Map<String, String> materialMap = new HashMap<>();
+                        materialMap.put("material", dynamaterial);
+                        materialMap.put("qty", dynaqty);
+                        materialMap.put("qtyuom",dynaqtyuom);
+                        // Add material data to the list
+                        materialList.add(materialMap);
+                    }
+                }
+            }
+
+            updates.put("extramaterials", materialList.toString().replace("[]",""));
 
 
             DocumentReference documentReference = intrsdbroot.collection("Inward Truck Security").document(DocId);
