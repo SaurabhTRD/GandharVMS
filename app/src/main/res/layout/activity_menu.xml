@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Menu"
     android:background="@color/white">
-
+    <include layout="@layout/header_layout"></include>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="65dp"
         android:background="#283593"
         android:text="Select Menu"
         android:textStyle="bold"

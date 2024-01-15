@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.os.storage.StorageManager;
+import android.os.storage.StorageVolume;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -15,7 +18,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Se_Adapter;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
@@ -34,9 +40,26 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.RichTextString;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
@@ -46,11 +69,13 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
     In_Tanker_we_Adapter in_tanker_we_adapter;
 
     TextView txtTotalCount;
-    Button startDatePicker, endDatePicker, btncleardateselection,btnlogout;
+    Button startDatePicker, endDatePicker, btncleardateselection, btnlogout;
     EditText etserialNumber, etpartyName;
-    Button btnsrnumclear, btnptnamclear;
-    String date_start,date_end;
-
+    Button btnsrnumclear, btnptnamclear, btnExportExcel;
+    String date_start, date_end;
+/*
+    private ListView listView;
+*/
 
 
     @Override
@@ -58,7 +83,9 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_weighment_viewdata);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnExportExcel = findViewById(R.id.btn_ExportToExcel);
+
+        btnlogout = findViewById(R.id.btn_logoutButton);
         startDatePicker = findViewById(R.id.startdate);
         endDatePicker = findViewById(R.id.enddate);
         btnsrnumclear = findViewById(R.id.btn_srnumberbutton_clear);
@@ -67,7 +94,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         etpartyName = findViewById(R.id.et_PartyName);
         btncleardateselection = findViewById(R.id.btn_clearDateSelectionfields);
         txtTotalCount = findViewById(R.id.tv_TotalCount);
-        recview = (RecyclerView) findViewById(R.id.recyclerview);
+        recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
         datalist = new ArrayList<>();
         in_tanker_we_adapter = new In_Tanker_we_Adapter(datalist);
@@ -128,6 +155,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Weighment");
@@ -181,6 +209,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                     });
                 }
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
             }
@@ -195,6 +224,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Weighment");
@@ -248,13 +278,24 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                     });
                 }
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
             }
         });
+
+        btnExportExcel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Get the data from the adapter
+                List<In_Tanker_Weighment_list> dataList = in_tanker_we_adapter.datalist;
+                // Export data to Excel
+                exportToExcel(dataList);
+            }
+        });
     }
 
-    public void showDatePickerDialog(final boolean isStartDate){
+    public void showDatePickerDialog(final boolean isStartDate) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -267,7 +308,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         String monthAbbreviation = monthAbbreviations[monthOfYear];
                         // Month is 0 based, so adding 1 to monthOfYear
-                        String selectedDate = dayOfMonth + "/" + monthAbbreviation  + "/" + year;
+                        String selectedDate = dayOfMonth + "/" + monthAbbreviation + "/" + year;
 
                         if (isStartDate) {
                             date_start = selectedDate;
@@ -284,12 +325,13 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
         datePickerDialog.show();
     }
-    private void clearSelectedDates(){
+
+    private void clearSelectedDates() {
         startDatePicker.setText("start of Date");
         endDatePicker.setText("End of Data");
         etserialNumber.setText("");
         etpartyName.setText("");
-        recview = (RecyclerView) findViewById(R.id.recyclerview);
+        recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
         datalist = new ArrayList<>();
         in_tanker_we_adapter = new In_Tanker_we_Adapter(datalist);
@@ -313,15 +355,15 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                 });
     }
 
-    public void fetchDataFromFirestore(String startDate, String endDate){
+    public void fetchDataFromFirestore(String startDate, String endDate) {
 
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Weighment");
         Query baseQuery = collectionReference.orderBy("Date");
 
-        if (startDate != null && endDate != null){
+        if (startDate != null && endDate != null) {
             baseQuery = baseQuery.whereGreaterThanOrEqualTo("Date", startDate)
                     .whereLessThanOrEqualTo("Date", endDate);
-        } else if (startDate != null){
+        } else if (startDate != null) {
             baseQuery = baseQuery.whereGreaterThanOrEqualTo("Date", startDate);
         } else if (endDate != null) {
             baseQuery = baseQuery.whereLessThanOrEqualTo("Date", endDate);
@@ -344,5 +386,90 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private void exportToExcel(List<In_Tanker_Weighment_list> datalist) {
+        try {
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            Sheet sheet = workbook.createSheet("InwardTankerWeighmentData");
+            // Create header row
+            Row headerRow = sheet.createRow(0);
+
+            headerRow.createCell(0).setCellValue("IN TIME");
+            headerRow.createCell(1).setCellValue("OUT TIME");
+            headerRow.createCell(2).setCellValue("SERIAL NUMBER");
+            headerRow.createCell(3).setCellValue("VEHICLE NUMBER");
+            headerRow.createCell(4).setCellValue("SUPPLIER NAME");
+            headerRow.createCell(5).setCellValue("MATERIAL NAME");
+            headerRow.createCell(6).setCellValue("DRIVER MOB NUMBER");
+            headerRow.createCell(7).setCellValue("OA/PO NUMBER");
+            headerRow.createCell(8).setCellValue("DATE");
+            headerRow.createCell(9).setCellValue("GROSS WEIGHT");
+            headerRow.createCell(10).setCellValue("REMARK");
+            headerRow.createCell(11).setCellValue("CONTAINER NO");
+            headerRow.createCell(12).setCellValue("SIGN BY");
+            headerRow.createCell(13).setCellValue("SHORTAGE DIP");
+            headerRow.createCell(14).setCellValue("SHORTAGE WEIGHT");
+            headerRow.createCell(15).setCellValue("INVEHICLEIMAGE");
+            headerRow.createCell(16).setCellValue("INDRIVERIMAGE");
+
+            // Populate data rows
+            for (int i = 0; i < datalist.size(); i++) {
+                Row dataRow = sheet.createRow(i + 1); // Start from the second row (index 1) for data
+
+                In_Tanker_Weighment_list dataItem = datalist.get(i);
+                dataRow.createCell(0).setCellValue(dataItem.getIn_Time());
+                dataRow.createCell(1).setCellValue(dataItem.getOuttime());
+                dataRow.createCell(2).setCellValue(dataItem.getSerial_number());
+                dataRow.createCell(3).setCellValue(dataItem.getVehicle_number());
+                dataRow.createCell(4).setCellValue(dataItem.getSupplier_name());
+                dataRow.createCell(5).setCellValue(dataItem.getMaterial_name());
+                dataRow.createCell(6).setCellValue(dataItem.getDriver_Number());
+                dataRow.createCell(7).setCellValue(dataItem.getOA_number());
+                dataRow.createCell(8).setCellValue(dataItem.getDate());
+                dataRow.createCell(9).setCellValue(dataItem.getGross_Weight());
+                dataRow.createCell(10).setCellValue(dataItem.getBatch_Number());
+                dataRow.createCell(11).setCellValue(dataItem.getContainer_No());
+                dataRow.createCell(12).setCellValue(dataItem.getSign_By());
+                dataRow.createCell(13).setCellValue(dataItem.getShortage_Dip());
+                dataRow.createCell(14).setCellValue(dataItem.getShortage_weight());
+                dataRow.createCell(15).setCellValue(dataItem.getInVehicleImage());
+                dataRow.createCell(16).setCellValue(dataItem.getInDriverImage());
+            }
+            // Save the workbook
+            saveWorkBook(workbook);
+        }catch(Exception ex){
+            throw new RuntimeException(ex);
+        }
+    }
+
+    private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
+        try {
+            StorageManager storageManager = (StorageManager) getSystemService(STORAGE_SERVICE);
+            StorageVolume storageVolume = storageManager.getStorageVolumes().get(0);
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+                String dateTimeSuffix = new SimpleDateFormat("ddMMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
+                int counter = 1;
+                String fileName = "Inward Tanker Weighment Data_" + dateTimeSuffix + ".xls";
+                File outputfile = new File(storageVolume.getDirectory().getPath() + "/Download/" + fileName);
+                while (outputfile.exists()) {
+                    counter++;
+                    fileName = "Inward Tanker Weighment Data_" + dateTimeSuffix + "_" + counter + ".xls";
+                    outputfile = new File(storageVolume.getDirectory().getPath() + "/Download/" + fileName);
+                }
+                try {
+                    FileOutputStream fileOutputStream = new FileOutputStream(outputfile);
+                    hssfWorkBook.write(fileOutputStream);
+                    fileOutputStream.close();
+                    hssfWorkBook.close();
+                    Toast.makeText(this, "Excel File Created Successfully", Toast.LENGTH_SHORT).show();
+                } catch (Exception ex) {
+                    Toast.makeText(this, "File Creation Failed", Toast.LENGTH_SHORT).show();
+                    throw new RuntimeException(ex);
+                }
+            }
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }
