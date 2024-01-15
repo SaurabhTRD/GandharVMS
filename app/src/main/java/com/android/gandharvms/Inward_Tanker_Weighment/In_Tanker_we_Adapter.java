@@ -47,8 +47,8 @@ public class In_Tanker_we_Adapter extends RecyclerView.Adapter<In_Tanker_we_Adap
         holder.oanumber.setText(datalist.get(position).getOA_number());
         holder.date.setText(datalist.get(position).getDate());
         holder.grossweight.setText(datalist.get(position).getGross_Weight());
-        holder.tareweight.setText(datalist.get(position).getTare_Weight());
-        holder.netweight.setText(datalist.get(position).getNet_Weight());
+        /*holder.tareweight.setText(datalist.get(position).getTare_Weight());
+        holder.netweight.setText(datalist.get(position).getNet_Weight());*/
         holder.batchnumber.setText(datalist.get(position).getBatch_Number());
         holder.containerno.setText(datalist.get(position).getContainer_No());
         holder.sighby.setText(datalist.get(position).getSign_By());
@@ -82,7 +82,7 @@ public class In_Tanker_we_Adapter extends RecyclerView.Adapter<In_Tanker_we_Adap
 
         class myviewholder extends RecyclerView.ViewHolder
     {
-        TextView intime,serialnumber,vehiclenumber,suppliername,materialname,driverno,oanumber,date,grossweight,tareweight,netweight,batchnumber,containerno,outTime,
+        TextView intime,serialnumber,vehiclenumber,suppliername,materialname,driverno,oanumber,date,grossweight,batchnumber,containerno,outTime,
         sighby,shortagedip,shortageweight;
         ImageView invehicleimage,indriverimage;
         public myviewholder(@NonNull View itemView) {
@@ -96,8 +96,8 @@ public class In_Tanker_we_Adapter extends RecyclerView.Adapter<In_Tanker_we_Adap
             oanumber = itemView.findViewById(R.id.oanumber);
             date = itemView.findViewById(R.id.date);
             grossweight = itemView.findViewById(R.id.grossweight);
-            tareweight = itemView.findViewById(R.id.tareweight);
-            netweight = itemView.findViewById(R.id.etnetweight);
+            /*tareweight = itemView.findViewById(R.id.tareweight);
+            netweight = itemView.findViewById(R.id.etnetweight);*/
             batchnumber = itemView.findViewById(R.id.batchnumber);
             containerno = itemView.findViewById(R.id.containerno);
             sighby = itemView.findViewById(R.id.signby);

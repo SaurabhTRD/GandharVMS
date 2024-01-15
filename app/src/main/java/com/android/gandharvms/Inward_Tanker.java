@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
@@ -26,10 +27,13 @@ public class Inward_Tanker extends AppCompatActivity {
 
 DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String userRole="default";
+    Button btnlogout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "admin");
 
@@ -48,7 +52,12 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
 
             }
         });
-
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Tanker.this, Login.class));
+            }
+        });
 
 
     }

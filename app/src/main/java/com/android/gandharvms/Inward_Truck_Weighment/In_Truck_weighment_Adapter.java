@@ -3,6 +3,7 @@ package com.android.gandharvms.Inward_Truck_Weighment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -10,12 +11,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_weighment_Adapter.myviewholder> {
 
     //ok
+    private static String BaseUrl ="https://firebasestorage.googleapis.com/v0/b/gandharvms.appspot.com/o";
     ArrayList<In_Truck_weigment_list> datalist;
 
     public In_Truck_weighment_Adapter(ArrayList<In_Truck_weigment_list> datalist) {
@@ -44,13 +47,25 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
         holder.etoanumber.setText(datalist.get(position).getOA_Number());
         holder.etdate.setText(datalist.get(position).getDate());
         holder.etgrossweight.setText(datalist.get(position).getGross_Weight());
-        holder.ettareweight.setText(datalist.get(position).getTare_Weight());
-        holder.etnetweight.setText(datalist.get(position).getNet_Weight());
+        /*holder.ettareweight.setText(datalist.get(position).getTare_Weight());
+        holder.etnetweight.setText(datalist.get(position).getNet_Weight());*/
         holder.etdensity.setText(datalist.get(position).getDensity());
         holder.etbatchno.setText(datalist.get(position).getBatch_No());
         holder.etsignby.setText(datalist.get(position).getSign_By());
         holder.etdatetime.setText(datalist.get(position).getDate_Time());
         holder.outTime.setText(datalist.get(position).getOutTime());
+        Picasso.get()
+                .load(BaseUrl + datalist.get(position).getInVehicleImage() + "?alt=media")
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.invehicleimage);
+        Picasso.get()
+                .load(BaseUrl + datalist.get(position).getInDriverImage() + "?alt=media")
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.indriverimage);
 
     }
 
@@ -64,6 +79,7 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
 
         TextView etintime, etserialnumber,etvehicalnumber,etsupplier,etmaterial,etcustomer,etdriver,etoanumber,etdate,
                 etgrossweight,ettareweight,etnetweight,etdensity,etbatchno,etsignby,etdatetime,outTime;
+        ImageView invehicleimage,indriverimage;
 
         public myviewholder(@NonNull View itemView) {
             super(itemView);
@@ -77,13 +93,15 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
             etoanumber=itemView.findViewById(R.id.oanumber);
             etdate= itemView.findViewById(R.id.date);
             etgrossweight= itemView.findViewById(R.id.grossweight);
-            ettareweight = itemView.findViewById(R.id.tareweight);
-            etnetweight = itemView.findViewById(R.id.etnetweight);
+            /*ettareweight = itemView.findViewById(R.id.tareweight);
+            etnetweight = itemView.findViewById(R.id.etnetweight);*/
             etdensity = itemView.findViewById(R.id.density);
             etbatchno = itemView.findViewById(R.id.batchnumber);
             etsignby = itemView.findViewById(R.id.signby);
             etdatetime = itemView.findViewById(R.id.datetime);
             outTime=itemView.findViewById(R.id.listouttime);
+            invehicleimage=itemView.findViewById(R.id.listtrInVehicleImage);
+            indriverimage=itemView.findViewById(R.id.listtrInDriverImage);
         }
     }
 }

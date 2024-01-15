@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,12 +19,18 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.SimpleDateFormat;
@@ -35,7 +42,7 @@ import java.util.Map;
 
 public class Inward_Tanker_Production extends AppCompatActivity {
 
-    EditText etint, etreq, ettankno, etconbyop, tanknoun, etconunloadDateTime, etMaterial, etVehicleNumber;
+    EditText etint, etserno,etreq, ettankno, etconbyop, tanknoun, etconunloadDateTime, etMaterial, etVehicleNumber;
     /*  Button viewdata;*/
     Button prosubmit;
     FirebaseFirestore prodbroot;
@@ -51,16 +58,17 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic("cZO18soMQ7K8D3CkVdUA9i:APA91bFdQxHnryIGp1ZSaMMZggvyev0DbgwMqvuHOPzdi_CnUGJeGds6aIK9_2cZdb6e246Ju5a6erKkwkWHQmUKeYTYm_tO2NEsM-GiPsWlqFQK3E--ArUx99-UwGtsnZHgm7_jAFSs");
 
-        etMaterial = (EditText) findViewById(R.id.etMaterial);
-        etVehicleNumber = (EditText) findViewById(R.id.etvehicleNumber);
-        etint = (EditText) findViewById(R.id.etintime);
-        etreq = (EditText) findViewById(R.id.etreq);
-        ettankno = (EditText) findViewById(R.id.ettankno);
-        etconbyop = (EditText) findViewById(R.id.etconbyop);
-        tanknoun = (EditText) findViewById(R.id.tanknoun);
-        etconunloadDateTime = (EditText) findViewById(R.id.etconunloadDateTime);
+        etMaterial = findViewById(R.id.etMaterial);
+        etVehicleNumber = findViewById(R.id.etvehicleNumber);
+        etserno=findViewById(R.id.etpserialnumber);
+        etint = findViewById(R.id.etintime);
+        etreq = findViewById(R.id.etreq);
+        ettankno = findViewById(R.id.ettankno);
+        etconbyop = findViewById(R.id.etconbyop);
+        tanknoun = findViewById(R.id.tanknoun);
+        etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
 
-        prosubmit = (Button) findViewById(R.id.prosubmit);
+        prosubmit = findViewById(R.id.prosubmit);
 
 
         //datetimepickertesting
@@ -91,6 +99,15 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                 }, hours, mins, false);
                 tpicker.show();
             }
+        });
+
+        etVehicleNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    FetchVehicleDetails(etVehicleNumber.getText().toString().trim());
+                }
+            }
+
         });
 
         /*etVehicleNumber.addTextChangedListener(new TextWatcher() {
@@ -174,7 +191,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     public void handleDateTimeSelection(java.util.Date dateTime) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault());
         etconunloadDateTime.setText(dateFormat.format(dateTime.getTime()));
-
     }
 
     public void makeNotification(String vehicleNo, String outTime) {
@@ -216,7 +232,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             Toast.makeText(this, "All Fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
             Map<String, String> proitems = new HashMap<>();
-
             proitems.put("In_Time", etint.getText().toString().trim());
             proitems.put("Req_to_unload", etreq.getText().toString().trim());
             proitems.put("Tank_Number_Request", ettankno.getText().toString().trim());
@@ -226,14 +241,13 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             proitems.put("outTime", outTime);
             proitems.put("Material", etMaterial.getText().toString().trim());
             proitems.put("Vehicle_Number", etVehicleNumber.getText().toString().trim());
-
+            proitems.put("Serial_Number",etserno.getText().toString().trim());
 
             makeNotification(etVehicleNumber.getText().toString(), outTime);
             prodbroot.collection("Inward Tanker Production").add(proitems)
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
                         @Override
                         public void onComplete(@NonNull Task<DocumentReference> task) {
-
                             etint.setText("");
                             etreq.setText("");
                             ettankno.setText("");
@@ -242,16 +256,12 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                             etconunloadDateTime.setText("");
                             etMaterial.setText("");
                             etVehicleNumber.setText("");
-
+                            etserno.setText("");
                             Toast.makeText(Inward_Tanker_Production.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
-
-
                         }
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
             startActivity(intent);
-
-
         }
     }
 
@@ -261,4 +271,41 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         finish();
     }
 
+    public void FetchVehicleDetails(@NonNull String VehicleNo) {
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
+        String searchText = VehicleNo.trim();
+        Query query = collectionReference.whereEqualTo("vehicalnumber", searchText)
+                .whereNotEqualTo("intime", "");
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int totalCount = task.getResult().size();
+                    if (totalCount == 0) {
+                        etMaterial.setText("");
+                        etVehicleNumber.requestFocus();
+                        etserno.setText("");
+                        Toast.makeText(Inward_Tanker_Production.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT).show();
+                    } else {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+                            // Check if the object already exists to avoid duplicates
+                            if (totalCount > 0) {
+                                etserno.setText(obj.getSerialNumber());
+                                etserno.setEnabled(true);
+                                etVehicleNumber.setText(obj.getVehicalnumber());
+                                etVehicleNumber.setEnabled(true);
+                                etMaterial.setText(obj.getMaterial());
+                                etMaterial.setEnabled(true);
+                                etint.requestFocus();
+                                etint.callOnClick();
+                            }
+                        }
+                    }
+                } else {
+                    Log.w("FirestoreData", "Error getting documents.", task.getException());
+                }
+            }
+        });
+    }
 }

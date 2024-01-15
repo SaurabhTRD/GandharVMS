@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 
 import com.android.gandharvms.submenu.Submenu_Outward_Truck;
 import com.android.gandharvms.submenu.Submenu_outward_tanker;
@@ -13,15 +14,21 @@ import com.android.gandharvms.submenu.submenu_Inward_Truck;
 
 public class Menu extends AppCompatActivity {
 
+    Button btnlogout;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-//        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-//        String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "");
 
-//        Intent intent = new Intent(this,Inward_Tanker.class);
-//        startActivity(intent);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Menu.this, Login.class));
+            }
+        });
     }
     public void Inward_Tanker(View view){
        Intent intent = new Intent(this, submenu_Inward_Tanker.class);

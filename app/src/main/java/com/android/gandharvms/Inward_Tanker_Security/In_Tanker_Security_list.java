@@ -8,8 +8,6 @@ public class In_Tanker_Security_list {
 
     }
 
-
-
     public In_Tanker_Security_list(String serialNumber, String date, String intime,String supplier, String invoiceno, String material, String netweight, String qty, String uom, String vehicalnumber , String outTime, String qtyuom, String netweightuom,String extramaterials,String partyname,String remark,String OA_PO_Number,String driver_Mobile_No,String reporting_Remark) {
 
         this.SerialNumber = serialNumber;
