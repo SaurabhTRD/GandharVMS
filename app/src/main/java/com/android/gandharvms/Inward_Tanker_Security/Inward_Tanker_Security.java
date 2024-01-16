@@ -315,12 +315,12 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
         });
 
-        etvehical.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    FetchVehicleDetails(etvehical.getText().toString().trim());
+           etvehical.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                public void onFocusChange(View v, boolean hasFocus) {
+                    if(!hasFocus) {
+                        FetchVehicleDetails(etvehical.getText().toString().trim());
+                    }
                 }
-            }
 
         });
 
@@ -743,53 +743,53 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
         });
     }
-
-    public void updateData() {
-        //  String vehiclnumber = "0JTDOizXVgFrAuOeosCy";
-        //etvehical.getText().toString().trim();
-        if (DocId != "") {
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("intime", etintime.getText().toString().trim());
-            updates.put("invoiceno", etinvoice.getText().toString().trim());
-            updates.put("Driver_Mobile_No", etmobilenum.getText().toString().trim());
-            updates.put("partyname", etsupplier.getText().toString().trim());
-            updates.put("material", etmaterial.getText().toString().trim());
-            updates.put("OA_PO_Number", edpooa.getText().toString().trim());
-            updates.put("qty", etqty.getText().toString().trim());
-            updates.put("qtyuom", etqtyoum.getText().toString().trim());
-            updates.put("netweight", etnetweight.getText().toString().trim());
-            updates.put("netweightuom", etnetoum.getText().toString().trim());
-            DocumentReference documentReference = dbroot.collection("Inward Tanker Security").document(DocId);
-            updates.put("Remark", etremark.getText().toString().trim());
-            documentReference.update(updates)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            etvehical.setText("");
-                            etinvoice.setText("");
-                            etdate.setText("");
-                            etsupplier.setText("");
-                            etmaterial.setText("");
-                            etintime.setText("");
-                            etnetweight.setText("");
-                            etqty.setText("");
-                            etnetoum.setText("");
-                            etqtyoum.setText("");
-                            edpooa.setText("");
-                            etmobilenum.setText("");
-                            etremark.setText("");
-                            Toast.makeText(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Inward_Tanker_Security.this, "Failed to update data", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        } else {
-            Toast.makeText(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT).show();
-        }
+ public void updateData() {
+   //  String vehiclnumber = "0JTDOizXVgFrAuOeosCy";
+     //etvehical.getText().toString().trim();
+     if(DocId != ""){
+         Map<String, Object> updates = new HashMap<>();
+         updates.put("intime", etintime.getText().toString().trim());
+         updates.put("invoiceno", etinvoice.getText().toString().trim());
+         updates.put("Driver_Mobile_No", etmobilenum.getText().toString().trim());
+         updates.put("partyname", etsupplier.getText().toString().trim());
+         updates.put("material", etmaterial.getText().toString().trim());
+         updates.put("OA_PO_Number", edpooa.getText().toString().trim());
+         updates.put("qty", etqty.getText().toString().trim());
+         updates.put("qtyuom", etqtyoum.getText().toString().trim());
+         updates.put("netweight", etnetweight.getText().toString().trim());
+         updates.put("netweightuom", etnetoum.getText().toString().trim());
+         DocumentReference documentReference = dbroot.collection("Inward Tanker Security").document(DocId);
+         updates.put("Remark", etremark.getText().toString().trim());
+         documentReference.update(updates)
+                 .addOnSuccessListener(new OnSuccessListener<Void>() {
+                     @Override
+                     public void onSuccess(Void unused) {
+                         etvehical.setText("");
+                         etinvoice.setText("");
+                         etdate.setText("");
+                         etsupplier.setText("");
+                         etmaterial.setText("");
+                         etintime.setText("");
+                         etnetweight.setText("");
+                         etqty.setText("");
+                         etnetoum.setText("");
+                         etqtyoum.setText("");
+                         edpooa.setText("");
+                         etmobilenum.setText("");
+                         etremark.setText("");
+                         Toast.makeText(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
+                     }
+                 })
+                 .addOnFailureListener(new OnFailureListener() {
+                     @Override
+                     public void onFailure(@NonNull Exception e) {
+                         Toast.makeText(Inward_Tanker_Security.this, "Failed to update data", Toast.LENGTH_SHORT).show();
+                     }
+                 });
+     }
+     else {
+         Toast.makeText(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT).show();
+     }
 
     }
 

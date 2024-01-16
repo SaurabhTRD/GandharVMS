@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -50,6 +51,8 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
 
     SearchView searchdata;
     Spinner spinner;
+
+    ListView listView;
 //    Context context;
 
                 //date filter
@@ -78,6 +81,8 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
      Button endDatePicker;
     EditText etserialNumber,etpartyName;
     Button btnsrnumclear,btnptnamclear;
+
+
 
 
     @Override
@@ -294,6 +299,7 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
 
 
 
+
     public void showDatePickerDialog(final boolean isStartDate){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -359,6 +365,7 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
                     }
                 });
     }
+
 
     public void fetchDataFromFirestore(String startDate, String endDate){
 
