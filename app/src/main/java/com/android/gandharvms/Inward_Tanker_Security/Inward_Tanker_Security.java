@@ -1,6 +1,9 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
+import static com.google.common.net.InternetDomainName.MAX_LENGTH;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.ReturnThis;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
@@ -38,6 +41,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.Timestamp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -52,6 +56,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -64,10 +69,14 @@ import java.util.Objects;
 
 public class Inward_Tanker_Security extends AppCompatActivity implements View.OnClickListener {
 
-    private final int MAX_LENGTH = 10;
-    String[] items = {"Capital Register", "General Register", "Inward Register"};
+    String [] items = {"Capital Register", "General Register","Inward Register"};
+
     String DocId = "";
+
+    final Calendar calendar = Calendar.getInstance();
     //uom
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+
     String[] qtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
     String[] netweuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
     AutoCompleteTextView autoCompleteTextView, autoCompleteTextView1, autoCompleteTextView2;
@@ -140,7 +149,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 //        });
 
         //uom and netwe dropdown
-
         autoCompleteTextView1 = findViewById(R.id.qtyuom);
         qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, qtyuom);
         autoCompleteTextView1.setAdapter(qtyuomdrop);
@@ -191,8 +199,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         etmobilenum = findViewById(R.id.etcontactnumber);
 
         repremark = findViewById(R.id.edtreportingremark);
-
-        cbox = findViewById(R.id.isreporting);
+       
+        cbox = (CheckBox) findViewById(R.id.isreporting);
 
 
         // for Auto Genrated serial number
@@ -233,7 +241,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         // Use the month abbreviation from the array
                         String monthAbbreviation = monthAbbreviations[month];
-                        etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                       // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        etdate.setText(dateFormat.format(calendar.getTime()));
                     }
                 }, year, month, day);
                 picker.show();
@@ -271,8 +280,12 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 if (isReportingCheckBox.isChecked()) {
                     updateData();
                 } else {
-                    insertdata();
-                    makeNotification();
+                    try {
+                        insertdata();
+                        makeNotification();
+                    } catch (ParseException e) {
+                        throw new RuntimeException(e);
+                    }                    
                 }
             }
         });
@@ -315,12 +328,12 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
         });
 
-           etvehical.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-                public void onFocusChange(View v, boolean hasFocus) {
-                    if(!hasFocus) {
-                        FetchVehicleDetails(etvehical.getText().toString().trim());
-                    }
+        etvehical.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    FetchVehicleDetails(etvehical.getText().toString().trim());
                 }
+            }
 
         });
 
@@ -536,7 +549,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         return sdf.format(new Date());
     }
 
-    public void insertdata() {
+    public void insertdata() throws ParseException {
         String serialnumber = etreg.getText().toString().trim();
         String vehicalnumber = etvehical.getText().toString().trim();
         String invoicenumber = etinvoice.getText().toString().trim();
@@ -581,11 +594,16 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                     }
                 }
             }
-            Map<String, String> items = new HashMap<>();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//            Date date = dateFormat.parse(calendar.getTime().toString());
+//            assert date != null;
+            Timestamp timestamp = new Timestamp(calendar.getTime());
+            Map<String, Object> items = new HashMap<>();
             items.put("SerialNumber", etreg.getText().toString().trim());
             items.put("vehicalnumber", etvehical.getText().toString().trim());
             items.put("invoiceno", etinvoice.getText().toString().trim());
-            items.put("date", etdate.getText().toString().trim());
+          //  items.put("date", etdate.getText().toString().trim());
+            items.put("date",  timestamp);
             items.put("partyname", etsupplier.getText().toString());
             items.put("extramaterials", materialList.toString().replace("[]", ""));
             items.put("material", etmaterial.getText().toString().trim());
@@ -725,7 +743,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             etreg.setText(obj.getSerialNumber());
                             etvehical.setText(obj.getVehicalnumber());
                             repremark.setText(obj.getReporting_Remark());
-                            etdate.setText(obj.getDate());
+                            etdate.setText(dateFormat.format(obj.getDate()));
                             etnetweight.setText(obj.getNetweight());
                             cbox.setChecked(true);
                             cbox.setEnabled(false);
@@ -743,55 +761,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
         });
     }
- public void updateData() {
-   //  String vehiclnumber = "0JTDOizXVgFrAuOeosCy";
-     //etvehical.getText().toString().trim();
-     if(DocId != ""){
-         Map<String, Object> updates = new HashMap<>();
-         updates.put("intime", etintime.getText().toString().trim());
-         updates.put("invoiceno", etinvoice.getText().toString().trim());
-         updates.put("Driver_Mobile_No", etmobilenum.getText().toString().trim());
-         updates.put("partyname", etsupplier.getText().toString().trim());
-         updates.put("material", etmaterial.getText().toString().trim());
-         updates.put("OA_PO_Number", edpooa.getText().toString().trim());
-         updates.put("qty", etqty.getText().toString().trim());
-         updates.put("qtyuom", etqtyoum.getText().toString().trim());
-         updates.put("netweight", etnetweight.getText().toString().trim());
-         updates.put("netweightuom", etnetoum.getText().toString().trim());
-         DocumentReference documentReference = dbroot.collection("Inward Tanker Security").document(DocId);
-         updates.put("Remark", etremark.getText().toString().trim());
-         documentReference.update(updates)
-                 .addOnSuccessListener(new OnSuccessListener<Void>() {
-                     @Override
-                     public void onSuccess(Void unused) {
-                         etvehical.setText("");
-                         etinvoice.setText("");
-                         etdate.setText("");
-                         etsupplier.setText("");
-                         etmaterial.setText("");
-                         etintime.setText("");
-                         etnetweight.setText("");
-                         etqty.setText("");
-                         etnetoum.setText("");
-                         etqtyoum.setText("");
-                         edpooa.setText("");
-                         etmobilenum.setText("");
-                         etremark.setText("");
-                         Toast.makeText(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
-                     }
-                 })
-                 .addOnFailureListener(new OnFailureListener() {
-                     @Override
-                     public void onFailure(@NonNull Exception e) {
-                         Toast.makeText(Inward_Tanker_Security.this, "Failed to update data", Toast.LENGTH_SHORT).show();
-                     }
-                 });
-     }
-     else {
-         Toast.makeText(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT).show();
-     }
-
-    }
 
     public void GetMaxSerialNo(String formattedDate) {
         String serialNoPreFix = "GA" + formattedDate;
@@ -800,36 +769,87 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         Query query = collectionReference
                 .whereGreaterThanOrEqualTo("SerialNumber", searchText)
                 .whereLessThanOrEqualTo("SerialNumber", searchText + "\uf8ff")
-                .orderBy("SerialNumber", Query.Direction.DESCENDING)
+                .orderBy("SerialNumber",Query.Direction.DESCENDING)
                 .limit(1);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
                     int totalCount = task.getResult().size();
-                    if (totalCount > 0) {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                            // Check if the object already exists to avoid duplicates
-                            if (totalCount > 0) {
-                                autoGeneratedNumber = Integer.parseInt(obj.getSerialNumber().substring(8, 11)) + 1;
-                                //  sharedPreferences.edit().putInt("autoGeneratedNumber", autoGeneratedNumber).apply();
-                                @SuppressLint("DefaultLocale") String autoGeneratedNumberString = String.format("%03d", autoGeneratedNumber);
-                                // Create the serial number
-                                String serialNumber = "GA" + formattedDate + autoGeneratedNumberString;
-                                // Set the serial number in the EditText
-                                etreg.setText(serialNumber);
-                                etreg.setEnabled(true);
-                            }
-
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+                        // Check if the object already exists to avoid duplicates
+                        if (totalCount > 0) {
+                            autoGeneratedNumber = Integer.parseInt(obj.getSerialNumber().toString().substring(8,11)) + 1;
+                            //  sharedPreferences.edit().putInt("autoGeneratedNumber", autoGeneratedNumber).apply();
+                            @SuppressLint("DefaultLocale") String autoGeneratedNumberString = String.format("%03d", autoGeneratedNumber);
+                            // Create the serial number
+                            String serialNumber = "GA" + formattedDate + autoGeneratedNumberString;
+                            // Set the serial number in the EditText
+                            etreg.setText(serialNumber);
+                            etreg.setEnabled(true);
                         }
-                    } else {
-                        String serialNumber = "GA" + formattedDate + "001";
-                        etreg.setText(serialNumber);
+                        else
+                        {
+                            String serialNumber = "GA" + formattedDate + "001";
+                            etreg.setText(serialNumber);
+                        }
                     }
+                } else {
+                    Log.w("FirestoreData", "Error getting documents.", task.getException());
                 }
             }
         });
+    //    return DocId.toString();
     }
+    public void updateData() {
+        //  String vehiclnumber = "0JTDOizXVgFrAuOeosCy";
+        //etvehical.getText().toString().trim();
+        if (DocId != "") {
+            Map<String, Object> updates = new HashMap<>();
+            updates.put("intime", etintime.getText().toString().trim());
+            updates.put("invoiceno", etinvoice.getText().toString().trim());
+            updates.put("Driver_Mobile_No", etmobilenum.getText().toString().trim());
+            updates.put("partyname", etsupplier.getText().toString().trim());
+            updates.put("material", etmaterial.getText().toString().trim());
+            updates.put("OA_PO_Number", edpooa.getText().toString().trim());
+            updates.put("qty", etqty.getText().toString().trim());
+            updates.put("qtyuom", etqtyoum.getText().toString().trim());
+            updates.put("netweight", etnetweight.getText().toString().trim());
+            updates.put("netweightuom", etnetoum.getText().toString().trim());
+            DocumentReference documentReference = dbroot.collection("Inward Tanker Security").document(DocId);
+            updates.put("Remark", etremark.getText().toString().trim());
+            documentReference.update(updates)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void unused) {
+                            etvehical.setText("");
+                            etinvoice.setText("");
+                            etdate.setText("");
+                            etsupplier.setText("");
+                            etmaterial.setText("");
+                            etintime.setText("");
+                            etnetweight.setText("");
+                            etqty.setText("");
+                            etnetoum.setText("");
+                            etqtyoum.setText("");
+                            edpooa.setText("");
+                            etmobilenum.setText("");
+                            etremark.setText("");
+                            Toast.makeText(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Toast.makeText(Inward_Tanker_Security.this, "Failed to update data", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+        } else {
+            Toast.makeText(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT).show();
+        }
+
+}
+
 }
 

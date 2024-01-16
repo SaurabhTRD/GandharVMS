@@ -1,14 +1,18 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
+import com.google.firebase.Timestamp;
+
+import java.sql.Time;
+
 public class In_Tanker_Security_list {
 
-    String SerialNumber,date,intime,invoiceno,material,netweight,partyname,qty,uom,vehicalnumber,outTime,qtyuom,netweightuom,extramaterials,Remark,OA_PO_Number,Driver_Mobile_No,Reporting_Remark;
-
+    String SerialNumber,intime,invoiceno,material,netweight,partyname,qty,uom,vehicalnumber,outTime,qtyuom,netweightuom,extramaterials,Remark,OA_PO_Number,Driver_Mobile_No,Reporting_Remark;
+Timestamp date;
     public In_Tanker_Security_list(){
 
     }
 
-    public In_Tanker_Security_list(String serialNumber, String date, String intime,String supplier, String invoiceno, String material, String netweight, String qty, String uom, String vehicalnumber , String outTime, String qtyuom, String netweightuom,String extramaterials,String partyname,String remark,String OA_PO_Number,String driver_Mobile_No,String reporting_Remark) {
+    public In_Tanker_Security_list(String serialNumber, Timestamp date, String intime, String supplier, String invoiceno, String material, String netweight, String qty, String uom, String vehicalnumber , String outTime, String qtyuom, String netweightuom, String extramaterials, String partyname, String remark, String OA_PO_Number, String driver_Mobile_No, String reporting_Remark) {
 
         this.SerialNumber = serialNumber;
         this.date = date;
@@ -41,11 +45,11 @@ public class In_Tanker_Security_list {
         SerialNumber = serialNumber;
     }
 
-    public String getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 
