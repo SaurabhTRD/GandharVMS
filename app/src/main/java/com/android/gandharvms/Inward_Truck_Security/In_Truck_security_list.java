@@ -3,12 +3,12 @@ package com.android.gandharvms.Inward_Truck_Security;
 public class In_Truck_security_list {
 
 //    String etintime,etserialnumber,etvehicalnumber,etsinvocieno,etsdate,etssupplier,etsmaterial,etsqty,etsuom,etsnetwt,etsuom2;
-    String Intime,serialnumber,VehicalNumber,invoicenumber,date,Supplier,Material,Qty,UOM,etsnetweight,UOM2,outTime,SelectRegister,lrcopy, deliverybill, taxinvoice, ewaybill;
+    String Intime,serialnumber,VehicalNumber,invoicenumber,date,Supplier,Material,Qty,UOM,etsnetweight,UOM2,outTime,SelectRegister,lrcopy, deliverybill, taxinvoice, ewaybill,Reporting_Remark;
 
     public In_Truck_security_list() {
     }
 
-    public In_Truck_security_list(String intime, String serialnumber, String vehicalNumber, String invoicenumber, String date, String supplier, String material, String qty, String UOM, String etsnetweight, String UOM2,String outTime,String selectRegister,String Lrcopy, String Deliverybill, String Taxinvoice, String Ewaybill) {
+    public In_Truck_security_list(String intime, String serialnumber, String vehicalNumber, String invoicenumber, String date, String supplier, String material, String qty, String UOM, String etsnetweight, String UOM2,String outTime,String selectRegister,String Lrcopy, String Deliverybill, String Taxinvoice, String Ewaybill,String reporting_Remark) {
         Intime = intime;
         this.serialnumber = serialnumber;
         VehicalNumber = vehicalNumber;
@@ -26,6 +26,7 @@ public class In_Truck_security_list {
         this.deliverybill = Deliverybill;
         this.taxinvoice = Taxinvoice;
         this.ewaybill = Ewaybill;
+        this.Reporting_Remark = reporting_Remark;
     }
 
     public String getIntime() {
@@ -163,6 +164,15 @@ public class In_Truck_security_list {
     public void setEwaybill(String Ewaybill) {
         this.ewaybill = Ewaybill;
     }
+
+    public String getReporting_Remark() {
+        return Reporting_Remark;
+    }
+
+    public void setReporting_Remark(String reporting_Remark) {
+        Reporting_Remark = reporting_Remark;
+    }
+
     //    public In_Truck_security_list() {
 //    }
 //

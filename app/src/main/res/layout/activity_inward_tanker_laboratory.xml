@@ -3,8 +3,22 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     tools:context=".Inward_Tanker_Laboratory.Inward_Tanker_Laboratory">
+
+    <Button
+        android:id="@+id/btn_ViewlabReport"
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:onClick="btn_clicktoViewSAMPLEREPORT"
+        android:text="View SAMPLE DATA"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"></Button>
 
 
     <ScrollView
@@ -21,6 +35,21 @@
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
+
+        <Button
+            android:id="@+id/btn_clicktoViewWEIGHMENTREPORT"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="-20dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="30dp"
+            android:onClick="weViewclick"
+            android:text="View WEIGHMENT Data"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"></Button>
+
 
 
         <androidx.cardview.widget.CardView
