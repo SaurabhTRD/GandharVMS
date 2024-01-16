@@ -1,12 +1,15 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.R;
@@ -27,6 +30,7 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
         this.context = context;
         this.inTankerSecurityListArrayList = inTankerSecurityListArrayList;
     }
+
 
     @NonNull
     @Override
@@ -61,6 +65,19 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
         holder.oapo.setText(inTankerSecurityListArrayList.get(position).getOA_PO_Number());
         holder.mob.setText(inTankerSecurityListArrayList.get(position).getDriver_Mobile_No());
         holder.reoprtingre.setText(inTankerSecurityListArrayList.get(position).getReporting_Remark());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+//                @SuppressLint("RestrictedApi") Intent intent = new Intent(context, MenuView.ItemView.class);
+                Intent intent1 = new Intent(context,android.R.layout.class);
+
+            }
+        });
+
+
+
 
 
 
