@@ -10,8 +10,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.R;
+import com.google.firebase.Timestamp;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
 public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adapter.myviewHolder> {
 
@@ -37,14 +40,12 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
     @NonNull
     @Override
     public void onBindViewHolder(@NonNull myviewHolder holder, int position) {
-
-//        In_Tanker_Security_list inTankerSecurityList = inTankerSecurityListArrayList.get(position);
-
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
         holder.serialnumber.setText(inTankerSecurityListArrayList.get(position).getSerialNumber());
         holder.vehiclenumber.setText(inTankerSecurityListArrayList.get(position).getVehicalnumber());
         holder.invoiceno.setText(inTankerSecurityListArrayList.get(position).getInvoiceno());
-        holder.date.setText(inTankerSecurityListArrayList.get(position).getDate());
+        holder.date.setText(dateFormat.format(inTankerSecurityListArrayList.get(position).getDate().toDate()));
         holder.partyname.setText(inTankerSecurityListArrayList.get(position).getPartyname());
         holder.material.setText(inTankerSecurityListArrayList.get(position).getMaterial());
         holder.qty.setText(inTankerSecurityListArrayList.get(position).getQty());

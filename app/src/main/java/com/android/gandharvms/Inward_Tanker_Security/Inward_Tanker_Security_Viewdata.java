@@ -118,7 +118,7 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
         recyclerView.setAdapter(in_tanker_se_adapter);
 
         db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Security").get()
+        db.collection("Inward Tanker Security").orderBy("date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -228,7 +228,9 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
                 String searchText = charSequence.toString().trim();
                 if (searchText.isEmpty()) {
                     // If search text is empty, fetch all data without any filters
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    collectionReference
+                            .orderBy("date", Query.Direction.DESCENDING)
+                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -251,7 +253,8 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
                 } else {
                     // Create a query with filters for non-empty search text
                     Query query = collectionReference.whereGreaterThanOrEqualTo("partyname", searchText)
-                            .whereLessThanOrEqualTo("partyname", searchText + "\uf8ff");
+                            .whereLessThanOrEqualTo("partyname", searchText + "\uf8ff")
+                            .orderBy("date", Query.Direction.DESCENDING);
 
                     query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
@@ -363,7 +366,7 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
     public void fetchDataFromFirestore(String startDate, String endDate){
 
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
-        Query baseQuery = collectionReference.orderBy("date");
+        Query baseQuery = collectionReference.orderBy("date", Query.Direction.DESCENDING);
 
         if (startDate != null && endDate != null){
             baseQuery = baseQuery.whereGreaterThanOrEqualTo("date", startDate)
@@ -374,7 +377,7 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
             baseQuery = baseQuery.whereLessThanOrEqualTo("date", endDate);
         }
 
-        baseQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        baseQuery.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
