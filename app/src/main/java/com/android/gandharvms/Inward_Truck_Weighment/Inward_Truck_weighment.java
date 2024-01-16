@@ -220,8 +220,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         intsubmit=(Button) findViewById(R.id.wesubmit);
         trwdbroot=FirebaseFirestore.getInstance();
 
-        //Prince
-        // AUTO GENRATED SERIAL NUMBER
         /*int lastDay = sharedPreferences.getInt("lastDay", -1);
         int currentDay = Integer.parseInt(getDay());
         if (currentDay != lastDay) {
@@ -277,7 +275,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         });
     }
 
-
     /*public void showDatePicker()
     {
         DatePickerDialog datePickerDialog = new DatePickerDialog(Inward_Truck_weighment.this, new DatePickerDialog.OnDateSetListener() {
@@ -324,7 +321,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
 
     }
 
-    //prince
     /*private String GetYear() {
         SimpleDateFormat yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
         return yearToLetter(yearFormat.format(new Date()));

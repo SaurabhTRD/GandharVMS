@@ -33,7 +33,7 @@ public class Inward_Truck extends AppCompatActivity {
 
         btnlogout=findViewById(R.id.btn_logoutButton);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "admin");
+        String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "");
 
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
