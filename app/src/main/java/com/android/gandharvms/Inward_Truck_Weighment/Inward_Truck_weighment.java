@@ -28,14 +28,20 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Truck;
+import com.android.gandharvms.Inward_Truck_Security.In_Truck_security_list;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -80,7 +86,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_truck_weighment);
         //Send Notification to all
-        //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic("cCeBwmIxRz2HRH6A6blM94:APA91bHCinIPsP8HvzUL3qLI9EXBo0l8wAS5pJmz2UdxahlFpe_FMoRC0SyH9DgcbBoCXrwZy01YMr_QZcpSFnXOhoKGE2S17Bn39xW7MTLDyh0UnvwqLvdcotNoqDl6UyJ5oCBC990z");
 
         //Prince
@@ -113,6 +118,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         img1 = findViewById(R.id.ettrimageView1);
         img2 = findViewById(R.id.ettrimageView2);
         storage = FirebaseStorage.getInstance();
+
         view = findViewById(R.id.viewclick);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -120,7 +126,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                 startActivity(new Intent(Inward_Truck_weighment.this, Inward_Truck_Weighment_Viewdata.class));
             }
         });
-
 
         //datetime
         /*datetimeTextview=findViewById(R.id.ettrdatetime);
@@ -154,12 +159,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             }
         });
 
-
-
-
-
-
-        etvehicalnumber.addTextChangedListener(new TextWatcher() {
+        /*etvehicalnumber.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -182,9 +182,17 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     etvehicalnumber.setError(null);
                 }
             }
-        });
+        });*/
 
-        etdriver.addTextChangedListener(new TextWatcher() {
+        etvehicalnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus) {
+                    FetchVehicleDetails(etvehicalnumber.getText().toString().trim());
+                }
+            }
+
+        });
+        /*etdriver.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -208,13 +216,11 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                 }
             }
         });
-
+*/
         intsubmit=(Button) findViewById(R.id.wesubmit);
         trwdbroot=FirebaseFirestore.getInstance();
 
-        //Prince
-// AUTO GENRATED SERIAL NUMBER
-        int lastDay = sharedPreferences.getInt("lastDay", -1);
+        /*int lastDay = sharedPreferences.getInt("lastDay", -1);
         int currentDay = Integer.parseInt(getDay());
         if (currentDay != lastDay) {
             // Day has changed, reset auto-generated number to 1
@@ -236,7 +242,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             // Handle the case where sharedPreferences is null
             // This might involve displaying an error message or taking appropriate action
             Log.e("MainActivity", "SharedPreferences is null");
-        }
+        }*/
 
         etint.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,8 +275,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         });
     }
 
-
-    public void showDatePicker()
+    /*public void showDatePicker()
     {
         DatePickerDialog datePickerDialog = new DatePickerDialog(Inward_Truck_weighment.this, new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -288,7 +293,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         );
         datePickerDialog.show();
     }
-
+*/
     public void showTimePicker()
     {
         TimePickerDialog timePickerDialog = new TimePickerDialog(Inward_Truck_weighment.this, new TimePickerDialog.OnTimeSetListener() {
@@ -316,8 +321,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
 
     }
 
-    //prince
-    private String GetYear() {
+    /*private String GetYear() {
         SimpleDateFormat yearFormat = new SimpleDateFormat("yy", Locale.getDefault());
         return yearToLetter(yearFormat.format(new Date()));
     }
@@ -419,7 +423,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                 return null;
             // Default to Null if month is not recognized
         }
-    }
+    }*/
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -510,9 +514,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     });
             Intent intent= new Intent(this, Inward_Truck.class);
             startActivity(intent);
-
-            // Auto Genrated serial number
-            sharedPreferences.edit().putInt("autoGeneratedNumber", autoGeneratedNumber + 1).apply();
         }
     }
     public void uploadimg(Uri Image1, Uri Image2) {
@@ -607,5 +608,59 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
+    }
+    public void FetchVehicleDetails(@NonNull String VehicleNo) {
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Truck Security");
+        String searchText = VehicleNo.trim();
+        Query query = collectionReference.whereEqualTo("VehicalNumber", searchText)
+                .whereNotEqualTo("Intime","" );
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int totalCount = task.getResult().size();
+                    if(totalCount == 0) {
+                        etserialnumber.setText("");
+                        etvehicalnumber.setText("");
+                        etsupplier.setText("");
+                        etmaterial.setText("");
+                        etoanumber.setText("");
+                        etdriver.setText("");
+                        etdate.setText("");
+                        /*etnetweight.setText("");*/
+                        etvehicalnumber.requestFocus();
+                        Toast.makeText(Inward_Truck_weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT).show();
+                    }
+                    else {
+                        for (QueryDocumentSnapshot document : task.getResult()) {
+                            In_Truck_security_list obj = document.toObject(In_Truck_security_list.class);
+                            // Check if the object already exists to avoid duplicates
+                            if (totalCount > 0) {
+                                etserialnumber.setText(obj.getSerialnumber());
+                                etserialnumber.setEnabled(true);
+                                etvehicalnumber.setText(obj.getVehicalNumber());
+                                etvehicalnumber.setEnabled(true);
+                                etsupplier.setText(obj.getSupplier());
+                                etsupplier.setEnabled(true);
+                                etmaterial.setText(obj.getMaterial());
+                                etmaterial.setEnabled(true);
+                               /* etoanumber.setText(obj.getOA_Number());
+                                etoanumber.setEnabled(false);
+                                etdriver.setText(obj.getDriver_No());
+                                etdriver.setEnabled(false);*/
+                                etdate.setText(obj.getDate());
+                                etdate.setEnabled(true);
+                                /*etnetweight.setText(obj.getNetweight());
+                                etnetweight.setEnabled(false);*/
+                                etint.requestFocus();
+                                etint.callOnClick();
+                            }
+                        }
+                    }
+                } else {
+                    Log.w("FirestoreData", "Error getting documents.", task.getException());
+                }
+            }
+        });
     }
 }

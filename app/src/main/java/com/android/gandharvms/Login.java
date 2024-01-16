@@ -22,6 +22,9 @@ import com.google.firebase.database.ValueEventListener;
 public class Login extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
+
+    private String emplidTxt;
+    private String passwordTxt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,38 +35,34 @@ public class Login extends AppCompatActivity {
         final Button login = findViewById(R.id.btnlogin);
         final TextView NotRegister = findViewById(R.id.registerlink);
 
+        autoLoggingFunc();
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String emplidTxt = Userid.getText().toString();
-                final String passwordTxt = password.getText().toString();
+                emplidTxt = Userid.getText().toString();
+                passwordTxt = password.getText().toString();
 
-                if (emplidTxt.isEmpty() || passwordTxt.isEmpty()){
+                if (emplidTxt.isEmpty() || passwordTxt.isEmpty()) {
                     Toast.makeText(Login.this, "Please Enter Your UserID or Password", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
 
                     databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(emplidTxt)){
-
+                            if (snapshot.hasChild(emplidTxt)) {
                                 final String getpassword = snapshot.child(emplidTxt).child("password").getValue(String.class);
-
-                                if (getpassword.equals(passwordTxt)){
+                                if (getpassword.equals(passwordTxt)) {
                                     Toast.makeText(Login.this, "Succesfully Logged in ", Toast.LENGTH_SHORT).show();
                                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("EMPLID_KEY", emplidTxt);
                                     editor.apply();
-                                    startActivity(new Intent(Login.this,Menu.class));
+                                    startActivity(new Intent(Login.this, Menu.class));
                                     finish();
-                                }
-                                else {
+                                } else {
                                     Toast.makeText(Login.this, "Wrong Password", Toast.LENGTH_SHORT).show();
                                 }
-                            }
-                            else {
+                            } else {
                                 Toast.makeText(Login.this, "Wrong Empld ID", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -76,13 +75,24 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
-       NotRegister.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
-               startActivity(new Intent(Login.this,Register.class));
-           }
-       });
+        NotRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Login.this, Register.class));
+            }
+        });
 
 
+    }
+
+    private void autoLoggingFunc() {
+        /*SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String check = sharedPreferences.getString("EMPLID_KEY", "");
+        if (!check.equals(emplidTxt))
+        {
+            Intent intent= new Intent(getApplicationContext(),Menu.class);
+            startActivity(intent);
+            finish();
+        }*/
     }
 }

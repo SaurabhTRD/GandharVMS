@@ -35,7 +35,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
         btnlogout=findViewById(R.id.btn_logoutButton);
 
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "admin");
+        String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "");
 
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -58,8 +58,6 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
                 startActivity(new Intent(Inward_Tanker.this, Login.class));
             }
         });
-
-
     }
 
 

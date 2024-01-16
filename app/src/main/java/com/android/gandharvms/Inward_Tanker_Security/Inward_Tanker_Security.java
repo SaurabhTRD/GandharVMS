@@ -1,5 +1,7 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
+import static com.google.common.net.InternetDomainName.MAX_LENGTH;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.ReturnThis;
 import androidx.appcompat.app.AppCompatActivity;
@@ -67,8 +69,8 @@ import java.util.Objects;
 
 public class Inward_Tanker_Security extends AppCompatActivity implements View.OnClickListener {
 
-    private final int MAX_LENGTH = 10;
-    String[] items = {"Capital Register", "General Register", "Inward Register"};
+    String [] items = {"Capital Register", "General Register","Inward Register"};
+
     String DocId = "";
 
     final Calendar calendar = Calendar.getInstance();
@@ -81,7 +83,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     ArrayAdapter<String> registeritem;
     ArrayAdapter<String> qtyuomdrop;
     ArrayAdapter<String> netweuomdrop;
-        EditText etreg, etvehical, etinvoice, etdate, etsupplier, etmaterial, etintime, etnetweight, etqty, etoum, etregister, etqtyoum, etnetoum, etremark, edpooa, etmobilenum, repremark;
+    EditText etreg, etvehical, etinvoice, etdate, etsupplier, etmaterial, etintime, etnetweight, etqty, etoum, etregister, etqtyoum, etnetoum, etremark, edpooa, etmobilenum, repremark;
     Button btnadd, button1, dbbutton;
     EditText editmaterial, editqty, edituom;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
@@ -147,7 +149,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 //        });
 
         //uom and netwe dropdown
-
         autoCompleteTextView1 = findViewById(R.id.qtyuom);
         qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, qtyuom);
         autoCompleteTextView1.setAdapter(qtyuomdrop);
@@ -181,24 +182,24 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
         });
 
-        etreg = (EditText) findViewById(R.id.etserialnumber);
-        etvehical = (EditText) findViewById(R.id.etvehical);
-        etinvoice = (EditText) findViewById(R.id.etinvoice);
-        etdate = (EditText) findViewById(R.id.etdate);
-        etsupplier = (EditText) findViewById(R.id.etsupplier);
-        etmaterial = (EditText) findViewById(R.id.etmaterial);
-        etintime = (EditText) findViewById(R.id.etqty);
-        etnetweight = (EditText) findViewById(R.id.etnetweight);
-        etqty = (EditText) findViewById(R.id.etintime);
-        etqtyoum = (EditText) findViewById(R.id.qtyuom);
-        etnetoum = (EditText) findViewById(R.id.netweuom);
+        etreg = findViewById(R.id.etserialnumber);
+        etvehical = findViewById(R.id.etvehical);
+        etinvoice = findViewById(R.id.etinvoice);
+        etdate = findViewById(R.id.etdate);
+        etsupplier = findViewById(R.id.etsupplier);
+        etmaterial = findViewById(R.id.etmaterial);
+        etintime = findViewById(R.id.etqty);
+        etnetweight = findViewById(R.id.etnetweight);
+        etqty = findViewById(R.id.etintime);
+        etqtyoum = findViewById(R.id.qtyuom);
+        etnetoum = findViewById(R.id.netweuom);
 
-        etremark = (EditText) findViewById(R.id.edtremark);
-        edpooa = (EditText) findViewById(R.id.etpooa);
-        etmobilenum = (EditText) findViewById(R.id.etcontactnumber);
+        etremark = findViewById(R.id.edtremark);
+        edpooa = findViewById(R.id.etpooa);
+        etmobilenum = findViewById(R.id.etcontactnumber);
 
-        repremark = (EditText) findViewById(R.id.edtreportingremark);
-
+        repremark = findViewById(R.id.edtreportingremark);
+       
         cbox = (CheckBox) findViewById(R.id.isreporting);
 
 
@@ -229,7 +230,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         etdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-              //  final Calendar calendar = Calendar.getInstance();
+                final Calendar calendar = Calendar.getInstance();
                 int day = calendar.get(Calendar.DAY_OF_MONTH);
                 int month = calendar.get(Calendar.MONTH);
                 int year = calendar.get(Calendar.YEAR);
@@ -275,16 +276,16 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isReportingCheckBox = (CheckBox) findViewById(R.id.isreporting);
+                isReportingCheckBox = findViewById(R.id.isreporting);
                 if (isReportingCheckBox.isChecked()) {
                     updateData();
                 } else {
                     try {
                         insertdata();
+                        makeNotification();
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
-                    }
-                    makeNotification();
+                    }                    
                 }
             }
         });
@@ -350,9 +351,14 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             editor.apply();
         }
         if (sharedPreferences != null) {
-            String MaxNumber = formattedDate + "001";
-             GetMaxSerialNo(formattedDate);
+            GetMaxSerialNo(formattedDate);
+            /*autoGeneratedNumber = sharedPreferences.getInt("autoGeneratedNumber", 1);
+            String autoGeneratedNumberString = String.format("%03d", autoGeneratedNumber);
+            // Create the serial number
+            String serialNumber = "GA" + formattedDate + autoGeneratedNumberString;
+            // Set the serial number in the EditText
 
+            etreg.setText(serialNumber);*/
             // Increment and store the auto-generated number for the next vehicle
 
         } else {
@@ -647,10 +653,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
             startActivity(intent);
-
-
-            // Auto Genrated serial number
-            sharedPreferences.edit().putInt("autoGeneratedNumber", autoGeneratedNumber + 1).apply();
         }
     }
 
@@ -719,8 +721,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
             startActivity(intent);
-            // Auto Genrated serial number
-            sharedPreferences.edit().putInt("autoGeneratedNumber", autoGeneratedNumber + 1).apply();
         }
     }
 
@@ -849,7 +849,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             Toast.makeText(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT).show();
         }
 
-    }
+}
 
 }
 
