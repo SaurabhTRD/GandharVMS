@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -91,6 +92,11 @@ public class Inward_Truck_Security extends AppCompatActivity {
     private CheckBox isReportingCheckBox;
     private EditText reportingRemarkLayout;
     Date currentDate = Calendar.getInstance().getTime();
+
+    final Calendar calendar = Calendar.getInstance();
+    //uom
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+    private String dateTimeString = "";
 
 //    String lrCopySelection = lrcopyYes.isChecked() ? "Yes" : "No";
 //    String deliverySelection = deliveryYes.isChecked() ? "Yes" : "No";
@@ -580,14 +586,16 @@ public class Inward_Truck_Security extends AppCompatActivity {
                     }
                 }
             }
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
 
 
-            Map<String, String> trseitems = new HashMap<>();
+            Timestamp timestamp = new Timestamp(calendar.getTime());
+            Map<String, Object> trseitems = new HashMap<>();
             trseitems.put("Intime", etintime.getText().toString().trim());
             trseitems.put("serialnumber", etserialnumber.getText().toString().trim());
             trseitems.put("VehicalNumber", etvehicalnumber.getText().toString().trim());
             trseitems.put("invoicenumber", etsinvocieno.getText().toString().trim());
-            trseitems.put("date", etsdate.getText().toString().trim());
+            trseitems.put("date", timestamp);
             trseitems.put("Supplier", etssupplier.getText().toString().trim());
             trseitems.put("Material", etsmaterial.getText().toString().trim());
             trseitems.put("Qty", etsqty.getText().toString().trim());
@@ -661,9 +669,11 @@ public class Inward_Truck_Security extends AppCompatActivity {
         if (vehicalnumber.isEmpty() || date.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
-            Map<String, String> trseitems = new HashMap<>();
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+            Timestamp timestamp = new Timestamp(calendar.getTime());
+            Map<String, Object> trseitems = new HashMap<>();
 
-            trseitems.put("date", etsdate.getText().toString().trim());
+            trseitems.put("date", timestamp);
             trseitems.put("serialnumber", etserialnumber.getText().toString().trim());
             trseitems.put("VehicalNumber", etvehicalnumber.getText().toString().trim());
             String rpremark = "";
@@ -713,6 +723,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
         String searchText = VehicleNo.trim();
         CollectionReference collectionReference1 = FirebaseFirestore.getInstance().collection("Inward Truck Security");
         Query query = collectionReference.whereEqualTo("VehicalNumber", searchText);
+        Timestamp timestamp = new Timestamp(calendar.getTime());
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -724,7 +735,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             etserialnumber.setText(obj.getSerialnumber());
                             etvehicalnumber.setText(obj.getVehicalNumber());
                             repremark.setText(obj.getReporting_Remark());
-                            etsdate.setText(obj.getDate());
+                            etsdate.setText(dateFormat.format(obj.getDate().toDate()));
                             etsnetwt.setText(obj.getEtsnetweight());
                             cbox.setChecked(true);
                             cbox.setEnabled(false);
@@ -762,6 +773,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
             updates.put("Material", etsmaterial.getText().toString().trim());
             updates.put("Qty", etsqty.getText().toString().trim());
             updates.put("UOM", etsuom.getText().toString().trim());
+            updates.put("etsnetweight",etsnetwt.getText().toString().trim());
             updates.put("UOM2", etsuom2.getText().toString().trim());
 
             List<Map<String, String>> materialList = new ArrayList<>();

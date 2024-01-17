@@ -136,7 +136,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Weighment");
         String searchText = VehicleNo.toString().trim();
         CollectionReference collectionReferenceWe = FirebaseFirestore.getInstance().collection("Inward Tanker Weighment");
-        Query query = collectionReference.whereEqualTo("Gross_Weight", searchText);
+        Query query = collectionReference.whereEqualTo("vehicle_number", searchText);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -146,11 +146,14 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                         In_Tanker_Weighment_list obj = document.toObject(In_Tanker_Weighment_list.class);
                         // Check if the object already exists to avoid duplicates
                         if (totalCount > 0) {
+                            String Grosswt = obj.getGross_Weight();
+
 //                            etint.setText(obj.In_Time);
 
 
                             etvehicle.setText(obj.getVehicle_number());
                             grswt.setText(obj.getGross_Weight());
+
 
                         }
                     }

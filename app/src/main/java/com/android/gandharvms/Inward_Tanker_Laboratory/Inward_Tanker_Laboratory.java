@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,13 +24,19 @@ import android.widget.Toast;
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_saampling_View_data;
+import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.SimpleDateFormat;
@@ -52,6 +59,11 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     FirebaseFirestore dblabroot;
 
     DatePickerDialog picker,picker1,picker2;
+
+    final Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+    Date currentDate = Calendar.getInstance().getTime();
+    private String dateTimeString = "";
 
     private final int MAX_LENGTH=10;
     @Override
@@ -230,6 +242,15 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
         dblabroot=FirebaseFirestore.getInstance();
 
+        etvehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    FetchVehicleDetails(etvehiclenumber.getText().toString().trim());
+                }
+            }
+
+        });
+
         etlabsub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,6 +271,10 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     }
     public void weViewclick(View view){
         Intent intent = new Intent(this, Inward_Tanker_Weighment_Viewdata.class);
+        startActivity(intent);
+    }
+    public void labviewclick(View view){
+        Intent intent = new Intent(this, Inward_Tanker_Lab_Viewdata.class);
         startActivity(intent);
     }
 
@@ -420,7 +445,52 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
 //                });
 
 
+
+
+
+
     }
+
+    public void FetchVehicleDetails(@NonNull String VehicleNo) {
+        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
+        String searchText = VehicleNo.trim();
+        CollectionReference collectionReferenceWe = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
+        Query query = collectionReference.whereEqualTo("vehicalnumber", searchText);
+        Timestamp timestamp = new Timestamp(calendar.getTime());
+        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    int totalCount = task.getResult().size();
+                    for (QueryDocumentSnapshot document : task.getResult()) {
+                        In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+                        // Check if the object already exists to avoid duplicates
+                        if (totalCount > 0) {
+//                            etint.setText(obj.In_Time);
+//                            etreg.setText(obj.getSerialNumber());
+//                            etvehical.setText(obj.getVehicalnumber());
+//                            repremark.setText(obj.getReporting_Remark());
+//                            etdate.setText(dateFormat.format(obj.getDate().toDate()));
+//                            etnetweight.setText(obj.getNetweight());
+//                            cbox.setChecked(true);
+//                            cbox.setEnabled(false);
+//                            saveButton.setVisibility(View.GONE);
+//                            repremark.setEnabled(false);
+//                            etreg.setEnabled(false);
+//                            etdate.setEnabled(false);
+//                            DocId = document.getId();
+                            etMaterial.setText(obj.getMaterial());
+                            etsupplier.setText(obj.getPartyname());
+
+                        }
+                    }
+                } else {
+                    Log.w("FirestoreData", "Error getting documents.", task.getException());
+                }
+            }
+        });
+    }
+
     public void onBackPressed(){
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Security_Adapter.myviewholder> {
@@ -31,13 +32,14 @@ public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Sec
 
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
 
         holder.etintime.setText(datalist.get(position).getIntime());
         holder.etserialnumber.setText(datalist.get(position).getSerialnumber());
         holder.etvehicalnumber.setText(datalist.get(position).getVehicalNumber());
         holder.etsinvocieno.setText(datalist.get(position).getInvoicenumber());
-        holder.etsdate.setText(datalist.get(position).getDate());
+        holder.etsdate.setText(dateFormat.format(datalist.get(position).getDate().toDate()));
         holder.etssupplier.setText(datalist.get(position).getSupplier());
         holder.etsmaterial.setText(datalist.get(position).getMaterial());
         holder.etsqty.setText(datalist.get(position).getQty());

@@ -648,7 +648,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                                 etoanumber.setEnabled(false);
                                 etdriver.setText(obj.getDriver_No());
                                 etdriver.setEnabled(false);*/
-                                etdate.setText(obj.getDate());
+                                etdate.setText(obj.getDate().toString());
                                 etdate.setEnabled(true);
                                 /*etnetweight.setText(obj.getNetweight());
                                 etnetweight.setEnabled(false);*/
