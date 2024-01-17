@@ -259,12 +259,16 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         String supplier=etsupplier.getText().toString().trim();
         String material=etmaterial.getText().toString().trim();
         String Driver = etdriver.getText().toString().trim();
+        /*String customer = etcustomer.getText().toString().trim();*/
         String oanumber = etoanumber.getText().toString().trim();
         String date = etdate.getText().toString().trim();
         String Grossweight = etgrossweight.getText().toString().trim();
         /*String Tareweight = ettareweight.getText().toString().trim();
         String netweight = etnetweight.getText().toString().trim();*/
+        /*String Density = etdensity.getText().toString().trim();
+        String Batchno = etbatchno.getText().toString().trim();*/
         String signby = etsignby.getText().toString().trim();
+       /* String DateTime = etdatetime.getText().toString().trim();*/
         String outTime = getCurrentTime();
 
 
@@ -273,22 +277,27 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }
         else {
-            Map<String,Object>trweitems= new HashMap<>();
+            Map<String,String>trweitems= new HashMap<>();
             trweitems.put("In_Time",etint.getText().toString().trim());
             trweitems.put("Serial_Number",etserialnumber.getText().toString().trim());
             trweitems.put("Vehicle_Number",etvehicalnumber.getText().toString().trim());
             trweitems.put("Supplier",etsupplier.getText().toString().trim());
             trweitems.put("Material",etmaterial.getText().toString().trim());
             trweitems.put("Driver_No",etdriver.getText().toString().trim());
+            /*trweitems.put("Customer",etcustomer.getText().toString().trim());*/
             trweitems.put("Oa_Number",etoanumber.getText().toString().trim());
-            trweitems.put("Date",timestamp);
+            trweitems.put("Date",etdate.getText().toString().trim());
             trweitems.put("Gross_Weight",etgrossweight.getText().toString().trim());
             /*trweitems.put("Tare_Weight",ettareweight.getText().toString().trim());
             trweitems.put("Net_Weight",etnetweight.getText().toString().trim());*/
+            /*trweitems.put("Density",etdensity.getText().toString().trim());
+            trweitems.put("Batch_No",etbatchno.getText().toString().trim());*/
             trweitems.put("Sign_By",etsignby.getText().toString().trim());
+            /*trweitems.put("Date_Time",etdatetime.getText().toString().trim());*/
             trweitems.put("outTime",outTime.toString());
             trweitems.put("InVehicleImage", imgPath1);
             trweitems.put("InDriverImage", imgPath2);
+
 
             makeNotification(etvehicalnumber.getText().toString(),outTime.toString());
             trwdbroot.collection("Inward Truck Weighment").add(trweitems)
@@ -302,12 +311,17 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                             etsupplier.setText("");
                             etmaterial.setText("");
                             etdriver.setText("");
+                            /*etcustomer.setText("");*/
                             etoanumber.setText("");
                             etdate.setText("");
                             etgrossweight.setText("");
                             /*ettareweight.setText("");
                             etnetweight.setText("");*/
+                            /*etdensity.setText("");
+                            etbatchno.setText("");*/
                             etsignby.setText("");
+                            /*etdatetime.setText("");*/
+
                             Toast.makeText(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         }
                     });

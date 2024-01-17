@@ -1,14 +1,17 @@
 package com.android.gandharvms.Inward_Truck_Security;
 
+import com.google.firebase.Timestamp;
+
 public class In_Truck_security_list {
 
 //    String etintime,etserialnumber,etvehicalnumber,etsinvocieno,etsdate,etssupplier,etsmaterial,etsqty,etsuom,etsnetwt,etsuom2;
-    String Intime,serialnumber,VehicalNumber,invoicenumber,date,Supplier,Material,Qty,UOM,etsnetweight,UOM2,outTime,SelectRegister,lrcopy, deliverybill, taxinvoice, ewaybill,Reporting_Remark;
+    String Intime,serialnumber,VehicalNumber,invoicenumber,Supplier,Material,Qty,UOM,etsnetweight,UOM2,outTime,SelectRegister,lrcopy, deliverybill, taxinvoice, ewaybill,Reporting_Remark;
 
+    Timestamp date;
     public In_Truck_security_list() {
     }
 
-    public In_Truck_security_list(String intime, String serialnumber, String vehicalNumber, String invoicenumber, String date, String supplier, String material, String qty, String UOM, String etsnetweight, String UOM2,String outTime,String selectRegister,String Lrcopy, String Deliverybill, String Taxinvoice, String Ewaybill,String reporting_Remark) {
+    public In_Truck_security_list(String intime, String serialnumber, String vehicalNumber, String invoicenumber, Timestamp date, String supplier, String material, String qty, String UOM, String etsnetweight, String UOM2,String outTime,String selectRegister,String Lrcopy, String Deliverybill, String Taxinvoice, String Ewaybill,String reporting_Remark) {
         Intime = intime;
         this.serialnumber = serialnumber;
         VehicalNumber = vehicalNumber;
@@ -61,11 +64,11 @@ public class In_Truck_security_list {
         this.invoicenumber = invoicenumber;
     }
 
-    public String getDate() {
+    public Timestamp getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Timestamp date) {
         this.date = date;
     }
 

@@ -7,7 +7,7 @@ import java.sql.Time;
 public class In_Tanker_Security_list {
 
     String SerialNumber,intime,invoiceno,material,netweight,partyname,qty,uom,vehicalnumber,outTime,qtyuom,netweightuom,extramaterials,Remark,OA_PO_Number,Driver_Mobile_No,Reporting_Remark;
-Timestamp date;
+    Timestamp date;
     public In_Tanker_Security_list(){
 
     }

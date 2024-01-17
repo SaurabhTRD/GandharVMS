@@ -320,7 +320,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
             baseQuery = baseQuery.whereLessThanOrEqualTo("date", endDate);
         }
 
-        baseQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        baseQuery.orderBy("date", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
