@@ -1,13 +1,14 @@
 package com.android.gandharvms.Inward_Tanker_Production;
+import com.google.firebase.Timestamp;
 
 public class In_Tanker_Production_list {
 
-    String In_Time, Req_to_unload, Tank_Number_Request, confirm_unload, Tank_Number,con_unload_DT, outTime, Material, Vehicle_Number;
-
+    String In_Time, Req_to_unload, Tank_Number_Request, confirm_unload, Tank_Number, outTime, Material, Vehicle_Number;
+    Timestamp con_unload_DT;
     public In_Tanker_Production_list() {
     }
 
-    public In_Tanker_Production_list(String in_Time, String req_to_unload, String tank_Number_Request, String confirm_unload, String tank_Number, String con_unload_DT, String outTime, String Material, String Vehicle_Number) {
+    public In_Tanker_Production_list(String in_Time, String req_to_unload, String tank_Number_Request, String confirm_unload, String tank_Number, Timestamp con_unload_DT, String outTime, String Material, String Vehicle_Number) {
         this.In_Time = in_Time;
         this.Req_to_unload = req_to_unload;
         this.Tank_Number_Request = tank_Number_Request;
@@ -60,11 +61,11 @@ public class In_Tanker_Production_list {
         Tank_Number = tank_Number;
     }
 
-    public String getCon_unload_DT() {
+    public Timestamp getCon_unload_DT() {
         return con_unload_DT;
     }
 
-    public void setCon_unload_DT(String con_unload_DT) {
+    public void setCon_unload_DT(Timestamp con_unload_DT) {
         this.con_unload_DT = con_unload_DT;
     }
 

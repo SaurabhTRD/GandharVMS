@@ -1,15 +1,15 @@
 package com.android.gandharvms.Inward_Truck_Weighment;
-
+import com.google.firebase.Timestamp;
 public class In_Truck_weigment_list {
 
     String In_Time, Serial_Number, Vehicle_Number, Supplier, Material,
-            Driver_No, Customer, Oa_Number, Date, Gross_Weight, Density, Batch_No, Sign_By, Date_Time, outTime,InVehicleImage,InDriverImage;
-
+            Driver_No, Customer, Oa_Number, Gross_Weight, Density, Batch_No, Sign_By, Date_Time, outTime,InVehicleImage,InDriverImage;
+    Timestamp Date;
     public In_Truck_weigment_list() {
     }
 
     public In_Truck_weigment_list(String in_Time, String serial_Number, String vehicle_Number, String supplier, String material, String driver_No, String customer,
-                                  String oa_Number, String date, String gross_Weight,String density, String batch_No,
+                                  String oa_Number, Timestamp date, String gross_Weight,String density, String batch_No,
                                   String sign_By, String date_Time, String outTime,String InVehicleImage,String InDriverImage) {
         In_Time = in_Time;
         Serial_Number = serial_Number;
@@ -107,11 +107,11 @@ public class In_Truck_weigment_list {
         this.Oa_Number = OA_Number;
     }
 
-    public String getDate() {
+    public Timestamp getDate() {
         return Date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Timestamp date) {
         Date = date;
     }
 

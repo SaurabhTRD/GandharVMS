@@ -1,14 +1,17 @@
 package com.android.gandharvms.Inward_Tanker_Weighment;
 
+import com.google.firebase.Timestamp;
+
 public class In_Tanker_Weighment_list {
 
-    String   In_Time,serial_number,vehicle_number,supplier_name,material_name,Driver_Number,OA_number,Date,
+    String   In_Time,serial_number,vehicle_number,supplier_name,material_name,Driver_Number,OA_number,
             Gross_Weight,Batch_Number,Sign_By,Container_No,shortage_Dip,shortage_weight,outTime,InVehicleImage,InDriverImage;
 
+    Timestamp Date;
     public In_Tanker_Weighment_list() {
     }
 
-    public In_Tanker_Weighment_list( String in_Time,  String serial_number, String vehicle_number, String supplier_name, String material_name, String customer_Name, String driver_Number, String OA_number, String date, String gross_Weight, String batch_Number, String sign_By, String we_Date_Time, String container_No, String shortage_Dip, String shortage_weight ,String outTime
+    public In_Tanker_Weighment_list( String in_Time,  String serial_number, String vehicle_number, String supplier_name, String material_name, String customer_Name, String driver_Number, String OA_number, Timestamp  date, String gross_Weight, String batch_Number, String sign_By, String we_Date_Time, String container_No, String shortage_Dip, String shortage_weight ,String outTime
     ,String InVehicleImage,String InDriverImage) {
         this.In_Time = in_Time;
         this.serial_number = serial_number;
@@ -86,11 +89,11 @@ public class In_Tanker_Weighment_list {
         this.OA_number = OA_number;
     }
 
-    public String getDate() {
+    public Timestamp getDate() {
         return Date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Timestamp date) {
         Date = date;
     }
 

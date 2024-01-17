@@ -67,6 +67,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
     ArrayList<In_Tanker_Weighment_list> datalist;
     FirebaseFirestore db;
     In_Tanker_we_Adapter in_tanker_we_adapter;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
     TextView txtTotalCount;
     Button startDatePicker, endDatePicker, btncleardateselection, btnlogout;
@@ -94,6 +95,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         etpartyName = findViewById(R.id.et_PartyName);
         btncleardateselection = findViewById(R.id.btn_clearDateSelectionfields);
         txtTotalCount = findViewById(R.id.tv_TotalCount);
+
         recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
         datalist = new ArrayList<>();
@@ -101,7 +103,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         recview.setAdapter(in_tanker_we_adapter);
 
         db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Weighment").orderBy("Date", Query.Direction.ASCENDING).get()
+        db.collection("Inward Tanker Weighment").orderBy("Date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -162,7 +164,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                 String searchText = charSequence.toString().trim();
                 if (searchText.isEmpty()) {
                     // If search text is empty, fetch all data without any filters
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    collectionReference.orderBy("Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -187,7 +189,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                     Query query = collectionReference.whereGreaterThanOrEqualTo("serial_number", searchText)
                             .whereLessThanOrEqualTo("serial_number", searchText + "\uf8ff");
 
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    query.orderBy("Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -231,7 +233,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                 String searchText = charSequence.toString().trim();
                 if (searchText.isEmpty()) {
                     // If search text is empty, fetch all data without any filters
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    collectionReference.orderBy("Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -256,7 +258,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                     Query query = collectionReference.whereGreaterThanOrEqualTo("supplier_name", searchText)
                             .whereLessThanOrEqualTo("supplier_name", searchText + "\uf8ff");
 
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    query.orderBy("Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -338,7 +340,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         recview.setAdapter(in_tanker_we_adapter);
 
         db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Weighment").orderBy("Date", Query.Direction.ASCENDING).get()
+        db.collection("Inward Tanker Weighment").orderBy("Date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -369,7 +371,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
             baseQuery = baseQuery.whereLessThanOrEqualTo("Date", endDate);
         }
 
-        baseQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        baseQuery.orderBy("Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -426,7 +428,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                 dataRow.createCell(5).setCellValue(dataItem.getMaterial_name());
                 dataRow.createCell(6).setCellValue(dataItem.getDriver_Number());
                 dataRow.createCell(7).setCellValue(dataItem.getOA_number());
-                dataRow.createCell(8).setCellValue(dataItem.getDate());
+                dataRow.createCell(8).setCellValue(dateFormat.format(dataItem.getDate().toDate()));
                 dataRow.createCell(9).setCellValue(dataItem.getGross_Weight());
                 dataRow.createCell(10).setCellValue(dataItem.getBatch_Number());
                 dataRow.createCell(11).setCellValue(dataItem.getContainer_No());

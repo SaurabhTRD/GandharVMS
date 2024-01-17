@@ -1,5 +1,6 @@
 package com.android.gandharvms.Inward_Truck_store;
 
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,12 +32,13 @@ public class Im_Truck_Store_Adapter extends RecyclerView.Adapter<Im_Truck_Store_
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
         //,,,,,,,,,;
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
         holder.etintime.setText(datalist.get(position).getIn_Time());
         holder.etserialnumber.setText(datalist.get(position).getSerial_Number());
         holder.etvehicalnum.setText(datalist.get(position).getVehicle_Number());
         holder.etpo.setText(datalist.get(position).getPO_No());
-        holder.etdate.setText(datalist.get(position).getPo_Date());
+        holder.etdate.setText(dateFormat.format(datalist.get(position).getPo_Date().toDate()));
         holder.etmaterialrdate.setText(datalist.get(position).getMaterial_Rec_Date());
         holder.etmaterial.setText(datalist.get(position).getMaterial());
         holder.etqty.setText(datalist.get(position).getQty());

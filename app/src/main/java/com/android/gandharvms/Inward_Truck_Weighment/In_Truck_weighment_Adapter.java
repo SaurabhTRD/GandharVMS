@@ -1,5 +1,6 @@
 package com.android.gandharvms.Inward_Truck_Weighment;
 
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
 
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
         holder.etintime.setText(datalist.get(position).getIn_Time());
         holder.etserialnumber.setText(datalist.get(position).getSerial_Number());
@@ -45,7 +47,7 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
         holder.etcustomer.setText(datalist.get(position).getCustomer());
         holder.etdriver.setText(datalist.get(position).getDriver_No());
         holder.etoanumber.setText(datalist.get(position).getOA_Number());
-        holder.etdate.setText(datalist.get(position).getDate());
+        holder.etdate.setText(dateFormat.format(datalist.get(position).getDate().toDate()));
         holder.etgrossweight.setText(datalist.get(position).getGross_Weight());
         /*holder.ettareweight.setText(datalist.get(position).getTare_Weight());
         holder.etnetweight.setText(datalist.get(position).getNet_Weight());*/

@@ -134,7 +134,7 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
                     Query query = collectionReference.whereGreaterThanOrEqualTo("Serial_Number", searchText)
                             .whereLessThanOrEqualTo("Serial_Number", searchText + "\uf8ff");
 
-                    query.orderBy("Po_Date", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    query.orderBy("Po_Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -176,7 +176,7 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
                 String searchText = charSequence.toString().trim();
                 if (searchText.isEmpty()) {
                     // If search text is empty, fetch all data without any filters
-                    collectionReference.orderBy("Po_Date", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    collectionReference.orderBy("Po_Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -201,7 +201,7 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
                     Query query = collectionReference.whereGreaterThanOrEqualTo("Material", searchText)
                             .whereLessThanOrEqualTo("Material", searchText + "\uf8ff");
 
-                    query.orderBy("Po_Date", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    query.orderBy("Po_Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -235,7 +235,7 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
         recview.setAdapter(imTruckStoreAdapter);
 
         db= FirebaseFirestore.getInstance();
-        db.collection("Inward Truck Store").orderBy("Po_Date", Query.Direction.ASCENDING).get()
+        db.collection("Inward Truck Store").orderBy("Po_Date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -296,7 +296,7 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
         recview.setAdapter(imTruckStoreAdapter);
 
         db= FirebaseFirestore.getInstance();
-        db.collection("Inward Truck Store").orderBy("Po_Date", Query.Direction.ASCENDING).get()
+        db.collection("Inward Truck Store").orderBy("Po_Date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -330,7 +330,7 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
             baseQuery = baseQuery.whereLessThanOrEqualTo("Po_Date", endDate);
         }
 
-        baseQuery.orderBy("Po_Date", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        baseQuery.orderBy("Po_Date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

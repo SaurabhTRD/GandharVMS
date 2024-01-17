@@ -41,7 +41,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
     ArrayList<In_Tanker_Production_list> datalist;
     FirebaseFirestore db;
     In_Tanker_Pro_Adapter inTankerProAdapter;
-    Button btntanknumclear, btnmaterialnumclear, startDatePicker, endDatePicker, btnclearSelectedDates,btnlogout;
+    Button btntanknumclear, btnmaterialnumclear, startDatePicker, endDatePicker, btnclearSelectedDates, btnlogout;
     EditText etTankNumber, etMaterialName;
     String date_start, date_end;
     TextView txtTotalCount;
@@ -54,7 +54,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
         startDatePicker = findViewById(R.id.startdate);
         endDatePicker = findViewById(R.id.enddate);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnlogout = findViewById(R.id.btn_logoutButton);
         txtTotalCount = findViewById(R.id.tv_TotalCount);
         btnclearSelectedDates = findViewById(R.id.btn_clearDateSelectionfields);
         btntanknumclear = findViewById(R.id.btn_sTnnumberbutton_clear);
@@ -63,14 +63,14 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
         etMaterialName = findViewById(R.id.et_ProMaterialName);
 
 
-        recview = (RecyclerView) findViewById(R.id.recyclerview);
+        recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
         datalist = new ArrayList<>();
         inTankerProAdapter = new In_Tanker_Pro_Adapter(datalist);
         recview.setAdapter(inTankerProAdapter);
 
         db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Production").get()
+        db.collection("Inward Tanker Production").orderBy("con_unload_DT", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -122,7 +122,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                 String searchtext = charSequence.toString().trim();
                 if (searchtext.isEmpty()) {
                     // If search text is empty, fetch all data without any filters
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    collectionReference.orderBy("con_unload_DT", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -147,7 +147,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                     Query query = collectionReference.whereGreaterThanOrEqualTo("Tank_Number", searchtext)
                             .whereLessThanOrEqualTo("Tank_Number", searchtext + "\uf8ff");
 
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    query.orderBy("con_unload_DT", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -187,7 +187,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                 String searchtext = charSequence.toString().trim();
                 if (searchtext.isEmpty()) {
                     // If search text is empty, fetch all data without any filters
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    collectionReference.orderBy("con_unload_DT", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -211,8 +211,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                     // Create a query with filters for non-empty search text
                     Query query = collectionReference.whereGreaterThanOrEqualTo("Material", searchtext)
                             .whereLessThanOrEqualTo("Material", searchtext + "\uf8ff");
-
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    query.orderBy("con_unload_DT", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -254,7 +253,8 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
             }
         });
     }
-    public void showDatePickerDialog(final boolean isStartDate){
+
+    public void showDatePickerDialog(final boolean isStartDate) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -267,7 +267,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         String monthAbbreviation = monthAbbreviations[monthOfYear];
                         // Month is 0 based, so adding 1 to monthOfYear
-                        String selectedDate = dayOfMonth + " " + monthAbbreviation  + " " + year;
+                        String selectedDate = dayOfMonth + " " + monthAbbreviation + " " + year;
 
                         if (isStartDate) {
                             date_start = selectedDate;
@@ -283,21 +283,23 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                 }, year, month, day);
 
         datePickerDialog.show();
-    }    public void fetchDataFromFirestore(String startDate, String endDate){
+    }
+
+    public void fetchDataFromFirestore(String startDate, String endDate) {
 
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Production");
         Query baseQuery = collectionReference.orderBy("con_unload_DT");
 
-        if (startDate != null && endDate != null){
+        if (startDate != null && endDate != null) {
             baseQuery = baseQuery.whereGreaterThanOrEqualTo("con_unload_DT", startDate)
                     .whereLessThanOrEqualTo("con_unload_DT", endDate);
-        } else if (startDate != null){
+        } else if (startDate != null) {
             baseQuery = baseQuery.whereGreaterThanOrEqualTo("con_unload_DT", startDate);
         } else if (endDate != null) {
             baseQuery = baseQuery.whereLessThanOrEqualTo("con_unload_DT", endDate);
         }
 
-        baseQuery.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        baseQuery.orderBy("con_unload_DT", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {
@@ -315,19 +317,20 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
             }
         });
     }
-    private void clearSelectedDates(){
+
+    private void clearSelectedDates() {
         startDatePicker.setText("start of Date");
         endDatePicker.setText("End of Data");
         etTankNumber.setText("");
         etMaterialName.setText("");
-        recview= (RecyclerView) findViewById(R.id.recyclerview);
+        recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
         datalist = new ArrayList<>();
-        inTankerProAdapter= new In_Tanker_Pro_Adapter(datalist);
+        inTankerProAdapter = new In_Tanker_Pro_Adapter(datalist);
         recview.setAdapter(inTankerProAdapter);
 
-        db= FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Production").get()
+        db = FirebaseFirestore.getInstance();
+        db.collection("Inward Tanker Production").orderBy("con_unload_DT", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -335,8 +338,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                         int totalCount = list.size();
                         txtTotalCount.setText("Total count: " + totalCount);
                         datalist.clear();
-                        for (DocumentSnapshot d:list)
-                        {
+                        for (DocumentSnapshot d : list) {
                             In_Tanker_Production_list obj = d.toObject(In_Tanker_Production_list.class);
                             datalist.add(obj);
                         }

@@ -13,13 +13,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class In_Tanker_we_Adapter extends RecyclerView.Adapter<In_Tanker_we_Adapter.myviewholder>
 {
 
     Context context;
-
     private static String BaseUrl ="https://firebasestorage.googleapis.com/v0/b/gandharvms.appspot.com/o";
     ArrayList<In_Tanker_Weighment_list> datalist ;
 
@@ -38,6 +38,8 @@ public class In_Tanker_we_Adapter extends RecyclerView.Adapter<In_Tanker_we_Adap
 
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
+
         holder.intime.setText(datalist.get(position).getIn_Time());
         holder.serialnumber.setText(datalist.get(position).getSerial_number());
         holder.vehiclenumber.setText(datalist.get(position).getVehicle_number());
@@ -45,7 +47,7 @@ public class In_Tanker_we_Adapter extends RecyclerView.Adapter<In_Tanker_we_Adap
         holder.materialname.setText(datalist.get(position).getMaterial_name());
         holder.driverno.setText(datalist.get(position).getDriver_Number());
         holder.oanumber.setText(datalist.get(position).getOA_number());
-        holder.date.setText(datalist.get(position).getDate());
+        holder.date.setText(dateFormat.format(datalist.get(position).getDate().toDate()));
         holder.grossweight.setText(datalist.get(position).getGross_Weight());
         /*holder.tareweight.setText(datalist.get(position).getTare_Weight());
         holder.netweight.setText(datalist.get(position).getNet_Weight());*/

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.R;
 
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 public class In_Tanker_Pro_Adapter extends RecyclerView.Adapter<In_Tanker_Pro_Adapter.myviewholder> {
 
@@ -31,6 +32,7 @@ public class In_Tanker_Pro_Adapter extends RecyclerView.Adapter<In_Tanker_Pro_Ad
 
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
         holder.etint.setText(datalist.get(position).getIn_Time());
         holder.etreq.setText(datalist.get(position).getReq_to_unload());
         holder.ettankno.setText(datalist.get(position).getTank_Number_Request());
@@ -39,7 +41,7 @@ public class In_Tanker_Pro_Adapter extends RecyclerView.Adapter<In_Tanker_Pro_Ad
         holder.outTime.setText(datalist.get(position).getOutTime());
         holder.Material.setText(datalist.get(position).getMaterial());
         holder.Vehicle_Number.setText(datalist.get(position).getVehicle_Number());
-        holder.etconunloadDateTime.setText(datalist.get(position).getCon_unload_DT());
+        holder.etconunloadDateTime.setText(dateFormat.format(datalist.get(position).getCon_unload_DT().toDate()));
     }
     @Override
     public int getItemCount() {

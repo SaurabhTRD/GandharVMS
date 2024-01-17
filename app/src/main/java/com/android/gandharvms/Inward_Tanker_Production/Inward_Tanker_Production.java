@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
@@ -31,6 +32,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.Timestamp;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.SimpleDateFormat;
@@ -46,8 +48,11 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     /*  Button viewdata;*/
     Button prosubmit;
     FirebaseFirestore prodbroot;
-    EditText datetimeTextview;
-    Calendar calendar = Calendar.getInstance();
+    DatePickerDialog picker;
+    final Calendar calendar = Calendar.getInstance();
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
+    Timestamp timestamp = new Timestamp(calendar.getTime());
+
     TimePickerDialog tpicker;
 
     @Override
@@ -72,12 +77,27 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
 
         //datetimepickertesting
-        datetimeTextview = findViewById(R.id.etconunloadDateTime);
+        etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
 
-        datetimeTextview.setOnClickListener(new View.OnClickListener() {
+        etconunloadDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePicker();
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(Inward_Tanker_Production.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        etconunloadDateTime.setText(dateFormat.format(calendar.getTime()));
+                    }
+                }, year, month, day);
+                picker.show();
             }
         });
         etint.setOnClickListener(new View.OnClickListener() {
@@ -110,33 +130,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
         });
 
-        /*etVehicleNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() > MAX_LENGTH) {
-                    etVehicleNumber.removeTextChangedListener(this);
-                    String trimmedText = editable.toString().substring(0, MAX_LENGTH);
-                    etVehicleNumber.setText(trimmedText);
-                    etVehicleNumber.setSelection(MAX_LENGTH); // Move cursor to the end
-                    etVehicleNumber.addTextChangedListener(this);
-                } else if (editable.length() < MAX_LENGTH) {
-                    // Show an error message for less than 10 digits
-                    etVehicleNumber.setError("Invalid format. Enter 10 Character. \n Vehicle No Format - ST00AA9999 OR YYBR9999AA");
-                } else {
-                    // Clear any previous error message when valid
-                    etVehicleNumber.setError(null);
-                }
-            }
-        });*/
-
         prodbroot = FirebaseFirestore.getInstance();
 
         prosubmit.setOnClickListener(new View.OnClickListener() {
@@ -146,51 +139,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             }
         });
 
-    }
-
-    // Time and date for confirm unload
-    public void showDatePicker() {
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(Inward_Tanker_Production.this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-
-                calendar.set(Calendar.YEAR, year);
-                calendar.set(Calendar.MONTH, month);
-                calendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-
-                showTimePicker();
-            }
-        },
-                calendar.get(Calendar.YEAR),
-                calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH)
-        );
-        datePickerDialog.show();
-
-    }
-
-    public void showTimePicker() {
-        TimePickerDialog timePickerDialog = new TimePickerDialog(Inward_Tanker_Production.this, new TimePickerDialog.OnTimeSetListener() {
-            @Override
-            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-
-                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                calendar.set(Calendar.MINUTE, minute);
-
-                handleDateTimeSelection(calendar.getTime());
-
-            }
-        }, calendar.get(Calendar.HOUR_OF_DAY),
-                calendar.get(Calendar.MINUTE),
-                true
-        );
-        timePickerDialog.show();
-    }
-
-    public void handleDateTimeSelection(java.util.Date dateTime) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd MMM yyyy, hh:mm a", Locale.getDefault());
-        etconunloadDateTime.setText(dateFormat.format(dateTime.getTime()));
     }
 
     public void makeNotification(String vehicleNo, String outTime) {
@@ -231,13 +179,13 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         if (intime.isEmpty() || reqtounload.isEmpty() || tanknumber.isEmpty() || confirmunload.isEmpty() || tanknumbers.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
             Toast.makeText(this, "All Fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
-            Map<String, String> proitems = new HashMap<>();
+            Map<String, Object> proitems = new HashMap<>();
             proitems.put("In_Time", etint.getText().toString().trim());
             proitems.put("Req_to_unload", etreq.getText().toString().trim());
             proitems.put("Tank_Number_Request", ettankno.getText().toString().trim());
             proitems.put("confirm_unload", etconbyop.getText().toString().trim());
             proitems.put("Tank_Number", tanknoun.getText().toString().trim());
-            proitems.put("con_unload_DT", etconunloadDateTime.getText().toString().trim());
+            proitems.put("con_unload_DT", timestamp);
             proitems.put("outTime", outTime);
             proitems.put("Material", etMaterial.getText().toString().trim());
             proitems.put("Vehicle_Number", etVehicleNumber.getText().toString().trim());
@@ -257,6 +205,8 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                             etMaterial.setText("");
                             etVehicleNumber.setText("");
                             etserno.setText("");
+                            etint.requestFocus();
+                            etint.callOnClick();
                             Toast.makeText(Inward_Tanker_Production.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
                         }
                     });
@@ -285,6 +235,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                         etMaterial.setText("");
                         etVehicleNumber.requestFocus();
                         etserno.setText("");
+                        etconunloadDateTime.setText("");
                         Toast.makeText(Inward_Tanker_Production.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT).show();
                     } else {
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -292,11 +243,9 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                             // Check if the object already exists to avoid duplicates
                             if (totalCount > 0) {
                                 etserno.setText(obj.getSerialNumber());
-                                etserno.setEnabled(true);
                                 etVehicleNumber.setText(obj.getVehicalnumber());
-                                etVehicleNumber.setEnabled(true);
                                 etMaterial.setText(obj.getMaterial());
-                                etMaterial.setEnabled(true);
+                                etconunloadDateTime.setText(dateFormat.format(obj.getDate().toDate()));
                                 etint.requestFocus();
                                 etint.callOnClick();
                             }

@@ -1,14 +1,15 @@
 package com.android.gandharvms.Inward_Truck_store;
-
+import com.google.firebase.Timestamp;
 public class In_Truck_Store_list {
-    String In_Time,Inv_QuantityUom,Serial_Number,Vehicle_Number,PO_No,Po_Date,Material_Rec_Date,
+    String In_Time,Inv_QuantityUom,Serial_Number,Vehicle_Number,PO_No,Material_Rec_Date,
             Material,Qty,ReceiveQTY_Uom,Remarks,outTime,Invoice_Quantity,Invoice_Date,Invoice_Number,extramaterials;
 
+    Timestamp Po_Date;
     public In_Truck_Store_list() {
     }
 
     public In_Truck_Store_list(String in_Time,String inv_quantityuom, String serial_Number, String vehicle_Number, String po_no,
-                               String po_Date, String material_Rec_Date, String material, String qty,
+                               Timestamp po_Date, String material_Rec_Date, String material, String qty,
                                String recqtyoum, String remarks, String outTime,String inv_Qty,String extramaterials,String inv_Date,String inv_Number) {
         In_Time = in_Time;
         this.Inv_QuantityUom=inv_quantityuom;
@@ -62,12 +63,12 @@ public class In_Truck_Store_list {
         this.PO_No = PO_No;
     }
 
-    public String getPo_Date() {
+    public Timestamp getPo_Date() {
 
         return Po_Date;
     }
 
-    public void setDate(String po_Date) {
+    public void setDate(Timestamp po_Date) {
         Po_Date = po_Date;
     }
 
