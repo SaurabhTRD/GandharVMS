@@ -453,7 +453,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                                 etvehicalnumber.setText(obj.getVehicalNumber());
                                 etsupplier.setText(obj.getSupplier());
                                 etmaterial.setText(obj.getMaterial());
-                                etdate.setText(obj.getDate());
+                                etdate.setText(dateFormat.format(obj.getDate().toDate()));
                                 /*etnetweight.setText(obj.getNetweight());
                                 etnetweight.setEnabled(false);*/
                                 etint.requestFocus();

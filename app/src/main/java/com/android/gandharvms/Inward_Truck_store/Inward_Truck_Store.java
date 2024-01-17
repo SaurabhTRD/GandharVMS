@@ -465,7 +465,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
                                 etoanumber.setEnabled(false);
                                 etdriver.setText(obj.getDriver_No());
                                 etdriver.setEnabled(false);*/
-                                etpodate.setText(obj.getDate().toString());
+                                etpodate.setText(dateFormat.format(obj.getDate().toDate()));
                                 etpodate.setEnabled(true);
                                 /*etnetweight.setText(obj.getNetweight());
                                 etnetweight.setEnabled(false);*/
