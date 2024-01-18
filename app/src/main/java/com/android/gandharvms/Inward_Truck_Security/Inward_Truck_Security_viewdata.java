@@ -106,7 +106,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
                 String searchText = charSequence.toString().trim();
                 if (searchText.isEmpty()) {
                     // If search text is empty, fetch all data without any filters
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    collectionReference.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -131,7 +131,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
                     Query query = collectionReference.whereGreaterThanOrEqualTo("serialnumber", searchText)
                             .whereLessThanOrEqualTo("serialnumber", searchText + "\uf8ff");
 
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    query.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -168,7 +168,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
                 String searchText = charSequence.toString().trim();
                 if (searchText.isEmpty()) {
                     // If search text is empty, fetch all data without any filters
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    collectionReference.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -193,7 +193,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
                     Query query = collectionReference.whereGreaterThanOrEqualTo("Supplier", searchText)
                             .whereLessThanOrEqualTo("Supplier", searchText + "\uf8ff");
 
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    query.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                         @Override
                         public void onComplete(@NonNull Task<QuerySnapshot> task) {
                             if (task.isSuccessful()) {
@@ -228,7 +228,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
         recview.setAdapter(inTruckSecurityAdapter);
 
         db= FirebaseFirestore.getInstance();
-        db.collection("Inward Truck Security").get()
+        db.collection("Inward Truck Security").orderBy("date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -259,7 +259,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
         recview.setAdapter(inTruckSecurityAdapter);
 
         db= FirebaseFirestore.getInstance();
-        db.collection("Inward Truck Security").get()
+        db.collection("Inward Truck Security").orderBy("date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
@@ -309,7 +309,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
     public void fetchDataFromFirestore(String startDate, String endDate){
 
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Truck Security");
-        Query baseQuery = collectionReference.orderBy("date");
+        Query baseQuery = collectionReference.orderBy("date",Query.Direction.DESCENDING);
 
         if (startDate != null && endDate != null){
             baseQuery = baseQuery.whereGreaterThanOrEqualTo("date", startDate)
@@ -320,7 +320,7 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
             baseQuery = baseQuery.whereLessThanOrEqualTo("date", endDate);
         }
 
-        baseQuery.orderBy("date", Query.Direction.ASCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        baseQuery.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if (task.isSuccessful()) {

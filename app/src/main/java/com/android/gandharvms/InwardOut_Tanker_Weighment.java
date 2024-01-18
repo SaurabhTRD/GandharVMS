@@ -129,6 +129,27 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         finish();
     }
 
+    /*public void calculateNetWeight() {
+
+        String grossweightStr = etgrossweight.getText().toString().trim();
+        *//*String tareweightStr = ettareweight.getText().toString().trim();*//*
+
+        double grossWeight = grossweightStr.isEmpty() ? 0.0 : Double.parseDouble(grossweightStr);
+*//*
+        double tareWeight = tareweightStr.isEmpty() ? 0.0 : Double.parseDouble(tareweightStr);
+*//*
+
+        double netweight = grossWeight - tareWeight;
+
+        etnetweight.setText("" + netweight);
+    }*/
+    public void calculateNetWeight(){
+        String tareweight = ettareweight.getText().toString().trim();
+        String grossweight = grswt.getText().toString().trim();
+
+
+    }
+
 
 
     public void FetchVehicleDetails(@NonNull String VehicleNo)

@@ -5,13 +5,15 @@ import com.google.firebase.Timestamp;
 public class In_Truck_security_list {
 
 //    String etintime,etserialnumber,etvehicalnumber,etsinvocieno,etsdate,etssupplier,etsmaterial,etsqty,etsuom,etsnetwt,etsuom2;
-    String Intime,serialnumber,VehicalNumber,invoicenumber,Supplier,Material,Qty,UOM,etsnetweight,UOM2,outTime,SelectRegister,lrcopy, deliverybill, taxinvoice, ewaybill,Reporting_Remark;
+    String Intime,serialnumber,VehicalNumber,invoicenumber,Supplier,Material,Qty,UOM,etsnetweight,UOM2,outTime,SelectRegister,lrcopy, deliverybill, taxinvoice, ewaybill,Reporting_Remark,
+        Driver_Mobile_Number,OA_PO_Number;
 
     Timestamp date;
     public In_Truck_security_list() {
     }
 
-    public In_Truck_security_list(String intime, String serialnumber, String vehicalNumber, String invoicenumber, Timestamp date, String supplier, String material, String qty, String UOM, String etsnetweight, String UOM2,String outTime,String selectRegister,String Lrcopy, String Deliverybill, String Taxinvoice, String Ewaybill,String reporting_Remark) {
+    public In_Truck_security_list(String intime, String serialnumber, String vehicalNumber, String invoicenumber, Timestamp date, String supplier, String material, String qty, String UOM, String etsnetweight, String UOM2,String outTime,String selectRegister,String Lrcopy, String Deliverybill, String Taxinvoice, String Ewaybill,String reporting_Remark
+    ,String driver_Mobile_Number,String OA_PO_Number) {
         Intime = intime;
         this.serialnumber = serialnumber;
         VehicalNumber = vehicalNumber;
@@ -30,6 +32,8 @@ public class In_Truck_security_list {
         this.taxinvoice = Taxinvoice;
         this.ewaybill = Ewaybill;
         this.Reporting_Remark = reporting_Remark;
+        this.Driver_Mobile_Number = driver_Mobile_Number;
+        this.OA_PO_Number = OA_PO_Number;
     }
 
     public String getIntime() {
@@ -176,6 +180,21 @@ public class In_Truck_security_list {
         Reporting_Remark = reporting_Remark;
     }
 
+    public String getDriver_Mobile_Number() {
+        return Driver_Mobile_Number;
+    }
+
+    public void setDriver_Mobile_Number(String driver_Mobile_Number) {
+        Driver_Mobile_Number = driver_Mobile_Number;
+    }
+
+    public String getOA_PO_Number() {
+        return OA_PO_Number;
+    }
+
+    public void setOA_PO_Number(String OA_PO_Number) {
+        this.OA_PO_Number = OA_PO_Number;
+    }
     //    public In_Truck_security_list() {
 //    }
 //

@@ -55,6 +55,9 @@ public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Sec
         holder.ewaybill.setText(datalist.get(position).getEwaybill());
         holder.reoprtingre.setText(datalist.get(position).getReporting_Remark());
 
+        holder.mob.setText(datalist.get(position).getDriver_Mobile_Number());
+        holder.oapo.setText(datalist.get(position).getOA_PO_Number());
+
     }
 
 
@@ -64,7 +67,8 @@ public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Sec
     }
 
     class myviewholder extends RecyclerView.ViewHolder {
-        TextView etintime,etserialnumber,etvehicalnumber,etsinvocieno,etsdate,etssupplier,etsmaterial,etsqty,etsuom,etsnetwt,etsuom2,outTime,selectregister,lrcopy, deliverybill, taxinvoice, ewaybill,reoprtingre;
+        TextView etintime,etserialnumber,etvehicalnumber,etsinvocieno,etsdate,etssupplier,etsmaterial,etsqty,etsuom,etsnetwt,etsuom2,outTime,selectregister,lrcopy, deliverybill, taxinvoice, ewaybill,reoprtingre,
+        mob,oapo;
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             etintime=itemView.findViewById(R.id.listintime);
@@ -85,6 +89,8 @@ public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Sec
             taxinvoice=itemView.findViewById(R.id.listtaxinvoice);
             ewaybill=itemView.findViewById(R.id.listewaybill);
             reoprtingre = itemView.findViewById(R.id.listreportingremark);
+            mob = itemView.findViewById(R.id.listdrivermobilenumber);
+            oapo = itemView.findViewById(R.id.listoaponumber);
 
 
 

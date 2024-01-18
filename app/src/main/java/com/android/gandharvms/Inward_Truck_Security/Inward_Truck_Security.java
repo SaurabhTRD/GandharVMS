@@ -76,7 +76,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
     RadioButton lrcopyYes, lrcopyNo, deliveryYes, deliveryNo, taxinvoiceYes, taxinvoiceNo, ewaybillYes, ewaybillNo;
     ActivityResultLauncher<String> launcher;
     EditText etintime, etserialnumber, etvehicalnumber, etsinvocieno, etsdate, etssupplier,
-            etsmaterial, etsqty, etsuom, etsnetwt, etsuom2, etregister, repremark;
+            etsmaterial, etsqty, etsuom, etsnetwt, etsuom2, etregister, repremark, etmobile, etoapo;
     Button wesubmit;
     Button view;
     FirebaseFirestore intrsdbroot;
@@ -181,6 +181,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
         etsnetwt = findViewById(R.id.etsnetwt);
         etsuom2 = findViewById(R.id.etsuom2);
         etregister = findViewById(R.id.etregister);
+        etmobile = findViewById(R.id.etmob);
+        etoapo = findViewById(R.id.etoapo);
 
 
         //for add material
@@ -257,32 +259,32 @@ public class Inward_Truck_Security extends AppCompatActivity {
             }
         });
 
-        etvehicalnumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() > MAX_LENGTH) {
-                    etvehicalnumber.removeTextChangedListener(this);
-                    String trimmedText = editable.toString().substring(0, MAX_LENGTH);
-                    etvehicalnumber.setText(trimmedText);
-                    etvehicalnumber.setSelection(MAX_LENGTH); // Move cursor to the end
-                    etvehicalnumber.addTextChangedListener(this);
-                } else if (editable.length() < MAX_LENGTH) {
-                    // Show an error message for less than 10 digits
-                    etvehicalnumber.setError("Invalid format. Enter 10 Character. \n Vehicle No Format - ST00AA9999 OR YYBR9999AA");
-                } else {
-                    // Clear any previous error message when valid
-                    etvehicalnumber.setError(null);
-                }
-            }
-        });
+//        etvehicalnumber.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if (editable.length() > MAX_LENGTH) {
+//                    etvehicalnumber.removeTextChangedListener(this);
+//                    String trimmedText = editable.toString().substring(0, MAX_LENGTH);
+//                    etvehicalnumber.setText(trimmedText);
+//                    etvehicalnumber.setSelection(MAX_LENGTH); // Move cursor to the end
+//                    etvehicalnumber.addTextChangedListener(this);
+//                } else if (editable.length() < MAX_LENGTH) {
+//                    // Show an error message for less than 10 digits
+//                    etvehicalnumber.setError("Invalid format. Enter 10 Character. \n Vehicle No Format - ST00AA9999 OR YYBR9999AA");
+//                } else {
+//                    // Clear any previous error message when valid
+//                    etvehicalnumber.setError(null);
+//                }
+//            }
+//        });
         wesubmit = findViewById(R.id.wesubmit);
         intrsdbroot = FirebaseFirestore.getInstance();
 
@@ -309,33 +311,33 @@ public class Inward_Truck_Security extends AppCompatActivity {
                 }
             }
         });
-        etvehicalnumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                if (editable.length() > MAX_LENGTH) {
-                    etvehicalnumber.removeTextChangedListener(this);
-                    String trimmedText = editable.toString().substring(0, MAX_LENGTH);
-                    etvehicalnumber.setText(trimmedText);
-                    etvehicalnumber.setText(MAX_LENGTH);
-                    etvehicalnumber.addTextChangedListener(this);
-                } else if (editable.length() < MAX_LENGTH) {
-                    etvehicalnumber.setError("Invalid format. Enter 10 Character. \n Vehicle No Format - ST00AA9999 OR YYBR9999AA");
-                } else {
-                    etvehicalnumber.setError(null);
-                }
-            }
-        });
+//        etvehicalnumber.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//                if (editable.length() > MAX_LENGTH) {
+//                    etvehicalnumber.removeTextChangedListener(this);
+//                    String trimmedText = editable.toString().substring(0, MAX_LENGTH);
+//                    etvehicalnumber.setText(trimmedText);
+//                    etvehicalnumber.setText(MAX_LENGTH);
+//                    etvehicalnumber.addTextChangedListener(this);
+//                } else if (editable.length() < MAX_LENGTH) {
+//                    etvehicalnumber.setError("Invalid format. Enter 10 Character. \n Vehicle No Format - ST00AA9999 OR YYBR9999AA");
+//                } else {
+//                    etvehicalnumber.setError(null);
+//                }
+//            }
+//        });
         etvehicalnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -427,8 +429,12 @@ public class Inward_Truck_Security extends AppCompatActivity {
         String taxInvoiceSelection = taxinvoiceYes.isChecked() ? "Yes" : "No";
         String ewayBillSelection = ewaybillYes.isChecked() ? "Yes" : "No";
 
+        String mobile = etmobile.getText().toString().trim();
+        String oapo = etoapo.getText().toString().trim();
+
+
         if (intime.isEmpty() || serialnumber.isEmpty() || vehicalnumber.isEmpty() || invoiceno.isEmpty() || date.isEmpty() || supplier.isEmpty() || material.isEmpty()
-                || qty.isEmpty() || uom.isEmpty() || netwt.isEmpty() || uom2.isEmpty() || register.isEmpty()) {
+                || qty.isEmpty() || uom.isEmpty() || netwt.isEmpty() || uom2.isEmpty() || register.isEmpty() || mobile.isEmpty() ||oapo.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
 
@@ -472,6 +478,10 @@ public class Inward_Truck_Security extends AppCompatActivity {
             trseitems.put("UOM", etsuom.getText().toString().trim());
             trseitems.put("etsnetweight", etsnetwt.getText().toString().trim());
             trseitems.put("UOM2", etsuom2.getText().toString().trim());
+
+            trseitems.put("Driver_Mobile_Number",etmobile.getText().toString().trim());
+            trseitems.put("OA_PO_Number",etoapo.getText().toString().trim());
+
             if (cbox.isChecked()) {
                 trseitems.put("outTime", "");
             } else {
@@ -566,6 +576,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
             trseitems.put("delivery", "");
             trseitems.put("taxinvoice", "");
             trseitems.put("ewaybill", "");
+            trseitems.put("Driver_Mobile_Number","");
+            trseitems.put("OA_PO_Number","");
 
 
             intrsdbroot.collection("Inward Truck Security").add(trseitems)
@@ -583,8 +595,13 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             etsuom.setText("");
                             etsnetwt.setText("");
                             etsuom2.setText("");
+                            etmobile.setText("");
+                            etoapo.setText("");
+                            Toast.makeText(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         }
                     });
+            Intent intent = new Intent(this,Inward_Truck.class);
+            startActivity(intent);
         }
     }
 
@@ -613,6 +630,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             repremark.setEnabled(false);
                             etregister.setEnabled(false);
                             DocId = documentSnapshot.getId();
+                            etintime.requestFocus();
+                            etintime.callOnClick();
                         }
 
                     }
@@ -635,7 +654,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
             updates.put("Intime", etintime.getText().toString().trim());
             updates.put("invoicenumber", etsinvocieno.getText().toString().trim());
             updates.put("lrcopy", lrCopySelection);
-            updates.put("delivery", deliverySelection);
+            updates.put("deliverybill", deliverySelection);
             updates.put("taxinvoice", taxInvoiceSelection);
             updates.put("ewaybill", ewayBillSelection);
             updates.put("SelectRegister", etregister.getText().toString().trim());
@@ -645,6 +664,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
             updates.put("UOM", etsuom.getText().toString().trim());
             updates.put("etsnetweight",etsnetwt.getText().toString().trim());
             updates.put("UOM2", etsuom2.getText().toString().trim());
+            updates.put("Driver_Mobile_Number",etmobile.getText().toString().trim());
+            updates.put("OA_PO_Number",etoapo.getText().toString().trim());
 
             List<Map<String, String>> materialList = new ArrayList<>();
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
@@ -690,6 +711,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             etsuom.setText("");
                             etsnetwt.setText("");
                             etsuom2.setText("");
+                            etmobile.setText("");
+                            etoapo.setText("");
                             Toast.makeText(Inward_Truck_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -721,9 +744,9 @@ public class Inward_Truck_Security extends AppCompatActivity {
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Truck Security");
         String searchText = serialNoPreFix.trim();
         Query query = collectionReference
-                .whereGreaterThanOrEqualTo("SerialNumber", searchText)
-                .whereLessThanOrEqualTo("SerialNumber", searchText + "\uf8ff")
-                .orderBy("SerialNumber", Query.Direction.DESCENDING)
+                .whereGreaterThanOrEqualTo("serialnumber", searchText)
+                .whereLessThanOrEqualTo("serialnumber", searchText + "\uf8ff")
+                .orderBy("serialnumber", Query.Direction.DESCENDING)
                 .limit(1);
         query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -732,10 +755,10 @@ public class Inward_Truck_Security extends AppCompatActivity {
                     int totalCount = task.getResult().size();
                     if (totalCount > 0) {
                         for (QueryDocumentSnapshot document : task.getResult()) {
-                            In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+                            In_Truck_security_list obj = document.toObject(In_Truck_security_list.class);
                             // Check if the object already exists to avoid duplicates
                             if (totalCount > 0) {
-                                autoGeneratedNumber = Integer.parseInt(obj.getSerialNumber().substring(8, 11)) + 1;
+                                autoGeneratedNumber = Integer.parseInt(obj.getSerialnumber().substring(8, 11)) + 1;
                                 //  sharedPreferences.edit().putInt("autoGeneratedNumber", autoGeneratedNumber).apply();
                                 @SuppressLint("DefaultLocale") String autoGeneratedNumberString = String.format("%03d", autoGeneratedNumber);
                                 // Create the serial number

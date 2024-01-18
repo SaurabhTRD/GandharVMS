@@ -120,7 +120,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Vehicle Number"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 />
@@ -161,28 +161,6 @@
                 android:text="Save"
                 />
         </LinearLayout>
-
-
-
-         <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
-            >
-            <EditText
-                android:id="@+id/etsinvocieno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Invoice No"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -201,6 +179,60 @@
                 android:textSize="17dp"
                 android:textStyle="bold"
                 android:focusable="false"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+         <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            >
+            <EditText
+                android:id="@+id/etsinvocieno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Invoice No"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            >
+            <EditText
+                android:id="@+id/etmob"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Driver Mobile No"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            >
+            <EditText
+                android:id="@+id/etoapo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="OA/PO Number"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -304,19 +336,19 @@
                 android:paddingEnd="8dp"
                 android:textStyle="bold"
                 android:layout_marginLeft="20dp"
+                android:textSize="15dp"
                 />
 
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="91dp"
                 android:orientation="horizontal">
 
                 <RadioButton
                     android:id="@+id/rb_TaxInvoiceYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="45dp"
                     android:checked="true"
                     android:text="Yes" />
                 <RadioButton
@@ -346,12 +378,13 @@
             android:paddingEnd="8dp"
             android:textStyle="bold"
             android:layout_marginLeft="20dp"
+            android:textSize="15dp"
             />
 
         <RadioGroup
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="40dp"
+            android:layout_marginLeft="55dp"
             android:orientation="horizontal">
             <RadioButton
                 android:id="@+id/rb_EwaybillYes"
@@ -359,13 +392,14 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="Yes"
-                android:layout_marginLeft="45dp"/>
+                android:layout_marginLeft="39dp"
+               />
             <RadioButton
                 android:id="@+id/rb_EwaybillNo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No"
-                android:layout_marginRight="25dp"/>
+                android:layout_marginLeft="28dp"/>
         </RadioGroup>
 
 
@@ -405,7 +439,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Supplier"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -424,7 +458,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Material"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"
                    />
