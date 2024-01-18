@@ -31,6 +31,11 @@ import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,6 +50,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
@@ -66,14 +72,14 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     private String dateTimeString = "";
 
     private final int MAX_LENGTH=10;
+    private String token;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_laboratory);
         //Send Notification to all
-        //Send Notification to all
-        FirebaseMessaging.getInstance().subscribeToTopic("eeEJ-ixdncup2-FtyzLVSu:APA91bGSjIm_CSC_VJCo56OFoc4IfAjKxvtSpg_Afmfha2OGxloggj3hmuMCjWtVmFF7cmGnKER_1fbHgkDpCjt8U9FCUtnLgF8lQonhS0WS-Aicu-W6j2bKAUDItioRUVHqCdrOGzEy");
-
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         regAutoCompleteTextView = findViewById(R.id.etpremark);
         remarkarray = new ArrayAdapter<String>(this,R.layout.in_tanker_labremarkitem,remark);
@@ -85,7 +91,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(),"Item: "+items+"Selected",Toast.LENGTH_SHORT).show();
             }
         });
-
 
         etintime = (EditText) findViewById(R.id.etintime);
         etpsample = (EditText) findViewById(R.id.etpsample);
@@ -110,12 +115,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etsupplier = (EditText) findViewById(R.id.supplier);
         disc = (EditText) findViewById(R.id.remarkdisc);
         etviscosity = (EditText) findViewById(R.id.etviscosityindex);
-
-
-
-
-
-
         etlabsub=(Button) findViewById(R.id.etlabsub);
 
         view = findViewById(R.id.viewclick);
@@ -215,30 +214,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 picker.show();
             }
         });
-        etvehiclenumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (editable.length() > MAX_LENGTH) {
-                    etvehiclenumber.removeTextChangedListener(this);
-                    String trimmedText = editable.toString().substring(0, MAX_LENGTH);
-                    etvehiclenumber.setText(trimmedText);
-                    etvehiclenumber.setSelection(MAX_LENGTH); // Move cursor to the end
-                    etvehiclenumber.addTextChangedListener(this);
-                }else if (editable.length() < MAX_LENGTH) {
-                    // Show an error message for less than 10 digits
-                    etvehiclenumber.setError("Invalid format. Enter 10 Character. \n Vehicle No Format - ST00AA9999 OR YYBR9999AA");
-                } else {
-                    // Clear any previous error message when valid
-                    etvehiclenumber.setError(null);
-                }
-            }
-        });
 
         dblabroot=FirebaseFirestore.getInstance();
 
@@ -248,7 +223,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                     FetchVehicleDetails(etvehiclenumber.getText().toString().trim());
                 }
             }
-
         });
 
         etlabsub.setOnClickListener(new View.OnClickListener() {
@@ -258,12 +232,37 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             }
         });
     }
-    public void makeNotification(String vehicleNo,String outTime){
-        FcmNotificationsSender notificationsSender = new FcmNotificationsSender("eeEJ-ixdncup2-FtyzLVSu:APA91bGSjIm_CSC_VJCo56OFoc4IfAjKxvtSpg_Afmfha2OGxloggj3hmuMCjWtVmFF7cmGnKER_1fbHgkDpCjt8U9FCUtnLgF8lQonhS0WS-Aicu-W6j2bKAUDItioRUVHqCdrOGzEy",
-                "Inward Tanker Laboratory Process Done..!",
-                "Vehicle Number:-" + vehicleNo + " has completed Laboratory process at " + outTime,
-                getApplicationContext(), Inward_Tanker_Laboratory.this);
-        notificationsSender.SendNotifications();
+    public void makeNotification(String vehicleNumber,String outTime) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Assume you have a user role to identify the specific role
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        String specificRole = "Production";
+                        // Get the value of the "role" node                    ;
+                        if (issue.toString().contains(specificRole)) {
+                            //getting the token
+                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
+                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
+                                    "Inward Tanker Laboratory Process Done..!",
+                                    "Vehicle Number:-" + vehicleNumber + " has completed Laboratory process at " + outTime,
+                                    getApplicationContext(), Inward_Tanker_Laboratory.this);
+                            notificationsSender.SendNotifications();
+                        }
+                    }
+                } else {
+                    // Handle the case when the "role" node doesn't exist
+                    Log.d("Role Data", "Role node doesn't exist");
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors here
+                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+            }
+        });
     }
     public void btn_clicktoViewSAMPLEREPORT(View view){
         Intent intent = new Intent(this, Inward_Tanker_saampling_View_data.class);
@@ -306,21 +305,12 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String dateSignOfSign = etpdatesignofsign.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
         String material=etMaterial.getText().toString().trim();
-
         String edsupplier= etsupplier.getText().toString().trim();
-
-
-
         if ( intime.isEmpty() || sample.isEmpty() || vehicle.isEmpty() ||  apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty()||  anline.isEmpty()|| flash.isEmpty()|| density.isEmpty() || rcsTest.isEmpty() ||
                 kv.isEmpty() || addTest.isEmpty() || sampleTest.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty()|| edsupplier.isEmpty()){
-
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-
-
-
             Map<String,String> labitems = new HashMap<>();
-
             labitems.put("In_Time",etintime.getText().toString().trim());
             labitems.put("sample_reciving",etpsample.getText().toString().trim());
             labitems.put("Vehicle_Number",etvehiclenumber.getText().toString().trim());
@@ -341,13 +331,9 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             labitems.put("Date_and_Time",etpdatesignofsign.getText().toString().trim());
             labitems.put("outTime",outTime.toString());
             labitems.put("Material",etMaterial.getText().toString().trim());
-
             labitems.put("Supplier",etsupplier.getText().toString().trim());
             labitems.put("Remark_Discription",disc.getText().toString().trim());
             labitems.put("Viscosity_Index",etviscosity.getText().toString().trim());
-
-
-
             makeNotification(etvehiclenumber.getText().toString(),outTime.toString());
             dblabroot.collection("Inward Tanker Laboratory").add(labitems)
                     .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
@@ -376,79 +362,12 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                             etsupplier.setText("");
                             disc.setText("");
                             etviscosity.setText("");
-
                             Toast.makeText(Inward_Tanker_Laboratory.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
-
-
-
                         }
                     });
             Intent intent= new Intent(this, Inward_Tanker.class);
             startActivity(intent);
-
-
-
         }
-
-
-
-
-//
-//        Map<String,String> labitems = new HashMap<>();
-//
-//        labitems.put("sample reciving",etpsample.getText().toString().trim());
-//        labitems.put("apperance",etpapperance.getText().toString().trim());
-//        labitems.put("odor",etpodor.getText().toString().trim());
-//        labitems.put("color",etpcolour.getText().toString().trim());
-//        labitems.put("density",etpdensity.getText().toString().trim());
-//        labitems.put("Rcs Test",etPrcstest.getText().toString().trim());
-//        labitems.put("KV",etpkv.getText().toString().trim());
-//        labitems.put("Additional test",etpaddtest.getText().toString().trim());
-//        labitems.put("sample test",etpsamplere.getText().toString().trim());
-//        labitems.put("Remark",etpremark.getText().toString().trim());
-//        labitems.put("sign of",etpsignQc.getText().toString().trim());
-//        labitems.put("Date and Time",etpdatesignofsign.getText().toString().trim());
-//
-//
-//        dblabroot.collection("Inward Tanker Laboratory").add(labitems)
-//                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                    @Override
-//                    public void onComplete(@NonNull Task<DocumentReference> task) {
-//
-//                        etpsample.setText("");
-//                        etpapperance.setText("");
-//                        etpodor.setText("");
-//                        etpcolour.setText("");
-//                        etpdensity.setText("");
-//                        etPrcstest.setText("");
-//                        etpkv.setText("");
-//                        etpaddtest.setText("");
-//                        etpsamplere.setText("");
-//                        etpremark.setText("");
-//                        etpsignQc.setText("");
-//                        etpdatesignofsign.setText("");
-//
-//                        Toast.makeText(Inward_Tanker_Laboratory.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//                    }
-//                });
-
-
-
-
-
-
     }
 
     public void FetchVehicleDetails(@NonNull String VehicleNo) {

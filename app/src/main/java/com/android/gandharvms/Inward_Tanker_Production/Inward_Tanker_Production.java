@@ -26,6 +26,11 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -41,44 +46,43 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 
 public class Inward_Tanker_Production extends AppCompatActivity {
 
-    EditText etint, etserno,etreq, ettankno, etconbyop, tanknoun, etconunloadDateTime, etMaterial, etVehicleNumber;
+    final Calendar calendar = Calendar.getInstance();
+    EditText etint, etserno, etreq, ettankno, etconbyop, tanknoun, etconunloadDateTime, etMaterial, etVehicleNumber;
     /*  Button viewdata;*/
     Button prosubmit;
     FirebaseFirestore prodbroot;
     DatePickerDialog picker;
-    final Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
     Timestamp timestamp = new Timestamp(calendar.getTime());
 
     TimePickerDialog tpicker;
+    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_production);
+
         //Send Notification to all
-        //Send Notification to all
-        FirebaseMessaging.getInstance().subscribeToTopic("cZO18soMQ7K8D3CkVdUA9i:APA91bFdQxHnryIGp1ZSaMMZggvyev0DbgwMqvuHOPzdi_CnUGJeGds6aIK9_2cZdb6e246Ju5a6erKkwkWHQmUKeYTYm_tO2NEsM-GiPsWlqFQK3E--ArUx99-UwGtsnZHgm7_jAFSs");
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         etMaterial = findViewById(R.id.etMaterial);
         etVehicleNumber = findViewById(R.id.etvehicleNumber);
-        etserno=findViewById(R.id.etpserialnumber);
+        etserno = findViewById(R.id.etpserialnumber);
         etint = findViewById(R.id.etintime);
         etreq = findViewById(R.id.etreq);
         ettankno = findViewById(R.id.ettankno);
         etconbyop = findViewById(R.id.etconbyop);
         tanknoun = findViewById(R.id.tanknoun);
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
-
         prosubmit = findViewById(R.id.prosubmit);
-
-
         //datetimepickertesting
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
-
         etconunloadDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -141,12 +145,38 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
     }
 
-    public void makeNotification(String vehicleNo, String outTime) {
-        FcmNotificationsSender notificationsSender = new FcmNotificationsSender("cZO18soMQ7K8D3CkVdUA9i:APA91bFdQxHnryIGp1ZSaMMZggvyev0DbgwMqvuHOPzdi_CnUGJeGds6aIK9_2cZdb6e246Ju5a6erKkwkWHQmUKeYTYm_tO2NEsM-GiPsWlqFQK3E--ArUx99-UwGtsnZHgm7_jAFSs",
-                "Inward Tanker Production Process Done..!",
-                "Vehicle Number:-" + vehicleNo + " has completed Laboratory process at " + outTime,
-                getApplicationContext(), Inward_Tanker_Production.this);
-        notificationsSender.SendNotifications();
+    public void makeNotification(String vehicleNumber, String outTime) {
+        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    // Assume you have a user role to identify the specific role
+                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+                        String specificRole = "Weighment";
+                        // Get the value of the "role" node                    ;
+                        if (issue.toString().contains(specificRole)) {
+                            //getting the token
+                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
+                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
+                                    "Inward Tanker Production Process Done..!",
+                                    "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime+" & Ready For Weighment",
+                                    getApplicationContext(), Inward_Tanker_Production.this);
+                            notificationsSender.SendNotifications();
+                        }
+                    }
+                } else {
+                    // Handle the case when the "role" node doesn't exist
+                    Log.d("Role Data", "Role node doesn't exist");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                // Handle errors here
+                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+            }
+        });
     }
 
     public void btn_clicktoViewLabReport(View view) {
@@ -189,7 +219,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             proitems.put("outTime", outTime);
             proitems.put("Material", etMaterial.getText().toString().trim());
             proitems.put("Vehicle_Number", etVehicleNumber.getText().toString().trim());
-            proitems.put("Serial_Number",etserno.getText().toString().trim());
+            proitems.put("Serial_Number", etserno.getText().toString().trim());
 
             makeNotification(etVehicleNumber.getText().toString(), outTime);
             prodbroot.collection("Inward Tanker Production").add(proitems)
