@@ -54,7 +54,6 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
         holder.etdensity.setText(datalist.get(position).getDensity());
         holder.etbatchno.setText(datalist.get(position).getBatch_No());
         holder.etsignby.setText(datalist.get(position).getSign_By());
-        holder.etdatetime.setText(datalist.get(position).getDate_Time());
         holder.outTime.setText(datalist.get(position).getOutTime());
         Picasso.get()
                 .load(BaseUrl + datalist.get(position).getInVehicleImage() + "?alt=media")
@@ -90,7 +89,7 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
             etvehicalnumber= itemView.findViewById(R.id.vehiclenumber);
             etsupplier = itemView.findViewById(R.id.suppliername);
             etmaterial= itemView.findViewById(R.id.materialname);
-            etcustomer =itemView.findViewById(R.id.custname);
+            etcustomer =itemView.findViewById(R.id.listcustname);
             etdriver= itemView.findViewById(R.id.listdriver);
             etoanumber=itemView.findViewById(R.id.oanumber);
             etdate= itemView.findViewById(R.id.date);

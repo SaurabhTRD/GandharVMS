@@ -11,6 +11,7 @@ import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
@@ -42,7 +43,7 @@ public class Inward_Truck_Weighment_Viewdata extends AppCompatActivity {
 
 
         db=FirebaseFirestore.getInstance();
-        db.collection("Inward Truck Weighment").get()
+        db.collection("Inward Truck Weighment").orderBy("Date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
                     public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
