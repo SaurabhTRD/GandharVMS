@@ -70,7 +70,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private final int MAX_LENGTH=10;
 
-    EditText etint,etserialnumber,etvehicalnumber,etsupplier,etmaterial,etdriver,etoanumber,etdate,etgrossweight,etsignby;
+    EditText etint,etremark,etserialnumber,etcontainer,etvehicalnumber,etsupplier,etmaterial,etdriver,etoanumber,etdate,etgrossweight,etsignby;
 
     Button intsubmit;
     Button view;
@@ -116,6 +116,8 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         /*ettareweight=(EditText) findViewById(R.id.ettrtareweight);
         etnetweight=(EditText) findViewById(R.id.ettrnetweight);*/
         etsignby =(EditText) findViewById(R.id.ettrsignby);
+        etcontainer=(EditText)findViewById(R.id.ettrwcontainer);
+        etremark=(EditText)findViewById(R.id.ettwremark);
 
         // listing Data button
         img1 = findViewById(R.id.ettrimageView1);
@@ -245,6 +247,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         String oanumber = etoanumber.getText().toString().trim();
         String date = etdate.getText().toString().trim();
         String Grossweight = etgrossweight.getText().toString().trim();
+        String container=etcontainer.getText().toString().trim();
         /*String Tareweight = ettareweight.getText().toString().trim();
         String netweight = etnetweight.getText().toString().trim();*/
         String signby = etsignby.getText().toString().trim();
@@ -252,7 +255,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
 
 
         if ( intime.isEmpty()|| serial_Number.isEmpty()|| vehicalnumber.isEmpty()|| supplier.isEmpty()|| material.isEmpty()|| Driver.isEmpty() || oanumber.isEmpty()|| date.isEmpty()||Grossweight.isEmpty()
-        || signby.isEmpty()){
+        ||container.isEmpty()|| signby.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -267,8 +270,10 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             trweitems.put("Oa_Number",etoanumber.getText().toString().trim());
             trweitems.put("Date",timestamp);
             trweitems.put("Gross_Weight",etgrossweight.getText().toString().trim());
+            trweitems.put("Container_No", etcontainer.getText().toString().trim());
             /*trweitems.put("Tare_Weight",ettareweight.getText().toString().trim());
             trweitems.put("Net_Weight",etnetweight.getText().toString().trim());*/
+            trweitems.put("remark",etremark.getText().toString().trim());
             trweitems.put("Sign_By",etsignby.getText().toString().trim());
             trweitems.put("outTime",outTime.toString());
             trweitems.put("InVehicleImage", imgPath1);
@@ -292,6 +297,8 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                             /*ettareweight.setText("");
                             etnetweight.setText("");*/
                             etsignby.setText("");
+                            etremark.setText("");
+                            etcontainer.setText("");
                             /*etdatetime.setText("");*/
                             Toast.makeText(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         }

@@ -144,7 +144,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String qtyuom = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Inward_Tanker_Security.this, "qtyuom: " + qtyuom, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Inward_Tanker_Security.this, "qtyuom : " + qtyuom+" Selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -156,7 +156,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String neweuom = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Inward_Tanker_Security.this, "netwe: " + neweuom, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Inward_Tanker_Security.this, "netwe: " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
         autoCompleteTextView1 = findViewById(R.id.qtyuom);
@@ -166,7 +166,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String qtyuom = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Inward_Tanker_Security.this, "qtyuom: " + qtyuom, Toast.LENGTH_SHORT).show();
+                Toast.makeText(Inward_Tanker_Security.this, "qtyuom: " + qtyuom + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
 

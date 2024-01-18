@@ -147,7 +147,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item: " + items + "Selected", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Item:- " + items + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
         // Uom work
@@ -166,14 +166,14 @@ public class Inward_Truck_Security extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item" + items, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Item :- " + items + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
         autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items1 = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item" + items1, Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Item :- " + items1 + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -460,7 +460,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
             trseitems.put("UOM", etsuom.getText().toString().trim());
             trseitems.put("etsnetweight", etsnetwt.getText().toString().trim());
             trseitems.put("UOM2", etsuom2.getText().toString().trim());
-
+            trseitems.put("extramaterials", materialList.toString().replace("[]", ""));
             trseitems.put("Driver_Mobile_Number", etmobile.getText().toString().trim());
             trseitems.put("OA_PO_Number", etoapo.getText().toString().trim());
 
@@ -579,7 +579,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             etsuom2.setText("");
                             etmobile.setText("");
                             etoapo.setText("");
-                            Toast.makeText(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getApplicationContext(), "Reporting Remark Inserted Successfully", Toast.LENGTH_SHORT).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Truck.class);
@@ -694,6 +694,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             etsuom2.setText("");
                             etmobile.setText("");
                             etoapo.setText("");
+
                             Toast.makeText(Inward_Truck_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
                         }
                     })
@@ -703,6 +704,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             Toast.makeText(Inward_Truck_Security.this, "Failed to update data", Toast.LENGTH_SHORT).show();
                         }
                     });
+            Intent intent = new Intent(this, Inward_Truck.class);
+            startActivity(intent);
 
         } else {
             Toast.makeText(this, "Please Provide Vehicle no", Toast.LENGTH_SHORT).show();

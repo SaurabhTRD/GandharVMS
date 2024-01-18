@@ -44,15 +44,13 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
         holder.etvehicalnumber.setText(datalist.get(position).getVehicle_Number());
         holder.etsupplier.setText(datalist.get(position).getSupplier());
         holder.etmaterial.setText(datalist.get(position).getMaterial());
-        holder.etcustomer.setText(datalist.get(position).getCustomer());
         holder.etdriver.setText(datalist.get(position).getDriver_No());
         holder.etoanumber.setText(datalist.get(position).getOA_Number());
         holder.etdate.setText(dateFormat.format(datalist.get(position).getDate().toDate()));
         holder.etgrossweight.setText(datalist.get(position).getGross_Weight());
         /*holder.ettareweight.setText(datalist.get(position).getTare_Weight());
         holder.etnetweight.setText(datalist.get(position).getNet_Weight());*/
-        holder.etdensity.setText(datalist.get(position).getDensity());
-        holder.etbatchno.setText(datalist.get(position).getBatch_No());
+        holder.etremark.setText(datalist.get(position).getRemark());
         holder.etsignby.setText(datalist.get(position).getSign_By());
         holder.outTime.setText(datalist.get(position).getOutTime());
         Picasso.get()
@@ -67,9 +65,7 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
                 .error(R.drawable.gandhar2)
                 .noFade().resize(120,120)
                 .centerCrop().into(holder.indriverimage);
-
     }
-
 
     @Override
     public int getItemCount() {
@@ -78,8 +74,8 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
 
     class myviewholder extends RecyclerView.ViewHolder {
 
-        TextView etintime, etserialnumber,etvehicalnumber,etsupplier,etmaterial,etcustomer,etdriver,etoanumber,etdate,
-                etgrossweight,ettareweight,etnetweight,etdensity,etbatchno,etsignby,etdatetime,outTime;
+        TextView etintime, etserialnumber,etvehicalnumber,etsupplier,etmaterial,etdriver,etoanumber,etdate,
+                etgrossweight,etcontainerno,etremark,ettareweight,etnetweight,etsignby,outTime;
         ImageView invehicleimage,indriverimage;
 
         public myviewholder(@NonNull View itemView) {
@@ -89,20 +85,18 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
             etvehicalnumber= itemView.findViewById(R.id.vehiclenumber);
             etsupplier = itemView.findViewById(R.id.suppliername);
             etmaterial= itemView.findViewById(R.id.materialname);
-            etcustomer =itemView.findViewById(R.id.listcustname);
             etdriver= itemView.findViewById(R.id.listdriver);
             etoanumber=itemView.findViewById(R.id.oanumber);
             etdate= itemView.findViewById(R.id.date);
             etgrossweight= itemView.findViewById(R.id.grossweight);
             /*ettareweight = itemView.findViewById(R.id.tareweight);
             etnetweight = itemView.findViewById(R.id.etnetweight);*/
-            etdensity = itemView.findViewById(R.id.density);
-            etbatchno = itemView.findViewById(R.id.batchnumber);
             etsignby = itemView.findViewById(R.id.signby);
-            etdatetime = itemView.findViewById(R.id.datetime);
+            etcontainerno=itemView.findViewById(R.id.listcontainerno);
             outTime=itemView.findViewById(R.id.listouttime);
             invehicleimage=itemView.findViewById(R.id.listtrInVehicleImage);
             indriverimage=itemView.findViewById(R.id.listtrInDriverImage);
+            etremark=itemView.findViewById(R.id.listremark);
         }
     }
 }

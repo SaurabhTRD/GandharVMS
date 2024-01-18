@@ -291,7 +291,7 @@
                         android:layout_marginRight="30dp">
 
                         <EditText
-                            android:id="@+id/ettrcontainer"
+                            android:id="@+id/ettrwcontainer"
                             android:layout_width="185dp"
                             android:layout_height="wrap_content"
                             android:hint="Container No"
@@ -344,7 +344,7 @@
                         android:layout_marginRight="30dp">
 
                         <EditText
-                            android:id="@+id/etremark"
+                            android:id="@+id/ettwremark"
                             android:layout_width="185dp"
                             android:layout_height="wrap_content"
                             android:hint="Remark"

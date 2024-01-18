@@ -3,33 +3,31 @@ import com.google.firebase.Timestamp;
 public class In_Truck_weigment_list {
 
     String In_Time, Serial_Number, Vehicle_Number, Supplier, Material,
-            Driver_No, Customer, Oa_Number, Gross_Weight, Density, Batch_No, Sign_By, Date_Time, outTime,InVehicleImage,InDriverImage;
+            Driver_No,remark,Container_No, Oa_Number, Gross_Weight, Sign_By, outTime,InVehicleImage,InDriverImage;
     Timestamp Date;
     public In_Truck_weigment_list() {
     }
 
-    public In_Truck_weigment_list(String in_Time, String serial_Number, String vehicle_Number, String supplier, String material, String driver_No, String customer,
-                                  String oa_Number, Timestamp date, String gross_Weight,String density, String batch_No,
-                                  String sign_By, String date_Time, String outTime,String InVehicleImage,String InDriverImage) {
+    public In_Truck_weigment_list(String in_Time, String serial_Number, String vehicle_Number, String supplier, String material, String driver_No,
+                                  String oa_Number, Timestamp date,String containerno, String gross_Weight,
+                                  String sign_By,String Remark, String outTime,String InVehicleImage,String InDriverImage) {
         In_Time = in_Time;
         Serial_Number = serial_Number;
         Vehicle_Number = vehicle_Number;
         Supplier = supplier;
         Material = material;
         this.Driver_No = driver_No;
-        Customer = customer;
         this.Oa_Number = oa_Number;
         Date = date;
         Gross_Weight = gross_Weight;
         /*Tare_Weight = tare_Weight;
         this.Net_Weight = net_Weight;*/
-        Density = density;
-        Batch_No = batch_No;
         this.Sign_By = sign_By;
-        Date_Time = date_Time;
         this.outTime = outTime;
         this.InVehicleImage=InVehicleImage;
         this.InDriverImage=InDriverImage;
+        this.Container_No=containerno;
+        this.remark=Remark;
     }
 
     public String getIn_Time() {
@@ -80,22 +78,6 @@ public class In_Truck_weigment_list {
         Driver_No = driver_No;
     }
 
-    public String getCustomer() {
-        return Customer;
-    }
-
-    public void setCustomer(String customer) {
-        Customer = customer;
-    }
-
-//    public String getOA_Number() {
-//        return OA_Number;
-//    }
-//
-//    public void setOA_Number(String oa_Number) {
-//        this.OA_Number = oa_Number;
-//    }
-
 
     public String getOA_Number() {
 
@@ -123,38 +105,6 @@ public class In_Truck_weigment_list {
         Gross_Weight = gross_Weight;
     }
 
-    /*public String getTare_Weight() {
-        return Tare_Weight;
-    }
-
-    public void setTare_Weight(String tare_Weight) {
-        Tare_Weight = tare_Weight;
-    }
-
-    public String getNet_Weight() {
-        return Net_Weight;
-    }
-
-    public void setNet_Weight(String net_Weight) {
-        Net_Weight = net_Weight;
-    }*/
-
-    public String getDensity() {
-        return Density;
-    }
-
-    public void setDensity(String density) {
-        Density = density;
-    }
-
-    public String getBatch_No() {
-        return Batch_No;
-    }
-
-    public void setBatch_No(String batch_No) {
-        Batch_No = batch_No;
-    }
-
     public String getSign_By() {
         return Sign_By;
     }
@@ -176,4 +126,10 @@ public class In_Truck_weigment_list {
 
     public String getInDriverImage(){return  InDriverImage;}
     public void setInDriverImage(String indriverImage){this.InDriverImage=indriverImage;}
+
+    public String getContainer_No(){return Container_No;}
+    public void setContainer_No(String container){this.Container_No=container;}
+
+    public String getRemark(){return remark;}
+    public void setRemark(String weremark){this.remark=weremark;}
 }
