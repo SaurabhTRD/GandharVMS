@@ -57,6 +57,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class Inward_Truck_Store extends AppCompatActivity {
 
     private final int MAX_LENGTH = 10;
@@ -351,7 +353,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
         if (intime.isEmpty() || serialnumber.isEmpty() || vehicalnumber.isEmpty() || invoicenum.isEmpty()
                 || date.isEmpty() || supplier.isEmpty() || material.isEmpty() || qty.isEmpty() || invqtyUom.isEmpty()
                 || oum.isEmpty() || remark.isEmpty() || invqty.isEmpty() || invdate.isEmpty() || invNum.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
             // Material data handling for dynamically added fields
             List<Map<String, String>> materialList = new ArrayList<>();
@@ -415,7 +417,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
                             etinqtyuom.setText("");
                             etinvdate.setText("");
                             etinvnum.setText("");
-                            Toast.makeText(Inward_Truck_Store.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Truck_Store.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Truck.class);
@@ -477,7 +479,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etpo.setText("");
                         etpodate.setText("");
                         etvehicalnum.requestFocus();
-                        Toast.makeText(Inward_Truck_Store.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT).show();
+                        Toasty.warning(Inward_Truck_Store.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
                     }
                     else {
                         for (QueryDocumentSnapshot document : task.getResult()) {

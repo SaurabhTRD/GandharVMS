@@ -68,6 +68,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import es.dmoral.toasty.Toasty;
+
 public class Inward_Truck_Security extends AppCompatActivity {
 
     final Calendar calendar = Calendar.getInstance();
@@ -417,7 +419,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
         if (intime.isEmpty() || serialnumber.isEmpty() || vehicalnumber.isEmpty() || invoiceno.isEmpty() || date.isEmpty() || supplier.isEmpty() || material.isEmpty()
                 || qty.isEmpty() || uom.isEmpty() || netwt.isEmpty() || uom2.isEmpty() || register.isEmpty() || mobile.isEmpty() || oapo.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
 
 
@@ -503,7 +505,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             etsuom2.setText("");
                             etregister.setText("");
 
-                            Toast.makeText(Inward_Truck_Security.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Truck_Security.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
 
@@ -529,7 +531,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
 
         if (vehicalnumber.isEmpty() || date.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             Timestamp timestamp = new Timestamp(calendar.getTime());
@@ -579,7 +581,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             etsuom2.setText("");
                             etmobile.setText("");
                             etoapo.setText("");
-                            Toast.makeText(getApplicationContext(), "Reporting Remark Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "Reporting Remark Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Truck.class);
@@ -695,7 +697,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             etmobile.setText("");
                             etoapo.setText("");
 
-                            Toast.makeText(Inward_Truck_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Truck_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
@@ -708,7 +710,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
             startActivity(intent);
 
         } else {
-            Toast.makeText(this, "Please Provide Vehicle no", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Please Provide Vehicle no", Toast.LENGTH_SHORT,true).show();
         }
     }
 

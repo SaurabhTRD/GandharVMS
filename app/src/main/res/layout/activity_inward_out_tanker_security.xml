@@ -115,7 +115,7 @@
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
                     android:hint="Delivery Challan"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"
                     />
@@ -164,7 +164,7 @@
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
                     android:hint="Tax Invoice"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"
                     />

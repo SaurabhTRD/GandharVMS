@@ -64,6 +64,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import es.dmoral.toasty.Toasty;
+
 public class Inward_Truck_weighment extends AppCompatActivity {
 
     //prince
@@ -256,7 +258,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
 
         if ( intime.isEmpty()|| serial_Number.isEmpty()|| vehicalnumber.isEmpty()|| supplier.isEmpty()|| material.isEmpty()|| Driver.isEmpty() || oanumber.isEmpty()|| date.isEmpty()||Grossweight.isEmpty()
         ||container.isEmpty()|| signby.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }
         else {
             Map<String,Object>trweitems= new HashMap<>();
@@ -300,7 +302,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                             etremark.setText("");
                             etcontainer.setText("");
                             /*etdatetime.setText("");*/
-                            Toast.makeText(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent= new Intent(this, Inward_Truck.class);
@@ -420,7 +422,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                         etdate.setText("");
                         /*etnetweight.setText("");*/
                         etvehicalnumber.requestFocus();
-                        Toast.makeText(Inward_Truck_weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT).show();
+                        Toasty.warning(Inward_Truck_weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
                     }
                     else {
                         for (QueryDocumentSnapshot document : task.getResult()) {

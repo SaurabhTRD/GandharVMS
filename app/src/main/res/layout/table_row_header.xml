@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="9dp"
+    android:gravity="right">
+
+    <TextView
+        android:id="@+id/textdate"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="Date"
+        android:layout_height="wrap_content"
+
+        android:textSize="15dp"
+        android:minWidth="95dp"
+        android:padding="5sp"
+        android:layout_gravity="start"
+        />
+
+    <TextView
+        android:id="@+id/textVehicleNumber"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="Vehicle Number"
+        android:layout_height="wrap_content"
+
+        android:textSize="15dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridmaterial"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="Material"
+        android:layout_height="wrap_content"
+
+        android:textSize="15dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="Status"
+        android:layout_height="wrap_content"
+
+        android:textSize="15dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+
+</LinearLayout>

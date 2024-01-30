@@ -67,6 +67,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class Inward_Tanker_Security extends AppCompatActivity implements View.OnClickListener {
 
     String [] items = {"Capital Register", "General Register","Inward Register"};
@@ -403,7 +405,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String mobnumber = etmobilenum.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() || partyname.isEmpty() ||
                 netweight.isEmpty() || intime.isEmpty() || material.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
             // Material data handling for dynamically added fields
             List<Map<String, String>> materialList = new ArrayList<>();
@@ -479,7 +481,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             etqty.setText("");
                             etnetoum.setText("");
                             etqtyoum.setText("");
-                            Toast.makeText(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
@@ -504,7 +506,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String pooa = edpooa.getText().toString().trim();
         String mobnumber = etmobilenum.getText().toString().trim();
         if (vehicalnumber.isEmpty() || Date.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.success(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
             // Material data handling for dynamically added fields
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
@@ -550,7 +552,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             etqty.setText("");
                             etnetoum.setText("");
                             etqtyoum.setText("");
-                            Toast.makeText(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
@@ -696,19 +698,23 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             edpooa.setText("");
                             etmobilenum.setText("");
                             etremark.setText("");
-                            Toast.makeText(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Inward_Tanker_Security.this, "Failed to update data", Toast.LENGTH_SHORT).show();
+                            Toasty.error(Inward_Tanker_Security.this, "Failed to update data", Toast.LENGTH_SHORT,true).show();
                         }
                     });
         } else {
-            Toast.makeText(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT).show();
+            Toasty.warning(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT,true).show();
         }
 
+}
+public void gridclick(View view){
+        Intent intent = new Intent(this,grid.class);
+        startActivity(intent);
 }
 
 }

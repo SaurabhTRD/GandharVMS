@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import org.apache.poi.ss.usermodel.Color;
+
+import es.dmoral.toasty.Toasty;
+import io.github.muddz.styleabletoast.StyleableToast;
+import www.sanju.motiontoast.MotionToast;
 
 public class Login extends AppCompatActivity {
 
@@ -43,7 +50,7 @@ public class Login extends AppCompatActivity {
                 passwordTxt = password.getText().toString();
 
                 if (emplidTxt.isEmpty() || passwordTxt.isEmpty()) {
-                    Toast.makeText(Login.this, "Please Enter Your UserID or Password", Toast.LENGTH_SHORT).show();
+                    StyleableToast.makeText(Login.this, "Please Enter Your UserID or Password", Toast.LENGTH_SHORT,R.style.mytoast).show();
                 } else {
 
                     databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
@@ -52,7 +59,7 @@ public class Login extends AppCompatActivity {
                             if (snapshot.hasChild(emplidTxt)) {
                                 final String getpassword = snapshot.child(emplidTxt).child("password").getValue(String.class);
                                 if (getpassword.equals(passwordTxt)) {
-                                    Toast.makeText(Login.this, "Succesfully Logged in ", Toast.LENGTH_SHORT).show();
+                                    Toasty.success(Login.this, "Succesfully Logged in ", Toast.LENGTH_SHORT,true).show();
                                     SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
                                     SharedPreferences.Editor editor = sharedPreferences.edit();
                                     editor.putString("EMPLID_KEY", emplidTxt);
@@ -60,10 +67,10 @@ public class Login extends AppCompatActivity {
                                     startActivity(new Intent(Login.this, Menu.class));
                                     finish();
                                 } else {
-                                    Toast.makeText(Login.this, "Wrong Password", Toast.LENGTH_SHORT).show();
+                                    Toasty.error(Login.this, "Wrong Password", Toast.LENGTH_SHORT,true).show();
                                 }
                             } else {
-                                Toast.makeText(Login.this, "Wrong Empld ID", Toast.LENGTH_SHORT).show();
+                                Toasty.error(Login.this, "Wrong Empld ID", Toast.LENGTH_SHORT,true).show();
                             }
                         }
 

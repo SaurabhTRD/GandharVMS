@@ -43,6 +43,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class Inward_Tanker_Sampling extends AppCompatActivity {
 
     private final int MAX_LENGTH = 10;
@@ -161,7 +163,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         String date = etsdate.getText().toString().trim();
         String vehiclenumber = etvehicleno.getText().toString().trim();
         if (vehiclenumber.isEmpty() || etreciving.isEmpty() || date.isEmpty() || etsubmitted.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
             Map<String, String> saitems = new HashMap<>();
             saitems.put("Sample_Reciving_Time", etssignofproduction.getText().toString().trim());
@@ -179,7 +181,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                             etinvoiceno.setText("");
                             etsdate.setText("");
                             etvehicleno.setText("");
-                            Toast.makeText(Inward_Tanker_Sampling.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Tanker_Sampling.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
@@ -191,5 +193,10 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
+    }
+
+    public void samplegrid(View view){
+        Intent intent = new Intent(this, in_Tanker_sampling_grid.class);
+        startActivity(intent);
     }
 }

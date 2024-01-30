@@ -52,6 +52,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
     String [] remark = {"Accepted","Rejected"};
@@ -308,7 +310,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String edsupplier= etsupplier.getText().toString().trim();
         if ( intime.isEmpty() || sample.isEmpty() || vehicle.isEmpty() ||  apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty()||  anline.isEmpty()|| flash.isEmpty()|| density.isEmpty() || rcsTest.isEmpty() ||
                 kv.isEmpty() || addTest.isEmpty() || sampleTest.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty()|| edsupplier.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }else {
             Map<String,String> labitems = new HashMap<>();
             labitems.put("In_Time",etintime.getText().toString().trim());
@@ -362,7 +364,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                             etsupplier.setText("");
                             disc.setText("");
                             etviscosity.setText("");
-                            Toast.makeText(Inward_Tanker_Laboratory.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Tanker_Laboratory.this, "Data Added Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent= new Intent(this, Inward_Tanker.class);
@@ -414,6 +416,10 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
+    }
+    public void vgrid(View view){
+        Intent intent = new Intent(this, in_tanker_lab_grid.class);
+        startActivity(intent);
     }
 
 }
