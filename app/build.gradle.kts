@@ -67,6 +67,8 @@ dependencies {
     implementation ("com.squareup.picasso:picasso:2.8")
     // Apache POI
     implementation ("org.apache.poi:poi:4.1.2")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
 
     implementation ("io.github.muddz:styleabletoast:2.4.0")
     implementation ("com.github.Spikeysanju:MotionToast:1.1")

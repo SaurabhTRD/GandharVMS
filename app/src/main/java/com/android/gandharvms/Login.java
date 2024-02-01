@@ -1,9 +1,7 @@
 package com.android.gandharvms;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
@@ -14,11 +12,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.RequestModel;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 import org.apache.poi.ss.usermodel.Color;
 
@@ -32,6 +37,9 @@ public class Login extends AppCompatActivity {
 
     private String emplidTxt;
     private String passwordTxt;
+
+    private LoginMethod loginMethod;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,7 +50,10 @@ public class Login extends AppCompatActivity {
         final Button login = findViewById(R.id.btnlogin);
         final TextView NotRegister = findViewById(R.id.registerlink);
 
+        loginMethod = RetroApiClient.getLoginApi();
+/*
         autoLoggingFunc();
+*/
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,33 +61,35 @@ public class Login extends AppCompatActivity {
                 passwordTxt = password.getText().toString();
 
                 if (emplidTxt.isEmpty() || passwordTxt.isEmpty()) {
-                    StyleableToast.makeText(Login.this, "Please Enter Your UserID or Password", Toast.LENGTH_SHORT,R.style.mytoast).show();
+                    Toast.makeText(Login.this, "Please Enter Your UserID or Password", Toast.LENGTH_SHORT).show();
                 } else {
-
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    RequestModel restmodel = new RequestModel();
+                    restmodel.setEmpId(emplidTxt);
+                    restmodel.setPassword(passwordTxt);
+                    Call<List<ResponseModel>> call = loginMethod.postData(restmodel);
+                    call.enqueue(new Callback<List<ResponseModel>>() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(emplidTxt)) {
-                                final String getpassword = snapshot.child(emplidTxt).child("password").getValue(String.class);
-                                if (getpassword.equals(passwordTxt)) {
-                                    Toasty.success(Login.this, "Succesfully Logged in ", Toast.LENGTH_SHORT,true).show();
-                                    SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-                                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                                    editor.putString("EMPLID_KEY", emplidTxt);
-                                    editor.apply();
-                                    startActivity(new Intent(Login.this, Menu.class));
-                                    finish();
-                                } else {
-                                    Toasty.error(Login.this, "Wrong Password", Toast.LENGTH_SHORT,true).show();
+                        public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                            if (response.isSuccessful() && response.body() != null && !response.body().isEmpty()) {
+                                ResponseModel resModel = response.body().get(0);
+                                String empid = resModel.getEmpId();
+                                String password = resModel.getPassword();
+                                if (resModel != null) {
+                                    if (password == null && empid == null) {
+                                        Toast.makeText(Login.this, "Incorrect Password or EmpId", Toast.LENGTH_SHORT).show();
+                                    } else if (password.equals(passwordTxt) && empid.equals(emplidTxt)) {
+                                        Toast.makeText(Login.this, "Succesfully Logged In ..!", Toast.LENGTH_SHORT).show();
+                                        startActivity(new Intent(Login.this, Menu.class));
+                                        finish();
+                                    } else {
+                                        Toast.makeText(Login.this, "Login Failed. Please try again.", Toast.LENGTH_SHORT).show();
+                                    }
                                 }
-                            } else {
-                                Toasty.error(Login.this, "Wrong Empld ID", Toast.LENGTH_SHORT,true).show();
                             }
                         }
-
                         @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
+                        public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+                            Toast.makeText(Login.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
@@ -88,18 +101,16 @@ public class Login extends AppCompatActivity {
                 startActivity(new Intent(Login.this, Register.class));
             }
         });
-
-
     }
 
-    private void autoLoggingFunc() {
-        /*SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+    /*private void autoLoggingFunc() {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String check = sharedPreferences.getString("EMPLID_KEY", "");
         if (!check.equals(emplidTxt))
         {
             Intent intent= new Intent(getApplicationContext(),Menu.class);
-            startActivity(intent);
+            startActivity(intent);2
             finish();
-        }*/
-    }
+        }
+    }*/
 }
