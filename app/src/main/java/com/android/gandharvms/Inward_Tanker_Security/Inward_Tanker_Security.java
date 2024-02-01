@@ -481,7 +481,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             etqty.setText("");
                             etnetoum.setText("");
                             etqtyoum.setText("");
-                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+//                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
@@ -552,7 +552,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             etqty.setText("");
                             etnetoum.setText("");
                             etqtyoum.setText("");
-                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+//                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
@@ -698,17 +698,17 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             edpooa.setText("");
                             etmobilenum.setText("");
                             etremark.setText("");
-                            Toasty.success(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT,true).show();
+//                            Toasty.success(Inward_Tanker_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            Toasty.error(Inward_Tanker_Security.this, "Failed to update data", Toast.LENGTH_SHORT,true).show();
+//                            Toasty.error(Inward_Tanker_Security.this, "Failed to update data", Toast.LENGTH_SHORT,true).show();
                         }
                     });
         } else {
-            Toasty.warning(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT,true).show();
+//            Toasty.warning(Inward_Tanker_Security.this, "Please Provide Vehicle no", Toast.LENGTH_SHORT,true).show();
         }
 
 }
