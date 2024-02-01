@@ -203,7 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Driver Mobile No"
-                android:inputType="textCapCharacters"
+                android:inputType="phone"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -449,7 +449,8 @@
                       android:layout_height="match_parent"
                       android:layout_below="@id/OUM."
                       android:layout_marginLeft="30dp"
-                      android:text="Cancel"
+                      android:onClick="gridclick"
+                      android:text="Grid"
                       android:textStyle="bold"
                       android:textSize="22dp">
 

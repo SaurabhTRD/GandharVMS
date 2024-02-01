@@ -21,13 +21,31 @@
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
+        android:hasFragileUserData="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:hasFragileUserData="true"
         android:theme="@style/Theme.GandharVMS"
         tools:targetApi="31">
+        <activity
+            android:name=".Inward_Tanker_Production.in_tanker_produ_grid"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Laboratory.in_tanker_lab_grid"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Sampling.in_Tanker_sampling_grid"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Sampling.in"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Weighment.in_Tanker_weighment_grid"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Security.grid"
+            android:exported="false" />
         <activity
             android:name=".OutwardOut_Truck_Billing"
             android:exported="false" />
@@ -174,8 +192,7 @@
             android:exported="false" />
         <activity
             android:name=".Inward_Tanker_Security.Inward_Tanker_Security"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".Inward_Truck"
             android:exported="false" />

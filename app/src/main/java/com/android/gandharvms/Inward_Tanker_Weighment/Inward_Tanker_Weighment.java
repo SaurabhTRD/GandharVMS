@@ -72,6 +72,8 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
+import es.dmoral.toasty.Toasty;
+
 
 public class Inward_Tanker_Weighment extends AppCompatActivity {
 
@@ -267,14 +269,14 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         if (inte.isEmpty() || serialnumber.isEmpty() || vehicelnumber.isEmpty() || suppliername.isEmpty() || materialname.isEmpty() ||
                 driverno.isEmpty() || oan.isEmpty() || grossweight.isEmpty() ||
                 signby.isEmpty() || container.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
             Map<String,Object> weitems = new HashMap<>();
             weitems.put("In_Time", etint.getText().toString().trim());
-            weitems.put("serial_number", etserialnumber.getText().toString().trim());
-            weitems.put("vehicle_number", etvehicalno.getText().toString().trim());
+            weitems.put("SerialNumber", etserialnumber.getText().toString().trim());
+            weitems.put("vehicalnumber", etvehicalno.getText().toString().trim());
             weitems.put("supplier_name", etsuppliername.getText().toString().trim());
-            weitems.put("material_name", etmaterialname.getText().toString().trim());
+            weitems.put("material", etmaterialname.getText().toString().trim());
             weitems.put("Driver_Number", etdriverno.getText().toString().trim());
             weitems.put("OA_number", etoano.getText().toString().trim());
             weitems.put("Date", timestamp);
@@ -314,7 +316,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                             etcontainer.setText("");
                             etshortagedip.setText("");
                             etshortageweight.setText("");
-                            Toast.makeText(Inward_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
@@ -452,7 +454,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                         etdate.setText("");
                         /*etnetweight.setText("");*/
                         etvehicalno.requestFocus();
-                        Toast.makeText(Inward_Tanker_Weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT).show();
+                        Toasty.warning(Inward_Tanker_Weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
                     }
                     else {
                         for (QueryDocumentSnapshot document : task.getResult()) {
@@ -477,5 +479,9 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void inweighmenttankergridclick(View view){
+        Intent intent = new Intent(this, in_Tanker_weighment_grid.class);
+        startActivity(intent);
     }
 }

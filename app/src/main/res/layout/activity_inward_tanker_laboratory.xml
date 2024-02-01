@@ -222,7 +222,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Appearance"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -244,7 +244,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Odor"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -273,7 +273,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Color/Saybolt"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -342,7 +342,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="RCS test"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -468,7 +468,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Additional test"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -520,7 +520,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Viscosity Index"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -541,7 +541,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Sign of QC/R &amp; D"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -652,7 +652,8 @@
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="2dp"
                     android:layout_marginTop="5dp"
-                    android:text="Cancel"
+                    android:onClick="vgrid"
+                    android:text="V Status"
                     android:textStyle="bold"
                     android:textSize="19dp"
 

@@ -48,6 +48,8 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
+import es.dmoral.toasty.Toasty;
+
 public class Inward_Tanker_Production extends AppCompatActivity {
 
     final Calendar calendar = Calendar.getInstance();
@@ -207,7 +209,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         String vehicleNumber = etVehicleNumber.getText().toString().trim();
 
         if (intime.isEmpty() || reqtounload.isEmpty() || tanknumber.isEmpty() || confirmunload.isEmpty() || tanknumbers.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
-            Toast.makeText(this, "All Fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All Fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
             Map<String, Object> proitems = new HashMap<>();
             proitems.put("In_Time", etint.getText().toString().trim());
@@ -237,7 +239,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                             etserno.setText("");
                             etint.requestFocus();
                             etint.callOnClick();
-                            Toast.makeText(Inward_Tanker_Production.this, "Data Added Successfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Tanker_Production.this, "Data Added Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent = new Intent(this, Inward_Tanker.class);
@@ -266,7 +268,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                         etVehicleNumber.requestFocus();
                         etserno.setText("");
                         etconunloadDateTime.setText("");
-                        Toast.makeText(Inward_Tanker_Production.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT).show();
+                        Toasty.warning(Inward_Tanker_Production.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
                     } else {
                         for (QueryDocumentSnapshot document : task.getResult()) {
                             In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
@@ -286,5 +288,9 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void statusgrid(View view){
+        Intent intent = new Intent(this, in_tanker_produ_grid.class);
+        startActivity(intent);
     }
 }

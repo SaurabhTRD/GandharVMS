@@ -1,7 +1,13 @@
 <resources>
-    <string name="app_name">GandharVMS</string>
+    <string name="app_name">Gandhar VMS</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="select">Select UOM </string>
     <string name="app_name1">DropdownMenu</string>
+    <!--    Todo: Register View Strings-->'
+    <string name="fieldEmplName">Employee Name</string>
+    <string name="fieldEmplId">Employee Id</string>
+    <string name="fieldEmplMail">Employee Mail</string>
+    <string name="fieldEmplPhone">Employee Phone</string>
+    <string name="fieldEmplPass">Password</string>
+
 </resources>

@@ -125,8 +125,9 @@
             android:layout_height="match_parent"
             android:layout_below="@id/OUM."
             android:layout_marginLeft="25dp"
-            android:text="Cancel"
-            android:textSize="22dp"
+            android:onClick="samplegrid"
+            android:text="V Status"
+            android:textSize="18dp"
             android:textStyle="bold">
 
         </androidx.appcompat.widget.AppCompatButton>

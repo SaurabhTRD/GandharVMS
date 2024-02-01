@@ -38,6 +38,7 @@ android {
     viewBinding {
       enable = true
     }
+
 }
 
 dependencies {
@@ -68,6 +69,16 @@ dependencies {
     implementation ("org.apache.poi:poi:4.1.2")
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+
+    implementation ("io.github.muddz:styleabletoast:2.4.0")
+    implementation ("com.github.Spikeysanju:MotionToast:1.1")
+    implementation ("com.github.GrenderG:Toasty:1.5.2")
+//    implementation ("com.evrencoskun.library:tableview:0.8.9")
+    implementation ("com.github.evrencoskun:TableView:v0.8.9.4")
+
+
+
+
 
 
 

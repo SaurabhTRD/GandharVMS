@@ -490,9 +490,12 @@
                             android:layout_height="match_parent"
                             android:layout_below="@id/OUM."
                             android:layout_marginLeft="80dp"
-                            android:text="Cancel"
-                            android:textSize="22dp"
-                            android:textStyle="bold"></androidx.appcompat.widget.AppCompatButton>
+                            android:onClick="inweighmenttankergridclick"
+                            android:text="V Status"
+                            android:textSize="18dp"
+                            android:textStyle="bold">
+
+                        </androidx.appcompat.widget.AppCompatButton>
 
                         <androidx.appcompat.widget.AppCompatButton
                             android:id="@+id/wesubmit"
