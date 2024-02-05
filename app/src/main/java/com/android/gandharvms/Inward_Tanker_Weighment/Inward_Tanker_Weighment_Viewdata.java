@@ -18,17 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Se_Adapter;
-import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
-import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security_Viewdata;
-import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
-import com.android.gandharvms.Login;
-import com.android.gandharvms.Menu;
+import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -40,19 +37,11 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.RichTextString;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -61,12 +50,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
+
 public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
     RecyclerView recview;
-    ArrayList<In_Tanker_Weighment_list> datalist;
+  /*  ArrayList<InTanWeighRequestModel> weighdatalist;*/
     FirebaseFirestore db;
-    In_Tanker_we_Adapter in_tanker_we_adapter;
+    Intankweighlistdata_adapter intankweighlistdataAdapter;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
     TextView txtTotalCount;
@@ -77,6 +72,8 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 /*
     private ListView listView;
 */
+
+    private LoginMethod loginMethod;
 
 
     @Override
@@ -96,13 +93,16 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         btncleardateselection = findViewById(R.id.btn_clearDateSelectionfields);
         txtTotalCount = findViewById(R.id.tv_TotalCount);
 
+        loginMethod= RetroApiClient.getLoginApi();
+
         recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
-        datalist = new ArrayList<>();
-        in_tanker_we_adapter = new In_Tanker_we_Adapter(datalist);
-        recview.setAdapter(in_tanker_we_adapter);
+        intankweighlistdataAdapter = new Intankweighlistdata_adapter(new ArrayList<>());
+        recview.setAdapter(intankweighlistdataAdapter);
+        String nextprocess= Global_Var.getInstance().DeptType;
+        callApiAndUpdateAdapter(nextprocess);
 
-        db = FirebaseFirestore.getInstance();
+        /*db = FirebaseFirestore.getInstance();
         db.collection("Inward Tanker Weighment").orderBy("Date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -117,9 +117,42 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                         }
                         in_tanker_we_adapter.notifyDataSetChanged();
                     }
-                });
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
+                });*/
+    }
+    private void callApiAndUpdateAdapter(String nextProcess) {
+        Call<List<InTanWeighResponseModel>> call = loginMethod.getIntankWeighListData(nextProcess);
+        call.enqueue(new Callback<List<InTanWeighResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<InTanWeighResponseModel>> call, Response<List<InTanWeighResponseModel>> response) {
+                if(response.isSuccessful()){
+                    List<InTanWeighResponseModel> data=response.body();
+                    intankweighlistdataAdapter.setData(data);
+                }
+                else
+                {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<InTanWeighResponseModel>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Weighment_Viewdata.this,"failed..!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+        /*btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Tanker_Weighment_Viewdata.this, Login.class));
@@ -473,5 +506,5 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-    }
+    }*/
 }

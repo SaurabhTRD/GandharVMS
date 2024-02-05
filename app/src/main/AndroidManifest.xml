@@ -162,9 +162,6 @@
             android:name=".Inward_Tanker_Sampling.Inward_Tanker_saampling_View_data"
             android:exported="false" />
         <activity
-            android:name=".Inward_Tanker_Sampling.Inward_Tanker_Sampling_View_data"
-            android:exported="false" /> <!-- Add any additional attributes or intent filters here -->
-        <activity
             android:name=".Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata"
             android:exported="false" />
         <activity

@@ -83,6 +83,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
 
     public void samplicgclick(View view) {
         if(userRole.equals("Admin") || userRole.equals("Sampling")){
+            Global_Var.getInstance().DeptType="M";
             startActivity(new Intent(this, Inward_Tanker_Sampling.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Sampling Department", Toast.LENGTH_SHORT).show();
@@ -91,6 +92,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
 
     public void productionclick(View view) {
         if(userRole.equals("Admin") || userRole.equals("Production")){
+            Global_Var.getInstance().DeptType="P";
             startActivity(new Intent(this, Inward_Tanker_Production.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Production Department", Toast.LENGTH_SHORT).show();
@@ -99,6 +101,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
 
     public void Laboratoryclick(View view) {
         if(userRole.equals("Admin") || userRole.equals("Laboratory")){
+            Global_Var.getInstance().DeptType="L";
             startActivity(new Intent(this, Inward_Tanker_Laboratory.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Laboratory Department", Toast.LENGTH_SHORT).show();
