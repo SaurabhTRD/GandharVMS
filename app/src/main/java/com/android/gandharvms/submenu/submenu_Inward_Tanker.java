@@ -9,11 +9,14 @@ import android.widget.Button;
 
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Out;
-import com.android.gandharvms.login.Login;
+import com.android.gandharvms.Login;
 import com.android.gandharvms.R;
 
 public class submenu_Inward_Tanker extends AppCompatActivity {
     Button btnlogout;
+
+    public static String Tanker;
+    public static String Truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,10 +34,12 @@ public class submenu_Inward_Tanker extends AppCompatActivity {
 
     public void inwardtankerinclick(View view){
         Intent intent = new Intent(this, Inward_Tanker.class);
+        Tanker = "I";
         startActivity(intent);
     }
     public void inwardtankeroutclick(View view){
         Intent intent = new Intent(this, Inward_Tanker_Out.class);
+        Truck = "O";
         startActivity(intent);
     }
 }

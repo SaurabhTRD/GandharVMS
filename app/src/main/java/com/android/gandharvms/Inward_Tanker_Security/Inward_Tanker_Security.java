@@ -2,8 +2,9 @@ package com.android.gandharvms.Inward_Tanker_Security;
 
 
 
+import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
+
 import androidx.annotation.NonNull;
-import androidx.annotation.ReturnThis;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
 
@@ -13,8 +14,6 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -26,21 +25,16 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Inward_Tanker;
-import com.android.gandharvms.MainActivity;
-import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
-import com.google.android.gms.common.server.converter.StringToIntConverter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.Timestamp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -49,15 +43,21 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,10 +68,14 @@ import java.util.Map;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
-public class Inward_Tanker_Security extends AppCompatActivity implements View.OnClickListener {
+public class Inward_Tanker_Security extends AppCompatActivity implements View.OnClickListener  {
 
-    String [] items = {"Capital Register", "General Register","Inward Register"};
+    String[] items = {"Capital Register", "General Register", "Inward Register"};
 
     String DocId = "";
 
@@ -80,6 +84,26 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
     String[] qtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
+    Map<String, Integer> qtyUomMapping= new HashMap<>();
+    Integer qtyUomNumericValue = 1;
+    Integer netweuomvalue = 2;
+    char input = 'i';
+
+    int isReportingInt = 0;
+    String isReportingString = "0";  // or "1"
+    boolean isReporting = isReportingString.equals("1");
+
+
+     String vehicletype = String.valueOf(T);
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    LocalDate currentDatee = LocalDate.now();
+
+    // Assign the current date to a variable of type java.sql.Date
+
+
+    String datetimeString = "2022-01-31 12:34:56";
     String[] netweuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
     AutoCompleteTextView autoCompleteTextView, autoCompleteTextView1, autoCompleteTextView2;
     ArrayAdapter<String> registeritem;
@@ -103,14 +127,20 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     private EditText reportingRemarkLayout;
     Date currentDate = Calendar.getInstance().getTime();
     private String token;
-    public int MAX_LENGTH=10;
+    public int MAX_LENGTH = 10;
 
     private String dateTimeString = "";
+
+    private API_In_Tanker_Security apiInTankerSecurity;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_security);
+
 
         isReportingCheckBox = findViewById(R.id.isreporting);
         reportingRemarkLayout = findViewById(R.id.edtreportingremark);
@@ -142,13 +172,41 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         autoCompleteTextView1 = findViewById(R.id.qtyuom);
         qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, qtyuom);
         autoCompleteTextView1.setAdapter(qtyuomdrop);
+
+
+        qtyUomMapping.put("Ton", 1);
+        qtyUomMapping.put("Litre", 2);
+        qtyUomMapping.put("KL", 3);
+        qtyUomMapping.put("Kgs", 4);
+        qtyUomMapping.put("pcs", 5);
+        qtyUomMapping.put("NA", 6);
+
         autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String qtyuom = parent.getItemAtPosition(position).toString();
-                Toast.makeText(Inward_Tanker_Security.this, "qtyuom : " + qtyuom+" Selected", Toast.LENGTH_SHORT).show();
+                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
+
+                // Retrieve the corresponding numerical value from the mapping
+                Integer qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
+
+                if (qtyUomNumericValue != null) {
+                    // Now, you can use qtyUomNumericValue when inserting into the database
+                    Toast.makeText(Inward_Tanker_Security.this, "qtyUomNumericValue : " + qtyUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Handle the case where the mapping doesn't contain the display value
+                    Toast.makeText(Inward_Tanker_Security.this, "Unknown qtyUom : " + qtyUomDisplay, Toast.LENGTH_SHORT).show();
+                }
             }
         });
+
+
+//        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String qtyuom = parent.getItemAtPosition(position).toString();
+//                Toast.makeText(Inward_Tanker_Security.this, "qtyuom : " + qtyuom + " Selected", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
         autoCompleteTextView2 = findViewById(R.id.netweuom);
         netweuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_nw, netweuom);
@@ -178,9 +236,9 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         etdate = findViewById(R.id.etdate);
         etsupplier = findViewById(R.id.etsupplier);
         etmaterial = findViewById(R.id.etmaterial);
-        etintime = findViewById(R.id.etqty);
+        etintime = findViewById(R.id.etintime);
         etnetweight = findViewById(R.id.etnetweight);
-        etqty = findViewById(R.id.etintime);
+        etqty = findViewById(R.id.etqty);
         etqtyoum = findViewById(R.id.qtyuom);
         etnetoum = findViewById(R.id.netweuom);
 
@@ -189,7 +247,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         etmobilenum = findViewById(R.id.etcontactnumber);
 
         repremark = findViewById(R.id.edtreportingremark);
-       
+
         cbox = (CheckBox) findViewById(R.id.isreporting);
 
 
@@ -198,17 +256,17 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         //
         linearLayout = findViewById(R.id.layout_list);
         button1 = findViewById(R.id.button_add);
-        button1.setOnClickListener(this);
+        button1.setOnClickListener((View.OnClickListener) this);
         dbbutton = findViewById(R.id.dbview);
 
 
-        teamList.add("Ton");
-        teamList.add("Litre");
-        teamList.add("KL");
-        teamList.add("Kgs");
-        teamList.add("Pcs");
+        teamList.add(0, "Ton");
+        teamList.add(1,"Litre");
+        teamList.add(2,"KL");
+        teamList.add(3,"Kgs");
+        teamList.add(4,"Pcs");
 
-        //listdata button
+//        listdata button
         dbbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -239,7 +297,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
         });
 
-        etqty.setOnClickListener(new View.OnClickListener() {
+        etintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
@@ -253,7 +311,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         c.set(Calendar.MINUTE, minute);
 
                         // Set the formatted time to the EditText
-                        etqty.setText(hourOfDay + ":" + minute);
+                        etintime.setText(hourOfDay + ":" + minute);
                     }
                 }, hours, mins, false);
                 tpicker.show();
@@ -274,7 +332,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         insertdata();
                     } catch (ParseException e) {
                         throw new RuntimeException(e);
-                    }                    
+                    }
                 }
             }
         });
@@ -394,100 +452,193 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String Date = etdate.getText().toString().trim();
         String partyname = etsupplier.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
-        String qty = etqty.getText().toString().trim();
-        String netweight = etnetweight.getText().toString().trim();
+        int qty = Integer.parseInt(etqty.getText().toString().trim());
+        int netweight = Integer.parseInt(etnetweight.getText().toString().trim());
         String intime = etintime.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
-        String qtyuom = etqtyoum.getText().toString().trim();
-        String netweuom = etnetoum.getText().toString().trim();
+        int qtyuom = Integer.parseInt( qtyUomNumericValue.toString().trim());
+
+//        Integer qtyUomNumericValue = qtyUomMapping.get(qtyuom);
+//
+//        if (qtyUomNumericValue != null) {
+//            // Now, you can use qtyUomNumericValue when needed
+//            Toast.makeText(Inward_Tanker_Security.this, "qtyUomNumericValue: " + qtyUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
+//            // Use qtyUomNumericValue as needed in your application logic
+//        } else {
+//            // Handle the case where the mapping doesn't contain the unit of measure
+//            Toast.makeText(Inward_Tanker_Security.this, "Unknown qtyUom: ", Toast.LENGTH_SHORT).show();
+//        }
+        int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
         String remark = etremark.getText().toString().trim();
         String pooa = edpooa.getText().toString().trim();
-        String mobnumber = etmobilenum.getText().toString().trim();
+        int mobnumber = Integer.parseInt(etmobilenum.getText().toString().trim());
+        String edremark = repremark.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() || partyname.isEmpty() ||
-                netweight.isEmpty() || intime.isEmpty() || material.isEmpty()) {
+                 intime.isEmpty() || material.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
-            // Material data handling for dynamically added fields
-            List<Map<String, String>> materialList = new ArrayList<>();
 
-            for (int i = 0; i < linearLayout.getChildCount(); i++) {
-                View childView = linearLayout.getChildAt(i);
-                if (childView != null) {
-                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
-                    EditText qtyEditText = childView.findViewById(R.id.editqty);
-                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
 
-                    String dynamaterial = materialEditText.getText().toString().trim();
-                    String dynaqty = qtyEditText.getText().toString().trim();
-                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
 
-                    // Check if both material and quantity fields are not empty
-                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-                        Map<String, String> materialMap = new HashMap<>();
-                        materialMap.put("material", dynamaterial);
-                        materialMap.put("qty", dynaqty);
-                        materialMap.put("qtyuom", dynaqtyuom);
-                        // Add material data to the list
-                        materialList.add(materialMap);
+
+            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,invoicenumber,vehicalnumber,Date,partyname,material,pooa,mobnumber,'W','I',Date,
+                    null,'T',intime,outTime,qtyuom,netweuom,netweight,qty,"",remark,false,"No","","","","","","prince");
+           /*requestModelInTankerSecurity.Date = Date;
+           requestModelInTankerSecurity.SerialNo = serialnumber;
+           requestModelInTankerSecurity.VehicleNo= vehicalnumber;
+           requestModelInTankerSecurity.ReportingRemark = edremark;
+            requestModelInTankerSecurity.InTime=intime;
+            requestModelInTankerSecurity.InvoiceNo=invoicenumber;
+            requestModelInTankerSecurity.Driver_MobileNo=mobnumber;
+            requestModelInTankerSecurity.PartyName=partyname;
+            requestModelInTankerSecurity.Material=material;
+            requestModelInTankerSecurity.OA_PO_number =pooa;
+            requestModelInTankerSecurity.NetWeight=netweight;
+            requestModelInTankerSecurity.NetWeightUOM=netweuom;
+            requestModelInTankerSecurity.Qty=qty;
+            requestModelInTankerSecurity.QtyUOM=qtyuom;
+            requestModelInTankerSecurity.Remark=remark;
+*/
+//            Toast.makeText(this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+
+
+
+
+//            requestModelInTankerSecurity.setCreatedDate(Date);
+//            requestModelInTankerSecurity.setSerialNo(serialnumber);
+//            requestModelInTankerSecurity.setVehicleNo(vehicalnumber);
+//            requestModelInTankerSecurity.setReportingRemark(edremark);
+//            requestModelInTankerSecurity.setInTime(intime);
+//            requestModelInTankerSecurity.setTaxInvoice(invoicenumber);
+////            requestModelInTankerSecurity.setDriver_MobileNo(Integer.parseInt(mobnumber));
+//            requestModelInTankerSecurity.setPartyName(partyname);
+//            requestModelInTankerSecurity.setMaterial(material);
+//            requestModelInTankerSecurity.setOA_PO_number(pooa);
+////            requestModelInTankerSecurity.setNetWeight(Integer.parseInt(netweight));
+////            requestModelInTankerSecurity.setNetWeightUOM(netweuom);
+////            requestModelInTankerSecurity.setQty(Integer.parseInt(qty));
+////            requestModelInTankerSecurity.setQtyUOM(Integer.parseInt(qtyuom));
+//            requestModelInTankerSecurity.setRemark(remark);
+
+
+            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
+
+            Call<Boolean> call =  apiInTankerSecurity.postData(requestModelInTankerSecurity);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() != null ){
+                        Toast.makeText(Inward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                     }
                 }
-            }
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-            Timestamp timestamp = new Timestamp(calendar.getTime());
-            Map<String, Object> items = new HashMap<>();
-            items.put("SerialNumber", etreg.getText().toString().trim());
-            items.put("vehicalnumber", etvehical.getText().toString().trim());
-            items.put("invoiceno", etinvoice.getText().toString().trim());
-          //  items.put("date", etdate.getText().toString().trim());
-            items.put("date",  timestamp);
-            items.put("partyname", etsupplier.getText().toString());
-            items.put("extramaterials", materialList.toString().replace("[]", ""));
-            items.put("material", etmaterial.getText().toString().trim());
-            items.put("qty", etintime.getText().toString().trim());
-            items.put("netweight", etnetweight.getText().toString().trim());
-            items.put("intime", etqty.getText().toString().trim());
-            if (cbox.isChecked()) {
-                items.put("outTime", "");
-            } else {
-                items.put("outTime", outTime);
-            }
-            items.put("qtyuom", etqtyoum.getText().toString().trim());
-            items.put("netweightuom", etnetoum.getText().toString().trim());
-            items.put("Remark", etremark.getText().toString().trim());
-            items.put("OA_PO_Number", edpooa.getText().toString().trim());
-            items.put("Driver_Mobile_No", etmobilenum.getText().toString().trim());
 
-            String rpremark = "";
-            int isreporting = 0;
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
 
-            if (cbox.isChecked()) {
-                rpremark = repremark.getText().toString().trim();
-                isreporting = 1;
-            }
-            items.put("Is_Reporting", String.valueOf(isreporting));
-            items.put("Reporting_Remark", rpremark);
-            makeNotification(etvehical.getText().toString(), outTime);
-            dbroot.collection("Inward Tanker Security").add(items)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            etvehical.setText("");
-                            etinvoice.setText("");
-                            etdate.setText("");
-                            etsupplier.setText("");
-                            etmaterial.setText("");
-                            etintime.setText("");
-                            etnetweight.setText("");
-                            etqty.setText("");
-                            etnetoum.setText("");
-                            etqtyoum.setText("");
-//                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    });
-            Intent intent = new Intent(this, Inward_Tanker.class);
-            startActivity(intent);
+                    }
+                    Toast.makeText(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
         }
+
+//        else {
+//            // Material data handling for dynamically added fields
+//            List<Map<String, String>> materialList = new ArrayList<>();
+//
+//            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+//                View childView = linearLayout.getChildAt(i);
+//                if (childView != null) {
+//                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
+//                    EditText qtyEditText = childView.findViewById(R.id.editqty);
+//                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+//
+//                    String dynamaterial = materialEditText.getText().toString().trim();
+//                    String dynaqty = qtyEditText.getText().toString().trim();
+//                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+//
+//                    // Check if both material and quantity fields are not empty
+//                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+//                        Map<String, String> materialMap = new HashMap<>();
+//                        materialMap.put("material", dynamaterial);
+//                        materialMap.put("qty", dynaqty);
+//                        materialMap.put("qtyuom", dynaqtyuom);
+//                        // Add material data to the list
+//                        materialList.add(materialMap);
+//                    }
+//                }
+//            }
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+//            Timestamp timestamp = new Timestamp(calendar.getTime());
+//            Map<String, Object> items = new HashMap<>();
+//            items.put("SerialNumber", etreg.getText().toString().trim());
+//            items.put("vehicalnumber", etvehical.getText().toString().trim());
+//            items.put("invoiceno", etinvoice.getText().toString().trim());
+//          //  items.put("date", etdate.getText().toString().trim());
+//            items.put("date",  timestamp);
+//            items.put("partyname", etsupplier.getText().toString());
+//            items.put("extramaterials", materialList.toString().replace("[]", ""));
+//            items.put("material", etmaterial.getText().toString().trim());
+//            items.put("qty", etintime.getText().toString().trim());
+//            items.put("netweight", etnetweight.getText().toString().trim());
+//            items.put("intime", etqty.getText().toString().trim());
+//            if (cbox.isChecked()) {
+//                items.put("outTime", "");
+//            } else {
+//                items.put("outTime", outTime);
+//            }
+//            items.put("qtyuom", etqtyoum.getText().toString().trim());
+//            items.put("netweightuom", etnetoum.getText().toString().trim());
+//            items.put("Remark", etremark.getText().toString().trim());
+//            items.put("OA_PO_Number", edpooa.getText().toString().trim());
+//            items.put("Driver_Mobile_No", etmobilenum.getText().toString().trim());
+//
+//            String rpremark = "";
+//            int isreporting = 0;
+//
+//            if (cbox.isChecked()) {
+//                rpremark = repremark.getText().toString().trim();
+//                isreporting = 1;
+//            }
+//            items.put("Is_Reporting", String.valueOf(isreporting));
+//            items.put("Reporting_Remark", rpremark);
+//            makeNotification(etvehical.getText().toString(), outTime);
+//            dbroot.collection("Inward Tanker Security").add(items)
+//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<DocumentReference> task) {
+//                            etvehical.setText("");
+//                            etinvoice.setText("");
+//                            etdate.setText("");
+//                            etsupplier.setText("");
+//                            etmaterial.setText("");
+//                            etintime.setText("");
+//                            etnetweight.setText("");
+//                            etqty.setText("");
+//                            etnetoum.setText("");
+//                            etqtyoum.setText("");
+//////                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+//                        }
+//                    });
+//            Intent intent = new Intent(this, Inward_Tanker.class);
+//            startActivity(intent);
+//        }
     }
+
+
 
     public void insertreporting() {
         String serialnumber = etreg.getText().toString().trim();
@@ -512,8 +663,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
             Timestamp timestamp = new Timestamp(calendar.getTime());
             Map<String, Object> items = new HashMap<>();
-//            List<Map<String, String>> materialList = new ArrayList<>();
-
+////            List<Map<String, String>> materialList = new ArrayList<>();
+//
             items.put("SerialNumber", serialnumber);
             items.put("vehicalnumber", vehicalnumber);
             items.put("invoiceno", invoicenumber);
@@ -637,8 +788,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         });
         //    return DocId.toString();
     }    public void updateData() {
-        //  String vehiclnumber = "0JTDOizXVgFrAuOeosCy";
-        //etvehical.getText().toString().trim();
+          String vehiclnumber = "0JTDOizXVgFrAuOeosCy";
+        etvehical.getText().toString().trim();
         String outTime=getCurrentTime();
         if (DocId != "") {
             Map<String, Object> updates = new HashMap<>();
@@ -712,10 +863,11 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         }
 
 }
-public void gridclick(View view){
+       public void gridclick(View view){
         Intent intent = new Intent(this,grid.class);
         startActivity(intent);
-}
+       }
+
 
 }
 

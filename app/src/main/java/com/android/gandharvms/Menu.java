@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import com.android.gandharvms.login.Login;
 import com.android.gandharvms.submenu.Submenu_Outward_Truck;
 import com.android.gandharvms.submenu.Submenu_outward_tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
@@ -15,11 +14,16 @@ import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.apache.poi.ss.formula.functions.T;
+
 public class Menu extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String userRole = "default";
     Button btnlogout;
+
+    public static String Tanker;
+    public static String Truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +41,7 @@ public class Menu extends AppCompatActivity {
 
     public void Inward_Tanker(View view) {
         Intent intent = new Intent(this, submenu_Inward_Tanker.class);
+         Tanker = "T";
         startActivity(intent);
     }
 

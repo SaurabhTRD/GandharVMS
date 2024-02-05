@@ -9,7 +9,7 @@ import android.widget.Button;
 
 import com.android.gandharvms.Inward_Tanker_Out;
 import com.android.gandharvms.Inward_Truck;
-import com.android.gandharvms.login.Login;
+import com.android.gandharvms.Login;
 import com.android.gandharvms.R;
 
 public class submenu_Inward_Truck extends AppCompatActivity {

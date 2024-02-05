@@ -14,7 +14,6 @@ import android.os.Vibrator;
 
 import androidx.core.app.NotificationCompat;
 
-import com.android.gandharvms.login.Login;
 import com.google.firebase.messaging.RemoteMessage;
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
     NotificationManager mNotificationManager;
