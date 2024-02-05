@@ -15,11 +15,12 @@ public class OutwardOut_Tanker extends AppCompatActivity {
     }
 
     public void inwardtankerinclick(View view){
+        Global_Var.getInstance().DeptType="S";
         Intent intent = new Intent(this, OutwardOut_Tanker_Security.class);
         startActivity(intent);
     }
     public void inwardtankeroutclick(View view){
-
+        Global_Var.getInstance().DeptType="W";
         Intent intent = new Intent(this, OutwardOut_Tanker_Weighment.class);
         startActivity(intent);
     }

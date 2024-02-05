@@ -1,12 +1,13 @@
-package com.android.gandharvms;
+package com.android.gandharvms.RegisterwithAPI;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
@@ -16,46 +17,56 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Menu;
+import com.android.gandharvms.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.io.IOException;
+
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class Register extends AppCompatActivity {
 
-    private String setRole="";
+    private int setRole;
     private String token;
     private final int MAX_LENGTH=10;
 
+    private LoginMethod loginMethod;
 
+    EditText name,emplid,emailid,phoneno,password;
+    Button register;
+    TextView loginnowbtn;
+    CheckBox security,weighment,sampling,production,laboratary,stores;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+          name = findViewById(R.id.name);
+          emplid =findViewById(R.id.emplid);
+          emailid = findViewById(R.id.emailid);
+          phoneno = findViewById(R.id.phoneno);
+          password = findViewById(R.id.password);
 
+          register = findViewById(R.id.btnregister);
+          loginnowbtn = findViewById(R.id.loginlink);
 
-        final EditText name = findViewById(R.id.name);
-        final EditText emplid =findViewById(R.id.emplid);
-//        final EditText departmentname = findViewById(R.id.departmentname);
-        final EditText emailid = findViewById(R.id.emailid);
-        final EditText phoneno = findViewById(R.id.phoneno);
-        final EditText password = findViewById(R.id.password);
+          security=findViewById(R.id.isSecurity);
+          weighment=findViewById(R.id.isWeighment);
+          sampling=findViewById(R.id.isSampling);
+          production=findViewById(R.id.isProduction);
+          laboratary=findViewById(R.id.isLaboratary);
+          stores=findViewById(R.id.isStores);
 
-        final Button register = findViewById(R.id.btnregister);
-        final TextView loginnowbtn = findViewById(R.id.loginlink);
-
-
-
-        final CheckBox security=findViewById(R.id.isSecurity);
-        final CheckBox weighment=findViewById(R.id.isWeighment);
-        final CheckBox sampling=findViewById(R.id.isSampling);
-        final CheckBox production=findViewById(R.id.isProduction);
-        final CheckBox laboratary=findViewById(R.id.isLaboratary);
-        final CheckBox stores=findViewById(R.id.isStores);
-
+        loginMethod= RetroApiClient.getLoginApi();
         emailid.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -74,7 +85,7 @@ public class Register extends AppCompatActivity {
                 }
             }
         });
-        phoneno.addTextChangedListener(new TextWatcher() {
+        /*phoneno.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
@@ -97,8 +108,15 @@ public class Register extends AppCompatActivity {
                     phoneno.setError(null);
                 }
             }
-        });
+        });*/
 
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful() && task.getResult() != null) {
+                        token = task.getResult();
+                    } else {
+                    }
+                });
         security.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -178,100 +196,7 @@ public class Register extends AppCompatActivity {
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String nameTxt = name.getText().toString();
-                final String emplidTxt = emplid.getText().toString();
-//                final String departmentnameTxt = departmentname.getText().toString();
-                final String emailidTxt = emailid.getText().toString();
-                final String phoneTxt = phoneno.getText().toString();
-                final String passwordTxt = password.getText().toString();
-
-                if(security.isChecked()){
-                    setRole="Security";
-                } else if (weighment.isChecked()) {
-                    setRole="Weighment";
-                } else if (sampling.isChecked()) {
-                    setRole="Sampling";
-                } else if (production.isChecked()) {
-                    setRole="Production";
-                } else if (laboratary.isChecked()) {
-                    setRole="Laboratory";
-                } else if (stores.isChecked()) {
-                    setRole="Store";
-                }
-
-
-                if(TextUtils.isEmpty(nameTxt)){
-                    name.setError("Name is Required");
-                    return;
-                }
-                if(TextUtils.isEmpty(emplidTxt)){
-                    emplid.setError("Employee Id is Required");
-                    return;
-                }
-                if(TextUtils.isEmpty(emailidTxt)){
-                    emailid.setError("Email Id is Required");
-                    return;
-                }
-                if(TextUtils.isEmpty(phoneTxt)){
-                    phoneno.setError("Phone No is Required");
-                    return;
-                }
-                if (TextUtils.isEmpty(passwordTxt)){
-                    password.setError("Passsword is Required");
-                    return;
-                }
-                if(passwordTxt.length()<8){
-                    password.setError("Password Must be >= 8 Characters");
-                    return;
-                }
-
-                FirebaseMessaging.getInstance().getToken()
-                        .addOnCompleteListener(task -> {
-                            if (task.isSuccessful() && task.getResult() != null) {
-                                token = task.getResult();
-                                // Use the token as needed
-                            } else {
-                                // Handle the error
-                            }
-                        });
-                //Checkbox Validation
-                if(!(security.isChecked() || weighment.isChecked() || sampling.isChecked() || production.isChecked() || laboratary.isChecked() || stores.isChecked()))
-                {
-                    Toast.makeText(Register.this, "Please Select the Department", Toast.LENGTH_SHORT).show();
-                }
-
-
-                else {
-                    databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if (snapshot.hasChild(emplidTxt)){
-                                Toast.makeText(Register.this, "Empl ID is Already Registered", Toast.LENGTH_SHORT).show();
-                            }
-                            else {
-
-                                databaseReference.child("users").child(emplidTxt).child("name").setValue(nameTxt);
-//                                databaseReference.child("users").child(emplidTxt).child("departmentname").setValue(departmentnameTxt);
-                                databaseReference.child("users").child(emplidTxt).child("emailid").setValue(emailidTxt);
-                                databaseReference.child("users").child(emplidTxt).child("phoneno").setValue(phoneTxt);
-                                databaseReference.child("users").child(emplidTxt).child("password").setValue(passwordTxt);
-                                databaseReference.child("users").child(emplidTxt).child("role").setValue(setRole);
-                                databaseReference.child("users").child(emplidTxt).child("token").setValue(token);
-
-                                Toast.makeText(Register.this, "User Register succesfully", Toast.LENGTH_SHORT).show();
-                                finish();
-
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-
-
-                }
+                InsertRegistrationDetails();
             }
         });
         loginnowbtn.setOnClickListener(new View.OnClickListener() {
@@ -280,8 +205,96 @@ public class Register extends AppCompatActivity {
                 finish();
             }
         });
+    }
 
+    private void InsertRegistrationDetails()
+    {
+        final String nameTxt = name.getText().toString();
+        final String emplidTxt = emplid.getText().toString();
+        final String emailidTxt = emailid.getText().toString();
+        final String phoneTxt = phoneno.getText().toString();
+        final String passwordTxt = password.getText().toString();
 
+        if(security.isChecked()){
+            setRole=1;
+        } else if (weighment.isChecked()) {
+            setRole=2;
+        } else if (sampling.isChecked()) {
+            setRole=3;
+        } else if (production.isChecked()) {
+            setRole=4;
+        } else if (laboratary.isChecked()) {
+            setRole=5;
+        } else if (stores.isChecked()) {
+            setRole=6;
+        }
+        if(TextUtils.isEmpty(nameTxt)){
+            name.setError("Name is Required");
+            return;
+        }
+        if(TextUtils.isEmpty(emplidTxt)){
+            emplid.setError("Employee Id is Required");
+            return;
+        }
+        if(TextUtils.isEmpty(emailidTxt)){
+            emailid.setError("Email Id is Required");
+            return;
+        }
+        if(TextUtils.isEmpty(phoneTxt)){
+            phoneno.setError("Phone No is Required");
+            return;
+        }
+        if (TextUtils.isEmpty(passwordTxt)){
+            password.setError("Passsword is Required");
+            return;
+        }
+        if(passwordTxt.length()<6){
+            password.setError("Password Must be >= 6 Characters");
+            return;
+        }
+
+        //Checkbox Validation
+        if(!(security.isChecked() || weighment.isChecked() || sampling.isChecked() || production.isChecked() || laboratary.isChecked() || stores.isChecked()))
+        {
+            Toasty.warning(Register.this, "Please Select the Department", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            RegRequestModel regmodel= new RegRequestModel(nameTxt,emplidTxt,emailidTxt,Integer.parseInt(phoneTxt),passwordTxt,token,setRole,nameTxt);
+            Call<Boolean> call = loginMethod.postregData(regmodel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if(response.isSuccessful() && response.body() != null)
+                    {
+                        Log.d("Registration", "Response Body: " + response.body());
+                        Toasty.success(Register.this, "User Register succesfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Register.this, Menu.class));
+                        finish();
+                    }else {
+                        // Registration failed
+                        Log.e("Registration", "Registration failed. Response: " + response.body());
+                        Toasty.error(Register.this, "Registration failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Register.this,"Registration failed..!",Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
     private boolean isValidEmail(CharSequence target) {
         return (Patterns.EMAIL_ADDRESS.matcher(target).matches());

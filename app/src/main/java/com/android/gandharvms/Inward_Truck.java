@@ -14,6 +14,7 @@ import android.widget.Toast;
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.Inward_Truck_store.Inward_Truck_Store;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -60,6 +61,7 @@ public class Inward_Truck extends AppCompatActivity {
 
     public void sequirtyinwardtruck(View view) {
         if(userRole.equals("Admin") || userRole.equals("Security")){
+            Global_Var.getInstance().DeptType="S";
             startActivity(new Intent(this, Inward_Truck_Security.class));
         } else {
             Toast.makeText(Inward_Truck.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
@@ -68,6 +70,7 @@ public class Inward_Truck extends AppCompatActivity {
 
     public void Weighmentinwardtruck(View view) {
         if(userRole.equals("Admin") || userRole.equals("Weighment")){
+            Global_Var.getInstance().DeptType="W";
             startActivity(new Intent(this, Inward_Truck_weighment.class));
         } else {
             Toast.makeText(Inward_Truck.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
@@ -75,6 +78,7 @@ public class Inward_Truck extends AppCompatActivity {
     }
 
     public void storeinwardtruck(View view) {
+        Global_Var.getInstance().DeptType="R";
         if(userRole.equals("Admin") || userRole.equals("Store")){
             startActivity(new Intent(this, Inward_Truck_Store.class));
         } else {
