@@ -45,11 +45,11 @@ public class Inward_Truck extends AppCompatActivity {
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(receivedEmplid).child("role").exists()) {
+                /*if (snapshot.child(receivedEmplid).child("role").exists()) {
                     userRole = snapshot.child(receivedEmplid).child("role").getValue(String.class);
                 } else {
                     Toast.makeText(Inward_Truck.this, "EmplId with this Role is Not Available", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
 
             @Override
@@ -60,7 +60,13 @@ public class Inward_Truck extends AppCompatActivity {
     }
 
     public void sequirtyinwardtruck(View view) {
-        if(userRole.equals("Admin") || userRole.equals("Security")){
+       /* if(userRole.equals("Admin") || userRole.equals("Security")){
+            Global_Var.getInstance().DeptType="S";
+            startActivity(new Intent(this, Inward_Truck_Security.class));
+        } else {
+            Toast.makeText(Inward_Truck.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
+        }*/
+        if(true){
             Global_Var.getInstance().DeptType="S";
             startActivity(new Intent(this, Inward_Truck_Security.class));
         } else {
@@ -69,17 +75,30 @@ public class Inward_Truck extends AppCompatActivity {
     }
 
     public void Weighmentinwardtruck(View view) {
-        if(userRole.equals("Admin") || userRole.equals("Weighment")){
+        /*if(userRole.equals("Admin") || userRole.equals("Weighment")){
+            Global_Var.getInstance().DeptType="W";
+            startActivity(new Intent(this, Inward_Truck_weighment.class));
+        } else {
+            Toast.makeText(Inward_Truck.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
+        }*/
+        if(true){
             Global_Var.getInstance().DeptType="W";
             startActivity(new Intent(this, Inward_Truck_weighment.class));
         } else {
             Toast.makeText(Inward_Truck.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     public void storeinwardtruck(View view) {
-        Global_Var.getInstance().DeptType="R";
-        if(userRole.equals("Admin") || userRole.equals("Store")){
+        /*if(userRole.equals("Admin") || userRole.equals("Store")){
+            Global_Var.getInstance().DeptType="R";
+            startActivity(new Intent(this, Inward_Truck_Store.class));
+        } else {
+            Toast.makeText(Inward_Truck.this, "You are not in Store Department", Toast.LENGTH_SHORT).show();
+        }*/
+        if(true){
+            Global_Var.getInstance().DeptType="R";
             startActivity(new Intent(this, Inward_Truck_Store.class));
         } else {
             Toast.makeText(Inward_Truck.this, "You are not in Store Department", Toast.LENGTH_SHORT).show();

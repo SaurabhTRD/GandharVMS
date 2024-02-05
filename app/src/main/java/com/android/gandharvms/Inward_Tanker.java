@@ -41,11 +41,11 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
         databaseReference.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.child(receivedEmplid).child("role").exists()) {
+               /* if (snapshot.child(receivedEmplid).child("role").exists()) {
                     userRole = snapshot.child(receivedEmplid).child("role").getValue(String.class);
                 } else {
                     Toast.makeText(Inward_Tanker.this, "EmplId with this Role is Not Available", Toast.LENGTH_SHORT).show();
-                }
+                }*/
             }
 
             @Override
@@ -63,9 +63,14 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
 
 
     public void sequirityinwardT(View view) {
-        if(userRole.equals("Admin") || userRole.equals("Security")){
+        /*if(userRole.equals("Admin") || userRole.equals("Security")){
             Global_Var.getInstance().DeptType="S";
-            Object xyz= Global_Var.getInstance();
+            startActivity(new Intent(this, Inward_Tanker_Security.class));
+        } else {
+            Toast.makeText(Inward_Tanker.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
+        }*/
+        if(true){
+            Global_Var.getInstance().DeptType="S";
             startActivity(new Intent(this, Inward_Tanker_Security.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
@@ -73,7 +78,14 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
     }
 
     public void Weighmentclick(View view) {
-        if(userRole.equals("Admin") || userRole.equals("Weighment")){
+        /*if(userRole.equals("Admin") || userRole.equals("Weighment")){
+            Global_Var.getInstance().DeptType="W";
+            startActivity(new Intent(this, Inward_Tanker_Weighment.class));
+        } else {
+            Toast.makeText(Inward_Tanker.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
+        }*/
+
+        if(true){
             Global_Var.getInstance().DeptType="W";
             startActivity(new Intent(this, Inward_Tanker_Weighment.class));
         } else {
@@ -82,7 +94,14 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
     }
 
     public void samplicgclick(View view) {
-        if(userRole.equals("Admin") || userRole.equals("Sampling")){
+        /*if(userRole.equals("Admin") || userRole.equals("Sampling")){
+            Global_Var.getInstance().DeptType="M";
+            startActivity(new Intent(this, Inward_Tanker_Sampling.class));
+        } else {
+            Toast.makeText(Inward_Tanker.this, "You are not in Sampling Department", Toast.LENGTH_SHORT).show();
+        }*/
+
+        if(true){
             Global_Var.getInstance().DeptType="M";
             startActivity(new Intent(this, Inward_Tanker_Sampling.class));
         } else {
@@ -91,7 +110,13 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
     }
 
     public void productionclick(View view) {
-        if(userRole.equals("Admin") || userRole.equals("Production")){
+        /*if(userRole.equals("Admin") || userRole.equals("Production")){
+            Global_Var.getInstance().DeptType="P";
+            startActivity(new Intent(this, Inward_Tanker_Production.class));
+        } else {
+            Toast.makeText(Inward_Tanker.this, "You are not in Production Department", Toast.LENGTH_SHORT).show();
+        }*/
+        if(true){
             Global_Var.getInstance().DeptType="P";
             startActivity(new Intent(this, Inward_Tanker_Production.class));
         } else {
@@ -100,7 +125,13 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
     }
 
     public void Laboratoryclick(View view) {
-        if(userRole.equals("Admin") || userRole.equals("Laboratory")){
+        /*if(userRole.equals("Admin") || userRole.equals("Laboratory")){
+            Global_Var.getInstance().DeptType="L";
+            startActivity(new Intent(this, Inward_Tanker_Laboratory.class));
+        } else {
+            Toast.makeText(Inward_Tanker.this, "You are not in Laboratory Department", Toast.LENGTH_SHORT).show();
+        }*/
+        if(true){
             Global_Var.getInstance().DeptType="L";
             startActivity(new Intent(this, Inward_Tanker_Laboratory.class));
         } else {

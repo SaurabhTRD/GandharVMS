@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.Register;
@@ -65,6 +66,8 @@ public class Login extends AppCompatActivity {
                     RequestModel restmodel = new RequestModel();
                     restmodel.setEmpId(emplidTxt);
                     restmodel.setPassword(passwordTxt);
+
+
                     Call<List<ResponseModel>> call = loginMethod.postData(restmodel);
                     call.enqueue(new Callback<List<ResponseModel>>() {
                         @Override
@@ -73,6 +76,8 @@ public class Login extends AppCompatActivity {
                                 ResponseModel resModel = response.body().get(0);
                                 String empid = resModel.getEmpId();
                                 String password = resModel.getPassword();
+                                Global_Var.getInstance().EmpId=empid;
+                                Global_Var.getInstance().Department=resModel.getDepartment();
                                 if (resModel != null) {
                                     if (password != null && empid != null && password.equals(passwordTxt) && empid.equals(emplidTxt)) {
                                         Toasty.success(getApplicationContext(), "Succesfully Logged In ..!", Toast.LENGTH_SHORT,true).show();

@@ -10,6 +10,8 @@ public class Global_Var {
     public String MenuType;
     public String InOutType;
     public String DeptType;
+    public String EmpId;
+    public String Department;
     // Getter/setter
     private static Global_Var instance;
     public static Global_Var getInstance() {
