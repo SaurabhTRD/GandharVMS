@@ -1,35 +1,34 @@
-package com.android.gandharvms;
+package com.android.gandharvms.LoginWithAPI;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.gandharvms.LoginWithAPI.LoginMethod;
-import com.android.gandharvms.LoginWithAPI.RequestModel;
-import com.android.gandharvms.LoginWithAPI.ResponseModel;
-import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Menu;
+import com.android.gandharvms.R;
+import com.android.gandharvms.RegisterwithAPI.Register;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.IOException;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
-import org.apache.poi.ss.usermodel.Color;
-
-import es.dmoral.toasty.Toasty;
+/*import es.dmoral.toasty.Toasty;
 import io.github.muddz.styleabletoast.StyleableToast;
-import www.sanju.motiontoast.MotionToast;
+import www.sanju.motiontoast.MotionToast;*/
 
 public class Login extends AppCompatActivity {
 
@@ -75,21 +74,32 @@ public class Login extends AppCompatActivity {
                                 String empid = resModel.getEmpId();
                                 String password = resModel.getPassword();
                                 if (resModel != null) {
-                                    if (password == null && empid == null) {
-                                        Toast.makeText(Login.this, "Incorrect Password or EmpId", Toast.LENGTH_SHORT).show();
-                                    } else if (password.equals(passwordTxt) && empid.equals(emplidTxt)) {
-                                        Toast.makeText(Login.this, "Succesfully Logged In ..!", Toast.LENGTH_SHORT).show();
+                                    if (password != null && empid != null && password.equals(passwordTxt) && empid.equals(emplidTxt)) {
+                                        Toasty.success(getApplicationContext(), "Succesfully Logged In ..!", Toast.LENGTH_SHORT,true).show();
                                         startActivity(new Intent(Login.this, Menu.class));
                                         finish();
                                     } else {
-                                        Toast.makeText(Login.this, "Login Failed. Please try again.", Toast.LENGTH_SHORT).show();
+                                        Toasty.error(getApplicationContext(), "Login Failed. Please try again.", Toast.LENGTH_SHORT,true).show();
                                     }
                                 }
                             }
                         }
                         @Override
                         public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
-                            Toast.makeText(Login.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                            Log.e("Retrofit", "Failure: " + t.getMessage());
+                            // Check if there's a response body in case of an HTTP error
+                            if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                                Response<?> response = ((HttpException) t).response();
+                                if (response != null) {
+                                    Log.e("Retrofit", "Error Response Code: " + response.code());
+                                    try {
+                                        Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            }
+                            Toasty.error(Login.this,"Login failed..!",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

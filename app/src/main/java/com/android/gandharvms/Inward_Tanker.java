@@ -16,6 +16,7 @@ import com.android.gandharvms.Inward_Tanker_Production.Inward_Tanker_Production;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_Sampling;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -63,6 +64,8 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
 
     public void sequirityinwardT(View view) {
         if(userRole.equals("Admin") || userRole.equals("Security")){
+            Global_Var.getInstance().DeptType="S";
+            Object xyz= Global_Var.getInstance();
             startActivity(new Intent(this, Inward_Tanker_Security.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
@@ -71,6 +74,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
 
     public void Weighmentclick(View view) {
         if(userRole.equals("Admin") || userRole.equals("Weighment")){
+            Global_Var.getInstance().DeptType="W";
             startActivity(new Intent(this, Inward_Tanker_Weighment.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();

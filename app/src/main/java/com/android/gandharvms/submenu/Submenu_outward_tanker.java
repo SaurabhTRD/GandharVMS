@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.R;
@@ -25,11 +26,13 @@ public class Submenu_outward_tanker extends AppCompatActivity {
 
     }
     public void tankerinclick(View view){
+        Global_Var.getInstance().InOutType="I";
         Intent intent = new Intent(this, Outward_Tanker.class);
         startActivity(intent);
     }
 
     public void tankeroutclick(View view){
+        Global_Var.getInstance().InOutType="O";
         Intent intent = new Intent(this, OutwardOut_Tanker.class);
         startActivity(intent);
     }

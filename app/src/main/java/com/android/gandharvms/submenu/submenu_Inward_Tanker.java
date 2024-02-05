@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Out;
-import com.android.gandharvms.Login;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.R;
 
 public class submenu_Inward_Tanker extends AppCompatActivity {
@@ -30,10 +31,12 @@ public class submenu_Inward_Tanker extends AppCompatActivity {
 
 
     public void inwardtankerinclick(View view){
+        Global_Var.getInstance().InOutType="I";
         Intent intent = new Intent(this, Inward_Tanker.class);
         startActivity(intent);
     }
     public void inwardtankeroutclick(View view){
+        Global_Var.getInstance().InOutType="O";
         Intent intent = new Intent(this, Inward_Tanker_Out.class);
         startActivity(intent);
     }
