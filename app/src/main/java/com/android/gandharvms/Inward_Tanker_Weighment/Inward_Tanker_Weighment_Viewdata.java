@@ -113,7 +113,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                         datalist.clear();
                         for (DocumentSnapshot d : list) {
                             In_Tanker_Weighment_list obj = d.toObject(In_Tanker_Weighment_list.class);
-                            datalist.add(obj);
+                            datalist.add(obj);gfg
                         }
                         in_tanker_we_adapter.notifyDataSetChanged();
                     }

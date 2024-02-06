@@ -71,6 +71,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
         }*/
         if(true){
             Global_Var.getInstance().DeptType="S";
+            Object xyz=Global_Var.getInstance();
             startActivity(new Intent(this, Inward_Tanker_Security.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();

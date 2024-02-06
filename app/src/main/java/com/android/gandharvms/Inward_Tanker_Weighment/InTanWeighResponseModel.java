@@ -1,14 +1,27 @@
 package com.android.gandharvms.Inward_Tanker_Weighment;
 
+
 import com.google.type.DateTime;
 
 import org.apache.poi.hpsf.Decimal;
 
+
+
+
 public class InTanWeighResponseModel {
-    DateTime InTime,OutTime,Date,FactoryOut;
+/*
+    DateTime ;
+*/
     int Driver_MobileNO;
-    Decimal GrossWeight,NetWeight,TareWeight;
-    String ShortageDip,ShortageWeight,Remark,SignBy,ContainerNo,InVehicleImage,InDriverImage,VehicleNo,SerialNo,PartyName,Material,OA_PO_number;
+/*
+    Decimal ;
+*/
+
+    DateTime InTime;
+    DateTime OutTime;
+    DateTime Date;
+    DateTime FactoryOut;
+    String GrossWeight,NetWeight,TareWeight,ShortageDip,ShortageWeight,Remark,SignBy,ContainerNo,InVehicleImage,InDriverImage,VehicleNo,SerialNo,PartyName,Material,OA_PO_number;
 
     public DateTime getInTime() {
         return InTime;
@@ -50,27 +63,27 @@ public class InTanWeighResponseModel {
         Driver_MobileNO = driver_MobileNO;
     }
 
-    public Decimal getGrossWeight() {
+    public String getGrossWeight() {
         return GrossWeight;
     }
 
-    public void setGrossWeight(Decimal grossWeight) {
+    public void setGrossWeight(String grossWeight) {
         GrossWeight = grossWeight;
     }
 
-    public Decimal getNetWeight() {
+    public String getNetWeight() {
         return NetWeight;
     }
 
-    public void setNetWeight(Decimal netWeight) {
+    public void setNetWeight(String netWeight) {
         NetWeight = netWeight;
     }
 
-    public Decimal getTareWeight() {
+    public String getTareWeight() {
         return TareWeight;
     }
 
-    public void setTareWeight(Decimal tareWeight) {
+    public void setTareWeight(String tareWeight) {
         TareWeight = tareWeight;
     }
 
