@@ -53,7 +53,7 @@ public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweig
         holder.vehiclenumber.setText(data.getVehicleNo());
         holder.suppliername.setText(data.getPartyName());
         holder.materialname.setText(data.getMaterial());
-        holder.driverno.setText(data.getDriver_MobileNO());
+        holder.driverno.setText(String.valueOf(data.getDriver_MobileNo()) );
         holder.oanumber.setText(data.getOA_PO_number());
         if(data.getDate()!=null)
         {
@@ -64,7 +64,7 @@ public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweig
         /*holder.tareweight.setText(data.getTare_Weight());
         holder.netweight.setText(data.getNet_Weight());*/
         holder.batchnumber.setText(data.getRemark());
-        holder.containerno.setText(data.getContainerNo());
+        holder.containerno.setText(String.valueOf(data.getContainerNo()));
         holder.sighby.setText(data.getSignBy());
         holder.shortagedip.setText(data.getShortageDip());
         holder.shortageweight.setText(data.getShortageWeight());

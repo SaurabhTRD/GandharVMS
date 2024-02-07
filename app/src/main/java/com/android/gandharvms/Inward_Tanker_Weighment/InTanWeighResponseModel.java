@@ -13,7 +13,7 @@ public class InTanWeighResponseModel {
     public String OutTime;
     public String Date;
     public String FactoryOut;
-    public int Driver_MobileNO;
+    public int Driver_MobileNo;
     public String GrossWeight;
     public String NetWeight;
     public String TareWeight;
@@ -21,7 +21,7 @@ public class InTanWeighResponseModel {
     public String ShortageWeight;
     public String Remark;
     public String SignBy;
-    public String ContainerNo;
+    public int ContainerNo;
     public String InVehicleImage;
     public String InDriverImage;
     public String VehicleNo;
@@ -64,12 +64,12 @@ public class InTanWeighResponseModel {
         FactoryOut = factoryOut;
     }
 
-    public int getDriver_MobileNO() {
-        return Driver_MobileNO;
+    public int getDriver_MobileNo() {
+        return Driver_MobileNo;
     }
 
-    public void setDriver_MobileNO(int driver_MobileNO) {
-        Driver_MobileNO = driver_MobileNO;
+    public void setDriver_MobileNo(int driver_MobileNo) {
+        Driver_MobileNo = driver_MobileNo;
     }
 
     public String getGrossWeight() {
@@ -128,11 +128,11 @@ public class InTanWeighResponseModel {
         SignBy = signBy;
     }
 
-    public String getContainerNo() {
+    public int getContainerNo() {
         return ContainerNo;
     }
 
-    public void setContainerNo(String containerNo) {
+    public void setContainerNo(int containerNo) {
         ContainerNo = containerNo;
     }
 

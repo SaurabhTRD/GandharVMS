@@ -59,7 +59,7 @@ import retrofit2.Response;
 public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
     RecyclerView recview;
-    ArrayList<InTanWeighResponseModel> weighdatalist;
+    List<InTanWeighResponseModel> weighdatalist;
     FirebaseFirestore db;
     Intankweighlistdata_adapter intankweighlistdataAdapter;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
@@ -99,27 +99,9 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         recview.setLayoutManager(new LinearLayoutManager(this));
 
         weighdatalist = new ArrayList<>();
-        intankweighlistdataAdapter = new Intankweighlistdata_adapter(weighdatalist);
-        recview.setAdapter(intankweighlistdataAdapter);
+
         String nextprocess= Global_Var.getInstance().DeptType;
         callApiAndUpdateAdapter(nextprocess);
-
-        /*db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Weighment").orderBy("Date", Query.Direction.DESCENDING).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                        int totalCount = list.size();
-                        txtTotalCount.setText("Total count: " + totalCount);
-                        datalist.clear();
-                        for (DocumentSnapshot d : list) {
-                            In_Tanker_Weighment_list obj = d.toObject(In_Tanker_Weighment_list.class);
-                            datalist.add(obj);gfg
-                        }
-                        in_tanker_we_adapter.notifyDataSetChanged();
-                    }
-                });*/
     }
     private void callApiAndUpdateAdapter(String nextProcess) {
         Call<List<InTanWeighResponseModel>> call = loginMethod.getIntankWeighListData(nextProcess);
@@ -131,11 +113,9 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
                     int totalCount = data.size();
                     txtTotalCount.setText("Total count: " + totalCount);
                     weighdatalist.clear();
-                    weighdatalist = (ArrayList<InTanWeighResponseModel>) data;
-                    /*for (InTanWeighResponseModel d : data) {
-                       // InTanWeighResponseModel obj = d.set(InTanWeighResponseModel.class);
-                        weighdatalist.add(d);
-                    }*/
+                    weighdatalist = data;
+                    intankweighlistdataAdapter = new Intankweighlistdata_adapter(weighdatalist);
+                    recview.setAdapter(intankweighlistdataAdapter);
                     intankweighlistdataAdapter.notifyDataSetChanged();
                 }
                 else
