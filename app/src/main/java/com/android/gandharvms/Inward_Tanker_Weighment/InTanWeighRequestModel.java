@@ -8,17 +8,14 @@ import java.util.ArrayList;
 
 public class InTanWeighRequestModel {
 
-    DateTime InTime,OutTime,Date,FactoryOut;
-    int Driver_MobileNO;
-    Decimal GrossWeight,NetWeight,TareWeight;
-    String ShortageDip,ShortageWeight,Remark,SignBy,ContainerNo,InVehicleImage,InDriverImage,VehicleNo,SerialNo,PartyName,Material,OA_PO_number;
+    String InTime,OutTime,Date,FactoryOut;
+    int Driver_MobileNO,ContainerNo;
+    String GrossWeight,NetWeight,TareWeight;
+    String ShortageDip,ShortageWeight,Remark,SignBy,InVehicleImage,InDriverImage,VehicleNo,SerialNo,PartyName,Material,OA_PO_number;
 
     Character Nextprocess,I_O,VehicleType;
 
-    public  InTanWeighRequestModel(){
-
-    }
-    public InTanWeighRequestModel(DateTime inTime, DateTime outTime, DateTime date, DateTime factoryOut, int driver_MobileNO, Decimal grossWeight, Decimal netWeight, Decimal tareWeight, String shortageDip, String shortageWeight, String remark, String signBy, String containerNo, String inVehicleImage, String inDriverImage, String vehicleNo, String serialNo, String partyName, String material, String OA_PO_number, Character nextprocess, Character i_O, Character vehicleType) {
+    public InTanWeighRequestModel(String inTime, String outTime, String date, String factoryOut, int driver_MobileNO, String grossWeight, String netWeight, String tareWeight, String shortageDip, String shortageWeight, String remark, String signBy, int containerNo, String inVehicleImage, String inDriverImage, String vehicleNo, String serialNo, String partyName, String material, String OA_PO_number, Character nextprocess, Character i_O, Character vehicleType) {
         InTime = inTime;
         OutTime = outTime;
         Date = date;
@@ -44,35 +41,35 @@ public class InTanWeighRequestModel {
         VehicleType = vehicleType;
     }
 
-    public DateTime getInTime() {
+    public String getInTime() {
         return InTime;
     }
 
-    public void setInTime(DateTime inTime) {
+    public void setInTime(String inTime) {
         InTime = inTime;
     }
 
-    public DateTime getOutTime() {
+    public String getOutTime() {
         return OutTime;
     }
 
-    public void setOutTime(DateTime outTime) {
+    public void setOutTime(String outTime) {
         OutTime = outTime;
     }
 
-    public DateTime getDate() {
+    public String getDate() {
         return Date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(String date) {
         Date = date;
     }
 
-    public DateTime getFactoryOut() {
+    public String getFactoryOut() {
         return FactoryOut;
     }
 
-    public void setFactoryOut(DateTime factoryOut) {
+    public void setFactoryOut(String factoryOut) {
         FactoryOut = factoryOut;
     }
 
@@ -84,27 +81,27 @@ public class InTanWeighRequestModel {
         Driver_MobileNO = driver_MobileNO;
     }
 
-    public Decimal getGrossWeight() {
+    public String getGrossWeight() {
         return GrossWeight;
     }
 
-    public void setGrossWeight(Decimal grossWeight) {
+    public void setGrossWeight(String grossWeight) {
         GrossWeight = grossWeight;
     }
 
-    public Decimal getNetWeight() {
+    public String getNetWeight() {
         return NetWeight;
     }
 
-    public void setNetWeight(Decimal netWeight) {
+    public void setNetWeight(String netWeight) {
         NetWeight = netWeight;
     }
 
-    public Decimal getTareWeight() {
+    public String getTareWeight() {
         return TareWeight;
     }
 
-    public void setTareWeight(Decimal tareWeight) {
+    public void setTareWeight(String tareWeight) {
         TareWeight = tareWeight;
     }
 
@@ -140,11 +137,11 @@ public class InTanWeighRequestModel {
         SignBy = signBy;
     }
 
-    public String getContainerNo() {
+    public int getContainerNo() {
         return ContainerNo;
     }
 
-    public void setContainerNo(String containerNo) {
+    public void setContainerNo(int containerNo) {
         ContainerNo = containerNo;
     }
 
@@ -227,4 +224,9 @@ public class InTanWeighRequestModel {
     public void setVehicleType(Character vehicleType) {
         VehicleType = vehicleType;
     }
+
+    public  InTanWeighRequestModel(){
+
+    }
+
 }

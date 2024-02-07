@@ -9,49 +9,58 @@ import org.apache.poi.hpsf.Decimal;
 
 
 public class InTanWeighResponseModel {
-/*
-    DateTime ;
-*/
-    int Driver_MobileNO;
-/*
-    Decimal ;
-*/
+    public String InTime;
+    public String OutTime;
+    public String Date;
+    public String FactoryOut;
+    public int Driver_MobileNO;
+    public String GrossWeight;
+    public String NetWeight;
+    public String TareWeight;
+    public String ShortageDip;
+    public String ShortageWeight;
+    public String Remark;
+    public String SignBy;
+    public String ContainerNo;
+    public String InVehicleImage;
+    public String InDriverImage;
+    public String VehicleNo;
+    public String SerialNo;
+    public String PartyName;
+    public String Material;
+    public String OA_PO_number;
 
-    DateTime InTime;
-    DateTime OutTime;
-    DateTime Date;
-    DateTime FactoryOut;
-    String GrossWeight,NetWeight,TareWeight,ShortageDip,ShortageWeight,Remark,SignBy,ContainerNo,InVehicleImage,InDriverImage,VehicleNo,SerialNo,PartyName,Material,OA_PO_number;
+    Character Nextprocess,I_O,VehicleType;
 
-    public DateTime getInTime() {
+    public String getInTime() {
         return InTime;
     }
 
-    public void setInTime(DateTime inTime) {
+    public void setInTime(String inTime) {
         InTime = inTime;
     }
 
-    public DateTime getOutTime() {
+    public String getOutTime() {
         return OutTime;
     }
 
-    public void setOutTime(DateTime outTime) {
+    public void setOutTime(String outTime) {
         OutTime = outTime;
     }
 
-    public DateTime getDate() {
+    public String getDate() {
         return Date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(String date) {
         Date = date;
     }
 
-    public DateTime getFactoryOut() {
+    public String getFactoryOut() {
         return FactoryOut;
     }
 
-    public void setFactoryOut(DateTime factoryOut) {
+    public void setFactoryOut(String factoryOut) {
         FactoryOut = factoryOut;
     }
 
@@ -181,5 +190,29 @@ public class InTanWeighResponseModel {
 
     public void setOA_PO_number(String OA_PO_number) {
         this.OA_PO_number = OA_PO_number;
+    }
+
+    public Character getNextprocess() {
+        return Nextprocess;
+    }
+
+    public void setNextprocess(Character nextprocess) {
+        Nextprocess = nextprocess;
+    }
+
+    public Character getI_O() {
+        return I_O;
+    }
+
+    public void setI_O(Character i_O) {
+        I_O = i_O;
+    }
+
+    public Character getVehicleType() {
+        return VehicleType;
+    }
+
+    public void setVehicleType(Character vehicleType) {
+        VehicleType = vehicleType;
     }
 }

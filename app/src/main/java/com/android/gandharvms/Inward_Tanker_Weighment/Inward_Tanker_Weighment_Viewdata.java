@@ -59,7 +59,7 @@ import retrofit2.Response;
 public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
     RecyclerView recview;
-  /*  ArrayList<InTanWeighRequestModel> weighdatalist;*/
+    ArrayList<InTanWeighResponseModel> weighdatalist;
     FirebaseFirestore db;
     Intankweighlistdata_adapter intankweighlistdataAdapter;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
@@ -97,7 +97,9 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
         recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
-        intankweighlistdataAdapter = new Intankweighlistdata_adapter(new ArrayList<>());
+
+        weighdatalist = new ArrayList<>();
+        intankweighlistdataAdapter = new Intankweighlistdata_adapter(weighdatalist);
         recview.setAdapter(intankweighlistdataAdapter);
         String nextprocess= Global_Var.getInstance().DeptType;
         callApiAndUpdateAdapter(nextprocess);
@@ -126,7 +128,15 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
             public void onResponse(Call<List<InTanWeighResponseModel>> call, Response<List<InTanWeighResponseModel>> response) {
                 if(response.isSuccessful()){
                     List<InTanWeighResponseModel> data=response.body();
-                    intankweighlistdataAdapter.setData(data);
+                    int totalCount = data.size();
+                    txtTotalCount.setText("Total count: " + totalCount);
+                    weighdatalist.clear();
+                    weighdatalist = (ArrayList<InTanWeighResponseModel>) data;
+                    /*for (InTanWeighResponseModel d : data) {
+                       // InTanWeighResponseModel obj = d.set(InTanWeighResponseModel.class);
+                        weighdatalist.add(d);
+                    }*/
+                    intankweighlistdataAdapter.notifyDataSetChanged();
                 }
                 else
                 {

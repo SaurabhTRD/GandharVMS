@@ -43,11 +43,11 @@ public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweig
         InTanWeighResponseModel data = responsedatalist.get(position);
         if(data.getInTime()!=null)
         {
-            holder.intime.setText(formatTimestamp(data.getInTime()));
+            holder.intime.setText(data.getInTime());
         }
         if(data.getOutTime()!=null)
         {
-            holder.outTime.setText(formatTimestamp(data.getOutTime()));
+            holder.outTime.setText(data.getOutTime());
         }
         holder.serialnumber.setText(data.getSerialNo());
         holder.vehiclenumber.setText(data.getVehicleNo());
@@ -57,7 +57,7 @@ public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweig
         holder.oanumber.setText(data.getOA_PO_number());
         if(data.getDate()!=null)
         {
-            holder.date.setText(formatTimestamp(data.getDate()));
+            holder.date.setText(data.getDate());
         }
         /*holder.date.setText(dateFormat.format(data.getDate()));*/
         holder.grossweight.setText(data.getGrossWeight());
@@ -92,11 +92,11 @@ public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweig
         return responsedatalist.size();
     }
 
-    public void setData(List<InTanWeighResponseModel> newData) {
+    /*public void setData(List<InTanWeighResponseModel> newData) {
         responsedatalist.clear();
         responsedatalist.addAll(newData);
         notifyDataSetChanged();
-    }
+    }*/
     private String formatTimestamp(DateTime timestamp) {
         if (timestamp != null) {
             SimpleDateFormat sqlDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.getDefault());
