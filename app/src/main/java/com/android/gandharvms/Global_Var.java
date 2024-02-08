@@ -12,6 +12,8 @@ public class Global_Var {
     public String DeptType;
     public String EmpId;
     public String Department;
+    public String Name;
+    public String Token;
     // Getter/setter
     private static Global_Var instance;
     public static Global_Var getInstance() {

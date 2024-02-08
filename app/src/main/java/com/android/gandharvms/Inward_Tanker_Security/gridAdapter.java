@@ -1,5 +1,6 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,13 +57,21 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
         }
     }
     @Override
-    public void onBindViewHolder(myviewHolder holder, int position)
+    public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         gridmodel club = filteredGridList.get(position);
         holder.sernum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicalnumber());
         holder.material.setText(club.getMaterial());
         holder.Status.setText(club.getStatus());
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                grid grd = new grid();
+                gridmodel club = filteredGridList.get(position);
+                // grd.FetchVehicleDetailsFromGrid(club);
+            }
+        });
     }
 
     public int getItemCount() {

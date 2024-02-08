@@ -78,6 +78,8 @@ public class Login extends AppCompatActivity {
                                 String password = resModel.getPassword();
                                 Global_Var.getInstance().EmpId=empid;
                                 Global_Var.getInstance().Department=resModel.getDepartment();
+                                Global_Var.getInstance().Name=resModel.getEmployeeName();
+                                Global_Var.getInstance().Token=resModel.getToken();
                                 if (resModel != null) {
                                     if (password != null && empid != null && password.equals(passwordTxt) && empid.equals(emplidTxt)) {
                                         Toasty.success(getApplicationContext(), "Succesfully Logged In ..!", Toast.LENGTH_SHORT,true).show();
