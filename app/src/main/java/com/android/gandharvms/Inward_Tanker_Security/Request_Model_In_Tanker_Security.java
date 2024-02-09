@@ -1,8 +1,6 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
 
-import java.sql.Date;
-
 public class Request_Model_In_Tanker_Security {
     public String SerialNo;
     public String InvoiceNo;
@@ -16,7 +14,7 @@ public class Request_Model_In_Tanker_Security {
     public char I_O;
     public String FactoryIn;
     public String FactoryOut;
-    public char VehicleType;
+    public String VehicleType;
     public String InTime;
     public String OutTime;
     public int QtyUOM;
@@ -34,7 +32,7 @@ public class Request_Model_In_Tanker_Security {
     public String EwayBill;
     public String CreatedBy;
 
-    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, char vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
+    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
         SerialNo = serialNo;
         InvoiceNo = invoiceNo;
         VehicleNo = vehicleNo;

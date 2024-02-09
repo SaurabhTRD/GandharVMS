@@ -7,7 +7,7 @@ public class RetroApiclient_In_Tanker_Security {
 
     private static Retrofit retrofit = null;
 
-    private static String BASE_URL = "http://172.20.22.90/gandharvms/";
+    private static String BASE_URL = "https://gandharvms.azurewebsites.net/";
 
     public static Retrofit getRetrofit() {
         if (retrofit == null){
@@ -21,4 +21,7 @@ public class RetroApiclient_In_Tanker_Security {
     public static API_In_Tanker_Security getinsecurityApi(){
         return getRetrofit().create(API_In_Tanker_Security.class);
     }
+
+
+
 }
