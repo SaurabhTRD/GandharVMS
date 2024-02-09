@@ -22,12 +22,12 @@ public class Submenu_Outward_Truck extends AppCompatActivity {
 
     }
     public void intruckclick(View view){
-        Global_Var.getInstance().InOutType="I";
+        Global_Var.getInstance().InOutType='I';
         Intent intent = new Intent(this, Outward_Truck.class);
         startActivity(intent);
     }
     public void truckclick(View view){
-        Global_Var.getInstance().InOutType="O";
+        Global_Var.getInstance().InOutType='O';
         Intent intent = new Intent(this, OutwardOut_Truck.class);
         startActivity(intent);
     }

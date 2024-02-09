@@ -20,4 +20,7 @@ public class RetroApiClient {
     public static LoginMethod getLoginApi() {
         return getClient().create(LoginMethod.class);
     }
+    public static Weighment getWeighmentDetails(){
+        return getClient().create(Weighment.class);
+    }
 }

@@ -1,7 +1,10 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,9 +70,13 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                grid grd = new grid();
+                Intent intent = new Intent (view.getContext(), Inward_Tanker_Security.class);
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                 gridmodel club = filteredGridList.get(position);
-                // grd.FetchVehicleDetailsFromGrid(club);
+                intent.putExtra("SerialNumber",club.getSerialNumber());
+                intent.putExtra("VehicleNumber",club.getVehicalnumber());
+                view.getContext().startActivity(intent);
+
             }
         });
     }

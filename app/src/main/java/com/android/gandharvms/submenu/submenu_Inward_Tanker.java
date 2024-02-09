@@ -31,12 +31,12 @@ public class submenu_Inward_Tanker extends AppCompatActivity {
 
 
     public void inwardtankerinclick(View view){
-        Global_Var.getInstance().InOutType="I";
+        Global_Var.getInstance().InOutType='I';
         Intent intent = new Intent(this, Inward_Tanker.class);
         startActivity(intent);
     }
     public void inwardtankeroutclick(View view){
-        Global_Var.getInstance().InOutType="O";
+        Global_Var.getInstance().InOutType='O';
         Intent intent = new Intent(this, Inward_Tanker_Out.class);
         startActivity(intent);
     }

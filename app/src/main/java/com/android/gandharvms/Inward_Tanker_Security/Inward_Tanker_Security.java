@@ -310,7 +310,29 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             editor.apply();
         }
         if (sharedPreferences != null) {
-            GetMaxSerialNo(formattedDate);
+            if (getIntent().hasExtra("VehicleNumber")) {
+                // FetchVehicleDetails(getIntent().getStringExtra("SerialNumber"));
+                etreg.setText(getIntent().getStringExtra("SerialNumber"));
+                etreg.setEnabled(false);
+                etvehical.setText(getIntent().getStringExtra("VehicleNumber"));
+                etvehical.setEnabled(false);
+//            repremark.setText(getIntent().getStringExtra("Remark"));
+//            repremark.setEnabled(false);
+//            etdate.setText(dateFormat.format(getIntent().getStringExtra("Date")));
+//            etdate.setEnabled(false);
+//            etnetweight.setText(getIntent().getStringExtra("NetWt"));
+//            etnetweight.setEnabled(false);
+//            cbox.setChecked(Boolean.parseBoolean(getIntent().getStringExtra("IsReporting")));
+//            cbox.setEnabled(false);
+                saveButton.setVisibility(View.GONE);
+                button1.setVisibility(View.GONE);
+                btnadd.setVisibility(View.GONE);
+            }
+            else
+            {
+                GetMaxSerialNo(formattedDate);
+            }
+
         } else {
             Log.e("MainActivity", "SharedPreferences is null");
         }

@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 
 public interface LoginMethod {
     @GET("api/InwardWeighment/GetWeighmentList")
-    Call<List<InTanWeighResponseModel>> getIntankWeighListData(@Query("NextProcess") String nextProcess);
+    Call<List<InTanWeighResponseModel>> getIntankWeighListData(@Query("NextProcess") char nextProcess);
 
     @POST("api/Users/Login")
     Call<List<ResponseModel>> postData(@Body RequestModel request);

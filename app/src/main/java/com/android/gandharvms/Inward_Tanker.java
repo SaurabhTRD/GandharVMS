@@ -70,7 +70,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
             Toast.makeText(Inward_Tanker.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
         }*/
         if(true){
-            Global_Var.getInstance().DeptType="S";
+            Global_Var.getInstance().DeptType='S';
             startActivity(new Intent(this, Inward_Tanker_Security.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
@@ -86,7 +86,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
         }*/
 
         if(true){
-            Global_Var.getInstance().DeptType="W";
+            Global_Var.getInstance().DeptType='W';
             startActivity(new Intent(this, Inward_Tanker_Weighment.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
@@ -102,7 +102,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
         }*/
 
         if(true){
-            Global_Var.getInstance().DeptType="M";
+            Global_Var.getInstance().DeptType='M';
             startActivity(new Intent(this, Inward_Tanker_Sampling.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Sampling Department", Toast.LENGTH_SHORT).show();
@@ -117,7 +117,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
             Toast.makeText(Inward_Tanker.this, "You are not in Production Department", Toast.LENGTH_SHORT).show();
         }*/
         if(true){
-            Global_Var.getInstance().DeptType="P";
+            Global_Var.getInstance().DeptType='P';
             startActivity(new Intent(this, Inward_Tanker_Production.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Production Department", Toast.LENGTH_SHORT).show();
@@ -132,7 +132,7 @@ DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenc
             Toast.makeText(Inward_Tanker.this, "You are not in Laboratory Department", Toast.LENGTH_SHORT).show();
         }*/
         if(true){
-            Global_Var.getInstance().DeptType="L";
+            Global_Var.getInstance().DeptType='L';
             startActivity(new Intent(this, Inward_Tanker_Laboratory.class));
         } else {
             Toast.makeText(Inward_Tanker.this, "You are not in Laboratory Department", Toast.LENGTH_SHORT).show();

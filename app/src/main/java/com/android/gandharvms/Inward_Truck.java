@@ -67,7 +67,7 @@ public class Inward_Truck extends AppCompatActivity {
             Toast.makeText(Inward_Truck.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
         }*/
         if(true){
-            Global_Var.getInstance().DeptType="S";
+            Global_Var.getInstance().DeptType='S';
             startActivity(new Intent(this, Inward_Truck_Security.class));
         } else {
             Toast.makeText(Inward_Truck.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
@@ -82,7 +82,7 @@ public class Inward_Truck extends AppCompatActivity {
             Toast.makeText(Inward_Truck.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
         }*/
         if(true){
-            Global_Var.getInstance().DeptType="W";
+            Global_Var.getInstance().DeptType='W';
             startActivity(new Intent(this, Inward_Truck_weighment.class));
         } else {
             Toast.makeText(Inward_Truck.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
@@ -98,7 +98,7 @@ public class Inward_Truck extends AppCompatActivity {
             Toast.makeText(Inward_Truck.this, "You are not in Store Department", Toast.LENGTH_SHORT).show();
         }*/
         if(true){
-            Global_Var.getInstance().DeptType="R";
+            Global_Var.getInstance().DeptType='R';
             startActivity(new Intent(this, Inward_Truck_Store.class));
         } else {
             Toast.makeText(Inward_Truck.this, "You are not in Store Department", Toast.LENGTH_SHORT).show();

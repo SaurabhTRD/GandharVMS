@@ -100,10 +100,10 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
         weighdatalist = new ArrayList<>();
 
-        String nextprocess= Global_Var.getInstance().DeptType;
+        char nextprocess= Global_Var.getInstance().DeptType;
         callApiAndUpdateAdapter(nextprocess);
     }
-    private void callApiAndUpdateAdapter(String nextProcess) {
+    private void callApiAndUpdateAdapter(char nextProcess) {
         Call<List<InTanWeighResponseModel>> call = loginMethod.getIntankWeighListData(nextProcess);
         call.enqueue(new Callback<List<InTanWeighResponseModel>>() {
             @Override
