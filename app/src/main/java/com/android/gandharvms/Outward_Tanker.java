@@ -15,28 +15,28 @@ public class Outward_Tanker extends AppCompatActivity {
 
     }
     public void sequirityoutwardTanker(View view){
-        Global_Var.getInstance().DeptType="S";
+        Global_Var.getInstance().DeptType='S';
         Intent intent = new Intent(this,Outward_Tanker_Security.class);
         startActivity(intent);
     }
     public void Weighmentouttankerclick(View view){
-        Global_Var.getInstance().DeptType="W";
+        Global_Var.getInstance().DeptType='W';
         Intent intent = new Intent(this, Outward_Tanker_weighment.class);
         startActivity(intent);
     }
 
     public void labouttanker(View view){
-        Global_Var.getInstance().DeptType="L";
+        Global_Var.getInstance().DeptType='L';
         Intent intent = new Intent(this, Outward_Tanker_Laboratory.class);
         startActivity(intent);
     }
     public void productionouttanker(View view){
-        Global_Var.getInstance().DeptType="P";
+        Global_Var.getInstance().DeptType='P';
         Intent intent = new Intent(this, Outward_Tanker_Production.class);
         startActivity(intent);
     }
     public void samplingouttanker(View view){
-        Global_Var.getInstance().DeptType="B";
+        Global_Var.getInstance().DeptType='B';
         Intent intent = new Intent(this, Outward_Tanker_Billing.class);
         startActivity(intent);
     }

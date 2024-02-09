@@ -61,7 +61,7 @@ dependencies {
     implementation("com.google.firebase:firebase-analytics-ktx")
     implementation("com.google.firebase:firebase-database-ktx")
 
-   implementation("androidx.recyclerview:recyclerview:1.3.1")
+   /*implementation("androidx.recyclerview:recyclerview:1.3.1")*/
 
     implementation( "com.github.dhaval2404:imagepicker:2.1")
     implementation ("com.squareup.picasso:picasso:2.8")
@@ -75,6 +75,10 @@ dependencies {
     implementation ("com.github.GrenderG:Toasty:1.5.2")
 //    implementation ("com.evrencoskun.library:tableview:0.8.9")
     implementation ("com.github.evrencoskun:TableView:v0.8.9.4")
+
+    implementation ("androidx.recyclerview:recyclerview:1.1.0")
+    // For control over item selection of both touch and mouse driven selection
+    implementation ("androidx.recyclerview:recyclerview-selection:1.1.0")
 
 
 

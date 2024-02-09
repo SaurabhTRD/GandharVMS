@@ -1,6 +1,9 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -8,12 +11,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.FixedGridLayoutManager;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -29,39 +34,73 @@ public class grid extends AppCompatActivity {
 
     ArrayList<In_Tanker_Security_list> inTankerSecurityLists;
     In_Tanker_Se_Adapter in_tanker_se_adapter;
+    int scrollX = 0;
+    List<gridmodel> clubList = new ArrayList<>();
+    RecyclerView rvClub;
+    HorizontalScrollView headerscroll;
+    SearchView searchView;
 
     gridAdapter GridAdapter;
-
     RecyclerView recyclerView;
-    gridAdapter gridadap;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
-
-        recyclerView  = findViewById(R.id.recyclerView);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
+//        LinearLayoutManager layoutManager= new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
+//        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView  = findViewById(R.id.recyclerView);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        fetchDataFromFirestore();
+        initViews();
         fetchDataFromFirestore();
+        rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+                scrollX += dx;
+                headerscroll.scrollTo(scrollX, 0);
+            }
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+    }
 
+    private void initViews()
+    {
+        rvClub = findViewById(R.id.recyclerviewgrid);
+        headerscroll = findViewById(R.id.headerscroll);
+    }
+
+    private void setUpRecyclerView()
+    {
+        GridAdapter  = new gridAdapter(clubList);
+        FixedGridLayoutManager manager = new FixedGridLayoutManager();
+        manager.setTotalColumnCount(1);
+        rvClub.setLayoutManager(manager);
+        rvClub.setAdapter(GridAdapter);
+        rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
     public void fetchDataFromFirestore(){
-
-
-       FirebaseFirestore db = FirebaseFirestore.getInstance();
+        FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference collectionReference = db.collection("Inward Tanker Security");
-
         collectionReference.get().addOnCompleteListener(task -> {
             if (task.isSuccessful()){
                 List<gridmodel> Gridmodel = new ArrayList<>();
                 for (QueryDocumentSnapshot document :task.getResult()){
                     gridmodel obj = document.toObject(gridmodel.class);
+                    obj.status ="";
                     Gridmodel.add(obj);
                 }
-                GridAdapter = new gridAdapter(Gridmodel);
-                recyclerView.setAdapter(GridAdapter);
+                clubList = Gridmodel;
+                setUpRecyclerView();
+//                GridAdapter = new gridAdapter(Gridmodel);
+//                recyclerView.setAdapter(GridAdapter);
             }else {
                 Log.e("Firestore","Error getting documnet: ",task.getException());
             }

@@ -18,12 +18,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.android.gandharvms.Login;
+import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -41,18 +43,25 @@ import org.apache.poi.ss.usermodel.Sheet;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
+
 public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
     RecyclerView recview;
-    ArrayList<In_Tanker_Weighment_list> datalist;
+    List<InTanWeighResponseModel> weighdatalist;
     FirebaseFirestore db;
-    In_Tanker_we_Adapter in_tanker_we_adapter;
+    Intankweighlistdata_adapter intankweighlistdataAdapter;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
     TextView txtTotalCount;
@@ -63,6 +72,8 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 /*
     private ListView listView;
 */
+
+    private LoginMethod loginMethod;
 
 
     @Override
@@ -82,30 +93,56 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         btncleardateselection = findViewById(R.id.btn_clearDateSelectionfields);
         txtTotalCount = findViewById(R.id.tv_TotalCount);
 
+        loginMethod= RetroApiClient.getLoginApi();
+
         recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
-        datalist = new ArrayList<>();
-        in_tanker_we_adapter = new In_Tanker_we_Adapter(datalist);
-        recview.setAdapter(in_tanker_we_adapter);
 
-        db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Weighment").orderBy("Date", Query.Direction.DESCENDING).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                        int totalCount = list.size();
-                        txtTotalCount.setText("Total count: " + totalCount);
-                        datalist.clear();
-                        for (DocumentSnapshot d : list) {
-                            In_Tanker_Weighment_list obj = d.toObject(In_Tanker_Weighment_list.class);
-                            datalist.add(obj);
+        weighdatalist = new ArrayList<>();
+
+        char nextprocess= Global_Var.getInstance().DeptType;
+        callApiAndUpdateAdapter(nextprocess);
+    }
+    private void callApiAndUpdateAdapter(char nextProcess) {
+        Call<List<InTanWeighResponseModel>> call = loginMethod.getIntankWeighListData(nextProcess);
+        call.enqueue(new Callback<List<InTanWeighResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<InTanWeighResponseModel>> call, Response<List<InTanWeighResponseModel>> response) {
+                if(response.isSuccessful()){
+                    List<InTanWeighResponseModel> data=response.body();
+                    int totalCount = data.size();
+                    txtTotalCount.setText("Total count: " + totalCount);
+                    weighdatalist.clear();
+                    weighdatalist = data;
+                    intankweighlistdataAdapter = new Intankweighlistdata_adapter(weighdatalist);
+                    recview.setAdapter(intankweighlistdataAdapter);
+                    intankweighlistdataAdapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<InTanWeighResponseModel>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
-                        in_tanker_we_adapter.notifyDataSetChanged();
                     }
-                });
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
+                }
+                Toasty.error(Inward_Tanker_Weighment_Viewdata.this,"failed..!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+        /*btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Tanker_Weighment_Viewdata.this, Login.class));
@@ -459,5 +496,5 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
-    }
+    }*/
 }

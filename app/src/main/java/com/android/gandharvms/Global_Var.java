@@ -8,8 +8,12 @@ package com.android.gandharvms;
 
 public class Global_Var {
     public String MenuType;
-    public String InOutType;
-    public String DeptType;
+    public char InOutType;
+    public char DeptType;
+    public String EmpId;
+    public String Department;
+    public String Name;
+    public String Token;
     // Getter/setter
     private static Global_Var instance;
     public static Global_Var getInstance() {

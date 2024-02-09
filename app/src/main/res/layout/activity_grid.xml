@@ -1,85 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp"
-    >
+    tools:context=".MainActivity">
 
-<!--    <com.evrencoskun.tableview.TableView-->
-<!--        android:id="@+id/tableView"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginEnd="16dp"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        app:tableView_cellLayout="@layout/table_cell"-->
-<!--        app:tableView_columnHeaderLayout="@layout/table_column_header"-->
-<!--        app:tableView_rowHeaderLayout="@layout/table_row_header" />-->
-
-        <!-- Header Row -->
-
-    <TableLayout
+    <HorizontalScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:stretchColumns="*"
-        android:background="#CCCCCC"
-        android:keyboardNavigationCluster="true">
+        android:id="@+id/headerscroll"
+        android:layout_height="40dp">
 
-        <TableRow
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
-            >
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:text="Serial Number"
-                android:textColor="#000000"
-                android:padding="10sp"
-                android:textSize="14sp"
-                android:minWidth="110dp"
-                android:layout_weight="4"/>
+        <LinearLayout android:orientation="horizontal"
+            android:background="@color/navyblue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:text="Vehicle Number"
-                android:textColor="#000000"
-                android:padding="10sp"
-                android:textSize="14sp"/>
+                android:layout_width="120dp"
+                android:id="@+id/textSerialNumber"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="Serial No"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/textVehicleNumber"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Vehicle No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center_horizontal"
-                android:text="Material"
-                android:textColor="#000000"
-                android:padding="10sp"
-                android:textSize="14sp"/>
+                android:layout_width="120dp"
+                android:id="@+id/textMaterial"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Material No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="4"
-                android:gravity="center"
-                android:text="Status"
-                android:textColor="#000000"/>
-        </TableRow>
-    </TableLayout>
+                android:layout_width="120dp"
+                android:id="@+id/textStatus"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Curr Status"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="16dp"
-        android:layout_marginTop="0dp"/>
-
+        android:id="@+id/recyclerviewgrid"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

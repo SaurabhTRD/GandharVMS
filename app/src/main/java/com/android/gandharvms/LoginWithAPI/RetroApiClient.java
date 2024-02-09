@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroApiClient {
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://gandharvms.azurewebsites.net/";
+    private static String BASE_URL = "http://172.20.22.90/gandharvms/";
 
     public static Retrofit getClient() {
         if (retrofit == null) {
@@ -24,5 +24,8 @@ public class RetroApiClient {
     }
     public static API_In_Tanker_Security getserccrityveh(){
         return  getClient().create(API_In_Tanker_Security.class);
+    }
+    public static Weighment getWeighmentDetails(){
+        return getClient().create(Weighment.class);
     }
 }
