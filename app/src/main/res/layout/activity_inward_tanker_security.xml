@@ -324,7 +324,7 @@
 
             >
             <AutoCompleteTextView
-                android:id="@+id/qtyuom"
+                android:id="@+id/qtyuomtanker"
                 android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 android:hint="UOM"
