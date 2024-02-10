@@ -133,7 +133,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private String vehicleType= Global_Var.getInstance().MenuType;
     private char nextProcess=Global_Var.getInstance().DeptType;
     private char inOut=Global_Var.getInstance().InOutType;
-    private String EmployeName=Global_Var.getInstance().EmpId;
+    private String EmployeId=Global_Var.getInstance().EmpId;
     private String token;
     private int inwardid;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
@@ -146,8 +146,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
-        img1 = findViewById(R.id.imageView1);
-        img2 = findViewById(R.id.imageView2);
+        img1 = findViewById(R.id.intanvehimageView1);
+        img2 = findViewById(R.id.intandriverimageView2);
 
         etint = findViewById(R.id.etintime);
         etserialnumber = findViewById(R.id.etserialnumber);
@@ -290,7 +290,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         } else {
             InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,grossweight,tareweight,netweight,
                     shortagedip,shortageweight,remark,signby,Integer.parseInt(container),imgPath1,imgPath2,serialnumber,
-                    vehicelnumber,date,suppliername,materialname,oan,Integer.parseInt(driverno),'M',inOut,vehicleType,EmployeName,EmployeName);
+                    vehicelnumber,date,suppliername,materialname,oan,Integer.parseInt(driverno),'M',inOut,vehicleType,EmployeId,EmployeId);
 
             Call<Boolean> call=weighmentdetails.insertWeighData(weighReqModel);
             call.enqueue(new Callback<Boolean>() {
@@ -489,12 +489,19 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                     {
                         inwardid=data.getInwardId();
                         etserialnumber.setText(data.getSerialNo());
+                        etserialnumber.setEnabled(false);
                         etvehicalno.setText(data.getVehicleNo());
+                        etvehicalno.setEnabled(false);
                         etsuppliername.setText(data.getPartyName());
+                        etsuppliername.setEnabled(false);
                         etmaterialname.setText(data.getMaterial());
+                        etmaterialname.setEnabled(false);
                         etoano.setText(data.getOA_PO_number());
+                        etoano.setEnabled(false);
                         etdriverno.setText(String.valueOf(data.getDriver_MobileNo()));
+                        etdriverno.setEnabled(false);
                         etdate.setText(data.getDate());
+                        etdate.setEnabled(false);
                         etint.requestFocus();
                         etint.callOnClick();
                     }
@@ -521,50 +528,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 Toasty.error(Inward_Tanker_Weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
             }
         });
-        /*CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
-        String searchText = VehicleNo.trim();
-        Query query = collectionReference.whereEqualTo("vehicalnumber", searchText)
-                .whereNotEqualTo("intime","" );
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int totalCount = task.getResult().size();
-                    if(totalCount == 0) {
-                        etserialnumber.setText("");
-                        etvehicalno.setText("");
-                        etsuppliername.setText("");
-                        etmaterialname.setText("");
-                        etoano.setText("");
-                        etdriverno.setText("");
-                        etdate.setText("");
-                        *//*etnetweight.setText("");*//*
-                        etvehicalno.requestFocus();
-                        Toasty.warning(Inward_Tanker_Weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
-                    }
-                    else {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                            if (totalCount > 0) {
-                                etserialnumber.setText(obj.getSerialNumber());
-                                etvehicalno.setText(obj.getVehicalnumber());
-                                etsuppliername.setText(obj.getPartyname());
-                                etmaterialname.setText(obj.getMaterial());
-                                etoano.setText(obj.getOA_PO_Number());
-                                etdriverno.setText(obj.getDriver_Mobile_No());
-                                etdate.setText(dateFormat.format(obj.getDate().toDate()));
-                                *//*etnetweight.setText(obj.getNetweight());
-                                etnetweight.setEnabled(false);*//*
-                                etint.requestFocus();
-                                etint.callOnClick();
-                            }
-                        }
-                    }
-                } else {
-                    Log.w("FirestoreData", "Error getting documents.", task.getException());
-                }
-            }
-        });*/
     }
     public void inweighmenttankergridclick(View view){
         Intent intent = new Intent(this, in_Tanker_weighment_grid.class);
