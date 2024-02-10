@@ -48,7 +48,7 @@ public class In_Tanker_View_Lab_Report_Adapter extends RecyclerView.Adapter<In_T
         public myviewholder(@NonNull View itemView) {
             super(itemView);
             etMaterial=itemView.findViewById(R.id.txtMaterial);
-            etpsample = itemView.findViewById(R.id.recdate);
+            /*etpsample = itemView.findViewById(R.id.recdate);*/
             etvehiclenumber = itemView.findViewById(R.id.listvehnumber);
             etpapperance = itemView.findViewById(R.id.listappreance);
             etpodor = itemView.findViewById(R.id.lsitodor);

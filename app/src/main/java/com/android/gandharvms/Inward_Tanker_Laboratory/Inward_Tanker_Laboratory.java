@@ -22,10 +22,15 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_saampling_View_data;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
+import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
+import com.android.gandharvms.LoginWithAPI.Laboratory;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,6 +49,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -53,13 +59,17 @@ import java.util.Map;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
     String [] remark = {"Accepted","Rejected"};
     AutoCompleteTextView regAutoCompleteTextView;
     ArrayAdapter<String> remarkarray;
-    EditText etintime, etpsample,etvehiclenumber,etpapperance,etpodor,etpcolour,etpdensity,etqty,etPrcstest,etpkv,ethundred,etanline,etflash,etpaddtest,etpsamplere,etpremark,etpsignQc,etpdatesignofsign,etMaterial,etsupplier,disc,etviscosity;
+    EditText etintime,etserialnumber,etpsample,etvehiclenumber,etpapperance,etpodor,etpcolour,etpdensity,etqty,etPrcstest,etpkv,ethundred,etanline,etflash,etpaddtest,etpsamplere,etpremark,etpsignQc,etpdatesignofsign,etMaterial,etsupplier,remarkdisc,etviscosity;
     Button etlabsub;
     Button view;
     TimePickerDialog tpicker;
@@ -76,12 +86,22 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     private final int MAX_LENGTH=10;
     private String token;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
+
+    //Call Interface Method of Laboratory
+    private Laboratory labdetails;
+    private int inwardid;
+    private String vehicleType= Global_Var.getInstance().MenuType;
+    private char nextProcess=Global_Var.getInstance().DeptType;
+    private char inOut=Global_Var.getInstance().InOutType;
+    private String EmployeId=Global_Var.getInstance().EmpId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_laboratory);
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
+
+        labdetails= RetroApiClient.getLabDetails();//Call retrofit api
 
         regAutoCompleteTextView = findViewById(R.id.etpremark);
         remarkarray = new ArrayAdapter<String>(this,R.layout.in_tanker_labremarkitem,remark);
@@ -96,6 +116,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
         etintime = (EditText) findViewById(R.id.etintime);
         etpsample = (EditText) findViewById(R.id.etpsample);
+        etserialnumber=(EditText) findViewById(R.id.etlabserialnumber);
         etvehiclenumber = (EditText) findViewById(R.id.vehiclenumber);
         etpapperance = (EditText) findViewById(R.id.etpapperance);
         etpodor = (EditText) findViewById(R.id.etpodor);
@@ -115,7 +136,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etMaterial=(EditText) findViewById(R.id.et_materialname);
 
         etsupplier = (EditText) findViewById(R.id.supplier);
-        disc = (EditText) findViewById(R.id.remarkdisc);
+        remarkdisc = (EditText) findViewById(R.id.remarkdisc);
         etviscosity = (EditText) findViewById(R.id.etviscosityindex);
         etlabsub=(Button) findViewById(R.id.etlabsub);
 
@@ -222,7 +243,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etvehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    FetchVehicleDetails(etvehiclenumber.getText().toString().trim());
+                    FetchVehicleDetails(etvehiclenumber.getText().toString().trim(),vehicleType,nextProcess,inOut);
                 }
             }
         });
@@ -288,7 +309,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     public void labinsertdata()
     {
         String intime = etintime.getText().toString().trim();
-        String sample = etpsample.getText().toString().trim();
+        String serialNumber=etserialnumber.getText().toString().trim();
+        String date = etpsample.getText().toString().trim();
         String vehicle = etvehiclenumber.getText().toString().trim();
         String apperance = etpapperance.getText().toString().trim();
         String odor = etpodor.getText().toString().trim();
@@ -301,113 +323,112 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String anline = etanline.getText().toString().trim();
         String flash = etflash.getText().toString().trim();
         String addTest = etpaddtest.getText().toString().trim();
-        String sampleTest = etpsamplere.getText().toString().trim();
+        String samplereceivingdate = etpsamplere.getText().toString().trim();
         String remark = etpremark.getText().toString().trim();
         String signQc = etpsignQc.getText().toString().trim();
         String dateSignOfSign = etpdatesignofsign.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
         String material=etMaterial.getText().toString().trim();
         String edsupplier= etsupplier.getText().toString().trim();
-        if ( intime.isEmpty() || sample.isEmpty() || vehicle.isEmpty() ||  apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty()||  anline.isEmpty()|| flash.isEmpty()|| density.isEmpty() || rcsTest.isEmpty() ||
-                kv.isEmpty() || addTest.isEmpty() || sampleTest.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty()|| edsupplier.isEmpty()){
+        String viscosity=etviscosity.getText().toString().trim();
+        String disc=remarkdisc.getText().toString().trim();
+        if ( intime.isEmpty() ||serialNumber.isEmpty()|| date.isEmpty() ||hundred.isEmpty()|| vehicle.isEmpty() ||  apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty()||  anline.isEmpty()|| flash.isEmpty()|| density.isEmpty() || rcsTest.isEmpty() ||
+                kv.isEmpty() || addTest.isEmpty() || samplereceivingdate.isEmpty() || viscosity.isEmpty() ||remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty()|| edsupplier.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }else {
-            Map<String,String> labitems = new HashMap<>();
-            labitems.put("In_Time",etintime.getText().toString().trim());
-            labitems.put("sample_reciving",etpsample.getText().toString().trim());
-            labitems.put("Vehicle_Number",etvehiclenumber.getText().toString().trim());
-            labitems.put("apperance",etpapperance.getText().toString().trim());
-            labitems.put("odor",etpodor.getText().toString().trim());
-            labitems.put("color",etpcolour.getText().toString().trim());
-            labitems.put("Qty",etqty.getText().toString().trim());
-            labitems.put("density",etpdensity.getText().toString().trim());
-            labitems.put("Rcs_Test",etPrcstest.getText().toString().trim());
-            labitems.put("40°KV",etpkv.getText().toString().trim());
-            labitems.put("100°KV",ethundred.getText().toString().trim());
-            labitems.put("Anline_Point",etanline.getText().toString().trim());
-            labitems.put("Flash_Point",etflash.getText().toString().trim());
-            labitems.put("Additional_test",etpaddtest.getText().toString().trim());
-            labitems.put("sample_test",etpsamplere.getText().toString().trim());
-            labitems.put("Remark",etpremark.getText().toString().trim());
-            labitems.put("sign_of",etpsignQc.getText().toString().trim());
-            labitems.put("Date_and_Time",etpdatesignofsign.getText().toString().trim());
-            labitems.put("outTime",outTime.toString());
-            labitems.put("Material",etMaterial.getText().toString().trim());
-            labitems.put("Supplier",etsupplier.getText().toString().trim());
-            labitems.put("Remark_Discription",disc.getText().toString().trim());
-            labitems.put("Viscosity_Index",etviscosity.getText().toString().trim());
-            makeNotification(etvehiclenumber.getText().toString(),outTime.toString());
-            dblabroot.collection("Inward Tanker Laboratory").add(labitems)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
+            InTanLabRequestModel labRequestModel= new InTanLabRequestModel(inwardid,intime,outTime,date,
+                    samplereceivingdate,apperance,odor,color,Integer.parseInt(qty),Integer.parseInt(density),
+                    rcsTest,Integer.parseInt(kv),Integer.parseInt(hundred),Integer.parseInt(anline),
+                    Integer.parseInt(flash), addTest,samplereceivingdate,remark,signQc,dateSignOfSign,
+                    disc,Integer.parseInt(viscosity), EmployeId,EmployeId,vehicle,material,
+                    serialNumber,'P',inOut, vehicleType,edsupplier);
+            Call<Boolean> call =labdetails.insertLabData(labRequestModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body()!=null)
+                    {
+                        Log.d("Registration", "Response Body: " + response.body());
+                        Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker.class));
+                        finish();
+                    }
+                    else
+                    {
+                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    }
+                }
 
-                            etintime.setText("");
-                            etpsample.setText("");
-                            etvehiclenumber.setText("");
-                            etpapperance.setText("");
-                            etpodor.setText("");
-                            etpcolour.setText("");
-                            etqty.setText("");
-                            etpdensity.setText("");
-                            etPrcstest.setText("");
-                            etpkv.setText("");
-                            ethundred.setText("");
-                            etanline.setText("");
-                            etflash.setText("");
-                            etpaddtest.setText("");
-                            etpsamplere.setText("");
-                            etpremark.setText("");
-                            etpsignQc.setText("");
-                            etpdatesignofsign.setText("");
-                            etMaterial.setText("");
-                            etsupplier.setText("");
-                            disc.setText("");
-                            etviscosity.setText("");
-                            Toasty.success(Inward_Tanker_Laboratory.this, "Data Added Successfully", Toast.LENGTH_SHORT,true).show();
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    });
-            Intent intent= new Intent(this, Inward_Tanker.class);
-            startActivity(intent);
+                    }
+                    Toasty.error(Inward_Tanker_Laboratory.this,"failed..!",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
-    public void FetchVehicleDetails(@NonNull String VehicleNo) {
-        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
-        String searchText = VehicleNo.trim();
-        CollectionReference collectionReferenceWe = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
-        Query query = collectionReference.whereEqualTo("vehicalnumber", searchText);
-        Timestamp timestamp = new Timestamp(calendar.getTime());
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void FetchVehicleDetails(@NonNull String vehicleNo,String vehicleType,char NextProcess,char inOut) {
+        Call<InTanLabResponseModel> call=labdetails.getLabbyfetchVehData(vehicleNo,vehicleType,NextProcess,inOut);
+        call.enqueue(new Callback<InTanLabResponseModel>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int totalCount = task.getResult().size();
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                        // Check if the object already exists to avoid duplicates
-                        if (totalCount > 0) {
-//                            etint.setText(obj.In_Time);
-//                            etreg.setText(obj.getSerialNumber());
-//                            etvehical.setText(obj.getVehicalnumber());
-//                            repremark.setText(obj.getReporting_Remark());
-//                            etdate.setText(dateFormat.format(obj.getDate().toDate()));
-//                            etnetweight.setText(obj.getNetweight());
-//                            cbox.setChecked(true);
-//                            cbox.setEnabled(false);
-//                            saveButton.setVisibility(View.GONE);
-//                            repremark.setEnabled(false);
-//                            etreg.setEnabled(false);
-//                            etdate.setEnabled(false);
-//                            DocId = document.getId();
-                            etMaterial.setText(obj.getMaterial());
-                            etsupplier.setText(obj.getPartyname());
-
+            public void onResponse(Call<InTanLabResponseModel> call, Response<InTanLabResponseModel> response) {
+                if(response.isSuccessful())
+                {
+                    InTanLabResponseModel data=response.body();
+                    if(data.getVehicleNo()!="")
+                    {
+                        inwardid=data.getInwardId();
+                        etvehiclenumber.setText(data.getVehicleNo());
+                        etvehiclenumber.setEnabled(false);
+                        etserialnumber.setText(data.getSerialNo());
+                        etserialnumber.setEnabled(false);
+                        etsupplier.setText(data.getPartyName());
+                        etsupplier.setEnabled(false);
+                        etMaterial.setText(data.getMaterial());
+                        etMaterial.setEnabled(false);
+                        etpsample.setText(data.getDate());
+                        etpsample.setEnabled(false);
+                        etintime.requestFocus();
+                        etintime.callOnClick();
+                    }
+                    else
+                    {
+                        Toasty.success(Inward_Tanker_Laboratory.this,"Vehicle Is Not Available",Toast.LENGTH_SHORT).show();
+                    }
+                }else
+                {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<InTanLabResponseModel> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
                         }
                     }
-                } else {
-                    Log.w("FirestoreData", "Error getting documents.", task.getException());
                 }
+                Toasty.error(Inward_Tanker_Laboratory.this,"failed..!",Toast.LENGTH_SHORT).show();
             }
         });
     }

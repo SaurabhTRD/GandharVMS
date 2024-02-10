@@ -39,8 +39,6 @@ public class InTanWeighResponseModel {
      String UpdatedBy;
      int Qty;
 
-
-
     public int getId() {
         return Id;
     }
