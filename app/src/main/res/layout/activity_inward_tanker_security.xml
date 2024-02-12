@@ -307,8 +307,8 @@
                 android:id="@+id/etqty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Type of Packeging"
-                android:inputType="textCapCharacters"
+                android:hint="Qty"
+                android:inputType="numberDecimal"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -381,7 +381,7 @@
                 android:id="@+id/etnetweight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Invoice QTY"
+                android:hint="Net Weight"
                 android:inputType="numberDecimal"
                 android:textSize="17dp"
                 android:textStyle="bold"

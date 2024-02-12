@@ -38,6 +38,8 @@ public class Inward_Tanker extends AppCompatActivity {
         setContentView(R.layout.activity_inward_tanker);
         btnlogout=findViewById(R.id.btn_logoutButton);
 
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "");
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

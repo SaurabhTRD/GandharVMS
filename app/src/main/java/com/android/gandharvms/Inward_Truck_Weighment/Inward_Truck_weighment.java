@@ -27,7 +27,13 @@ import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
+import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.google.firebase.Timestamp;
 
 import com.android.gandharvms.FcmNotificationsSender;
@@ -55,6 +61,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -65,6 +72,10 @@ import java.util.Objects;
 import java.util.UUID;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class Inward_Truck_weighment extends AppCompatActivity {
 
@@ -97,12 +108,22 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     private String token;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
 
+    private Weighment weighmentdetails;
+    private String vehicleType= Global_Var.getInstance().MenuType;
+    private char nextProcess=Global_Var.getInstance().DeptType;
+    private char inOut=Global_Var.getInstance().InOutType;
+    private String EmployeId=Global_Var.getInstance().EmpId;
+    private int inwardid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_truck_weighment);
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
+
+        //Call Api method
+        weighmentdetails= RetroApiClient.getWeighmentDetails();
 
         sharedPreferences = getSharedPreferences("TruckWeighment", MODE_PRIVATE);
 
@@ -159,7 +180,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         etvehicalnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus) {
-                    FetchVehicleDetails(etvehicalnumber.getText().toString().trim());
+                    FetchVehicleDetails(etvehicalnumber.getText().toString().trim(),vehicleType,nextProcess,inOut);
                 }
             }
 
@@ -241,7 +262,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     public void intrinsert()
     {
         String intime = etint.getText().toString().trim();
-        String serial_Number=etserialnumber.getText().toString().trim();
+        String serialnumber=etserialnumber.getText().toString().trim();
         String vehicalnumber=etvehicalnumber.getText().toString().trim();
         String supplier=etsupplier.getText().toString().trim();
         String material=etmaterial.getText().toString().trim();
@@ -250,31 +271,71 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         String date = etdate.getText().toString().trim();
         String Grossweight = etgrossweight.getText().toString().trim();
         String container=etcontainer.getText().toString().trim();
-        /*String Tareweight = ettareweight.getText().toString().trim();
-        String netweight = etnetweight.getText().toString().trim();*/
+        String tareweight = "0";
+        String netweight = "0";
+        String remark=etremark.getText().toString().trim();
         String signby = etsignby.getText().toString().trim();
         String outTime = getCurrentTime();
 
 
-        if ( intime.isEmpty()|| serial_Number.isEmpty()|| vehicalnumber.isEmpty()|| supplier.isEmpty()|| material.isEmpty()|| Driver.isEmpty() || oanumber.isEmpty()|| date.isEmpty()||Grossweight.isEmpty()
+        if ( intime.isEmpty()|| serialnumber.isEmpty()|| vehicalnumber.isEmpty()|| supplier.isEmpty()|| material.isEmpty()|| Driver.isEmpty() || oanumber.isEmpty()|| date.isEmpty()||Grossweight.isEmpty()
         ||container.isEmpty()|| signby.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }
         else {
-            Map<String,Object>trweitems= new HashMap<>();
+            InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,Grossweight,tareweight,netweight,
+                    "","",remark,signby,Integer.parseInt(container),imgPath1,imgPath2,serialnumber,
+                    vehicalnumber,date,supplier,material,oanumber,Integer.parseInt(Driver),'R',inOut,vehicleType,EmployeId,EmployeId);
+
+            Call<Boolean> call=weighmentdetails.insertWeighData(weighReqModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body()!=null)
+                    {
+                        Log.d("Registration", "Response Body: " + response.body());
+                        Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Inward_Truck_weighment.this, Inward_Tanker.class));
+                        finish();
+                    }
+                    else
+                    {
+                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Inward_Truck_weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
+                }
+            });
+            /*Map<String,Object>trweitems= new HashMap<>();
             trweitems.put("In_Time",etint.getText().toString().trim());
             trweitems.put("Serial_Number",etserialnumber.getText().toString().trim());
             trweitems.put("Vehicle_Number",etvehicalnumber.getText().toString().trim());
             trweitems.put("Supplier",etsupplier.getText().toString().trim());
             trweitems.put("Material",etmaterial.getText().toString().trim());
             trweitems.put("Driver_No",etdriver.getText().toString().trim());
-            /*trweitems.put("Customer",etcustomer.getText().toString().trim());*/
+            *//*trweitems.put("Customer",etcustomer.getText().toString().trim());*//*
             trweitems.put("Oa_Number",etoanumber.getText().toString().trim());
             trweitems.put("Date",timestamp);
             trweitems.put("Gross_Weight",etgrossweight.getText().toString().trim());
             trweitems.put("Container_No", etcontainer.getText().toString().trim());
-            /*trweitems.put("Tare_Weight",ettareweight.getText().toString().trim());
-            trweitems.put("Net_Weight",etnetweight.getText().toString().trim());*/
+            *//*trweitems.put("Tare_Weight",ettareweight.getText().toString().trim());
+            trweitems.put("Net_Weight",etnetweight.getText().toString().trim());*//*
             trweitems.put("remark",etremark.getText().toString().trim());
             trweitems.put("Sign_By",etsignby.getText().toString().trim());
             trweitems.put("outTime",outTime.toString());
@@ -292,21 +353,21 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                             etsupplier.setText("");
                             etmaterial.setText("");
                             etdriver.setText("");
-                            /*etcustomer.setText("");*/
+                            *//*etcustomer.setText("");*//*
                             etoanumber.setText("");
                             etdate.setText("");
                             etgrossweight.setText("");
-                            /*ettareweight.setText("");
-                            etnetweight.setText("");*/
+                            *//*ettareweight.setText("");
+                            etnetweight.setText("");*//*
                             etsignby.setText("");
                             etremark.setText("");
                             etcontainer.setText("");
-                            /*etdatetime.setText("");*/
+                            *//*etdatetime.setText("");*//*
                             Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         }
                     });
             Intent intent= new Intent(this, Inward_Truck.class);
-            startActivity(intent);
+            startActivity(intent);*/
         }
     }
     public void uploadimg(Uri Image1, Uri Image2) {
@@ -402,7 +463,60 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    public void FetchVehicleDetails(@NonNull String VehicleNo) {
+
+    public void FetchVehicleDetails(@NonNull String vehicleNo,String vehicleType,char NextProcess,char inOut) {
+        Call<InTanWeighResponseModel> call=weighmentdetails.getWeighbyfetchVehData(vehicleNo,vehicleType,NextProcess,inOut);
+        call.enqueue(new Callback<InTanWeighResponseModel>() {
+            @Override
+            public void onResponse(Call<InTanWeighResponseModel> call, Response<InTanWeighResponseModel> response) {
+                if(response.isSuccessful())
+                {
+                    InTanWeighResponseModel data=response.body();
+                    if(data.getVehicleNo()!="")
+                    {
+                        inwardid=data.getInwardId();
+                        etserialnumber.setText(data.getSerialNo());
+                        etserialnumber.setEnabled(false);
+                        etvehicalnumber.setText(data.getVehicleNo());
+                        etvehicalnumber.setEnabled(false);
+                        etsupplier.setText(data.getPartyName());
+                        etsupplier.setEnabled(false);
+                        etmaterial.setText(data.getMaterial());
+                        etmaterial.setEnabled(false);
+                        etoanumber.setText(data.getOA_PO_number());
+                        etoanumber.setEnabled(false);
+                        etdriver.setText(String.valueOf(data.getDriver_MobileNo()));
+                        etdriver.setEnabled(false);
+                        etdate.setText(data.getDate());
+                        etdate.setEnabled(false);
+                        etint.requestFocus();
+                        etint.callOnClick();
+                    }
+                }else
+                {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<InTanWeighResponseModel> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Truck_weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    /*public void FetchVehicleDetails(@NonNull String VehicleNo) {
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Truck Security");
         String searchText = VehicleNo.trim();
         Query query = collectionReference.whereEqualTo("VehicalNumber", searchText)
@@ -420,7 +534,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                         etoanumber.setText("");
                         etdriver.setText("");
                         etdate.setText("");
-                        /*etnetweight.setText("");*/
+                        *//*etnetweight.setText("");*//*
                         etvehicalnumber.requestFocus();
                         Toasty.warning(Inward_Truck_weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
                     }
@@ -436,8 +550,8 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                                 etdate.setText(dateFormat.format(obj.getDate().toDate()));
                                 etoanumber.setText(obj.getOA_PO_Number());
                                 etdriver.setText(obj.getDriver_Mobile_Number());
-                                /*etnetweight.setText(obj.getNetweight());
-                                etnetweight.setEnabled(false);*/
+                                *//*etnetweight.setText(obj.getNetweight());
+                                etnetweight.setEnabled(false);*//*
                                 etint.requestFocus();
                                 etint.callOnClick();
                             }
@@ -448,5 +562,5 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 }
