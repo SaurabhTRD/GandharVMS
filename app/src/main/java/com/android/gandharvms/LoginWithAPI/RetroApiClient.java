@@ -28,4 +28,12 @@ public class RetroApiClient {
     public static Weighment getWeighmentDetails(){
         return getClient().create(Weighment.class);
     }
+
+    public static Laboratory getLabDetails(){
+        return getClient().create(Laboratory.class);
+    }
+
+    public static Store getStoreDetails(){
+        return getClient().create(Store.class);
+    }
 }

@@ -25,10 +25,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.Inward_Truck_Security.In_Truck_security_list;
 import com.android.gandharvms.Inward_Truck_Weighment.In_Truck_weigment_list;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.LoginWithAPI.Store;
+import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -47,6 +51,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.Timestamp;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -58,6 +63,10 @@ import java.util.Map;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class Inward_Truck_Store extends AppCompatActivity {
 
@@ -86,7 +95,12 @@ public class Inward_Truck_Store extends AppCompatActivity {
     private String token;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
 
-
+    private String vehicleType= Global_Var.getInstance().MenuType;
+    private char nextProcess=Global_Var.getInstance().DeptType;
+    private char inOut=Global_Var.getInstance().InOutType;
+    private String EmployeId=Global_Var.getInstance().EmpId;
+    private int inwardid;
+    private Store storedetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +109,8 @@ public class Inward_Truck_Store extends AppCompatActivity {
         //Send Notification to all
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
+
+        storedetails= RetroApiClient.getStoreDetails();
 
         //prince
         //Send Notifications To All
@@ -230,7 +246,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
         etvehicalnum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus) {
-                    FetchVehicleDetails(etvehicalnum.getText().toString().trim());
+                    FetchVehicleDetails(etvehicalnum.getText().toString().trim(),vehicleType,nextProcess,inOut);
                 }
             }
 
@@ -462,7 +478,65 @@ public class Inward_Truck_Store extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    public void FetchVehicleDetails(@NonNull String VehicleNo) {
+    public void FetchVehicleDetails(@NonNull String vehicleNo,String vehicleType,char NextProcess,char inOut) {
+        Call<InTruckStoreResponseModel> call=storedetails.getstorebyfetchVehData(vehicleNo,vehicleType,NextProcess,inOut);
+        call.enqueue(new Callback<InTruckStoreResponseModel>() {
+            @Override
+            public void onResponse(Call<InTruckStoreResponseModel> call, Response<InTruckStoreResponseModel> response) {
+                if(response.isSuccessful())
+                {
+                    InTruckStoreResponseModel data=response.body();
+                    if(data.getVehicleNo()!="")
+                    {
+                        inwardid=data.getInwardId();
+                        etvehicalnum.setText(data.getVehicleNo());
+                        etvehicalnum.setEnabled(false);
+                        etserialnumber.setText(data.getSerialNo());
+                        etserialnumber.setEnabled(false);
+                        etmaterial.setText(data.getMaterial());
+                        etmaterial.setEnabled(false);
+                        etmaterialrdate.setText(data.getDate());
+                        etmaterialrdate.setEnabled(false);
+                        etpo.setText(data.getOA_PO_number());
+                        etpo.setEnabled(false);
+                        etpodate.setText(data.getDate());
+                        etpodate.setEnabled(false);
+                        etinvnum.setText(data.getInvoiceNo());
+                        etinvnum.setEnabled(false);
+                        etinvdate.setText(data.getDate());
+                        etinvdate.setEnabled(false);
+                        etinvqty.setText(String.valueOf(data.getQty()));
+                        etinvqty.setEnabled(false);
+                        etqty.setText(String.valueOf(data.getQty()));
+                        etqty.setEnabled(false);
+                        etintime.requestFocus();
+                        etintime.callOnClick();
+                    }
+                }else
+                {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<InTruckStoreResponseModel> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Truck_Store.this,"failed..!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    /*public void FetchVehicleDetails(@NonNull String VehicleNo) {
         CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Truck Weighment");
         String searchText = VehicleNo.trim();
         Query query = collectionReference.whereEqualTo("Vehicle_Number", searchText)
@@ -506,5 +580,5 @@ public class Inward_Truck_Store extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 }

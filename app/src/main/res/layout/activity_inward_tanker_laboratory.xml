@@ -68,9 +68,6 @@
 
         </Button>
 
-
-
-
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
             android:layout_height="wrap_content"
@@ -84,22 +81,17 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-
-
+                android:id="@+id/regno"
                 >
                 <EditText
-                    android:id="@+id/etintime"
+                    android:id="@+id/etpsample"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="In Time"
+                    android:hint="Date"
                     android:inputType="text"
                     android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:clickable="false"
-                    android:focusable="false"
-                   />
+                    android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="185dp"
@@ -116,8 +108,6 @@
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
-
-
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
@@ -125,24 +115,36 @@
             android:layout_height="wrap_content"
             android:layout_weight="2">
 
-
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
+                android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="2dp"
-
-                android:layout_below="@id/intime"
-
-                >
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/supplier"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Supplier"
                     android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp">
+                <EditText
+                    android:id="@+id/etlabserialnumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Serial Number"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -153,40 +155,32 @@
             android:layout_height="wrap_content"
             android:layout_weight="2"
             >
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="185dp"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            android:id="@+id/regno"
-
-            >
-            <EditText
-                android:id="@+id/etpsample"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Date"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold"
-                android:focusable="false"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="185dp"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="200dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="10dp">
 
-                android:layout_below="@id/regno"
+                <EditText
+                    android:id="@+id/etintime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="In Time"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                >
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="185dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/vehiclenumber"
                     android:layout_width="match_parent"
@@ -194,12 +188,10 @@
                     android:hint="Vehicle Number"
                     android:inputType="textCapCharacters"
                     android:textSize="17dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.cardview.widget.CardView>
-
-
 
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
@@ -625,7 +617,7 @@
                     android:id="@+id/remarkdisc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Remark Discription"
+                    android:hint="Remark Description"
                     android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />

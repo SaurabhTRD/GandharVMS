@@ -26,6 +26,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -73,7 +74,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
     private ListView listView;
 */
 
-    private LoginMethod loginMethod;
+    private Weighment weighmentdetails;
 
 
     @Override
@@ -93,7 +94,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         btncleardateselection = findViewById(R.id.btn_clearDateSelectionfields);
         txtTotalCount = findViewById(R.id.tv_TotalCount);
 
-        loginMethod= RetroApiClient.getLoginApi();
+        weighmentdetails= RetroApiClient.getWeighmentDetails();
 
         recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
@@ -101,10 +102,10 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         weighdatalist = new ArrayList<>();
 
         char nextprocess= Global_Var.getInstance().DeptType;
-        callApiAndUpdateAdapter(nextprocess);
+        GetWeighmentListData(nextprocess);
     }
-    private void callApiAndUpdateAdapter(char nextProcess) {
-        Call<List<InTanWeighResponseModel>> call = loginMethod.getIntankWeighListData(nextProcess);
+    private void GetWeighmentListData(char nextProcess) {
+        Call<List<InTanWeighResponseModel>> call = weighmentdetails.getIntankWeighListData(nextProcess);
         call.enqueue(new Callback<List<InTanWeighResponseModel>>() {
             @Override
             public void onResponse(Call<List<InTanWeighResponseModel>> call, Response<List<InTanWeighResponseModel>> response) {
