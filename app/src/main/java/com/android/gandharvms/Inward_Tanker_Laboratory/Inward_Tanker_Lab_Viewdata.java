@@ -57,7 +57,7 @@ public class Inward_Tanker_Lab_Viewdata extends AppCompatActivity {
         recview.setLayoutManager(new LinearLayoutManager(this));
         labdatalist = new ArrayList<>();
 
-        recview.setAdapter(inTankLabAdapter);
+        /*recview.setAdapter(inTankLabAdapter);*/
 
         char nextprocess= Global_Var.getInstance().DeptType;
         GetLabListData(nextprocess);

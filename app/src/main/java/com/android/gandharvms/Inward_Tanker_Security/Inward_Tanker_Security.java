@@ -488,7 +488,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String vehicltype= Global_Var.getInstance().MenuType;
         char InOutType = Global_Var.getInstance().InOutType;
         char DeptType= Global_Var.getInstance().DeptType;
-
         int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
         String remark = etremark.getText().toString().trim();
         String pooa = edpooa.getText().toString().trim();

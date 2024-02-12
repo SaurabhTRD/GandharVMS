@@ -11,6 +11,11 @@ public class InTruckStoreResponseModel {
     String VehicleNo;
     String FactoryOut;
     String SerialNo;
+    int ReceiveQTY ;
+    int ReceiveQTYUOM ;
+    String Remark ;
+
+    String StoreExtramaterials;
     char Nextprocess;
     char I_O;
     String VehicleType;
@@ -21,6 +26,7 @@ public class InTruckStoreResponseModel {
     String OA_PO_number;
     int Driver_MobileNo;
     int Qty;
+    int QtyUOM;
 
     public int getId() {
         return Id;
@@ -100,6 +106,46 @@ public class InTruckStoreResponseModel {
 
     public void setSerialNo(String serialNo) {
         SerialNo = serialNo;
+    }
+
+    public int getReceiveQTY() {
+        return ReceiveQTY;
+    }
+
+    public void setReceiveQTY(int receiveQTY) {
+        ReceiveQTY = receiveQTY;
+    }
+
+    public int getReceiveQTYUOM() {
+        return ReceiveQTYUOM;
+    }
+
+    public void setReceiveQTYUOM(int receiveQTYUOM) {
+        ReceiveQTYUOM = receiveQTYUOM;
+    }
+
+    public String getRemark() {
+        return Remark;
+    }
+
+    public void setRemark(String remark) {
+        Remark = remark;
+    }
+
+    public String getStoreExtramaterials() {
+        return StoreExtramaterials;
+    }
+
+    public void setStoreExtramaterials(String storeExtramaterials) {
+        StoreExtramaterials = storeExtramaterials;
+    }
+
+    public int getQtyUOM() {
+        return QtyUOM;
+    }
+
+    public void setQtyUOM(int qtyUOM) {
+        QtyUOM = qtyUOM;
     }
 
     public char getNextprocess() {
