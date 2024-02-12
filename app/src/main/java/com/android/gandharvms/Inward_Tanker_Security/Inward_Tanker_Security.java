@@ -137,6 +137,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     private String dateTimeString = "";
 
     private API_In_Tanker_Security apiInTankerSecurity;
+    private String EmployeId=Global_Var.getInstance().EmpId;
 
 
 
@@ -357,8 +358,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
 //                    String VehicleNo = etvehical.getText().toString();
                     String vehicltype= Global_Var.getInstance().MenuType;
-                    String DeptType= Global_Var.getInstance().DeptType;
-                    String InOutType = Global_Var.getInstance().InOutType;
+                    char DeptType= Global_Var.getInstance().DeptType;
+                    char InOutType = Global_Var.getInstance().InOutType;
 
                     FetchVehicleDetails(etvehical.getText().toString().trim(),vehicltype,DeptType,InOutType);
                 }
@@ -486,8 +487,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
         int qtyuom = Integer.parseInt( qtyUomNumericValue.toString().trim());
         String vehicltype= Global_Var.getInstance().MenuType;
-        String InOutType = Global_Var.getInstance().InOutType;
-        String DeptType= Global_Var.getInstance().DeptType;
+        char InOutType = Global_Var.getInstance().InOutType;
+        char DeptType= Global_Var.getInstance().DeptType;
 
         int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
         String remark = etremark.getText().toString().trim();
@@ -498,8 +499,35 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                  intime.isEmpty() || material.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
+
+            //Extra material dynamic view
+            List<Map<String, String>> materialList = new ArrayList<>();
+
+            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                View childView = linearLayout.getChildAt(i);
+                if (childView != null) {
+                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
+                    EditText qtyEditText = childView.findViewById(R.id.editqty);
+                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+
+                    String dynamaterial = materialEditText.getText().toString().trim();
+                    String dynaqty = qtyEditText.getText().toString().trim();
+                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+
+                    // Check if both material and quantity fields are not empty
+                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+                        Map<String, String> materialMap = new HashMap<>();
+                        materialMap.put("material", dynamaterial);
+                        materialMap.put("qty", dynaqty);
+                        materialMap.put("qtyuom", dynaqtyuom);
+                        // Add material data to the list
+                        materialList.add(materialMap);
+                    }
+                }
+            }
+
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,invoicenumber,vehicalnumber,Date,partyname,material,pooa,mobnumber,'W','I',Date,
-                    "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,"",remark,false,"No","","","","","","prince");
+                    "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,materialList.toString().replace("[]", ""),remark,false,"No","","","","","",EmployeId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call =  apiInTankerSecurity.postData(requestModelInTankerSecurity);
@@ -626,8 +654,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         int qtyuom = 2;
 
         String vehicltype= Global_Var.getInstance().MenuType;
-        String InOutType = Global_Var.getInstance().InOutType;
-        String DeptType= Global_Var.getInstance().DeptType;
+        char InOutType = Global_Var.getInstance().InOutType;
+        char DeptType= Global_Var.getInstance().DeptType;
         int netweuom = 1;
         String remark = "";
         String pooa = "";
@@ -641,8 +669,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         if (vehicalnumber.isEmpty() ||  Date.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
-            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,invoicenumber,vehicalnumber,Date,partyname,material,pooa,mobnumber,DeptType.charAt(0),InOutType.charAt(0),"",
-                    "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,"",remark,isreporting,edremark,"","","","","","Sunil");
+            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,invoicenumber,vehicalnumber,Date,partyname,material,pooa,mobnumber,'S',InOutType,"",
+                    "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,"",remark,isreporting,edremark,"","","","","",EmployeId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call =  apiInTankerSecurity.postData(requestModelInTankerSecurity);
@@ -674,7 +702,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             });
         }
     }
-    public void FetchVehicleDetails(@NonNull String VehicleNo,String vehicltype,String DeptType,String InOutType) {
+    public void FetchVehicleDetails(@NonNull String VehicleNo,String vehicltype,char DeptType,char InOutType) {
         Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(VehicleNo,vehicltype,DeptType,InOutType);
         call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
             @Override
@@ -777,8 +805,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String remark = etremark.getText().toString().trim();
         String outTime = getCurrentTime();
         String vehicltype= Global_Var.getInstance().MenuType;
-        String InOutType = Global_Var.getInstance().InOutType;
-        String DeptType= Global_Var.getInstance().DeptType;
+        char InOutType = Global_Var.getInstance().InOutType;
+        char DeptType= Global_Var.getInstance().DeptType;
 
         if ( invoice.isEmpty()||party.isEmpty()||material.isEmpty()||oapo.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();

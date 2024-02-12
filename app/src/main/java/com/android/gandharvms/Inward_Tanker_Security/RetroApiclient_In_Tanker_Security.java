@@ -1,5 +1,7 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
+import com.android.gandharvms.Inward_Tanker_Production.API_In_Tanker_production;
+
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -20,6 +22,9 @@ public class RetroApiclient_In_Tanker_Security {
     }
     public static API_In_Tanker_Security getinsecurityApi(){
         return getRetrofit().create(API_In_Tanker_Security.class);
+    }
+    public static API_In_Tanker_production getinproductionApi(){
+        return getRetrofit().create(API_In_Tanker_production.class);
     }
 
 
