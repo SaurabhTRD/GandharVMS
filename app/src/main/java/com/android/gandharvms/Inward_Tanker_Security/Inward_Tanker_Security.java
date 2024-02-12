@@ -357,8 +357,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
 //                    String VehicleNo = etvehical.getText().toString();
                     String vehicltype= Global_Var.getInstance().MenuType;
-                    String DeptType= Global_Var.getInstance().DeptType;
-                    String InOutType = Global_Var.getInstance().InOutType;
+                    char DeptType= Global_Var.getInstance().DeptType;
+                    char InOutType = Global_Var.getInstance().InOutType;
 
                     FetchVehicleDetails(etvehical.getText().toString().trim(),vehicltype,DeptType,InOutType);
                 }
@@ -486,8 +486,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
         int qtyuom = Integer.parseInt( qtyUomNumericValue.toString().trim());
         String vehicltype= Global_Var.getInstance().MenuType;
-        String InOutType = Global_Var.getInstance().InOutType;
-        String DeptType= Global_Var.getInstance().DeptType;
+        char InOutType = Global_Var.getInstance().InOutType;
+        char DeptType= Global_Var.getInstance().DeptType;
 
         int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
         String remark = etremark.getText().toString().trim();
@@ -626,8 +626,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         int qtyuom = 2;
 
         String vehicltype= Global_Var.getInstance().MenuType;
-        String InOutType = Global_Var.getInstance().InOutType;
-        String DeptType= Global_Var.getInstance().DeptType;
+        char InOutType = Global_Var.getInstance().InOutType;
+        char DeptType= Global_Var.getInstance().DeptType;
         int netweuom = 1;
         String remark = "";
         String pooa = "";
@@ -641,7 +641,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         if (vehicalnumber.isEmpty() ||  Date.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
-            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,invoicenumber,vehicalnumber,Date,partyname,material,pooa,mobnumber,DeptType.charAt(0),InOutType.charAt(0),"",
+            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,invoicenumber,vehicalnumber,Date,partyname,material,pooa,mobnumber,DeptType,InOutType,"",
                     "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,"",remark,isreporting,edremark,"","","","","","Sunil");
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
@@ -674,7 +674,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             });
         }
     }
-    public void FetchVehicleDetails(@NonNull String VehicleNo,String vehicltype,String DeptType,String InOutType) {
+    public void FetchVehicleDetails(@NonNull String VehicleNo,String vehicltype,char DeptType,char InOutType) {
         Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(VehicleNo,vehicltype,DeptType,InOutType);
         call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
             @Override
@@ -777,8 +777,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String remark = etremark.getText().toString().trim();
         String outTime = getCurrentTime();
         String vehicltype= Global_Var.getInstance().MenuType;
-        String InOutType = Global_Var.getInstance().InOutType;
-        String DeptType= Global_Var.getInstance().DeptType;
+        char InOutType = Global_Var.getInstance().InOutType;
+        char DeptType= Global_Var.getInstance().DeptType;
 
         if ( invoice.isEmpty()||party.isEmpty()||material.isEmpty()||oapo.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();

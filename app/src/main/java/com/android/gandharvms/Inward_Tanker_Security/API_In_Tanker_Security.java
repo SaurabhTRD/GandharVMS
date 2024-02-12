@@ -20,8 +20,8 @@ public interface API_In_Tanker_Security {
     Call<List<Respo_Model_In_Tanker_security>> GetIntankerSecurityByVehicle(
             @Query("vehicleNo") String VehicleNo,
             @Query("vehicleType") String vehicleType,
-            @Query("NextProcess") String NextProcess,
-            @Query("inOut") String inOut);
+            @Query("NextProcess") char NextProcess,
+            @Query("inOut") char inOut);
 }
 
 
