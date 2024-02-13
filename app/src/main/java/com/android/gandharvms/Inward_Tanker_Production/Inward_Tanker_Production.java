@@ -18,10 +18,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
+import com.android.gandharvms.Inward_Tanker_Security.RetroApiclient_In_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,15 +44,21 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.Timestamp;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class Inward_Tanker_Production extends AppCompatActivity {
 
@@ -64,6 +74,14 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     TimePickerDialog tpicker;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String token;
+    private API_In_Tanker_production apiInTankerProduction;
+    private int inwardid;
+    private String vehicleType= Global_Var.getInstance().MenuType;
+    private char nextProcess=Global_Var.getInstance().DeptType;
+    private char inOut=Global_Var.getInstance().InOutType;
+    private String EmployeName=Global_Var.getInstance().Name;
+    private String EmployeId=Global_Var.getInstance().EmpId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,8 +101,10 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         tanknoun = findViewById(R.id.tanknoun);
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
         prosubmit = findViewById(R.id.prosubmit);
-        //datetimepickertesting
+        apiInTankerProduction = RetroApiclient_In_Tanker_Security.getinproductionApi();
+                //datetimepickertesting
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
+
         etconunloadDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +150,10 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         etVehicleNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    FetchVehicleDetails(etVehicleNumber.getText().toString().trim());
+                    String vehicltype= Global_Var.getInstance().MenuType;
+                    char DeptType= Global_Var.getInstance().DeptType;
+                    char InOutType = Global_Var.getInstance().InOutType;
+                    FetchVehicleDetails(etVehicleNumber.getText().toString().trim(),vehicltype,DeptType,InOutType);
                 }
             }
 
@@ -199,8 +222,10 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
     public void proinsertdata() {
         String intime = etint.getText().toString().trim();
-        String reqtounload = etreq.getText().toString().trim();
-        String tanknumber = ettankno.getText().toString().trim();
+        String etser = etserno.getText().toString().trim();
+        String eddate = etconunloadDateTime.getText().toString().trim();
+        int reqtounload = Integer.parseInt(etreq.getText().toString().trim());
+        int tanknumber = Integer.parseInt(ettankno.getText().toString().trim());
         String confirmunload = etconbyop.getText().toString().trim();
         String tanknumbers = tanknoun.getText().toString().trim();
         String conunload = etconunloadDateTime.getText().toString().trim();
@@ -208,42 +233,82 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         String material = etMaterial.getText().toString().trim();
         String vehicleNumber = etVehicleNumber.getText().toString().trim();
 
-        if (intime.isEmpty() || reqtounload.isEmpty() || tanknumber.isEmpty() || confirmunload.isEmpty() || tanknumbers.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
+        if (intime.isEmpty() ||   confirmunload.isEmpty() || tanknumbers.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
             Toasty.warning(this, "All Fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
-            Map<String, Object> proitems = new HashMap<>();
-            proitems.put("In_Time", etint.getText().toString().trim());
-            proitems.put("Req_to_unload", etreq.getText().toString().trim());
-            proitems.put("Tank_Number_Request", ettankno.getText().toString().trim());
-            proitems.put("confirm_unload", etconbyop.getText().toString().trim());
-            proitems.put("Tank_Number", tanknoun.getText().toString().trim());
-            proitems.put("con_unload_DT", timestamp);
-            proitems.put("outTime", outTime);
-            proitems.put("Material", etMaterial.getText().toString().trim());
-            proitems.put("Vehicle_Number", etVehicleNumber.getText().toString().trim());
-            proitems.put("Serial_Number", etserno.getText().toString().trim());
+//            Map<String, Object> proitems = new HashMap<>();
+//            proitems.put("In_Time", etint.getText().toString().trim());
+//            proitems.put("Req_to_unload", etreq.getText().toString().trim());
+//            proitems.put("Tank_Number_Request", ettankno.getText().toString().trim());
+//            proitems.put("confirm_unload", etconbyop.getText().toString().trim());
+//            proitems.put("Tank_Number", tanknoun.getText().toString().trim());
+//            proitems.put("con_unload_DT", timestamp);
+//            proitems.put("outTime", outTime);
+//            proitems.put("Material", etMaterial.getText().toString().trim());
+//            proitems.put("Vehicle_Number", etVehicleNumber.getText().toString().trim());
+//            proitems.put("Serial_Number", etserno.getText().toString().trim());
+//
+//            makeNotification(etVehicleNumber.getText().toString(), outTime);
+//            prodbroot.collection("Inward Tanker Production").add(proitems)
+//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<DocumentReference> task) {
+//                            etint.setText("");
+//                            etreq.setText("");
+//                            ettankno.setText("");
+//                            etconbyop.setText("");
+//                            tanknoun.setText("");
+//                            etconunloadDateTime.setText("");
+//                            etMaterial.setText("");
+//                            etVehicleNumber.setText("");
+//                            etserno.setText("");
+//                            etint.requestFocus();
+//                            etint.callOnClick();
+//                            Toasty.success(Inward_Tanker_Production.this, "Data Added Successfully", Toast.LENGTH_SHORT,true).show();
+//                        }
+//                    });
+//            Intent intent = new Intent(this, Inward_Tanker.class);
+//            startActivity(intent);
 
-            makeNotification(etVehicleNumber.getText().toString(), outTime);
-            prodbroot.collection("Inward Tanker Production").add(proitems)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            etint.setText("");
-                            etreq.setText("");
-                            ettankno.setText("");
-                            etconbyop.setText("");
-                            tanknoun.setText("");
-                            etconunloadDateTime.setText("");
-                            etMaterial.setText("");
-                            etVehicleNumber.setText("");
-                            etserno.setText("");
-                            etint.requestFocus();
-                            etint.callOnClick();
-                            Toasty.success(Inward_Tanker_Production.this, "Data Added Successfully", Toast.LENGTH_SHORT,true).show();
+            Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid,intime,outTime,reqtounload,confirmunload,tanknumber,tanknumbers,
+                    EmployeId,vehicleNumber,etser,'W',inOut,vehicleType,eddate,material);
+
+            Call<Boolean> call = apiInTankerProduction.insertproductionData(requestInTankerProduction);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body()!=null){
+                        Log.d("Production", "Response Body: " + response.body());
+                        Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Inward_Tanker_Production.this, Inward_Tanker.class));
+                        finish();
+
+                    }
+                    else {
+                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    }
+                }
+
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
-                    });
-            Intent intent = new Intent(this, Inward_Tanker.class);
-            startActivity(intent);
+                    }
+                    Toasty.error(Inward_Tanker_Production.this,"failed..!",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
@@ -253,41 +318,120 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         finish();
     }
 
-    public void FetchVehicleDetails(@NonNull String VehicleNo) {
-        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
-        String searchText = VehicleNo.trim();
-        Query query = collectionReference.whereEqualTo("vehicalnumber", searchText)
-                .whereNotEqualTo("intime", "");
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    public void FetchVehicleDetails(@NonNull String VehicleNo,String vehicltype,char DeptType, char InOutType) {
+//        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
+//        String searchText = VehicleNo.trim();
+//        Query query = collectionReference.whereEqualTo("vehicalnumber", searchText)
+//                .whereNotEqualTo("intime", "");
+//        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    int totalCount = task.getResult().size();
+//                    if (totalCount == 0) {
+//                        etMaterial.setText("");
+//                        etVehicleNumber.requestFocus();
+//                        etserno.setText("");
+//                        etconunloadDateTime.setText("");
+//                        Toasty.warning(Inward_Tanker_Production.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
+//                    } else {
+//                        for (QueryDocumentSnapshot document : task.getResult()) {
+//                            In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+//                            // Check if the object already exists to avoid duplicates
+//                            if (totalCount > 0) {
+//                                etserno.setText(obj.getSerialNumber());
+//                                etVehicleNumber.setText(obj.getVehicalnumber());
+//                                etMaterial.setText(obj.getMaterial());
+//                                etconunloadDateTime.setText(dateFormat.format(obj.getDate().toDate()));
+//                                etint.requestFocus();
+//                                etint.callOnClick();
+//                            }
+//                        }
+//                    }
+//                } else {
+//                    Log.w("FirestoreData", "Error getting documents.", task.getException());
+//                }
+//            }
+//        });
+
+        Call<Respo_Model_In_Tanker_Production>  call = apiInTankerProduction.GetinTankerprodcutionByvehicle(VehicleNo,vehicltype,DeptType,InOutType);
+        call.enqueue(new Callback<Respo_Model_In_Tanker_Production>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int totalCount = task.getResult().size();
-                    if (totalCount == 0) {
-                        etMaterial.setText("");
-                        etVehicleNumber.requestFocus();
-                        etserno.setText("");
-                        etconunloadDateTime.setText("");
-                        Toasty.warning(Inward_Tanker_Production.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
-                    } else {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                            // Check if the object already exists to avoid duplicates
-                            if (totalCount > 0) {
-                                etserno.setText(obj.getSerialNumber());
-                                etVehicleNumber.setText(obj.getVehicalnumber());
-                                etMaterial.setText(obj.getMaterial());
-                                etconunloadDateTime.setText(dateFormat.format(obj.getDate().toDate()));
-                                etint.requestFocus();
-                                etint.callOnClick();
-                            }
-                        }
+            public void onResponse(Call<Respo_Model_In_Tanker_Production> call, Response<Respo_Model_In_Tanker_Production> response) {
+                if (response.isSuccessful()){
+                    Respo_Model_In_Tanker_Production data = response.body();
+                    if (data.getVehicleNo()!= ""){
+                        inwardid = data.getInwardId();
+                        etserno.setText(data.getSerialNo());
+                        etVehicleNumber.setText(data.getVehicleNo());
+                        etMaterial.setText(data.getMaterial());
+//                        etconunloadDateTime.setText(dateFormat.format(data.getDate()));
+                        etconunloadDateTime.setText(data.getDate());
+                        etint.requestFocus();
+                        etint.callOnClick();
+
+
                     }
-                } else {
-                    Log.w("FirestoreData", "Error getting documents.", task.getException());
                 }
             }
+
+            @Override
+            public void onFailure(Call<Respo_Model_In_Tanker_Production> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Production.this,"failed..!",Toast.LENGTH_SHORT).show();
+            }
         });
+
+//        call.enqueue(new Callback<Respo_Model_In_Tanker_Production>() {
+//            @Override
+//            public void onResponse(Call<Respo_Model_In_Tanker_Production> call, Response<Respo_Model_In_Tanker_security> response) {
+//                if (response.isSuccessful()){
+//                    Respo_Model_In_Tanker_Production data = response.body();
+//
+//                    if (response.body().size() > 0){
+////                        List<Object> Data = response.body();
+////                        Respo_Model_In_Tanker_Production obj = (Respo_Model_In_Tanker_Production) Data.get(0);
+////                        etMaterial.setText(obj.getMaterial());
+////                        etserno.setText(obj.getSerialNo());
+//
+//
+//                    }
+//                }else {
+//                    Log.e("Retrofit","Error"+ response.code());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Respo_Model_In_Tanker_Production> call, Throwable t) {
+//
+//                Log.e("Retrofit", "Failure: " + t.getMessage());
+//// Check if there's a response body in case of an HTTP error
+//                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+//                    Response<?> response = ((HttpException) t).response();
+//                    if (response != null) {
+//                        Log.e("Retrofit", "Error Response Code: " + response.code());
+//                        try {
+//                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        });
     }
     public void statusgrid(View view){
         Intent intent = new Intent(this, in_tanker_produ_grid.class);
