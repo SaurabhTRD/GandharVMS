@@ -37,7 +37,10 @@ public class InTanWeighResponseModel {
      char I_O;
      String VehicleType;
      String UpdatedBy;
-     int Qty;
+
+    String OutVehicleImage;
+    String OutDriverImage;
+    int Qty;
 
     public int getId() {
         return Id;
@@ -261,6 +264,22 @@ public class InTanWeighResponseModel {
 
     public void setUpdatedBy(String updatedBy) {
         UpdatedBy = updatedBy;
+    }
+
+    public String getOutVehicleImage() {
+        return OutVehicleImage;
+    }
+
+    public void setOutVehicleImage(String outVehicleImage) {
+        OutVehicleImage = outVehicleImage;
+    }
+
+    public String getOutDriverImage() {
+        return OutDriverImage;
+    }
+
+    public void setOutDriverImage(String outDriverImage) {
+        OutDriverImage = outDriverImage;
     }
 
     public int getQty() {

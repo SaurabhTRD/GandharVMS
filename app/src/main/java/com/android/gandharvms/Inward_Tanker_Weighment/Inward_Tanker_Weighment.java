@@ -289,7 +289,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         } else {
             InTanWeighRequestModel weighReqModel = new InTanWeighRequestModel(inwardid, intime, outTime, grossweight, tareweight, netweight,
                     shortagedip, shortageweight, remark, signby, Integer.parseInt(container), imgPath1, imgPath2, serialnumber,
-                    vehicelnumber, date, suppliername, materialname, oan, Integer.parseInt(driverno), 'M', inOut, vehicleType, EmployeId, EmployeId);
+                    vehicelnumber, date, suppliername, materialname, oan, Integer.parseInt(driverno), 'M', inOut, vehicleType, EmployeId, EmployeId,"","");
 
             Call<Boolean> call = weighmentdetails.insertWeighData(weighReqModel);
             call.enqueue(new Callback<Boolean>() {

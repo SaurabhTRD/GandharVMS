@@ -9,6 +9,7 @@ public class ResponseModel {
     private String Department;
     private String Password;
     private String Token;
+    private int DeptId;
 
     public String getEmpId() {
         return EmpId;
@@ -71,5 +72,13 @@ public class ResponseModel {
 
     public void setToken(String token) {
         Token = token;
+    }
+
+    public int getDeptId() {
+        return DeptId;
+    }
+
+    public void setDeptId(int deptId) {
+        DeptId = deptId;
     }
 }
