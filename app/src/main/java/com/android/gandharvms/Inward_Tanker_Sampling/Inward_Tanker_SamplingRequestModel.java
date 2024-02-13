@@ -12,12 +12,11 @@ public class Inward_Tanker_SamplingRequestModel {
     String SerialNo ;
     char Nextprocess ;
     char I_O ;
-    char VehicleType ;
+    String VehicleType ;
     char FactoryOut ;
     String Date ;
 
-    public Inward_Tanker_SamplingRequestModel(int id, int inwardId, String sampleReceivingTime, String sampleSubmittedTime, boolean isActive, String createdBy, String vehicleNo, String serialNo, char nextprocess, char i_O, char vehicleType, char factoryOut, String date) {
-        Id = id;
+    public Inward_Tanker_SamplingRequestModel(int inwardId, String sampleReceivingTime, String sampleSubmittedTime, boolean isActive, String createdBy, String vehicleNo, String serialNo, char nextprocess, char i_O, String vehicleType, char factoryOut, String date) {
         InwardId = inwardId;
         SampleReceivingTime = sampleReceivingTime;
         SampleSubmittedTime = sampleSubmittedTime;
@@ -30,6 +29,7 @@ public class Inward_Tanker_SamplingRequestModel {
         VehicleType = vehicleType;
         FactoryOut = factoryOut;
         Date = date;
+        UpdatedBy = createdBy;
     }
 
 }

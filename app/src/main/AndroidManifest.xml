@@ -29,7 +29,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GandharVMS"
         tools:targetApi="31"
-        android:usesCleartextTraffic="true"
         >
         <activity
             android:name=".Inward_Tanker_Production.in_tanker_produ_grid"

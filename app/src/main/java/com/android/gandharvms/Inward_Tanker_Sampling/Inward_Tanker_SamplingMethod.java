@@ -23,20 +23,23 @@ public interface Inward_Tanker_SamplingMethod {
     Call<Boolean> postDelete(@Body Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel);
 
     @GET("api/InwardSampling/GetInwardSampling")
-    Call<List<Respo_Model_In_Tanker_security>> GetInwardSampling();
+    Call<List<Inward_Tanker_SamplingResponseModel>> GetInwardSampling();
+
+    @GET("api/InwardSampling/GetInwardSampling")
+    Call<List<gridmodel_in_tanker_sampling>> GetInwardSamplinggrid();
 
     @GET("api/InwardSampling/GetInwardSamplingById")
-    Call<List<Respo_Model_In_Tanker_security>> GetInwardSamplingById(@Query("id") int id);
+    Call<List<Inward_Tanker_SamplingResponseModel>> GetInwardSamplingById(@Query("id") int id);
 
     @GET("api/InwardSampling/GetSamplingList")
-    Call<List<Respo_Model_In_Tanker_security>> GetSamplingList(@Query("NextProcess") char NextProcess);
+    Call<List<Inward_Tanker_SamplingResponseModel>> GetSamplingList(@Query("NextProcess") char NextProcess);
 
     @GET("api/InwardSampling/GetSamplingPendingList")
-    Call<List<Respo_Model_In_Tanker_security>> GetSamplingPendingList(@Query("vehicleNo") String VehicleNo,
+    Call<List<Inward_Tanker_SamplingResponseModel>> GetSamplingPendingList(@Query("vehicleNo") String VehicleNo,
                                                                       @Query("NextProcess") char NextProcess);
 
     @GET("api/InwardSampling/GetSamplingByFetchVehicleDetails")
-    Call<List<Respo_Model_In_Tanker_security>> GetSamplingByFetchVehicleDetails(
+    Call<InTanSamplingResponseModel> GetSamplingByFetchVehicleDetails(
             @Query("vehicleNo") String VehicleNo, @Query("vehicleType") String vehicleType,
             @Query("NextProcess") char NextProcess, @Query("inOut") char inOut);
 
