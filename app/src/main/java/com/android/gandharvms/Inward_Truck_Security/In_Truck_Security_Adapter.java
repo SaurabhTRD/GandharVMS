@@ -1,5 +1,6 @@
 package com.android.gandharvms.Inward_Truck_Security;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,17 +10,24 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.Inward_Tanker_Security.ListingResponse_InTankerSequrity;
 import com.android.gandharvms.R;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Security_Adapter.myviewholder> {
 
-    ArrayList<In_Truck_security_list> datalist;
+    Context context;
 
-    public In_Truck_Security_Adapter(ArrayList<In_Truck_security_list> datalist) {
+    ArrayList<In_Truck_security_list> datalist;
+    private final List<ListingResponse_InTankerSequrity> listingResponseInTankerSec;
+
+
+    public In_Truck_Security_Adapter(List<ListingResponse_InTankerSequrity> listingResponseInTankerSec) {
         this.datalist = datalist;
+        this.listingResponseInTankerSec = listingResponseInTankerSec;
     }
 
     @NonNull
@@ -32,38 +40,59 @@ public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Sec
 
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
+        ListingResponse_InTankerSequrity data = listingResponseInTankerSec.get(position);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
+//        holder.etintime.setText(datalist.get(position).getIntime());
+//        holder.etserialnumber.setText(datalist.get(position).getSerialnumber());
+//        holder.etvehicalnumber.setText(datalist.get(position).getVehicalNumber());
+//        holder.etsinvocieno.setText(datalist.get(position).getInvoicenumber());
+//        holder.etsdate.setText(dateFormat.format(datalist.get(position).getDate().toDate()));
+//        holder.etssupplier.setText(datalist.get(position).getSupplier());
+//        holder.etsmaterial.setText(datalist.get(position).getMaterial());
+//        holder.etsqty.setText(datalist.get(position).getQty());
+//        holder.etsuom.setText(datalist.get(position).getUOM());
+//        holder.etsnetwt.setText(datalist.get(position).getEtsnetweight());
+//        holder.etsuom2.setText(datalist.get(position).getUOM2());
+//        holder.outTime.setText(datalist.get(position).getOutTime());
+//        holder.selectregister.setText(datalist.get(position).getSelectRegister());
+//
+//        holder.lrcopy.setText(datalist.get(position).getLrcopy());
+//        holder.deliverybill.setText(datalist.get(position).getDeliverybill());
+//        holder.taxinvoice.setText(datalist.get(position).getTaxinvoice());
+//        holder.ewaybill.setText(datalist.get(position).getEwaybill());
+//        holder.reoprtingre.setText(datalist.get(position).getReporting_Remark());
+//
+//        holder.mob.setText(datalist.get(position).getDriver_Mobile_Number());
+//        holder.oapo.setText(datalist.get(position).getOA_PO_Number());
 
-        holder.etintime.setText(datalist.get(position).getIntime());
-        holder.etserialnumber.setText(datalist.get(position).getSerialnumber());
-        holder.etvehicalnumber.setText(datalist.get(position).getVehicalNumber());
-        holder.etsinvocieno.setText(datalist.get(position).getInvoicenumber());
-        holder.etsdate.setText(dateFormat.format(datalist.get(position).getDate().toDate()));
-        holder.etssupplier.setText(datalist.get(position).getSupplier());
-        holder.etsmaterial.setText(datalist.get(position).getMaterial());
-        holder.etsqty.setText(datalist.get(position).getQty());
-        holder.etsuom.setText(datalist.get(position).getUOM());
-        holder.etsnetwt.setText(datalist.get(position).getEtsnetweight());
-        holder.etsuom2.setText(datalist.get(position).getUOM2());
-        holder.outTime.setText(datalist.get(position).getOutTime());
-        holder.selectregister.setText(datalist.get(position).getSelectRegister());
+        holder.etintime.setText(data.getInTime());
+        holder.etserialnumber.setText(data.getSerialNo());
+        holder.etvehicalnumber.setText(data.getVehicleNo());
+        holder.etsinvocieno.setText(data.getInvoiceNo());
+        holder.etsdate.setText(data.getDate());
+        holder.etssupplier.setText(data.getPartyName());
+        holder.etsmaterial.setText(data.getMaterial());
+        holder.etsqty.setText(String.valueOf(data.getQty()));
+        holder.etsuom.setText(String.valueOf(data.getQtyUOM()));
+        holder.etsnetwt.setText(String.valueOf(data.getNetWeight()));
+        holder.etsuom2.setText(String.valueOf(data.getNetWeightUOM()));
+        holder.outTime.setText(data.getOutTime());
+        holder.selectregister.setText(data.getSelectregister());
+        holder.lrcopy.setText(data.getIrCopy());
+        holder.deliverybill.setText(data.getDeliveryBill());
+        holder.taxinvoice.setText(data.getTaxInvoice());
+        holder.reoprtingre.setText(data.getReportingRemark());
+        holder.mob.setText(String.valueOf(data.getDriver_MobileNo()));
+        holder.oapo.setText(data.getOA_PO_number());
 
-        holder.lrcopy.setText(datalist.get(position).getLrcopy());
-        holder.deliverybill.setText(datalist.get(position).getDeliverybill());
-        holder.taxinvoice.setText(datalist.get(position).getTaxinvoice());
-        holder.ewaybill.setText(datalist.get(position).getEwaybill());
-        holder.reoprtingre.setText(datalist.get(position).getReporting_Remark());
-
-        holder.mob.setText(datalist.get(position).getDriver_Mobile_Number());
-        holder.oapo.setText(datalist.get(position).getOA_PO_Number());
 
     }
 
 
     @Override
     public int getItemCount() {
-        return datalist.size();
+        return listingResponseInTankerSec.size();
     }
 
     class myviewholder extends RecyclerView.ViewHolder {

@@ -21,7 +21,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -33,16 +36,23 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
+
 public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
 
     RecyclerView recyclerView;
-    ArrayList<In_Tanker_Security_list>inTankerSecurityLists;
+//    ArrayList<In_Tanker_Security_list>inTankerSecurityLists;
     In_Tanker_Se_Adapter in_tanker_se_adapter;
 
     FirebaseFirestore db;
@@ -82,6 +92,12 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
     EditText etserialNumber,etpartyName;
     Button btnsrnumclear,btnptnamclear;
 
+    private API_In_Tanker_Security securitydetails;
+    List<ListingResponse_InTankerSequrity> securitylist;
+
+
+
+
 
 
 
@@ -99,194 +115,207 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
         btncleardateselection=findViewById(R.id.btn_clearDateSelectionfields);
         txtTotalCount=findViewById(R.id.tv_TotalCount);
 
-        startDatePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(true);
-            }
-        });
-        endDatePicker.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog(false);
-            }
-        });
-        fetchDataFromFirestore(null, null);
-
+        securitydetails = RetroApiclient_In_Tanker_Security.getinsecurityApi();
         recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
-//        recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        inTankerSecurityLists = new ArrayList<In_Tanker_Security_list>();
 
-        inTankerSecurityLists = new ArrayList<In_Tanker_Security_list>();
-        in_tanker_se_adapter = new In_Tanker_Se_Adapter(Inward_Tanker_Security_Viewdata.this,inTankerSecurityLists);
+        securitylist = new ArrayList<>();
+        char nextprocess= Global_Var.getInstance().DeptType;
+        GetsecuritylistData(nextprocess);
+
+
+
+
+
+//        startDatePicker.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showDatePickerDialog(true);
+//            }
+//        });
+//        endDatePicker.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                showDatePickerDialog(false);
+//            }
+//        });
+//        fetchDataFromFirestore(null, null);
+
+
+//        recyclerView.setHasFixedSize(true);
+
+
+
+//        in_tanker_se_adapter = new In_Tanker_Se_Adapter(Inward_Tanker_Security_Viewdata.this,inTankerSecurityLists);
 
         recyclerView.setAdapter(in_tanker_se_adapter);
 
-        db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Security").orderBy("date", Query.Direction.DESCENDING).get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                        int totalCount = list.size();
-                        txtTotalCount.setText("Total count: " + totalCount);
-                        inTankerSecurityLists.clear();
-                        for (DocumentSnapshot d:list)
-                        {
-                            In_Tanker_Security_list obj = d.toObject(In_Tanker_Security_list.class);
-                            inTankerSecurityLists.add(obj);
-                        }
-                        //update Adapter
-                        in_tanker_se_adapter.notifyDataSetChanged();
-                    }
-                });
+//        db = FirebaseFirestore.getInstance();
+//        db.collection("Inward Tanker Security").orderBy("date", Query.Direction.DESCENDING).get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+//                        int totalCount = list.size();
+//                        txtTotalCount.setText("Total count: " + totalCount);
+//                        inTankerSecurityLists.clear();
+//                        for (DocumentSnapshot d:list)
+//                        {
+//                            In_Tanker_Security_list obj = d.toObject(In_Tanker_Security_list.class);
+//                            inTankerSecurityLists.add(obj);
+//                        }
+//                        //update Adapter
+//                        in_tanker_se_adapter.notifyDataSetChanged();
+//                    }
+//                });
 
-        btnsrnumclear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                etserialNumber.setText("");
-            }
-        });
+//        btnsrnumclear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                etserialNumber.setText("");
+//            }
+//        });
 
-        btnptnamclear.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                etpartyName.setText("");
-            }
-        });
+//        btnptnamclear.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                etpartyName.setText("");
+//            }
+//        });
 
 
-        etserialNumber.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
-                String searchText = charSequence.toString().trim();
-                if (searchText.isEmpty()) {
-                    // If search text is empty, fetch all data without any filters
-                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                int totalCount = task.getResult().size();
-                                txtTotalCount.setText("Total count: " + totalCount);
-                                inTankerSecurityLists.clear(); // Clear the previous data
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                                    // Check if the object already exists to avoid duplicates
-                                    if (!inTankerSecurityLists.contains(obj)) {
-                                        inTankerSecurityLists.add(obj);
-                                    }
-                                }
-                                in_tanker_se_adapter.notifyDataSetChanged();
-                            } else {
-                                Log.w("FirestoreData", "Error getting documents.", task.getException());
-                            }
-                        }
-                    });
-                } else {
-                    // Create a query with filters for non-empty search text
-                    Query query = collectionReference.whereGreaterThanOrEqualTo("SerialNumber", searchText)
-                            .whereLessThanOrEqualTo("SerialNumber", searchText + "\uf8ff");
-
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                int totalCount = task.getResult().size();
-                                txtTotalCount.setText("Total count: " + totalCount);
-                                inTankerSecurityLists.clear(); // Clear the previous data
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                                    // Check if the object already exists to avoid duplicates
-                                    if (!inTankerSecurityLists.contains(obj)) {
-                                        inTankerSecurityLists.add(obj);
-                                    }
-                                }
-                                in_tanker_se_adapter.notifyDataSetChanged();
-                            } else {
-                                Log.w("FirestoreData", "Error getting documents.", task.getException());
-                            }
-                        }
-                    });
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-        btncleardateselection.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                clearSelectedDates();
-            }
-        });
-        etpartyName.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
-                String searchText = charSequence.toString().trim();
-                if (searchText.isEmpty()) {
-                    // If search text is empty, fetch all data without any filters
-                    collectionReference
-                            .orderBy("date", Query.Direction.DESCENDING)
-                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                int totalCount = task.getResult().size();
-                                txtTotalCount.setText("Total count: " + totalCount);
-                                inTankerSecurityLists.clear(); // Clear the previous data
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                                    // Check if the object already exists to avoid duplicates
-                                    if (!inTankerSecurityLists.contains(obj)) {
-                                        inTankerSecurityLists.add(obj);
-                                    }
-                                }
-                                in_tanker_se_adapter.notifyDataSetChanged();
-                            } else {
-                                Log.w("FirestoreData", "Error getting documents.", task.getException());
-                            }
-                        }
-                    });
-                } else {
-                    // Create a query with filters for non-empty search text
-                    Query query = collectionReference.whereGreaterThanOrEqualTo("partyname", searchText)
-                            .whereLessThanOrEqualTo("partyname", searchText + "\uf8ff")
-                            .orderBy("date", Query.Direction.DESCENDING);
-
-                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                            if (task.isSuccessful()) {
-                                int totalCount = task.getResult().size();
-                                txtTotalCount.setText("Total count: " + totalCount);
-                                inTankerSecurityLists.clear(); // Clear the previous data
-                                for (QueryDocumentSnapshot document : task.getResult()) {
-                                    In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                                    // Check if the object already exists to avoid duplicates
-                                    if (!inTankerSecurityLists.contains(obj)) {
-                                        inTankerSecurityLists.add(obj);
-                                    }
-                                }
-                                in_tanker_se_adapter.notifyDataSetChanged();
-                            } else {
-                                Log.w("FirestoreData", "Error getting documents.", task.getException());
-                            }
-                        }
-                    });
-                }
-            }
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
+//        etserialNumber.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
+//                String searchText = charSequence.toString().trim();
+//                if (searchText.isEmpty()) {
+//                    // If search text is empty, fetch all data without any filters
+//                    collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                int totalCount = task.getResult().size();
+//                                txtTotalCount.setText("Total count: " + totalCount);
+//                                inTankerSecurityLists.clear(); // Clear the previous data
+//                                for (QueryDocumentSnapshot document : task.getResult()) {
+//                                    In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+//                                    // Check if the object already exists to avoid duplicates
+//                                    if (!inTankerSecurityLists.contains(obj)) {
+//                                        inTankerSecurityLists.add(obj);
+//                                    }
+//                                }
+//                                in_tanker_se_adapter.notifyDataSetChanged();
+//                            } else {
+//                                Log.w("FirestoreData", "Error getting documents.", task.getException());
+//                            }
+//                        }
+//                    });
+//                } else {
+//                    // Create a query with filters for non-empty search text
+//                    Query query = collectionReference.whereGreaterThanOrEqualTo("SerialNumber", searchText)
+//                            .whereLessThanOrEqualTo("SerialNumber", searchText + "\uf8ff");
+//
+//                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                int totalCount = task.getResult().size();
+//                                txtTotalCount.setText("Total count: " + totalCount);
+//                                inTankerSecurityLists.clear(); // Clear the previous data
+//                                for (QueryDocumentSnapshot document : task.getResult()) {
+//                                    In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+//                                    // Check if the object already exists to avoid duplicates
+//                                    if (!inTankerSecurityLists.contains(obj)) {
+//                                        inTankerSecurityLists.add(obj);
+//                                    }
+//                                }
+//                                in_tanker_se_adapter.notifyDataSetChanged();
+//                            } else {
+//                                Log.w("FirestoreData", "Error getting documents.", task.getException());
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+////            @Override
+////            public void afterTextChanged(Editable editable) {
+////            }
+//        });
+//        btncleardateselection.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                clearSelectedDates();
+//            }
+//        });
+//        etpartyName.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
+//                String searchText = charSequence.toString().trim();
+//                if (searchText.isEmpty()) {
+//                    // If search text is empty, fetch all data without any filters
+//                    collectionReference
+//                            .orderBy("date", Query.Direction.DESCENDING)
+//                            .get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                int totalCount = task.getResult().size();
+//                                txtTotalCount.setText("Total count: " + totalCount);
+//                                inTankerSecurityLists.clear(); // Clear the previous data
+//                                for (QueryDocumentSnapshot document : task.getResult()) {
+//                                    In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+//                                    // Check if the object already exists to avoid duplicates
+//                                    if (!inTankerSecurityLists.contains(obj)) {
+//                                        inTankerSecurityLists.add(obj);
+//                                    }
+//                                }
+//                                in_tanker_se_adapter.notifyDataSetChanged();
+//                            } else {
+//                                Log.w("FirestoreData", "Error getting documents.", task.getException());
+//                            }
+//                        }
+//                    });
+//                } else {
+//                    // Create a query with filters for non-empty search text
+//                    Query query = collectionReference.whereGreaterThanOrEqualTo("partyname", searchText)
+//                            .whereLessThanOrEqualTo("partyname", searchText + "\uf8ff")
+//                            .orderBy("date", Query.Direction.DESCENDING);
+//
+//                    query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                            if (task.isSuccessful()) {
+//                                int totalCount = task.getResult().size();
+//                                txtTotalCount.setText("Total count: " + totalCount);
+//                                inTankerSecurityLists.clear(); // Clear the previous data
+//                                for (QueryDocumentSnapshot document : task.getResult()) {
+//                                    In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+//                                    // Check if the object already exists to avoid duplicates
+//                                    if (!inTankerSecurityLists.contains(obj)) {
+//                                        inTankerSecurityLists.add(obj);
+//                                    }
+//                                }
+//                                in_tanker_se_adapter.notifyDataSetChanged();
+//                            } else {
+//                                Log.w("FirestoreData", "Error getting documents.", task.getException());
+//                            }
+//                        }
+//                    });
+//                }
+//            }
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//            }
+//        });
 
 
 //        Button selectDateButton = findViewById(R.id.selectDateButton);
@@ -300,108 +329,147 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
 
    }
 
-
-
-
-    public void showDatePickerDialog(final boolean isStartDate){
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        // Array of month abbreviations
-        String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                        String monthAbbreviation = monthAbbreviations[monthOfYear];
-                        // Month is 0 based, so adding 1 to monthOfYear
-                        String selectedDate = dayOfMonth + "/" + monthAbbreviation  + "/" + year;
-
-                        if (isStartDate) {
-                            date_start = selectedDate;
-                            startDatePicker.setText(selectedDate);
-                        } else {
-                            date_end = selectedDate;
-                            endDatePicker.setText(selectedDate);
-                        }
-
-                        // Call method to fetch data after selecting the date
-                        fetchDataFromFirestore(date_start, date_end);
-                    }
-                }, year, month, day);
-
-        datePickerDialog.show();
-    }
-    private void clearSelectedDates(){
-        startDatePicker.setText("start of Date");
-        endDatePicker.setText("End of Data");
-        etserialNumber.setText("");
-        etpartyName.setText("");
-        recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
-//        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-        inTankerSecurityLists = new ArrayList<In_Tanker_Security_list>();
-        in_tanker_se_adapter = new In_Tanker_Se_Adapter(Inward_Tanker_Security_Viewdata.this,inTankerSecurityLists);
-
-        recyclerView.setAdapter(in_tanker_se_adapter);
-
-        db = FirebaseFirestore.getInstance();
-        db.collection("Inward Tanker Security")
-                .orderBy("date", Query.Direction.DESCENDING)
-                .get()
-                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
-                    @Override
-                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
-                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
-                        int totalCount = list.size();
-                        txtTotalCount.setText("Total count: " + totalCount);
-                        inTankerSecurityLists.clear(); // Clear the previous data
-                        for (DocumentSnapshot d:list)
-                        {
-                            In_Tanker_Security_list obj = d.toObject(In_Tanker_Security_list.class);
-                            inTankerSecurityLists.add(obj);
-                        }
-                        //update Adapter
-                        in_tanker_se_adapter.notifyDataSetChanged();
-                    }
-                });
-    }
-
-
-    public void fetchDataFromFirestore(String startDate, String endDate){
-
-        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
-        Query baseQuery = collectionReference.orderBy("date", Query.Direction.DESCENDING);
-
-        if (startDate != null && endDate != null){
-            baseQuery = baseQuery.whereGreaterThanOrEqualTo("date", startDate)
-                    .whereLessThanOrEqualTo("date", endDate);
-        } else if (startDate != null){
-            baseQuery = baseQuery.whereGreaterThanOrEqualTo("date", startDate);
-        } else if (endDate != null) {
-            baseQuery = baseQuery.whereLessThanOrEqualTo("date", endDate);
-        }
-
-        baseQuery.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+    private void GetsecuritylistData(char nextprocess) {
+        Call<List<ListingResponse_InTankerSequrity>> call = securitydetails.getintankersecurityListData(nextprocess);
+        call.enqueue(new Callback<List<ListingResponse_InTankerSequrity>>() {
             @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int totalCount = task.getResult().size();
-                    txtTotalCount.setText("Total count: " + totalCount);
-                    inTankerSecurityLists.clear(); // Clear the previous data
-                    for (QueryDocumentSnapshot document : task.getResult()) {
-                        In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
-                        inTankerSecurityLists.add(obj);
-                    }
+            public void onResponse(Call<List<ListingResponse_InTankerSequrity>> call, Response<List<ListingResponse_InTankerSequrity>> response) {
+                if (response.isSuccessful()){
+                    List<ListingResponse_InTankerSequrity> data = response.body();
+                    int totalcount = data.size();
+                    txtTotalCount.setText("Total count: "+ totalcount);
+                    securitylist.clear();
+                    securitylist = data;
+                    in_tanker_se_adapter = new In_Tanker_Se_Adapter(securitylist);
+                    recyclerView.setAdapter(in_tanker_se_adapter);
                     in_tanker_se_adapter.notifyDataSetChanged();
-                } else {
-                    Log.w("FirestoreData", "Error getting documents.", task.getException());
+
+                }else  {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
+            }
+
+            @Override
+            public void onFailure(Call<List<ListingResponse_InTankerSequrity>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Security_Viewdata.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
+//    public void showDatePickerDialog(final boolean isStartDate){
+//        Calendar calendar = Calendar.getInstance();
+//        int year = calendar.get(Calendar.YEAR);
+//        int month = calendar.get(Calendar.MONTH);
+//        int day = calendar.get(Calendar.DAY_OF_MONTH);
+//        // Array of month abbreviations
+//        String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+//        DatePickerDialog datePickerDialog = new DatePickerDialog(this,
+//                new DatePickerDialog.OnDateSetListener() {
+//                    @Override
+//                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+//                        String monthAbbreviation = monthAbbreviations[monthOfYear];
+//                        // Month is 0 based, so adding 1 to monthOfYear
+//                        String selectedDate = dayOfMonth + "/" + monthAbbreviation  + "/" + year;
+//
+//                        if (isStartDate) {
+//                            date_start = selectedDate;
+//                            startDatePicker.setText(selectedDate);
+//                        } else {
+//                            date_end = selectedDate;
+//                            endDatePicker.setText(selectedDate);
+//                        }
+//
+//                        // Call method to fetch data after selecting the date
+//                        fetchDataFromFirestore(date_start, date_end);
+//                    }
+//                }, year, month, day);
+//
+//        datePickerDialog.show();
+//    }
+//    private void clearSelectedDates(){
+//        startDatePicker.setText("start of Date");
+//        endDatePicker.setText("End of Data");
+//        etserialNumber.setText("");
+//        etpartyName.setText("");
+//        recyclerView = (RecyclerView)findViewById(R.id.recyclerview);
+////        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
+//        inTankerSecurityLists = new ArrayList<In_Tanker_Security_list>();
+//        in_tanker_se_adapter = new In_Tanker_Se_Adapter(Inward_Tanker_Security_Viewdata.this,inTankerSecurityLists);
+//
+//        recyclerView.setAdapter(in_tanker_se_adapter);
+//
+//        db = FirebaseFirestore.getInstance();
+//        db.collection("Inward Tanker Security")
+//                .orderBy("date", Query.Direction.DESCENDING)
+//                .get()
+//                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+//                    @Override
+//                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+//                        List<DocumentSnapshot> list = queryDocumentSnapshots.getDocuments();
+//                        int totalCount = list.size();
+//                        txtTotalCount.setText("Total count: " + totalCount);
+//                        inTankerSecurityLists.clear(); // Clear the previous data
+//                        for (DocumentSnapshot d:list)
+//                        {
+//                            In_Tanker_Security_list obj = d.toObject(In_Tanker_Security_list.class);
+//                            inTankerSecurityLists.add(obj);
+//                        }
+//                        //update Adapter
+//                        in_tanker_se_adapter.notifyDataSetChanged();
+//                    }
+//                });
+//    }
+
+
+//    public void fetchDataFromFirestore(String startDate, String endDate){
+//
+//        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Security");
+//        Query baseQuery = collectionReference.orderBy("date", Query.Direction.DESCENDING);
+//
+//        if (startDate != null && endDate != null){
+//            baseQuery = baseQuery.whereGreaterThanOrEqualTo("date", startDate)
+//                    .whereLessThanOrEqualTo("date", endDate);
+//        } else if (startDate != null){
+//            baseQuery = baseQuery.whereGreaterThanOrEqualTo("date", startDate);
+//        } else if (endDate != null) {
+//            baseQuery = baseQuery.whereLessThanOrEqualTo("date", endDate);
+//        }
+//
+//        baseQuery.orderBy("date", Query.Direction.DESCENDING).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (task.isSuccessful()) {
+//                    int totalCount = task.getResult().size();
+//                    txtTotalCount.setText("Total count: " + totalCount);
+//                    inTankerSecurityLists.clear(); // Clear the previous data
+//                    for (QueryDocumentSnapshot document : task.getResult()) {
+//                        In_Tanker_Security_list obj = document.toObject(In_Tanker_Security_list.class);
+//                        inTankerSecurityLists.add(obj);
+//                    }
+//                    in_tanker_se_adapter.notifyDataSetChanged();
+//                } else {
+//                    Log.w("FirestoreData", "Error getting documents.", task.getException());
+//                }
+//            }
+//        });
+//    }
 //    private void showDatePickerDialog() {
 //        Calendar calendar = Calendar.getInstance();
 //        int year = calendar.get(Calendar.YEAR);

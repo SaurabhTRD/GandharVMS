@@ -39,6 +39,7 @@ import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Request_Model_In_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Inward_Tanker_Security.RetroApiclient_In_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequrity;
 import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
@@ -131,6 +132,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
     AutoCompleteTextView  autoCompleteTextView1, autoCompleteTextView2;
     Map<String, Integer> qtyUomMapping= new HashMap<>();
+    private int InwardId;
 
 
 
@@ -848,6 +850,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                         List<Respo_Model_In_Tanker_security> Data = response.body();
                         Respo_Model_In_Tanker_security obj = (Respo_Model_In_Tanker_security) Data.get(0);
                         int intimelength = obj.getInTime().length();
+                        InwardId=obj.getInwardId();
                         etintime.setText(obj.getInTime().substring(12,intimelength));
                         etserialnumber.setText(obj.getSerialNo());
                         etvehicalnumber.setText(obj.getVehicleNo());
@@ -899,25 +902,113 @@ public class Inward_Truck_Security extends AppCompatActivity {
         String ewayBillSelection = ewaybillYes.isChecked() ? "Yes" : "No";
         String outTime = getCurrentTime();
 
-        if (DocId != "") {
-            Map<String, Object> updates = new HashMap<>();
-            updates.put("Intime", etintime.getText().toString().trim());
-            updates.put("invoicenumber", etsinvocieno.getText().toString().trim());
-            updates.put("lrcopy", lrCopySelection);
-            updates.put("deliverybill", deliverySelection);
-            updates.put("taxinvoice", taxInvoiceSelection);
-            updates.put("ewaybill", ewayBillSelection);
-            updates.put("SelectRegister", etregister.getText().toString().trim());
-            updates.put("Supplier", etssupplier.getText().toString().trim());
-            updates.put("Material", etsmaterial.getText().toString().trim());
-            updates.put("Qty", etsqty.getText().toString().trim());
-            updates.put("UOM", etsuom.getText().toString().trim());
-            updates.put("etsnetweight", etsnetwt.getText().toString().trim());
-            updates.put("UOM2", etsuom2.getText().toString().trim());
-            updates.put("Driver_Mobile_Number", etmobile.getText().toString().trim());
-            updates.put("OA_PO_Number", etoapo.getText().toString().trim());
-            makeNotification(etvehicalnumber.getText().toString(), outTime);
+//        if (DocId != "") {
+//            Map<String, Object> updates = new HashMap<>();
+//            updates.put("Intime", etintime.getText().toString().trim());
+//            updates.put("invoicenumber", etsinvocieno.getText().toString().trim());
+//            updates.put("lrcopy", lrCopySelection);
+//            updates.put("deliverybill", deliverySelection);
+//            updates.put("taxinvoice", taxInvoiceSelection);
+//            updates.put("ewaybill", ewayBillSelection);
+//            updates.put("SelectRegister", etregister.getText().toString().trim());
+//            updates.put("Supplier", etssupplier.getText().toString().trim());
+//            updates.put("Material", etsmaterial.getText().toString().trim());
+//            updates.put("Qty", etsqty.getText().toString().trim());
+//            updates.put("UOM", etsuom.getText().toString().trim());
+//            updates.put("etsnetweight", etsnetwt.getText().toString().trim());
+//            updates.put("UOM2", etsuom2.getText().toString().trim());
+//            updates.put("Driver_Mobile_Number", etmobile.getText().toString().trim());
+//            updates.put("OA_PO_Number", etoapo.getText().toString().trim());
+//            makeNotification(etvehicalnumber.getText().toString(), outTime);
+//            List<Map<String, String>> materialList = new ArrayList<>();
+//            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+//                View childView = linearLayout.getChildAt(i);
+//                if (childView != null) {
+//                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
+//                    EditText qtyEditText = childView.findViewById(R.id.editqty);
+//                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+//
+//                    String dynamaterial = materialEditText.getText().toString().trim();
+//                    String dynaqty = qtyEditText.getText().toString().trim();
+//                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+//
+//                    // Check if both material and quantity fields are not empty
+//                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+//                        Map<String, String> materialMap = new HashMap<>();
+//                        materialMap.put("material", dynamaterial);
+//                        materialMap.put("qty", dynaqty);
+//                        materialMap.put("qtyuom", dynaqtyuom);
+//                        // Add material data to the list
+//                        materialList.add(materialMap);
+//                    }
+//                }
+//            }
+//
+//            updates.put("extramaterials", materialList.toString().replace("[]", ""));
+//            DocumentReference documentReference = intrsdbroot.collection("Inward Truck Security").document(DocId);
+//            documentReference.update(updates)
+//                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+//                        @Override
+//                        public void onSuccess(Void unused) {
+//                            etsdate.setText("");
+//                            etserialnumber.setText("");
+//                            etvehicalnumber.setText("");
+//                            etintime.setText("");
+//                            etsinvocieno.setText("");
+//                            etregister.setText("");
+//                            etssupplier.setText("");
+//                            etsmaterial.setText("");
+//                            etsqty.setText("");
+//                            etsuom.setText("");
+//                            etsnetwt.setText("");
+//                            etsuom2.setText("");
+//                            etmobile.setText("");
+//                            etoapo.setText("");
+//
+//                            Toasty.success(Inward_Truck_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT,true).show();
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            Toast.makeText(Inward_Truck_Security.this, "Failed to update data", Toast.LENGTH_SHORT).show();
+//                        }
+//                    });
+//            Intent intent = new Intent(this, Inward_Truck.class);
+//            startActivity(intent);
+//
+//        } else {
+//            Toasty.warning(this, "Please Provide Vehicle no", Toast.LENGTH_SHORT,true).show();
+//        }
+        String serialnumber = etserialnumber.getText().toString().trim();
+        String vehiclenumber = etvehicalnumber.getText().toString().trim();
+        String Date = etsdate.getText().toString().trim();
+        String intime = etintime.getText().toString().trim();
+        String invoice = etsinvocieno.getText().toString().trim();
+        int drivermobile = Integer.parseInt(etmobile.getText().toString().trim());
+        String party = etssupplier.getText().toString().trim();
+        String material = etsmaterial.getText().toString().trim();
+        String oapo = etoapo.getText().toString().trim();
+        int netweight = Integer.parseInt(etsnetwt.getText().toString().trim());
+        int netwtuom = Integer.parseInt(netweuomvalue.toString());
+        int qty = Integer.parseInt(etsqty.getText().toString().trim());
+        int qtyuom = Integer.parseInt(qtyUomNumericValue.toString().trim());
+        String remark = etremark.getText().toString().trim();
+        String etouttime = getCurrentTime();
+        String vehicltype= Global_Var.getInstance().MenuType;
+        char InOutType = Global_Var.getInstance().InOutType;
+        char DeptType= Global_Var.getInstance().DeptType;
+
+        String selectregister = etregister.getText().toString().trim();
+
+        if ( invoice.isEmpty()||party.isEmpty()||material.isEmpty()||oapo.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
+        }else {
+
+
+            //Extra material dynamic view
             List<Map<String, String>> materialList = new ArrayList<>();
+
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 View childView = linearLayout.getChildAt(i);
                 if (childView != null) {
@@ -941,41 +1032,39 @@ public class Inward_Truck_Security extends AppCompatActivity {
                 }
             }
 
-            updates.put("extramaterials", materialList.toString().replace("[]", ""));
-            DocumentReference documentReference = intrsdbroot.collection("Inward Truck Security").document(DocId);
-            documentReference.update(updates)
-                    .addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void unused) {
-                            etsdate.setText("");
-                            etserialnumber.setText("");
-                            etvehicalnumber.setText("");
-                            etintime.setText("");
-                            etsinvocieno.setText("");
-                            etregister.setText("");
-                            etssupplier.setText("");
-                            etsmaterial.setText("");
-                            etsqty.setText("");
-                            etsuom.setText("");
-                            etsnetwt.setText("");
-                            etsuom2.setText("");
-                            etmobile.setText("");
-                            etoapo.setText("");
+           //  Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId,serialnumber,invoice,vehiclenumber,Date,party,material,oapo,drivermobile,'W','I',intime,
+            //                    "",vehicltype,intime,outTime,qty,qtyuom,netwtuom,netweight,materialList.toString().replace("[]", ""),remark,selectregister,lrCopySelection,deliverySelection,taxInvoiceSelection,ewayBillSelection,EmployeId);
 
-                            Toasty.success(Inward_Truck_Security.this, "Data Updated Successfully", Toast.LENGTH_SHORT,true).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(Inward_Truck_Security.this, "Failed to update data", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-            Intent intent = new Intent(this, Inward_Truck.class);
-            startActivity(intent);
+            Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId,serialnumber,invoice,vehiclenumber,Date,party,material,oapo,drivermobile,'W','I',intime,
+                    "",vehicltype,intime,outTime,qtyuom,netwtuom,netweight,qty,materialList.toString().replace("[]", ""),remark,selectregister,lrCopySelection,deliverySelection,taxInvoiceSelection,ewayBillSelection,EmployeId);
 
-        } else {
-            Toasty.warning(this, "Please Provide Vehicle no", Toast.LENGTH_SHORT,true).show();
+            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
+            Call<Boolean> call = apiInTankerSecurity.updatesecuritydata(requestModelInTankerSecurityupdate);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() != null){
+                        Toast.makeText(Inward_Truck_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                    }
+                }
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toast.makeText(Inward_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 

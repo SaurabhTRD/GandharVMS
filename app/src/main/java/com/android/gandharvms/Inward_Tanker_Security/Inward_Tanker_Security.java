@@ -139,6 +139,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     private API_In_Tanker_Security apiInTankerSecurity;
     private String EmployeId=Global_Var.getInstance().EmpId;
 
+    private int InwardId;
 
 
 
@@ -712,6 +713,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                     if (response.body().size() > 0) {
                         List<Respo_Model_In_Tanker_security> Data = response.body();
                         Respo_Model_In_Tanker_security obj = (Respo_Model_In_Tanker_security) Data.get(0);
+                        InwardId=obj.getInwardId();
                         int intimelength = obj.getInTime().length();
                             etintime.setText(obj.getInTime().substring(12,intimelength));
                             etreg.setText(obj.getSerialNo());
@@ -791,7 +793,10 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         //    return DocId.toString();
     }
     public void updateData() {
-        String etintime = dateTimeString.toString();
+        String serialnumber = etreg.getText().toString().trim();
+        String vehiclenumber = etvehical.getText().toString().trim();
+        String Date = etdate.getText().toString().trim();
+        String intime = etintime.getText().toString().trim();
         String invoice = etinvoice.getText().toString().trim();
         int drivermobile = Integer.parseInt(etmobilenum.getText().toString().trim());
         String party = etsupplier.getText().toString().trim();
@@ -811,11 +816,39 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         if ( invoice.isEmpty()||party.isEmpty()||material.isEmpty()||oapo.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }else {
-            Request_Model_In_Tanker_Security requestModelInTankerSecurityupdate = new Request_Model_In_Tanker_Security("",invoice,"","",party,material,oapo,drivermobile,'W','I',"",
-                    "",vehicltype,etintime,outTime,qty,qtyuom,netwtuom,netweight,"",remark,false,"No","","","","","","Sunil");
+
+
+            //Extra material dynamic view
+            List<Map<String, String>> materialList = new ArrayList<>();
+
+            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+                View childView = linearLayout.getChildAt(i);
+                if (childView != null) {
+                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
+                    EditText qtyEditText = childView.findViewById(R.id.editqty);
+                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+
+                    String dynamaterial = materialEditText.getText().toString().trim();
+                    String dynaqty = qtyEditText.getText().toString().trim();
+                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+
+                    // Check if both material and quantity fields are not empty
+                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+                        Map<String, String> materialMap = new HashMap<>();
+                        materialMap.put("material", dynamaterial);
+                        materialMap.put("qty", dynaqty);
+                        materialMap.put("qtyuom", dynaqtyuom);
+                        // Add material data to the list
+                        materialList.add(materialMap);
+                    }
+                }
+            }
+
+            Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId,serialnumber,invoice,vehiclenumber,Date,party,material,oapo,drivermobile,'W','I',intime,
+                    "",vehicltype,intime,outTime,qty,qtyuom,netwtuom,netweight,materialList.toString().replace("[]", ""),remark,"","","","","",EmployeId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
-            Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurityupdate);
+            Call<Boolean> call = apiInTankerSecurity.updatesecuritydata(requestModelInTankerSecurityupdate);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {

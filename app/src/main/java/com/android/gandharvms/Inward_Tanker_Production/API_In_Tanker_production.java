@@ -20,4 +20,7 @@ public interface API_In_Tanker_production {
 
     @POST("api/InwardProduction/Add")
     Call<Boolean> insertproductionData(@Body Request_In_Tanker_Production requestInTankerProduction);
+
+    @GET("api/InwardProduction/GetProductionList")
+    Call<List<ListingResponse_InTankerproduction>> getintankerproductionListdata(@Query("NextProcess")char nextProcess);
 }

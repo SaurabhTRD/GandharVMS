@@ -63,7 +63,38 @@ public class Request_Model_In_Tanker_Security {
         EwayBill = ewayBill;
         CreatedBy = createdBy;
     }
-//    public String getSerialNo() {
+
+    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
+        SerialNo = serialNo;
+        InvoiceNo = invoiceNo;
+        VehicleNo = vehicleNo;
+        Date = date;
+        PartyName = partyName;
+        Material = material;
+        this.OA_PO_number = OA_PO_number;
+        Driver_MobileNo = driver_MobileNo;
+        Nextprocess = nextprocess;
+        I_O = i_O;
+        FactoryIn = factoryIn;
+        FactoryOut = factoryOut;
+        VehicleType = vehicleType;
+        InTime = inTime;
+        OutTime = outTime;
+        QtyUOM = qtyUOM;
+        NetWeightUOM = netWeightUOM;
+        NetWeight = netWeight;
+        Qty = qty;
+        Extramaterials = extramaterials;
+        Remark = remark;
+        Selectregister = selectregister;
+        IrCopy = irCopy;
+        DeliveryBill = deliveryBill;
+        TaxInvoice = taxInvoice;
+        EwayBill = ewayBill;
+        CreatedBy = createdBy;
+    }
+
+    //    public String getSerialNo() {
 //        return SerialNo;
 //    }
 

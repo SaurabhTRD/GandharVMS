@@ -16,12 +16,18 @@ public interface API_In_Tanker_Security {
     @POST("api/InwardSecurity/Add")
     Call<Boolean> postData(@Body Request_Model_In_Tanker_Security request);
 
+    @POST("api/InwardSecurity/UpdateReport")
+    Call<Boolean> updatesecuritydata(@Body Update_Request_Model_Insequrity request);
+
     @GET("api/InwardSecurity/GetSecurityByFetchVehicleDetails")
     Call<List<Respo_Model_In_Tanker_security>> GetIntankerSecurityByVehicle(
             @Query("vehicleNo") String VehicleNo,
             @Query("vehicleType") String vehicleType,
             @Query("NextProcess") char NextProcess,
             @Query("inOut") char inOut);
+
+    @GET("api/InwardSecurity/GetSecurityList")
+    Call<List<ListingResponse_InTankerSequrity>> getintankersecurityListData(@Query("NextProcess") char nextProcess);
 }
 
 
