@@ -1,45 +1,34 @@
-package com.android.gandharvms.Inward_Tanker_Weighment;
+package com.android.gandharvms.Inward_Tanker_Sampling;
 
-
-import com.google.type.DateTime;
-
-import org.apache.poi.hpsf.Decimal;
-
-
-
-
-public class InTanWeighResponseModel {
+public class InTanSamplingResponseModel {
     int Id;
-     int InwardId;
-     String InTime ;
-     String OutTime ;
-     String GrossWeight;
-     String NetWeight;
-     String TareWeight ;
-     String ShortageDip;
-     String ShortageWeight ;
-     String Remark ;
-     String SignBy ;
-     int ContainerNo ;
-     String InVehicleImage ;
-     String InDriverImage ;
-     boolean IsActive ;
-     String CreatedBy ;
-     String SerialNo ;
-     String InvoiceNo;
-     String VehicleNo;
-     String Date;
-     String PartyName;
-     String Material;
-     String OA_PO_number;
-     int Driver_MobileNo ;
-     char Nextprocess;
-     char I_O;
-     String VehicleType;
-     String UpdatedBy;
-
-    String OutVehicleImage;
-    String OutDriverImage;
+    int InwardId;
+    String InTime ;
+    String OutTime ;
+    String GrossWeight;
+    String NetWeight;
+    String TareWeight ;
+    String ShortageDip;
+    String ShortageWeight ;
+    String Remark ;
+    String SignBy ;
+    int ContainerNo ;
+    String InVehicleImage ;
+    String InDriverImage ;
+    boolean IsActive ;
+    String CreatedBy ;
+    String SerialNo ;
+    String InvoiceNo;
+    String VehicleNo;
+    String Date;
+    String PartyName;
+    String Material;
+    String OA_PO_number;
+    int Driver_MobileNo ;
+    char Nextprocess;
+    char I_O;
+    String VehicleType;
+    String UpdatedBy;
     int Qty;
 
     public int getId() {
@@ -174,8 +163,8 @@ public class InTanWeighResponseModel {
         return SerialNo;
     }
 
-    public void setSerialNo(String serialNo) {
-        SerialNo = serialNo;
+    public void setSerialNo(String SerialNo) {
+        SerialNo = SerialNo;
     }
 
     public String getInvoiceNo() {
@@ -264,22 +253,6 @@ public class InTanWeighResponseModel {
 
     public void setUpdatedBy(String updatedBy) {
         UpdatedBy = updatedBy;
-    }
-
-    public String getOutVehicleImage() {
-        return OutVehicleImage;
-    }
-
-    public void setOutVehicleImage(String outVehicleImage) {
-        OutVehicleImage = outVehicleImage;
-    }
-
-    public String getOutDriverImage() {
-        return OutDriverImage;
-    }
-
-    public void setOutDriverImage(String outDriverImage) {
-        OutDriverImage = outDriverImage;
     }
 
     public int getQty() {

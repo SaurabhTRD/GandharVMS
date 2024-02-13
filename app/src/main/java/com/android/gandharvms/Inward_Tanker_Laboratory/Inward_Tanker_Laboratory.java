@@ -30,6 +30,8 @@ import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
 import com.android.gandharvms.LoginWithAPI.Laboratory;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
@@ -47,6 +49,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.auth.User;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
@@ -54,6 +57,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -89,6 +93,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
     //Call Interface Method of Laboratory
     private Laboratory labdetails;
+    private LoginMethod userDetails;
     private int inwardid;
     private String vehicleType= Global_Var.getInstance().MenuType;
     private char nextProcess=Global_Var.getInstance().DeptType;
@@ -98,10 +103,16 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_laboratory);
+
+
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         labdetails= RetroApiClient.getLabDetails();//Call retrofit api
+
+        userDetails=RetroApiClient.getLoginApi();
+
+
 
         regAutoCompleteTextView = findViewById(R.id.etpremark);
         remarkarray = new ArrayAdapter<String>(this,R.layout.in_tanker_labremarkitem,remark);
@@ -255,7 +266,56 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             }
         });
     }
-    public void makeNotification(String vehicleNumber,String outTime) {
+
+    public void makeNotification(String vehicleNumber,String outTime){
+        Call<List<ResponseModel>> call=userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
+                            String specificRole = "Production";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+                                // Adjust the notification sender based on your new token and data structure
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Inward Tanker Production Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        getApplicationContext(),
+                                        Inward_Tanker_Laboratory.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                } else {
+                    // Handle unsuccessful API response
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Laboratory.this,"failed..!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+    /*public void makeNotification(String vehicleNumber,String outTime) {
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -286,7 +346,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
             }
         });
-    }
+    }*/
     public void btn_clicktoViewSAMPLEREPORT(View view){
         Intent intent = new Intent(this, Inward_Tanker_saampling_View_data.class);
         startActivity(intent);
@@ -348,6 +408,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body()!=null)
                     {
+                        makeNotification(vehicle,outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker.class));

@@ -249,6 +249,29 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/OUM."
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/QTY."
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="30dp"
+
+                >
+
+                <EditText
+                    android:id="@+id/etintime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="In Time"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
@@ -279,7 +302,7 @@
                     android:layout_marginRight="22dp">
 
                     <AutoCompleteTextView
-                        android:id="@+id/etsuom"
+                        android:id="@+id/recqtysuom"
                         android:layout_width="160dp"
                         android:layout_height="wrap_content"
                         android:hint="UOM"
@@ -309,29 +332,6 @@
                 android:text="Add Material" />
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/OUM."
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/QTY."
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="2dp"
-                android:layout_marginRight="30dp"
-
-                >
-
-                <EditText
-                    android:id="@+id/etintime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:hint="In Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -349,7 +349,6 @@
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
-
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
