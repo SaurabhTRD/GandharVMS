@@ -14,15 +14,23 @@ public class InTruckStoreRequestModel {
     char Nextprocess;
     char I_O;
     String VehicleType;
-    String InvoiceNo;
+    /*String InvoiceNo;
     String Date;
     String PartyName;
     String Material;
     String OA_PO_number;
     int Driver_MobileNo;
-    int Qty;
+    int Qty;*/
+    int ReceiveQTY ;
+    int ReceiveQTYUOM ;
+    String Remark ;
+    String StoreExtramaterials;
 
-    public InTruckStoreRequestModel(int inwardId, String inTime, String outTime, String createdBy, String updatedBy, String vehicleNo, String serialNo, char nextprocess, char i_O, String vehicleType, String invoiceNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, int qty) {
+
+    public InTruckStoreRequestModel(int inwardId, String inTime, String outTime, String createdBy,
+                                    String updatedBy, String vehicleNo, String serialNo, char nextprocess,
+                                    char i_O, String vehicleType, int receiveQTY,
+                                    int receiveQTYUOM, String remark,String extramaterials) {
         InwardId = inwardId;
         InTime = inTime;
         OutTime = outTime;
@@ -33,12 +41,16 @@ public class InTruckStoreRequestModel {
         Nextprocess = nextprocess;
         I_O = i_O;
         VehicleType = vehicleType;
-        InvoiceNo = invoiceNo;
+        /*InvoiceNo = invoiceNo;
         Date = date;
         PartyName = partyName;
         Material = material;
         this.OA_PO_number = OA_PO_number;
         Driver_MobileNo = driver_MobileNo;
-        Qty = qty;
+        Qty = qty;*/
+        ReceiveQTY = receiveQTY;
+        ReceiveQTYUOM = receiveQTYUOM;
+        Remark = remark;
+        StoreExtramaterials=extramaterials;
     }
 }

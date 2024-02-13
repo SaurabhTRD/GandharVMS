@@ -16,8 +16,15 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabListData_Adapter;
+import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabResponseModel;
+import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Lab_Viewdata;
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.LoginWithAPI.Store;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -29,24 +36,35 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
+
 public class Inward_Truck_Store_viewdata extends AppCompatActivity {
 
     RecyclerView recview;
-    ArrayList<In_Truck_Store_list> datalist;
+    /*ArrayList<In_Truck_Store_list> datalist;*/
+
+    List<InTruckStoreResponseModel> storeListDetails;
 
     FirebaseFirestore db;
 
-    Im_Truck_Store_Adapter imTruckStoreAdapter;
+    /*Im_Truck_Store_Adapter imTruckStoreAdapter;*/
 
+    InTruckStoreList_DataAdapter intruckStoreAdapter;
     String date_start,date_end;
     EditText etserialNumber,etpartyName;
     Button btnsrnumclear,btnptnamclear,startDatePicker,endDatePicker,btncleardateselection,btnlogout;
     TextView txtTotalCount;
 
+    private Store storedetails;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +79,15 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
         btncleardateselection=findViewById(R.id.btn_clearDateSelectionfields);
         txtTotalCount=findViewById(R.id.tv_TotalCount);
         btnlogout=findViewById(R.id.btn_logoutButton);
+        storedetails= RetroApiClient.getStoreDetails();
 
-        startDatePicker.setOnClickListener(new View.OnClickListener() {
+        recview = (RecyclerView) findViewById(R.id.recyclerview);
+        recview.setLayoutManager(new LinearLayoutManager(this));
+        storeListDetails = new ArrayList<>();
+
+        char nextprocess= Global_Var.getInstance().DeptType;
+        GetStoreListData(nextprocess);
+        /*startDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 showDatePickerDialog(true);
@@ -249,9 +274,82 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
                         imTruckStoreAdapter.notifyDataSetChanged();
 
                     }
-                });
+                });*/
     }
-    public void showDatePickerDialog(final boolean isStartDate){
+    private void GetStoreListData(char nextProcess) {
+        Call<List<InTruckStoreResponseModel>> call = storedetails.getInTruckStoreListData(nextProcess);
+        call.enqueue(new Callback<List<InTruckStoreResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<InTruckStoreResponseModel>> call, Response<List<InTruckStoreResponseModel>> response) {
+                if(response.isSuccessful())
+                {
+                    List<InTruckStoreResponseModel> data=response.body();
+                    int totalCount = data.size();
+                    txtTotalCount.setText("Total count: " + totalCount);
+                    storeListDetails.clear();
+                    storeListDetails = data;
+                    intruckStoreAdapter = new InTruckStoreList_DataAdapter(storeListDetails);
+                    recview.setAdapter(intruckStoreAdapter);
+                    intruckStoreAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<InTruckStoreResponseModel>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Truck_Store_viewdata.this,"failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+        /*call.enqueue(new Callback<List<InTanLabResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<InTanLabResponseModel>> call, Response<List<InTanLabResponseModel>> response) {
+                if(response.isSuccessful()){
+                    List<InTanLabResponseModel> data=response.body();
+                    int totalCount = data.size();
+                    txtTotalCount.setText("Total count: " + totalCount);
+                    labdatalist.clear();
+                    labdatalist = data;
+                    inTankLabAdapter = new InTanLabListData_Adapter(labdatalist);
+                    recview.setAdapter(inTankLabAdapter);
+                    inTankLabAdapter.notifyDataSetChanged();
+                }
+                else
+                {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<InTanLabResponseModel>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Lab_Viewdata.this,"failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });*/
+    }
+    /*public void showDatePickerDialog(final boolean isStartDate){
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -344,5 +442,5 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
                 }
             }
         });
-    }
+    }*/
 }
