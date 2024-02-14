@@ -17,6 +17,8 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface LoginMethod {
+    @GET("api/Inward/GetMaxSerialNumber")
+    Call<String> getMaxSerialNumber(@Query("FormattedDate") String formattedDate);
     @GET("api/Users/GetUsersList")
     Call<List<ResponseModel>> getUsersListData();
     @POST("api/Users/Login")
