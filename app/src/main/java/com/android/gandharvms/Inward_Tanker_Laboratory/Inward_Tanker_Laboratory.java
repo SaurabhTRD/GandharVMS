@@ -70,24 +70,24 @@ import retrofit2.Response;
 
 public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
-    String [] remark = {"Accepted","Rejected"};
+    String[] remark = {"Accepted", "Rejected"};
     AutoCompleteTextView regAutoCompleteTextView;
     ArrayAdapter<String> remarkarray;
-    EditText etintime,etserialnumber,etpsample,etvehiclenumber,etpapperance,etpodor,etpcolour,etpdensity,etqty,etPrcstest,etpkv,ethundred,etanline,etflash,etpaddtest,etpsamplere,etpremark,etpsignQc,etpdatesignofsign,etMaterial,etsupplier,remarkdisc,etviscosity;
+    EditText etintime, etserialnumber, etpsample, etvehiclenumber, etpapperance, etpodor, etpcolour, etpdensity, etqty, etPrcstest, etpkv, ethundred, etanline, etflash, etpaddtest, etpsamplere, etpremark, etpsignQc, etpdatesignofsign, etMaterial, etsupplier, remarkdisc, etviscosity;
     Button etlabsub;
     Button view;
     TimePickerDialog tpicker;
 
     FirebaseFirestore dblabroot;
 
-    DatePickerDialog picker,picker1,picker2;
+    DatePickerDialog picker, picker1, picker2;
 
     final Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     Date currentDate = Calendar.getInstance().getTime();
     private String dateTimeString = "";
 
-    private final int MAX_LENGTH=10;
+    private final int MAX_LENGTH = 10;
     private String token;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
 
@@ -95,10 +95,11 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     private Laboratory labdetails;
     private LoginMethod userDetails;
     private int inwardid;
-    private String vehicleType= Global_Var.getInstance().MenuType;
-    private char nextProcess=Global_Var.getInstance().DeptType;
-    private char inOut=Global_Var.getInstance().InOutType;
-    private String EmployeId=Global_Var.getInstance().EmpId;
+    private String vehicleType = Global_Var.getInstance().MenuType;
+    private char nextProcess = Global_Var.getInstance().DeptType;
+    private char inOut = Global_Var.getInstance().InOutType;
+    private String EmployeId = Global_Var.getInstance().EmpId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -108,26 +109,25 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
-        labdetails= RetroApiClient.getLabDetails();//Call retrofit api
+        labdetails = RetroApiClient.getLabDetails();//Call retrofit api
 
-        userDetails=RetroApiClient.getLoginApi();
-
+        userDetails = RetroApiClient.getLoginApi();
 
 
         regAutoCompleteTextView = findViewById(R.id.etpremark);
-        remarkarray = new ArrayAdapter<String>(this,R.layout.in_tanker_labremarkitem,remark);
+        remarkarray = new ArrayAdapter<String>(this, R.layout.in_tanker_labremarkitem, remark);
         regAutoCompleteTextView.setAdapter(remarkarray);
         regAutoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(),"Item: "+items+"Selected",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Item: " + items + "Selected", Toast.LENGTH_SHORT).show();
             }
         });
 
         etintime = (EditText) findViewById(R.id.etintime);
         etpsample = (EditText) findViewById(R.id.etpsample);
-        etserialnumber=(EditText) findViewById(R.id.etlabserialnumber);
+        etserialnumber = (EditText) findViewById(R.id.etlabserialnumber);
         etvehiclenumber = (EditText) findViewById(R.id.vehiclenumber);
         etpapperance = (EditText) findViewById(R.id.etpapperance);
         etpodor = (EditText) findViewById(R.id.etpodor);
@@ -135,27 +135,27 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etqty = (EditText) findViewById(R.id.qtycolor);
         etpdensity = (EditText) findViewById(R.id.etpdensity);
         etPrcstest = (EditText) findViewById(R.id.etPrcstest);
-        etpkv=(EditText) findViewById(R.id.etpkv);
-        ethundred = (EditText)findViewById(R.id.hundered);
+        etpkv = (EditText) findViewById(R.id.etpkv);
+        ethundred = (EditText) findViewById(R.id.hundered);
         etanline = (EditText) findViewById(R.id.anline);
         etflash = (EditText) findViewById(R.id.flash);
-        etpaddtest=(EditText) findViewById(R.id.etpaddtest);
-        etpsamplere=(EditText) findViewById(R.id.etpsamplere);
-        etpremark =(EditText) findViewById(R.id.etpremark);
-        etpsignQc=(EditText) findViewById(R.id.etpsignQc);
-        etpdatesignofsign=(EditText) findViewById(R.id.etpdatesignofsign);
-        etMaterial=(EditText) findViewById(R.id.et_materialname);
+        etpaddtest = (EditText) findViewById(R.id.etpaddtest);
+        etpsamplere = (EditText) findViewById(R.id.etpsamplere);
+        etpremark = (EditText) findViewById(R.id.etpremark);
+        etpsignQc = (EditText) findViewById(R.id.etpsignQc);
+        etpdatesignofsign = (EditText) findViewById(R.id.etpdatesignofsign);
+        etMaterial = (EditText) findViewById(R.id.et_materialname);
 
         etsupplier = (EditText) findViewById(R.id.supplier);
         remarkdisc = (EditText) findViewById(R.id.remarkdisc);
         etviscosity = (EditText) findViewById(R.id.etviscosityindex);
-        etlabsub=(Button) findViewById(R.id.etlabsub);
+        etlabsub = (Button) findViewById(R.id.etlabsub);
 
         view = findViewById(R.id.viewclick);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Inward_Tanker_Laboratory.this,Inward_Tanker_Lab_Viewdata.class));
+                startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker_Lab_Viewdata.class));
             }
         });
 
@@ -169,13 +169,13 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
+                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        c.set(Calendar.MINUTE, minute);
 
                         // Set the formatted time to the EditText
-                        etintime.setText(hourOfDay +":"+ minute );
+                        etintime.setText(hourOfDay + ":" + minute);
                     }
-                },hours,mins,false);
+                }, hours, mins, false);
                 tpicker.show();
             }
         });
@@ -249,12 +249,12 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             }
         });
 
-        dblabroot=FirebaseFirestore.getInstance();
+        dblabroot = FirebaseFirestore.getInstance();
 
         etvehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    FetchVehicleDetails(etvehiclenumber.getText().toString().trim(),vehicleType,nextProcess,inOut);
+                    FetchVehicleDetails(etvehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
                 }
             }
         });
@@ -265,10 +265,14 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 labinsertdata();
             }
         });
+
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'L', 'I');
+        }
     }
 
-    public void makeNotification(String vehicleNumber,String outTime){
-        Call<List<ResponseModel>> call=userDetails.getUsersListData();
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
@@ -296,6 +300,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
+
             @Override
             public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
                 Log.e("Retrofit", "Failure: " + t.getMessage());
@@ -311,10 +316,11 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(Inward_Tanker_Laboratory.this,"failed..!",Toast.LENGTH_SHORT).show();
+                Toasty.error(Inward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     /*public void makeNotification(String vehicleNumber,String outTime) {
         databaseReference = FirebaseDatabase.getInstance().getReference("users");
         databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -347,15 +353,17 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             }
         });
     }*/
-    public void btn_clicktoViewSAMPLEREPORT(View view){
+    public void btn_clicktoViewSAMPLEREPORT(View view) {
         Intent intent = new Intent(this, Inward_Tanker_saampling_View_data.class);
         startActivity(intent);
     }
-    public void weViewclick(View view){
+
+    public void weViewclick(View view) {
         Intent intent = new Intent(this, Inward_Tanker_Weighment_Viewdata.class);
         startActivity(intent);
     }
-    public void labviewclick(View view){
+
+    public void labviewclick(View view) {
         Intent intent = new Intent(this, Inward_Tanker_Lab_Viewdata.class);
         startActivity(intent);
     }
@@ -366,10 +374,9 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         return sdf.format(new Date());
     }
 
-    public void labinsertdata()
-    {
+    public void labinsertdata() {
         String intime = etintime.getText().toString().trim();
-        String serialNumber=etserialnumber.getText().toString().trim();
+        String serialNumber = etserialnumber.getText().toString().trim();
         String date = etpsample.getText().toString().trim();
         String vehicle = etvehiclenumber.getText().toString().trim();
         String apperance = etpapperance.getText().toString().trim();
@@ -388,34 +395,31 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String signQc = etpsignQc.getText().toString().trim();
         String dateSignOfSign = etpdatesignofsign.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
-        String material=etMaterial.getText().toString().trim();
-        String edsupplier= etsupplier.getText().toString().trim();
-        String viscosity=etviscosity.getText().toString().trim();
-        String disc=remarkdisc.getText().toString().trim();
-        if ( intime.isEmpty() ||serialNumber.isEmpty()|| date.isEmpty() ||hundred.isEmpty()|| vehicle.isEmpty() ||  apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty()||  anline.isEmpty()|| flash.isEmpty()|| density.isEmpty() || rcsTest.isEmpty() ||
-                kv.isEmpty() || addTest.isEmpty() || samplereceivingdate.isEmpty() || viscosity.isEmpty() ||remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty()|| edsupplier.isEmpty()){
-            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
-        }else {
-            InTanLabRequestModel labRequestModel= new InTanLabRequestModel(inwardid,intime,outTime,date,
-                    samplereceivingdate,apperance,odor,color,Integer.parseInt(qty),Integer.parseInt(density),
-                    rcsTest,Integer.parseInt(kv),Integer.parseInt(hundred),Integer.parseInt(anline),
-                    Integer.parseInt(flash), addTest,samplereceivingdate,remark,signQc,dateSignOfSign,
-                    disc,Integer.parseInt(viscosity), EmployeId,EmployeId,vehicle,material,
-                    serialNumber,'P',inOut, vehicleType,edsupplier);
-            Call<Boolean> call =labdetails.insertLabData(labRequestModel);
+        String material = etMaterial.getText().toString().trim();
+        String edsupplier = etsupplier.getText().toString().trim();
+        String viscosity = etviscosity.getText().toString().trim();
+        String disc = remarkdisc.getText().toString().trim();
+        if (intime.isEmpty() || serialNumber.isEmpty() || date.isEmpty() || hundred.isEmpty() || vehicle.isEmpty() || apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty() || anline.isEmpty() || flash.isEmpty() || density.isEmpty() || rcsTest.isEmpty() ||
+                kv.isEmpty() || addTest.isEmpty() || samplereceivingdate.isEmpty() || viscosity.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+        } else {
+            InTanLabRequestModel labRequestModel = new InTanLabRequestModel(inwardid, intime, outTime, date,
+                    samplereceivingdate, apperance, odor, color, Integer.parseInt(qty), Integer.parseInt(density),
+                    rcsTest, Integer.parseInt(kv), Integer.parseInt(hundred), Integer.parseInt(anline),
+                    Integer.parseInt(flash), addTest, samplereceivingdate, remark, signQc, dateSignOfSign,
+                    disc, Integer.parseInt(viscosity), EmployeId, EmployeId, vehicle, material,
+                    serialNumber, 'P', inOut, vehicleType, edsupplier);
+            Call<Boolean> call = labdetails.insertLabData(labRequestModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body()!=null)
-                    {
-                        makeNotification(vehicle,outTime);
+                    if (response.isSuccessful() && response.body() != null) {
+                        makeNotification(vehicle, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker.class));
                         finish();
-                    }
-                    else
-                    {
+                    } else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
                 }
@@ -435,23 +439,21 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                             }
                         }
                     }
-                    Toasty.error(Inward_Tanker_Laboratory.this,"failed..!",Toast.LENGTH_SHORT).show();
+                    Toasty.error(Inward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    public void FetchVehicleDetails(@NonNull String vehicleNo,String vehicleType,char NextProcess,char inOut) {
-        Call<InTanLabResponseModel> call=labdetails.getLabbyfetchVehData(vehicleNo,vehicleType,NextProcess,inOut);
+    public void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
+        Call<InTanLabResponseModel> call = labdetails.getLabbyfetchVehData(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<InTanLabResponseModel>() {
             @Override
             public void onResponse(Call<InTanLabResponseModel> call, Response<InTanLabResponseModel> response) {
-                if(response.isSuccessful())
-                {
-                    InTanLabResponseModel data=response.body();
-                    if(data.getVehicleNo()!="")
-                    {
-                        inwardid=data.getInwardId();
+                if (response.isSuccessful()) {
+                    InTanLabResponseModel data = response.body();
+                    if (data.getVehicleNo() != "") {
+                        inwardid = data.getInwardId();
                         etvehiclenumber.setText(data.getVehicleNo());
                         etvehiclenumber.setEnabled(false);
                         etserialnumber.setText(data.getSerialNo());
@@ -464,16 +466,14 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etpsample.setEnabled(false);
                         etintime.requestFocus();
                         etintime.callOnClick();
+                    } else {
+                        Toasty.success(Inward_Tanker_Laboratory.this, "Vehicle Is Not Available", Toast.LENGTH_SHORT).show();
                     }
-                    else
-                    {
-                        Toasty.success(Inward_Tanker_Laboratory.this,"Vehicle Is Not Available",Toast.LENGTH_SHORT).show();
-                    }
-                }else
-                {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
+
             @Override
             public void onFailure(Call<InTanLabResponseModel> call, Throwable t) {
                 Log.e("Retrofit", "Failure: " + t.getMessage());
@@ -489,17 +489,18 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(Inward_Tanker_Laboratory.this,"failed..!",Toast.LENGTH_SHORT).show();
+                Toasty.error(Inward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
     }
-    public void vgrid(View view){
+
+    public void vgrid(View view) {
         Intent intent = new Intent(this, in_tanker_lab_grid.class);
         startActivity(intent);
     }

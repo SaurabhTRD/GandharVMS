@@ -37,6 +37,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
@@ -169,14 +170,20 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         weighmentdetails = RetroApiClient.getWeighmentDetails();
 
         sharedPreferences = getSharedPreferences("TankerWeighment", MODE_PRIVATE);
-
+        if (sharedPreferences != null) {
+            if (getIntent().hasExtra("VehicleNumber")) {
+                FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'W', 'I');
+            }}
+//
         storage = FirebaseStorage.getInstance();
         //view button
         view = findViewById(R.id.dbview);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Inward_Tanker_Weighment.this, Inward_Tanker_Weighment_Viewdata.class));
+                Intent intent = new Intent(Inward_Tanker_Weighment.this, grid.class);
+                startActivity(intent);
+                /*startActivity(new Intent(Inward_Tanker_Weighment.this, Inward_Tanker_Weighment_Viewdata.class));*/
             }
         });
 

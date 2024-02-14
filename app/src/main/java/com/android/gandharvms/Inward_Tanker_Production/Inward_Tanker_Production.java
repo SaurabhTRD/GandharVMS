@@ -105,6 +105,9 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                 //datetimepickertesting
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
 
+            if (getIntent().hasExtra("VehicleNumber")) {
+                FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'W', 'I');
+            }
         etconunloadDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

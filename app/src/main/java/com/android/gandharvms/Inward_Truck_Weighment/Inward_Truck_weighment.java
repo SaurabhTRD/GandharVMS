@@ -155,6 +155,10 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'W', 'I');
+        }
+
         etdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

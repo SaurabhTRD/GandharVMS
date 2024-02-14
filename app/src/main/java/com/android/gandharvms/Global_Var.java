@@ -14,6 +14,7 @@ public class Global_Var {
     public String Department;
     public String Name;
     public String Token;
+    public int InwardId;
     // Getter/setter
     private static Global_Var instance;
     public static Global_Var getInstance() {

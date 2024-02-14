@@ -322,6 +322,9 @@ public class Inward_Truck_Security extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
+        }
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
