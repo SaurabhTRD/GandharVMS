@@ -38,6 +38,7 @@ public class    Respo_Model_In_Tanker_security {
     private String CreatedBy ;
     //private String CreatedDate ;
     private String UpdatedBy ;
+    private String CurrStatus;
 
     public int getId() {
         return Id;
@@ -301,5 +302,13 @@ public class    Respo_Model_In_Tanker_security {
 
     public void setUpdatedBy(String updatedBy) {
         UpdatedBy = updatedBy;
+    }
+
+    public String getCurrStatus() {
+        return CurrStatus;
+    }
+
+    public void setCurrStatus(String currStatus) {
+        CurrStatus = currStatus;
     }
 }

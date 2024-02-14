@@ -16,6 +16,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
+import com.android.gandharvms.Inward_Tanker_Production.Inward_Tanker_Production;
+import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_Sampling;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
+import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.Inward_Truck_store.Inward_Truck_Store;
 import com.android.gandharvms.R;
 
 import java.util.ArrayList;
@@ -26,13 +33,13 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
     private static final int TYPE_ROW = 0;
     private static final int TYPE_ROW_COLORFUL = 1;
 
-    private List<gridmodel> Gridmodel;
-    private List<gridmodel> filteredGridList;
+    private List<Respo_Model_In_Tanker_security> Gridmodel;
+    private List<Respo_Model_In_Tanker_security> filteredGridList;
     private Context context;
 
-    public gridAdapter(List<gridmodel> Gridmodel) {
-        this.Gridmodel = Gridmodel;
-        this.filteredGridList = Gridmodel;
+    public gridAdapter(List<Respo_Model_In_Tanker_security> respoModelInTankerSecurities) {
+        this.Gridmodel = respoModelInTankerSecurities;
+        this.filteredGridList = respoModelInTankerSecurities;
     }
     @Override
     public int getItemViewType(int position)
@@ -62,19 +69,43 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
     @Override
     public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position)
     {
-        gridmodel club = filteredGridList.get(position);
-        holder.sernum.setText(club.getSerialNumber());
-        holder.vehiclenum.setText(club.getVehicalnumber());
+        Respo_Model_In_Tanker_security club = filteredGridList.get(position);
+        holder.sernum.setText(club.getSerialNo());
+        holder.vehiclenum.setText(club.getVehicleNo());
         holder.material.setText(club.getMaterial());
-        holder.Status.setText(club.getStatus());
+        holder.Status.setText(club.getCurrStatus());
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent (view.getContext(), Inward_Tanker_Security.class);
+                Respo_Model_In_Tanker_security club = filteredGridList.get(position);
+                String vehitype=club.getVehicleType();
+                String crst=club.getCurrStatus();
+                Intent intent= new Intent();
+                if(vehitype.equals("IT")) {
+                    if (crst.equals("Weighment")) {
+                        intent = new Intent(view.getContext(), Inward_Tanker_Weighment.class);
+                    } else if (crst.equals("Security Reported")) {
+                        intent = new Intent(view.getContext(), Inward_Tanker_Security.class);
+                    } else if (crst.equals("Sampling")) {
+                        intent = new Intent(view.getContext(), Inward_Tanker_Sampling.class);
+                    } else if (crst.equals("Laboratory")) {
+                        intent = new Intent(view.getContext(), Inward_Tanker_Laboratory.class);
+                    } else if (crst.equals("Production")) {
+                        intent = new Intent(view.getContext(), Inward_Tanker_Production.class);
+                    }
+                } else if (vehitype.equals("IR")) {
+                    if (crst.equals("Weighment")) {
+                        intent = new Intent(view.getContext(), Inward_Truck_weighment.class);
+                    } else if (crst.equals("Security Reported")) {
+                        intent = new Intent(view.getContext(), Inward_Truck_Security.class);
+                    } else if (crst.equals("Store")) {
+                        intent = new Intent(view.getContext(), Inward_Truck_Store.class);
+                    }
+                }
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                gridmodel club = filteredGridList.get(position);
-                intent.putExtra("SerialNumber",club.getSerialNumber());
-                intent.putExtra("VehicleNumber",club.getVehicalnumber());
+                intent.putExtra("SerialNumber",club.getSerialNo());
+                intent.putExtra("VehicleNumber",club.getVehicleNo());
+                intent.putExtra("CurrStatus",club.getCurrStatus());
                 view.getContext().startActivity(intent);
 
             }
@@ -105,11 +136,11 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
                 if (charString.isEmpty()) {
                     filteredGridList = Gridmodel;
                 } else {
-                    List<gridmodel> filteredList = new ArrayList<>();
-                    for (gridmodel club : Gridmodel) {
+                    List<Respo_Model_In_Tanker_security> filteredList = new ArrayList<>();
+                    for (Respo_Model_In_Tanker_security club : Gridmodel) {
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name
-                        if (club.SerialNumber.toLowerCase().contains(charString.toLowerCase()) || club.vehicalnumber.toLowerCase().contains(charString.toLowerCase())) {
+                        if (club.getSerialNo().toLowerCase().contains(charString.toLowerCase()) || club.getVehicleNo().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(club);
                         }
                     }
@@ -122,7 +153,7 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                filteredGridList = (ArrayList<gridmodel>) filterResults.values;
+                filteredGridList = (ArrayList<Respo_Model_In_Tanker_security>) filterResults.values;
                 // refresh the list with filtered data
                 notifyDataSetChanged();
             }

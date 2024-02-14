@@ -155,6 +155,9 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'R', 'I');
+        }
         autoCompleteTextViewINVUOM = findViewById(R.id.etinvqtysuom);
         netweuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_nw,new ArrayList<>(qtyUomMapping.keySet()));
         autoCompleteTextViewINVUOM.setAdapter(netweuomdrop);

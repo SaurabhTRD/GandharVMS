@@ -44,7 +44,7 @@
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
-                android:text="Material No"
+                android:text="Material"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>

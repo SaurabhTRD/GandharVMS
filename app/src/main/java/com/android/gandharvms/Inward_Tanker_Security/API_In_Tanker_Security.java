@@ -28,6 +28,8 @@ public interface API_In_Tanker_Security {
 
     @GET("api/InwardSecurity/GetSecurityList")
     Call<List<ListingResponse_InTankerSequrity>> getintankersecurityListData(@Query("NextProcess") char nextProcess);
+
+
 }
 
 

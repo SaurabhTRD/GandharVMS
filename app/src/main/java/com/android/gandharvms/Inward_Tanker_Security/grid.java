@@ -17,6 +17,8 @@ import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
+import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 import com.google.firebase.firestore.CollectionReference;
@@ -27,6 +29,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class grid extends AppCompatActivity {
     private LinearLayout linearLayout;
@@ -35,13 +40,20 @@ public class grid extends AppCompatActivity {
     ArrayList<In_Tanker_Security_list> inTankerSecurityLists;
     In_Tanker_Se_Adapter in_tanker_se_adapter;
     int scrollX = 0;
-    List<gridmodel> clubList = new ArrayList<>();
+    List<Respo_Model_In_Tanker_security> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
     SearchView searchView;
 
     gridAdapter GridAdapter;
     RecyclerView recyclerView;
+
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
+
+    List<Respo_Model_In_Tanker_security> gridlistsecurity;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +65,15 @@ public class grid extends AppCompatActivity {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        fetchDataFromFirestore();
         initViews();
-        fetchDataFromFirestore();
+        if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
+        {
+            fetchDataFromApi("x",vehicleType,Global_Var.getInstance().DeptType,'x');
+        }
+        else{
+            fetchDataFromApi("x",vehicleType,'x','x');
+        }
+
+        //fetchDataFromApi("x",vehicleType,'x','x');
         rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
             @Override
@@ -86,25 +106,47 @@ public class grid extends AppCompatActivity {
         rvClub.setAdapter(GridAdapter);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
-    public void fetchDataFromFirestore(){
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference collectionReference = db.collection("Inward Tanker Security");
-        collectionReference.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                List<gridmodel> Gridmodel = new ArrayList<>();
-                for (QueryDocumentSnapshot document :task.getResult()){
-                    gridmodel obj = document.toObject(gridmodel.class);
-                    obj.status ="";
-                    Gridmodel.add(obj);
+    public void fetchDataFromApi(String vehicleno,String vehicleType,char nextProcess, char inOut){
+        Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(vehicleno,vehicleType,nextProcess,inOut);
+        call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
+            @Override
+            public void onResponse(Call<List<Respo_Model_In_Tanker_security>> call, Response<List<Respo_Model_In_Tanker_security>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size()>0){
+                        List<Respo_Model_In_Tanker_security> data = response.body();
+                        clubList= data;
+                        setUpRecyclerView();
+                    }
                 }
-                clubList = Gridmodel;
-                setUpRecyclerView();
-//                GridAdapter = new gridAdapter(Gridmodel);
-//                recyclerView.setAdapter(GridAdapter);
-            }else {
-                Log.e("Firestore","Error getting documnet: ",task.getException());
+            }
+
+            @Override
+            public void onFailure(Call<List<Respo_Model_In_Tanker_security>> call, Throwable t) {
+
             }
         });
+
+
+
+
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        CollectionReference collectionReference = db.collection("Inward Tanker Security");
+//        collectionReference.get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()){
+//                List<gridmodel> Gridmodel = new ArrayList<>();
+//                for (QueryDocumentSnapshot document :task.getResult()){
+//                    gridmodel obj = document.toObject(gridmodel.class);
+//                    obj.status ="";
+//                    Gridmodel.add(obj);
+//                }
+//                clubList = Gridmodel;
+//                setUpRecyclerView();
+////                GridAdapter = new gridAdapter(Gridmodel);
+////                recyclerView.setAdapter(GridAdapter);
+//            }else {
+//                Log.e("Firestore","Error getting documnet: ",task.getException());
+//            }
+//        });
     }
 
 //        recyclerView = (RecyclerView) findViewById(R.id.recycler);
