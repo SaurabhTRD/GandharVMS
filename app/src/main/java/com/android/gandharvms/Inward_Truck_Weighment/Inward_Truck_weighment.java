@@ -29,10 +29,13 @@ import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.google.firebase.Timestamp;
@@ -67,6 +70,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -115,6 +119,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     private char inOut=Global_Var.getInstance().InOutType;
     private String EmployeId=Global_Var.getInstance().EmpId;
     private int inwardid;
+    private LoginMethod userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +127,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         setContentView(R.layout.activity_inward_truck_weighment);
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
+        userDetails = RetroApiClient.getLoginApi();
 
         //Call Api method
         weighmentdetails= RetroApiClient.getWeighmentDetails();
@@ -231,35 +237,65 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     }
 
     public void makeNotification(String vehicleNumber,String outTime) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // Assume you have a user role to identify the specific role
+//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+//                        String specificRole = "Weighment";
+//                        // Get the value of the "role" node                    ;
+//                        if (issue.toString().contains(specificRole)) {
+//                            //getting the token
+//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
+//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
+//                                    "Inward Truck Store Process Done..!",
+//                                    "Vehicle Number:-" + vehicleNumber + " has completed Store process at " + outTime+ " & Ready To Weighment",
+//                                    getApplicationContext(), Inward_Truck_weighment.this);
+//                            notificationsSender.SendNotifications();
+//                        }
+//                    }
+//                } else {
+//                    // Handle the case when the "role" node doesn't exist
+//                    Log.d("Role Data", "Role node doesn't exist");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle errors here
+//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+//            }
+//        });
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Assume you have a user role to identify the specific role
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        String specificRole = "Weighment";
-                        // Get the value of the "role" node                    ;
-                        if (issue.toString().contains(specificRole)) {
-                            //getting the token
-                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-                                    "Inward Truck Store Process Done..!",
-                                    "Vehicle Number:-" + vehicleNumber + " has completed Store process at " + outTime+ " & Ready To Weighment",
-                                    getApplicationContext(), Inward_Truck_weighment.this);
-                            notificationsSender.SendNotifications();
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel responseModel :userList){
+                            String specificrole = "Store";
+                            if (specificrole.equals(responseModel.getDepartment())){
+                                token = responseModel.getToken();
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Inward Tanker Store Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        getApplicationContext(),
+                                        Inward_Truck_weighment.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
                         }
                     }
-                } else {
-                    // Handle the case when the "role" node doesn't exist
-                    Log.d("Role Data", "Role node doesn't exist");
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here
-                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
             }
         });
     }
@@ -298,6 +334,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body()!=null)
                     {
+                        makeNotification(vehicalnumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Truck_weighment.this, Inward_Tanker.class));

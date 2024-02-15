@@ -31,8 +31,10 @@ import android.widget.Toast;
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -129,6 +131,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     private API_In_Tanker_Security apiInTankerSecurity;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int InwardId;
+    private LoginMethod userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +139,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         setContentView(R.layout.activity_inward_tanker_security);
 
         getmaxserialno = RetroApiClient.getLoginApi();
+        userDetails = RetroApiClient.getLoginApi();
 
         isReportingCheckBox = findViewById(R.id.isreporting);
         reportingRemarkLayout = findViewById(R.id.edtreportingremark);
@@ -384,7 +388,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 //            cbox.setEnabled(false);
                 saveButton.setVisibility(View.GONE);
                 button1.setVisibility(View.GONE);
-                btnadd.setVisibility(View.GONE);
+//                btnadd.setVisibility(View.GONE);
             } else {
                 GetMaxSerialNo(formattedDate);
             }
@@ -425,35 +429,83 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // Assume you have a user role to identify the specific role
+//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+//                        String specificRole = "Weighment";
+//                        // Get the value of the "role" node                    ;
+//                        if (issue.toString().contains(specificRole)) {
+//                            //getting the token
+//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
+//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
+//                                    "Inward Tanker Security Process Done..!",
+//                                    "Vehicle Number:-" + vehicleNumber + " has completed security process at " + outTime,
+//                                    getApplicationContext(), Inward_Tanker_Security.this);
+//                            notificationsSender.SendNotifications();
+//                        }
+//                    }
+//                } else {
+//                    // Handle the case when the "role" node doesn't exist
+//                    Log.d("Role Data", "Role node doesn't exist");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle errors here
+//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+//            }
+//        });
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Assume you have a user role to identify the specific role
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        String specificRole = "Weighment";
-                        // Get the value of the "role" node                    ;
-                        if (issue.toString().contains(specificRole)) {
-                            //getting the token
-                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-                                    "Inward Tanker Security Process Done..!",
-                                    "Vehicle Number:-" + vehicleNumber + " has completed security process at " + outTime,
-                                    getApplicationContext(), Inward_Tanker_Security.this);
-                            notificationsSender.SendNotifications();
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Weighment";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Inward Tanker Security Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        getApplicationContext(),
+                                        Inward_Tanker_Security.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
                         }
                     }
-                } else {
-                    // Handle the case when the "role" node doesn't exist
-                    Log.d("Role Data", "Role node doesn't exist");
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here
-                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Security.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -524,6 +576,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null) {
+                        makeNotification(vehicalnumber, outTime);
                         Toast.makeText(Inward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -847,7 +900,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
 
             Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId, serialnumber, invoice, vehiclenumber, Date, party, material, oapo, drivermobile, 'W', 'I', intime,
-                    "", vehicltype, intime, outTime, qty, qtyuom, netwtuom, netweight, materialList.toString().replace("[]", ""), remark, "", "", "", "", "", EmployeId);
+                    "", vehicltype, intime, outTime, qtyuom, netwtuom, netweight, qty, materialList.toString().replace("[]", ""), remark, "", "", "", "", "", EmployeId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.updatesecuritydata(requestModelInTankerSecurityupdate);
@@ -855,6 +908,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null) {
+                        makeNotification(vehiclenumber, outTime);
                         Toast.makeText(Inward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                     }
                 }

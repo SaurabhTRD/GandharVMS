@@ -35,9 +35,12 @@ import android.widget.Toast;
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
@@ -136,6 +139,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private String token;
     private int inwardid;
+    private LoginMethod userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -144,6 +148,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
 
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
+        userDetails = RetroApiClient.getLoginApi();
 
         img1 = findViewById(R.id.intanvehimageView1);
         img2 = findViewById(R.id.intandriverimageView2);
@@ -230,35 +235,66 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // Assume you have a user role to identify the specific role
+//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+//                        String specificRole = "Sampling";
+//                        // Get the value of the "role" node                    ;
+//                        if (issue.toString().contains(specificRole)) {
+//                            //getting the token
+//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
+//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
+//                                    "Inward Tanker Weighment Process Done..!",
+//                                    "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
+//                                    getApplicationContext(), Inward_Tanker_Weighment.this);
+//                            notificationsSender.SendNotifications();
+//                        }
+//                    }
+//                } else {
+//                    // Handle the case when the "role" node doesn't exist
+//                    Log.d("Role Data", "Role node doesn't exist");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle errors here
+//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+//            }
+//        });
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Assume you have a user role to identify the specific role
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        String specificRole = "Sampling";
-                        // Get the value of the "role" node                    ;
-                        if (issue.toString().contains(specificRole)) {
-                            //getting the token
-                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-                                    "Inward Tanker Weighment Process Done..!",
-                                    "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
-                                    getApplicationContext(), Inward_Tanker_Weighment.this);
-                            notificationsSender.SendNotifications();
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel :userList){
+                            String specificrole = "Sampling";
+                            if (specificrole.equals(resmodel.getDepartment())){
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Inward Tanker Sampling Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        getApplicationContext(),
+                                        Inward_Tanker_Weighment.this
+
+                                );
+                            }
                         }
                     }
-                } else {
-                    // Handle the case when the "role" node doesn't exist
-                    Log.d("Role Data", "Role node doesn't exist");
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here
-                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
             }
         });
     }
@@ -303,6 +339,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null) {
+                        makeNotification(vehicelnumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Weighment.this, Inward_Tanker.class));

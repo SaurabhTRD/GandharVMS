@@ -23,10 +23,13 @@ import android.widget.Toast;
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
@@ -49,6 +52,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
@@ -81,6 +85,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     private char InOutType=Global_Var.getInstance().InOutType;
     String createdby = Global_Var.getInstance().Name;
     private int inwardid;
+    private LoginMethod userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +95,8 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         inward_Tanker_SamplingMethod= RetroApiClient.getInward_Tanker_Sampling();
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
+
+        userDetails = RetroApiClient.getLoginApi();
 
         etssignofproduction = findViewById(R.id.etreciving);
         etinvoiceno = findViewById(R.id.etsubmitted);
@@ -154,37 +161,75 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
+//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+//                if (dataSnapshot.exists()) {
+//                    // Assume you have a user role to identify the specific role
+//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
+//                        String specificRole = "Laboratory";
+//                        // Get the value of the "role" node                    ;
+//                        if (issue.toString().contains(specificRole)) {
+//                            //getting the token
+//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
+//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
+//                                    "Inward Tanker Sampling Process Done..!",
+//                                    "Vehicle Number:-" + vehicleNumber + " has completed Sampling process at " + outTime,
+//                                    getApplicationContext(), Inward_Tanker_Sampling.this);
+//                            notificationsSender.SendNotifications();
+//                        }
+//                    }
+//                } else {
+//                    // Handle the case when the "role" node doesn't exist
+//                    Log.d("Role Data", "Role node doesn't exist");
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//                // Handle errors here
+//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+//            }
+//        });
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Assume you have a user role to identify the specific role
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        String specificRole = "Laboratory";
-                        // Get the value of the "role" node                    ;
-                        if (issue.toString().contains(specificRole)) {
-                            //getting the token
-                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-                                    "Inward Tanker Sampling Process Done..!",
-                                    "Vehicle Number:-" + vehicleNumber + " has completed Sampling process at " + outTime,
-                                    getApplicationContext(), Inward_Tanker_Sampling.this);
-                            notificationsSender.SendNotifications();
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel responseModel :userList){
+                            String specificrole = "Laboratory";
+                            if (specificrole.equals(responseModel.getDepartment())){
+                                token =responseModel.getToken();
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Inward Tanker Laboratory Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        getApplicationContext(),
+                                        Inward_Tanker_Sampling.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
                         }
                     }
-                } else {
-                    // Handle the case when the "role" node doesn't exist
-                    Log.d("Role Data", "Role node doesn't exist");
+                }else {
+                    Log.d("API", "Unsuccessful API response");
                 }
             }
 
             @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here
-                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
             }
         });
+    }
+
+    private String getCurrentTime() {
+        // Get the current time
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return sdf.format(new Date());
     }
 
 
@@ -193,6 +238,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         String etsubmitted = etinvoiceno.getText().toString().trim();
         String date = etsdate.getText().toString().trim();
         String vehiclenumber = etvehicleno.getText().toString().trim();
+        String outTime = getCurrentTime();
 
         if (vehiclenumber.isEmpty() || etreciving.isEmpty() || date.isEmpty() || etsubmitted.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
@@ -206,6 +252,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if(response.isSuccessful() && response.body() != null)
                     {
+                        makeNotification(vehiclenumber, outTime);
                         if(response.body().booleanValue())
                         {
                             Log.d("Registration", "Response Body: " + response.body());
