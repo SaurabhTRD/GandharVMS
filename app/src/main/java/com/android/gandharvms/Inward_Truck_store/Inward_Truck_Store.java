@@ -29,6 +29,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.Inward_Truck_Security.In_Truck_security_list;
 import com.android.gandharvms.Inward_Truck_Weighment.In_Truck_weigment_list;
@@ -678,4 +679,8 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
         });
     }*/
+    public void StoreViewclick(View view){
+        Intent intent = new Intent(this, grid.class);
+        startActivity(intent);
+    }
 }

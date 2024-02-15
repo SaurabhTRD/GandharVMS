@@ -24,6 +24,7 @@ import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Inward_Tanker_Security.RetroApiclient_In_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
@@ -208,12 +209,12 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     }
 
     public void btn_clicktoViewLabReport(View view) {
-        Intent intent = new Intent(this, Tanker_Production_Lab_Report_Data.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(this, grid.class);
+        startActivity(intent);*/
     }
 
-    public void weViewclick(View view) {
-        Intent intent = new Intent(this, Inward_Tanker_Production_Viewdata.class);
+    public void ProductionViewclick(View view) {
+        Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }
 

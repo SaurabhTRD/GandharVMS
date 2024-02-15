@@ -26,6 +26,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_saampling_View_data;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
@@ -354,8 +355,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         });
     }*/
     public void btn_clicktoViewSAMPLEREPORT(View view) {
-        Intent intent = new Intent(this, Inward_Tanker_saampling_View_data.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(this, grid.class);
+        startActivity(intent);*/
     }
 
     public void weViewclick(View view) {
@@ -363,8 +364,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public void labviewclick(View view) {
-        Intent intent = new Intent(this, Inward_Tanker_Lab_Viewdata.class);
+    public void Labviewclick(View view) {
+        Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }
 

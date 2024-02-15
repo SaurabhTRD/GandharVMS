@@ -452,7 +452,7 @@
                       android:onClick="gridclick"
                       android:text="Pending"
                       android:textStyle="bold"
-                      android:textSize="22dp">
+                      android:textSize="15dp">
 
                   </androidx.appcompat.widget.AppCompatButton>
 
@@ -463,7 +463,7 @@
                       android:layout_below="@id/OUM."
                       android:layout_marginLeft="12dp"
                       android:text="Completed"
-                      android:textSize="22dp"
+                      android:textSize="15dp"
                       android:textStyle="bold"
                       android:onClick="Viewclick"
 
@@ -478,7 +478,7 @@
                       android:layout_below="@id/OUM."
                       android:layout_marginLeft="10dp"
                       android:text="SUBMIT"
-                      android:textSize="22dp"
+                      android:textSize="15dp"
                       android:textStyle="bold">
 
                   </androidx.appcompat.widget.AppCompatButton>

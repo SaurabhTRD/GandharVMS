@@ -23,7 +23,9 @@ import android.widget.Toast;
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
@@ -321,7 +323,15 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     }
 
     public void samplegrid(View view){
-        Intent intent = new Intent(this, in_Tanker_sampling_grid.class);
+        Intent intent = new Intent(this, grid.class);
         startActivity(intent);
+        /*Intent intent = new Intent(this, in_Tanker_sampling_grid.class);
+        startActivity(intent);*/
+    }
+    public void SamplingViewclick(View view){
+        /*Intent intent = new Intent(this, grid.class);
+        startActivity(intent);*/
+        /*Intent intent = new Intent(this, in_Tanker_sampling_grid.class);
+        startActivity(intent);*/
     }
 }

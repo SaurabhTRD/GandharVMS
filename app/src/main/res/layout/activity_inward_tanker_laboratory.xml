@@ -60,8 +60,8 @@
             android:layout_marginLeft="21dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="21dp"
-            android:onClick="labviewclick"
-            android:text="View LABORATORY Data"
+            android:onClick="Labviewclick"
+            android:text="Pending Vehicles"
             android:textSize="18dp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints">

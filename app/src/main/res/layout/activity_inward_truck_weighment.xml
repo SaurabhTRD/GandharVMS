@@ -14,8 +14,8 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="25dp"
         android:layout_marginRight="30dp"
-        android:onClick="Viewclick"
-        android:text="View Weighment Data"
+        android:onClick="WeighViewclick"
+        android:text="Pending Vehicles"
         android:textSize="18dp"
         android:textStyle="bold"
         tools:ignore="MissingConstraints"></Button>
