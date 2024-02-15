@@ -35,38 +35,37 @@ import retrofit2.Response;
 
 public class Register extends AppCompatActivity {
 
-    private int setRole;
-    private String token;
-    private final int MAX_LENGTH=10;
-
-    private LoginMethod loginMethod;
-
-    EditText name,emplid,emailid,phoneno,password;
+    private final int MAX_LENGTH = 10;
+    EditText name, emplid, emailid, phoneno, password;
     Button register;
     TextView loginnowbtn;
-    CheckBox security,weighment,sampling,production,laboratary,stores;
+    CheckBox security, weighment, sampling, production, laboratary, stores;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
+    private int setRole;
+    private String token;
+    private LoginMethod loginMethod;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-          name = findViewById(R.id.name);
-          emplid =findViewById(R.id.emplid);
-          emailid = findViewById(R.id.emailid);
-          phoneno = findViewById(R.id.phoneno);
-          password = findViewById(R.id.password);
+        name = findViewById(R.id.name);
+        emplid = findViewById(R.id.emplid);
+        emailid = findViewById(R.id.emailid);
+        phoneno = findViewById(R.id.phoneno);
+        password = findViewById(R.id.password);
 
-          register = findViewById(R.id.btnregister);
-          loginnowbtn = findViewById(R.id.loginlink);
+        register = findViewById(R.id.btnregister);
+        loginnowbtn = findViewById(R.id.loginlink);
 
-          security=findViewById(R.id.isSecurity);
-          weighment=findViewById(R.id.isWeighment);
-          sampling=findViewById(R.id.isSampling);
-          production=findViewById(R.id.isProduction);
-          laboratary=findViewById(R.id.isLaboratary);
-          stores=findViewById(R.id.isStores);
+        security = findViewById(R.id.isSecurity);
+        weighment = findViewById(R.id.isWeighment);
+        sampling = findViewById(R.id.isSampling);
+        production = findViewById(R.id.isProduction);
+        laboratary = findViewById(R.id.isLaboratary);
+        stores = findViewById(R.id.isStores);
 
-        loginMethod= RetroApiClient.getLoginApi();
+        loginMethod = RetroApiClient.getLoginApi();
         emailid.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -75,12 +74,13 @@ public class Register extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
             }
+
             @Override
             public void afterTextChanged(Editable editable) {
                 String email = editable.toString().trim();
-                if(!isValidEmail(email)){
+                if (!isValidEmail(email)) {
                     emailid.setError("Invalid Email Format");
-                }else {
+                } else {
                     emailid.setError(null);//clear the error
                 }
             }
@@ -120,7 +120,7 @@ public class Register extends AppCompatActivity {
         security.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(buttonView.isChecked()){
+                if (buttonView.isChecked()) {
                     weighment.setChecked(false);
                     sampling.setChecked(false);
                     production.setChecked(false);
@@ -133,7 +133,7 @@ public class Register extends AppCompatActivity {
         weighment.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(buttonView.isChecked()){
+                if (buttonView.isChecked()) {
                     security.setChecked(false);
                     sampling.setChecked(false);
                     production.setChecked(false);
@@ -146,7 +146,7 @@ public class Register extends AppCompatActivity {
         sampling.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(buttonView.isChecked()){
+                if (buttonView.isChecked()) {
                     weighment.setChecked(false);
                     security.setChecked(false);
                     production.setChecked(false);
@@ -158,7 +158,7 @@ public class Register extends AppCompatActivity {
         production.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(buttonView.isChecked()){
+                if (buttonView.isChecked()) {
                     weighment.setChecked(false);
                     sampling.setChecked(false);
                     security.setChecked(false);
@@ -170,7 +170,7 @@ public class Register extends AppCompatActivity {
         laboratary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(buttonView.isChecked()){
+                if (buttonView.isChecked()) {
                     weighment.setChecked(false);
                     sampling.setChecked(false);
                     production.setChecked(false);
@@ -183,7 +183,7 @@ public class Register extends AppCompatActivity {
         stores.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean b) {
-                if(buttonView.isChecked()){
+                if (buttonView.isChecked()) {
                     weighment.setChecked(false);
                     sampling.setChecked(false);
                     production.setChecked(false);
@@ -207,75 +207,74 @@ public class Register extends AppCompatActivity {
         });
     }
 
-    private void InsertRegistrationDetails()
-    {
+    private void InsertRegistrationDetails() {
         final String nameTxt = name.getText().toString();
         final String emplidTxt = emplid.getText().toString();
         final String emailidTxt = emailid.getText().toString();
         final String phoneTxt = phoneno.getText().toString();
         final String passwordTxt = password.getText().toString();
 
-        if(security.isChecked()){
-            setRole=1;
+        if (security.isChecked()) {
+            setRole = 1;
         } else if (weighment.isChecked()) {
-            setRole=2;
+            setRole = 2;
         } else if (sampling.isChecked()) {
-            setRole=3;
+            setRole = 3;
         } else if (production.isChecked()) {
-            setRole=4;
+            setRole = 4;
         } else if (laboratary.isChecked()) {
-            setRole=5;
+            setRole = 5;
         } else if (stores.isChecked()) {
-            setRole=6;
+            setRole = 6;
         }
-        if(TextUtils.isEmpty(nameTxt)){
+        if (TextUtils.isEmpty(nameTxt)) {
             name.setError("Name is Required");
             return;
         }
-        if(TextUtils.isEmpty(emplidTxt)){
+        if (TextUtils.isEmpty(emplidTxt)) {
             emplid.setError("Employee Id is Required");
             return;
         }
-        if(TextUtils.isEmpty(emailidTxt)){
+        if (TextUtils.isEmpty(emailidTxt)) {
             emailid.setError("Email Id is Required");
             return;
         }
-        if(TextUtils.isEmpty(phoneTxt)){
+        if (TextUtils.isEmpty(phoneTxt)) {
             phoneno.setError("Phone No is Required");
             return;
         }
-        if (TextUtils.isEmpty(passwordTxt)){
+        if (TextUtils.isEmpty(passwordTxt)) {
             password.setError("Passsword is Required");
             return;
         }
-        if(passwordTxt.length()<6){
+        if (passwordTxt.length() < 6) {
             password.setError("Password Must be >= 6 Characters");
             return;
         }
 
         //Checkbox Validation
-        if(!(security.isChecked() || weighment.isChecked() || sampling.isChecked() || production.isChecked() || laboratary.isChecked() || stores.isChecked()))
-        {
+        if (!(security.isChecked() || weighment.isChecked() || sampling.isChecked() || production.isChecked() || laboratary.isChecked() || stores.isChecked())) {
             Toasty.warning(Register.this, "Please Select the Department", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            RegRequestModel regmodel= new RegRequestModel(nameTxt,emplidTxt,emailidTxt,Integer.parseInt(phoneTxt),passwordTxt,token,setRole,nameTxt);
+        } else {
+            RegRequestModel regmodel = new RegRequestModel(nameTxt, emplidTxt, emailidTxt, phoneTxt, passwordTxt, token, setRole, nameTxt);
             Call<Boolean> call = loginMethod.postregData(regmodel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if(response.isSuccessful() && response.body() != null)
-                    {
+                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Register.this, "User Register succesfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Register.this, Menu.class));
                         finish();
                     }else {
                         // Registration failed
+                        Log.e("Registration", "Unexpected response code: " + response.code());
+                        Toasty.error(Register.this, "Unexpected response code..!", Toast.LENGTH_SHORT).show();
                         Log.e("Registration", "Registration failed. Response: " + response.body());
                         Toasty.error(Register.this, "Registration failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("Retrofit", "Failure: " + t.getMessage());
@@ -291,11 +290,12 @@ public class Register extends AppCompatActivity {
                             }
                         }
                     }
-                    Toasty.error(Register.this,"Registration failed..!",Toast.LENGTH_SHORT).show();
+                    Toasty.error(Register.this, "Registration failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
     private boolean isValidEmail(CharSequence target) {
         return (Patterns.EMAIL_ADDRESS.matcher(target).matches());
     }

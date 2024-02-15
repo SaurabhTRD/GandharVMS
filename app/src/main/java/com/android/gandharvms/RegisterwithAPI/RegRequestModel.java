@@ -3,20 +3,20 @@ package com.android.gandharvms.RegisterwithAPI;
 import com.google.type.DateTime;
 
 public class RegRequestModel {
-    private String Name;
+    private String EmployeeName;
     private String EmpId;
-    private String EmailId;
-    private int PhoneNo;
+    private String EmailID;
+    private String MobileNo;
     private String Password;
     private String Token;
     private int DeptId;
     private String CreatedBy;
 
-    public RegRequestModel(String name, String empId, String emailId, int phoneNo, String password, String token, int deptId, String createdBy) {
-        Name = name;
+    public RegRequestModel(String name, String empId, String emailId, String phoneNo, String password, String token, int deptId, String createdBy) {
+        EmployeeName = name;
         EmpId = empId;
-        EmailId = emailId;
-        PhoneNo = phoneNo;
+        EmailID = emailId;
+        MobileNo = phoneNo;
         Password = password;
         Token = token;
         DeptId = deptId;

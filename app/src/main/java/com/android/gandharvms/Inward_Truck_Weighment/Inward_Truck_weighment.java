@@ -154,13 +154,13 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         img2 = findViewById(R.id.ettrimageView2);
         storage = FirebaseStorage.getInstance();
 
-        view = findViewById(R.id.viewclick);
+        /*view = findViewById(R.id.viewclick);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Inward_Truck_weighment.this, Inward_Truck_Weighment_Viewdata.class));
             }
-        });
+        });*/
 
         if (getIntent().hasExtra("VehicleNumber")) {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'W', 'I');

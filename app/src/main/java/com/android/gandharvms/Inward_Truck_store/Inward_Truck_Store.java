@@ -233,13 +233,13 @@ public class Inward_Truck_Store extends AppCompatActivity {
 
 
         //listdata
-        view = findViewById(R.id.viewclick);
+        /*view = findViewById(R.id.viewclick);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Inward_Truck_Store.this, Inward_Truck_Store_viewdata.class));
             }
-        });
+        });*/
 
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
