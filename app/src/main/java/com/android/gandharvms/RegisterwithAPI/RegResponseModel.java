@@ -4,7 +4,7 @@ public class RegResponseModel {
     private String Name;
     private String EmpId;
     private String EmailId;
-    private int PhoneNo;
+    private String PhoneNo;
     private String Password;
     private String Token;
     private int DeptId;
@@ -34,11 +34,11 @@ public class RegResponseModel {
         EmailId = emailId;
     }
 
-    public int getPhoneNo() {
+    public String getPhoneNo() {
         return PhoneNo;
     }
 
-    public void setPhoneNo(int phoneNo) {
+    public void setPhoneNo(String phoneNo) {
         PhoneNo = phoneNo;
     }
 

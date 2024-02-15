@@ -263,7 +263,10 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etlabsub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                labinsertdata();
+
+                /*labinsertdata();*/
+                makeNotification("", "");
+
             }
         });
 
@@ -415,7 +418,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null) {
-                        makeNotification(vehicle, outTime);
+                        /*makeNotification(vehicle, outTime);*/
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker.class));
