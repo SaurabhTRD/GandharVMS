@@ -313,7 +313,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 //            startActivity(intent);
 
             Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid,intime,outTime,reqtounload,confirmunload,tanknumber,tanknumbers,
-                    EmployeId,vehicleNumber,etser,'W',inOut,vehicleType,eddate,material);
+                    EmployeId,vehicleNumber,etser,'W','O',vehicleType,eddate,material);
 
             Call<Boolean> call = apiInTankerProduction.insertproductionData(requestInTankerProduction);
             call.enqueue(new Callback<Boolean>() {

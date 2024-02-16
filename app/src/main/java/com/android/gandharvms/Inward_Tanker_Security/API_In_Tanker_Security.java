@@ -26,8 +26,10 @@ public interface API_In_Tanker_Security {
             @Query("NextProcess") char NextProcess,
             @Query("inOut") char inOut);
 
-    @GET("api/InwardSecurity/GetSecurityList")
-    Call<List<ListingResponse_InTankerSequrity>> getintankersecurityListData(@Query("NextProcess") char nextProcess);
+    @GET("api/InwardSecurity/GetInwardSecurityList")
+    Call<List<ListingResponse_InTankerSequrity>> getintankersecurityListData(
+            @Query("FromDate") String FromDate,
+            @Query("Todate") String Todate);
 
 
 }

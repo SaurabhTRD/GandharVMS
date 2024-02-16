@@ -22,4 +22,7 @@ public interface Weighment {
                                                          @Query("inOut") char inOut);
     @POST("api/InwardWeighment/Add")
     Call<Boolean> insertWeighData(@Body InTanWeighRequestModel insertweighmodel);
+
+    @POST("api/InwardWeighment/UpdateOutWeighmentDetails")
+    Call<Boolean> inwardoutweighment(@Body InTanWeighRequestModel inTanWeighRequestModel);
 }

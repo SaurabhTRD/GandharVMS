@@ -40,6 +40,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -122,11 +123,9 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
 
         securitylist = new ArrayList<>();
         char nextprocess= Global_Var.getInstance().DeptType;
-        GetsecuritylistData(nextprocess);
-
-
-
-
+        String FromDate = getCurrentDateTime();
+        String Todate = getCurrentDateTime();
+        GetsecuritylistData(FromDate,Todate);
 
 //        startDatePicker.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -328,9 +327,18 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
 //        });
 
    }
+    private String getCurrentDateTime() {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
 
-    private void GetsecuritylistData(char nextprocess) {
-        Call<List<ListingResponse_InTankerSequrity>> call = securitydetails.getintankersecurityListData(nextprocess);
+        // Format the date and time as a string
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(now);
+    }
+
+    private void GetsecuritylistData(String FromDate,String Todate) {
+        Call<List<ListingResponse_InTankerSequrity>> call = securitydetails.getintankersecurityListData(FromDate,Todate);
         call.enqueue(new Callback<List<ListingResponse_InTankerSequrity>>() {
             @Override
             public void onResponse(Call<List<ListingResponse_InTankerSequrity>> call, Response<List<ListingResponse_InTankerSequrity>> response) {

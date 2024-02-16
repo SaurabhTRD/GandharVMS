@@ -35,9 +35,12 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -250,7 +253,9 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
         recview.setLayoutManager(new LinearLayoutManager(this));
         trucksecuritylist = new ArrayList<>();
         char nextprocess= Global_Var.getInstance().DeptType;
-        GetsecuritylistData(nextprocess);
+        String FromDate = getCurrentDateTime();
+        String Todate = getCurrentDateTime();
+        GetsecuritylistData(FromDate,Todate);
 
 
 
@@ -274,8 +279,18 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
 
     }
 
-    private void GetsecuritylistData(char nextprocess) {
-        Call<List<ListingResponse_InTankerSequrity>> call = securitydetails.getintankersecurityListData(nextprocess);
+    private String getCurrentDateTime() {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // Format the date and time as a string
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(now);
+    }
+
+    private void GetsecuritylistData(String FromDate,String Todate) {
+        Call<List<ListingResponse_InTankerSequrity>> call = securitydetails.getintankersecurityListData(FromDate,Todate);
         call.enqueue(new Callback<List<ListingResponse_InTankerSequrity>>() {
             @Override
             public void onResponse(Call<List<ListingResponse_InTankerSequrity>> call, Response<List<ListingResponse_InTankerSequrity>> response) {
