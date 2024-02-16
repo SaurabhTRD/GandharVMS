@@ -30,6 +30,7 @@ public class Update_Request_Model_Insequrity {
     public String TaxInvoice;
     public String EwayBill;
     public String UpdatedBy;
+    public String OutInTime;
 
 
     public Update_Request_Model_Insequrity(int inwardId,String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String updatedBy) {

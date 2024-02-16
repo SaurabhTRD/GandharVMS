@@ -39,6 +39,15 @@ public class    Respo_Model_In_Tanker_security {
     //private String CreatedDate ;
     private String UpdatedBy ;
     private String CurrStatus;
+    public String OutInTime;
+
+    public String getOutInTime() {
+        return OutInTime;
+    }
+
+    public void setOutInTime(String outInTime) {
+        OutInTime = outInTime;
+    }
 
     public int getId() {
         return Id;
