@@ -34,7 +34,15 @@ public class ListingResponse_InTankerSequrity {
     private boolean IsActive;
     private String CreatedBy;
     private  String UpdatedBy;
+    public String OutInTime;
 
+    public String getOutInTime() {
+        return OutInTime;
+    }
+
+    public void setOutInTime(String outInTime) {
+        OutInTime = outInTime;
+    }
 
     public int getId() {
         return Id;

@@ -41,6 +41,7 @@ public class InTanWeighResponseModel {
     String OutVehicleImage;
     String OutDriverImage;
     int Qty;
+    public String OutInTime;
 
     public int getId() {
         return Id;

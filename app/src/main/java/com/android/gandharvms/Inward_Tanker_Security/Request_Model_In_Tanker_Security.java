@@ -31,6 +31,7 @@ public class Request_Model_In_Tanker_Security {
     public String TaxInvoice;
     public String EwayBill;
     public String CreatedBy;
+    public String OutInTime;
 
     public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
         SerialNo = serialNo;

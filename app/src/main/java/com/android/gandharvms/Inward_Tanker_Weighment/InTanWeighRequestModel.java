@@ -37,6 +37,7 @@ public class InTanWeighRequestModel {
     String UpdatedBy;
     String OutVehicleImage;
     String OutDriverImage;
+    public String OutInTime;
 
 
     public InTanWeighRequestModel(int inwardId, String inTime, String outTime, String grossWeight, String netWeight,
@@ -45,7 +46,7 @@ public class InTanWeighRequestModel {
                                   String serialNo, String vehicleNo, String date, String partyName,
                                   String material, String OA_PO_number, int driver_MobileNo, char nextprocess,
                                   char i_O, String vehicleType, String createdBy,
-                                  String updatedBy,String outVehicleImage, String outDriverImage) {
+                                  String updatedBy,String outVehicleImage, String outDriverImage,String outInTime) {
         InwardId = inwardId;
         InTime = inTime;
         OutTime = outTime;
@@ -73,5 +74,6 @@ public class InTanWeighRequestModel {
         UpdatedBy=updatedBy;
         OutVehicleImage = outVehicleImage;
         OutDriverImage = outDriverImage;
+        OutInTime=outInTime;
     }
 }
