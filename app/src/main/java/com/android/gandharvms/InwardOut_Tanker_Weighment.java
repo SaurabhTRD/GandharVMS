@@ -20,6 +20,7 @@ import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.In_Tanker_Weighment_list;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
+import com.android.gandharvms.Inward_Tanker_Weighment.Model_InwardOutweighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
@@ -131,6 +132,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         String grossweight = grswt.getText().toString().trim();
         String etnetweight = etnetwt.getText().toString().trim();
 
+
         if (intime.isEmpty() || tare.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
@@ -151,10 +153,12 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
 //                        }
 //                    });
 
-            InTanWeighRequestModel weighReqModel = new InTanWeighRequestModel(inwardid, intime, "", grossweight, tare, etnetweight,
-                    "", "", "", "", Integer.parseInt(""), "", "", "",
-                    vehiclenumber, "", "", "", "", Integer.parseInt(""), 'S', inOut, vehicleType, EmployeId, EmployeId,"","");
-            Call<Boolean> call = weighmentdetails.inwardoutweighment(weighReqModel);
+//            InTanWeighRequestModel weighReqModel = new InTanWeighRequestModel(inwardid, intime, "", grossweight, tare, etnetweight,
+//                    "", "", "", "", Integer.parseInt(""), "", "", "",
+//                    vehiclenumber, "", "", "", "", Integer.parseInt(""), 'S', inOut, vehicleType, EmployeId, EmployeId,"","");
+
+            Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,grossweight,etnetweight,tare,"","",'S',inOut,vehicleType,intime);
+            Call<Boolean> call = weighmentdetails.inwardoutweighment(modelInwardOutweighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -258,6 +262,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                    if (data.getVehicleNo() != ""){
                        grswt.setText(data.getGrossWeight());
                        etnetwt.callOnClick();
+                       inwardid = data.getInwardId();
                    }
                }
            }

@@ -6,10 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".Outward_Tanker_weighment">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="750dp"
+        android:layout_height="wrap_content"
 
         android:layout_marginTop="10dp"
 
@@ -161,6 +164,90 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/ettankernumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Tanker Number"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/ettransportname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Transporter Name"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/ethowmuchqtyfill"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="How Much Qty want to filled"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etlocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Location"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -300,6 +387,8 @@
 
 
     </LinearLayout>
+
+    </ScrollView>
 
 
 

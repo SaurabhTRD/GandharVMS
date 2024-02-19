@@ -4,13 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.RadioButton;
 
 public class InwardOut_Tanker_Security extends AppCompatActivity {
+
+    EditText edintime ;
+    RadioButton lrcopyYes, lrcopyNo, deliveryYes, deliveryNo, taxinvoiceYes, taxinvoiceNo, ewaybillYes, ewaybillNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_out_tanker_security);
+        edintime = findViewById(R.id.etintime);
+
+
+//        String lrCopySelection = lrcopyYes.isChecked() ? "Yes" : "No";
+//        String deliverySelection = deliveryYes.isChecked() ? "Yes" : "No";
+//        String taxInvoiceSelection = taxinvoiceYes.isChecked() ? "Yes" : "No";
+//        String ewayBillSelection = ewaybillYes.isChecked() ? "Yes" : "No";
     }
 
     public void onBackPressed(){

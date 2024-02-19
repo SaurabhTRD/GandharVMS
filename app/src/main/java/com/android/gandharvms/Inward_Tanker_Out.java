@@ -21,7 +21,7 @@ public class Inward_Tanker_Out extends AppCompatActivity {
     }
     public void inwardtankeroutclick(View view){
         Global_Var.getInstance().DeptType='S';
-        Intent intent = new Intent(this, InwardOut_Truck_Security.class);
+        Intent intent = new Intent(this, InwardOut_Tanker_Security.class);
         startActivity(intent);
     }
 
