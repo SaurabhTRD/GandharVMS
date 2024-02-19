@@ -32,7 +32,7 @@ public class InTanWeighResponseModel {
      String PartyName;
      String Material;
      String OA_PO_number;
-     int Driver_MobileNo ;
+     String Driver_MobileNo ;
      char Nextprocess;
      char I_O;
      String VehicleType;
@@ -227,11 +227,11 @@ public class InTanWeighResponseModel {
         this.OA_PO_number = OA_PO_number;
     }
 
-    public int getDriver_MobileNo() {
+    public String getDriver_MobileNo() {
         return Driver_MobileNo;
     }
 
-    public void setDriver_MobileNo(int driver_MobileNo) {
+    public void setDriver_MobileNo(String driver_MobileNo) {
         Driver_MobileNo = driver_MobileNo;
     }
 

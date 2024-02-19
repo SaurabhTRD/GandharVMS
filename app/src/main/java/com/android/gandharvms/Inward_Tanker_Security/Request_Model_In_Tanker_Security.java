@@ -9,7 +9,7 @@ public class Request_Model_In_Tanker_Security {
     public String PartyName;
     public  String Material;
     public String OA_PO_number;
-    public  int Driver_MobileNo;
+    public  String Driver_MobileNo;
     public char Nextprocess;
     public char I_O;
     public String FactoryIn;
@@ -33,7 +33,7 @@ public class Request_Model_In_Tanker_Security {
     public String CreatedBy;
     public String OutInTime;
 
-    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
+    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
         SerialNo = serialNo;
         InvoiceNo = invoiceNo;
         VehicleNo = vehicleNo;
@@ -65,7 +65,7 @@ public class Request_Model_In_Tanker_Security {
         CreatedBy = createdBy;
     }
 
-    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
+    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
         SerialNo = serialNo;
         InvoiceNo = invoiceNo;
         VehicleNo = vehicleNo;

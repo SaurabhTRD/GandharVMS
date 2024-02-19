@@ -10,7 +10,7 @@ public class Update_Request_Model_Insequrity {
     public String PartyName;
     public  String Material;
     public String OA_PO_number;
-    public  int Driver_MobileNo;
+    public  String Driver_MobileNo;
     public char Nextprocess;
     public char I_O;
     public String FactoryIn;
@@ -33,7 +33,7 @@ public class Update_Request_Model_Insequrity {
     public String OutInTime;
 
 
-    public Update_Request_Model_Insequrity(int inwardId,String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, int driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String updatedBy) {
+    public Update_Request_Model_Insequrity(int inwardId,String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String updatedBy) {
         InwardId = inwardId;
         SerialNo = serialNo;
         InvoiceNo = invoiceNo;

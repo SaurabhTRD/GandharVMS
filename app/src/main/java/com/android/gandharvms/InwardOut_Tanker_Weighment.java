@@ -86,12 +86,12 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         etsubmit = (Button) findViewById(R.id.prosubmit);
         dbroot = FirebaseFirestore.getInstance();
 
-        etsubmit.setOnClickListener(new View.OnClickListener() {
+        /*etsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 insert();
             }
-        });
+        });*/
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -123,7 +123,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
     }
 
 
-    public void insert(){
+    /*public void insert(){
 
         String vehiclenumber = etvehicle.getText().toString().trim();
         String intime = etintime.getText().toString().trim();
@@ -187,7 +187,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
             });
 
         }
-    }
+    }*/
     public void onBackPressed(){
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);

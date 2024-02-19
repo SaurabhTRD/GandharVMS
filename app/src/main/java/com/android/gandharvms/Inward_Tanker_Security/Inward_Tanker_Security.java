@@ -534,7 +534,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
         String remark = etremark.getText().toString().trim();
         String pooa = edpooa.getText().toString().trim();
-        int mobnumber = Integer.parseInt(etmobilenum.getText().toString().trim());
+        String mobnumber = etmobilenum.getText().toString().trim();
         String edremark = repremark.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() || partyname.isEmpty() ||
                 intime.isEmpty() || material.isEmpty()) {
@@ -703,7 +703,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         int netweuom = 1;
         String remark = "";
         String pooa = "";
-        int mobnumber = 0;
+        String mobnumber = "";
         String edremark = "";
         Boolean isreporting = false;
         if (cbox.isChecked()) {
@@ -853,7 +853,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String Date = etdate.getText().toString().trim();
         String intime = etintime.getText().toString().trim();
         String invoice = etinvoice.getText().toString().trim();
-        int drivermobile = Integer.parseInt(etmobilenum.getText().toString().trim());
+        String drivermobile = etmobilenum.getText().toString().trim();
         String party = etsupplier.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
         String oapo = edpooa.getText().toString().trim();
