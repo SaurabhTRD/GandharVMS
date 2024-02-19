@@ -53,7 +53,7 @@ public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweig
         holder.vehiclenumber.setText(data.getVehicleNo());
         holder.suppliername.setText(data.getPartyName());
         holder.materialname.setText(data.getMaterial());
-        holder.driverno.setText(String.valueOf(data.getDriver_MobileNo()) );
+        holder.driverno.setText(data.getDriver_MobileNo());
         holder.oanumber.setText(data.getOA_PO_number());
         if(data.getDate()!=null)
         {

@@ -326,13 +326,13 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         else {
             InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,Grossweight,tareweight,netweight,
                     "","",remark,signby,Integer.parseInt(container),imgPath1,imgPath2,serialnumber,
-                    vehicalnumber,date,supplier,material,oanumber,Integer.parseInt(Driver),'R',inOut,vehicleType,EmployeId,EmployeId,"","","");
+                    vehicalnumber,date,supplier,material,oanumber,Driver,'R',inOut,vehicleType,EmployeId,EmployeId,"","","");
 
             Call<Boolean> call=weighmentdetails.insertWeighData(weighReqModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body()!=null)
+                    if (response.isSuccessful() && response.body()!=null && response.body()==true)
                     {
                         makeNotification(vehicalnumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());

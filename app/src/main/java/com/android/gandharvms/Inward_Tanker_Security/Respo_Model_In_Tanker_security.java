@@ -13,7 +13,7 @@ public class    Respo_Model_In_Tanker_security {
     private String PartyName ;
     private String Material ;
     private String OA_PO_number ;
-    private int Driver_MobileNo ;
+    private String Driver_MobileNo ;
     private char Nextprocess ;
     private char I_O ;
     private String FactoryIn ;
@@ -121,11 +121,11 @@ public class    Respo_Model_In_Tanker_security {
         this.OA_PO_number = OA_PO_number;
     }
 
-    public int getDriver_MobileNo() {
+    public String getDriver_MobileNo() {
         return Driver_MobileNo;
     }
 
-    public void setDriver_MobileNo(int driver_MobileNo) {
+    public void setDriver_MobileNo(String driver_MobileNo) {
         Driver_MobileNo = driver_MobileNo;
     }
 

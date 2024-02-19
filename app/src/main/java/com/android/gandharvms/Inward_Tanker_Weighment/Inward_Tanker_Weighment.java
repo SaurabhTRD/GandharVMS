@@ -331,14 +331,14 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             InTanWeighRequestModel weighReqModel = new InTanWeighRequestModel(inwardid, intime, outTime, grossweight, tareweight, netweight,
-                    shortagedip, shortageweight, remark, signby, Integer.parseInt(container), imgPath1, imgPath2, serialnumber,
-                    vehicelnumber, date, suppliername, materialname, oan, Integer.parseInt(driverno), 'M', inOut, vehicleType, EmployeId, EmployeId,"","","");
+                    shortagedip, shortageweight, remark, signby, Integer.parseInt(container), "imgPath1", "imgPath2", serialnumber,
+                    vehicelnumber, date, suppliername, materialname, oan, driverno, 'M', inOut, vehicleType, EmployeId, EmployeId,"","","");
 
             Call<Boolean> call = weighmentdetails.insertWeighData(weighReqModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null) {
+                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotification(vehicelnumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
@@ -532,7 +532,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                         etmaterialname.setEnabled(false);
                         etoano.setText(data.getOA_PO_number());
                         etoano.setEnabled(false);
-                        etdriverno.setText(String.valueOf(data.getDriver_MobileNo()));
+                        etdriverno.setText(data.getDriver_MobileNo());
                         etdriverno.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);

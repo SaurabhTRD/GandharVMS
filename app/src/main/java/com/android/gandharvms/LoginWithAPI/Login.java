@@ -106,7 +106,7 @@ public class Login extends AppCompatActivity {
                                     }
                                 }
                             }
-                            Toasty.error(Login.this,"Login failed..!",Toast.LENGTH_SHORT).show();
+                            Toasty.warning(Login.this,"NetWork Issues..!",Toast.LENGTH_SHORT).show();
                         }
                     });
                 }

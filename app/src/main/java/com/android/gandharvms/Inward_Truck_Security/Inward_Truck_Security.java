@@ -646,7 +646,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
         String remark = etremark.getText().toString().trim();
         String pooa = etoapo.getText().toString().trim();
-        int mobnumber = Integer.parseInt(etmobile.getText().toString().trim());
+        String mobnumber = etmobile.getText().toString().trim();
         String edremark = repremark.getText().toString().trim();
         String selectregister = etregister.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() || partyname.isEmpty() ||
@@ -804,7 +804,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
         int netweuom = 1;
         String remark = "";
         String pooa = "";
-        int mobnumber = 0;
+        String mobnumber = "";
         String edremark = "";
         Boolean isreporting = false ;
         if (cbox.isChecked()) {
@@ -1028,7 +1028,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
         String Date = etsdate.getText().toString().trim();
         String intime = etintime.getText().toString().trim();
         String invoice = etsinvocieno.getText().toString().trim();
-        int drivermobile = Integer.parseInt(etmobile.getText().toString().trim());
+        String drivermobile = etmobile.getText().toString().trim();
         String party = etssupplier.getText().toString().trim();
         String material = etsmaterial.getText().toString().trim();
         String oapo = etoapo.getText().toString().trim();
