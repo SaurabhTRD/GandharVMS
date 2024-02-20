@@ -256,19 +256,19 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                         if(response.body().booleanValue())
                         {
                             Log.d("Registration", "Response Body: " + response.body());
-                            Toasty.success(Inward_Tanker_Sampling.this, "User Register succesfully", Toast.LENGTH_SHORT).show();
+                            Toasty.success(Inward_Tanker_Sampling.this, "Inward Tanker Sampling succesfully", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(Inward_Tanker_Sampling.this, Inward_Tanker.class);
                             startActivity(intent);
                         }
                         else {
                             // Registration failed
-                            Log.e("Registration", "Registration failed. Response: " + response.body());
-                            Toasty.error(Inward_Tanker_Sampling.this, "Registration failed..!", Toast.LENGTH_SHORT).show();
+                            Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
+                            Toasty.error(Inward_Tanker_Sampling.this, "Inward Tanker Sampling failed..!", Toast.LENGTH_SHORT).show();
                         }
                     }else {
                         // Registration failed
-                        Log.e("Registration", "Registration failed. Response: " + response.body());
-                        Toasty.error(Inward_Tanker_Sampling.this, "Registration failed..!", Toast.LENGTH_SHORT).show();
+                        Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
+                        Toasty.error(Inward_Tanker_Sampling.this, "Inward Tanker Sampling failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
@@ -286,7 +286,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                             }
                         }
                     }
-                    Toasty.error(Inward_Tanker_Sampling.this,"Registration failed..!",Toast.LENGTH_SHORT).show();
+                    Toasty.error(Inward_Tanker_Sampling.this,"Inward Tanker Sampling failed..!",Toast.LENGTH_SHORT).show();
                 }
             });
 
