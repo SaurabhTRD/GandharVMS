@@ -300,9 +300,10 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
+                    android:onClick="inwardoutsecurityclick"
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="25dp"
-                    android:text="Cancel"
+                    android:text="Pending"
                     android:textSize="22dp"
                     android:textStyle="bold">
 

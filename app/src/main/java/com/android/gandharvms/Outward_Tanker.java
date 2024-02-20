@@ -25,14 +25,19 @@ public class Outward_Tanker extends AppCompatActivity {
         startActivity(intent);
     }
 
+//    public void inprocessrequestform(View view){
+//        Intent intent = new Intent(this, inprocessrequestform.class);
+//        startActivity(intent);
+//    }
+
     public void labouttanker(View view){
         Global_Var.getInstance().DeptType='L';
-        Intent intent = new Intent(this, Outward_Tanker_Laboratory.class);
+        Intent intent = new Intent(this, outwardlabforms.class);
         startActivity(intent);
     }
     public void productionouttanker(View view){
         Global_Var.getInstance().DeptType='P';
-        Intent intent = new Intent(this, Outward_Tanker_Production.class);
+        Intent intent = new Intent(this, inprocessrequestform.class);
         startActivity(intent);
     }
     public void samplingouttanker(View view){

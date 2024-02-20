@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.RadioButton;
+
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 
 public class InwardOut_Tanker_Security extends AppCompatActivity {
 
@@ -25,9 +28,16 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
 //        String ewayBillSelection = ewaybillYes.isChecked() ? "Yes" : "No";
     }
 
+
+
     public void onBackPressed(){
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
+    }
+
+    public void inwardoutsecurityclick(View view){
+        Intent intent = new Intent(this, grid.class);
+        startActivity(intent);
     }
 }

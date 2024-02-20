@@ -907,7 +907,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null) {
+                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotification(vehiclenumber, outTime);
                         Toast.makeText(Inward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                     }
