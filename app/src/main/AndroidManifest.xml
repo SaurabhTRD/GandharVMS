@@ -147,7 +147,7 @@
             android:name=".Outward_Tanker_weighment"
             android:exported="false" />
         <activity
-            android:name=".Outward_Tanker_Security"
+            android:name=".Outward_Tanker_Security.Outward_Tanker_Security"
             android:exported="false" />
         <activity
             android:name=".submenu.Submenu_outward_tanker"

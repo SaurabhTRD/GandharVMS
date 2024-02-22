@@ -7,6 +7,7 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -27,10 +28,35 @@ public class Outward_Truck_Security extends AppCompatActivity {
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
+    private CheckBox isReportingCheckBox;
+    private EditText reportingRemarkLayout;
+    Button saveButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck_security);
+
+        isReportingCheckBox = findViewById(R.id.isreporting);
+        reportingRemarkLayout = findViewById(R.id.edtreportingremark);
+        saveButton = findViewById(R.id.saveButton);
+
+        reportingRemarkLayout.setVisibility(View.GONE);
+        saveButton.setVisibility(View.GONE);
+
+        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                // Show the TextInputLayout and Button
+                reportingRemarkLayout.setVisibility(View.VISIBLE);
+                saveButton.setVisibility(View.VISIBLE);
+            } else {
+                // Hide the TextInputLayout and Button
+                reportingRemarkLayout.setVisibility(View.GONE);
+                saveButton.setVisibility(View.GONE);
+            }
+        });
+
+        saveButton.setOnClickListener(v -> {
+        });
 
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);

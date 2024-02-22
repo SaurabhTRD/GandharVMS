@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
+
 public class Outward_Tanker extends AppCompatActivity {
 
     @Override
@@ -16,7 +18,7 @@ public class Outward_Tanker extends AppCompatActivity {
     }
     public void sequirityoutwardTanker(View view){
         Global_Var.getInstance().DeptType='S';
-        Intent intent = new Intent(this,Outward_Tanker_Security.class);
+        Intent intent = new Intent(this, Outward_Tanker_Security.class);
         startActivity(intent);
     }
     public void Weighmentouttankerclick(View view){

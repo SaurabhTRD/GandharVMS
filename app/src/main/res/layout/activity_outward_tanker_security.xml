@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Outward_Tanker_Security">
+    tools:context=".Outward_Tanker_Security.Outward_Tanker_Security">
 
 
     <ScrollView
@@ -13,13 +13,126 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        android:layout_marginTop="10dp"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-        android:layout_marginBottom="10dp"
-        android:orientation="vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp">
+            <CheckBox
+                android:id="@+id/isreporting"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:textSize="16dp"
+                android:text="Is Reporting ?" />
+
+        </LinearLayout>
+
+
+
+
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+            android:id="@+id/Date"
+            android:layout_below="@id/invoiceno"
+
+            >
+            <EditText
+                android:id="@+id/etdate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Date"
+                android:inputType="date"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:focusable="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+            <EditText
+                android:id="@+id/etserialnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Serial Number"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+            <EditText
+                android:id="@+id/etvehicleno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Vehicle Number"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+
+
+            >
+            <EditText
+                android:id="@+id/edtreportingremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Reporting Remark"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"
+
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="250dp"
+                android:id="@+id/saveButton"
+                android:text="Save"
+                />
+        </LinearLayout>
+
 
 
 
@@ -43,25 +156,6 @@
                 android:textStyle="bold"
                 android:focusable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            >
-            <EditText
-                android:id="@+id/etserialnumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Serial Number"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -87,23 +181,6 @@
 
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            >
-            <EditText
-                android:id="@+id/etvehicleno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Vehicle Number"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold"/>
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -228,16 +305,16 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="95dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/rb_LRCopyYes"
+                    android:id="@+id/vehiclepermityes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Yes"/>
                 <RadioButton
-                    android:id="@+id/rb_LRCopyNo"
+                    android:id="@+id/vehiclepermitno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
@@ -269,17 +346,17 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="95dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/rb_DeliveryYes"
+                    android:id="@+id/pucyes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Yes"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_marginLeft="68dp"/>
                 <RadioButton
-                    android:id="@+id/rb_DeliveryNo"
+                    android:id="@+id/pucno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
@@ -310,17 +387,17 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="87dp"
+                android:layout_marginLeft="125dp"
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/rb_TaxInvoiceYes"
+                    android:id="@+id/insuranceyes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Yes" />
                 <RadioButton
-                    android:id="@+id/rb_TaxInvoiceNo"
+                    android:id="@+id/insuranceno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
@@ -339,7 +416,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Vehicle Fitness Certificate"
+                android:text="Veh Fitness Certificate"
                 android:gravity="start"
                 android:layout_gravity="start"
                 android:paddingStart="18dp"
@@ -352,10 +429,10 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
+                android:layout_marginRight="1dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/rb_EwaybillYes"
+                    android:id="@+id/vehfityes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -363,7 +440,7 @@
                     android:layout_marginLeft="39dp"
                     />
                 <RadioButton
-                    android:id="@+id/vehiclefitness"
+                    android:id="@+id/vehfitno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
@@ -393,10 +470,10 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
+                android:layout_marginLeft="49dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/driverlic"
+                    android:id="@+id/drilicyes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -404,7 +481,7 @@
                     android:layout_marginLeft="39dp"
                     />
                 <RadioButton
-                    android:id="@+id/driverlicradiobtn"
+                    android:id="@+id/drilicno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
@@ -434,7 +511,7 @@
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
+                android:layout_marginLeft="95dp"
                 android:orientation="horizontal">
                 <RadioButton
                     android:id="@+id/rcbook_yes"
