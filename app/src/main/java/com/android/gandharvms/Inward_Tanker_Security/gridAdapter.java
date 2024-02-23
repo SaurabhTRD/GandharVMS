@@ -16,6 +16,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.InwardOut_Tanker_Security;
+import com.android.gandharvms.InwardOut_Tanker_Weighment;
+import com.android.gandharvms.InwardOut_Truck_Security;
 import com.android.gandharvms.InwardOut_Truck_Weighment;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Production.Inward_Tanker_Production;
@@ -95,18 +98,25 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
                     } else if (crst.equals("Production")) {
                         intent = new Intent(view.getContext(), Inward_Tanker_Production.class);
                     }
-                } else if (vehitype.equals("IT") && io=='O') {
-                    if (crst.equals("Weighment")){
-                        intent = new Intent(view.getContext(), InwardOut_Truck_Weighment.class);
-                    }
-
-                } else if (vehitype.equals("IR")) {
+                } else if (vehitype.equals("IR") && io=='I') {
                     if (crst.equals("Weighment")) {
                         intent = new Intent(view.getContext(), Inward_Truck_weighment.class);
                     } else if (crst.equals("Security Reported")) {
                         intent = new Intent(view.getContext(), Inward_Truck_Security.class);
                     } else if (crst.equals("Store")) {
                         intent = new Intent(view.getContext(), Inward_Truck_Store.class);
+                    }
+                }else if (vehitype.equals("IT") && io=='O') {
+                    if (crst.equals("OutForSecurity")) {
+                        intent = new Intent(view.getContext(), InwardOut_Tanker_Weighment.class);
+                    } else if (crst.equals("VehicleOutFromFactory")) {
+                        intent = new Intent(view.getContext(), InwardOut_Tanker_Security.class);
+                    }
+                }else if (vehitype.equals("IR") && io=='O') {
+                    if (crst.equals("OutForSecurity")) {
+                        intent = new Intent(view.getContext(), InwardOut_Truck_Weighment.class);
+                    } else if (crst.equals("VehicleOutFromFactory")) {
+                        intent = new Intent(view.getContext(), InwardOut_Truck_Security.class);
                     }
                 }
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
