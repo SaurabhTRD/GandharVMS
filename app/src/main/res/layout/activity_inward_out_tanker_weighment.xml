@@ -10,50 +10,52 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:gravity="top"
-        >
+        android:orientation="vertical">
+
         <Button
-            android:onClick="btn_clicktoViewLabReport"
-            android:text="View Weighment Slip"
             android:id="@+id/btn_Viewweigmentslip"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Button"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:onClick="btn_clicktoViewLabReport"
+            android:text="View Weighment Slip"></Button>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp">
-        </Button>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            >
             <EditText
                 android:id="@+id/etintime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
                 android:hint="In Time"
                 android:inputType="text"
                 android:textSize="17dp"
-                android:textStyle="bold"
-                android:clickable="false"
-                android:focusable="false"/>
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
-            >
+            android:layout_marginRight="30dp">
+
             <EditText
                 android:id="@+id/etvehicle"
                 android:layout_width="match_parent"
@@ -61,17 +63,17 @@
                 android:hint="Vehicle Number"
                 android:inputType="text"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
-            >
+            android:layout_marginRight="30dp">
+
             <EditText
                 android:id="@+id/etgrosswt"
                 android:layout_width="match_parent"
@@ -79,18 +81,18 @@
                 android:hint="Gross Weight"
                 android:inputType="text"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
-            >
+            android:layout_marginRight="30dp">
+
             <EditText
                 android:id="@+id/etnetweight"
                 android:layout_width="match_parent"
@@ -98,20 +100,21 @@
                 android:hint="Net Weight"
                 android:inputType="text"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/regno"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
-            android:id="@+id/regno"
+            android:layout_marginRight="30dp"
 
             >
+
             <EditText
                 android:id="@+id/ettareweight"
                 android:layout_width="match_parent"
@@ -119,65 +122,62 @@
                 android:hint="Tare Weight"
                 android:inputType="text"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="Out Vehicle"
-                android:gravity="start"
-                android:layout_gravity="start"
-                android:paddingStart="18dp"
-                android:paddingEnd="8dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
-                android:textSize="19dp"
-                />
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Out Driver"
-                android:gravity="end"
+                android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:gravity="start"
+                android:paddingStart="18dp"
+                android:paddingEnd="8dp"
+                android:text="Out Vehicle"
+                android:textSize="19dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="end"
+                android:layout_marginLeft="120dp"
+                android:gravity="end"
                 android:paddingStart="8dp"
                 android:paddingEnd="8dp"
-                android:layout_marginLeft="120dp"
-                android:textStyle="bold"
+                android:text="Out Driver"
                 android:textSize="19dp"
-                />
+                android:textStyle="bold" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="115dp"
-            android:weightSum="2"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="2">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imgtr"
                 android:layout_width="175dp"
                 android:layout_height="105dp"
                 android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <ImageView
                     android:id="@+id/imageView1"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/camera"
                     android:clickable="true"
                     android:onClick="captureImageFromCamera1"
+                    android:src="@drawable/camera"
 
                     />
             </androidx.cardview.widget.CardView>
@@ -185,18 +185,16 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="175dp"
                 android:layout_height="105dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginLeft="29dp"
-                >
+                android:layout_marginTop="5dp">
 
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@drawable/camera"
                     android:clickable="true"
                     android:onClick="captureImageFromCamera2"
-                    />
+                    android:src="@drawable/camera" />
 
             </androidx.cardview.widget.CardView>
 
@@ -204,39 +202,38 @@
         </LinearLayout>
 
 
-
-
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
             android:layout_height="55dp"
-            android:layout_marginTop="15dp"
-            >
+            android:layout_marginTop="15dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="115dp"
                     android:layout_height="55dp"
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="25dp"
-                    android:text="Cancel"
-                    android:textStyle="bold"
-                    android:textSize="22dp">
+                    android:onClick="gridinouttanker"
+                    android:text="Pending"
+                    android:textSize="22dp"
+                    android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/view"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/view"
                     android:layout_marginLeft="15dp"
+                    android:onClick="Viewclick"
                     android:text="View"
                     android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:onClick="Viewclick">
+                    android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>
 
@@ -247,9 +244,8 @@
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="25dp"
                     android:text="SUBMIT"
-                    android:textStyle="bold"
                     android:textSize="22dp"
-                    >
+                    android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>
 

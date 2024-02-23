@@ -18,7 +18,9 @@ public class Request_In_Tanker_Production {
     private String Date;
     private String Material;
 
-    public Request_In_Tanker_Production(int inwardId, String inTime, String outTime, int unloadAboveMaterialInTK, String productName, int aboveMaterialIsUnloadInTK, String operatorName, String createdBy, String vehicleNo, String serialNo, char nextprocess, char i_O, String vehicleType, String date, String material) {
+    public String UpdatedBy;
+
+    public Request_In_Tanker_Production(int inwardId, String inTime, String outTime, int unloadAboveMaterialInTK, String productName, int aboveMaterialIsUnloadInTK, String operatorName, String createdBy, String vehicleNo, String serialNo, char nextprocess, char i_O, String vehicleType, String date, String material ,String updatedBy) {
         InwardId = inwardId;
         InTime = inTime;
         OutTime = outTime;
@@ -34,5 +36,6 @@ public class Request_In_Tanker_Production {
         VehicleType = vehicleType;
         Date = date;
         Material = material;
+        UpdatedBy = updatedBy;
     }
 }

@@ -67,7 +67,7 @@ import retrofit2.Response;
 public class Inward_Tanker_Production extends AppCompatActivity {
 
     final Calendar calendar = Calendar.getInstance();
-    EditText etint, etserno, etreq, ettankno, etconbyop, tanknoun, etconunloadDateTime, etMaterial, etVehicleNumber;
+    EditText etint, etserno, edunloadabovematerial, abovematerialunload, etconbyop, opratorname, etconunloadDateTime, etMaterial, etVehicleNumber;
     /*  Button viewdata;*/
     Button prosubmit;
     FirebaseFirestore prodbroot;
@@ -88,6 +88,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     private LoginMethod userDetails;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,22 +99,23 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
         userDetails = RetroApiClient.getLoginApi();
 
-        etMaterial = findViewById(R.id.etMaterial);
         etVehicleNumber = findViewById(R.id.etvehicleNumber);
+        etMaterial = findViewById(R.id.etMaterial);
         etserno = findViewById(R.id.etpserialnumber);
-        etint = findViewById(R.id.etintime);
-        etreq = findViewById(R.id.etreq);
-        ettankno = findViewById(R.id.ettankno);
-        etconbyop = findViewById(R.id.etconbyop);
-        tanknoun = findViewById(R.id.tanknoun);
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
+        etint = findViewById(R.id.etintime);
+        edunloadabovematerial = findViewById(R.id.etreq);
+        etconbyop = findViewById(R.id.etconbyop);
+        abovematerialunload = findViewById(R.id.ettankno);
+        opratorname = findViewById(R.id.tanknoun);
+
         prosubmit = findViewById(R.id.prosubmit);
         apiInTankerProduction = RetroApiclient_In_Tanker_Security.getinproductionApi();
                 //datetimepickertesting
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
 
             if (getIntent().hasExtra("VehicleNumber")) {
-                FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'W', 'I');
+                FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
             }
         etconunloadDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -266,16 +268,16 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         String intime = etint.getText().toString().trim();
         String etser = etserno.getText().toString().trim();
         String eddate = etconunloadDateTime.getText().toString().trim();
-        int reqtounload = Integer.parseInt(etreq.getText().toString().trim());
-        int tanknumber = Integer.parseInt(ettankno.getText().toString().trim());
+        int reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
+        int abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
         String confirmunload = etconbyop.getText().toString().trim();
-        String tanknumbers = tanknoun.getText().toString().trim();
+        String oprator = opratorname.getText().toString().trim();
         String conunload = etconunloadDateTime.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
         String material = etMaterial.getText().toString().trim();
         String vehicleNumber = etVehicleNumber.getText().toString().trim();
 
-        if (intime.isEmpty() ||   confirmunload.isEmpty() || tanknumbers.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
+        if (intime.isEmpty() ||   confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
             Toasty.warning(this, "All Fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
 //            Map<String, Object> proitems = new HashMap<>();
@@ -312,8 +314,8 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 //            Intent intent = new Intent(this, Inward_Tanker.class);
 //            startActivity(intent);
 
-            Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid,intime,outTime,reqtounload,confirmunload,tanknumber,tanknumbers,
-                    EmployeId,vehicleNumber,etser,'W','O',vehicleType,eddate,material);
+            Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid,intime,outTime,reqtounload,confirmunload,abovematerialtank,oprator,
+                    EmployeId,vehicleNumber,etser,'W','O',vehicleType,eddate,material,EmployeName);
 
             Call<Boolean> call = apiInTankerProduction.insertproductionData(requestInTankerProduction);
             call.enqueue(new Callback<Boolean>() {

@@ -260,6 +260,35 @@
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:weightSum="2"
+            android:orientation="horizontal">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/imgtr"
+                android:layout_width="115dp"
+                android:layout_height="55dp"
+                android:layout_marginLeft="35dp"
+                android:layout_marginTop="5dp"
+                >
+
+                <ImageView
+                    android:id="@+id/imageView1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/camera"
+                    android:clickable="true"
+                    android:onClick="captureImageFromCamera1"
+
+                    />
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

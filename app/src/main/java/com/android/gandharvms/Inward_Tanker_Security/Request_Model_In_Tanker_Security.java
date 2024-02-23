@@ -2,6 +2,7 @@ package com.android.gandharvms.Inward_Tanker_Security;
 
 
 public class Request_Model_In_Tanker_Security {
+    public int InwardId;
     public String SerialNo;
     public String InvoiceNo;
     public String VehicleNo;
@@ -33,7 +34,7 @@ public class Request_Model_In_Tanker_Security {
     public String CreatedBy;
     public String OutInTime;
 
-    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
+    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy,String outInTime,int inwardId) {
         SerialNo = serialNo;
         InvoiceNo = invoiceNo;
         VehicleNo = vehicleNo;
@@ -63,6 +64,8 @@ public class Request_Model_In_Tanker_Security {
         TaxInvoice = taxInvoice;
         EwayBill = ewayBill;
         CreatedBy = createdBy;
+        OutInTime = outInTime;
+        InwardId = inwardId;
     }
 
     public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
