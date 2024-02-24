@@ -64,4 +64,36 @@ public class Update_Request_Model_Insequrity {
         UpdatedBy = updatedBy;
 
     }
+
+    public Update_Request_Model_Insequrity(int inwardId, String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String updatedBy, String outInTime) {
+        InwardId = inwardId;
+        SerialNo = serialNo;
+        InvoiceNo = invoiceNo;
+        VehicleNo = vehicleNo;
+        Date = date;
+        PartyName = partyName;
+        Material = material;
+        this.OA_PO_number = OA_PO_number;
+        Driver_MobileNo = driver_MobileNo;
+        Nextprocess = nextprocess;
+        I_O = i_O;
+        FactoryIn = factoryIn;
+        FactoryOut = factoryOut;
+        VehicleType = vehicleType;
+        InTime = inTime;
+        OutTime = outTime;
+        QtyUOM = qtyUOM;
+        NetWeightUOM = netWeightUOM;
+        NetWeight = netWeight;
+        Qty = qty;
+        Extramaterials = extramaterials;
+        Remark = remark;
+        Selectregister = selectregister;
+        IrCopy = irCopy;
+        DeliveryBill = deliveryBill;
+        TaxInvoice = taxInvoice;
+        EwayBill = ewayBill;
+        UpdatedBy = updatedBy;
+        OutInTime = outInTime;
+    }
 }

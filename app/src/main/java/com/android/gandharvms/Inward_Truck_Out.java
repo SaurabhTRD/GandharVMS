@@ -14,14 +14,19 @@ public class Inward_Truck_Out extends AppCompatActivity {
         setContentView(R.layout.activity_inward_truck_out);
 
     }
-    public void inwardtankerinclick(View view){
-        Global_Var.getInstance().DeptType='W';
-        Intent intent = new Intent(this, InwardOut_Truck_Weighment.class);
-        startActivity(intent);
-    }
-    public void inwardtankeroutclick(View view){
+//    public void Inwardoutweighmentclick(View view){
+//        Global_Var.getInstance().DeptType='W';
+//        Intent intent = new Intent(this, InwardOut_Truck_Weighment.class);
+//        startActivity(intent);
+//    }
+    public void inwardtrucksecurityoutclick(View view){
         Global_Var.getInstance().DeptType='S';
         Intent intent = new Intent(this, InwardOut_Truck_Security.class);
+        startActivity(intent);
+    }
+    public void inwardweighmentout(View view){
+        Global_Var.getInstance().DeptType='W';
+        Intent intent = new Intent(this,InwardOut_Truck_Weighment.class);
         startActivity(intent);
     }
 }

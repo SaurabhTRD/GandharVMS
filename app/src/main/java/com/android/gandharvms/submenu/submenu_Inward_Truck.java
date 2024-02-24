@@ -11,6 +11,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Out;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck;
+import com.android.gandharvms.Inward_Truck_Out;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.R;
 
@@ -32,14 +33,14 @@ public class submenu_Inward_Truck extends AppCompatActivity {
         });
     }
 
-    public void inwardtankerinclick(View view){
+    public void inward_truck_in(View view){
         Global_Var.getInstance().InOutType='I';
         Intent intent = new Intent(this, Inward_Truck.class);
         startActivity(intent);
     }
-    public void inwardtankeroutclick(View view){
+    public void inward_out_truck(View view){
         Global_Var.getInstance().InOutType='O';
-        Intent intent = new Intent(this, Inward_Tanker_Out.class);
+        Intent intent = new Intent(this, Inward_Truck_Out.class);
         startActivity(intent);
     }
     public void intankerstatusclick(View view){

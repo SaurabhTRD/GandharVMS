@@ -22,6 +22,7 @@ import com.android.gandharvms.Inward_Tanker_Weighment.In_Tanker_Weighment_list;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
 import com.android.gandharvms.Inward_Tanker_Weighment.Model_InwardOutweighment;
+import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
@@ -272,6 +273,20 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
            @Override
            public void onFailure(Call<InTanWeighResponseModel> call, Throwable t) {
 
+               Log.e("Retrofit", "Failure: " + t.getMessage());
+               // Check if there's a response body in case of an HTTP error
+               if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                   Response<?> response = ((HttpException) t).response();
+                   if (response != null) {
+                       Log.e("Retrofit", "Error Response Code: " + response.code());
+                       try {
+                           Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                       } catch (IOException e) {
+                           e.printStackTrace();
+                       }
+                   }
+               }
+               Toasty.error(InwardOut_Tanker_Weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
            }
        });
     }

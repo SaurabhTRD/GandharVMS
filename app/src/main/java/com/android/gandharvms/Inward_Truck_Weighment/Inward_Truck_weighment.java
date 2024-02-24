@@ -325,7 +325,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         }
         else {
             InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,Grossweight,tareweight,netweight,
-                    "","",remark,signby,Integer.parseInt(container),imgPath1,imgPath2,serialnumber,
+                    "","",remark,signby,Integer.parseInt(container),"","",serialnumber,
                     vehicalnumber,date,supplier,material,oanumber,Driver,'R',inOut,vehicleType,EmployeId,EmployeId,"","","");
 
             Call<Boolean> call=weighmentdetails.insertWeighData(weighReqModel);

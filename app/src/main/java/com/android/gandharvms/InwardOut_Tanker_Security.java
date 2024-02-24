@@ -115,9 +115,11 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
                                 List<Respo_Model_In_Tanker_security> Data = response.body();
                                 Respo_Model_In_Tanker_security obj = Data.get(0);
 
+                                InwardId = obj.getInwardId();
                                 etinvoice.setText(obj.getInvoiceNo());
                                 etmaterial.setText(obj.getMaterial());
                                 etsupplier.setText(obj.getPartyName());
+
                             }
                         }else {
                             Log.e("Retrofit", "Error" + response.code());
@@ -168,13 +170,13 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
             Update_Request_Model_Insequrity updateRequestModelInsequrity = new Update_Request_Model_Insequrity(InwardId,"",invoice,vehiclenumber,"",supplier,material,
                     "","",'S','O',intime,"",vehicltype,intime,outTime,'0','0',
                     '0','0',"","","",lrCopySelection,deliverySelection,taxInvoiceSelection,
-                    ewayBillSelection,EmployeId);
+                    ewayBillSelection,EmployeId,intime);
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.intankersecurityoutupdate(updateRequestModelInsequrity);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null){
+                    if (response.isSuccessful() && response.body() != null && response.body() == true){
                         Toast.makeText(InwardOut_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                     }
                 }
