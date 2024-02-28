@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -72,6 +74,23 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
 //            }
 //        });
 
+        etnetwt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calculateNetWeight();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -106,6 +125,19 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                 update();
             }
         });
+    }
+
+    public void calculateNetWeight() {
+
+        String grosswt = etgrosswt.getText().toString().trim();
+        String netweight = etnetwt.getText().toString().trim();
+
+        double grossWeight = grosswt.isEmpty() ? 0.0 : Double.parseDouble(grosswt);
+        double netwe = netweight.isEmpty() ? 0.0 : Double.parseDouble(netweight);
+
+        double tareweight = grossWeight - netwe;
+
+        ettarewt.setText(String.valueOf(tareweight));
     }
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
 

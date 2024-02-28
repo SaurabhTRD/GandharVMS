@@ -67,7 +67,7 @@ public class grid extends AppCompatActivity {
         initViews();
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
         {
-            fetchDataFromApi("x",vehicleType,Global_Var.getInstance().DeptType,'x');
+            fetchDataFromApi("x",vehicleType,Global_Var.getInstance().DeptType,inOut);
         }
         else{
             fetchDataFromApi("x",vehicleType,'x','x');
