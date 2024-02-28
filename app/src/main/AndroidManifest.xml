@@ -30,16 +30,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".bulkloadinglaboratory"
+            android:name=".outward_Tanker_Lab_forms.bulkloadinglaboratory"
             android:exported="false" />
         <activity
-            android:name=".outwardlabforms"
+            android:name=".outward_Tanker_Lab_forms.outwardlabforms"
             android:exported="false" />
         <activity
-            android:name=".bulkloadingproduction"
+            android:name=".Outward_Tanker_Production_forms.bulkloadingproduction"
             android:exported="false" />
         <activity
-            android:name=".inprocessrequestform"
+            android:name=".Outward_Tanker_Production_forms.inprocessrequestform"
             android:exported="false" />
         <activity
             android:name=".Inward_Tanker_Production.in_tanker_produ_grid"
@@ -135,16 +135,16 @@
             android:name=".submenu.Submenu_Outward_Truck"
             android:exported="false" />
         <activity
-            android:name=".Outward_Tanker_Billing"
+            android:name=".Outward_Tanker_Billing.Outward_Tanker_Billing"
             android:exported="false" />
         <activity
-            android:name=".Outward_Tanker_Production"
+            android:name=".Outward_Tanker_Production_forms.Outward_Tanker_Production"
             android:exported="false" />
         <activity
-            android:name=".Outward_Tanker_Laboratory"
+            android:name=".outward_Tanker_Lab_forms.Outward_Tanker_Laboratory"
             android:exported="false" />
         <activity
-            android:name=".Outward_Tanker_weighment"
+            android:name=".Outward_Tanker_Weighment.Outward_Tanker_weighment"
             android:exported="false" />
         <activity
             android:name=".Outward_Tanker_Security.Outward_Tanker_Security"

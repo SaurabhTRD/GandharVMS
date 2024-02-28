@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Outward_Tanker_Production">
+    tools:context=".Outward_Tanker_Production_forms.Outward_Tanker_Production">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -43,25 +43,25 @@
                     android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_marginTop="10dp"-->
 
 
-                >
-                <EditText
-                    android:id="@+id/etdatetime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Date"
-                    android:inputType="number"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                >-->
+<!--                <EditText-->
+<!--                    android:id="@+id/etdatetime"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Date"-->
+<!--                    android:inputType="number"-->
+<!--                    android:textSize="17dp"-->
+<!--                    android:textStyle="bold" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -97,7 +97,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Vehicle Number"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -140,7 +140,7 @@
                     android:id="@+id/elblendingno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Blender No"
+                    android:hint="Blender/Tanker/Vessel Number"
                     android:inputType="text"
                     android:textSize="17dp"
                     android:textStyle="bold" />
@@ -303,7 +303,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Product Specification"
-                    android:inputType="number"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -343,7 +343,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Packing Status"
-                    android:inputType="number"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -364,7 +364,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Rinsing Status"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -384,7 +384,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Decision Rule Applicable to Customer"
-                    android:inputType="number"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -404,7 +404,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Blending Material Status"
-                    android:inputType="number"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -424,10 +424,31 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Sign of Production"
-                    android:inputType="number"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+
+                >
+                <EditText
+                    android:id="@+id/etremark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Remark"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
 
             <androidx.cardview.widget.CardView

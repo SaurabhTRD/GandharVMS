@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Outward_Tanker_weighment">
+    tools:context=".Outward_Tanker_Weighment.Outward_Tanker_weighment">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -78,51 +78,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Vehicle Number"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-
-
-            >
-            <EditText
-                android:id="@+id/etmaterialname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Material"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-
-
-            >
-            <EditText
-                android:id="@+id/etcustomername"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Customer"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -143,6 +102,49 @@
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etmaterialname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Material"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etcustomername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Customer"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -199,7 +201,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Transporter Name"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -219,7 +221,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Product"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -260,10 +262,31 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Remark"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
 
 

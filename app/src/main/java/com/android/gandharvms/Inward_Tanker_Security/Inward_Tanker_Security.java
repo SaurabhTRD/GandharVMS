@@ -141,6 +141,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
         getmaxserialno = RetroApiClient.getLoginApi();
         userDetails = RetroApiClient.getLoginApi();
+        apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
 
         isReportingCheckBox = findViewById(R.id.isreporting);
         reportingRemarkLayout = findViewById(R.id.edtreportingremark);
@@ -571,7 +572,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'W', 'I', Date,
                     "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, materialList.toString().replace("[]", ""), remark, false, "No", "", "", "", "", "", EmployeId,"",InwardId);
 
-            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
+//            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
             call.enqueue(new Callback<Boolean>() {
                 @Override

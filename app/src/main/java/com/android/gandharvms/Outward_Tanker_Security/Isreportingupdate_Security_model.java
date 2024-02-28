@@ -1,6 +1,6 @@
 package com.android.gandharvms.Outward_Tanker_Security;
 
-public class Request_Model_Outward_Tanker_Security {
+public class Isreportingupdate_Security_model {
 
     public int OutwardId;
     public String Intime;
@@ -19,19 +19,23 @@ public class Request_Model_Outward_Tanker_Security {
     public String Signature;
     public String Remark;
     public String TransportLRcopy;
+    public String UpdatedBy;
     public String Tremcard;
     public String Ewaybill;
     public String Test_Report;
     public String Invoice;
     public String OutInTime;
-//    public boolean IsActive;
+    public char CurrentProcess;
+    public String Factory_In;
+    public String Factory_Out;
+    //    public boolean IsActive;
     public String CreatedBy;
     public String CreatedDate;
-//    public String UpdatedBy;
+    //    public String UpdatedBy;
 //    public String UpdatedDate;
     public boolean IsReporting;
     public String ReportingRemark;
-    public char CurrentProcess;
+
     public String SerialNumber;
     public String VehicleNumber;
     public String TransportName;
@@ -49,11 +53,9 @@ public class Request_Model_Outward_Tanker_Security {
     public char NextProcess;
     public char I_O;
     public String VehicleType;
-   public String Factory_In;
-   public String Factory_Out;
 
 
-    public Request_Model_Outward_Tanker_Security( int outwardId, String intime, String outTime, int kl, String place, String vehiclePermit, String puc, String insurance, String vehicleFitnessCertificate, String driverLicenses, String rcBook, String invoiceNumber, String nameofParty, String descriptionofGoods, String signature, String remark, String transportLRcopy, String tremcard, String ewaybill, String test_Report, String invoice, String outInTime,  String createdBy, String createdDate, boolean isReporting, String reportingRemark, char currentProcess, String serialNumber, String vehicleNumber, String transportName, String mobileNumber, String capacityVehicle, String conditionOfVehicle, String date, String materialName, String customerName, String OAnumber, int tankerNumber, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType,String factory_In,String factory_Out) {
+    public Isreportingupdate_Security_model(int outwardId, String intime, String outTime, int kl, String place, String vehiclePermit, String puc, String insurance, String vehicleFitnessCertificate, String driverLicenses, String rcBook, String invoiceNumber, String nameofParty, String descriptionofGoods, String signature, String remark, String transportLRcopy, String updatedBy, String tremcard, String ewaybill, String test_Report, String invoice, String outInTime,char currentProcess, String serialNumber, String vehicleNumber, String transportName, String mobileNumber, String capacityVehicle, String conditionOfVehicle, String materialName, String customerName, String OAnumber, int tankerNumber, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType, String factory_In, String factory_Out) {
         OutwardId = outwardId;
         Intime = intime;
         OutTime = outTime;
@@ -71,15 +73,13 @@ public class Request_Model_Outward_Tanker_Security {
         Signature = signature;
         Remark = remark;
         TransportLRcopy = transportLRcopy;
+        UpdatedBy = updatedBy;
         Tremcard = tremcard;
         Ewaybill = ewaybill;
         Test_Report = test_Report;
         Invoice = invoice;
         OutInTime = outInTime;
-        CreatedBy = createdBy;
-        CreatedDate = createdDate;
-        IsReporting = isReporting;
-        ReportingRemark = reportingRemark;
+//        CreatedBy = createdBy;
         CurrentProcess = currentProcess;
         SerialNumber = serialNumber;
         VehicleNumber = vehicleNumber;
@@ -87,7 +87,7 @@ public class Request_Model_Outward_Tanker_Security {
         MobileNumber = mobileNumber;
         CapacityVehicle = capacityVehicle;
         ConditionOfVehicle = conditionOfVehicle;
-        Date = date;
+//        Date = date;
         MaterialName = materialName;
         CustomerName = customerName;
         this.OAnumber = OAnumber;
