@@ -43,6 +43,7 @@ import com.android.gandharvms.Inward_Tanker_Security.RetroApiclient_In_Tanker_Se
 import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequrity;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck;
+import com.android.gandharvms.Inward_Truck_store.Inward_Truck_Store;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -686,9 +687,11 @@ public class Inward_Truck_Security extends AppCompatActivity {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null ){
+                    if (response.isSuccessful() && response.body() != null && response.body()==true){
                         makeNotification(vehicalnumber, outTime);
                         Toast.makeText(Inward_Truck_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Inward_Truck_Security.this, Inward_Truck.class));
+                        finish();
                     }
                 }
                 @Override

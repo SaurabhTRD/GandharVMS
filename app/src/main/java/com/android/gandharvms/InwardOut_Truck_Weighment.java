@@ -22,6 +22,7 @@ import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_Weighment_View
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -74,6 +75,9 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
 //            }
 //        });
 
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
         etnetwt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -149,9 +153,10 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                     InTanWeighResponseModel data = response.body();
                     if (data.getVehicleNo() != ""){
                         etgrosswt.setText(data.getGrossWeight());
-                        etnetwt.setText(data.getNetWeight());
-                        inwardid = data.getInwardId();
+                        etgrosswt.setEnabled(false);
                         etvehicel.setText(data.getVehicleNo());
+                        etvehicel.setEnabled(false);
+                        inwardid = data.getInwardId();
                     }
                 }
             }
@@ -197,7 +202,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(InwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(InwardOut_Truck_Weighment.this, Inward_Tanker.class));
+                        startActivity(new Intent(InwardOut_Truck_Weighment.this, submenu_Inward_Tanker.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

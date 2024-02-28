@@ -19,7 +19,9 @@ import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security_View
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Inward_Tanker_Security.RetroApiclient_In_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequrity;
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -77,6 +79,9 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, DeptType, InOutType);
+        }
 
         view = findViewById(R.id.btn_Viewweigmentslip);
         view.setOnClickListener(new View.OnClickListener() {
@@ -128,11 +133,15 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
                     if (response.body().size()>0){
                         List<Respo_Model_In_Tanker_security> Data = response.body();
                         Respo_Model_In_Tanker_security obj = Data.get(0);
-
                         InwardId = obj.getInwardId();
+                        etvehicle.setText(obj.getVehicleNo());
+                        etvehicle.setEnabled(false);
                         etinvoice.setText(obj.getInvoiceNo());
+                        etinvoice.setEnabled(false);
                         etmaterial.setText(obj.getMaterial());
+                        etmaterial.setEnabled(false);
                         etsupplier.setText(obj.getPartyName());
+                        etsupplier.setEnabled(false);
                     }
                 }else {
                     Log.e("Retrofit", "Error" + response.code());
@@ -192,7 +201,9 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
-                        Toast.makeText(InwardOut_Truck_Security.this, "Inserted Succesfully", Toast.LENGTH_SHORT).show();
+                        Toasty.success(InwardOut_Truck_Security.this, "Inserted Succesfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(InwardOut_Truck_Security.this, submenu_Inward_Tanker.class));
+                        finish();
                     }
                 }
 
@@ -222,5 +233,10 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
+    }
+
+    public void inwardtrOutSecurityPendingClick(View view){
+        Intent intent = new Intent(this, grid.class);
+        startActivity(intent);
     }
 }

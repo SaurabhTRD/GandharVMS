@@ -401,7 +401,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String viscosity = etviscosity.getText().toString().trim();
         String disc = remarkdisc.getText().toString().trim();
         if (intime.isEmpty() || serialNumber.isEmpty() || date.isEmpty() || hundred.isEmpty() || vehicle.isEmpty() || apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty() || anline.isEmpty() || flash.isEmpty() || density.isEmpty() || rcsTest.isEmpty() ||
-                kv.isEmpty() || addTest.isEmpty() || samplereceivingdate.isEmpty() || viscosity.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
+                kv.isEmpty() || disc.isEmpty() || addTest.isEmpty() || samplereceivingdate.isEmpty() || viscosity.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             InTanLabRequestModel labRequestModel = new InTanLabRequestModel(inwardid, intime, outTime, date,

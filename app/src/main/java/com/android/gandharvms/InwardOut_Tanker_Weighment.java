@@ -28,6 +28,7 @@ import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -295,10 +296,11 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                    InTanWeighResponseModel data = response.body();
                    if (data.getVehicleNo() != ""){
                        grswt.setText(data.getGrossWeight());
+                       grswt.setEnabled(false);
+                       etvehicle.setText(data.getVehicleNo());
+                       etvehicle.setEnabled(false);
                        etnetwt.callOnClick();
                        inwardid = data.getInwardId();
-                       etvehicle.setText(data.getVehicleNo());
-
                    }
                }
            }
@@ -344,7 +346,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(InwardOut_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(InwardOut_Tanker_Weighment.this, Inward_Tanker.class));
+                        startActivity(new Intent(InwardOut_Tanker_Weighment.this, submenu_Inward_Tanker.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
