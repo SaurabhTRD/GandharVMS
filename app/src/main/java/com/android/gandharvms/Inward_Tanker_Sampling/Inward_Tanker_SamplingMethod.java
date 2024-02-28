@@ -14,13 +14,7 @@ import retrofit2.http.Query;
 
 public interface Inward_Tanker_SamplingMethod {
     @POST("api/InwardSampling/Add")
-    Call<Boolean> postAdd(@Body Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel);
-
-    @POST("api/InwardSampling/Add")
-    Call<Boolean> postUpdate(@Body Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel);
-
-    @POST("api/InwardSampling/Delete")
-    Call<Boolean> postDelete(@Body Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel);
+    Call<Boolean> insertSamplingData(@Body Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel);
 
     @GET("api/InwardSampling/GetInwardSampling")
     Call<List<Inward_Tanker_SamplingResponseModel>> GetInwardSampling();
@@ -28,15 +22,8 @@ public interface Inward_Tanker_SamplingMethod {
     @GET("api/InwardSampling/GetInwardSampling")
     Call<List<gridmodel_in_tanker_sampling>> GetInwardSamplinggrid();
 
-    @GET("api/InwardSampling/GetInwardSamplingById")
-    Call<List<Inward_Tanker_SamplingResponseModel>> GetInwardSamplingById(@Query("id") int id);
-
     @GET("api/InwardSampling/GetSamplingList")
     Call<List<Inward_Tanker_SamplingResponseModel>> GetSamplingList(@Query("NextProcess") char NextProcess);
-
-    @GET("api/InwardSampling/GetSamplingPendingList")
-    Call<List<Inward_Tanker_SamplingResponseModel>> GetSamplingPendingList(@Query("vehicleNo") String VehicleNo,
-                                                                      @Query("NextProcess") char NextProcess);
 
     @GET("api/InwardSampling/GetSamplingByFetchVehicleDetails")
     Call<InTanSamplingResponseModel> GetSamplingByFetchVehicleDetails(

@@ -71,6 +71,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     Button etssubmit;
     Button view;
     FirebaseFirestore sadbroot;
+    TimePickerDialog tpicker;
     Calendar currentTime = Calendar.getInstance();
     int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
     int currentMinute = currentTime.get(Calendar.MINUTE);
@@ -79,11 +80,11 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     String dateFormatPattern = "dd-MM-yyyy";
     SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
-    private String token,etserialnumber;
-    private String vehicltype= Global_Var.getInstance().MenuType;
+    private String token,serialnumber;
+    private String vehicletype= Global_Var.getInstance().MenuType;
     private char DeptType=Global_Var.getInstance().DeptType;
     private char InOutType=Global_Var.getInstance().InOutType;
-    String createdby = Global_Var.getInstance().Name;
+    private String empId = Global_Var.getInstance().EmpId;
     private int inwardid;
     private LoginMethod userDetails;
 
@@ -112,6 +113,9 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, DeptType, InOutType);
+        }
         // timepicker
         etssignofproduction.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,10 +123,17 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 int hours = calendar.get(Calendar.HOUR_OF_DAY);
                 int mins = calendar.get(Calendar.MINUTE);
-                String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", currentHour, currentMinute);
-                etssignofproduction.setText(formattedTime);
-
-                FetchVehicleDetails(etvehicleno.getText().toString().trim(),vehicltype,InOutType);
+                tpicker = new TimePickerDialog(Inward_Tanker_Sampling.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                        c.set(Calendar.MINUTE,minute);
+                        // Set the formatted time to the EditText
+                        etssignofproduction.setText(hourOfDay +":"+ minute );
+                    }
+                },hours,mins,false);
+                tpicker.show();
             }
         });
 
@@ -132,8 +143,17 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                 Calendar calendar = Calendar.getInstance();
                 int hours = calendar.get(Calendar.HOUR_OF_DAY);
                 int mins = calendar.get(Calendar.MINUTE);
-                String formattedTime = String.format(Locale.getDefault(), "%02d:%02d", currentHour, currentMinute);
-                etinvoiceno.setText(formattedTime);
+                tpicker = new TimePickerDialog(Inward_Tanker_Sampling.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
+                        c.set(Calendar.MINUTE,minute);
+                        // Set the formatted time to the EditText
+                        etinvoiceno.setText(hourOfDay +":"+ minute );
+                    }
+                },hours,mins,false);
+                tpicker.show();
 
             }
         });
@@ -146,52 +166,23 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         etssubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                sainsertdata();
-                sainsertdataAdapter();
+                sainsertdata();
+                //sainsertdataAdapter();
             }
         });
 
         etvehicleno.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus) {
-                    FetchVehicleDetails(etvehicleno.getText().toString().trim(),vehicltype,InOutType);
+                    FetchVehicleDetails(etvehicleno.getText().toString().trim(),vehicletype,DeptType,InOutType);
                 }
             }
         });
+
+
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
-//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    // Assume you have a user role to identify the specific role
-//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-//                        String specificRole = "Laboratory";
-//                        // Get the value of the "role" node                    ;
-//                        if (issue.toString().contains(specificRole)) {
-//                            //getting the token
-//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-//                                    "Inward Tanker Sampling Process Done..!",
-//                                    "Vehicle Number:-" + vehicleNumber + " has completed Sampling process at " + outTime,
-//                                    getApplicationContext(), Inward_Tanker_Sampling.this);
-//                            notificationsSender.SendNotifications();
-//                        }
-//                    }
-//                } else {
-//                    // Handle the case when the "role" node doesn't exist
-//                    Log.d("Role Data", "Role node doesn't exist");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle errors here
-//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
-//            }
-//        });
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -221,7 +212,20 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
-
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Sampling.this,"Inward Tanker Sampling failed..!",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -233,7 +237,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     }
 
 
-    public void sainsertdataAdapter() {
+    /*public void sainsertdataAdapter() {
         String etreciving = etssignofproduction.getText().toString().trim();
         String etsubmitted = etinvoiceno.getText().toString().trim();
         String date = etsdate.getText().toString().trim();
@@ -243,8 +247,10 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         if (vehiclenumber.isEmpty() || etreciving.isEmpty() || date.isEmpty() || etsubmitted.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
-            Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel= new Inward_Tanker_SamplingRequestModel(inwardid,etreciving,etsubmitted,true,createdby,vehiclenumber,etserialnumber,'L',InOutType,vehicltype,DeptType,date);
-            inward_Tanker_SamplingMethod= RetroApiClient.getInward_Tanker_Sampling();
+            Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel= new
+                    Inward_Tanker_SamplingRequestModel(inwardid,etreciving,etsubmitted,createdby,
+                    vehiclenumber,serialnumber,'L',InOutType,vehicltype,);
+
 
             Call<Boolean> call = inward_Tanker_SamplingMethod.postAdd(inward_Tanker_SamplingRequestModel);
             call.enqueue(new Callback<Boolean>() {
@@ -291,42 +297,67 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
             });
 
         }
-    }
+    }*/
 
     public void sainsertdata() {
         String etreciving = etssignofproduction.getText().toString().trim();
         String etsubmitted = etinvoiceno.getText().toString().trim();
-        String date = etsdate.getText().toString().trim();
         String vehiclenumber = etvehicleno.getText().toString().trim();
-        if (vehiclenumber.isEmpty() || etreciving.isEmpty() || date.isEmpty() || etsubmitted.isEmpty()) {
+        if (vehiclenumber.isEmpty() || etreciving.isEmpty() || etsubmitted.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
-            Map<String, String> saitems = new HashMap<>();
-            saitems.put("Sample_Reciving_Time", etssignofproduction.getText().toString().trim());
-            saitems.put("Sample_Submitted_Time", etinvoiceno.getText().toString().trim());
-            saitems.put("Date", etsdate.getText().toString().trim());
-            saitems.put("Vehicle_Number", etvehicleno.getText().toString().trim());
-            makeNotification(etvehicleno.getText().toString(), etinvoiceno.getText().toString());
-            sadbroot.collection("Inward Tanker Sampling").add(saitems)
-
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-
-                            etssignofproduction.setText("");
-                            etinvoiceno.setText("");
-                            etsdate.setText("");
-                            etvehicleno.setText("");
-                            Toasty.success(Inward_Tanker_Sampling.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+            Inward_Tanker_SamplingRequestModel itSamplingRequestModel= new
+                    Inward_Tanker_SamplingRequestModel(inwardid,etreciving,etsubmitted,empId,
+                    vehiclenumber,serialnumber,vehicletype,'L',InOutType,empId);
+            Call<Boolean> call = inward_Tanker_SamplingMethod.insertSamplingData(itSamplingRequestModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if(response.isSuccessful() && response.body() != null)
+                    {
+                        if(response.body().booleanValue()==true)
+                        {
+                            makeNotification(vehiclenumber, etsubmitted);
+                            Log.d("Registration", "Response Body: " + response.body());
+                            Toasty.success(Inward_Tanker_Sampling.this, "Data Inserted succesfully", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Inward_Tanker_Sampling.this, Inward_Tanker.class);
+                            startActivity(intent);
                         }
-                    });
-            Intent intent = new Intent(this, Inward_Tanker.class);
-            startActivity(intent);
+                        else {
+                            // Registration failed
+                            Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
+                            Toasty.error(Inward_Tanker_Sampling.this, "Insertion failed..!", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        // Registration failed
+                        Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
+                        Toasty.error(Inward_Tanker_Sampling.this, "Response Failed", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Inward_Tanker_Sampling.this,"Did not Getting Response",Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
-    public void FetchVehicleDetails(@NonNull String vehicleNo,String vehicleType,char inOut) {
-        Call<InTanSamplingResponseModel> call=inward_Tanker_SamplingMethod.GetSamplingByFetchVehicleDetails(vehicleNo,vehicleType,'W',inOut);
+    public void FetchVehicleDetails(@NonNull String vehicleNo,String vehicleType,char departmentType,char inOut) {
+        Call<InTanSamplingResponseModel> call=inward_Tanker_SamplingMethod.GetSamplingByFetchVehicleDetails(vehicleNo,vehicleType,departmentType,inOut);
         call.enqueue(new Callback<InTanSamplingResponseModel>() {
             @Override
             public void onResponse(Call<InTanSamplingResponseModel> call, Response<InTanSamplingResponseModel> response) {
@@ -336,8 +367,8 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                     if(data.getVehicleNo()!="")
                     {
                         inwardid = data.getInwardId();
-//                        etserialnumber = "GA25012025006";
-                        etserialnumber = data.getSerialNo();
+                        serialnumber = data.getSerialNo();
+                        etvehicleno.setText(data.getVehicleNo());
                     }
                 }else
                 {
