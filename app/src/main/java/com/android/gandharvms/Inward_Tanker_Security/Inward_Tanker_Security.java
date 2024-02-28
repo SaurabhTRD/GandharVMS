@@ -133,6 +133,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     private int InwardId;
     private LoginMethod userDetails;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,6 +141,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
         getmaxserialno = RetroApiClient.getLoginApi();
         userDetails = RetroApiClient.getLoginApi();
+        apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
 
         isReportingCheckBox = findViewById(R.id.isreporting);
         reportingRemarkLayout = findViewById(R.id.edtreportingremark);
@@ -568,14 +570,14 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
 
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'W', 'I', Date,
-                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, materialList.toString().replace("[]", ""), remark, false, "No", "", "", "", "", "", EmployeId);
+                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, materialList.toString().replace("[]", ""), remark, false, "No", "", "", "", "", "", EmployeId,"",InwardId);
 
-            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
+//            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null) {
+                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotification(vehicalnumber, outTime);
                         Toast.makeText(Inward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                     }
@@ -714,7 +716,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'S', InOutType, "",
-                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId);
+                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId,"",InwardId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);

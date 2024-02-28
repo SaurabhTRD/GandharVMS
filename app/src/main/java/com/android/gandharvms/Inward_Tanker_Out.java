@@ -14,12 +14,12 @@ public class Inward_Tanker_Out extends AppCompatActivity {
         setContentView(R.layout.activity_inward_tanker_out);
     }
 
-    public void inwardtankerinclick(View view){
+    public void inwardtankerinweighmentclick(View view){
         Global_Var.getInstance().DeptType='W';
         Intent intent = new Intent(this,InwardOut_Tanker_Weighment.class);
         startActivity(intent);
     }
-    public void inwardtankeroutclick(View view){
+    public void inwadtankeroutsecurity(View view){
         Global_Var.getInstance().DeptType='S';
         Intent intent = new Intent(this, InwardOut_Tanker_Security.class);
         startActivity(intent);

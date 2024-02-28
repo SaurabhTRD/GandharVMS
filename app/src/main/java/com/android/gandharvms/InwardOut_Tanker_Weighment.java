@@ -15,12 +15,14 @@ import android.widget.Toast;
 
 import com.android.gandharvms.Inward_Tanker_Production.Inward_Tanker_Production;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.In_Tanker_Weighment_list;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
 import com.android.gandharvms.Inward_Tanker_Weighment.Model_InwardOutweighment;
+import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
@@ -87,12 +89,12 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         etsubmit = (Button) findViewById(R.id.prosubmit);
         dbroot = FirebaseFirestore.getInstance();
 
-        /*etsubmit.setOnClickListener(new View.OnClickListener() {
+        etsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insert();
+                update();
             }
-        });*/
+        });
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +124,8 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
             }
         });
     }
+
+
 
 
     /*public void insert(){
@@ -218,9 +222,6 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
 //        String grossweight = grswt.getText().toString().trim();
 //
 //
-//    }
-
-
 
     public void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut)
     {
@@ -263,6 +264,8 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                        grswt.setText(data.getGrossWeight());
                        etnetwt.callOnClick();
                        inwardid = data.getInwardId();
+                       etvehicle.setText(data.getVehicleNo());
+
                    }
                }
            }
@@ -270,8 +273,76 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
            @Override
            public void onFailure(Call<InTanWeighResponseModel> call, Throwable t) {
 
+               Log.e("Retrofit", "Failure: " + t.getMessage());
+               // Check if there's a response body in case of an HTTP error
+               if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                   Response<?> response = ((HttpException) t).response();
+                   if (response != null) {
+                       Log.e("Retrofit", "Error Response Code: " + response.code());
+                       try {
+                           Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                       } catch (IOException e) {
+                           e.printStackTrace();
+                       }
+                   }
+               }
+               Toasty.error(InwardOut_Tanker_Weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
            }
        });
+    }
+
+    private void update() {
+
+        String intime = etintime.getText().toString().trim();
+        String vehiclnmo = etvehicle.getText().toString().trim();
+        String grosswt = grswt.getText().toString().trim();
+        String netwt = etnetwt.getText().toString().trim();
+        String tare = ettareweight.getText().toString().trim();
+
+        if (intime.isEmpty()|| vehiclnmo.isEmpty()||grosswt.isEmpty()||netwt.isEmpty()||tare.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+        }else {
+            Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,grosswt,netwt,tare,"","",
+                    'S','O',vehicleType,intime);
+            Call<Boolean> call = weighmentdetails.inwardoutweighment(modelInwardOutweighment);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body() == true){
+                        Log.d("Registration", "Response Body: " + response.body());
+                        Toasty.success(InwardOut_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(InwardOut_Tanker_Weighment.this, Inward_Tanker.class));
+                        finish();
+                    }else {
+                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(InwardOut_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+        }
+
+    }
+    public void gridinouttanker(View view){
+        Intent intent = new Intent(this, grid.class);
+        startActivity(intent);
     }
 
 }

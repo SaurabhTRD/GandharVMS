@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Outward_Tanker_Laboratory">
+    tools:context=".outward_Tanker_Lab_forms.Outward_Tanker_Laboratory">
 
 
     <ScrollView
@@ -105,6 +105,22 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="250dp"
+                android:id="@+id/saveButton"
+                android:text="Send"
+
+                />
+        </LinearLayout>
+
+
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -126,6 +142,69 @@
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etsamplecondition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Condition of Sample Received"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etsampledt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sample receving Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+
+
+            >
+            <EditText
+                android:id="@+id/etsamplereleasedate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sample release time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -459,51 +538,14 @@
 
             >
             <EditText
-                android:id="@+id/etapprove"
+                android:id="@+id/etcorrection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Approved by QC Manager"
-                android:inputType="numberDecimal"
+                android:hint="Correction Required"
+                android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-
-
-            >
-            <EditText
-                android:id="@+id/etdatetime"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Date/Time "
-                android:inputType="numberDecimal"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
         <androidx.cardview.widget.CardView

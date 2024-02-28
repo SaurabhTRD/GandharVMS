@@ -1,10 +1,12 @@
-package com.android.gandharvms;
+package com.android.gandharvms.Outward_Tanker_Production_forms;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
+import com.android.gandharvms.R;
 
 public class inprocessrequestform extends AppCompatActivity {
 
@@ -16,7 +18,7 @@ public class inprocessrequestform extends AppCompatActivity {
 
     }
     public void processformproduction(View view){
-        Intent intent = new Intent(this,Outward_Tanker_Production.class);
+        Intent intent = new Intent(this, Outward_Tanker_Production.class);
         startActivity(intent);
     }
     public void bulkloadingproduction(View view){

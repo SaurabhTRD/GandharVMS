@@ -61,7 +61,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
         vehiclenumber = findViewById(R.id.etvehicleno);
-        lr = findViewById(R.id.etlr);
+//        lr = findViewById(R.id.etlr);
         transporter= findViewById(R.id.ettranseporter);
         place = findViewById(R.id.etplace);
         mobilenuumber = findViewById(R.id.etmobilenumber);

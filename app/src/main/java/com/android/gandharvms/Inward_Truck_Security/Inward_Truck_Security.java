@@ -679,7 +679,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                 }
             }
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,invoicenumber,vehicalnumber,Date,partyname,material,pooa,mobnumber,'W','I',Date,
-                    "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,materialList.toString().replace("[]", ""),remark,false,"No",selectregister,lrCopySelection,deliverySelection,taxInvoiceSelection,ewayBillSelection,EmployeId);
+                    "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,materialList.toString().replace("[]", ""),remark,false,"No",selectregister,lrCopySelection,deliverySelection,taxInvoiceSelection,ewayBillSelection,EmployeId,"",InwardId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call =  apiInTankerSecurity.postData(requestModelInTankerSecurity);
@@ -815,7 +815,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,invoicenumber,vehicalnumber,Date,partyname,material,pooa,mobnumber,'S',InOutType,"",
-                    "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,"",remark,isreporting,edremark,"","","","","",EmployeId);
+                    "",vehicltype,intime,outTime,qtyuom,netweuom,netweight,qty,"",remark,isreporting,edremark,"","","","","",EmployeId,"",InwardId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call =  apiInTankerSecurity.postData(requestModelInTankerSecurity);

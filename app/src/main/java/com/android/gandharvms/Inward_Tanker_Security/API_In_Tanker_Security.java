@@ -31,6 +31,9 @@ public interface API_In_Tanker_Security {
             @Query("FromDate") String FromDate,
             @Query("Todate") String Todate);
 
+    @POST("api/InwardSecurity/UpdateOutSecurityDetails")
+    Call<Boolean> intankersecurityoutupdate(@Body Update_Request_Model_Insequrity request);
+
 
 }
 

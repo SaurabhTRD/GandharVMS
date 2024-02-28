@@ -264,9 +264,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                /*labinsertdata();*/
-                makeNotification("", "");
-
+                labinsertdata();
             }
         });
 
