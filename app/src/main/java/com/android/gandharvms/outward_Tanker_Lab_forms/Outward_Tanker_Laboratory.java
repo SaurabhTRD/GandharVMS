@@ -209,7 +209,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         }
     }
 
-    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
+    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
         Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo,vehicleType,nextProcess,inOut);
         call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
             @Override

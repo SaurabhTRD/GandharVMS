@@ -8,9 +8,13 @@ import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -58,6 +62,10 @@ public class Outward_Tanker_Production extends AppCompatActivity {
     private Outward_Tanker_Lab outwardTankerLab;
     DatePickerDialog picker;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+    AutoCompleteTextView autoCompleteTextView;
+    ArrayAdapter<String> adapterItems;
+    String [] items = {"For Small Pack","Barrel","Tanker Filling","Other"};
+    RadioButton rbrinsingyes,rbrinsingno,rbdecisionyes,rbdecisionno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,17 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         setContentView(R.layout.activity_outward_tanker_production);
 
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+
+        autoCompleteTextView = findViewById(R.id.etpackingstatus);
+        adapterItems = new ArrayAdapter<String>(this,R.layout.packing_status_dropdown,items);
+        autoCompleteTextView.setAdapter(adapterItems);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String items = parent.getItemAtPosition(position).toString();
+                Toast.makeText(getApplicationContext(), "Item"+items, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         intime= findViewById(R.id.etintime);
@@ -88,6 +107,11 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         remark = findViewById(R.id.etremark);
 //        dt = findViewById(R.id.etdatetime);
         oanum = findViewById(R.id.etoanumber);
+
+        rbrinsingyes = findViewById(R.id.rinsingyes);
+        rbrinsingno = findViewById(R.id.rinsingno);
+        rbdecisionyes = findViewById(R.id.decisionyes);
+        rbdecisionno = findViewById(R.id.decisionno);
 
         submit=findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
@@ -209,8 +233,12 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         String uremark = remark.getText().toString().trim();
         int etcustref = Integer.parseInt(custref.getText().toString().trim());
         String packstatus = packingsatus.getText().toString().trim();
-        String etrinisingstatus = rinsingstatus.getText().toString().trim();
-        String etdecisionrule = decisionrule.getText().toString().trim();
+//        String etrinisingstatus = rinsingstatus.getText().toString().trim();
+//        String etdecisionrule = decisionrule.getText().toString().trim();
+
+        String etrinisingstatus = rbrinsingyes.isChecked() ? "Yes" : "No";
+        String etdecisionrule = rbdecisionyes.isChecked() ? "Yes" : "No";
+
         String etblendingmaterial = blendingmaterial.getText().toString().trim();
         String  etsignof = signof.getText().toString().trim();
         String etbatchno = batchno.getText().toString().trim();
