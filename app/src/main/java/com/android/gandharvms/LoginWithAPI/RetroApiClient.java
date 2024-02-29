@@ -43,4 +43,7 @@ public class RetroApiClient {
     public static Store getStoreDetails(){
         return getClient().create(Store.class);
     }
+
+    public static Logistic getLogisticDetails() {return getClient().create(Logistic.class);}
+
 }

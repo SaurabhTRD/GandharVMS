@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,9 +22,11 @@ import android.widget.Toast;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Request_Model_In_Tanker_Security;
+import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Truck_Security;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -273,7 +276,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
             Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, "", "",
                     '0', "", "", "", "", "", "", "", "", "",
                     "", "", "", "", "", "", "", "", "", "",
-                    "", isreporting, edremark, 'S', serial, vehicle, "", "", "", "",
+                     isreporting, edremark, 'S', serial, vehicle, "", "", "", "",
                     date, "", "", "", '0', "", '0', "", 'S', inOut,
                     vehicleType, "", "");
             Call<Boolean> call = outwardTanker.outwardtankerinsert(requestModelOutwardTankerSecurity);
@@ -454,10 +457,10 @@ public class Outward_Tanker_Security extends AppCompatActivity {
 //                    )
             Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, etintime,
                     outTime, etkl, etplace, permitselection, pucselection, insuranceselection, vehfitnesselection, licselection, rcselection, "", "",
-                    "", "", remark, "", "", "", "", "", outTime, EmployeId, date, false,
+                    "", "", remark, "", "", "", "", "", outTime, EmployeId,  false,
                     "", 'S', etserialnum, etvehiclnum, ettransname, etmobilenum, capacity, "",
                     date, "", "", "", 0, "", 0, "",
-                    nextProcess, inOut, vehicleType, etintime, "");
+                    'B', inOut, vehicleType, etintime, "");
 
 
             Call<Boolean> call = outwardTanker.outwardtankerinsert(requestModelOutwardTankerSecurity);
@@ -531,7 +534,9 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
-                        Toast.makeText(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_Tanker_Security.this, Inward_Truck.class));
+                        finish();
                     }
                 }
 
@@ -551,12 +556,9 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                             }
                         }
                     }
-                    Toast.makeText(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 }
             });
         }
-
-
     }
-
 }

@@ -76,7 +76,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Gross Weight"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -94,7 +94,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Net Weight"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tare Weight"
-                android:inputType="text"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>

@@ -27,9 +27,13 @@ public class Outward_RetroApiclient {
     public static Outward_Tanker_Billinginterface outwardTankerBillinginterface(){
         return getClient().create(Outward_Tanker_Billinginterface.class);
     }
+
     public static Outward_weighment outwardWeighment(){
         return getClient().create(Outward_weighment.class);
     }
+    /*public static Outward_weighment outwardWeighment(){
+        return getClient().create(Outward_weighment.class);
+    }*/
     public static Outward_Tanker_Lab outwardTankerLab(){
         return getClient().create(Outward_Tanker_Lab.class);
     }

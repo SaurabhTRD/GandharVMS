@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +22,7 @@ import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_Weighment_View
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 
 import java.io.IOException;
 import java.util.Calendar;
@@ -72,6 +75,26 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
 //            }
 //        });
 
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
+        etnetwt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calculateNetWeight();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,6 +130,19 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
             }
         });
     }
+
+    public void calculateNetWeight() {
+
+        String grosswt = etgrosswt.getText().toString().trim();
+        String netweight = etnetwt.getText().toString().trim();
+
+        double grossWeight = grosswt.isEmpty() ? 0.0 : Double.parseDouble(grosswt);
+        double netwe = netweight.isEmpty() ? 0.0 : Double.parseDouble(netweight);
+
+        double tareweight = grossWeight - netwe;
+
+        ettarewt.setText(String.valueOf(tareweight));
+    }
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
 
         Call<InTanWeighResponseModel> call = weighmentdetails.getWeighbyfetchVehData(vehicleNo,vehicleType,NextProcess,inOut);
@@ -117,9 +153,10 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                     InTanWeighResponseModel data = response.body();
                     if (data.getVehicleNo() != ""){
                         etgrosswt.setText(data.getGrossWeight());
-                        etnetwt.setText(data.getNetWeight());
-                        inwardid = data.getInwardId();
+                        etgrosswt.setEnabled(false);
                         etvehicel.setText(data.getVehicleNo());
+                        etvehicel.setEnabled(false);
+                        inwardid = data.getInwardId();
                     }
                 }
             }
@@ -165,7 +202,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(InwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(InwardOut_Truck_Weighment.this, Inward_Tanker.class));
+                        startActivity(new Intent(InwardOut_Truck_Weighment.this, submenu_Inward_Tanker.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

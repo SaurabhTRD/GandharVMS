@@ -263,7 +263,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etlabsub.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 labinsertdata();
             }
         });
@@ -402,7 +401,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String viscosity = etviscosity.getText().toString().trim();
         String disc = remarkdisc.getText().toString().trim();
         if (intime.isEmpty() || serialNumber.isEmpty() || date.isEmpty() || hundred.isEmpty() || vehicle.isEmpty() || apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty() || anline.isEmpty() || flash.isEmpty() || density.isEmpty() || rcsTest.isEmpty() ||
-                kv.isEmpty() || addTest.isEmpty() || samplereceivingdate.isEmpty() || viscosity.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
+                kv.isEmpty() || disc.isEmpty() || addTest.isEmpty() || samplereceivingdate.isEmpty() || viscosity.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             InTanLabRequestModel labRequestModel = new InTanLabRequestModel(inwardid, intime, outTime, date,
@@ -415,8 +414,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        /*makeNotification(vehicle, outTime);*/
+                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
+                        makeNotification(vehicle, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker.class));

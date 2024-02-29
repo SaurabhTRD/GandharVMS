@@ -321,7 +321,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body()!=null){
+                    if (response.isSuccessful() && response.body()!=null && response.body()==true){
                         makeNotification(vehicleNumber, outTime);
                         Log.d("Production", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
@@ -408,10 +408,13 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                     if (data.getVehicleNo()!= ""){
                         inwardid = data.getInwardId();
                         etserno.setText(data.getSerialNo());
+                        etserno.setEnabled(false);
                         etVehicleNumber.setText(data.getVehicleNo());
+                        etVehicleNumber.setEnabled(false);
                         etMaterial.setText(data.getMaterial());
-//                        etconunloadDateTime.setText(dateFormat.format(data.getDate()));
+                        etMaterial.setEnabled(false);
                         etconunloadDateTime.setText(data.getDate());
+                        etconunloadDateTime.setEnabled(false);
                         etint.requestFocus();
                         etint.callOnClick();
 

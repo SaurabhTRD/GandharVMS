@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,6 +28,7 @@ import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
@@ -86,6 +89,10 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
 
         });
 
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
+
         etsubmit = (Button) findViewById(R.id.prosubmit);
         dbroot = FirebaseFirestore.getInstance();
 
@@ -102,6 +109,22 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
             }
         });
 
+        etnetwt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calculateNetWeight();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,16 +236,27 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         double tareweight = grossWeight - netwe;
 
         ettareweight.setText(String.valueOf(tareweight));
-
-
-
     }
+
 //    public void calculateNetWeight(){
 //        String tareweight = ettareweight.getText().toString().trim();
 //        String grossweight = grswt.getText().toString().trim();
 //
 //
+   /* private final TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
 
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+            calculateNetWeight();
+        }
+    };*/
     public void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut)
     {
 //        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Tanker Weighment");
@@ -262,10 +296,11 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                    InTanWeighResponseModel data = response.body();
                    if (data.getVehicleNo() != ""){
                        grswt.setText(data.getGrossWeight());
+                       grswt.setEnabled(false);
+                       etvehicle.setText(data.getVehicleNo());
+                       etvehicle.setEnabled(false);
                        etnetwt.callOnClick();
                        inwardid = data.getInwardId();
-                       etvehicle.setText(data.getVehicleNo());
-
                    }
                }
            }
@@ -311,7 +346,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(InwardOut_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(InwardOut_Tanker_Weighment.this, Inward_Tanker.class));
+                        startActivity(new Intent(InwardOut_Tanker_Weighment.this, submenu_Inward_Tanker.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

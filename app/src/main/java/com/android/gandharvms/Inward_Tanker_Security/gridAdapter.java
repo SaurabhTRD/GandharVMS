@@ -107,15 +107,15 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
                         intent = new Intent(view.getContext(), Inward_Truck_Store.class);
                     }
                 }else if (vehitype.equals("IT") && io=='O') {
-                    if (crst.equals("OutForSecurity")) {
+                    if (crst.equals("OutSecurity")) {
                         intent = new Intent(view.getContext(), InwardOut_Tanker_Weighment.class);
-                    } else if (crst.equals("VehicleOutFromFactory")) {
+                    } else if (crst.equals("VehicleOut")) {
                         intent = new Intent(view.getContext(), InwardOut_Tanker_Security.class);
                     }
                 }else if (vehitype.equals("IR") && io=='O') {
-                    if (crst.equals("OutForSecurity")) {
+                    if (crst.equals("OutSecurity")) {
                         intent = new Intent(view.getContext(), InwardOut_Truck_Weighment.class);
-                    } else if (crst.equals("VehicleOutFromFactory")) {
+                    } else if (crst.equals("VehicleOut")) {
                         intent = new Intent(view.getContext(), InwardOut_Truck_Security.class);
                     }
                 }

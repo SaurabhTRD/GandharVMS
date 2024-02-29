@@ -10,42 +10,45 @@
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_margin="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
         android:gravity="top"
-        >
+        android:orientation="vertical">
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="155dp"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_gravity="left"
             android:layout_marginLeft="25dp"
             android:layout_marginTop="10dp"
-            android:layout_gravity="left"
 
             >
+
             <EditText
                 android:id="@+id/etintime"
                 android:layout_width="155dp"
                 android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
                 android:hint="In Time"
                 android:inputType="text"
                 android:textSize="17dp"
-                android:textStyle="bold"
-                android:focusable="false"
-                android:clickable="false"
-                />
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
 
             >
+
             <EditText
                 android:id="@+id/etvehicalnumber"
                 android:layout_width="match_parent"
@@ -53,17 +56,17 @@
                 android:hint="Vehicle Number"
                 android:inputType="textCapCharacters"
                 android:textSize="17dp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-            >
+            android:layout_marginRight="5dp">
+
             <EditText
                 android:id="@+id/etsinvocieno"
                 android:layout_width="match_parent"
@@ -71,18 +74,19 @@
                 android:hint="Invoice No"
                 android:inputType="textCapCharacters"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
 
             >
+
             <EditText
                 android:id="@+id/etsmaterial"
                 android:layout_width="match_parent"
@@ -90,19 +94,19 @@
                 android:hint="Material"
                 android:inputType="textCapCharacters"
                 android:textSize="17dp"
-                android:textStyle="bold"
-                />
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
             android:layout_marginTop="10dp"
+            android:layout_marginRight="5dp"
 
             >
+
             <EditText
                 android:id="@+id/etssupplier"
                 android:layout_width="match_parent"
@@ -110,29 +114,27 @@
                 android:hint="Supplier"
                 android:inputType="textCapCharacters"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
-
 
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Transport LR Copy"
-                android:gravity="start"
                 android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:gravity="start"
                 android:paddingStart="18dp"
                 android:paddingEnd="8dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
+                android:text="Transport LR Copy"
                 android:textSize="15dp"
-                />
+                android:textStyle="bold" />
 
 
             <RadioGroup
@@ -140,18 +142,20 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/rb_LRCopyYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
-                    android:text="Yes"/>
+                    android:text="Yes" />
+
                 <RadioButton
                     android:id="@+id/rb_LRCopyNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
-                    android:text="No"/>
+                    android:text="No" />
             </RadioGroup>
 
 
@@ -160,40 +164,41 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Delivery Challan"
-                android:gravity="start"
                 android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:gravity="start"
                 android:paddingStart="18dp"
                 android:paddingEnd="8dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
+                android:text="Delivery Challan"
                 android:textSize="15dp"
-                />
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="40dp"
                 android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/rb_DeliveryYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
                     android:checked="true"
-                    android:text="Yes"
-                    android:layout_marginLeft="15dp"/>
+                    android:text="Yes" />
+
                 <RadioButton
                     android:id="@+id/rb_DeliveryNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No"
-                    android:layout_marginLeft="25dp"/>
+                    android:layout_marginLeft="25dp"
+                    android:text="No" />
             </RadioGroup>
 
         </LinearLayout>
@@ -201,21 +206,20 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            >
+            android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Tax Invoice"
-                android:gravity="start"
                 android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:gravity="start"
                 android:paddingStart="18dp"
                 android:paddingEnd="8dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
+                android:text="Tax Invoice"
                 android:textSize="15dp"
-                />
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
@@ -229,12 +233,13 @@
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Yes" />
+
                 <RadioButton
                     android:id="@+id/rb_TaxInvoiceNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No"
-                    android:layout_marginLeft="25dp"/>
+                    android:layout_marginLeft="25dp"
+                    android:text="No" />
             </RadioGroup>
 
         </LinearLayout>
@@ -243,97 +248,90 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="E-Way Bill"
-                android:gravity="start"
                 android:layout_gravity="start"
+                android:layout_marginLeft="20dp"
+                android:gravity="start"
                 android:paddingStart="18dp"
                 android:paddingEnd="8dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
+                android:text="E-Way Bill"
                 android:textSize="15dp"
-                />
+                android:textStyle="bold" />
 
             <RadioGroup
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="55dp"
                 android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/rb_EwaybillYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="Yes"
                     android:layout_marginLeft="39dp"
-                    />
+                    android:checked="true"
+                    android:text="Yes" />
+
                 <RadioButton
                     android:id="@+id/rb_EwaybillNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="No"
-                    android:layout_marginLeft="28dp"/>
+                    android:layout_marginLeft="28dp"
+                    android:text="No" />
             </RadioGroup>
 
         </LinearLayout>
 
 
         <Button
-            android:onClick="btn_clicktoViewLabReport"
-            android:text="View Weighment Slip"
             android:id="@+id/btn_Viewweigmentslip"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.Button"
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp">
-        </Button>
-
-
-
-
-
-
-
+            android:layout_marginRight="30dp"
+            android:onClick="btn_clicktoViewLabReport"
+            android:text="View Weighment Slip"></Button>
 
 
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
             android:layout_height="55dp"
-            android:layout_marginTop="15dp"
-            >
+            android:layout_marginTop="15dp">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="115dp"
                     android:layout_height="55dp"
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="25dp"
-                    android:text="Cancel"
+                    android:text="Pending"
+                    android:textSize="22dp"
                     android:textStyle="bold"
-                    android:textSize="22dp">
+                    android:onClick="inwardtrOutSecurityPendingClick">
 
                 </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/view"
                     android:layout_width="100dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/view"
                     android:layout_marginLeft="15dp"
+                    android:onClick="Viewclick"
                     android:text="View"
                     android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:onClick="Viewclick">
+                    android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>
 
@@ -344,9 +342,8 @@
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="25dp"
                     android:text="SUBMIT"
-                    android:textStyle="bold"
                     android:textSize="22dp"
-                    >
+                    android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>
 

@@ -24,7 +24,7 @@ public class InTruckStoreResponseModel {
     String PartyName;
     String Material;
     String OA_PO_number;
-    int Driver_MobileNo;
+    String Driver_MobileNo;
     int Qty;
     int QtyUOM;
 
@@ -212,11 +212,11 @@ public class InTruckStoreResponseModel {
         this.OA_PO_number = OA_PO_number;
     }
 
-    public int getDriver_MobileNo() {
+    public String getDriver_MobileNo() {
         return Driver_MobileNo;
     }
 
-    public void setDriver_MobileNo(int driver_MobileNo) {
+    public void setDriver_MobileNo(String driver_MobileNo) {
         Driver_MobileNo = driver_MobileNo;
     }
 

@@ -337,7 +337,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                         makeNotification(vehicalnumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Truck_weighment.this, Inward_Tanker.class));
+                        startActivity(new Intent(Inward_Truck_weighment.this, Inward_Truck.class));
                         finish();
                     }
                     else

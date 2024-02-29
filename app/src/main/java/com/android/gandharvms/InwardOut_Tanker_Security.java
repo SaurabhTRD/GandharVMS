@@ -21,6 +21,7 @@ import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequ
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -75,6 +76,11 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
                 update();
             }
         });
+
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, DeptType, InOutType);
+        }
+
         edintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -101,54 +107,58 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
                     String vehicltype = Global_Var.getInstance().MenuType;
                     char DeptType = Global_Var.getInstance().DeptType;
                     char InOutType = Global_Var.getInstance().InOutType;
-
                     FetchVehicleDetails(etvehicle.getText().toString().trim(), vehicltype, DeptType, InOutType);
                 }
             }
-            private void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
-                Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(VehicleNo, vehicltype, DeptType, InOutType);
-                call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
-                    @Override
-                    public void onResponse(Call<List<Respo_Model_In_Tanker_security>> call, Response<List<Respo_Model_In_Tanker_security>> response) {
-                        if (response.isSuccessful()){
-                            if (response.body().size()>0){
-                                List<Respo_Model_In_Tanker_security> Data = response.body();
-                                Respo_Model_In_Tanker_security obj = Data.get(0);
 
-                                InwardId = obj.getInwardId();
-                                etinvoice.setText(obj.getInvoiceNo());
-                                etmaterial.setText(obj.getMaterial());
-                                etsupplier.setText(obj.getPartyName());
-
-                            }
-                        }else {
-                            Log.e("Retrofit", "Error" + response.code());
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<List<Respo_Model_In_Tanker_security>> call, Throwable t) {
-                        Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                            Response<?> response = ((HttpException) t).response();
-                            if (response != null) {
-                                Log.e("Retrofit", "Error Response Code: " + response.code());
-                                try {
-                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    }
-                });
-            }
         });
     }
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
+    }
+
+    private void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
+        Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(VehicleNo, vehicltype, DeptType, InOutType);
+        call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
+            @Override
+            public void onResponse(Call<List<Respo_Model_In_Tanker_security>> call, Response<List<Respo_Model_In_Tanker_security>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size()>0){
+                        List<Respo_Model_In_Tanker_security> Data = response.body();
+                        Respo_Model_In_Tanker_security obj = Data.get(0);
+                        InwardId = obj.getInwardId();
+                        etvehicle.setText(obj.getVehicleNo());
+                        etvehicle.setEnabled(false);
+                        etinvoice.setText(obj.getInvoiceNo());
+                        etinvoice.setEnabled(false);
+                        etmaterial.setText(obj.getMaterial());
+                        etmaterial.setEnabled(false);
+                        etsupplier.setText(obj.getPartyName());
+                        etsupplier.setEnabled(false);
+                    }
+                }else {
+                    Log.e("Retrofit", "Error" + response.code());
+                }
+            }
+            @Override
+            public void onFailure(Call<List<Respo_Model_In_Tanker_security>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void update() {
@@ -177,7 +187,9 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
-                        Toast.makeText(InwardOut_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(InwardOut_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(InwardOut_Tanker_Security.this, submenu_Inward_Tanker.class));
+                        finish();
                     }
                 }
 
@@ -215,6 +227,4 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }
-
-
 }

@@ -22,7 +22,7 @@
             android:orientation="horizontal">
 
             <CheckBox
-                android:id="@+id/isreporting"
+                android:id="@+id/trsisreporting"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="35dp"
@@ -49,7 +49,7 @@
 
             >
             <EditText
-                android:id="@+id/etdate"
+                android:id="@+id/ettrsdate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Date"
@@ -71,7 +71,7 @@
 
             >
             <EditText
-                android:id="@+id/etserialnumber"
+                android:id="@+id/ettrsserialnumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Serial Number"
@@ -90,11 +90,11 @@
             android:layout_marginTop="10dp"
             >
             <EditText
-                android:id="@+id/etvehicleno"
+                android:id="@+id/ettrsvehicleno"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Vehicle Number"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -110,11 +110,12 @@
 
             >
             <EditText
-                android:id="@+id/edtreportingremark"
+                android:id="@+id/edtrsreportingremark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Reporting Remark"
                 android:inputType="textCapCharacters"
+                android:textAllCaps="true"
                 android:textSize="17dp"
                 android:textStyle="bold"
 
@@ -145,7 +146,7 @@
 
             >
             <EditText
-                android:id="@+id/etintime"
+                android:id="@+id/ettrsintime"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="In Time"
@@ -167,11 +168,12 @@
 
             >
             <EditText
-                android:id="@+id/ettranseporter"
+                android:id="@+id/ettrstranseporter"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Transporter"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
+                android:textAllCaps="true"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -187,11 +189,12 @@
 
             >
             <EditText
-                android:id="@+id/etplace"
+                android:id="@+id/ettrsplace"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Place"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
+                android:textAllCaps="true"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -207,7 +210,7 @@
 
             >
             <EditText
-                android:id="@+id/etmobilenumber"
+                android:id="@+id/ettrsmobilenumber"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mobile Number"
@@ -227,11 +230,12 @@
 
             >
             <EditText
-                android:id="@+id/etremark"
+                android:id="@+id/ettrsremark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Remark"
-                android:inputType="number"
+                android:inputType="textCapCharacters"
+                android:textAllCaps="true"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -263,13 +267,13 @@
                 android:layout_marginLeft="95dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/vehpermityes"
+                    android:id="@+id/rbtrsvehpermityes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Yes"/>
                 <RadioButton
-                    android:id="@+id/vehpermitno"
+                    android:id="@+id/rbtrsvehpermitno"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
@@ -305,13 +309,13 @@
                 android:layout_marginLeft="138dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/rb_LRCopyYes"
+                    android:id="@+id/rb_trsLRCopyYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Yes"/>
                 <RadioButton
-                    android:id="@+id/rb_LRCopyNo"
+                    android:id="@+id/rb_trsLRCopyNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
@@ -347,14 +351,14 @@
                 android:layout_marginLeft="95dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/rb_DeliveryYes"
+                    android:id="@+id/rb_trsPUCYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Yes"
                     android:layout_marginLeft="68dp"/>
                 <RadioButton
-                    android:id="@+id/rb_DeliveryNo"
+                    android:id="@+id/rb_trsPUCNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
@@ -389,13 +393,13 @@
                 android:orientation="horizontal">
 
                 <RadioButton
-                    android:id="@+id/rb_TaxInvoiceYes"
+                    android:id="@+id/rb_trsInsuranceYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
                     android:text="Yes" />
                 <RadioButton
-                    android:id="@+id/rb_TaxInvoiceNo"
+                    android:id="@+id/rb_trsInsuranceNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
@@ -430,7 +434,7 @@
                 android:layout_marginRight="1dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/rb_EwaybillYes"
+                    android:id="@+id/rb_trsvehfitcertYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -438,7 +442,7 @@
                     android:layout_marginLeft="39dp"
                     />
                 <RadioButton
-                    android:id="@+id/vehiclefitness"
+                    android:id="@+id/rb_trsvehfitcertNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
@@ -471,7 +475,7 @@
                 android:layout_marginLeft="49dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/driverlic"
+                    android:id="@+id/rb_trsdriverlicYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -479,7 +483,7 @@
                     android:layout_marginLeft="39dp"
                     />
                 <RadioButton
-                    android:id="@+id/driverlicradiobtn"
+                    android:id="@+id/rb_trsdriverlicNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
@@ -512,7 +516,7 @@
                 android:layout_marginLeft="95dp"
                 android:orientation="horizontal">
                 <RadioButton
-                    android:id="@+id/rcbook_yes"
+                    android:id="@+id/rb_trsrcbookYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:checked="true"
@@ -520,7 +524,7 @@
                     android:layout_marginLeft="39dp"
                     />
                 <RadioButton
-                    android:id="@+id/rcbook_no"
+                    android:id="@+id/rb_trsrcbookNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="No"
