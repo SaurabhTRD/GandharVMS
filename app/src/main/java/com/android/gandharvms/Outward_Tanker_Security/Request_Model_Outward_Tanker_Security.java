@@ -53,7 +53,16 @@ public class Request_Model_Outward_Tanker_Security {
    public String Factory_Out;
 
 
-    public Request_Model_Outward_Tanker_Security( int outwardId, String intime, String outTime, int kl, String place, String vehiclePermit, String puc, String insurance, String vehicleFitnessCertificate, String driverLicenses, String rcBook, String invoiceNumber, String nameofParty, String descriptionofGoods, String signature, String remark, String transportLRcopy, String tremcard, String ewaybill, String test_Report, String invoice, String outInTime,  String createdBy, String createdDate, boolean isReporting, String reportingRemark, char currentProcess, String serialNumber, String vehicleNumber, String transportName, String mobileNumber, String capacityVehicle, String conditionOfVehicle, String date, String materialName, String customerName, String OAnumber, int tankerNumber, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType,String factory_In,String factory_Out) {
+    public Request_Model_Outward_Tanker_Security( int outwardId, String intime, String outTime, int kl,
+            String place, String vehiclePermit, String puc, String insurance, String vehicleFitnessCertificate,
+            String driverLicenses, String rcBook, String invoiceNumber, String nameofParty, String descriptionofGoods,
+            String signature, String remark, String transportLRcopy, String tremcard, String ewaybill,
+            String test_Report, String invoice, String outInTime,  String createdBy, boolean isReporting,
+            String reportingRemark, char currentProcess, String serialNumber, String vehicleNumber,
+            String transportName, String mobileNumber, String capacityVehicle, String conditionOfVehicle,
+            String date, String materialName, String customerName, String OAnumber, int tankerNumber,
+            String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O,
+            String vehicleType,String factory_In,String factory_Out) {
         OutwardId = outwardId;
         Intime = intime;
         OutTime = outTime;
@@ -77,7 +86,6 @@ public class Request_Model_Outward_Tanker_Security {
         Invoice = invoice;
         OutInTime = outInTime;
         CreatedBy = createdBy;
-        CreatedDate = createdDate;
         IsReporting = isReporting;
         ReportingRemark = reportingRemark;
         CurrentProcess = currentProcess;

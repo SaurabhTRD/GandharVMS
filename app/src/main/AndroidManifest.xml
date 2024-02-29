@@ -81,7 +81,7 @@
             android:name=".OutwardOut_Tanker"
             android:exported="false" />
         <activity
-            android:name=".Outward_Truck_Logistics"
+            android:name=".Outward_Truck_Logistic.Outward_Truck_Logistics"
             android:exported="false" />
         <activity
             android:name=".Outward_Truck_Dispatch"

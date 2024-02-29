@@ -4,8 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.view.View;
+
+import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 
 public class Outward_Truck extends AppCompatActivity {
 
