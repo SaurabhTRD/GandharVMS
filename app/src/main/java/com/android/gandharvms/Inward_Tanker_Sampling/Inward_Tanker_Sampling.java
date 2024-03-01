@@ -79,7 +79,6 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     Date currentDate = Calendar.getInstance().getTime();
     String dateFormatPattern = "dd-MM-yyyy";
     SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String token,serialnumber;
     private String vehicletype= Global_Var.getInstance().MenuType;
     private char DeptType=Global_Var.getInstance().DeptType;
@@ -167,7 +166,6 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 sainsertdata();
-                //sainsertdataAdapter();
             }
         });
 
@@ -178,8 +176,6 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
@@ -196,8 +192,8 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                                 token =responseModel.getToken();
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Laboratory Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        "Inward Tanker Sampling Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Sampling process at " + outTime,
                                         getApplicationContext(),
                                         Inward_Tanker_Sampling.this
                                 );
@@ -229,75 +225,6 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
             }
         });
     }
-
-    private String getCurrentTime() {
-        // Get the current time
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        return sdf.format(new Date());
-    }
-
-
-    /*public void sainsertdataAdapter() {
-        String etreciving = etssignofproduction.getText().toString().trim();
-        String etsubmitted = etinvoiceno.getText().toString().trim();
-        String date = etsdate.getText().toString().trim();
-        String vehiclenumber = etvehicleno.getText().toString().trim();
-        String outTime = getCurrentTime();
-
-        if (vehiclenumber.isEmpty() || etreciving.isEmpty() || date.isEmpty() || etsubmitted.isEmpty()) {
-            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
-        } else {
-            Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel= new
-                    Inward_Tanker_SamplingRequestModel(inwardid,etreciving,etsubmitted,createdby,
-                    vehiclenumber,serialnumber,'L',InOutType,vehicltype,);
-
-
-            Call<Boolean> call = inward_Tanker_SamplingMethod.postAdd(inward_Tanker_SamplingRequestModel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if(response.isSuccessful() && response.body() != null)
-                    {
-                        makeNotification(vehiclenumber, outTime);
-                        if(response.body().booleanValue())
-                        {
-                            Log.d("Registration", "Response Body: " + response.body());
-                            Toasty.success(Inward_Tanker_Sampling.this, "Inward Tanker Sampling succesfully", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Inward_Tanker_Sampling.this, Inward_Tanker.class);
-                            startActivity(intent);
-                        }
-                        else {
-                            // Registration failed
-                            Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
-                            Toasty.error(Inward_Tanker_Sampling.this, "Inward Tanker Sampling failed..!", Toast.LENGTH_SHORT).show();
-                        }
-                    }else {
-                        // Registration failed
-                        Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
-                        Toasty.error(Inward_Tanker_Sampling.this, "Inward Tanker Sampling failed..!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    Toasty.error(Inward_Tanker_Sampling.this,"Inward Tanker Sampling failed..!",Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-    }*/
 
     public void sainsertdata() {
         String etreciving = etssignofproduction.getText().toString().trim();
@@ -403,13 +330,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     public void samplegrid(View view){
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
-        /*Intent intent = new Intent(this, in_Tanker_sampling_grid.class);
-        startActivity(intent);*/
     }
     public void SamplingViewclick(View view){
-        /*Intent intent = new Intent(this, grid.class);
-        startActivity(intent);*/
-        /*Intent intent = new Intent(this, in_Tanker_sampling_grid.class);
-        startActivity(intent);*/
     }
 }

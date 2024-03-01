@@ -77,9 +77,6 @@ import retrofit2.Response;
 public class Inward_Truck_Store extends AppCompatActivity {
 
     private final int MAX_LENGTH = 10;
-    /*String[] items = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
-    String[] items1 = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};*/
-    /*AutoCompleteTextView autoCompleteTextView, autoCompleteTextView1;*/
     ArrayAdapter<String> adapterItems;
     ArrayAdapter<String> adapterItems1;
     EditText etintime, etserialnumber, etvehicalnum, etpo, etpodate, etmaterialrdate, etmaterial, etqty, etrecqtyoum, etremark, etinvqty, etinvdate, etinvnum, etinvqtyuom;
@@ -99,7 +96,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
     Timestamp timestamp = new Timestamp(calendar.getTime());
     private String token;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
 
     Integer qtyUomNumericValue = 1;
     Integer netweuomvalue = 1;
@@ -120,7 +116,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_truck_store);
 
-        //Send Notification to all
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
@@ -151,11 +146,9 @@ public class Inward_Truck_Store extends AppCompatActivity {
                 // Retrieve the corresponding numerical value from the mapping
                 qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
                 if (qtyUomNumericValue != null) {
-                    // Now, you can use qtyUomNumericValue when inserting into the database
-                    Toast.makeText(Inward_Truck_Store.this, "RecQty : " + qtyUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
+                    Toasty.success(Inward_Truck_Store.this, "RecQty : " + qtyUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
                 } else {
-                    // Handle the case where the mapping doesn't contain the display value
-                    Toast.makeText(Inward_Truck_Store.this, "Unknown qtyUom : " + qtyUomDisplay, Toast.LENGTH_SHORT).show();
+                    Toasty.warning(Inward_Truck_Store.this, "Unknown qtyUom : " + qtyUomDisplay, Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -173,37 +166,13 @@ public class Inward_Truck_Store extends AppCompatActivity {
                 String neweuom = parent.getItemAtPosition(position).toString();
                 netweuomvalue = qtyUomMapping.get(neweuom);
                 if (qtyUomNumericValue != null){
-                    Toast.makeText(Inward_Truck_Store.this, "Invoice QTY: " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
-
+                    Toasty.success(Inward_Truck_Store.this, "Invoice QTY: " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toast.makeText(Inward_Truck_Store.this, "Unknown qtyUom : " + netweuom, Toast.LENGTH_SHORT).show();
+                    Toasty.warning(Inward_Truck_Store.this, "Unknown qtyUom : " + netweuom, Toast.LENGTH_SHORT).show();
                 }
             }
         });
-        /*autoCompleteTextView = findViewById(R.id.etsuom);
-        adapterItems = new ArrayAdapter<String>(this, R.layout.list_itemuom, items);
-        autoCompleteTextView.setAdapter(adapterItems);
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item: " + items + " Selected", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //for invqtyuom
-        autoCompleteTextView1 = findViewById(R.id.etinvqtysuom);
-        adapterItems1 = new ArrayAdapter<String>(this, R.layout.list_itemuom, items1);
-        autoCompleteTextView1.setAdapter(adapterItems1);
-        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item: " + items + " Selected", Toast.LENGTH_SHORT).show();
-            }
-        });*/
-
 
         etintime = (EditText) findViewById(R.id.etintime);
         etserialnumber = (EditText) findViewById(R.id.ettrsserialnumber);
@@ -220,7 +189,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
         etinvdate = (EditText) findViewById(R.id.ettrinvDate);
         etinvnum = (EditText) findViewById(R.id.ettinvnumber);
 
-
         linearLayout = findViewById(R.id.layout_list);
         button1 = findViewById(R.id.button_add);
         button1.setOnClickListener(this::onClick);
@@ -232,23 +200,12 @@ public class Inward_Truck_Store extends AppCompatActivity {
         teamList.add("Pcs");
         teamList.add("NA");
 
-
-        //listdata
-        /*view = findViewById(R.id.viewclick);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Inward_Truck_Store.this, Inward_Truck_Store_viewdata.class));
-            }
-        });*/
-
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 int hours = calendar.get(Calendar.HOUR_OF_DAY);
                 int mins = calendar.get(Calendar.MINUTE);
-
 
                 intruckspicker = new TimePickerDialog(Inward_Truck_Store.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
@@ -282,7 +239,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
                 intruckspicker.show();
             }
         });
-
 
         //date
         etpodate.setOnClickListener(new View.OnClickListener() {
@@ -312,7 +268,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
                     FetchVehicleDetails(etvehicalnum.getText().toString().trim(),vehicleType,nextProcess,inOut);
                 }
             }
-
         });
 
         etinvdate.setOnClickListener(new View.OnClickListener() {
@@ -358,9 +313,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
 
         trssubmit = (Button) findViewById(R.id.submit);
         trsdbroot = FirebaseFirestore.getInstance();
-
-        //prince
-
         trssubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -369,41 +321,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
         });
     }
 
-
-
-
     public void makeNotification(String vehicleNumber,String outTime) {
-//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    // Assume you have a user role to identify the specific role
-//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-//                        String specificRole = "Sampling";
-//                        // Get the value of the "role" node                    ;
-//                        if (issue.toString().contains(specificRole)) {
-//                            //getting the token
-//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-//                                    "Inward Tanker Weighment Process Done..!",
-//                                    "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
-//                                    getApplicationContext(), Inward_Truck_Store.this);
-//                            notificationsSender.SendNotifications();
-//                        }
-//                    }
-//                } else {
-//                    // Handle the case when the "role" node doesn't exist
-//                    Log.d("Role Data", "Role node doesn't exist");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle errors here
-//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
-//            }
-//        });
         Call<List<ResponseModel>> call =userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -417,8 +335,8 @@ public class Inward_Truck_Store extends AppCompatActivity {
                                 token = responseModel.getToken();
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Production Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        "Inward Truck Store Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Store process at " + outTime,
                                         getApplicationContext(),
                                         Inward_Truck_Store.this
                                 );
@@ -642,7 +560,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etinvdate.setEnabled(false);
                         etinvqty.setText(String.valueOf(data.getQty()));
                         etinvqty.setEnabled(false);
-                        /*etinqtyuom.setSelection(Integer.parseInt(String.valueOf(data.QtyUOM)));*/
+                        etinvqtyuom.setText(data.UnitOfMeasurement);
                         /*etqty.setText(String.valueOf(data.getQty()));
                         etqty.setEnabled(false);*/
                         etintime.requestFocus();

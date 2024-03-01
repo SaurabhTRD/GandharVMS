@@ -59,6 +59,9 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
     String date_start,date_end;
     Button startDatePicker,endDatePicker,btnsrnumclear,btnptnamclear,btnclearSelectedDates;
     EditText etserialNumber,etSupplierName;
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
     TextView txtTotalCount;
     private API_In_Tanker_Security securitydetails;
     List<ListingResponse_InTankerSequrity> trucksecuritylist;
@@ -252,10 +255,9 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
         recview = (RecyclerView)findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
         trucksecuritylist = new ArrayList<>();
-        char nextprocess= Global_Var.getInstance().DeptType;
         String FromDate = getCurrentDateTime();
         String Todate = getCurrentDateTime();
-        GetsecuritylistData(FromDate,Todate);
+        GetsecuritylistData(FromDate,Todate,vehicleType,inOut);
 
 
 
@@ -289,8 +291,8 @@ public class Inward_Truck_Security_viewdata extends AppCompatActivity {
         return dateFormat.format(now);
     }
 
-    private void GetsecuritylistData(String FromDate,String Todate) {
-        Call<List<ListingResponse_InTankerSequrity>> call = securitydetails.getintankersecurityListData(FromDate,Todate);
+    private void GetsecuritylistData(String FromDate,String Todate,String vehicletype,char inout) {
+        Call<List<ListingResponse_InTankerSequrity>> call = securitydetails.getintankersecurityListData(FromDate,Todate,vehicletype,inout);
         call.enqueue(new Callback<List<ListingResponse_InTankerSequrity>>() {
             @Override
             public void onResponse(Call<List<ListingResponse_InTankerSequrity>> call, Response<List<ListingResponse_InTankerSequrity>> response) {

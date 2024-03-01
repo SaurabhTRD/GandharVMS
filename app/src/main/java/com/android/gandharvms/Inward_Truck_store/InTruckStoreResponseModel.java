@@ -27,6 +27,15 @@ public class InTruckStoreResponseModel {
     String Driver_MobileNo;
     int Qty;
     int QtyUOM;
+    String UnitOfMeasurement;
+
+    public String getUnitOfMeasurement() {
+        return UnitOfMeasurement;
+    }
+
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
+        UnitOfMeasurement = unitOfMeasurement;
+    }
 
     public int getId() {
         return Id;

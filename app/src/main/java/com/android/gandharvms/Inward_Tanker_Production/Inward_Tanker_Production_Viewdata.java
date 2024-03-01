@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -36,7 +37,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -57,6 +60,9 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
 
     private API_In_Tanker_production apiInTankerProduction;
     List<ListingResponse_InTankerproduction> productionlist;
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,8 +88,9 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
         recview = findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
         productionlist = new ArrayList<>();
-        char nextprocess= Global_Var.getInstance().DeptType;
-        GetproductionlistData(nextprocess);
+        String FromDate = getCurrentDateTime();
+        String Todate = getCurrentDateTime();
+        GetproductionlistData(FromDate,Todate,vehicleType,inOut);
 
 
 
@@ -272,8 +279,8 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
 //        });
     }
 
-    private void GetproductionlistData(char nextprocess) {
-        Call<List<ListingResponse_InTankerproduction>> call = apiInTankerProduction.getintankerproductionListdata(nextprocess);
+    private void GetproductionlistData(String FromDate,String Todate,String vehicletype,char inout) {
+        Call<List<ListingResponse_InTankerproduction>> call = apiInTankerProduction.getintankerproductionListdata(FromDate,Todate,vehicletype,inout);
         call.enqueue(new Callback<List<ListingResponse_InTankerproduction>>() {
             @Override
             public void onResponse(Call<List<ListingResponse_InTankerproduction>> call, Response<List<ListingResponse_InTankerproduction>> response) {
@@ -311,6 +318,16 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
                 Toasty.error(Inward_Tanker_Production_Viewdata.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private String getCurrentDateTime() {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // Format the date and time as a string
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(now);
     }
 
 //    public void showDatePickerDialog(final boolean isStartDate) {

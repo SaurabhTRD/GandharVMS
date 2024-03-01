@@ -14,8 +14,14 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface Weighment {
-    @GET("api/InwardWeighment/GetWeighmentList")
-    Call<List<InTanWeighResponseModel>> getIntankWeighListData(@Query("NextProcess") char nextProcess);
+   /* @GET("api/InwardWeighment/GetWeighmentList")
+    Call<List<InTanWeighResponseModel>> getIntankWeighListData(@Query("NextProcess") char nextProcess);*/
+
+    @GET("api/InwardWeighment/GetInwardWeighmentList")
+    Call<List<InTanWeighResponseModel>> getIntankWeighListingData(@Query("FromDate") String FromDate,
+                                                                  @Query("Todate") String Todate,
+                                                                  @Query("vehicleType") String vehicleType,
+                                                                  @Query("inout") char inout);
     @GET("api/InwardWeighment/GetWeighmentByFetchVehicleDetails")
     Call<InTanWeighResponseModel> getWeighbyfetchVehData(@Query("vehicleNo") String vehicleNo,
                                                          @Query("vehicleType") String vehicleType,

@@ -58,7 +58,7 @@ public class Inward_Truck_Weighment_Viewdata extends AppCompatActivity {
 
         weighdatalist = new ArrayList<>();
         char nextprocess= Global_Var.getInstance().DeptType;
-        GetWeighmentListData(nextprocess);
+        /*GetWeighmentListData(nextprocess);*/
         /*db=FirebaseFirestore.getInstance();
         db.collection("Inward Truck Weighment").orderBy("Date", Query.Direction.DESCENDING).get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
@@ -78,7 +78,7 @@ public class Inward_Truck_Weighment_Viewdata extends AppCompatActivity {
                 });*/
     }
 
-    private void GetWeighmentListData(char nextProcess) {
+    /*private void GetWeighmentListData(char nextProcess) {
         Call<List<InTanWeighResponseModel>> call = weighmentdetails.getIntankWeighListData(nextProcess);
         call.enqueue(new Callback<List<InTanWeighResponseModel>>() {
             @Override
@@ -116,5 +116,5 @@ public class Inward_Truck_Weighment_Viewdata extends AppCompatActivity {
                 Toasty.error(Inward_Truck_Weighment_Viewdata.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }*/
 }

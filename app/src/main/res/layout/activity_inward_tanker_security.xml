@@ -7,6 +7,19 @@
     tools:context=".Inward_Tanker_Security.Inward_Tanker_Security">
 
 
+    <Button
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="30dp"
+        android:onClick="olcgridclick"
+        android:text="Pending Vehicles"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"></Button>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -25,8 +38,9 @@
               android:id="@+id/isreporting"
               android:layout_width="wrap_content"
               android:layout_height="wrap_content"
-              android:layout_marginLeft="35dp"
+              android:layout_marginLeft="25dp"
               android:layout_marginRight="25dp"
+              android:layout_marginTop="40dp"
               android:layout_weight="1"
               android:textSize="16dp"
               android:text="Is Reporting ?" />
@@ -51,7 +65,6 @@
                 android:inputType="date"
                 android:textSize="17dp"
                 android:textStyle="bold"
-                android:focusable="false"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -64,8 +77,6 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="5dp"
             android:id="@+id/regno"
-
-
             >
             <EditText
                 android:id="@+id/etserialnumber"
@@ -75,9 +86,6 @@
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"
-                android:focusable="false"
-                android:clickable="false"
-                android:cursorVisible="false"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -444,7 +452,7 @@
                   android:orientation="horizontal"
                   android:layout_marginTop="10dp">
 
-                  <androidx.appcompat.widget.AppCompatButton
+                  <!--<androidx.appcompat.widget.AppCompatButton
                       android:layout_width="110dp"
                       android:layout_height="match_parent"
                       android:layout_below="@id/OUM."
@@ -454,31 +462,28 @@
                       android:textStyle="bold"
                       android:textSize="15dp">
 
-                  </androidx.appcompat.widget.AppCompatButton>
+                  </androidx.appcompat.widget.AppCompatButton>-->
 
                   <androidx.appcompat.widget.AppCompatButton
                       android:id="@+id/dbview"
-                      android:layout_width="110dp"
+                      android:layout_width="130dp"
                       android:layout_height="match_parent"
                       android:layout_below="@id/OUM."
-                      android:layout_marginLeft="12dp"
+                      android:layout_marginLeft="90dp"
                       android:text="Completed"
-                      android:textSize="15dp"
+                      android:textSize="17dp"
                       android:textStyle="bold"
-                      android:onClick="Viewclick"
-
-                      >
-
+                      android:onClick="olcViewclick">
                   </androidx.appcompat.widget.AppCompatButton>
 
                   <androidx.appcompat.widget.AppCompatButton
                       android:id="@+id/submit"
-                      android:layout_width="110dp"
+                      android:layout_width="130dp"
                       android:layout_height="match_parent"
                       android:layout_below="@id/OUM."
                       android:layout_marginLeft="10dp"
                       android:text="SUBMIT"
-                      android:textSize="15dp"
+                      android:textSize="17dp"
                       android:textStyle="bold">
 
                   </androidx.appcompat.widget.AppCompatButton>

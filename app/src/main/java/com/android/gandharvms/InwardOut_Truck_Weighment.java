@@ -20,12 +20,16 @@ import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Model_InwardOutweighment;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_Weighment_Viewdata;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -42,7 +46,9 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private Weighment weighmentdetails;
+    private LoginMethod userDetails;
     private int inwardid;
+    private String token;
     TimePickerDialog tpicker;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +56,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         setContentView(R.layout.activity_inward_out_truck_weighment);
 
         weighmentdetails = RetroApiClient.getWeighmentDetails();
+        userDetails = RetroApiClient.getLoginApi();
 
         etintime = findViewById(R.id.intime);
         etvehicel = findViewById(R.id.vehicle);
@@ -59,6 +66,9 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         
         submit = findViewById(R.id.prosubmit);
 
+        //Send Notification to all
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
+
         view = findViewById(R.id.btn_Viewweigmentslip);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,14 +76,6 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                 startActivity(new Intent(InwardOut_Truck_Weighment.this, Inward_Truck_Weighment_Viewdata.class));
             }
         });
-//        etvehicel.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onClick(View v, boolean hasFocus) {
-//                if (!hasFocus){
-//                    FetchVehicleDetails(etvehicel.getText().toString().trim(),vehicleType,nextProcess,inOut);
-//                }
-//            }
-//        });
 
         if (getIntent().hasExtra("VehicleNumber")) {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
@@ -177,10 +179,56 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                     }
                 }
                 Toasty.error(InwardOut_Truck_Weighment.this,"failed..!", Toast.LENGTH_SHORT).show();
-
             }
         });
     }
+
+    public void makeNotification(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel responseModel :userList){
+                            String specificrole = "Security";
+                            if (specificrole.equals(responseModel.getDepartment())){
+                                token = responseModel.getToken();
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Inward Truck Out Weighment Process Done..!",
+                                        "This Vehicle:-" + vehicleNumber + "is Ready for Security",
+                                        getApplicationContext(),
+                                        InwardOut_Truck_Weighment.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(InwardOut_Truck_Weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void update() {
 
         String intime = etintime.getText().toString().trim();
@@ -193,7 +241,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,gross,net,tare,"","",
-                    'S','O',vehicleType,intime);
+                    'S','O',vehicleType,intime,EmployeId);
 
             Call<Boolean> call = weighmentdetails.inwardoutweighment(modelInwardOutweighment);
             call.enqueue(new Callback<Boolean>() {
@@ -201,6 +249,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         Log.d("Registration", "Response Body: " + response.body());
+                        makeNotification(vehicleno);
                         Toasty.success(InwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(InwardOut_Truck_Weighment.this, submenu_Inward_Tanker.class));
                         finish();
@@ -228,10 +277,8 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                     Toasty.error(InwardOut_Truck_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
-
         }
     }
-
 
     public void onBackPressed(){
         Intent intent = new Intent(this, Menu.class);
@@ -239,6 +286,11 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         finish();
     }
     public void inouttruckgrid(View view){
+        Intent intent = new Intent(this, grid.class);
+        startActivity(intent);
+    }
+
+    public void intrwegridclick(View view){
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }

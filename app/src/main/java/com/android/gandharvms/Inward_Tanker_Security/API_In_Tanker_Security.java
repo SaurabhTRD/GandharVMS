@@ -29,12 +29,12 @@ public interface API_In_Tanker_Security {
     @GET("api/InwardSecurity/GetInwardSecurityList")
     Call<List<ListingResponse_InTankerSequrity>> getintankersecurityListData(
             @Query("FromDate") String FromDate,
-            @Query("Todate") String Todate);
+            @Query("Todate") String Todate,
+            @Query("vehicletype") String vehicletype,
+            @Query("inout") char inout);
 
     @POST("api/InwardSecurity/UpdateOutSecurityDetails")
-    Call<Boolean> intankersecurityoutupdate(@Body Update_Request_Model_Insequrity request);
-
-
+    Call<Boolean> intankersecurityoutupdate(@Body UpdateOutSecurityRequestModel updateOutSecurity);
 }
 
 

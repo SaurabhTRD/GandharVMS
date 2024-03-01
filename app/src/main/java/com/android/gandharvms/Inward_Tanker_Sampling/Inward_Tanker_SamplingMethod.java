@@ -13,6 +13,12 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface Inward_Tanker_SamplingMethod {
+
+    @GET("api/InwardWeighment/GetInwardWeighmentList")
+    Call<List<Inward_Tanker_SamplingResponseModel>> getIntankSamplingListingData(@Query("FromDate") String FromDate,
+                                                                  @Query("Todate") String Todate,
+                                                                  @Query("vehicleType") String vehicleType,
+                                                                  @Query("inout") char inout);
     @POST("api/InwardSampling/Add")
     Call<Boolean> insertSamplingData(@Body Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel);
 

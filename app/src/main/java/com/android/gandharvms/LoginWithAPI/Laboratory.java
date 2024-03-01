@@ -14,8 +14,14 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface Laboratory {
+    /*@GET("api/InwardLaboratory/GetLaboratoryList")
+    Call<List<InTanLabResponseModel>> getIntankLabListData(@Query("NextProcess") char nextProcess);*/
+
     @GET("api/InwardLaboratory/GetLaboratoryList")
-    Call<List<InTanLabResponseModel>> getIntankLabListData(@Query("NextProcess") char nextProcess);
+    Call<List<InTanLabResponseModel>> getIntankLabListData(@Query("FromDate") String FromDate,
+                                                                  @Query("Todate") String Todate,
+                                                                  @Query("vehicleType") String vehicleType,
+                                                                  @Query("inout") char inout);
     @GET("api/InwardLaboratory/GetLaboratoryByFetchVehicleDetails")
     Call<InTanLabResponseModel> getLabbyfetchVehData(@Query("vehicleNo") String vehicleNo,
                                                          @Query("vehicleType") String vehicleType,

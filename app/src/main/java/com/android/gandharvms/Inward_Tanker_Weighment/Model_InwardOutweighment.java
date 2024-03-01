@@ -11,8 +11,11 @@ public class Model_InwardOutweighment {
     private char I_O;
     private String VehicleType;
     private String OutInTime;
+    public String UpdatedBy;
 
-    public Model_InwardOutweighment(int inwardId, String grossWeight, String netWeight, String tareWeight, String outVehicleImage, String outDriverImage, char nextprocess, char i_O, String vehicleType, String outInTime) {
+    public Model_InwardOutweighment(int inwardId, String grossWeight, String netWeight, String tareWeight,
+                String outVehicleImage, String outDriverImage, char nextprocess, char i_O, String vehicleType,
+                String outInTime,String updatedBy) {
         InwardId = inwardId;
         GrossWeight = grossWeight;
         NetWeight = netWeight;
@@ -23,5 +26,6 @@ public class Model_InwardOutweighment {
         I_O = i_O;
         VehicleType = vehicleType;
         OutInTime = outInTime;
+        UpdatedBy=updatedBy;
     }
 }

@@ -95,23 +95,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int CAMERA_REQUEST_CODE1 = 103;
-    /*private final TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-            calculateNetWeight();
-        }
-    };*/
     final Calendar calendar = Calendar.getInstance();
     private final int MAX_LENGTH = 10;
     EditText etint, etserialnumber, etvehicalno, etsuppliername, etmaterialname, etdriverno, etoano, etdate,
@@ -126,8 +109,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     ImageView img1, img2;
     Uri image1, image2;
     TimePickerDialog tpicker;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
-    //Calling Interweighmnet Interface method
     private Weighment weighmentdetails;
     private final String dateTimeString = "";
     private String imgPath1, imgPath2;
@@ -162,9 +143,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etoano = findViewById(R.id.etoano);
         etdate = findViewById(R.id.etdate);
         etgrossweight = findViewById(R.id.etgrossweight);
-        /*ettareweight = findViewById(R.id.ettareweight);
-        etnetweight = findViewById(R.id.etnetweight);*/
-
         etremark = findViewById(R.id.etremark);
         etsignby = findViewById(R.id.etsignby);
         etcontainer = findViewById(R.id.container);
@@ -177,9 +155,9 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         sharedPreferences = getSharedPreferences("TankerWeighment", MODE_PRIVATE);
         if (sharedPreferences != null) {
             if (getIntent().hasExtra("VehicleNumber")) {
-                FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'W', 'I');
+                FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
             }}
-//
+
         storage = FirebaseStorage.getInstance();
         //view button
         view = findViewById(R.id.dbview);
@@ -188,7 +166,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Inward_Tanker_Weighment.this, grid.class);
                 startActivity(intent);
-                /*startActivity(new Intent(Inward_Tanker_Weighment.this, Inward_Tanker_Weighment_Viewdata.class));*/
             }
         });
 
@@ -229,43 +206,11 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             public void onClick(View v) {
                 uploadimg(image1, image2);
                 weinsertdata();
-
             }
         });
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
-//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    // Assume you have a user role to identify the specific role
-//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-//                        String specificRole = "Sampling";
-//                        // Get the value of the "role" node                    ;
-//                        if (issue.toString().contains(specificRole)) {
-//                            //getting the token
-//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-//                                    "Inward Tanker Weighment Process Done..!",
-//                                    "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
-//                                    getApplicationContext(), Inward_Tanker_Weighment.this);
-//                            notificationsSender.SendNotifications();
-//                        }
-//                    }
-//                } else {
-//                    // Handle the case when the "role" node doesn't exist
-//                    Log.d("Role Data", "Role node doesn't exist");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle errors here
-//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
-//            }
-//        });
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -280,11 +225,10 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
 
                                 FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Sampling Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        "Inward Tanker Weighment Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
                                         getApplicationContext(),
                                         Inward_Tanker_Weighment.this
-
                                 );
                             }
                         }
@@ -294,13 +238,25 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
-
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private String getCurrentTime() {
-        // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
@@ -367,56 +323,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                     Toasty.error(Inward_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
-            /*Map<String,Object> weitems = new HashMap<>();
-            weitems.put("In_Time", etint.getText().toString().trim());
-            weitems.put("SerialNumber", etserialnumber.getText().toString().trim());
-            weitems.put("vehicalnumber", etvehicalno.getText().toString().trim());
-            weitems.put("supplier_name", etsuppliername.getText().toString().trim());
-            weitems.put("material", etmaterialname.getText().toString().trim());
-            weitems.put("Driver_Number", etdriverno.getText().toString().trim());
-            weitems.put("OA_number", etoano.getText().toString().trim());
-            weitems.put("Date", timestamp);
-            weitems.put("Gross_Weight", etgrossweight.getText().toString().trim());
-            *//*weitems.put("Tare_Weight", ettareweight.getText().toString().trim());
-            weitems.put("Net_Weight", etnetweight.getText().toString().trim());*//*
-            weitems.put("Batch_Number", etremark.getText().toString().trim());
-            weitems.put("Sign_By", etsignby.getText().toString().trim());
-            weitems.put("Container_No", etcontainer.getText().toString().trim());
-            weitems.put("shortage_Dip", etshortagedip.getText().toString().trim());
-            weitems.put("shortage_weight", etshortageweight.getText().toString().trim());
-            weitems.put("outTime", outTime);
-            weitems.put("InVehicleImage", imgPath1);
-            weitems.put("InDriverImage", imgPath2);
-            makeNotification(etvehicalno.getText().toString(), outTime);
-*//*
-            /weitems.put("ImageURL",imageView1.toString());/
-*//*
-            wedbroot.collection("Inward Tanker Weighment").add(weitems)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-
-                            etint.setText("");
-                            etvehicalno.setText("");
-                            etsuppliername.setText("");
-                            etmaterialname.setText("");
-                            etdriverno.setText("");
-                            etvehicalno.setText("");
-                            etoano.setText("");
-                            etdate.setText("");
-                            etgrossweight.setText("");
-                            *//*ettareweight.setText("");
-                            etnetweight.setText("");*//*
-                            etremark.setText("");
-                            etsignby.setText("");
-                            etcontainer.setText("");
-                            etshortagedip.setText("");
-                            etshortageweight.setText("");
-                            Toasty.success(Inward_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        }
-                    });*/
-            /*Intent intent = new Intent(this, Inward_Tanker.class);
-            startActivity(intent);*/
         }
     }
 
