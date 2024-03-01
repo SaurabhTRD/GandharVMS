@@ -16,4 +16,8 @@ public interface Outward_weighment {
 
     @POST("api/OutwardWeighment/Add")
     Call<Boolean> updateweighmentoutwardtanker(@Body Response_Outward_Tanker_Weighment request);
+
+    //outwardout weighment update
+    @POST("api/OutwardWeighment/UpdateOutwardOutWeighmentDetails")
+    Call<Boolean> updateoutwardoutweighment(@Body Model_OutwardOut_Weighment request);
 }

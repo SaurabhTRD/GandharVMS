@@ -1,6 +1,8 @@
 package com.android.gandharvms.outward_Tanker_Lab_forms;
 
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Outward;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Update;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Production_bulkloading_model;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,4 +27,25 @@ public interface Outward_Tanker_Lab {
 
     @POST("api/OutwardProductionAndLaboratory/UpdateLaboratoryInProcessForm")
     Call<Boolean> insertinprocessLaboratory(@Body Lab_Model_insert_Outward_Tanker request);
+
+    @POST("api/OutwardBulkProductionAndLaboratory/AddOutwardBulkProductionForm")
+    Call<Boolean> insertbulkloadingproduction(@Body Production_bulkloading_model request);
+
+
+    //bulkloading form lab outward tanker
+    @GET("api/OutwardBulkProductionAndLaboratory/GetProductionAndLaboratoryByFetchVehicleDetails")
+    Call<Lab_Model_Bulkloading> fetchlabbulkloding(
+            @Query("vehicleNo")String vehicleNo,
+            @Query("vehicleType")String vehicleType,
+            @Query("NextProcess")char NextProcess,
+            @Query("inOut")char inOut
+    );
+
+    // update bulk loading outward tanker lab
+    @POST("api/OutwardBulkProductionAndLaboratory/UpdateOutwardBulkLaboratoryForm")
+    Call<Boolean> updatebulkloadingform(@Body Lab_Model_Bulkloading request);
+
+    //update production bulkloading form
+    @POST("api/OutwardBulkProductionAndLaboratory/UpdateOutwardBulkProductionFormOperatorDetails")
+    Call<Boolean> updatebulkloadingproduction(@Body Production_Model_Update request);
 }

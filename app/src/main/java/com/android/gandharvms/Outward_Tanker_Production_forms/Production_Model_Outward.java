@@ -36,4 +36,5 @@ public class Production_Model_Outward {
         Batch_No = batch_No;
         VehicleType = vehicleType;
     }
+
 }

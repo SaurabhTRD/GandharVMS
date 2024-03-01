@@ -23,6 +23,10 @@ public interface Outward_Tanker {
     @POST("api/OutwardSecurity/UpdateReportingDetails")
     Call<Boolean> updateoutwardsecurity(@Body Isreportingupdate_Security_model request);
 
+    //outwardout tanker security
+    @POST("api/OutwardSecurity/UpdateOutwardOutSecurityDetails")
+    Call<Boolean> updateOutwardoutsecurity(@Body Model_OutwardOut_Security request);
+
 
 
 }
