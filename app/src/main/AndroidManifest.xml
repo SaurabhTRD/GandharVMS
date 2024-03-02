@@ -90,16 +90,16 @@
             android:name=".Outward_Truck_Logistic.Outward_Truck_Logistics"
             android:exported="false" />
         <activity
-            android:name=".Outward_Truck_Dispatch"
+            android:name=".Outward_Truck_Dispatch.Outward_Truck_Dispatch"
             android:exported="false" />
         <activity
-            android:name=".Outward_Truck_Billing"
+            android:name=".Outward_Truck_Billing.Outward_Truck_Billing"
             android:exported="false" />
         <activity
-            android:name=".Outward_Truck_Production"
+            android:name=".Outward_Truck_Production.Outward_Truck_Production"
             android:exported="false" />
         <activity
-            android:name=".Outward_Truck_Laboratory"
+            android:name=".Outward_Truck_Laboratory.Outward_Truck_Laboratory"
             android:exported="false" />
         <activity
             android:name=".InwardOut_Truck_Security"
@@ -132,7 +132,7 @@
             android:name=".Outward_Truck_weighment"
             android:exported="false" />
         <activity
-            android:name=".Outward_Truck_Security"
+            android:name=".Outward_Truck_Security.Outward_Truck_Security"
             android:exported="false" />
         <activity
             android:name=".Outward_Truck"

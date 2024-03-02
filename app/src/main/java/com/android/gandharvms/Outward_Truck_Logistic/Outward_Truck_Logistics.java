@@ -19,6 +19,7 @@ import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabResponseModel;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.LoginWithAPI.Logistic;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -183,7 +184,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Outward_Truck_Logistics.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Outward_Truck_Logistics.this, Inward_Tanker.class));
+                        startActivity(new Intent(Outward_Truck_Logistics.this, Outward_Truck.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

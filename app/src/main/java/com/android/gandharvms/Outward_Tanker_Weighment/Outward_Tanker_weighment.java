@@ -172,7 +172,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         String ulocation = elocation.getText().toString().trim();
 
         if (etintime.isEmpty()|| etserialnumber.isEmpty()|| etvehiclenumber.isEmpty()|| etmaterialname.isEmpty()|| etcustname.isEmpty()||
-        etoam.isEmpty() || ettareweight.isEmpty()){
+        etoam.isEmpty() || ettareweight.isEmpty()||uremark.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -195,7 +195,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
 
             Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(OutwardId,etintime,
                    outTime,"","","","","","",ettareweight,"",
-                    "","","",'W',"",EmployeId,"",etmaterialname,
+                    "","","",'W',uremark,EmployeId,"",etmaterialname,
                     etcustname,tankno,uprodcut,uhowmuch,ulocation,'L',inOut,vehicleType);
             Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
             call.enqueue(new Callback<Boolean>() {

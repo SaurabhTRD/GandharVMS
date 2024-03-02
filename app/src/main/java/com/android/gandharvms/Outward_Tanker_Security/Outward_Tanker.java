@@ -1,5 +1,7 @@
 package com.android.gandharvms.Outward_Tanker_Security;
 
+import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,6 +28,10 @@ public interface Outward_Tanker {
     //outwardout tanker security
     @POST("api/OutwardSecurity/UpdateOutwardOutSecurityDetails")
     Call<Boolean> updateOutwardoutsecurity(@Body Model_OutwardOut_Security request);
+
+    //outwardout_security update
+    @POST("api/OutwardSecurity/UpdateOutwardOutSecurityDetails")
+    Call<Boolean> updateout_Truck_wardoutsecurity(@Body Model_OutwardOut_Truck_Security request);
 
 
 

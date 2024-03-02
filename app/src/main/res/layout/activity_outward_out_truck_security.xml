@@ -91,7 +91,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="2dp"
-                android:id="@+id/invoiceno"
+
                 android:layout_below="@id/vehicalno"
 
                 >
@@ -278,28 +278,6 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_below="@id/QTY."
-                >
-                <EditText
-                    android:id="@+id/etouttime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Out Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:focusable="false"
-                    android:clickable="false"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="2dp"
 
                 android:layout_below="@id/Date"
@@ -309,7 +287,7 @@
                     android:id="@+id/etsign"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Party Name"
+                    android:hint="Sign"
                     android:inputType="text"
                     android:textSize="17dp"
                     android:textStyle="bold"
@@ -339,6 +317,209 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Transport LR Copy"
+                    android:gravity="start"
+                    android:layout_gravity="start"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15dp"
+                    />
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/outwaoutrb_LRCopyYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Yes"/>
+                    <RadioButton
+                        android:id="@+id/outwaourb_LRCopyNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="25dp"
+                        android:text="No"/>
+                </RadioGroup>
+
+
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Trem Card"
+                    android:gravity="start"
+                    android:layout_gravity="start"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15dp"
+                    />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="80dp"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/tremcardyes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Yes"
+                        android:layout_marginLeft="15dp"/>
+                    <RadioButton
+                        android:id="@+id/tremcardno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:layout_marginLeft="25dp"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="E-Way Bill"
+                    android:gravity="start"
+                    android:layout_gravity="start"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15dp"
+                    />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="58dp"
+                    android:orientation="horizontal">
+                    <RadioButton
+                        android:id="@+id/outwardoutrb_EwaybillYes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Yes"
+                        android:layout_marginLeft="39dp"
+                        />
+                    <RadioButton
+                        android:id="@+id/outwardoutrb_EwaybillNo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:layout_marginLeft="26dp"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Test Report"
+                    android:gravity="start"
+                    android:layout_gravity="start"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15dp"
+                    />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="87dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/testreportyes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Yes" />
+                    <RadioButton
+                        android:id="@+id/testreportno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:layout_marginLeft="25dp"/>
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:orientation="horizontal"
+                android:layout_marginTop="10dp"
+                >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Invoice"
+                    android:gravity="start"
+                    android:layout_gravity="start"
+                    android:paddingStart="18dp"
+                    android:paddingEnd="8dp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="20dp"
+                    android:textSize="15dp"
+                    />
+
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="115dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/invoiceyes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="Yes" />
+                    <RadioButton
+                        android:id="@+id/invoiceno"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="No"
+                        android:layout_marginLeft="26dp"/>
+                </RadioGroup>
+
+            </LinearLayout>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

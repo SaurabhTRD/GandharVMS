@@ -73,7 +73,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Vehicle Number"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -93,7 +93,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Material"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -113,7 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Customer"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -216,7 +216,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="OA Number"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -236,7 +236,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Tare Weight"
-                android:inputType="text"
+                android:inputType="numberDecimal"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -256,7 +256,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Remark"
-                android:inputType="number"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>

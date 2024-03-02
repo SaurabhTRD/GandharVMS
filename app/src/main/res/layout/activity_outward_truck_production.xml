@@ -4,11 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Outward_Truck_Production">
+    tools:context=".Outward_Truck_Production.Outward_Truck_Production">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="650dp"
+        android:layout_height="match_parent"
 
         android:layout_marginTop="10dp"
 
@@ -69,7 +72,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Vehicle Number"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -80,18 +83,21 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
+            android:id="@+id/intime"
+            android:layout_below="@id/material"
+
             >
             <EditText
-                android:id="@+id/etmaterial"
+                android:id="@+id/etqty2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Material"
-                android:inputType="text"
+                android:hint="Qty"
+                android:inputType="numberDecimal"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                />
         </com.google.android.material.textfield.TextInputLayout>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -99,16 +105,20 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="2dp"
+
+            android:layout_below="@id/Date"
+
             >
             <EditText
-                android:id="@+id/etoanumber"
+                android:id="@+id/typeofpackproduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="OA Number"
+                android:hint="Type of Packaging"
                 android:inputType="text"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -117,16 +127,158 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+
+            android:layout_below="@id/Date"
+
+            >
+            <EditText
+                android:id="@+id/etdispatchofficer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Signed By Dispatch Officer"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+
+            android:layout_below="@id/Date"
+
+            >
+            <EditText
+                android:id="@+id/etdtdispatch"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Dispatch Date Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+            android:layout_below="@id/Date"
+            >
+            <EditText
+                android:id="@+id/etsecurityofficer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Signed By Security Officer"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+
+            android:layout_below="@id/Date"
+
+            >
+            <EditText
+                android:id="@+id/etdtsecurity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Security Date Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+            android:layout_below="@id/Date"
+            >
+            <EditText
+                android:id="@+id/etweighmentofficer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Signed By Weighment Officer"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+
+            android:layout_below="@id/Date"
+            >
+            <EditText
+                android:id="@+id/etdtweighment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Security Date Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginRight="30dp"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            >-->
+<!--            <EditText-->
+<!--                android:id="@+id/ettare"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Tare Weight"-->
+<!--                android:inputType="number"-->
+<!--                android:textSize="17dp"-->
+<!--                android:textStyle="bold" />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
-
-
             >
             <EditText
                 android:id="@+id/etremark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Remark"
-                android:inputType="number"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -178,6 +330,6 @@
 
 
     </LinearLayout>
-
+    </ScrollView>
 
 </RelativeLayout>

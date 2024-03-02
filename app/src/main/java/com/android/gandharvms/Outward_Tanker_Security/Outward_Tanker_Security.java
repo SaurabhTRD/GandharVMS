@@ -20,27 +20,16 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
-import com.android.gandharvms.Inward_Tanker_Security.Request_Model_In_Tanker_Security;
 import com.android.gandharvms.Inward_Truck;
-import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
-import com.android.gandharvms.LoginWithAPI.LoginMethod;
-import com.android.gandharvms.LoginWithAPI.RetroApiClient;
-import com.android.gandharvms.Outward_Truck_Security;
 import com.android.gandharvms.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
