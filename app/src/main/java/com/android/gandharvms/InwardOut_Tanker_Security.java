@@ -17,11 +17,13 @@ import android.widget.Toast;
 import com.android.gandharvms.Inward_Tanker_Security.API_In_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Inward_Tanker_Security.RetroApiclient_In_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Security.UpdateOutSecurityRequestModel;
 import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequrity;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -38,22 +40,25 @@ import retrofit2.Response;
 
 public class InwardOut_Tanker_Security extends AppCompatActivity {
 
-    EditText edintime ,etvehicle,etinvoice,etmaterial,etsupplier ;
+    EditText edintime, etvehicle, etinvoice, etmaterial, etsupplier;
     Button submit;
-    RadioButton Trasnportyes,transportno,deliveryes,deliveryno,taxyes,taxno,ewayyes,ewayno;
+    RadioButton Trasnportyes, transportno, deliveryes, deliveryno, taxyes, taxno, ewayyes, ewayno;
+    String vehicltype = Global_Var.getInstance().MenuType;
+    char InOutType = Global_Var.getInstance().InOutType;
+    char DeptType = Global_Var.getInstance().DeptType;
+    TimePickerDialog tpicker;
     private API_In_Tanker_Security apiInTankerSecurity;
     private int InwardId;
-    String vehicltype= Global_Var.getInstance().MenuType;
-    char InOutType = Global_Var.getInstance().InOutType;
-    char DeptType= Global_Var.getInstance().DeptType;
-    private String EmployeId=Global_Var.getInstance().EmpId;
-    TimePickerDialog tpicker;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_out_tanker_security);
         apiInTankerSecurity = RetroApiClient.getserccrityveh();
+
+        //Send Notification to all
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         edintime = findViewById(R.id.etintime);
         etvehicle = findViewById(R.id.etvehicalnumber);
@@ -103,7 +108,6 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         etvehicle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-//                    String VehicleNo = etvehical.getText().toString();
                     String vehicltype = Global_Var.getInstance().MenuType;
                     char DeptType = Global_Var.getInstance().DeptType;
                     char InOutType = Global_Var.getInstance().InOutType;
@@ -113,6 +117,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
 
         });
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -124,8 +129,8 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
             @Override
             public void onResponse(Call<List<Respo_Model_In_Tanker_security>> call, Response<List<Respo_Model_In_Tanker_security>> response) {
-                if (response.isSuccessful()){
-                    if (response.body().size()>0){
+                if (response.isSuccessful()) {
+                    if (response.body().size() > 0) {
                         List<Respo_Model_In_Tanker_security> Data = response.body();
                         Respo_Model_In_Tanker_security obj = Data.get(0);
                         InwardId = obj.getInwardId();
@@ -138,14 +143,14 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
                         etsupplier.setText(obj.getPartyName());
                         etsupplier.setEnabled(false);
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error" + response.code());
                 }
             }
+
             @Override
             public void onFailure(Call<List<Respo_Model_In_Tanker_security>> call, Throwable t) {
                 Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
                 if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
                     Response<?> response = ((HttpException) t).response();
                     if (response != null) {
@@ -166,28 +171,27 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         String deliverySelection = deliveryes.isChecked() ? "Yes" : "No";
         String taxInvoiceSelection = taxyes.isChecked() ? "Yes" : "No";
         String ewayBillSelection = ewayyes.isChecked() ? "Yes" : "No";
-        String outTime = getCurrentTime();
-        String intime = edintime.getText().toString().trim();
+        String outinintime = edintime.getText().toString().trim();
         String vehiclenumber = etvehicle.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
         String supplier = etsupplier.getText().toString().trim();
         String invoice = etinvoice.getText().toString().trim();
 
-        if (lrCopySelection.isEmpty()|| deliverySelection.isEmpty()||taxInvoiceSelection.isEmpty()||ewayBillSelection.isEmpty()||
-        outTime.isEmpty()||intime.isEmpty()||vehiclenumber.isEmpty()||material.isEmpty()||supplier.isEmpty()||invoice.isEmpty()){
+        if (lrCopySelection.isEmpty() || deliverySelection.isEmpty() || taxInvoiceSelection.isEmpty() || ewayBillSelection.isEmpty() ||
+                vehiclenumber.isEmpty() || material.isEmpty() || supplier.isEmpty() || invoice.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        }else {
-            Update_Request_Model_Insequrity updateRequestModelInsequrity = new Update_Request_Model_Insequrity(InwardId,"",invoice,vehiclenumber,"",supplier,material,
-                    "","",'S','O',intime,"",vehicltype,intime,outTime,'0','0',
-                    '0','0',"","","",lrCopySelection,deliverySelection,taxInvoiceSelection,
-                    ewayBillSelection,EmployeId,intime);
+        } else {
+            UpdateOutSecurityRequestModel updateOutSecRequestModel = new UpdateOutSecurityRequestModel(outinintime,
+                    InwardId, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection
+                    , 'S', 'O', vehicltype, EmployeId);
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
-            Call<Boolean> call = apiInTankerSecurity.intankersecurityoutupdate(updateRequestModelInsequrity);
+            Call<Boolean> call = apiInTankerSecurity.intankersecurityoutupdate(updateOutSecRequestModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body() == true){
+                    if (response.isSuccessful() && response.body() != null && response.body()) {
                         Toasty.success(InwardOut_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        makeNotification(vehiclenumber);
                         startActivity(new Intent(InwardOut_Tanker_Security.this, submenu_Inward_Tanker.class));
                         finish();
                     }
@@ -215,15 +219,29 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
             });
         }
     }
+    public void makeNotification(String vehicleNumber) {
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                "/topics/all",
+                "Inward Tanker Out Security Process Done..!",
+                "This Vehicle:-" + vehicleNumber + " has Completed The Inward Tanker Process",
+                getApplicationContext(),
+                InwardOut_Tanker_Security.this
+        );
+        notificationsSender.SendNotifications();
+    }
 
-
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
     }
 
-    public void inwardoutsecurityclick(View view){
+    public void inwardoutsecurityclick(View view) {
+        Intent intent = new Intent(this, grid.class);
+        startActivity(intent);
+    }
+
+    public void intrsecoutgridclick(View view) {
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }

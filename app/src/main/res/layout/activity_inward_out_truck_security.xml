@@ -7,6 +7,19 @@
     tools:context=".InwardOut_Truck_Security">
 
 
+    <Button
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginRight="30dp"
+        android:onClick="inwardtrOutSecurityPendingClick"
+        android:text="Pending Vehicles"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"></Button>
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -23,7 +36,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="left"
             android:layout_marginLeft="25dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="70dp"
 
             >
 
@@ -288,7 +301,7 @@
         </LinearLayout>
 
 
-        <Button
+       <!-- <Button
             android:id="@+id/btn_Viewweigmentslip"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
@@ -297,7 +310,7 @@
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
             android:onClick="btn_clicktoViewLabReport"
-            android:text="View Weighment Slip"></Button>
+            android:text="View Weighment Slip"></Button>-->
 
 
         <androidx.cardview.widget.CardView
@@ -311,7 +324,7 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <!--<androidx.appcompat.widget.AppCompatButton
                     android:layout_width="115dp"
                     android:layout_height="55dp"
                     android:layout_below="@id/OUM."
@@ -321,7 +334,7 @@
                     android:textStyle="bold"
                     android:onClick="inwardtrOutSecurityPendingClick">
 
-                </androidx.appcompat.widget.AppCompatButton>
+                </androidx.appcompat.widget.AppCompatButton>-->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/view"

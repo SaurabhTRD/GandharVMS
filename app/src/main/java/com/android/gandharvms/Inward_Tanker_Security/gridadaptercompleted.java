@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -32,16 +31,15 @@ import com.android.gandharvms.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> implements Filterable {
-
+public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercompleted.myviewHolder> implements Filterable {
     private static final int TYPE_ROW = 0;
     private static final int TYPE_ROW_COLORFUL = 1;
 
-    private List<Respo_Model_In_Tanker_security> Gridmodel;
-    private List<Respo_Model_In_Tanker_security> filteredGridList;
+    private List<ListingResponse_InTankerSequrity> Gridmodel;
+    private List<ListingResponse_InTankerSequrity> filteredGridList;
     private Context context;
 
-    public gridAdapter(List<Respo_Model_In_Tanker_security> respoModelInTankerSecurities) {
+    public gridadaptercompleted(List<ListingResponse_InTankerSequrity> respoModelInTankerSecurities) {
         this.Gridmodel = respoModelInTankerSecurities;
         this.filteredGridList = respoModelInTankerSecurities;
     }
@@ -57,41 +55,35 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
 
     @NonNull
     @Override
-    public myviewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
+    public gridadaptercompleted.myviewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType)
     {
         if (viewType == TYPE_ROW)
         {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.table_cell, viewGroup, false);
-            return new myviewHolder(view);
+            return new gridadaptercompleted.myviewHolder(view);
         } else
         {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item,
                     viewGroup, false);
-            return new myviewHolder(view);
+            return new gridadaptercompleted.myviewHolder(view);
         }
     }
     @Override
-    public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position)
+    public void onBindViewHolder(gridadaptercompleted.myviewHolder holder, @SuppressLint("RecyclerView") int position)
     {
-        Respo_Model_In_Tanker_security club = filteredGridList.get(position);
+        ListingResponse_InTankerSequrity club = filteredGridList.get(position);
         holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.material.setText(club.getMaterial());
         holder.Status.setText(club.getCurrStatus());
         int intimelength = club.getInTime().length();
-        if(intimelength>0)
-        {
-            holder.intime.setText(club.getInTime().substring(12, intimelength));
-        }
+        holder.intime.setText(club.getInTime().substring(12, intimelength));
         int outtimelength = club.getOutTime().length();
-        if(outtimelength>0)
-        {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-        }
-        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+        holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+        /*holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Respo_Model_In_Tanker_security club = filteredGridList.get(position);
+                ListingResponse_InTankerSequrity club = filteredGridList.get(position);
                 String vehitype=club.getVehicleType();
                 String crst=club.getCurrStatus();
                 char io = club.getI_O();
@@ -135,7 +127,7 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
                 intent.putExtra("CurrStatus",club.getCurrStatus());
                 view.getContext().startActivity(intent);
             }
-        });
+        });*/
     }
 
     public int getItemCount() {
@@ -164,8 +156,8 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
                 if (charString.isEmpty()) {
                     filteredGridList = Gridmodel;
                 } else {
-                    List<Respo_Model_In_Tanker_security> filteredList = new ArrayList<>();
-                    for (Respo_Model_In_Tanker_security club : Gridmodel) {
+                    List<ListingResponse_InTankerSequrity> filteredList = new ArrayList<>();
+                    for (ListingResponse_InTankerSequrity club : Gridmodel) {
                         // name match condition. this might differ depending on your requirement
                         // here we are looking for name
                         if (club.getSerialNo().toLowerCase().contains(charString.toLowerCase()) || club.getVehicleNo().toLowerCase().contains(charString.toLowerCase())) {
@@ -181,7 +173,7 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
 
             @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                filteredGridList = (ArrayList<Respo_Model_In_Tanker_security>) filterResults.values;
+                filteredGridList = (ArrayList<ListingResponse_InTankerSequrity>) filterResults.values;
                 // refresh the list with filtered data
                 notifyDataSetChanged();
             }

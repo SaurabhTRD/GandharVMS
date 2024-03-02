@@ -12,13 +12,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class In_Tanker_sa_Adapter extends RecyclerView.Adapter<In_Tanker_sa_Adapter.myviewHolder>
 {
 
-    ArrayList<In_Tanker_Sampling_list> datalist;
+    List<Inward_Tanker_SamplingResponseModel> datalist;
 
-    public In_Tanker_sa_Adapter(ArrayList<In_Tanker_Sampling_list> datalist) {
+    public In_Tanker_sa_Adapter(List<Inward_Tanker_SamplingResponseModel> datalist) {
         this.datalist = datalist;
     }
 
@@ -33,9 +34,9 @@ public class In_Tanker_sa_Adapter extends RecyclerView.Adapter<In_Tanker_sa_Adap
     @Override
     public void onBindViewHolder(@NonNull myviewHolder holder, int position) {
         holder.t1.setText(datalist.get(position).getDate());
-        holder.t2.setText(datalist.get(position).getSample_Reciving_Time());
-        holder.t3.setText(datalist.get(position).getSample_Submitted_Time());
-        holder.t4.setText(datalist.get(position).getVehicle_Number());
+        holder.t2.setText(datalist.get(position).getSampleReceivingTime());
+        holder.t3.setText(datalist.get(position).getSampleSubmittedTime());
+        holder.t4.setText(datalist.get(position).getVehicleNo());
 
     }
 

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Intankweighlistdata_adapter;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
@@ -21,7 +22,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -33,11 +37,14 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
 
     private Inward_Tanker_SamplingMethod inward_Tanker_SamplingMethod;
     RecyclerView recview;
-    ArrayList<In_Tanker_Sampling_list> datalist;
+    List<Inward_Tanker_SamplingResponseModel> samdatalist;
     FirebaseFirestore db;
     TextView txtTotalCount;
 
     In_Tanker_sa_Adapter inTankerSaAdapter;
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,11 +54,15 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
 
         recview= (RecyclerView) findViewById(R.id.recyclerview);
         recview.setLayoutManager(new LinearLayoutManager(this));
-        datalist = new ArrayList<>();
-        inTankerSaAdapter= new In_Tanker_sa_Adapter(datalist);
-        recview.setAdapter(inTankerSaAdapter);
+        samdatalist = new ArrayList<>();
+        /*inTankerSaAdapter= new In_Tanker_sa_Adapter(datalist);
+        recview.setAdapter(inTankerSaAdapter);*/
 
-        db = FirebaseFirestore.getInstance();
+        String FromDate = getCurrentDateTime();
+        String Todate = getCurrentDateTime();
+        GetInward_Tanker_saamplingListData(FromDate,Todate,vehicleType,inOut);
+
+        /*db = FirebaseFirestore.getInstance();
         db.collection("Inward Tanker Sampling").get()
                 .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
                     @Override
@@ -68,12 +79,21 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
                         inTankerSaAdapter.notifyDataSetChanged();
 
                     }
-                });
+                });*/
     }
 
-    private void GetInward_Tanker_saamplingListData(char nextProcess) {
+    private String getCurrentDateTime() {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // Format the date and time as a string
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(now);
+    }
+    private void GetInward_Tanker_saamplingListData(String FromDate,String Todate,String vehicletype,char inout) {
         inward_Tanker_SamplingMethod= RetroApiClient.getInward_Tanker_Sampling();
-        Call<List<Inward_Tanker_SamplingResponseModel>> call = inward_Tanker_SamplingMethod.GetInwardSampling();
+        Call<List<Inward_Tanker_SamplingResponseModel>> call = inward_Tanker_SamplingMethod.getIntankSamplingListingData(FromDate,Todate,vehicletype,inout);
         call.enqueue(new Callback<List<Inward_Tanker_SamplingResponseModel>>() {
             @Override
             public void onResponse(Call<List<Inward_Tanker_SamplingResponseModel>> call, Response<List<Inward_Tanker_SamplingResponseModel>> response) {
@@ -81,9 +101,9 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
                     List<Inward_Tanker_SamplingResponseModel> data=response.body();
                     int totalCount = data.size();
                     txtTotalCount.setText("Total count: " + totalCount);
-                    datalist.clear();
-//                    datalist = data;
-//                    inTankerSaAdapter = new gridAdapter_in_tanker_sampling(datalist);
+                    samdatalist.clear();
+                    samdatalist=data;
+                    inTankerSaAdapter= new In_Tanker_sa_Adapter(samdatalist);
                     recview.setAdapter(inTankerSaAdapter);
                     inTankerSaAdapter.notifyDataSetChanged();
                 }

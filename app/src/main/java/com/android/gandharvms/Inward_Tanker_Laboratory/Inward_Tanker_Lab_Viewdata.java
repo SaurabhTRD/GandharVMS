@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
@@ -22,7 +23,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -42,6 +46,10 @@ public class Inward_Tanker_Lab_Viewdata extends AppCompatActivity {
     TextView txtTotalCount;
 
     //Call Interface Method of Laboratory
+
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
     private Laboratory labdetails;
 
     @Override
@@ -58,9 +66,10 @@ public class Inward_Tanker_Lab_Viewdata extends AppCompatActivity {
         labdatalist = new ArrayList<>();
 
         /*recview.setAdapter(inTankLabAdapter);*/
+        String FromDate = getCurrentDateTime();
+        String Todate = getCurrentDateTime();
 
-        char nextprocess= Global_Var.getInstance().DeptType;
-        GetLabListData(nextprocess);
+        GetLabListData(FromDate,Todate,vehicleType,inOut);
 
         /*db= FirebaseFirestore.getInstance();
         db.collection("Inward Tanker Laboratory").get()
@@ -88,8 +97,18 @@ public class Inward_Tanker_Lab_Viewdata extends AppCompatActivity {
 
     }
 
-    private void GetLabListData(char nextProcess) {
-        Call<List<InTanLabResponseModel>> call = labdetails.getIntankLabListData(nextProcess);
+    private String getCurrentDateTime() {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // Format the date and time as a string
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(now);
+    }
+
+    private void GetLabListData(String FromDate,String Todate,String vehicletype,char inout) {
+        Call<List<InTanLabResponseModel>> call = labdetails.getIntankLabListData(FromDate,Todate,vehicletype,inout);
         call.enqueue(new Callback<List<InTanLabResponseModel>>() {
             @Override
             public void onResponse(Call<List<InTanLabResponseModel>> call, Response<List<InTanLabResponseModel>> response) {

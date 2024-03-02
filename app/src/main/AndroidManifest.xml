@@ -60,6 +60,9 @@
             android:name=".Inward_Tanker_Security.grid"
             android:exported="false" />
         <activity
+            android:name=".Inward_Tanker_Security.completedgrid"
+            android:exported="false" />
+        <activity
             android:name=".OutwardOut_Truck_Billing"
             android:exported="false" />
         <activity

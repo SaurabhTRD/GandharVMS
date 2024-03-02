@@ -111,7 +111,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
     Timestamp timestamp = new Timestamp(calendar.getTime());
     private String token;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
 
     private Weighment weighmentdetails;
     private String vehicleType= Global_Var.getInstance().MenuType;
@@ -143,8 +142,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         etoanumber=(EditText) findViewById(R.id.ettroa);
         etdate= (EditText) findViewById(R.id.ettrdate);
         etgrossweight=(EditText) findViewById(R.id.ettrgrossweight);
-        /*ettareweight=(EditText) findViewById(R.id.ettrtareweight);
-        etnetweight=(EditText) findViewById(R.id.ettrnetweight);*/
         etsignby =(EditText) findViewById(R.id.ettrsignby);
         etcontainer=(EditText)findViewById(R.id.ettrwcontainer);
         etremark=(EditText)findViewById(R.id.ettwremark);
@@ -154,16 +151,8 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         img2 = findViewById(R.id.ettrimageView2);
         storage = FirebaseStorage.getInstance();
 
-        /*view = findViewById(R.id.viewclick);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Inward_Truck_weighment.this, Inward_Truck_Weighment_Viewdata.class));
-            }
-        });*/
-
         if (getIntent().hasExtra("VehicleNumber")) {
-            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'W', 'I');
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
 
         etdate.setOnClickListener(new View.OnClickListener() {
@@ -194,7 +183,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     FetchVehicleDetails(etvehicalnumber.getText().toString().trim(),vehicleType,nextProcess,inOut);
                 }
             }
-
         });
 
         intsubmit=(Button) findViewById(R.id.wesubmit);
@@ -237,37 +225,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     }
 
     public void makeNotification(String vehicleNumber,String outTime) {
-//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    // Assume you have a user role to identify the specific role
-//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-//                        String specificRole = "Weighment";
-//                        // Get the value of the "role" node                    ;
-//                        if (issue.toString().contains(specificRole)) {
-//                            //getting the token
-//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-//                                    "Inward Truck Store Process Done..!",
-//                                    "Vehicle Number:-" + vehicleNumber + " has completed Store process at " + outTime+ " & Ready To Weighment",
-//                                    getApplicationContext(), Inward_Truck_weighment.this);
-//                            notificationsSender.SendNotifications();
-//                        }
-//                    }
-//                } else {
-//                    // Handle the case when the "role" node doesn't exist
-//                    Log.d("Role Data", "Role node doesn't exist");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle errors here
-//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
-//            }
-//        });
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -281,8 +238,8 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                                 token = responseModel.getToken();
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Store Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        "Inward Truck Weighment Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
                                         getApplicationContext(),
                                         Inward_Truck_weighment.this
                                 );
@@ -295,7 +252,20 @@ public class Inward_Truck_weighment extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
-
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Truck_weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -319,8 +289,9 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         String outTime = getCurrentTime();
 
 
-        if ( intime.isEmpty()|| serialnumber.isEmpty()|| vehicalnumber.isEmpty()|| supplier.isEmpty()|| material.isEmpty()|| Driver.isEmpty() || oanumber.isEmpty()|| date.isEmpty()||Grossweight.isEmpty()
-        ||container.isEmpty()|| signby.isEmpty()){
+        if ( intime.isEmpty()|| serialnumber.isEmpty()|| vehicalnumber.isEmpty()|| supplier.isEmpty()||
+                material.isEmpty()|| Driver.isEmpty() || oanumber.isEmpty()|| date.isEmpty()||
+                Grossweight.isEmpty()||container.isEmpty()|| remark.isEmpty() || signby.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }
         else {
@@ -364,52 +335,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     Toasty.error(Inward_Truck_weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
                 }
             });
-            /*Map<String,Object>trweitems= new HashMap<>();
-            trweitems.put("In_Time",etint.getText().toString().trim());
-            trweitems.put("Serial_Number",etserialnumber.getText().toString().trim());
-            trweitems.put("Vehicle_Number",etvehicalnumber.getText().toString().trim());
-            trweitems.put("Supplier",etsupplier.getText().toString().trim());
-            trweitems.put("Material",etmaterial.getText().toString().trim());
-            trweitems.put("Driver_No",etdriver.getText().toString().trim());
-            *//*trweitems.put("Customer",etcustomer.getText().toString().trim());*//*
-            trweitems.put("Oa_Number",etoanumber.getText().toString().trim());
-            trweitems.put("Date",timestamp);
-            trweitems.put("Gross_Weight",etgrossweight.getText().toString().trim());
-            trweitems.put("Container_No", etcontainer.getText().toString().trim());
-            *//*trweitems.put("Tare_Weight",ettareweight.getText().toString().trim());
-            trweitems.put("Net_Weight",etnetweight.getText().toString().trim());*//*
-            trweitems.put("remark",etremark.getText().toString().trim());
-            trweitems.put("Sign_By",etsignby.getText().toString().trim());
-            trweitems.put("outTime",outTime.toString());
-            trweitems.put("InVehicleImage", imgPath1);
-            trweitems.put("InDriverImage", imgPath2);
-            makeNotification(etvehicalnumber.getText().toString(),outTime.toString());
-            trwdbroot.collection("Inward Truck Weighment").add(trweitems)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-
-                            etint.setText("");
-                            etserialnumber.setText("");
-                            etvehicalnumber.setText("");
-                            etsupplier.setText("");
-                            etmaterial.setText("");
-                            etdriver.setText("");
-                            *//*etcustomer.setText("");*//*
-                            etoanumber.setText("");
-                            etdate.setText("");
-                            etgrossweight.setText("");
-                            *//*ettareweight.setText("");
-                            etnetweight.setText("");*//*
-                            etsignby.setText("");
-                            etremark.setText("");
-                            etcontainer.setText("");
-                            *//*etdatetime.setText("");*//*
-                            Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        }
-                    });
-            Intent intent= new Intent(this, Inward_Truck.class);
-            startActivity(intent);*/
         }
     }
     public void uploadimg(Uri Image1, Uri Image2) {
@@ -558,53 +483,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             }
         });
     }
-    /*public void FetchVehicleDetails(@NonNull String VehicleNo) {
-        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Truck Security");
-        String searchText = VehicleNo.trim();
-        Query query = collectionReference.whereEqualTo("VehicalNumber", searchText)
-                .whereNotEqualTo("Intime","" );
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int totalCount = task.getResult().size();
-                    if(totalCount == 0) {
-                        etserialnumber.setText("");
-                        etvehicalnumber.setText("");
-                        etsupplier.setText("");
-                        etmaterial.setText("");
-                        etoanumber.setText("");
-                        etdriver.setText("");
-                        etdate.setText("");
-                        *//*etnetweight.setText("");*//*
-                        etvehicalnumber.requestFocus();
-                        Toasty.warning(Inward_Truck_weighment.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
-                    }
-                    else {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            In_Truck_security_list obj = document.toObject(In_Truck_security_list.class);
-                            // Check if the object already exists to avoid duplicates
-                            if (totalCount > 0) {
-                                etserialnumber.setText(obj.getSerialnumber());
-                                etvehicalnumber.setText(obj.getVehicalNumber());
-                                etsupplier.setText(obj.getSupplier());
-                                etmaterial.setText(obj.getMaterial());
-                                etdate.setText(dateFormat.format(obj.getDate().toDate()));
-                                etoanumber.setText(obj.getOA_PO_Number());
-                                etdriver.setText(obj.getDriver_Mobile_Number());
-                                *//*etnetweight.setText(obj.getNetweight());
-                                etnetweight.setEnabled(false);*//*
-                                etint.requestFocus();
-                                etint.callOnClick();
-                            }
-                        }
-                    }
-                } else {
-                    Log.w("FirestoreData", "Error getting documents.", task.getException());
-                }
-            }
-        });
-    }*/
+
     public void WeighViewclick(View view){
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);

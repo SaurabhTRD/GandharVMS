@@ -25,8 +25,8 @@
             android:layout_marginLeft="30dp"
             android:layout_marginTop="20dp"
             android:layout_marginRight="30dp"
-            android:onClick="btn_clicktoViewLabReport"
-            android:text="View Weighment Slip"></Button>
+            android:onClick="gridinouttanker"
+            android:text="Pending Vehicles"></Button>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -213,38 +213,38 @@
                 android:gravity="center"
                 android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="115dp"
+                <!--<androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="130dp"
                     android:layout_height="55dp"
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="25dp"
                     android:onClick="gridinouttanker"
                     android:text="Pending"
-                    android:textSize="22dp"
+                    android:textSize="17dp"
                     android:textStyle="bold">
 
-                </androidx.appcompat.widget.AppCompatButton>
+                </androidx.appcompat.widget.AppCompatButton>-->
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/view"
-                    android:layout_width="100dp"
+                    android:layout_width="130dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="15dp"
-                    android:onClick="Viewclick"
-                    android:text="View"
-                    android:textSize="22dp"
+                    android:layout_marginLeft="10dp"
+                    android:onClick="itasecoutViewclick"
+                    android:text="COMPLETED"
+                    android:textSize="17dp"
                     android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/prosubmit"
-                    android:layout_width="115dp"
+                    android:layout_width="130dp"
                     android:layout_height="55dp"
                     android:layout_below="@id/OUM."
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginLeft="5dp"
                     android:text="SUBMIT"
-                    android:textSize="22dp"
+                    android:textSize="17dp"
                     android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>

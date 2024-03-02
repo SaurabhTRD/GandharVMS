@@ -38,4 +38,20 @@
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textInTime"
+        android:layout_width="120dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textOutTime"
+        android:layout_width="120dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
 </LinearLayout>

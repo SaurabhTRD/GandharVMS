@@ -1,51 +1,45 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import androidx.appcompat.widget.SearchView;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.Gravity;
-import android.view.View;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
-import android.widget.TableLayout;
-import android.widget.TableRow;
-import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
-import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
-import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class grid extends AppCompatActivity {
+public class completedgrid extends AppCompatActivity {
     private LinearLayout linearLayout;
     private FirebaseFirestore firestore;
 
     ArrayList<In_Tanker_Security_list> inTankerSecurityLists;
     In_Tanker_Se_Adapter in_tanker_se_adapter;
     int scrollX = 0;
-    List<Respo_Model_In_Tanker_security> clubList = new ArrayList<>();
+    List<ListingResponse_InTankerSequrity> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
     SearchView searchView;
 
-    gridAdapter GridAdapter;
+    /*gridAdapter GridAdapter;*/
+    gridadaptercompleted gridadaptercomp;
     RecyclerView recyclerView;
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
@@ -58,19 +52,15 @@ public class grid extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
-//        LinearLayoutManager layoutManager= new LinearLayoutManager(this,LinearLayoutManager.HORIZONTAL, false);
-//        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-//        recyclerView.setLayoutManager(layoutManager);
-//        recyclerView  = findViewById(R.id.recyclerView);
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        fetchDataFromFirestore();
+        String fromdate = "2024-02-01";
+        String todate = getCurrentDateTime();
         initViews();
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
         {
-            fetchDataFromApi("x",vehicleType,Global_Var.getInstance().DeptType,inOut);
+            fetchDataFromApi(fromdate,todate,vehicleType,inOut);
         }
         else{
-            fetchDataFromApi("x",vehicleType,'x','x');
+            fetchDataFromApi(fromdate,todate,vehicleType,'x');
         }
 
         //fetchDataFromApi("x",vehicleType,'x','x');
@@ -91,6 +81,15 @@ public class grid extends AppCompatActivity {
         });
     }
 
+    private String getCurrentDateTime() {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // Format the date and time as a string
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+        return dateFormat.format(now);
+    }
     private void initViews()
     {
         rvClub = findViewById(R.id.recyclerviewgrid);
@@ -99,21 +98,22 @@ public class grid extends AppCompatActivity {
 
     private void setUpRecyclerView()
     {
-        GridAdapter  = new gridAdapter(clubList);
+        gridadaptercomp  = new gridadaptercompleted(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
-        rvClub.setAdapter(GridAdapter);
+        rvClub.setAdapter(gridadaptercomp);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
-    public void fetchDataFromApi(String vehicleno,String vehicleType,char nextProcess, char inOut) {
-        Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(vehicleno, vehicleType, nextProcess, inOut);
-        call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
+    public void fetchDataFromApi(String FromDate,String Todate,String vehicleType, char inOut) {
+
+        Call<List<ListingResponse_InTankerSequrity>> call = RetroApiClient.getserccrityveh().getintankersecurityListData(FromDate,Todate, vehicleType, inOut);
+        call.enqueue(new Callback<List<ListingResponse_InTankerSequrity>>() {
             @Override
-            public void onResponse(Call<List<Respo_Model_In_Tanker_security>> call, Response<List<Respo_Model_In_Tanker_security>> response) {
+            public void onResponse(Call<List<ListingResponse_InTankerSequrity>> call, Response<List<ListingResponse_InTankerSequrity>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
-                        List<Respo_Model_In_Tanker_security> data = response.body();
+                        List<ListingResponse_InTankerSequrity> data = response.body();
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -121,7 +121,7 @@ public class grid extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Respo_Model_In_Tanker_security>> call, Throwable t) {
+            public void onFailure(Call<List<ListingResponse_InTankerSequrity>> call, Throwable t) {
 
             }
         });

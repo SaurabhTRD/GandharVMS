@@ -119,15 +119,4 @@ public class Login extends AppCompatActivity {
             }
         });
     }
-
-    /*private void autoLoggingFunc() {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        String check = sharedPreferences.getString("EMPLID_KEY", "");
-        if (!check.equals(emplidTxt))
-        {
-            Intent intent= new Intent(getApplicationContext(),Menu.class);
-            startActivity(intent);2
-            finish();
-        }
-    }*/
 }

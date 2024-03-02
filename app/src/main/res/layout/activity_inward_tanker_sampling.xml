@@ -8,13 +8,23 @@
     tools:context=".Inward_Tanker_Sampling.Inward_Tanker_Sampling">
 
 
+  <Button
+      style="@style/Widget.MaterialComponents.Button"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginLeft="30dp"
+      android:layout_marginTop="25dp"
+      android:layout_marginRight="30dp"
+      android:onClick="samplegrid"
+      android:text="Pending Vehicles"
+      android:textSize="18dp"
+      android:textStyle="bold"
+      tools:ignore="MissingConstraints"></Button>
 
   <LinearLayout
       android:layout_width="match_parent"
       android:layout_height="650dp"
-
       android:layout_marginTop="10dp"
-
       android:layout_marginBottom="10dp"
       android:orientation="vertical"
       android:layout_marginLeft="10dp"
@@ -26,9 +36,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
 
         >
       <EditText
@@ -46,8 +56,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
         >
       <EditText
@@ -65,8 +75,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:layout_marginTop="10dp"
 
         >
@@ -87,8 +97,8 @@
           android:layout_width="match_parent"
           android:layout_height="wrap_content"
           style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-          android:layout_marginLeft="30dp"
-          android:layout_marginRight="30dp"
+          android:layout_marginLeft="20dp"
+          android:layout_marginRight="20dp"
           android:layout_marginTop="10dp"
 
 
@@ -104,12 +114,6 @@
             android:focusable="false"/>
       </com.google.android.material.textfield.TextInputLayout>
 
-
-
-
-
-
-
     <androidx.cardview.widget.CardView
         android:layout_width="405dp"
         android:layout_height="55dp"
@@ -120,7 +124,7 @@
           android:layout_height="55dp"
           android:orientation="horizontal">
 
-        <androidx.appcompat.widget.AppCompatButton
+        <!--<androidx.appcompat.widget.AppCompatButton
             android:layout_width="110dp"
             android:layout_height="match_parent"
             android:layout_below="@id/OUM."
@@ -130,15 +134,15 @@
             android:textSize="18dp"
             android:textStyle="bold">
 
-        </androidx.appcompat.widget.AppCompatButton>
+        </androidx.appcompat.widget.AppCompatButton>-->
 
         <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="110dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:id="@+id/samplingview"
-            android:layout_marginLeft="15dp"
+            android:layout_marginLeft="60dp"
             android:text="Completed"
-            android:textSize="15dp"
+            android:textSize="17dp"
             android:textStyle="bold"
             android:onClick="SamplingViewclick">
 
@@ -147,12 +151,12 @@
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/etssubmit"
-            android:layout_width="110dp"
+            android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_below="@id/OUM."
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:text="SUBMIT"
-            android:textSize="15dp"
+            android:textSize="17dp"
             android:textStyle="bold">
 
         </androidx.appcompat.widget.AppCompatButton>

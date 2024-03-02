@@ -4,16 +4,34 @@ import javax.net.ssl.SSLEngineResult;
 
 public class gridmodel {
 
-    String SerialNumber,material,vehicalnumber,status;
+    String SerialNumber,material,vehicalnumber,status,InTime,OutTime;
 
     public gridmodel() {
     }
 
-    public gridmodel(String serialNumber, String material, String vehicalnumber, String Status) {
+    public gridmodel(String serialNumber, String material, String vehicalnumber, String Status,String inTime,String outTime) {
         SerialNumber = serialNumber;
         this.material = material;
         this.vehicalnumber = vehicalnumber;
         this.status = Status;
+        InTime = inTime;
+        OutTime = outTime;
+    }
+
+    public String getInTime() {
+        return InTime;
+    }
+
+    public void setInTime(String inTime) {
+        InTime = inTime;
+    }
+
+    public String getOutTime() {
+        return OutTime;
+    }
+
+    public void setOutTime(String outTime) {
+        OutTime = outTime;
     }
 
     public String getSerialNumber() {

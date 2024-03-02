@@ -60,6 +60,28 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/textInTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/textOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
         </LinearLayout>
 
     </HorizontalScrollView>

@@ -35,6 +35,15 @@ public class ListingResponse_InTankerSequrity {
     private String CreatedBy;
     private  String UpdatedBy;
     public String OutInTime;
+    private String CurrStatus;
+
+    public String getCurrStatus() {
+        return CurrStatus;
+    }
+
+    public void setCurrStatus(String currStatus) {
+        CurrStatus = currStatus;
+    }
 
     public String getOutInTime() {
         return OutInTime;

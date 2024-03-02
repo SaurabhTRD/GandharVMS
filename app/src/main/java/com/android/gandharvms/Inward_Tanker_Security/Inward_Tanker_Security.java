@@ -33,6 +33,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -112,8 +113,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     EditText etreg, etvehical, etinvoice, etdate, etsupplier, etmaterial, etintime, etnetweight, etqty, etoum, etregister, etqtyoum, etnetoum, etremark, edpooa, etmobilenum, repremark;
     Button btnadd, button1, dbbutton;
     EditText editmaterial, editqty, edituom;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
-    FirebaseFirestore dbroot;
     DatePickerDialog picker;
     List<String> teamList = new ArrayList<>();
     LinearLayout linearLayout;
@@ -271,7 +270,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         dbbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker_Security_Viewdata.class));
+                startActivity(new Intent(Inward_Tanker_Security.this, completedgrid.class));
             }
         });
 
@@ -321,7 +320,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
 
         btnadd = findViewById(R.id.submit);
-        dbroot = FirebaseFirestore.getInstance();
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -376,18 +374,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         if (sharedPreferences != null) {
             if (getIntent().hasExtra("VehicleNumber")) {
                 FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
-//                etreg.setText(getIntent().getStringExtra("SerialNumber"));
-//                etreg.setEnabled(false);
-//                etvehical.setText(getIntent().getStringExtra("VehicleNumber"));
-//                etvehical.setEnabled(false);
-//            repremark.setText(getIntent().getStringExtra("Remark"));
-//            repremark.setEnabled(false);
-//            etdate.setText(dateFormat.format(getIntent().getStringExtra("Date")));
-//            etdate.setEnabled(false);
-//            etnetweight.setText(getIntent().getStringExtra("NetWt"));
-//            etnetweight.setEnabled(false);
-//            cbox.setChecked(Boolean.parseBoolean(getIntent().getStringExtra("IsReporting")));
-//            cbox.setEnabled(false);
                 saveButton.setVisibility(View.GONE);
                 button1.setVisibility(View.GONE);
 //                btnadd.setVisibility(View.GONE);
@@ -431,37 +417,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
-//        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-//        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                if (dataSnapshot.exists()) {
-//                    // Assume you have a user role to identify the specific role
-//                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-//                        String specificRole = "Weighment";
-//                        // Get the value of the "role" node                    ;
-//                        if (issue.toString().contains(specificRole)) {
-//                            //getting the token
-//                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-//                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-//                                    "Inward Tanker Security Process Done..!",
-//                                    "Vehicle Number:-" + vehicleNumber + " has completed security process at " + outTime,
-//                                    getApplicationContext(), Inward_Tanker_Security.this);
-//                            notificationsSender.SendNotifications();
-//                        }
-//                    }
-//                } else {
-//                    // Handle the case when the "role" node doesn't exist
-//                    Log.d("Role Data", "Role node doesn't exist");
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//                // Handle errors here
-//                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
-//            }
-//        });
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -477,7 +432,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Inward Tanker Security Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
                                         getApplicationContext(),
                                         Inward_Tanker_Security.this
                                 );
@@ -539,7 +494,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String mobnumber = etmobilenum.getText().toString().trim();
         String edremark = repremark.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() || partyname.isEmpty() ||
-                intime.isEmpty() || material.isEmpty()) {
+                intime.isEmpty() || material.isEmpty() ||edremark.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
 
@@ -572,20 +527,19 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'W', 'I', Date,
                     "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, materialList.toString().replace("[]", ""), remark, false, "No", "", "", "", "", "", EmployeId,"",InwardId);
 
-//            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotification(vehicalnumber, outTime);
-                        Toast.makeText(Inward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
+                        finish();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
-
                     Log.e("Retrofit", "Failure: " + t.getMessage());
 // Check if there's a response body in case of an HTTP error
                     if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
@@ -603,87 +557,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 }
             });
         }
-//        else {
-//            // Material data handling for dynamically added fields
-//            List<Map<String, String>> materialList = new ArrayList<>();
-//
-//            for (int i = 0; i < linearLayout.getChildCount(); i++) {
-//                View childView = linearLayout.getChildAt(i);
-//                if (childView != null) {
-//                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
-//                    EditText qtyEditText = childView.findViewById(R.id.editqty);
-//                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
-//
-//                    String dynamaterial = materialEditText.getText().toString().trim();
-//                    String dynaqty = qtyEditText.getText().toString().trim();
-//                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
-//
-//                    // Check if both material and quantity fields are not empty
-//                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-//                        Map<String, String> materialMap = new HashMap<>();
-//                        materialMap.put("material", dynamaterial);
-//                        materialMap.put("qty", dynaqty);
-//                        materialMap.put("qtyuom", dynaqtyuom);
-//                        // Add material data to the list
-//                        materialList.add(materialMap);
-//                    }
-//                }
-//            }
-//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
-//            Timestamp timestamp = new Timestamp(calendar.getTime());
-//            Map<String, Object> items = new HashMap<>();
-//            items.put("SerialNumber", etreg.getText().toString().trim());
-//            items.put("vehicalnumber", etvehical.getText().toString().trim());
-//            items.put("invoiceno", etinvoice.getText().toString().trim());
-//          //  items.put("date", etdate.getText().toString().trim());
-//            items.put("date",  timestamp);
-//            items.put("partyname", etsupplier.getText().toString());
-//            items.put("extramaterials", materialList.toString().replace("[]", ""));
-//            items.put("material", etmaterial.getText().toString().trim());
-//            items.put("qty", etintime.getText().toString().trim());
-//            items.put("netweight", etnetweight.getText().toString().trim());
-//            items.put("intime", etqty.getText().toString().trim());
-//            if (cbox.isChecked()) {
-//                items.put("outTime", "");
-//            } else {
-//                items.put("outTime", outTime);
-//            }
-//            items.put("qtyuom", etqtyoum.getText().toString().trim());
-//            items.put("netweightuom", etnetoum.getText().toString().trim());
-//            items.put("Remark", etremark.getText().toString().trim());
-//            items.put("OA_PO_Number", edpooa.getText().toString().trim());
-//            items.put("Driver_Mobile_No", etmobilenum.getText().toString().trim());
-//
-//            String rpremark = "";
-//            int isreporting = 0;
-//
-//            if (cbox.isChecked()) {
-//                rpremark = repremark.getText().toString().trim();
-//                isreporting = 1;
-//            }
-//            items.put("Is_Reporting", String.valueOf(isreporting));
-//            items.put("Reporting_Remark", rpremark);
-//            makeNotification(etvehical.getText().toString(), outTime);
-//            dbroot.collection("Inward Tanker Security").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            etvehical.setText("");
-//                            etinvoice.setText("");
-//                            etdate.setText("");
-//                            etsupplier.setText("");
-//                            etmaterial.setText("");
-//                            etintime.setText("");
-//                            etnetweight.setText("");
-//                            etqty.setText("");
-//                            etnetoum.setText("");
-//                            etqtyoum.setText("");
-//////                            Toasty.success(getApplicationContext(), "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-//                        }
-//                    });
-//            Intent intent = new Intent(this, Inward_Tanker.class);
-//            startActivity(intent);
-//        }
     }
 
     public void insertreporting() {
@@ -697,7 +570,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         int netweight = 0;
         String intime = "";
         String outTime = "";//Insert out Time Directly to the Database
-        int qtyuom = 2;
+        int qtyuom = 1;
 
         String vehicltype = Global_Var.getInstance().MenuType;
         char InOutType = Global_Var.getInstance().InOutType;
@@ -723,11 +596,12 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null) {
-                        Toast.makeText(Inward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
+                        Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
+                        finish();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
 
@@ -744,7 +618,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             }
                         }
                     }
-                    Toast.makeText(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -761,14 +635,18 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         List<Respo_Model_In_Tanker_security> Data = response.body();
                         Respo_Model_In_Tanker_security obj = Data.get(0);
                         InwardId = obj.getInwardId();
-                        int intimelength = obj.getInTime().length();
-                        etintime.setText(obj.getInTime().substring(12, intimelength));
+                        /*int intimelength = obj.getInTime().length();
+                        etintime.setText(obj.getInTime().substring(12, intimelength));*/
                         etreg.setText(obj.getSerialNo());
+                        etreg.setEnabled(false);
                         etvehical.setText(obj.getVehicleNo());
+                        etvehical.setEnabled(false);
                         repremark.setText(obj.getReportingRemark());
+                        repremark.setEnabled(false);
                         etdate.setText(obj.getDate());
-//                            etdate.setText(dateFormat.format(obj.getDate()));
+                        etdate.setEnabled(false);
                         etnetweight.setText(String.valueOf(obj.getNetWeight()));
+                        etnetweight.setEnabled(false);
                         cbox.setChecked(true);
                         cbox.setEnabled(false);
                         saveButton.setVisibility(View.GONE);
@@ -778,7 +656,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 //                            DocId = document.getId();
                         etqty.requestFocus();
                         etqty.callOnClick();
-
                     }
                 } else {
                     Log.e("Retrofit", "Error" + response.code());
@@ -787,7 +664,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
             @Override
             public void onFailure(Call<List<Respo_Model_In_Tanker_security>> call, Throwable t) {
-
                 Log.e("Retrofit", "Failure: " + t.getMessage());
 // Check if there's a response body in case of an HTTP error
                 if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
@@ -842,7 +718,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         }
                     }
                 }
-                Toast.makeText(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                Toasty.error(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 // Handle the failure
 
             }
@@ -870,7 +746,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         char InOutType = Global_Var.getInstance().InOutType;
         char DeptType = Global_Var.getInstance().DeptType;
 
-        if (invoice.isEmpty() || party.isEmpty() || material.isEmpty() || oapo.isEmpty()) {
+        if (invoice.isEmpty() || party.isEmpty() || material.isEmpty() || oapo.isEmpty() || outTime.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
 
@@ -901,7 +777,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 }
             }
 
-            Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId, serialnumber, invoice, vehiclenumber, Date, party, material, oapo, drivermobile, 'W', 'I', intime,
+            Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId, serialnumber, invoice, vehiclenumber, Date, party, material, oapo, drivermobile, 'W', 'I', Date,
                     "", vehicltype, intime, outTime, qtyuom, netwtuom, netweight, qty, materialList.toString().replace("[]", ""), remark, "", "", "", "", "", EmployeId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
@@ -911,7 +787,9 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotification(vehiclenumber, outTime);
-                        Toast.makeText(Inward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
+                        finish();
                     }
                 }
 
@@ -930,15 +808,20 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             }
                         }
                     }
-                    Toast.makeText(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    public void gridclick(View view) {
+    public void olcgridclick(View view) {
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }
+
+    /*public void olcViewclick(View view) {
+        Intent intent = new Intent(this, gridadaptercompleted.class);
+        startActivity(intent);
+    }*/
 }
 

@@ -75,6 +75,9 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 */
 
     private Weighment weighmentdetails;
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
 
 
     @Override
@@ -101,11 +104,22 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
         weighdatalist = new ArrayList<>();
 
-        char nextprocess= Global_Var.getInstance().DeptType;
-        GetWeighmentListData(nextprocess);
+        String FromDate = getCurrentDateTime();
+        String Todate = getCurrentDateTime();
+        GetWeighmentListData(FromDate,Todate,vehicleType,inOut);
     }
-    private void GetWeighmentListData(char nextProcess) {
-        Call<List<InTanWeighResponseModel>> call = weighmentdetails.getIntankWeighListData(nextProcess);
+
+    private String getCurrentDateTime() {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // Format the date and time as a string
+        java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
+        return dateFormat.format(now);
+    }
+    private void GetWeighmentListData(String FromDate,String Todate,String vehicletype,char inout) {
+        Call<List<InTanWeighResponseModel>> call = weighmentdetails.getIntankWeighListingData(FromDate,Todate,vehicletype,inout);
         call.enqueue(new Callback<List<InTanWeighResponseModel>>() {
             @Override
             public void onResponse(Call<List<InTanWeighResponseModel>> call, Response<List<InTanWeighResponseModel>> response) {

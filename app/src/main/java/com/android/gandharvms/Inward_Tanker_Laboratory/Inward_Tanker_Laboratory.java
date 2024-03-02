@@ -90,7 +90,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
     private final int MAX_LENGTH = 10;
     private String token;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
 
     //Call Interface Method of Laboratory
     private Laboratory labdetails;
@@ -268,7 +267,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         });
 
         if (getIntent().hasExtra("VehicleNumber")) {
-            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'L', 'I');
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
     }
 
@@ -287,8 +286,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                                 // Adjust the notification sender based on your new token and data structure
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Production Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        "Inward Tanker Laboratory Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Laboratory process at " + outTime,
                                         getApplicationContext(),
                                         Inward_Tanker_Laboratory.this
                                 );
@@ -322,41 +321,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         });
     }
 
-    /*public void makeNotification(String vehicleNumber,String outTime) {
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        databaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // Assume you have a user role to identify the specific role
-                    for (DataSnapshot issue : dataSnapshot.getChildren()) {
-                        String specificRole = "Production";
-                        // Get the value of the "role" node                    ;
-                        if (issue.toString().contains(specificRole)) {
-                            //getting the token
-                            token = Objects.requireNonNull(issue.child("token").getValue()).toString();
-                            FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
-                                    "Inward Tanker Laboratory Process Done..!",
-                                    "Vehicle Number:-" + vehicleNumber + " has completed Laboratory process at " + outTime,
-                                    getApplicationContext(), Inward_Tanker_Laboratory.this);
-                            notificationsSender.SendNotifications();
-                        }
-                    }
-                } else {
-                    // Handle the case when the "role" node doesn't exist
-                    Log.d("Role Data", "Role node doesn't exist");
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                // Handle errors here
-                Log.e("Firebase", "Error fetching role data: " + databaseError.getMessage());
-            }
-        });
-    }*/
     public void btn_clicktoViewSAMPLEREPORT(View view) {
-        /*Intent intent = new Intent(this, grid.class);
-        startActivity(intent);*/
+
     }
 
     public void weViewclick(View view) {
@@ -370,7 +336,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     }
 
     private String getCurrentTime() {
-        // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
@@ -400,8 +365,12 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String edsupplier = etsupplier.getText().toString().trim();
         String viscosity = etviscosity.getText().toString().trim();
         String disc = remarkdisc.getText().toString().trim();
-        if (intime.isEmpty() || serialNumber.isEmpty() || date.isEmpty() || hundred.isEmpty() || vehicle.isEmpty() || apperance.isEmpty() || odor.isEmpty() || color.isEmpty() || qty.isEmpty() || anline.isEmpty() || flash.isEmpty() || density.isEmpty() || rcsTest.isEmpty() ||
-                kv.isEmpty() || disc.isEmpty() || addTest.isEmpty() || samplereceivingdate.isEmpty() || viscosity.isEmpty() || remark.isEmpty() || signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
+        if (intime.isEmpty() || serialNumber.isEmpty() ||remark.isEmpty()|| date.isEmpty() ||
+                hundred.isEmpty() || vehicle.isEmpty() || apperance.isEmpty() || odor.isEmpty() ||
+                color.isEmpty() || qty.isEmpty() || anline.isEmpty() || flash.isEmpty() || density.isEmpty() ||
+                rcsTest.isEmpty() || kv.isEmpty() || disc.isEmpty() || addTest.isEmpty() ||
+                samplereceivingdate.isEmpty() || viscosity.isEmpty() || remark.isEmpty() ||
+                signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             InTanLabRequestModel labRequestModel = new InTanLabRequestModel(inwardid, intime, outTime, date,
@@ -505,5 +474,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         Intent intent = new Intent(this, in_tanker_lab_grid.class);
         startActivity(intent);
     }
-
+    public void labviewclick(View view) {
+        Intent intent = new Intent(this, in_tanker_lab_grid.class);
+        startActivity(intent);
+    }
 }

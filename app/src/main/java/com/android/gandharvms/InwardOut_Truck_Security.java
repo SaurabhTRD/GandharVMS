@@ -18,10 +18,12 @@ import com.android.gandharvms.Inward_Tanker_Security.API_In_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security_Viewdata;
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Inward_Tanker_Security.RetroApiclient_In_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Security.UpdateOutSecurityRequestModel;
 import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequrity;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -55,6 +57,9 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
         setContentView(R.layout.activity_inward_out_truck_security);
 
         apiInTankerSecurity = RetroApiClient.getserccrityveh();
+
+        //Send Notification to all
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         edintime = findViewById(R.id.etintime);
         etvehicle = findViewById(R.id.etvehicalnumber);
@@ -113,11 +118,9 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-//                    String VehicleNo = etvehical.getText().toString();
                     String vehicltype = Global_Var.getInstance().MenuType;
                     char DeptType = Global_Var.getInstance().DeptType;
                     char InOutType = Global_Var.getInstance().InOutType;
-
                     FetchVehicleDetails(etvehicle.getText().toString().trim(), vehicltype, DeptType, InOutType);
                 }
             }
@@ -166,13 +169,6 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
                 }
             }
         });
-
-    }
-
-    private String getCurrentTime() {
-        // Get the current time
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
-        return sdf.format(new Date());
     }
 
     private void update() {
@@ -180,33 +176,31 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
         String deliverySelection = deliveryes.isChecked() ? "Yes" : "No";
         String taxInvoiceSelection = taxyes.isChecked() ? "Yes" : "No";
         String ewayBillSelection = ewayyes.isChecked() ? "Yes" : "No";
-        String outTime = getCurrentTime();
-        String intime = edintime.getText().toString().trim();
+        String outinintime = edintime.getText().toString().trim();
         String vehiclenumber = etvehicle.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
         String supplier = etsupplier.getText().toString().trim();
         String invoice = etinvoice.getText().toString().trim();
 
         if (lrCopySelection.isEmpty()|| deliverySelection.isEmpty()||taxInvoiceSelection.isEmpty()||ewayBillSelection.isEmpty()||
-                outTime.isEmpty()||intime.isEmpty()||vehiclenumber.isEmpty()||material.isEmpty()||supplier.isEmpty()||invoice.isEmpty()){
+                vehiclenumber.isEmpty()||material.isEmpty()||supplier.isEmpty()||invoice.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
-            Update_Request_Model_Insequrity updateRequestModelInsequrity = new Update_Request_Model_Insequrity(InwardId,"",invoice,vehiclenumber,"",supplier,material,
-                    "","",'S','O',intime,"",vehicltype,intime,outTime,'0','0',
-                    '0','0',"","","",lrCopySelection,deliverySelection,taxInvoiceSelection,
-                    ewayBillSelection,EmployeId,intime);
+            UpdateOutSecurityRequestModel updateOutSecRequestModel = new UpdateOutSecurityRequestModel(outinintime,
+                    InwardId,lrCopySelection,deliverySelection,taxInvoiceSelection,ewayBillSelection
+                    ,'S','O',vehicltype,EmployeId);
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
-            Call<Boolean> call = apiInTankerSecurity.intankersecurityoutupdate(updateRequestModelInsequrity);
+            Call<Boolean> call = apiInTankerSecurity.intankersecurityoutupdate(updateOutSecRequestModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
-                        Toasty.success(InwardOut_Truck_Security.this, "Inserted Succesfully", Toast.LENGTH_SHORT).show();
+                        Toasty.success(InwardOut_Truck_Security.this, "Data Inserted Succesfully", Toast.LENGTH_SHORT).show();
+                        makeNotification(vehiclenumber);
                         startActivity(new Intent(InwardOut_Truck_Security.this, submenu_Inward_Tanker.class));
                         finish();
                     }
                 }
-
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
 
@@ -223,10 +217,21 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
                             }
                         }
                     }
-                    Toast.makeText(InwardOut_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toasty.error(InwardOut_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 }
             });
         }
+    }
+
+    public void makeNotification(String vehicleNumber) {
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                "/topics/all",
+                "Inward Truck Out Security Process Done..!",
+                "This Vehicle:-" + vehicleNumber + " has Completed The Inward Truck Process",
+                getApplicationContext(),
+                InwardOut_Truck_Security.this
+        );
+        notificationsSender.SendNotifications();
     }
 
     public void onBackPressed(){
