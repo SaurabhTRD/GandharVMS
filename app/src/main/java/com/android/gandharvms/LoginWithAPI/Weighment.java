@@ -1,9 +1,9 @@
 package com.android.gandharvms.LoginWithAPI;
 
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Model_InwardOutweighment;
-import com.android.gandharvms.RegisterwithAPI.RegRequestModel;
 
 import java.util.List;
 
@@ -18,10 +18,10 @@ public interface Weighment {
     Call<List<InTanWeighResponseModel>> getIntankWeighListData(@Query("NextProcess") char nextProcess);*/
 
     @GET("api/InwardWeighment/GetInwardWeighmentList")
-    Call<List<InTanWeighResponseModel>> getIntankWeighListingData(@Query("FromDate") String FromDate,
-                                                                  @Query("Todate") String Todate,
-                                                                  @Query("vehicleType") String vehicleType,
-                                                                  @Query("inout") char inout);
+    Call<List<CommonResponseModelForAllDepartment>> getIntankWeighListingData(@Query("FromDate") String FromDate,
+                                                                              @Query("Todate") String Todate,
+                                                                              @Query("vehicleType") String vehicleType,
+                                                                              @Query("inout") char inout);
     @GET("api/InwardWeighment/GetWeighmentByFetchVehicleDetails")
     Call<InTanWeighResponseModel> getWeighbyfetchVehData(@Query("vehicleNo") String vehicleNo,
                                                          @Query("vehicleType") String vehicleType,

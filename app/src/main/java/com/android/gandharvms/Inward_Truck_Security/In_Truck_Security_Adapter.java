@@ -4,13 +4,12 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.gandharvms.Inward_Tanker_Security.ListingResponse_InTankerSequrity;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.R;
 
 import java.text.SimpleDateFormat;
@@ -22,10 +21,10 @@ public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Sec
     Context context;
 
     ArrayList<In_Truck_security_list> datalist;
-    private final List<ListingResponse_InTankerSequrity> listingResponseInTankerSec;
+    private final List<CommonResponseModelForAllDepartment> listingResponseInTankerSec;
 
 
-    public In_Truck_Security_Adapter(List<ListingResponse_InTankerSequrity> listingResponseInTankerSec) {
+    public In_Truck_Security_Adapter(List<CommonResponseModelForAllDepartment> listingResponseInTankerSec) {
         this.datalist = datalist;
         this.listingResponseInTankerSec = listingResponseInTankerSec;
     }
@@ -40,7 +39,7 @@ public class In_Truck_Security_Adapter extends RecyclerView.Adapter<In_Truck_Sec
 
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
-        ListingResponse_InTankerSequrity data = listingResponseInTankerSec.get(position);
+        CommonResponseModelForAllDepartment data = listingResponseInTankerSec.get(position);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
 //        holder.etintime.setText(datalist.get(position).getIntime());

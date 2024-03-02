@@ -78,16 +78,68 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.material.setText(club.getMaterial());
         holder.Status.setText(club.getCurrStatus());
-        int intimelength = club.getInTime().length();
-        if(intimelength>0)
+        int secintimelength = club.getSecIntime().length();
+        if(secintimelength>0)
         {
-            holder.intime.setText(club.getInTime().substring(12, intimelength));
+            holder.secintime.setText(club.getSecIntime().substring(12, secintimelength));
         }
-        int outtimelength = club.getOutTime().length();
-        if(outtimelength>0)
+        int secouttimelength = club.getSecOuttime().length();
+        if(secouttimelength>0)
         {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+            holder.secouttime.setText(club.getSecOuttime().substring(12, secouttimelength));
         }
+        int weiintimelength = club.getWeiIntime().length();
+        if(weiintimelength>0)
+        {
+            holder.wegintime.setText(club.getWeiIntime().substring(12, weiintimelength));
+        }
+        int weiouttimelength = club.getWeiOuttime().length();
+        if(weiouttimelength>0)
+        {
+            holder.wegouttime.setText(club.getWeiOuttime().substring(12, weiouttimelength));
+        }
+        int samintimelength = club.getSamIntime().length();
+        if(samintimelength>0)
+        {
+            holder.samintime.setText(club.getSamIntime().substring(12, samintimelength));
+        }
+        int samouttimelength = club.getSamOuttime().length();
+        if(samouttimelength>0)
+        {
+            holder.samouttime.setText(club.getSecOuttime().substring(12, samouttimelength));
+        }
+        int labintimelength = club.getLabIntime().length();
+        if(labintimelength>0)
+        {
+            holder.labintime.setText(club.getLabIntime().substring(12, labintimelength));
+        }
+        int labouttimelength = club.getLabOuttime().length();
+        if(labouttimelength>0)
+        {
+            holder.labouttime.setText(club.getLabOuttime().substring(12, labouttimelength));
+        }
+        int prointimelength = club.getProIntime().length();
+        if(prointimelength>0)
+        {
+            holder.prointime.setText(club.getProIntime().substring(12, prointimelength));
+        }
+        int proouttimelength = club.getProOuttime().length();
+        if(proouttimelength>0)
+        {
+            holder.proouttime.setText(club.getProOuttime().substring(12, proouttimelength));
+        }
+        /*int storeintimelength = club.getStoreIntime().length();
+        if(storeintimelength>0)
+        {
+            holder.storeintime.setText(club.getStoreIntime().substring(12, storeintimelength));
+        }
+        int storeouttimelength = club.getStoreIntime().length();
+        if(storeouttimelength>0)
+        {
+            holder.storeouttime.setText(club.getStoreIntime().substring(12, storeouttimelength));
+        }*/
+
+
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -143,7 +195,8 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
     }
     public class myviewHolder extends RecyclerView.ViewHolder
     {
-        public TextView sernum, vehiclenum, material, Status,intime,outtime;
+        public TextView Status,sernum, vehiclenum, material,secintime,secouttime,
+                wegintime,wegouttime,samintime,samouttime,labintime,labouttime,prointime,proouttime;
         public myviewHolder(View view)
         {
             super(view);
@@ -151,8 +204,16 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
             vehiclenum = view.findViewById(R.id.textVehicleNumber);
             material = view.findViewById(R.id.textMaterial);
             Status = view.findViewById(R.id.textStatus);
-            intime =view.findViewById(R.id.textInTime);
-            outtime=view.findViewById(R.id.textOutTime);
+            secintime =view.findViewById(R.id.textSecurityInTime);
+            secouttime=view.findViewById(R.id.textSecurityOutTime);
+            wegintime =view.findViewById(R.id.textWeighmentInTime);
+            wegouttime=view.findViewById(R.id.textWeighmentOutTime);
+            samintime =view.findViewById(R.id.textSamplingInTime);
+            samouttime=view.findViewById(R.id.textSamplingOutTime);
+            labintime =view.findViewById(R.id.textLoboratoryInTime);
+            labouttime=view.findViewById(R.id.textLoboratoryOutTime);
+            prointime =view.findViewById(R.id.textProductionInTime);
+            proouttime=view.findViewById(R.id.textProductionOutTime);
         }
     }
     @Override

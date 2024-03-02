@@ -10,14 +10,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.R;
 import com.google.type.DateTime;
-import com.squareup.picasso.Picasso;
 
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,9 +22,9 @@ import java.util.Locale;
 public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweighlistdata_adapter.myviewholder> {
     Context context;
     /*ArrayList<InTanWeighRequestModel> data ;*/
-    private final List<InTanWeighResponseModel> responsedatalist;
+    private final List<CommonResponseModelForAllDepartment> responsedatalist;
 
-    public Intankweighlistdata_adapter(List<InTanWeighResponseModel> responsedatalist) {
+    public Intankweighlistdata_adapter(List<CommonResponseModelForAllDepartment> responsedatalist) {
         this.context = context;
         this.responsedatalist = responsedatalist;
     }
@@ -40,7 +37,7 @@ public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweig
     @NonNull
     @Override
     public void onBindViewHolder(@NonNull Intankweighlistdata_adapter.myviewholder holder, int position) {
-        InTanWeighResponseModel data = responsedatalist.get(position);
+        CommonResponseModelForAllDepartment data = responsedatalist.get(position);
         if(data.getInTime()!=null)
         {
             holder.intime.setText(data.getInTime());

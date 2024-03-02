@@ -9,15 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.R;
 
 import java.util.List;
 
 public class InTanLabListData_Adapter extends RecyclerView.Adapter<InTanLabListData_Adapter.myviewholder> {
     Context context;
-    private final List<InTanLabResponseModel> responselabdatalist;
+    private final List<CommonResponseModelForAllDepartment> responselabdatalist;
 
-    public InTanLabListData_Adapter(List<InTanLabResponseModel> responselabdatalist) {
+    public InTanLabListData_Adapter(List<CommonResponseModelForAllDepartment> responselabdatalist) {
         this.responselabdatalist = responselabdatalist;
     }
 
@@ -28,7 +29,7 @@ public class InTanLabListData_Adapter extends RecyclerView.Adapter<InTanLabListD
 
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
-        InTanLabResponseModel datalist=responselabdatalist.get(position);
+        CommonResponseModelForAllDepartment datalist=responselabdatalist.get(position);
         int intimelength = datalist.getInTime().length();
         int outimelength = datalist.getOutTime().length();
         holder.ettime.setText(datalist.getInTime().substring(12,intimelength));

@@ -1,12 +1,11 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
-import android.graphics.ColorSpace;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.Field;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
@@ -27,7 +26,7 @@ public interface API_In_Tanker_Security {
             @Query("inOut") char inOut);
 
     @GET("api/InwardSecurity/GetInwardSecurityList")
-    Call<List<ListingResponse_InTankerSequrity>> getintankersecurityListData(
+    Call<List<CommonResponseModelForAllDepartment>> getintankersecurityListData(
             @Query("FromDate") String FromDate,
             @Query("Todate") String Todate,
             @Query("vehicletype") String vehicletype,

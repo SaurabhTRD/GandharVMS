@@ -7,12 +7,22 @@
     android:gravity="right">
 
     <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="Status"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
         android:id="@+id/textdate"
         android:layout_width="wrap_content"
         android:layout_weight="1"
         android:text="Date"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"
         android:layout_gravity="start"
@@ -24,7 +34,7 @@
         android:layout_weight="1"
         android:text="Vehicle Number"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 
@@ -34,39 +44,109 @@
         android:layout_weight="1"
         android:text="Sample Receving Time"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+
+    <TextView
+        android:id="@+id/textSecurityInTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="SecurityInTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 
     <TextView
-        android:id="@+id/textStatus"
+        android:id="@+id/textSecurityOutTime"
         android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:text="Status"
+        android:text="SecurityOutTime"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 
     <TextView
-        android:id="@+id/textInTime"
+        android:id="@+id/textWeighmentInTime"
         android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:text="InTime"
+        android:text="WeighmentInTime"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 
     <TextView
-        android:id="@+id/textOutTime"
+        android:id="@+id/textWeighmentOutTime"
         android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:text="OutTime"
+        android:text="WeighmentOutTime"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 
+    <TextView
+        android:id="@+id/textSamplingInTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="SamplingInTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/textSamplingOutTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="SamplingOutTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/textLoboratoryInTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="LoboratoryInTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/textLoboratoryOutTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="LoboratoryOutTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/textProductionInTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="ProductionInTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/textProductionOutTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="ProductionOutTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
 
 </LinearLayout>

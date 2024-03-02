@@ -1,22 +1,17 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -24,17 +19,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -98,7 +85,7 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
     private final char inOut = Global_Var.getInstance().InOutType;
 
     private API_In_Tanker_Security securitydetails;
-    List<ListingResponse_InTankerSequrity> securitylist;
+    List<CommonResponseModelForAllDepartment> securitylist;
 
 
     @Override
@@ -138,12 +125,12 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
     }
 
     private void GetsecuritylistData(String FromDate,String Todate,String vehicletype,char inout) {
-        Call<List<ListingResponse_InTankerSequrity>> call = securitydetails.getintankersecurityListData(FromDate,Todate,vehicletype,inout);
-        call.enqueue(new Callback<List<ListingResponse_InTankerSequrity>>() {
+        Call<List<CommonResponseModelForAllDepartment>> call = securitydetails.getintankersecurityListData(FromDate,Todate,vehicletype,inout);
+        call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
-            public void onResponse(Call<List<ListingResponse_InTankerSequrity>> call, Response<List<ListingResponse_InTankerSequrity>> response) {
+            public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
                 if (response.isSuccessful()){
-                    List<ListingResponse_InTankerSequrity> data = response.body();
+                    List<CommonResponseModelForAllDepartment> data = response.body();
                     int totalcount = data.size();
                     txtTotalCount.setText("Total count: "+ totalcount);
                     securitylist.clear();
@@ -158,7 +145,7 @@ public class Inward_Tanker_Security_Viewdata extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<ListingResponse_InTankerSequrity>> call, Throwable t) {
+            public void onFailure(Call<List<CommonResponseModelForAllDepartment>> call, Throwable t) {
 
                 Log.e("Retrofit", "Failure: " + t.getMessage());
                 // Check if there's a response body in case of an HTTP error

@@ -12,10 +12,22 @@
         android:id="@+id/headerscroll"
         android:layout_height="40dp">
 
-        <LinearLayout android:orientation="horizontal"
+        <LinearLayout
+            android:orientation="horizontal"
             android:background="@color/navyblue"
             android:layout_width="wrap_content"
             android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/textStatus"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Curr Status"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
@@ -50,34 +62,108 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textStatus"
+                android:layout_width="130dp"
+                android:id="@+id/SecurityInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Curr Status"
+                android:text="SecurityInTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textInTime"
+                android:layout_width="130dp"
+                android:id="@+id/SecurityOutTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="InTime"
+                android:text="SecurityOutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textOutTime"
+                android:layout_width="130dp"
+                android:id="@+id/WeighmentInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OutTime"
+                android:text="WeighmentInTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/WeighmentOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="WeighmentOutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/SamplingInTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="SamplingInTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/SamplingOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="SamplingOutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/LoboratoryInTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LoboratoryInTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/LoboratoryOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LoboratoryOutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/ProductionInTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ProductionInTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/ProductionOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ProductionOutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>

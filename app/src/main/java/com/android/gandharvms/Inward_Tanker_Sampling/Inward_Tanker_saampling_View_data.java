@@ -10,15 +10,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
-import com.android.gandharvms.Inward_Tanker_Weighment.Intankweighlistdata_adapter;
-import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -37,7 +32,7 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
 
     private Inward_Tanker_SamplingMethod inward_Tanker_SamplingMethod;
     RecyclerView recview;
-    List<Inward_Tanker_SamplingResponseModel> samdatalist;
+    List<CommonResponseModelForAllDepartment> samdatalist;
     FirebaseFirestore db;
     TextView txtTotalCount;
 
@@ -93,12 +88,12 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
     }
     private void GetInward_Tanker_saamplingListData(String FromDate,String Todate,String vehicletype,char inout) {
         inward_Tanker_SamplingMethod= RetroApiClient.getInward_Tanker_Sampling();
-        Call<List<Inward_Tanker_SamplingResponseModel>> call = inward_Tanker_SamplingMethod.getIntankSamplingListingData(FromDate,Todate,vehicletype,inout);
-        call.enqueue(new Callback<List<Inward_Tanker_SamplingResponseModel>>() {
+        Call<List<CommonResponseModelForAllDepartment>> call = inward_Tanker_SamplingMethod.getIntankSamplingListingData(FromDate,Todate,vehicletype,inout);
+        call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
-            public void onResponse(Call<List<Inward_Tanker_SamplingResponseModel>> call, Response<List<Inward_Tanker_SamplingResponseModel>> response) {
+            public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
                 if(response.isSuccessful()){
-                    List<Inward_Tanker_SamplingResponseModel> data=response.body();
+                    List<CommonResponseModelForAllDepartment> data=response.body();
                     int totalCount = data.size();
                     txtTotalCount.setText("Total count: " + totalCount);
                     samdatalist.clear();
@@ -113,7 +108,7 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<List<Inward_Tanker_SamplingResponseModel>> call, Throwable t) {
+            public void onFailure(Call<List<CommonResponseModelForAllDepartment>> call, Throwable t) {
                 Log.e("Retrofit", "Failure: " + t.getMessage());
                 // Check if there's a response body in case of an HTTP error
                 if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {

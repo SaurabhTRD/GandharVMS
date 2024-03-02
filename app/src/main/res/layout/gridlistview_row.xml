@@ -5,6 +5,15 @@
     android:layout_height="wrap_content" >
 
     <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:text="TextView" />
+
+    <TextView
         android:id="@+id/textSerialNumber"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -32,29 +41,92 @@
         android:text="TextView" />
 
     <TextView
-        android:id="@+id/textStatus"
+        android:id="@+id/textSecurityInTime"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:layout_gravity="center_vertical"
-        android:text="TextView" />
+        android:text="TextView"/>
 
     <TextView
-        android:id="@+id/textInTime"
+        android:id="@+id/textSecurityOutTime"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:layout_gravity="center_vertical"
-        android:text="TextView" />
+        android:text="TextView"/>
 
     <TextView
-        android:id="@+id/textOutTime"
+        android:id="@+id/textWeighmentInTime"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center"
         android:layout_gravity="center_vertical"
-        android:text="TextView" />
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/textWeighmentOutTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/textSamplingInTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/textSamplingOutTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/textLoboratoryInTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/textLoboratoryOutTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/textProductionInTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"/>
+
+    <TextView
+        android:id="@+id/textProductionOutTime"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_gravity="center_vertical"
+        android:text="TextView"/>
 </LinearLayout>

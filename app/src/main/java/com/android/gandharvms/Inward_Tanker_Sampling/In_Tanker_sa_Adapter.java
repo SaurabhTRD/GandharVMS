@@ -3,23 +3,22 @@ package com.android.gandharvms.Inward_Tanker_Sampling;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class In_Tanker_sa_Adapter extends RecyclerView.Adapter<In_Tanker_sa_Adapter.myviewHolder>
 {
 
-    List<Inward_Tanker_SamplingResponseModel> datalist;
+    List<CommonResponseModelForAllDepartment> datalist;
 
-    public In_Tanker_sa_Adapter(List<Inward_Tanker_SamplingResponseModel> datalist) {
+    public In_Tanker_sa_Adapter(List<CommonResponseModelForAllDepartment> datalist) {
         this.datalist = datalist;
     }
 
