@@ -2,6 +2,8 @@ package com.android.gandharvms.Outward_Tanker_Security;
 
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
+import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production_interface;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 
 import retrofit2.Retrofit;
@@ -10,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Outward_RetroApiclient {
 
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "http://172.20.22.90/gandharvms/";
+    private static String BASE_URL = "http://52.183.160.211:8097/";
 
     public static Retrofit getClient() {
         if (retrofit == null) {
@@ -36,5 +38,12 @@ public class Outward_RetroApiclient {
     }*/
     public static Outward_Tanker_Lab outwardTankerLab(){
         return getClient().create(Outward_Tanker_Lab.class);
+    }
+    public static Outward_Truck_interface outwardtruckdispatch(){
+        return getClient().create(Outward_Truck_interface.class);
+    }
+
+    public static Outward_Truck_Production_interface outwardTruckProductionInterface(){
+        return getClient().create(Outward_Truck_Production_interface.class);
     }
 }

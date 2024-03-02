@@ -1,4 +1,4 @@
-package com.android.gandharvms;
+package com.android.gandharvms.Outward_Truck_Security;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,26 +19,22 @@ import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Outward_Tanker_Security.Isreportingupdate_Security_model;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Security.Request_Model_Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
+import com.android.gandharvms.Outward_Truck;
+import com.android.gandharvms.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -362,7 +358,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
                     "", "", trremark, vehlrcopy, "", "", "", "", outTime, EmployeId, false,
                     "", 'S', etserialnum, etvehiclnum, ettransname, etmobilenum, "", "",trdate
                     , "", "", "", 0, "", 0, "",
-                    'L', inOut, vehicleType, etintime, "");
+                    'G', inOut, vehicleType, etintime, "");
 
 
             Call<Boolean> call = outwardTanker.outwardtankerinsert(requestModelOutwardTankerSecurity);

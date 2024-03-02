@@ -20,4 +20,7 @@ public interface Outward_weighment {
     //outwardout weighment update
     @POST("api/OutwardWeighment/UpdateOutwardOutWeighmentDetails")
     Call<Boolean> updateoutwardoutweighment(@Body Model_OutwardOut_Weighment request);
+
+    @POST("api/OutwardWeighment/UpdateOutwardOutWeighmentDetails")
+    Call<Boolean> updateoutwardouttruckweighment(@Body Model_OutwardOut_Truck_Weighment request);
 }

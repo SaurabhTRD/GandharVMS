@@ -2,6 +2,7 @@ package com.android.gandharvms.outward_Tanker_Lab_forms;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -25,6 +26,8 @@ import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -50,6 +53,8 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
     EditText intime,serialnum,vehiclnum,blendingratio,appreance,color,odor,kv40,density25,kv100,viscosity,tbn,anlinepoint,
             breakdownvoltage,ddf,watercontent,interfacialtension,flashpoint,pourpoint,rcstest,remark,approveqc,dt,samplecondition,samplerecivdt,samplereleasedate
             ,correctionrequird;
+    TextInputLayout retil;
+    CardView btnc;
 
     Button submit,sendbtn;
     FirebaseFirestore dbroot;
@@ -108,6 +113,9 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         samplerecivdt = findViewById(R.id.etsampledt);
         samplereleasedate = findViewById(R.id.etsamplereleasedate);
         correctionrequird = findViewById(R.id.etcorrection);
+
+        retil = findViewById(R.id.remarktil);
+        btnc = findViewById(R.id.btncdview);
 
 
 
@@ -223,7 +231,8 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
 
                         serialnum.setEnabled(false);
                         vehiclnum.setEnabled(false);
-                        if (data.getBlending_Ratio().isEmpty()){
+                        if (data.getBlending_Ratio() != null ){
+                        if (data.getBlending_Ratio().isEmpty() ){
                             intime.setVisibility(View.GONE);
                             appreance.setVisibility(View.GONE);
                             color.setVisibility(View.GONE);
@@ -232,7 +241,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                             kv40.setVisibility(View.GONE);
                             kv100.setVisibility(View.GONE);
                             viscosity.setVisibility(View.GONE);
-                            tbn.setVisibility(View.GONE);
+//                            tbn.setVisibility(View.GONE);
                             anlinepoint.setVisibility(View.GONE);
                             breakdownvoltage.setVisibility(View.GONE);
                             ddf.setVisibility(View.GONE);
@@ -241,36 +250,61 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                             flashpoint.setVisibility(View.GONE);
                             pourpoint.setVisibility(View.GONE);
                             rcstest.setVisibility(View.GONE);
-                            autoCompleteTextView.setVisibility(View.GONE);
-                            approveqc.setVisibility(View.GONE);
-                            dt.setVisibility(View.GONE);
-                            remark.setVisibility(View.GONE);
-                            sendbtn.setEnabled(true);
+
+                            samplecondition.setVisibility(View.GONE);
+                            samplerecivdt.setVisibility(View.GONE);
+                            samplereleasedate.setVisibility(View.GONE);
+                            correctionrequird.setVisibility(View.GONE);
+                            tbn.setVisibility(View.GONE);
+                          //  remark.setVisibility(View.GONE);
+//                            autoCompleteTextView.setVisibility(View.GONE);
+                            retil.setVisibility(View.GONE);
+                            btnc.setVisibility(View.GONE);
+
+//                            autoCompleteTextView.setVisibility(View.GONE);
+//                            approveqc.setVisibility(View.GONE);
+//                            dt.setVisibility(View.GONE);
+//                            remark.setVisibility(View.GONE);
+//                            sendbtn.setEnabled(true);
 
                         }else {
                             blendingratio.setText(data.getBlending_Ratio());
-                            intime.setEnabled(true);
-                            appreance.setEnabled(true);
-                            color.setEnabled(true);
-                            odor.setEnabled(true);
-                            density25.setEnabled(true);
-                            kv40.setEnabled(true);
-                            kv100.setEnabled(true);
-                            viscosity.setEnabled(true);
-                            tbn.setEnabled(true);
-                            anlinepoint.setEnabled(true);
-                            breakdownvoltage.setEnabled(true);
-                            ddf.setEnabled(true);
-                            watercontent.setEnabled(true);
-                            interfacialtension.setEnabled(true);
-                            flashpoint.setEnabled(true);
-                            pourpoint.setEnabled(true);
-                            rcstest.setEnabled(true);
-                            autoCompleteTextView.setEnabled(true);
-                            remark.setEnabled(true);
+                            intime.setVisibility(View.VISIBLE);
+                            appreance.setVisibility(View.VISIBLE);
+                            color.setVisibility(View.VISIBLE);
+                            odor.setVisibility(View.VISIBLE);
+                            density25.setVisibility(View.VISIBLE);
+                            kv40.setVisibility(View.VISIBLE);
+                            kv100.setVisibility(View.VISIBLE);
+                            viscosity.setVisibility(View.VISIBLE);
+//                            tbn.setVisibility(View.GONE);
+                            anlinepoint.setVisibility(View.VISIBLE);
+                            breakdownvoltage.setVisibility(View.VISIBLE);
+                            ddf.setVisibility(View.VISIBLE);
+                            watercontent.setVisibility(View.VISIBLE);
+                            interfacialtension.setVisibility(View.VISIBLE);
+                            flashpoint.setVisibility(View.VISIBLE);
+                            pourpoint.setVisibility(View.VISIBLE);
+                            rcstest.setVisibility(View.VISIBLE);
+
+                            samplecondition.setVisibility(View.VISIBLE);
+                            samplerecivdt.setVisibility(View.VISIBLE);
+                            samplereleasedate.setVisibility(View.VISIBLE);
+                            correctionrequird.setVisibility(View.VISIBLE);
+                            tbn.setVisibility(View.VISIBLE);
+                            //  remark.setVisibility(View.GONE);
+//                            autoCompleteTextView.setVisibility(View.GONE);
+                            retil.setVisibility(View.VISIBLE);
+                            btnc.setVisibility(View.VISIBLE);
 
 
+//                            autoCompleteTextView.setEnabled(true);
+//                            remark.setEnabled(true);
 
+                        }
+
+                        }else {
+                            Toasty.warning(Outward_Tanker_Laboratory.this, "Not Exist Blending Ratio..!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }else {

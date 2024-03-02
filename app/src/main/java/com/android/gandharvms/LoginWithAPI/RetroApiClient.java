@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroApiClient {
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "http://172.20.22.90/gandharvms/";
+    private static String BASE_URL = "http://52.183.160.211:8097/";
 
     public static Retrofit getClient() {
         if (retrofit == null) {

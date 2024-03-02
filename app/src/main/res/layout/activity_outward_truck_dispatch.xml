@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Outward_Truck_Dispatch">
+    tools:context=".Outward_Truck_Dispatch.Outward_Truck_Dispatch">
 
 
 
@@ -64,28 +64,6 @@
             </com.google.android.material.textfield.TextInputLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-                android:id="@+id/Date"
-                android:layout_below="@id/invoiceno"
-
-                >
-                <EditText
-                    android:id="@+id/etdate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Date"
-                    android:inputType="date"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:focusable="false"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -141,64 +119,18 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="2dp"
-
-                android:layout_below="@id/material"
-                >
-                <EditText
-                    android:id="@+id/etqty"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Qty"
-                    android:inputType="numberDecimal"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
                 android:id="@+id/party_name"
                 android:layout_below="@id/Date"
 
                 >
                 <EditText
-                    android:id="@+id/etpartyname"
+                    android:id="@+id/ettransport"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Party Name"
+                    android:hint="Transport Name"
                     android:inputType="text"
                     android:textSize="17dp"
                     android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-                android:id="@+id/regno"
-
-
-                >
-                <EditText
-                    android:id="@+id/etoanumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="OA Number"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -276,127 +208,14 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-
-                android:layout_below="@id/Date"
-
-                >
-                <EditText
-                    android:id="@+id/etdispatchdt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Date/Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-
-                android:layout_below="@id/Date"
-
-                >
-                <EditText
-                    android:id="@+id/etcheckofficer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Checked By Security Officer"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-
-                android:layout_below="@id/Date"
-
-                >
-                <EditText
-                    android:id="@+id/etsecurityofficerdt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Date/Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-
-                android:layout_below="@id/Date"
-
-                >
-                <EditText
-                    android:id="@+id/etsignedbyweigment"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Signed By Weighment"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-
-                android:layout_below="@id/Date"
-
-                >
-                <EditText
-                    android:id="@+id/etweighmentdt"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Date/Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
+                android:layout_marginTop="5dp"
                 >
                 <EditText
                     android:id="@+id/etremark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Remark"
-                    android:inputType="number"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>

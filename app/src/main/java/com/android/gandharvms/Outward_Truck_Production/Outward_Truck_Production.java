@@ -1,4 +1,4 @@
-package com.android.gandharvms;
+package com.android.gandharvms.Outward_Truck_Production;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,23 +13,22 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
-import com.android.gandharvms.Outward_Tanker_Weighment.Model_OutwardOut_Truck_Weighment;
-import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
-import com.android.gandharvms.Outward_Tanker_Weighment.Response_Outward_Tanker_Weighment;
-import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
+import com.android.gandharvms.Outward_Truck;
+import com.android.gandharvms.Outward_Truck_Dispatch.Model_Outward_Truck_Dispatch;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
+import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
+import com.android.gandharvms.R;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -37,37 +36,50 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class OutwardOut_Truck_Weighment extends AppCompatActivity {
+public class Outward_Truck_Production extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal;
-
+    EditText intime,serialnumber,vehiclenumber,etqty,typepack,signdis,dtdis,signsec,dtsec,signweigh,dtweigh,tare,etremark;
     Button submit;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
-
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
-    private Outward_weighment outwardWeighment;
+    private Outward_Tanker_Lab outwardTankerLab;
+    private Outward_Truck_interface outwardTruckInterface;
+
+    private Outward_Truck_Production_interface outwardTruckProductionInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_outward_out_truck_weighment);
-        outwardWeighment = Outward_RetroApiclient.outwardWeighment();
+        setContentView(R.layout.activity_outward_truck_production);
+        outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
 
-        intime=findViewById(R.id.etintime);
-        serialnumber=findViewById(R.id.etserialnumber);
-        vehiclenum=findViewById(R.id.etvehical);
-        grosswright=findViewById(R.id.etgrossweight);
-        noofpack=findViewById(R.id.etpack);
-        netwt = findViewById(R.id.etnetwwight);
-        etremark = findViewById(R.id.remark);
-        seal = findViewById(R.id.etseal);
+        outwardTruckProductionInterface = Outward_RetroApiclient.outwardTruckProductionInterface();
 
-        submit = findViewById(R.id.submit);
+//        ,,,,,,,;
+        intime = findViewById(R.id.etintime);
+        serialnumber = findViewById(R.id.etserialnumber);
+        vehiclenumber = findViewById(R.id.etvehicleno);
+        etqty = findViewById(R.id.etqty2);
+        typepack = findViewById(R.id.typeofpackproduction);
+        signdis = findViewById(R.id.etdispatchofficer);
+        dtdis = findViewById(R.id.etdtdispatch);
+        signsec = findViewById(R.id.etsecurityofficer);
+        dtsec = findViewById(R.id.etdtsecurity);
+        signweigh = findViewById(R.id.etweighmentofficer);
+        dtweigh = findViewById(R.id.etdtweighment);
+//        tare = findViewById(R.id.ettare);
+        etremark = findViewById(R.id.etremark);
+
+
+
+
+        submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -76,13 +88,14 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                 insert();
             }
         });
+
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 int hours = calendar.get(Calendar.HOUR_OF_DAY);
                 int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(OutwardOut_Truck_Weighment.this, new TimePickerDialog.OnTimeSetListener() {
+                tpicker = new TimePickerDialog(Outward_Truck_Production.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar c = Calendar.getInstance();
@@ -96,27 +109,41 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                 tpicker.show();
             }
         });
-        vehiclenum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    FetchVehicleDetails(vehiclenum.getText().toString().trim(), vehicleType, nextProcess, inOut);
+                    FetchVehicleDetails(vehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
                 }
             }
         });
 
     }
 
-    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
-        Call<Response_Outward_Tanker_Weighment> call = outwardWeighment.fetchweighment(vehicleNo,vehicleType,NextProcess,inOut);
-        call.enqueue(new Callback<Response_Outward_Tanker_Weighment>() {
+    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
+        Call<Model_Outward_Truck_Dispatch> call = outwardTruckInterface.fetchdispatch(vehicleNo,vehicleType,nextProcess,inOut);
+        call.enqueue(new Callback<Model_Outward_Truck_Dispatch>() {
             @Override
-            public void onResponse(Call<Response_Outward_Tanker_Weighment> call, Response<Response_Outward_Tanker_Weighment> response) {
+            public void onResponse(Call<Model_Outward_Truck_Dispatch> call, Response<Model_Outward_Truck_Dispatch> response) {
                 if (response.isSuccessful()){
-                    Response_Outward_Tanker_Weighment data = response.body();
-                    if (data.getVehicleNumber()!= ""){
-                        OutwardId =data.getOutwardId();
+                    Model_Outward_Truck_Dispatch data = response.body();
+                    if (data.getVehicleNumber() != ""){
+                        OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
-                        vehiclenum.setText(data.getVehicleNumber());
+                        vehiclenumber.setText(data.getVehicleNumber());
+                        etqty.setText(String.valueOf(data.getBarrelFormQty()));
+                        typepack.setText(String.valueOf(data.getTypeOfPackagingId()));
+                        signdis.setText(data.getDespatch_Sign());
+                        dtdis.setText(data.getDespatchInTime());
+                        typepack.setText(data.getTypeOfPackaging());
+                        signsec.setText(data.getSecurityCreatedBy());
+                        dtsec.setText(data.getSecurityCreatedDate());
+                        signweigh.setText(data.getWeighmentCreatedBy());
+                        dtweigh.setText(data.getWeighmentCreatedDate());
+
+
+//                      pending  signsec.setText(data.s);
+                    } else {
+                        Toasty.success(Outward_Truck_Production.this, "Vehicle Is Not Available", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -124,7 +151,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<Response_Outward_Tanker_Weighment> call, Throwable t) {
+            public void onFailure(Call<Model_Outward_Truck_Dispatch> call, Throwable t) {
 
                 Log.e("Retrofit", "Failure: " + t.getMessage());
                 // Check if there's a response body in case of an HTTP error
@@ -139,59 +166,53 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                         }
                     }
                 }
+                Toasty.error(Outward_Truck_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
-
     public void insert(){
-
-//        intime,serialnumber,vehiclenum,grosswright,noofpack;
+//        intime,serialnumber,vehiclenumber,material,oanumber;
         String etintime = intime.getText().toString().trim();
-        String unetwt = netwt.getText().toString().trim();
-        String etgrossweight = grosswright.getText().toString().trim();
-        String etnoofpack = noofpack.getText().toString().trim();
+        String etserialnumber =serialnumber.getText().toString().trim();
+        String etvehiclnumber = vehiclenumber.getText().toString().trim();
+        String outTime = getCurrentTime();
         String uremark = etremark.getText().toString().trim();
-        String useal = seal.getText().toString().trim();
 
 
-//        String etserialnumber = serialnumber.getText().toString().trim();
-//        String etvehiclenum = vehiclenum.getText().toString().trim();
-
-
-
-        if (etintime.isEmpty()||etgrossweight.isEmpty()||etnoofpack.isEmpty()){
+        if (etintime.isEmpty()||etserialnumber.isEmpty()||etvehiclnumber.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
 //            Map<String,String>items = new HashMap<>();
 //
 //            items.put("In_Time",intime.getText().toString().trim());
 //            items.put("Serial_Number",serialnumber.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclenum.getText().toString().trim());
-//            items.put("Gross_Weight",grosswright.getText().toString().trim());
-//            items.put("No_Of_Pack",noofpack.getText().toString().trim());
+//            items.put("Vehicle_Number",vehiclenumber.getText().toString().trim());
+//            items.put("Material",material.getText().toString().trim());
+//            items.put("OA_Number",oanumber.getText().toString().trim());
 //
-//            dbroot.collection("OutwardOutTruck Weighment()OUT").add(items)
+//            dbroot.collection("Outward_Truck_Prodution").add(items)
 //                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
 //                        @Override
 //                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(OutwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(Outward_Truck_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
 //                        }
 //                    });
-            Model_OutwardOut_Truck_Weighment modelOutwardOutTruckWeighment = new Model_OutwardOut_Truck_Weighment(OutwardId,
-                    "","",etintime,unetwt,etgrossweight,etnoofpack,uremark,useal,EmployeId,'S',inOut,
-                    vehicleType);
-            Call<Boolean> call = outwardWeighment.updateoutwardouttruckweighment(modelOutwardOutTruckWeighment);
+
+            Outward_Truck_Production_Model outwardTruckProductionModel = new Outward_Truck_Production_Model(OutwardId,etintime,outTime,
+                    uremark,'P',EmployeId,'B',inOut,vehicleType);
+            Call<Boolean> call = outwardTruckProductionInterface.updateouttruckproduction(outwardTruckProductionModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful()&& response.body() && response.body() == true){
-                        Toasty.success(OutwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        startActivity(new Intent(OutwardOut_Truck_Weighment.this, Outward_Truck.class));
+                    if (response.isSuccessful() && response.body() && response.body() == true){
+                        Toasty.success(Outward_Truck_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+                        startActivity(new Intent(Outward_Truck_Production.this, Outward_Truck.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -214,11 +235,11 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                             }
                         }
                     }
-                    Toasty.error(OutwardOut_Truck_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Outward_Truck_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
+
+
         }
-
-
     }
 }
