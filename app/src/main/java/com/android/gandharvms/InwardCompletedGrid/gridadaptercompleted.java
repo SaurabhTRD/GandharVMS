@@ -47,10 +47,10 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
     @Override
     public gridadaptercompleted.myviewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         if (viewType == TYPE_ROW) {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.table_cell, viewGroup, false);
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.inward_dept_completed_table_cell, viewGroup, false);
             return new gridadaptercompleted.myviewHolder(view);
         } else {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_item,
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.inward_dept_completed_card_item,
                     viewGroup, false);
             return new gridadaptercompleted.myviewHolder(view);
         }
@@ -167,7 +167,7 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
-        TextView sernum, vehiclenum, material, Status, secintime, secouttime,date,partyname,qty,netweight, reoprtingre,
+        TextView sernum, vehiclenum, material, secintime, secouttime,date,partyname,qty,netweight, reoprtingre,
                  qtyuom,netweightuom,extramaterials,remark,oapo,mob,Selectregister,IrCopy,DeliveryBill,TaxInvoice,
                  EwayBill,
                 weiintime, weiouttime,grossweight,batchnumber,containerno, sighby,shortagedip,shortageweight,
@@ -182,10 +182,9 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
 
         public myviewHolder(View view) {
             super(view);
-            sernum = view.findViewById(R.id.textSerialNumber);
-            vehiclenum = view.findViewById(R.id.textVehicleNumber);
-            material = view.findViewById(R.id.textMaterial);
-            Status = view.findViewById(R.id.textStatus);
+            sernum = view.findViewById(R.id.textcoSerialNumber);
+            vehiclenum = view.findViewById(R.id.textcoVehicleNumber);
+            material = view.findViewById(R.id.textcoMaterial);
             secintime =view.findViewById(R.id.textcoSecurityInTime);
             secouttime=view.findViewById(R.id.textcoSecurityOutTime);
             weiintime =view.findViewById(R.id.textcoWeighmentInTime);
@@ -204,43 +203,43 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
             qtyuom=view.findViewById(R.id.textcoqtyuom);
             netweightuom=view.findViewById(R.id.textconetweightuom);
             extramaterials=view.findViewById(R.id.textcoextramaterials);
-            remark=view.findViewById(R.id.textremark);
-            oapo=view.findViewById(R.id.textoapo);
-            mob=view.findViewById(R.id.textmob);
-            grossweight=view.findViewById(R.id.textgrossweight);
-            batchnumber=view.findViewById(R.id.textbatchnumber);
-            containerno=view.findViewById(R.id.textcontainerno);
-            Selectregister=view.findViewById(R.id.textSelectregister);
-            IrCopy=view.findViewById(R.id.textIrCopy);
-            DeliveryBill=view.findViewById(R.id.textDeliveryBill);
-            TaxInvoice=view.findViewById(R.id.textTaxInvoice);
-            EwayBill=view.findViewById(R.id.textEwayBill);
-            sighby=view.findViewById(R.id.textsighby);
-            shortagedip=view.findViewById(R.id.textshortagedip);
-            shortageweight=view.findViewById(R.id.textshortageweight);
-            Apperance=view.findViewById(R.id.textApperance);
-            Odor=view.findViewById(R.id.textOdor);
-            Color=view.findViewById(R.id.textColor);
-            LQty=view.findViewById(R.id.textLQty);
-            Density=view.findViewById(R.id.textDensity);
-            RcsTest=view.findViewById(R.id.textRcsTest);
-            AnLinePoint=view.findViewById(R.id.textAnLinePoint);
-            FlashPoint=view.findViewById(R.id.textFlashPoint);
-            _40KV=view.findViewById(R.id.text_40KV);
-            _100KV=view.findViewById(R.id.text_100KV);
-            AdditionalTest=view.findViewById(R.id.textAdditionalTest);
-            SampleTest=view.findViewById(R.id.textSampleTest);
-            SignOf=view.findViewById(R.id.textSignOf);
-            DateAndTime=view.findViewById(R.id.textDateAndTime);
-            RemarkDescription=view.findViewById(R.id.textRemarkDescription);
-            ViscosityIndex=view.findViewById(R.id.textViscosityIndex);
-            UnloadAboveMaterialInTK=view.findViewById(R.id.textUnloadAboveMaterialInTK);
-            ProductName=view.findViewById(R.id.textProductName);
-            AboveMaterialIsUnloadInTK=view.findViewById(R.id.textAboveMaterialIsUnloadInTK);
-            OperatorName=view.findViewById(R.id.textOperatorName);
-            ReceiveQTY=view.findViewById(R.id.textReceiveQTY);
-            ReceiveQTYUOM=view.findViewById(R.id.textReceiveQTYUOM);
-            StoreExtramaterials=view.findViewById(R.id.textStoreExtramaterials);
+            remark=view.findViewById(R.id.textcoremark);
+            oapo=view.findViewById(R.id.textcooapo);
+            mob=view.findViewById(R.id.textcomob);
+            grossweight=view.findViewById(R.id.textcogrossweight);
+            batchnumber=view.findViewById(R.id.textcobatchnumber);
+            containerno=view.findViewById(R.id.textcocontainerno);
+            Selectregister=view.findViewById(R.id.textcoSelectregister);
+            IrCopy=view.findViewById(R.id.textcoIrCopy);
+            DeliveryBill=view.findViewById(R.id.textcoDeliveryBill);
+            TaxInvoice=view.findViewById(R.id.textcoTaxInvoice);
+            EwayBill=view.findViewById(R.id.textcoEwayBill);
+            sighby=view.findViewById(R.id.textcosighby);
+            shortagedip=view.findViewById(R.id.textcoshortagedip);
+            shortageweight=view.findViewById(R.id.textcoshortageweight);
+            Apperance=view.findViewById(R.id.textcoApperance);
+            Odor=view.findViewById(R.id.textcoOdor);
+            Color=view.findViewById(R.id.textcoColor);
+            LQty=view.findViewById(R.id.textcoLQty);
+            Density=view.findViewById(R.id.textcoDensity);
+            RcsTest=view.findViewById(R.id.textcoRcsTest);
+            AnLinePoint=view.findViewById(R.id.textcoAnLinePoint);
+            FlashPoint=view.findViewById(R.id.textcoFlashPoint);
+            _40KV=view.findViewById(R.id.textco_40KV);
+            _100KV=view.findViewById(R.id.textco_100KV);
+            AdditionalTest=view.findViewById(R.id.textcoAdditionalTest);
+            SampleTest=view.findViewById(R.id.textcoSampleTest);
+            SignOf=view.findViewById(R.id.textcoSignOf);
+            DateAndTime=view.findViewById(R.id.textcoDateAndTime);
+            RemarkDescription=view.findViewById(R.id.textcoRemarkDescription);
+            ViscosityIndex=view.findViewById(R.id.textcoViscosityIndex);
+            UnloadAboveMaterialInTK=view.findViewById(R.id.textcoUnloadAboveMaterialInTK);
+            ProductName=view.findViewById(R.id.textcoProductName);
+            AboveMaterialIsUnloadInTK=view.findViewById(R.id.textcoAboveMaterialIsUnloadInTK);
+            OperatorName=view.findViewById(R.id.textcoOperatorName);
+            ReceiveQTY=view.findViewById(R.id.textcoReceiveQTY);
+            ReceiveQTYUOM=view.findViewById(R.id.textcoReceiveQTYUOM);
+            StoreExtramaterials=view.findViewById(R.id.textcoStoreExtramaterials);
         }
     }
 }

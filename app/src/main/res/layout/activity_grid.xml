@@ -51,7 +51,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="90dp"
                 android:id="@+id/textMaterial"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
@@ -62,108 +62,108 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/SecurityInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="SecurityInTime"
+                android:text="Sec-InTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/SecurityOutTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="SecurityOutTime"
+                android:text="Sec-OutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/WeighmentInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="WeighmentInTime"
+                android:text="Wei-InTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:id="@+id/WeighmentOutTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="WeighmentOutTime"
+                android:text="Wei-OutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/SamplingInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="SamplingInTime"
+                android:text="Sam-InTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/SamplingOutTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="SamplingOutTime"
+                android:text="Sam-OutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="140dp"
+                android:layout_width="100dp"
                 android:id="@+id/LoboratoryInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="LoboratoryInTime"
+                android:text="Lab-InTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:id="@+id/LoboratoryOutTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="LoboratoryOutTime"
+                android:text="Lab-OutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/ProductionInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="ProductionInTime"
+                android:text="Pro-InTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="100dp"
                 android:id="@+id/ProductionOutTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="ProductionOutTime"
+                android:text="Pro-OutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>

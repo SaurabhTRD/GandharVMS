@@ -103,10 +103,10 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
         {
             holder.samintime.setText(club.getSamIntime().substring(12, samintimelength));
         }
-        int samouttimelength = club.getSamOuttime().length();
+        int samouttimelength =club.getSamOuttime()!=null?club.getSamOuttime().length():0;
         if(samouttimelength>0)
         {
-            holder.samouttime.setText(club.getSecOuttime().substring(12, samouttimelength));
+            holder.samouttime.setText(club.getSamOuttime().substring(12, samouttimelength));
         }
         int labintimelength = club.getLabIntime().length();
         if(labintimelength>0)
@@ -136,7 +136,7 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
         int storeouttimelength = club.getStoreIntime().length();
         if(storeouttimelength>0)
         {
-            holder.storeouttime.setText(club.getStoreIntime().substring(12, storeouttimelength));
+            holder.storeouttime.setText(club.getStoreOuttime().substring(12, storeouttimelength));
         }*/
 
 

@@ -53,7 +53,7 @@ public class GridCompleted extends AppCompatActivity {
     gridadaptercompleted gridadaptercomp;
     RecyclerView recyclerView;
 
-    private Weighment WeighmnetDetails;
+    private Weighment WeighmentDetails;
     private Laboratory LaboratoryDetails;
     private Inward_Tanker_SamplingMethod samplingdetails;
     private API_In_Tanker_production productiondetails;
@@ -67,7 +67,7 @@ public class GridCompleted extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_completed);
-        WeighmnetDetails= RetroApiClient.getWeighmentDetails();
+        WeighmentDetails= RetroApiClient.getWeighmentDetails();
         LaboratoryDetails=RetroApiClient.getLabDetails();
         samplingdetails=RetroApiClient.getInward_Tanker_Sampling();
         productiondetails= RetroApiclient_In_Tanker_Security.getinproductionApi();
@@ -177,7 +177,7 @@ public class GridCompleted extends AppCompatActivity {
 
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = WeighmnetDetails.getIntankWeighListingData(FromDate, Todate, vehicleType, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call = WeighmentDetails.getIntankWeighListingData(FromDate, Todate, vehicleType, inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {

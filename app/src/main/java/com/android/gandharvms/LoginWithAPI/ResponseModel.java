@@ -5,7 +5,7 @@ public class ResponseModel {
     private String EmpId;
     private String EmployeeName;
     private String EmailID;
-    private int MobileNo;
+    private String MobileNo;
     private String Department;
     private String Password;
     private String Token;
@@ -50,11 +50,11 @@ public class ResponseModel {
         EmailID = emailID;
     }
 
-    public int getMobileNo() {
+    public String getMobileNo() {
         return MobileNo;
     }
 
-    public void setMobileNo(int mobileNo) {
+    public void setMobileNo(String mobileNo) {
         MobileNo = mobileNo;
     }
 
