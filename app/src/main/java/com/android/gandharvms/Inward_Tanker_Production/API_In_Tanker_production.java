@@ -1,5 +1,7 @@
 package com.android.gandharvms.Inward_Tanker_Production;
 
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -25,8 +27,8 @@ public interface API_In_Tanker_production {
     Call<List<ListingResponse_InTankerproduction>> getintankerproductionListdata(@Query("NextProcess")char nextProcess);*/
 
     @GET("api/InwardWeighment/GetInwardWeighmentList")
-    Call<List<ListingResponse_InTankerproduction>> getintankerproductionListdata(@Query("FromDate") String FromDate,
-                                                                  @Query("Todate") String Todate,
-                                                                  @Query("vehicleType") String vehicleType,
-                                                                  @Query("inout") char inout);
+    Call<List<CommonResponseModelForAllDepartment>> getintankerproductionListdata(@Query("FromDate") String FromDate,
+                                                                                  @Query("Todate") String Todate,
+                                                                                  @Query("vehicleType") String vehicleType,
+                                                                                  @Query("inout") char inout);
 }

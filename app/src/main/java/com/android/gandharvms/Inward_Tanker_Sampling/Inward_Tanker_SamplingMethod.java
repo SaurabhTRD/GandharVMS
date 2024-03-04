@@ -1,8 +1,6 @@
 package com.android.gandharvms.Inward_Tanker_Sampling;
 
-import com.android.gandharvms.Inward_Tanker_Security.Request_Model_In_Tanker_Security;
-import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
-import com.android.gandharvms.RegisterwithAPI.RegRequestModel;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 
 import java.util.List;
 
@@ -15,10 +13,10 @@ import retrofit2.http.Query;
 public interface Inward_Tanker_SamplingMethod {
 
     @GET("api/InwardWeighment/GetInwardWeighmentList")
-    Call<List<Inward_Tanker_SamplingResponseModel>> getIntankSamplingListingData(@Query("FromDate") String FromDate,
-                                                                  @Query("Todate") String Todate,
-                                                                  @Query("vehicleType") String vehicleType,
-                                                                  @Query("inout") char inout);
+    Call<List<CommonResponseModelForAllDepartment>> getIntankSamplingListingData(@Query("FromDate") String FromDate,
+                                                                                 @Query("Todate") String Todate,
+                                                                                 @Query("vehicleType") String vehicleType,
+                                                                                 @Query("inout") char inout);
     @POST("api/InwardSampling/Add")
     Call<Boolean> insertSamplingData(@Body Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel);
 

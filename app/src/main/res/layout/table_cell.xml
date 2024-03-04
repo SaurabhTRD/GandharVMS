@@ -4,6 +4,15 @@
     android:background="@android:color/darker_gray"
     android:layout_width="wrap_content"
     android:layout_height="40dp">
+
+    <TextView
+        android:id="@+id/textStatus"
+        android:layout_width="120dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
     <TextView
         android:id="@+id/textSerialNumber"
         android:layout_width="120dp"
@@ -11,6 +20,7 @@
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
+
     <TextView
         android:id="@+id/textVehicleNumber"
         android:layout_width="150dp"
@@ -24,6 +34,22 @@
 
     <TextView
         android:id="@+id/textMaterial"
+        android:layout_width="90dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textSecurityInTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textSecurityOutTime"
         android:layout_width="120dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -31,32 +57,67 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textStatus"
-        android:layout_width="120dp"
+        android:id="@+id/textWeighmentInTime"
+        android:layout_width="100dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textInTime"
-        android:layout_width="120dp"
+        android:id="@+id/textWeighmentOutTime"
+        android:layout_width="100dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textOutTime"
-        android:layout_width="120dp"
+        android:id="@+id/textSamplingInTime"
+        android:layout_width="100dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
-    <!--    <View-->
-    <!--        android:layout_width="0.2dp"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:background="#000000"/>-->
+    <TextView
+        android:id="@+id/textSamplingOutTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textLoboratoryInTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textLoboratoryOutTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textProductionInTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/textProductionOutTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
 </LinearLayout>
 

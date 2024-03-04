@@ -40,6 +40,114 @@ public class    Respo_Model_In_Tanker_security {
     private String UpdatedBy ;
     private String CurrStatus;
     public String OutInTime;
+    public String SecIntime;
+    public String SecOuttime;
+    public String WeiIntime;
+    public String WeiOuttime;
+    public String SamIntime;
+    public String SamOuttime;
+    public String LabIntime;
+    public String LabOuttime;
+    public String ProIntime;
+    public String ProOuttime;
+    public String StoreIntime;
+    public String StoreOuttime;
+
+    public String getSecIntime() {
+        return SecIntime;
+    }
+
+    public void setSecIntime(String secIntime) {
+        SecIntime = secIntime;
+    }
+
+    public String getSecOuttime() {
+        return SecOuttime;
+    }
+
+    public void setSecOuttime(String secOuttime) {
+        SecOuttime = secOuttime;
+    }
+
+    public String getWeiIntime() {
+        return WeiIntime;
+    }
+
+    public void setWeiIntime(String weiIntime) {
+        WeiIntime = weiIntime;
+    }
+
+    public String getWeiOuttime() {
+        return WeiOuttime;
+    }
+
+    public void setWeiOuttime(String weiOuttime) {
+        WeiOuttime = weiOuttime;
+    }
+
+    public String getSamIntime() {
+        return SamIntime;
+    }
+
+    public void setSamIntime(String samIntime) {
+        SamIntime = samIntime;
+    }
+
+    public String getSamOuttime() {
+        return SamOuttime;
+    }
+
+    public void setSamOuttime(String samOuttime) {
+        SamOuttime = samOuttime;
+    }
+
+    public String getLabIntime() {
+        return LabIntime;
+    }
+
+    public void setLabIntime(String labIntime) {
+        LabIntime = labIntime;
+    }
+
+    public String getLabOuttime() {
+        return LabOuttime;
+    }
+
+    public void setLabOuttime(String labOuttime) {
+        LabOuttime = labOuttime;
+    }
+
+    public String getProIntime() {
+        return ProIntime;
+    }
+
+    public void setProIntime(String proIntime) {
+        ProIntime = proIntime;
+    }
+
+    public String getProOuttime() {
+        return ProOuttime;
+    }
+
+    public void setProOuttime(String proOuttime) {
+        ProOuttime = proOuttime;
+    }
+
+    public String getStoreIntime() {
+        return StoreIntime;
+    }
+
+    public void setStoreIntime(String storeIntime) {
+        StoreIntime = storeIntime;
+    }
+
+    public String getStoreOuttime() {
+        return StoreOuttime;
+    }
+
+    public void setStoreOuttime(String storeOuttime) {
+        StoreOuttime = storeOuttime;
+    }
 
     public String getOutInTime() {
         return OutInTime;

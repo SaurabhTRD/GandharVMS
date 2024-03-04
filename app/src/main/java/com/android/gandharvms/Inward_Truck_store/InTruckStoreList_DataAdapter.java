@@ -9,16 +9,16 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabListData_Adapter;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.R;
 
 import java.util.List;
 
 public class InTruckStoreList_DataAdapter extends RecyclerView.Adapter<InTruckStoreList_DataAdapter.myviewholder>{
     Context context;
-    private final List<InTruckStoreResponseModel> storeDataList;
+    private final List<CommonResponseModelForAllDepartment> storeDataList;
 
-    public InTruckStoreList_DataAdapter(List<InTruckStoreResponseModel> storeDataList) {
+    public InTruckStoreList_DataAdapter(List<CommonResponseModelForAllDepartment> storeDataList) {
         this.storeDataList = storeDataList;
     }
 
@@ -31,7 +31,7 @@ public class InTruckStoreList_DataAdapter extends RecyclerView.Adapter<InTruckSt
 
     @Override
     public void onBindViewHolder(@NonNull InTruckStoreList_DataAdapter.myviewholder holder, int position) {
-        InTruckStoreResponseModel storedatalist=storeDataList.get(position);
+        CommonResponseModelForAllDepartment storedatalist=storeDataList.get(position);
         int intimelength = storedatalist.getInTime().length();
         int outimelength = storedatalist.getOutTime().length();
         holder.etintime.setText(storedatalist.getInTime().substring(12,intimelength));

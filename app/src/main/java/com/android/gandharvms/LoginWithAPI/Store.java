@@ -1,7 +1,6 @@
 package com.android.gandharvms.LoginWithAPI;
 
-import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabRequestModel;
-import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabResponseModel;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.Inward_Truck_store.InTruckStoreRequestModel;
 import com.android.gandharvms.Inward_Truck_store.InTruckStoreResponseModel;
 
@@ -14,8 +13,11 @@ import retrofit2.http.POST;
 import retrofit2.http.Query;
 
 public interface Store {
-    @GET("api/InwardStore/GetStoreList")
-    Call<List<InTruckStoreResponseModel>> getInTruckStoreListData(@Query("NextProcess") char nextProcess);
+    @GET("api/InwardStore/GetInwardStoreList")
+    Call<List<CommonResponseModelForAllDepartment>> getInTruckStoreListData(@Query("FromDate") String FromDate,
+                                                                            @Query("Todate") String Todate,
+                                                                            @Query("vehicleType") String vehicleType,
+                                                                            @Query("inout") char inout);
     @GET("api/InwardStore/GetStoreByFetchVehicleDetails")
     Call<InTruckStoreResponseModel> getstorebyfetchVehData(@Query("vehicleNo") String vehicleNo,
                                                      @Query("vehicleType") String vehicleType,

@@ -33,6 +33,9 @@
             android:name=".Outward_Tanker_Security.Grid_Outward"
             android:exported="false" />
         <activity
+            android:name=".InwardCompletedGrid.GridCompleted"
+            android:exported="false" />
+        <activity
             android:name=".outward_Tanker_Lab_forms.bulkloadinglaboratory"
             android:exported="false" />
         <activity

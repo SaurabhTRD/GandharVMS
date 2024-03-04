@@ -4,27 +4,25 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.gandharvms.Inward_Tanker_Security.ListingResponse_InTankerSequrity;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.R;
 
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class In_Tanker_Pro_Adapter extends RecyclerView.Adapter<In_Tanker_Pro_Adapter.myviewholder> {
 
     Context context;
     ArrayList<In_Tanker_Production_list> datalist;
-    private final List<ListingResponse_InTankerproduction> listingResponseInTankerproductions;
+    private final List<CommonResponseModelForAllDepartment> listingResponseInTankerproductions;
 
 
-    public In_Tanker_Pro_Adapter(List<ListingResponse_InTankerproduction> listingResponseInTankerproductions) {
+    public In_Tanker_Pro_Adapter(List<CommonResponseModelForAllDepartment> listingResponseInTankerproductions) {
         this.context = context;
 //        this.datalist = datalist;
         this.listingResponseInTankerproductions = listingResponseInTankerproductions;
@@ -40,7 +38,7 @@ public class In_Tanker_Pro_Adapter extends RecyclerView.Adapter<In_Tanker_Pro_Ad
 
     @Override
     public void onBindViewHolder(@NonNull myviewholder holder, int position) {
-        ListingResponse_InTankerproduction data = listingResponseInTankerproductions.get(position);
+        CommonResponseModelForAllDepartment data = listingResponseInTankerproductions.get(position);
         if (data.getInTime()!= null){
             holder.etint.setText(data.getInTime());
         }

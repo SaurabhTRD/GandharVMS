@@ -2,8 +2,7 @@ package com.android.gandharvms.LoginWithAPI;
 
 import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabRequestModel;
 import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabResponseModel;
-import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
-import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 
 import java.util.List;
 
@@ -18,10 +17,10 @@ public interface Laboratory {
     Call<List<InTanLabResponseModel>> getIntankLabListData(@Query("NextProcess") char nextProcess);*/
 
     @GET("api/InwardLaboratory/GetLaboratoryList")
-    Call<List<InTanLabResponseModel>> getIntankLabListData(@Query("FromDate") String FromDate,
-                                                                  @Query("Todate") String Todate,
-                                                                  @Query("vehicleType") String vehicleType,
-                                                                  @Query("inout") char inout);
+    Call<List<CommonResponseModelForAllDepartment>> getIntankLabListData(@Query("FromDate") String FromDate,
+                                                                         @Query("Todate") String Todate,
+                                                                         @Query("vehicleType") String vehicleType,
+                                                                         @Query("inout") char inout);
     @GET("api/InwardLaboratory/GetLaboratoryByFetchVehicleDetails")
     Call<InTanLabResponseModel> getLabbyfetchVehData(@Query("vehicleNo") String vehicleNo,
                                                          @Query("vehicleType") String vehicleType,

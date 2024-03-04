@@ -1,6 +1,5 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -9,16 +8,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.view.menu.MenuView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.R;
-import com.google.firebase.Timestamp;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adapter.myviewHolder> {
 
@@ -26,9 +22,9 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
 
     Context context;
     ArrayList<In_Tanker_Security_list>inTankerSecurityListArrayList;
-    private final List<ListingResponse_InTankerSequrity> listingResponseInTankerSec;
+    private final List<CommonResponseModelForAllDepartment> listingResponseInTankerSec;
 
-    public In_Tanker_Se_Adapter(List<ListingResponse_InTankerSequrity>listingResponseInTankerSec ) {
+    public In_Tanker_Se_Adapter(List<CommonResponseModelForAllDepartment>listingResponseInTankerSec ) {
         this.context = context;
         this.listingResponseInTankerSec = listingResponseInTankerSec;
     }
@@ -47,7 +43,7 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
     @NonNull
     @Override
     public void onBindViewHolder(@NonNull  In_Tanker_Se_Adapter.myviewHolder holder, int position) {
-        ListingResponse_InTankerSequrity data = listingResponseInTankerSec.get(position);
+        CommonResponseModelForAllDepartment data = listingResponseInTankerSec.get(position);
 //        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
 
 //        holder.serialnumber.setText(inTankerSecurityListArrayList.get(position).getSerialNumber());

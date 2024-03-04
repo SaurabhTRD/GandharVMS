@@ -12,7 +12,7 @@
         android:layout_weight="1"
         android:text="Date"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"
         android:layout_gravity="start"
@@ -24,7 +24,7 @@
         android:layout_weight="1"
         android:text="Vehicle Number"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 
@@ -34,7 +34,7 @@
         android:layout_weight="1"
         android:text="Material"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 
@@ -44,26 +44,106 @@
         android:layout_weight="1"
         android:text="Status"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
     <TextView
-        android:id="@+id/gridIntime"
+        android:id="@+id/gridSecurityInTime"
         android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:text="InTime"
+        android:text="SecurityInTime"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 
     <TextView
-        android:id="@+id/gridOutTime"
+        android:id="@+id/gridSecurityOutTime"
         android:layout_width="wrap_content"
         android:layout_weight="1"
-        android:text="OutTime"
+        android:text="SecurityOutTime"
         android:layout_height="wrap_content"
-        android:textSize="15dp"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridWeighmentInTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="WeighmentInTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridWeighmentOutTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="WeighmentOutTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridSamplingInTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="SamplingInTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridSamplingOutTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="SamplingOutTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridLoboratoryInTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="LoboratoryInTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridLoboratoryOutTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="LoboratoryOutTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridProductionInTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="ProductionInTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
+        android:minWidth="95dp"
+        android:padding="5sp"/>
+
+    <TextView
+        android:id="@+id/gridProductionOutTime"
+        android:layout_width="wrap_content"
+        android:layout_weight="1"
+        android:text="ProductionOutTime"
+        android:layout_height="wrap_content"
+        android:textSize="12dp"
         android:minWidth="95dp"
         android:padding="5sp"/>
 

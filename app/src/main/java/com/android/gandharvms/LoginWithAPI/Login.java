@@ -33,8 +33,6 @@ import www.sanju.motiontoast.MotionToast;*/
 
 public class Login extends AppCompatActivity {
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
-
     private String emplidTxt;
     private String passwordTxt;
 

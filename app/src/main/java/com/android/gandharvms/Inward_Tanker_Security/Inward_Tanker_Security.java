@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
@@ -270,7 +271,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         dbbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Inward_Tanker_Security.this, completedgrid.class));
+                startActivity(new Intent(Inward_Tanker_Security.this, GridCompleted.class));
             }
         });
 
