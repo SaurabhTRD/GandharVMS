@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +13,16 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -26,6 +34,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -51,12 +60,15 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private Outward_Tanker_Billinginterface outwardTankerBillinginterface;
     private int OutwardId;
+    private String token;
+    private LoginMethod userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
+        userDetails = RetroApiClient.getLoginApi();
 
         setContentView(R.layout.activity_outward_tanker_billing);
         intime = findViewById(R.id.etintime);
@@ -116,6 +128,57 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         });
 
     }
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Billing";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Security Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Tanker_Billing.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<Respons_Outward_Tanker_Billing> call = outwardTankerBillinginterface.outwardbillingfetching(vehicleNo,vehicleType,NextProcess,inOut);
@@ -226,7 +289,10 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
 
                     if (response.isSuccessful() && response.body() != null && response.body()==true){
-                        Toast.makeText(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        makeNotification(etvehiclenumber, outTime);
+                        Toasty.success(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+                        startActivity(new Intent(Outward_Tanker_Billing.this, Outward_Tanker.class));
+                        finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
@@ -252,5 +318,9 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                 }
             });
         }
+    }
+    public void outtankerbillpending(View view) {
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
     }
 }

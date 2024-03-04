@@ -13,9 +13,15 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck;
+import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Dispatch.Model_Outward_Truck_Dispatch;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
@@ -28,6 +34,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
@@ -52,12 +59,15 @@ public class Outward_Truck_Production extends AppCompatActivity {
     private Outward_Truck_interface outwardTruckInterface;
 
     private Outward_Truck_Production_interface outwardTruckProductionInterface;
+    private LoginMethod userDetails;
+    private String token;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck_production);
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+        userDetails = RetroApiClient.getLoginApi();
 
         outwardTruckProductionInterface = Outward_RetroApiclient.outwardTruckProductionInterface();
 
@@ -68,7 +78,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
         etqty = findViewById(R.id.etqty2);
         typepack = findViewById(R.id.typeofpackproduction);
         signdis = findViewById(R.id.etdispatchofficer);
-        dtdis = findViewById(R.id.etdtdispatch);
+//        dtdis = findViewById(R.id.etdtdispatch);
         signsec = findViewById(R.id.etsecurityofficer);
         dtsec = findViewById(R.id.etdtsecurity);
         signweigh = findViewById(R.id.etweighmentofficer);
@@ -118,6 +128,57 @@ public class Outward_Truck_Production extends AppCompatActivity {
         });
 
     }
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Production";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Inward Tanker Security Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Truck_Production.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Truck_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
         Call<Model_Outward_Truck_Dispatch> call = outwardTruckInterface.fetchdispatch(vehicleNo,vehicleType,nextProcess,inOut);
@@ -133,12 +194,22 @@ public class Outward_Truck_Production extends AppCompatActivity {
                         etqty.setText(String.valueOf(data.getBarrelFormQty()));
                         typepack.setText(String.valueOf(data.getTypeOfPackagingId()));
                         signdis.setText(data.getDespatch_Sign());
-                        dtdis.setText(data.getDespatchInTime());
+//                        dtdis.setText(data.getDespatchInTime());
                         typepack.setText(data.getTypeOfPackaging());
                         signsec.setText(data.getSecurityCreatedBy());
                         dtsec.setText(data.getSecurityCreatedDate());
                         signweigh.setText(data.getWeighmentCreatedBy());
                         dtweigh.setText(data.getWeighmentCreatedDate());
+                        serialnumber.setEnabled(false);
+                        vehiclenumber.setEnabled(false);
+                        etqty.setEnabled(false);
+                        typepack.setEnabled(false);
+                        signdis.setEnabled(false);
+                        signsec.setEnabled(false);
+                        dtsec.setEnabled(false);
+                        signsec.setEnabled(false);
+                        dtweigh.setEnabled(false);
+                        signweigh.setEnabled(false);
 
 
 //                      pending  signsec.setText(data.s);
@@ -211,6 +282,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
+                        makeNotification(etvehiclnumber, outTime);
                         Toasty.success(Outward_Truck_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         startActivity(new Intent(Outward_Truck_Production.this, Outward_Truck.class));
                         finish();
@@ -241,5 +313,9 @@ public class Outward_Truck_Production extends AppCompatActivity {
 
 
         }
+    }
+    public void outwardtruckpropending(View view){
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
     }
 }

@@ -193,7 +193,7 @@
                 android:id="@+id/isProduction"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="65dp"
+                android:layout_marginLeft="55dp"
                 android:layout_weight="2"
                 android:text="Production" />
         </LinearLayout>
@@ -217,11 +217,53 @@
                 android:id="@+id/isStores"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
+                android:layout_marginLeft="38dp"
                 android:layout_marginRight="10dp"
                 android:layout_weight="2"
                 android:text="Stores" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/isLogistic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:text="Logistic" />
+
+            <CheckBox
+                android:id="@+id/isbilling"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="2"
+                android:text="Billing" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/isdespatch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:text="Despatch" />
+
+        </LinearLayout>
+
+
 
 
         <Button

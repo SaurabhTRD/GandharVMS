@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,11 +19,20 @@ import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Billing;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
@@ -37,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -66,6 +77,9 @@ public class Outward_Tanker_Production extends AppCompatActivity {
     ArrayAdapter<String> adapterItems;
     String [] items = {"For Small Pack","Barrel","Tanker Filling","Other"};
     RadioButton rbrinsingyes,rbrinsingno,rbdecisionyes,rbdecisionno;
+    private String token;
+    private LoginMethod userDetails;
+    private String nvehiclenumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +87,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         setContentView(R.layout.activity_outward_tanker_production);
 
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+        userDetails = RetroApiClient.getLoginApi();
 
         autoCompleteTextView = findViewById(R.id.etpackingstatus);
         adapterItems = new ArrayAdapter<String>(this,R.layout.packing_status_dropdown,items);
@@ -174,6 +189,57 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         });
 
     }
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Production";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Production In Process form  Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Tanker_Production.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo,vehicleType,nextProcess,inOut);
@@ -185,6 +251,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                     if (data.getVehicleNumber()!= ""){
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
+                        nvehiclenumber=data.getVehicleNumber();
                         vehiclenumber.setText(data.getVehicleNumber());
                         oanum.setText(data.getOAnumber());
                         blenderno.setText(String.valueOf(data.getTankerNumber()));
@@ -298,7 +365,10 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                @Override
                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                    if (response.isSuccessful() && response.body() && response.body() == true){
-                       Toast.makeText(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                       makeNotification(nvehiclenumber, outTime);
+                       Toasty.success(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+                       startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
+                       finish();
                    }else {
                        Log.e("Retrofit", "Error Response Body: " + response.code());
                    }
@@ -325,5 +395,9 @@ public class Outward_Tanker_Production extends AppCompatActivity {
            });
         }
 
+    }
+    public void outtankerproinprocpending(View view){
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
     }
 }

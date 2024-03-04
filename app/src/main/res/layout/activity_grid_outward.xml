@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Outward_Tanker_Security.Grid_Outward">
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/outwardheaderscroll"
+        android:layout_height="40dp">
+
+        <LinearLayout android:orientation="horizontal"
+            android:background="@color/navyblue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/textSerialNumber"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="Serial No"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/textVehicleNumber"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Vehicle No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/textMaterial"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Material"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/textStatus"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Curr Status"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/textInTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/textOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/outwardrecyclerviewgrid"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

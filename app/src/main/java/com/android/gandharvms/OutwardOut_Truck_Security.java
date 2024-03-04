@@ -3,6 +3,7 @@ package com.android.gandharvms;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,15 +13,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
+import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
 import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -65,6 +69,9 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
     Integer netweuomvalue = 1;
     ArrayAdapter<String> netweuomdrop;
     String[] netweuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
+    SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+    DatePickerDialog picker;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,23 +119,26 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(OutwardOut_Truck_Security.this, new TimePickerDialog.OnTimeSetListener() {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(OutwardOut_Truck_Security.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        intime.setText(dtFormat.format(calendar.getTime()));
                     }
-                },hours,mins,false);
-                tpicker.show();
+                }, year, month, day);
+                picker.show();
             }
         });
+
+
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -200,6 +210,11 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                         serialnumber.setText(obj.getSerialNumber());
                         vehiclenumber.setText(obj.getVehicleNumber());
                         party.setText(obj.getCustomerName());
+                        serialnumber.setEnabled(false);
+                        vehiclenumber.setEnabled(false);
+                        party.setEnabled(false);
+
+
 
                     }else {
                         Log.e("Retrofit", "Error" + response.code());
@@ -320,5 +335,9 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                 }
             });
         }
+    }
+    public void outwardoutsecpending(View view){
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
     }
 }

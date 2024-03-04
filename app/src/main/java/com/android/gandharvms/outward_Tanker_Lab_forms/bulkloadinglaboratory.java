@@ -3,6 +3,8 @@ package com.android.gandharvms.outward_Tanker_Lab_forms;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,16 +12,25 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.Outward_Tanker;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.R;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
@@ -42,6 +53,11 @@ public class bulkloadinglaboratory extends AppCompatActivity {
     private Outward_Tanker_Lab outwardTankerLab;
 
     Button grid,view,submit;
+    private String token;
+    private LoginMethod userDetails;
+    private String bulklabvehiclenumber;
+    DatePickerDialog picker;
+    SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,12 +104,86 @@ public class bulkloadinglaboratory extends AppCompatActivity {
                 insert();
             }
         });
+        intime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(bulkloadinglaboratory.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        intime.setText(dtFormat.format(calendar.getTime()));
+                    }
+                }, year, month, day);
+                picker.show();
+            }
+        });
+
     }
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Production";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Production In Process form  Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        getApplicationContext(),
+                                        bulkloadinglaboratory.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(bulkloadinglaboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
@@ -106,6 +196,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
                     if (data.getVehicleNumber()!= ""){
                         OutwardId = data.getOutwardId();
                         etserialnumber.setText(data.getSerialNumber());
+                        bulklabvehiclenumber = data.getVehicleNumber();
                         etvehiclenumber.setText(data.getVehicleNumber());
                     }
                 }else {
@@ -159,7 +250,10 @@ public class bulkloadinglaboratory extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
-                        Toast.makeText(bulkloadinglaboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        makeNotification(bulklabvehiclenumber, outTime);
+                        Toasty.success(bulkloadinglaboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(bulkloadinglaboratory.this, Outward_Tanker.class));
+                        finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
@@ -185,6 +279,10 @@ public class bulkloadinglaboratory extends AppCompatActivity {
                 }
             });
         }
+    }
+    public void outtankerLabbulktpending(View view){
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
     }
 
 }

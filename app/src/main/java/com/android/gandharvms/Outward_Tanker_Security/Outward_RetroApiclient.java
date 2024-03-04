@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Outward_RetroApiclient {
 
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "http://52.183.160.211:8097/";
+    private static String BASE_URL = "https://gandhar.azurewebsites.net/";
 
     public static Retrofit getClient() {
         if (retrofit == null) {

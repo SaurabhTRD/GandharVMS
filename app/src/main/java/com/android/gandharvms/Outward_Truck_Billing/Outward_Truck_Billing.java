@@ -3,17 +3,25 @@ package com.android.gandharvms.Outward_Truck_Billing;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Dispatch.Model_Outward_Truck_Dispatch;
@@ -33,6 +41,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -57,11 +66,17 @@ public class Outward_Truck_Billing extends AppCompatActivity {
     private Outward_Truck_Production_interface outwardTruckProductionInterface;
 
     private int OutwardId;
+    SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
+    DatePickerDialog picker;
+    private LoginMethod userDetails;
+    private String token;
+    private String nvehiclenumber;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck_billing);
         outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+        userDetails = RetroApiClient.getLoginApi();
 
         outwardTruckProductionInterface = Outward_RetroApiclient.outwardTruckProductionInterface();
 
@@ -80,7 +95,7 @@ public class Outward_Truck_Billing extends AppCompatActivity {
         tppack = findViewById(R.id.typeofpackproduction);
         qty = findViewById(R.id.etqty2);
         etdis = findViewById(R.id.etdispatchofficer);
-        dtdis= findViewById(R.id.etdtdispatch);
+//        dtdis= findViewById(R.id.etdtdispatch);
         etsec = findViewById(R.id.etsecurityofficer);
         dtsec = findViewById(R.id.etdtsecurity);
         etwe = findViewById(R.id.etweighmentofficer);
@@ -100,21 +115,22 @@ public class Outward_Truck_Billing extends AppCompatActivity {
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Outward_Truck_Billing.this, new TimePickerDialog.OnTimeSetListener() {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(Outward_Truck_Billing.this, new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        intime.setText(dtFormat.format(calendar.getTime()));
                     }
-                },hours,mins,false);
-                tpicker.show();
+                }, year, month, day);
+                picker.show();
             }
         });
 
@@ -132,6 +148,57 @@ public class Outward_Truck_Billing extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Billing";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Inward Tanker Security Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Billing process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Truck_Billing.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Truck_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut){
         Call<Model_Outward_Truck_Dispatch> call = outwardTruckInterface.fetchdispatch(vehicleNo,vehicleType,NextProcess,inOut);
@@ -144,14 +211,31 @@ public class Outward_Truck_Billing extends AppCompatActivity {
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenumber.setText(data.getVehicleNumber());
-                        qty.setText(data.getBarrelFormQty());
+                        nvehiclenumber = data.getVehicleNumber();
+                        qty.setText(String.valueOf(data.getBarrelFormQty()));
                         tppack.setText(data.getTypeOfPackaging());
                         etdis.setText(data.getDespatch_Sign());
-                        dtdis.setText(data.getDespatchInTime());
+//                        dtdis.setText(data.getCreatedDate());
                         etsec.setText(data.getSecurityCreatedBy());
                         dtsec.setText(data.getSecurityCreatedDate());
-                        etwe.setText(data.getWeighmentCreatedDate());
+                        etwe.setText(data.getWeighmentCreatedBy());
                         dtwe.setText(data.getWeighmentCreatedDate());
+                        oanumber.setText(String.valueOf(data.getOAnumber()));
+                        customer.setText(data.getCustomerName());
+                        material.setText(data.getMaterialName());
+                        serialnumber.setEnabled(false);
+                        vehiclenumber.setEnabled(false);
+                        material.setEnabled(false);
+                        customer.setEnabled(false);
+                        oanumber.setEnabled(false);
+                        qty.setEnabled(false);
+                        tppack.setEnabled(false);
+                        etdis.setEnabled(false);
+                        etsec.setEnabled(false);
+                        dtsec.setEnabled(false);
+                        etwe.setEnabled(false);
+                        dtwe.setEnabled(false);
+
 
 
                     }else {
@@ -220,6 +304,7 @@ public class Outward_Truck_Billing extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
+                        makeNotification(nvehiclenumber, outTime);
                         Toasty.success(Outward_Truck_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         startActivity(new Intent(Outward_Truck_Billing.this, Outward_Truck.class));
                         finish();
@@ -247,6 +332,11 @@ public class Outward_Truck_Billing extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void outwardtruckbillpending(View view){
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
     }
 
 }

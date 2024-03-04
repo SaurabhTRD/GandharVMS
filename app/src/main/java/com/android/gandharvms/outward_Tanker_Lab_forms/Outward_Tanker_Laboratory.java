@@ -6,6 +6,7 @@ import androidx.cardview.widget.CardView;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +19,14 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.R;
@@ -36,6 +43,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -68,11 +76,16 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
     private Outward_Tanker_Lab outwardTankerLab;
     SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     DatePickerDialog picker;
+    private String token;
+    private LoginMethod userDetails;
+    private String labvehicl;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_tanker_laboratory);
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+
+        userDetails = RetroApiClient.getLoginApi();
 
         autoCompleteTextView = findViewById(R.id.etremark);
         adapterItems = new ArrayAdapter<String>(this,R.layout.dropdown_outward_securitytanker,items);
@@ -157,6 +170,50 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                 picker.show();
             }
         });
+        samplerecivdt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(Outward_Tanker_Laboratory.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        samplerecivdt.setText(dtFormat.format(calendar.getTime()));
+                    }
+                }, year, month, day);
+                picker.show();
+            }
+        });
+
+        samplereleasedate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(Outward_Tanker_Laboratory.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        samplereleasedate.setText(dtFormat.format(calendar.getTime()));
+                    }
+                }, year, month, day);
+                picker.show();
+            }
+        });
+
         vehiclnum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -173,6 +230,57 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Laboratory";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Laboratory  Process form  Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Tanker_Laboratory.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
     private void sendblendingratio() {
         String userialnumber = serialnum.getText().toString().trim();
@@ -189,6 +297,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
+
                         Toast.makeText(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -217,6 +326,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         }
     }
 
+
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
         Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo,vehicleType,nextProcess,inOut);
         call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
@@ -227,6 +337,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                     if (data.getVehicleNumber()!= ""){
                         OutwardId = data.getOutwardId();
                         serialnum.setText(data.getSerialNumber());
+                        labvehicl= data.getVehicleNumber();
                         vehiclnum.setText(data.getVehicleNumber());
 
                         serialnum.setEnabled(false);
@@ -296,6 +407,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
 //                            autoCompleteTextView.setVisibility(View.GONE);
                             retil.setVisibility(View.VISIBLE);
                             btnc.setVisibility(View.VISIBLE);
+                            sendbtn.setVisibility(View.GONE);
 
 
 //                            autoCompleteTextView.setEnabled(true);
@@ -412,6 +524,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
+                        makeNotification(labvehicl, outTime);
                         Toast.makeText(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -440,5 +553,9 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         }
 
 
+    }
+    public void outtankerlabinprocpending(View view){
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
     }
 }

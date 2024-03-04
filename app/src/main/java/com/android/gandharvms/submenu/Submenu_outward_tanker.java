@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.R;
 
 public class Submenu_outward_tanker extends AppCompatActivity {
@@ -36,4 +38,12 @@ public class Submenu_outward_tanker extends AppCompatActivity {
         Intent intent = new Intent(this, OutwardOut_Tanker.class);
         startActivity(intent);
     }
+    public void outwardtankerstatusclick(View view){
+        Global_Var.getInstance().InOutType='x';
+        Global_Var.getInstance().DeptType='x';
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
+
+    }
+
 }

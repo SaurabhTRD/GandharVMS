@@ -19,8 +19,13 @@ import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Truck;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -63,6 +68,8 @@ public class Outward_Tanker_Security extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     Date currentDate = Calendar.getInstance().getTime();
     CheckBox cbox;
+    private String token;
+    private LoginMethod userDetails;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +77,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         setContentView(R.layout.activity_outward_tanker_security);
         getmaxserialno = Outward_RetroApiclient.insertoutwardtankersecurity();
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        userDetails = RetroApiClient.getLoginApi();
 
         isReportingCheckBox = findViewById(R.id.isreporting);
         reportingRemarkLayout = findViewById(R.id.edtreportingremark);
@@ -239,6 +247,58 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         });
 
     }
+
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Security";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Security Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Tanker_Security.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Security.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 
 
     private void insertreporting() {
@@ -458,6 +518,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true) {
+                        makeNotification(etvehiclnum, outTime);
                         Toast.makeText(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -523,6 +584,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
+                        makeNotification(uvehicle, outTime);
                         Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Outward_Tanker_Security.this, Inward_Truck.class));
                         finish();
@@ -549,5 +611,9 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 }
             });
         }
+    }
+    public void outwardolcgridclick(View view){
+        Intent intent = new Intent(this,Grid_Outward.class);
+        startActivity(intent);
     }
 }

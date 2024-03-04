@@ -39,7 +39,7 @@ public class Register extends AppCompatActivity {
     EditText name, emplid, emailid, phoneno, password;
     Button register;
     TextView loginnowbtn;
-    CheckBox security, weighment, sampling, production, laboratary, stores;
+    CheckBox security, weighment, sampling, production, laboratary, stores ,logistic,billing,despatch;
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private int setRole;
     private String token;
@@ -64,6 +64,9 @@ public class Register extends AppCompatActivity {
         production = findViewById(R.id.isProduction);
         laboratary = findViewById(R.id.isLaboratary);
         stores = findViewById(R.id.isStores);
+        logistic = findViewById(R.id.isLogistic);
+        billing = findViewById(R.id.isbilling);
+        despatch = findViewById(R.id.isdespatch);
 
         loginMethod = RetroApiClient.getLoginApi();
         emailid.addTextChangedListener(new TextWatcher() {
@@ -126,6 +129,9 @@ public class Register extends AppCompatActivity {
                     production.setChecked(false);
                     laboratary.setChecked(false);
                     stores.setChecked(false);
+                    logistic.setChecked(false);
+                    billing.setChecked(false);
+                    despatch.setChecked(false);
                 }
             }
         });
@@ -139,6 +145,9 @@ public class Register extends AppCompatActivity {
                     production.setChecked(false);
                     laboratary.setChecked(false);
                     stores.setChecked(false);
+                    logistic.setChecked(false);
+                    billing.setChecked(false);
+                    despatch.setChecked(false);
                 }
             }
         });
@@ -152,6 +161,9 @@ public class Register extends AppCompatActivity {
                     production.setChecked(false);
                     laboratary.setChecked(false);
                     stores.setChecked(false);
+                    logistic.setChecked(false);
+                    billing.setChecked(false);
+                    despatch.setChecked(false);
                 }
             }
         });
@@ -164,6 +176,9 @@ public class Register extends AppCompatActivity {
                     security.setChecked(false);
                     laboratary.setChecked(false);
                     stores.setChecked(false);
+                    logistic.setChecked(false);
+                    billing.setChecked(false);
+                    despatch.setChecked(false);
                 }
             }
         });
@@ -176,6 +191,9 @@ public class Register extends AppCompatActivity {
                     production.setChecked(false);
                     security.setChecked(false);
                     stores.setChecked(false);
+                    logistic.setChecked(false);
+                    billing.setChecked(false);
+                    despatch.setChecked(false);
                 }
             }
         });
@@ -189,9 +207,61 @@ public class Register extends AppCompatActivity {
                     production.setChecked(false);
                     security.setChecked(false);
                     laboratary.setChecked(false);
+                    logistic.setChecked(false);
+                    billing.setChecked(false);
+                    despatch.setChecked(false);
                 }
             }
         });
+
+        logistic.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean b) {
+                if (buttonView.isChecked()) {
+                    weighment.setChecked(false);
+                    sampling.setChecked(false);
+                    production.setChecked(false);
+                    security.setChecked(false);
+                    laboratary.setChecked(false);
+                    stores.setChecked(false);
+                    billing.setChecked(false);
+                    despatch.setChecked(false);
+                }
+            }
+        });
+        billing.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean b) {
+                if (buttonView.isChecked()) {
+                    weighment.setChecked(false);
+                    sampling.setChecked(false);
+                    production.setChecked(false);
+                    security.setChecked(false);
+                    laboratary.setChecked(false);
+                    stores.setChecked(false);
+                    logistic.setChecked(false);
+                    despatch.setChecked(false);
+                }
+            }
+        });
+        despatch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean b) {
+                if (buttonView.isChecked()) {
+                    weighment.setChecked(false);
+                    sampling.setChecked(false);
+                    production.setChecked(false);
+                    security.setChecked(false);
+                    laboratary.setChecked(false);
+                    stores.setChecked(false);
+                    logistic.setChecked(false);
+                    billing.setChecked(false);
+                }
+            }
+        });
+
+
+
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,6 +296,12 @@ public class Register extends AppCompatActivity {
             setRole = 5;
         } else if (stores.isChecked()) {
             setRole = 6;
+        } else if (logistic.isChecked()) {
+            setRole = 10;
+        } else if (billing.isChecked()) {
+            setRole = 12;
+        } else if (despatch.isChecked()) {
+            setRole = 13;
         }
         if (TextUtils.isEmpty(nameTxt)) {
             name.setError("Name is Required");
@@ -253,7 +329,8 @@ public class Register extends AppCompatActivity {
         }
 
         //Checkbox Validation
-        if (!(security.isChecked() || weighment.isChecked() || sampling.isChecked() || production.isChecked() || laboratary.isChecked() || stores.isChecked())) {
+        if (!(security.isChecked() || weighment.isChecked() || sampling.isChecked() || production.isChecked() || laboratary.isChecked() || stores.isChecked()||
+                logistic.isChecked() || billing.isChecked() ||despatch.isChecked())) {
             Toasty.warning(Register.this, "Please Select the Department", Toast.LENGTH_SHORT).show();
         } else {
             RegRequestModel regmodel = new RegRequestModel(nameTxt, emplidTxt, emailidTxt, phoneTxt, passwordTxt, token, setRole, nameTxt);

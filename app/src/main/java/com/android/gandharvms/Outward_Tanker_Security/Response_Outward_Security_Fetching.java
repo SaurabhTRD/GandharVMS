@@ -4,7 +4,7 @@ public class Response_Outward_Security_Fetching {
 
     private int Id;
     private int OutwardId;
-    private String Intime;
+    private String InTime;
     private String OutTime;
     private int Kl;
     private String Place;
@@ -51,6 +51,15 @@ public class Response_Outward_Security_Fetching {
     private char I_O;
     private String VehicleType;
 
+    public String CurrStatus;
+
+    public String getCurrStatus() {
+        return CurrStatus;
+    }
+
+    public void setCurrStatus(String currStatus) {
+        CurrStatus = currStatus;
+    }
 
     public int getId() {
         return Id;
@@ -68,12 +77,12 @@ public class Response_Outward_Security_Fetching {
         OutwardId = outwardId;
     }
 
-    public String getIntime() {
-        return Intime;
+    public String getInTime() {
+        return InTime;
     }
 
-    public void setIntime(String intime) {
-        Intime = intime;
+    public void setInTime(String inTime) {
+        InTime = inTime;
     }
 
     public String getOutTime() {
