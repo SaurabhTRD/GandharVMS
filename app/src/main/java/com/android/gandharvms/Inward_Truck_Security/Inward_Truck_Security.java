@@ -33,6 +33,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Security.API_In_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
@@ -272,13 +273,15 @@ public class Inward_Truck_Security extends AppCompatActivity {
 //      for imgpicker
 
         // listing button
+/*
         view = findViewById(R.id.viewdb);
-        view.setOnClickListener(new View.OnClickListener() {
+*/
+        /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Inward_Truck_Security.this, Inward_Truck_Security_viewdata.class));
             }
-        });
+        });*/
         etsdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -810,6 +813,10 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
     public void Truckgridclick(View view) {
         Intent intent = new Intent(this, grid.class);
+        startActivity(intent);
+    }
+    public void truckseccompletedclick(View view) {
+        Intent intent = new Intent(this, GridCompleted.class);
         startActivity(intent);
     }
 }

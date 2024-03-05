@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
@@ -339,7 +340,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         });
     }
     public void statusgrid(View view){
-        Intent intent = new Intent(this, in_tanker_produ_grid.class);
+        Intent intent = new Intent(this, GridCompleted.class);
         startActivity(intent);
     }
 }
