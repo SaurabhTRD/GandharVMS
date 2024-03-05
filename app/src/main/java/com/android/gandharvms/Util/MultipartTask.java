@@ -23,7 +23,7 @@ public class MultipartTask extends AsyncTask<String, Void, String> {
     }
 
     // @Override
-    protected String doInBackground1(Void... params) {
+    /*protected String doInBackground1(Void... params) {
         HttpURLConnection connection = null;
         try {
             URL url = new URL("https://gandhar.azurewebsites.net/api/Common/MediaUploadImage"); // Replace with your actual API endpoint URL
@@ -73,7 +73,7 @@ public class MultipartTask extends AsyncTask<String, Void, String> {
             e.printStackTrace();
             return null;
         }
-    }
+    }*/
     @Override
     protected String doInBackground(String... params) {
         String uploadUrl = "https://gandhar.azurewebsites.net/api/Common/Upload"; // Replace with your actual API endpoint

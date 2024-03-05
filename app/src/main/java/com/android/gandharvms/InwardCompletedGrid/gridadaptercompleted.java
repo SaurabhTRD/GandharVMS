@@ -61,132 +61,153 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         CommonResponseModelForAllDepartment club = filteredGridList.get(position);
         int intimelength = club.getInTime()!=null ? club.getInTime().length() : 0;
         int outtimelength = club.getOutTime()!=null?club.getOutTime().length() : 0;
+        int samreceivingtime=club.getSampleReceivingTime()!=null ? club.getSampleReceivingTime().length() : 0;
+        int samsubmittedtime=club.getSampleSubmittedTime()!=null ? club.getSampleSubmittedTime().length() : 0;
         if(nextProcess=='S')
         {
-            holder.sernum.setText(club.getSerialNo());
-            holder.vehiclenum.setText(club.getVehicleNo());
-            holder.material.setText(club.getMaterial());
-            if (intimelength > 0) {
-                holder.intime.setText(club.getInTime().substring(12, intimelength));
-            }
-            if (outtimelength > 0) {
-                holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-            }
-            holder.partyname.setText(club.getPartyName());
-            holder.qty.setText(String.valueOf(club.getQty()));
-            holder.qtyuom.setText(String.valueOf(club.getQtyUOM()));
-            holder.netweight.setText(String.valueOf(club.getNetWeight()));
-            holder.netweightuom.setText(String.valueOf(club.getNetWeightUOM()));
-            holder.extramaterials.setText(club.getExtramaterials());
-            holder.reoprtingre.setText(club.getReportingRemark());
-            holder.remark.setText(club.getRemark());
-            holder.oapo.setText(club.getOA_PO_number());
-            holder.mob.setText(club.getDriver_MobileNo());
-            holder.Selectregister.setText(club.getSelectregister());
-            holder.IrCopy.setText(club.getIrCopy());
-            holder.DeliveryBill.setText(club.getDeliveryBill());
-            holder.TaxInvoice.setText(club.getTaxInvoice());
-            holder.EwayBill.setText(club.getEwayBill());
-
+            bindSColumns(holder, club, intimelength, outtimelength);
         } else if (nextProcess=='W') {
-            if (intimelength > 0) {
-                holder.intime.setText(club.getInTime().substring(12, intimelength));
-            }
-            if (outtimelength > 0) {
-                holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-            }
-            holder.sernum.setText(club.getSerialNo());
-            holder.vehiclenum.setText(club.getVehicleNo());
-            holder.material.setText(club.getMaterial());
-            holder.partyname.setText(club.getPartyName());
-            holder.date.setText(club.getDate());
-            holder.oapo.setText(club.getOA_PO_number());
-            holder.mob.setText(club.getDriver_MobileNo());
-            holder.grossweight.setText(String.valueOf(club.getGrossWeight()));
-            holder.remark.setText(club.getRemark());
-            holder.containerno.setText(String.valueOf(club.getContainerNo()));
-            holder.sighby.setText(club.getSignBy());
-            holder.shortagedip.setText(club.getShortageDip());
-            holder.shortageweight.setText(club.getShortageWeight());
+            bindWColumns(holder, club, intimelength, outtimelength);
         }
         else if (nextProcess=='M') {
-            holder.date.setText(club.getDate());
-            holder.vehiclenum.setText(club.getVehicleNo());
-            int samreceivingtime=club.getSampleReceivingTime()!=null ? club.getSampleReceivingTime().length() : 0;
-            if(samreceivingtime>0)
-            {
-                holder.samintime.setText(club.getSampleReceivingTime());
-            }
-            int samsubmittedtime=club.getSampleSubmittedTime()!=null ? club.getSampleSubmittedTime().length() : 0;
-            if(samsubmittedtime>0)
-            {
-                holder.samouttime.setText(club.getSampleSubmittedTime());
-            }
+            bindMColumns(holder, club, samreceivingtime, samsubmittedtime);
         }
         else if (nextProcess=='L') {
-            if (intimelength > 0) {
-                holder.intime.setText(club.getInTime().substring(12, intimelength));
-            }
-            if (outtimelength > 0) {
-                holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-            }
-            holder.sernum.setText(club.getSerialNo());
-            holder.vehiclenum.setText(club.getVehicleNo());
-            holder.material.setText(club.getMaterial());
-            holder.partyname.setText(club.getPartyName());
-            holder.date.setText(club.getDate());
-            holder.Apperance.setText(club.getApperance());
-            holder.Odor.setText(club.getOdor());
-            holder.Color.setText(club.getColor());
-            holder.LQty.setText(String.valueOf(club.getLQty()));
-            holder.Density.setText(String.valueOf(club.getDensity()));
-            holder.RcsTest.setText(club.getRcsTest());
-            holder.AnLinePoint.setText(String.valueOf(club.getAnLinePoint()));
-            holder.FlashPoint.setText(String.valueOf(club.getFlashPoint()));
-            holder._40KV.setText(String.valueOf(club.get_40KV()));
-            holder._100KV.setText(String.valueOf(club.get_100KV()));
-            holder.AdditionalTest.setText(club.getAdditionalTest());
-            holder.SampleTest.setText(club.getSampleTest());
-            holder.SignOf.setText(club.getSignBy());
-            holder.DateAndTime.setText(club.getDateAndTime());
-            holder.RemarkDescription.setText(club.getRemarkDescription());
-            holder.ViscosityIndex.setText(String.valueOf(club.getViscosityIndex()));
+            bindLColumns(holder, club, intimelength, outtimelength);
         }
         else if (nextProcess=='P') {
-            if (intimelength > 0) {
-                holder.intime.setText(club.getInTime().substring(12, intimelength));
-            }
-            if (outtimelength > 0) {
-                holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-            }
-            holder.sernum.setText(club.getSerialNo());
-            holder.vehiclenum.setText(club.getVehicleNo());
-            holder.material.setText(club.getMaterial());
-            holder.date.setText(club.getDate());
-            holder.UnloadAboveMaterialInTK.setText(String.valueOf(club.getUnloadAboveMaterialInTK()));
-            holder.ProductName.setText(club.getProductName());
-            holder.AboveMaterialIsUnloadInTK.setText(String.valueOf(club.getAboveMaterialIsUnloadInTK()));
-            holder.OperatorName.setText(club.getOperatorName());
+            bindPColumns(holder, club, intimelength, outtimelength);
         }
         else if (nextProcess=='R') {
-            holder.sernum.setText(club.getSerialNo());
-            holder.vehiclenum.setText(club.getVehicleNo());
-            holder.material.setText(club.getMaterial());
-            if (intimelength > 0) {
-                holder.intime.setText(club.getInTime().substring(12, intimelength));
-            }
-            if (outtimelength > 0) {
-                holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-            }
-            holder.partyname.setText(club.getPartyName());
-            holder.qty.setText(String.valueOf(club.getQty()));
-            holder.qtyuom.setText(String.valueOf(club.getQtyUOM()));
-            holder.ReceiveQTY.setText(String.valueOf(club.getReceiveQTY()));
-            holder.ReceiveQTYUOM.setText(String.valueOf(club.getReceiveQTYUOM()));
-            holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
+            bindRColumns(holder, club, intimelength, outtimelength);
         }
     }
 
+    private void bindSColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
+        holder.sernum.setText(club.getSerialNo());
+        holder.vehiclenum.setText(club.getVehicleNo());
+        holder.material.setText(club.getMaterial());
+        if (intimelength > 0) {
+            holder.intime.setText(club.getInTime().substring(12, intimelength));
+        }
+        if (outtimelength > 0) {
+            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+        }
+        holder.partyname.setText(club.getPartyName());
+        holder.qty.setText(String.valueOf(club.getQty()));
+        holder.qtyuom.setText(String.valueOf(club.getQtyUOM()));
+        holder.netweight.setText(String.valueOf(club.getNetWeight()));
+        holder.netweightuom.setText(String.valueOf(club.getNetWeightUOM()));
+        holder.extramaterials.setText(club.getExtramaterials());
+        holder.reoprtingre.setText(club.getReportingRemark());
+        holder.remark.setText(club.getRemark());
+        holder.oapo.setText(club.getOA_PO_number());
+        holder.mob.setText(club.getDriver_MobileNo());
+        holder.Selectregister.setText(club.getSelectregister());
+        holder.IrCopy.setText(club.getIrCopy());
+        holder.DeliveryBill.setText(club.getDeliveryBill());
+        holder.TaxInvoice.setText(club.getTaxInvoice());
+        holder.EwayBill.setText(club.getEwayBill());
+    }
+
+    private void bindWColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
+        if (intimelength > 0) {
+            holder.intime.setText(club.getInTime().substring(12, intimelength));
+        }
+        if (outtimelength > 0) {
+            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+        }
+        holder.sernum.setText(club.getSerialNo());
+        holder.vehiclenum.setText(club.getVehicleNo());
+        holder.material.setText(club.getMaterial());
+        holder.partyname.setText(club.getPartyName());
+        holder.date.setText(club.getDate());
+        holder.oapo.setText(club.getOA_PO_number());
+        holder.mob.setText(club.getDriver_MobileNo());
+        holder.grossweight.setText(String.valueOf(club.getGrossWeight()));
+        holder.remark.setText(club.getRemark());
+        holder.containerno.setText(String.valueOf(club.getContainerNo()));
+        holder.sighby.setText(club.getSignBy());
+        holder.shortagedip.setText(club.getShortageDip());
+        holder.shortageweight.setText(club.getShortageWeight());
+    }
+
+    private void bindMColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int samreceivingtime, int samsubmittedtime) {
+        holder.date.setText(club.getDate());
+        holder.vehiclenum.setText(club.getVehicleNo());
+        if(samreceivingtime>0)
+        {
+            holder.samintime.setText(club.getSampleReceivingTime());
+        }
+
+        if(samsubmittedtime>0)
+        {
+            holder.samouttime.setText(club.getSampleSubmittedTime());
+        }
+    }
+
+    private void bindLColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
+        if (intimelength > 0) {
+            holder.intime.setText(club.getInTime().substring(12, intimelength));
+        }
+        if (outtimelength > 0) {
+            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+        }
+        holder.sernum.setText(club.getSerialNo());
+        holder.vehiclenum.setText(club.getVehicleNo());
+        holder.material.setText(club.getMaterial());
+        holder.partyname.setText(club.getPartyName());
+        holder.date.setText(club.getDate());
+        holder.Apperance.setText(club.getApperance());
+        holder.Odor.setText(club.getOdor());
+        holder.Color.setText(club.getColor());
+        holder.LQty.setText(String.valueOf(club.getLQty()));
+        holder.Density.setText(String.valueOf(club.getDensity()));
+        holder.RcsTest.setText(club.getRcsTest());
+        holder.AnLinePoint.setText(String.valueOf(club.getAnLinePoint()));
+        holder.FlashPoint.setText(String.valueOf(club.getFlashPoint()));
+        holder._40KV.setText(String.valueOf(club.get_40KV()));
+        holder._100KV.setText(String.valueOf(club.get_100KV()));
+        holder.AdditionalTest.setText(club.getAdditionalTest());
+        holder.SampleTest.setText(club.getSampleTest());
+        holder.SignOf.setText(club.getSignBy());
+        holder.DateAndTime.setText(club.getDateAndTime());
+        holder.RemarkDescription.setText(club.getRemarkDescription());
+        holder.ViscosityIndex.setText(String.valueOf(club.getViscosityIndex()));
+    }
+    private void bindPColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
+        if (intimelength > 0) {
+            holder.intime.setText(club.getInTime().substring(12, intimelength));
+        }
+        if (outtimelength > 0) {
+            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+        }
+        holder.sernum.setText(club.getSerialNo());
+        holder.vehiclenum.setText(club.getVehicleNo());
+        holder.material.setText(club.getMaterial());
+        holder.date.setText(club.getDate());
+        holder.UnloadAboveMaterialInTK.setText(String.valueOf(club.getUnloadAboveMaterialInTK()));
+        holder.ProductName.setText(club.getProductName());
+        holder.AboveMaterialIsUnloadInTK.setText(String.valueOf(club.getAboveMaterialIsUnloadInTK()));
+        holder.OperatorName.setText(club.getOperatorName());
+    }
+    private void bindRColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
+        holder.sernum.setText(club.getSerialNo());
+        holder.vehiclenum.setText(club.getVehicleNo());
+        holder.material.setText(club.getMaterial());
+        if (intimelength > 0) {
+            holder.intime.setText(club.getInTime().substring(12, intimelength));
+        }
+        if (outtimelength > 0) {
+            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+        }
+        holder.partyname.setText(club.getPartyName());
+        holder.qty.setText(String.valueOf(club.getQty()));
+        holder.qtyuom.setText(String.valueOf(club.getQtyUOM()));
+        holder.ReceiveQTY.setText(String.valueOf(club.getReceiveQTY()));
+        holder.ReceiveQTYUOM.setText(String.valueOf(club.getReceiveQTYUOM()));
+        holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
+    }
     public int getItemCount() {
         return Gridmodel.size();
     }

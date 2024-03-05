@@ -69,13 +69,13 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
-        view = findViewById(R.id.btn_Viewweigmentslip);
-        view.setOnClickListener(new View.OnClickListener() {
+        //view = findViewById(R.id.btn_Viewweigmentslip);
+        /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(InwardOut_Truck_Weighment.this, Inward_Truck_Weighment_Viewdata.class));
             }
-        });
+        });*/
 
         if (getIntent().hasExtra("VehicleNumber")) {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);

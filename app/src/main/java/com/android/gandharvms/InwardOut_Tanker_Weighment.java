@@ -76,7 +76,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         userDetails = RetroApiClient.getLoginApi();
         weighmentdetails = RetroApiClient.getWeighmentDetails();
 
-        view = findViewById(R.id.btn_Viewweigmentslip);
+        /*view = findViewById(R.id.btn_Viewweigmentslip);*/
 
         etintime = findViewById(R.id.etintime);
         ettareweight = findViewById(R.id.ettareweight);
@@ -107,12 +107,12 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                 update();
             }
         });
-        view.setOnClickListener(new View.OnClickListener() {
+        /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(InwardOut_Tanker_Weighment.this, Inward_Tanker_Weighment_Viewdata.class));
             }
-        });
+        });*/
 
         etnetwt.addTextChangedListener(new TextWatcher() {
             @Override
