@@ -368,7 +368,8 @@
                         android:layout_marginLeft="60dp"
                         android:text="COMPLETED"
                         android:textSize="17dp"
-                        android:textStyle="bold">
+                        android:textStyle="bold"
+                        android:onClick="truckstorecompletedclick">
 
                     </androidx.appcompat.widget.AppCompatButton>
                     <androidx.appcompat.widget.AppCompatButton

@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_saampling_View_data;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
@@ -151,13 +152,13 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etviscosity = (EditText) findViewById(R.id.etviscosityindex);
         etlabsub = (Button) findViewById(R.id.etlabsub);
 
-        view = findViewById(R.id.viewclick);
-        view.setOnClickListener(new View.OnClickListener() {
+        /*view = findViewById(R.id.viewclick);*/
+        /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker_Lab_Viewdata.class));
             }
-        });
+        });*/
 
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -475,7 +476,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         startActivity(intent);
     }
     public void labviewclick(View view) {
-        Intent intent = new Intent(this, in_tanker_lab_grid.class);
+        Intent intent = new Intent(this, GridCompleted.class);
         startActivity(intent);
     }
 }

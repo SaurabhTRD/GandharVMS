@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
@@ -103,14 +104,14 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         etsdate = findViewById(R.id.etsdate);
         etvehicleno = findViewById(R.id.etvehicleno);
 
-        view = findViewById(R.id.samplingview);
+        /*view = findViewById(R.id.samplingview);*/
 
-        view.setOnClickListener(new View.OnClickListener() {
+        /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Inward_Tanker_Sampling.this, Inward_Tanker_saampling_View_data.class));
             }
-        });
+        });*/
 
         if (getIntent().hasExtra("VehicleNumber")) {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, DeptType, InOutType);
@@ -332,5 +333,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         startActivity(intent);
     }
     public void SamplingViewclick(View view){
+        Intent intent = new Intent(this, GridCompleted.class);
+        startActivity(intent);
     }
 }

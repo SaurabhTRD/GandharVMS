@@ -73,7 +73,7 @@ public class GridCompleted extends AppCompatActivity {
         productiondetails= RetroApiclient_In_Tanker_Security.getinproductionApi();
         storedetails=RetroApiClient.getStoreDetails();
 
-        String fromdate = "2024-02-01";
+        String fromdate = "2024-01-01";
         String todate = getCurrentDateTime();
         initViews();
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
@@ -126,8 +126,8 @@ public class GridCompleted extends AppCompatActivity {
     }
     private void initViews()
     {
-        rvClub = findViewById(R.id.recyclerviewgrid);
-        headerscroll = findViewById(R.id.headerscroll);
+        rvClub = findViewById(R.id.recyclerviewcogrid);
+        headerscroll = findViewById(R.id.coheaderscroll);
     }
 
     private void setUpRecyclerView()

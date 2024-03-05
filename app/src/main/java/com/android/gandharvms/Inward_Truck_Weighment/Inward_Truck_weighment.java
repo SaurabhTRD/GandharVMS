@@ -28,6 +28,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
@@ -486,6 +487,10 @@ public class Inward_Truck_weighment extends AppCompatActivity {
 
     public void WeighViewclick(View view){
         Intent intent = new Intent(this, grid.class);
+        startActivity(intent);
+    }
+    public void truckweicompletedclick(View view){
+        Intent intent = new Intent(this, GridCompleted.class);
         startActivity(intent);
     }
 }
