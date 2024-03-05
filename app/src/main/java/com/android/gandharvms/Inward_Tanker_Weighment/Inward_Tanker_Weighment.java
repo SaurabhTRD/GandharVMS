@@ -47,6 +47,7 @@ import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.Register;
+import com.android.gandharvms.Util.MultipartTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -109,6 +110,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     FirebaseStorage storage;
     ImageView img1, img2;
     Uri image1, image2;
+    byte[] ImgDriver , ImgVehicle;
+    byte[][] arrayOfByteArrays = new byte[2][];
     TimePickerDialog tpicker;
     private Weighment weighmentdetails;
     private final String dateTimeString = "";
@@ -205,9 +208,11 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         wesubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadimg(image1, image2);
-                weinsertdata();
-            }
+              //  uploadimg(image1, image2);
+                UploadImagesAndInsert();
+                }
+
+
         });
     }
 
@@ -288,7 +293,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             InTanWeighRequestModel weighReqModel = new InTanWeighRequestModel(inwardid, intime, outTime, grossweight, tareweight, netweight,
-                    shortagedip, shortageweight, remark, signby, Integer.parseInt(container), "imgPath1", "imgPath2", serialnumber,
+                    shortagedip, shortageweight, remark, signby, Integer.parseInt(container), imgPath1, imgPath2, serialnumber,
                     vehicelnumber, date, suppliername, materialname, oan, driverno, 'M', inOut, vehicleType, EmployeId, EmployeId,"","","");
 
             Call<Boolean> call = weighmentdetails.insertWeighData(weighReqModel);
@@ -360,7 +365,21 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                     });
         }
     }
+public void UploadImagesAndInsert(){
+        String FileInitial = "InVeh_In_";
+    arrayOfByteArrays[0] = ImgVehicle;
+    arrayOfByteArrays[1] = ImgDriver;
+    imgPath1 = FileInitial + etserialnumber.getText().toString() + ".jpeg";
+    for (byte[] byteArray : arrayOfByteArrays) {
 
+        MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + etserialnumber.getText().toString() + ".jpeg" ,"");
+        multipartTask.execute();
+        FileInitial = "InDrv_In_";
+    }
+    imgPath2 = FileInitial + etserialnumber.getText().toString() + ".jpeg";
+    FileInitial="";
+    weinsertdata();
+}
     //  image upload firebase
     public void captureImageFromCamera1(android.view.View view) {
         askCameraPermission(CAMERA_REQUEST_CODE);
@@ -404,6 +423,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
             String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
             image1 = Uri.parse(path);
+            ImgVehicle = baos.toByteArray();
         } else if (requestCode == CAMERA_REQUEST_CODE1) {
             Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
             img2.setImageBitmap(bimage2);
@@ -411,6 +431,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
             String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
             image2 = Uri.parse(path);
+           ImgDriver = baos.toByteArray();
         }
     }
 
