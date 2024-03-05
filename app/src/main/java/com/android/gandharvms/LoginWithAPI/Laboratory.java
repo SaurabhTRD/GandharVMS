@@ -16,7 +16,7 @@ public interface Laboratory {
     /*@GET("api/InwardLaboratory/GetLaboratoryList")
     Call<List<InTanLabResponseModel>> getIntankLabListData(@Query("NextProcess") char nextProcess);*/
 
-    @GET("api/InwardLaboratory/GetLaboratoryList")
+    @GET("api/InwardLaboratory/GetInwardLaboratoryList")
     Call<List<CommonResponseModelForAllDepartment>> getIntankLabListData(@Query("FromDate") String FromDate,
                                                                          @Query("Todate") String Todate,
                                                                          @Query("vehicleType") String vehicleType,

@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 
 public interface Inward_Tanker_SamplingMethod {
 
-    @GET("api/InwardWeighment/GetInwardWeighmentList")
+    @GET("api/InwardSampling/GetInwardSamplingList")
     Call<List<CommonResponseModelForAllDepartment>> getIntankSamplingListingData(@Query("FromDate") String FromDate,
                                                                                  @Query("Todate") String Todate,
                                                                                  @Query("vehicleType") String vehicleType,

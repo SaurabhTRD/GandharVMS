@@ -21,59 +21,6 @@ public class MultipartTask extends AsyncTask<String, Void, String> {
         this.fileName = fileName;
         this.path = path;
     }
-
-    // @Override
-    /*protected String doInBackground1(Void... params) {
-        HttpURLConnection connection = null;
-        try {
-            URL url = new URL("https://gandhar.azurewebsites.net/api/Common/MediaUploadImage"); // Replace with your actual API endpoint URL
-            connection = (HttpURLConnection) url.openConnection();
-
-            // Set connection properties
-            connection.setRequestMethod("POST");
-            connection.setRequestProperty("Content-Type", "multipart/form-data; boundary=---------------------------974767299852498929531610575");
-            connection.setRequestProperty("UniqueId", fileName);
-
-            // Enable input and output streams
-            connection.setDoInput(true);
-            connection.setDoOutput(true);
-            connection.connect();
-            // Create output stream for sending data
-            DataOutputStream outputStream = new DataOutputStream(connection.getOutputStream());
-            outputStream.writeBytes("Content-Disposition: form-data; name=\"file\"; filename=\"" + fileName + "\"\r\n");
-            outputStream.writeBytes("Content-Type: application/octet-stream\r\n\r\n");
-            outputStream.write(image);
-            outputStream.writeBytes("\r\n");
-            outputStream.writeBytes("-----------------------------974767299852498929531610575--\r\n");
-
-            // Get the server response
-            InputStream inputStream = connection.getInputStream();
-            ByteArrayOutputStream resultStream = new ByteArrayOutputStream();
-            byte[] buffer = new byte[1024];
-            int length;
-            while ((length = inputStream.read(buffer)) != -1) {
-                resultStream.write(buffer, 0, length);
-            }
-
-            // Close streams
-            outputStream.flush();
-            outputStream.close();
-            inputStream.close();
-
-            // Convert the result to a string
-            String result = resultStream.toString("UTF-8");
-
-            // Disconnect the connection
-            connection.disconnect();
-
-            return result;
-        } catch (IOException e) {
-            assert connection != null;
-            connection.disconnect();
-            e.printStackTrace();
-            return null;
-        }
-    }*/
     @Override
     protected String doInBackground(String... params) {
         String uploadUrl = "https://gandhar.azurewebsites.net/api/Common/Upload"; // Replace with your actual API endpoint
@@ -83,6 +30,7 @@ public class MultipartTask extends AsyncTask<String, Void, String> {
             URL url = new URL(uploadUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
+            connection.setRequestProperty("UniqueId", fileName);
             connection.setDoOutput(true);
             try (OutputStream outputStream = connection.getOutputStream()) {
                 outputStream.write(image);

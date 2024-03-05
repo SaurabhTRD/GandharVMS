@@ -93,6 +93,7 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         if (outtimelength > 0) {
             holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
+        holder.date.setText(club.getDate());
         holder.partyname.setText(club.getPartyName());
         holder.qty.setText(String.valueOf(club.getQty()));
         holder.qtyuom.setText(String.valueOf(club.getQtyUOM()));
@@ -137,12 +138,12 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         holder.vehiclenum.setText(club.getVehicleNo());
         if(samreceivingtime>0)
         {
-            holder.samintime.setText(club.getSampleReceivingTime());
+            holder.samintime.setText(club.getSampleReceivingTime().substring(12, samreceivingtime));
         }
 
         if(samsubmittedtime>0)
         {
-            holder.samouttime.setText(club.getSampleSubmittedTime());
+            holder.samouttime.setText(club.getSampleSubmittedTime().substring(12, samsubmittedtime));
         }
     }
 
