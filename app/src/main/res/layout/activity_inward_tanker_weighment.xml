@@ -312,7 +312,7 @@
                             android:layout_width="185dp"
                             android:layout_height="wrap_content"
                             android:hint="Shortage Dip"
-                            android:inputType="textCapCharacters"
+                            android:inputType="numberDecimal"
                             android:textSize="17dp"
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -332,7 +332,8 @@
                             android:layout_width="185dp"
                             android:layout_height="wrap_content"
                             android:hint="Shortage Weight"
-                            android:inputType="textCapCharacters"
+                            android:inputType="numberDecimal
+"
                             android:textSize="17dp"
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>

@@ -495,9 +495,10 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String mobnumber = etmobilenum.getText().toString().trim();
         String edremark = repremark.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() || partyname.isEmpty() ||
-                intime.isEmpty() || material.isEmpty() ||edremark.isEmpty()) {
+                intime.isEmpty() || material.isEmpty() ) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        } else {
+        }
+        else {
 
             //Extra material dynamic view
             List<Map<String, String>> materialList = new ArrayList<>();
