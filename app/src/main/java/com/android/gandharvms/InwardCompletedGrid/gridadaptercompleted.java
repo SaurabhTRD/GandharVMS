@@ -30,9 +30,9 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
     private final char inOut = Global_Var.getInstance().InOutType;
     private Context context;
 
-    public gridadaptercompleted(List<CommonResponseModelForAllDepartment> respoModelInTankerSecurities) {
-        this.Gridmodel = respoModelInTankerSecurities;
-        this.filteredGridList = respoModelInTankerSecurities;
+    public gridadaptercompleted(List<CommonResponseModelForAllDepartment> inwardcomresponsemodel) {
+        this.Gridmodel = inwardcomresponsemodel;
+        this.filteredGridList = inwardcomresponsemodel;
     }
 
     @Override
