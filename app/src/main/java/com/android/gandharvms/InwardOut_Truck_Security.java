@@ -88,13 +88,13 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, DeptType, InOutType);
         }
 
-        view = findViewById(R.id.btn_Viewweigmentslip);
-        view.setOnClickListener(new View.OnClickListener() {
+        //view = findViewById(R.id.btn_Viewweigmentslip);
+        /*view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                startActivity(new Intent(InwardOut_Truck_Security.this, Inward_Tanker_Security_Viewdata.class));
             }
-        });
+        });*/
         edintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
