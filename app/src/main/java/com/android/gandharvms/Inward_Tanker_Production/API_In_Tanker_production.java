@@ -26,7 +26,7 @@ public interface API_In_Tanker_production {
     /*@GET("api/InwardProduction/GetProductionList")
     Call<List<ListingResponse_InTankerproduction>> getintankerproductionListdata(@Query("NextProcess")char nextProcess);*/
 
-    @GET("api/InwardWeighment/GetInwardWeighmentList")
+    @GET("api/InwardProduction/GetProductionList")
     Call<List<CommonResponseModelForAllDepartment>> getintankerproductionListdata(@Query("FromDate") String FromDate,
                                                                                   @Query("Todate") String Todate,
                                                                                   @Query("vehicleType") String vehicleType,

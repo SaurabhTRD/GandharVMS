@@ -78,7 +78,6 @@ public class GridCompleted extends AppCompatActivity {
         initViews();
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
         {
-           // fetchDataFromApiforSec(fromdate,todate,vehicleType,inOut);
             if(nextProcess=='S')
             {
                 fetchDataFromApiforSec(fromdate,todate,vehicleType,inOut);
@@ -95,10 +94,8 @@ public class GridCompleted extends AppCompatActivity {
             }
         }
         else{
-            /*fetchDataFromApi(fromdate,todate,vehicleType,'x');*/
         }
 
-        //fetchDataFromApi("x",vehicleType,'x','x');
         rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
             @Override
