@@ -241,7 +241,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,gross,net,tare,"","",
-                    'S','O',vehicleType,intime,EmployeId);
+                    'S','O',vehicleType,intime,EmployeId,"","");
 
             Call<Boolean> call = weighmentdetails.inwardoutweighment(modelInwardOutweighment);
             call.enqueue(new Callback<Boolean>() {
