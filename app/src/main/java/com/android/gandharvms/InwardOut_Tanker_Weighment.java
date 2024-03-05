@@ -54,7 +54,7 @@ import retrofit2.Response;
 
 public class InwardOut_Tanker_Weighment extends AppCompatActivity {
 
-    EditText etintime,ettareweight,grswt,etvehicle,etnetwt;
+    EditText etintime,ettareweight,grswt,etvehicle,etnetwt,shdip,shwe;
     Button view;
     Button etsubmit;
     TimePickerDialog tpicker;
@@ -83,6 +83,8 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         grswt = findViewById(R.id.etgrosswt);
         etnetwt = findViewById(R.id.etnetweight);
         etvehicle = findViewById(R.id.etvehicle);
+        shdip = findViewById(R.id.shortagedip);
+        shwe = findViewById(R.id.shortageweight);
 
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -263,12 +265,14 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         String grosswt = grswt.getText().toString().trim();
         String netwt = etnetwt.getText().toString().trim();
         String tare = ettareweight.getText().toString().trim();
+        String udip = shdip.getText().toString().trim();
+        String uwet = shwe.getText().toString().trim();
 
         if (intime.isEmpty()|| vehiclnmo.isEmpty()||grosswt.isEmpty()||netwt.isEmpty()||tare.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,grosswt,netwt,tare,"","",
-                    'S','O',vehicleType,intime,EmployeId);
+                    'S','O',vehicleType,intime,EmployeId,udip,uwet);
             Call<Boolean> call = weighmentdetails.inwardoutweighment(modelInwardOutweighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override

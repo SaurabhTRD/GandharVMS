@@ -150,8 +150,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etremark = findViewById(R.id.etremark);
         etsignby = findViewById(R.id.etsignby);
         etcontainer = findViewById(R.id.container);
-        etshortagedip = findViewById(R.id.shortagedip);
-        etshortageweight = findViewById(R.id.shortageweight);
+//        etshortagedip = findViewById(R.id.shortagedip);
+//        etshortageweight = findViewById(R.id.shortageweight);
 
         //Call Api method
         weighmentdetails = RetroApiClient.getWeighmentDetails();
@@ -283,8 +283,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         String remark = etremark.getText().toString().trim();
         String signby = etsignby.getText().toString().trim();
         String container = etcontainer.getText().toString().trim();
-        String shortagedip = etshortagedip.getText().toString().trim();
-        String shortageweight = etshortageweight.getText().toString().trim();
+//        String shortagedip = etshortagedip.getText().toString().trim();
+//        String shortageweight = etshortageweight.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
 
 
@@ -294,7 +294,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             InTanWeighRequestModel weighReqModel = new InTanWeighRequestModel(inwardid, intime, outTime, grossweight, tareweight, netweight,
-                    shortagedip, shortageweight, remark, signby, Integer.parseInt(container), imgPath1, imgPath2, serialnumber,
+                     remark, signby, Integer.parseInt(container), imgPath1, imgPath2, serialnumber,
                     vehicelnumber, date, suppliername, materialname, oan, driverno, 'M', inOut, vehicleType, EmployeId, EmployeId, "", "", "");
 
             Call<Boolean> call = weighmentdetails.insertWeighData(weighReqModel);

@@ -15,8 +15,8 @@ public class InTanWeighRequestModel {
     String GrossWeight;
     String NetWeight;
     String TareWeight ;
-    String ShortageDip;
-    String ShortageWeight ;
+//    String ShortageDip;
+//    String ShortageWeight ;
     String Remark ;
     String SignBy ;
     int ContainerNo ;
@@ -41,7 +41,7 @@ public class InTanWeighRequestModel {
 
 
     public InTanWeighRequestModel(int inwardId, String inTime, String outTime, String grossWeight, String netWeight,
-                                  String tareWeight, String shortageDip, String shortageWeight, String remark,
+                                  String tareWeight, String remark,
                                   String signBy, int containerNo, String inVehicleImage, String inDriverImage,
                                   String serialNo, String vehicleNo, String date, String partyName,
                                   String material, String OA_PO_number, String driver_MobileNo, char nextprocess,
@@ -51,8 +51,6 @@ public class InTanWeighRequestModel {
         InTime = inTime;
         OutTime = outTime;
         GrossWeight = grossWeight;
-        ShortageDip = shortageDip;
-        ShortageWeight = shortageWeight;
         Remark = remark;
         SignBy = signBy;
         ContainerNo = containerNo;

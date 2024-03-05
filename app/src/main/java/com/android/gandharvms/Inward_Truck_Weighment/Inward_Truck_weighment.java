@@ -296,8 +296,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }
         else {
-            InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,Grossweight,tareweight,netweight,
-                    "","",remark,signby,Integer.parseInt(container),"","",serialnumber,
+            InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,Grossweight,tareweight,netweight, remark,signby,Integer.parseInt(container),"","",serialnumber,
                     vehicalnumber,date,supplier,material,oanumber,Driver,'R',inOut,vehicleType,EmployeId,EmployeId,"","","");
 
             Call<Boolean> call=weighmentdetails.insertWeighData(weighReqModel);
