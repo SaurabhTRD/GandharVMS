@@ -1,17 +1,28 @@
 package com.android.gandharvms;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.Manifest;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -24,9 +35,11 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.Util.MultipartTask;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
@@ -50,6 +63,16 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
     private int inwardid;
     private String token;
     TimePickerDialog tpicker;
+    byte[] ImgDriver, ImgVehicle;
+    byte[][] arrayOfByteArrays = new byte[2][];
+    private String imgPath1, imgPath2;
+    private String etSerialNumber;
+    private static final int CAMERA_PERM_CODE1 = 100;
+    private static final int CAMERA_PERM_CODE = 101;
+    private static final int CAMERA_REQUEST_CODE = 102;
+    private static final int CAMERA_REQUEST_CODE1 = 103;
+    ImageView img3, img4;
+    Uri image3, image4;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +88,9 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         ettarewt = findViewById(R.id.ettareweight);
         
         submit = findViewById(R.id.prosubmit);
+
+        img3=findViewById(R.id.inwardtruckoutvehicleimg);
+        img4=findViewById(R.id.inwardtruckoutdriverimg);
 
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -128,7 +154,8 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                update();
+                inwardouttruckweigmentuploadandupdate();
+//                update();
             }
         });
     }
@@ -159,6 +186,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                         etvehicel.setText(data.getVehicleNo());
                         etvehicel.setEnabled(false);
                         inwardid = data.getInwardId();
+                        etSerialNumber=data.getSerialNo();
                     }
                 }
             }
@@ -237,10 +265,11 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         String tare = ettarewt.getText().toString().trim();
         String net = etnetwt.getText().toString().trim();
 
+
         if (intime.isEmpty()||vehicleno.isEmpty()||gross.isEmpty()||tare.isEmpty()||net.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
-            Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,gross,net,tare,"","",
+            Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,gross,net,tare,imgPath1,imgPath2,
                     'S','O',vehicleType,intime,EmployeId,"","");
 
             Call<Boolean> call = weighmentdetails.inwardoutweighment(modelInwardOutweighment);
@@ -294,4 +323,76 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }
+
+    public void inwardouttruckweigmentuploadandupdate() {
+        String FileInitial = "InVeh_Out_";
+        arrayOfByteArrays[0] = ImgVehicle;
+        arrayOfByteArrays[1] = ImgDriver;
+        imgPath1 = "GAimages/"+ FileInitial + etSerialNumber.toString() + ".jpeg";
+        for (byte[] byteArray : arrayOfByteArrays) {
+
+            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + etSerialNumber.toString() + ".jpeg", "");
+            multipartTask.execute();
+            FileInitial = "InDrv_Out_";
+        }
+        imgPath2 = "GAimages/"+ FileInitial + etSerialNumber.toString() + ".jpeg";
+        FileInitial = "";
+        update();
+    }
+
+    public void captureImageFromCamera1(android.view.View view) {
+        askCameraPermission(CAMERA_REQUEST_CODE);
+    }
+
+    public void captureImageFromCamera2(android.view.View view) {
+        askCameraPermission1(CAMERA_REQUEST_CODE1);
+    }
+
+    private void askCameraPermission(int requestcode) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+        } else {
+            openCamera(requestcode);
+        }
+    }
+
+    private void askCameraPermission1(int requestcode1) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE1);
+        } else {
+            openCamera(requestcode1);
+        }
+    }
+
+    private void openCamera(int requestCode) {
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            startActivityForResult(camera, CAMERA_REQUEST_CODE);
+        } else if (requestCode == CAMERA_REQUEST_CODE1) {
+            startActivityForResult(camera, CAMERA_REQUEST_CODE1);
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
+            img3.setImageBitmap(bimage1);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
+            image3 = Uri.parse(path);
+            ImgVehicle = baos.toByteArray();
+        } else if (requestCode == CAMERA_REQUEST_CODE1) {
+            Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
+            img4.setImageBitmap(bimage2);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
+            image4 = Uri.parse(path);
+            ImgDriver = baos.toByteArray();
+        }
+    }
+
+
 }

@@ -8,8 +8,8 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetroApiClient {
-    private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://gandhar.azurewebsites.net/";
+    public static Retrofit retrofit = null;
+    public static String BASE_URL = "https://gandhar.azurewebsites.net/";
 //    private static String BASE_URL = "http://52.183.160.211:8097/";
 
     public static Retrofit getClient() {
