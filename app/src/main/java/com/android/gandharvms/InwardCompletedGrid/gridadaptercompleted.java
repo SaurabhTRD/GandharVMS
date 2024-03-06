@@ -14,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +31,7 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private Context context;
+
 
     public gridadaptercompleted(List<CommonResponseModelForAllDepartment> inwardcomresponsemodel) {
         this.Gridmodel = inwardcomresponsemodel;
@@ -61,8 +64,6 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         CommonResponseModelForAllDepartment club = filteredGridList.get(position);
         int intimelength = club.getInTime()!=null ? club.getInTime().length() : 0;
         int outtimelength = club.getOutTime()!=null?club.getOutTime().length() : 0;
-        int samreceivingtime=club.getSampleReceivingTime()!=null ? club.getSampleReceivingTime().length() : 0;
-        int samsubmittedtime=club.getSampleSubmittedTime()!=null ? club.getSampleSubmittedTime().length() : 0;
         if(nextProcess=='S')
         {
             bindSColumns(holder, club, intimelength, outtimelength);
@@ -70,7 +71,7 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
             bindWColumns(holder, club, intimelength, outtimelength);
         }
         else if (nextProcess=='M') {
-            bindMColumns(holder, club, samreceivingtime, samsubmittedtime);
+            bindMColumns(holder, club, intimelength, outtimelength);
         }
         else if (nextProcess=='L') {
             bindLColumns(holder, club, intimelength, outtimelength);
@@ -131,19 +132,28 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         holder.sighby.setText(club.getSignBy());
         holder.shortagedip.setText(club.getShortageDip());
         holder.shortageweight.setText(club.getShortageWeight());
+        Picasso.get()
+                .load(RetroApiClient.BASE_URL + club.getInVehicleImage())
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.invehicleimage);
+        Picasso.get()
+                .load(RetroApiClient.BASE_URL + club.getInDriverImage())
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.indriverimage);
     }
 
-    private void bindMColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int samreceivingtime, int samsubmittedtime) {
+    private void bindMColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
         holder.date.setText(club.getDate());
         holder.vehiclenum.setText(club.getVehicleNo());
-        if(samreceivingtime>0)
-        {
-            holder.samintime.setText(club.getSampleReceivingTime().substring(12, samreceivingtime));
+        if (intimelength > 0) {
+            holder.intime.setText(club.getInTime().substring(12, intimelength));
         }
-
-        if(samsubmittedtime>0)
-        {
-            holder.samouttime.setText(club.getSampleSubmittedTime().substring(12, samsubmittedtime));
+        if (outtimelength > 0) {
+            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
     }
 
@@ -252,7 +262,6 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
                  qtyuom,netweightuom,extramaterials,remark,oapo,mob,Selectregister,IrCopy,DeliveryBill,TaxInvoice,
                  EwayBill,
                 grossweight,batchnumber,containerno, sighby,shortagedip,shortageweight,
-                samintime, samouttime,
 
                 Apperance,Odor,Color,LQty,Density,RcsTest,AnLinePoint,FlashPoint,_40KV,_100KV,
                 AdditionalTest,SampleTest,SignOf,DateAndTime,RemarkDescription,ViscosityIndex,
@@ -268,8 +277,6 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
             material = view.findViewById(R.id.textcoMaterial);
             intime =view.findViewById(R.id.textcoInTime);
             outtime=view.findViewById(R.id.textcoOutTime);
-            samintime =view.findViewById(R.id.textcoSamplingInTime);
-            samouttime=view.findViewById(R.id.textcoSamplingOutTime);
             date=view.findViewById(R.id.textcodate);
             partyname=view.findViewById(R.id.textcopartyname);
             qty=view.findViewById(R.id.textcoqty);
@@ -284,6 +291,8 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
             grossweight=view.findViewById(R.id.textcogrossweight);
             batchnumber=view.findViewById(R.id.textcobatchnumber);
             containerno=view.findViewById(R.id.textcocontainerno);
+            invehicleimage=view.findViewById(R.id.textInVehicleImage);
+            indriverimage=view.findViewById(R.id.textInDriverImage);
             Selectregister=view.findViewById(R.id.textcoSelectregister);
             IrCopy=view.findViewById(R.id.textcoIrCopy);
             DeliveryBill=view.findViewById(R.id.textcoDeliveryBill);

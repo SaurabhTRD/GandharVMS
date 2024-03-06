@@ -371,14 +371,14 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         String FileInitial = "InVeh_In_";
         arrayOfByteArrays[0] = ImgVehicle;
         arrayOfByteArrays[1] = ImgDriver;
-        imgPath1 = FileInitial + etserialnumber.getText().toString() + ".jpeg";
+        imgPath1 = "GAimages/"+ FileInitial + etserialnumber.getText().toString() + ".jpeg";
         for (byte[] byteArray : arrayOfByteArrays) {
 
             MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + etserialnumber.getText().toString() + ".jpeg", "");
             multipartTask.execute();
             FileInitial = "InDrv_In_";
         }
-        imgPath2 = FileInitial + etserialnumber.getText().toString() + ".jpeg";
+        imgPath2 = "GAimages/"+ FileInitial + etserialnumber.getText().toString() + ".jpeg";
         FileInitial = "";
         weinsertdata();
     }
