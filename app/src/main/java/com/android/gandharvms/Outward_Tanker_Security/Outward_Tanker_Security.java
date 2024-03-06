@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
@@ -52,7 +53,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     private CheckBox isReportingCheckBox;
     private EditText reportingRemarkLayout;
-    Button saveButton;
+    Button saveButton,dbbutton;;
     RadioButton rbvehpermityes, rbvehpermitno, rbpucyes, rbpucno, rbinsuranceyes, rbinsuranceno, vehfitnessyes, vehfitnessno, licye, licno, rcyes, rcno;
     private String vehicleType = Global_Var.getInstance().MenuType;
     private char nextProcess = Global_Var.getInstance().DeptType;
@@ -86,6 +87,8 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         reportingRemarkLayout.setVisibility(View.GONE);
         saveButton.setVisibility(View.GONE);
 
+        dbbutton = findViewById(R.id.samplingview);
+
         isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
                 // Show the TextInputLayout and Button
@@ -97,6 +100,15 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 saveButton.setVisibility(View.GONE);
             }
         });
+
+        //        listdata button
+        dbbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Outward_Tanker_Security.this, GridCompleted.class));
+            }
+        });
+
 
         saveButton.setOnClickListener(v -> {
         });

@@ -33,7 +33,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="140dp"
         android:id="@+id/textcoInTime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -42,7 +42,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:id="@+id/textcoOutTime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -51,25 +51,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoSamplingInTime"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoSamplingOutTime"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
+        android:layout_width="130dp"
         android:id="@+id/textcodate"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -180,6 +162,20 @@
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/textInVehicleImage"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"/>
+    <ImageView
+        android:id="@+id/textInDriverImage"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"/>
+
     <TextView
         android:layout_width="100dp"
         android:id="@+id/textcoSelectregister"
