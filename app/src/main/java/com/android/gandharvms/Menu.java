@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.submenu.Submenu_Outward_Truck;
@@ -14,11 +15,13 @@ import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.protobuf.Empty;
 
 public class Menu extends AppCompatActivity {
 
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String userRole = "default";
+    TextView username,empid;
     Button btnlogout;
 
     @Override
@@ -27,6 +30,15 @@ public class Menu extends AppCompatActivity {
         setContentView(R.layout.activity_menu);
 
         btnlogout = findViewById(R.id.btn_logoutButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

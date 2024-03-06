@@ -69,7 +69,7 @@ public class Grid_Outward extends AppCompatActivity {
     private void initViews()
     {
         rvClub = findViewById(R.id.outwardrecyclerviewgrid);
-        headerscroll = findViewById(R.id.outwardheaderscroll);
+        headerscroll = findViewById(R.id.outwardgridheaderscroll);
     }
     private void setUpRecyclerView()
     {

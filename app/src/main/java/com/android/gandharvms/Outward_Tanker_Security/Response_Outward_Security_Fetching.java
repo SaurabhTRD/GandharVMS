@@ -52,6 +52,212 @@ public class Response_Outward_Security_Fetching {
     private String VehicleType;
 
     public String CurrStatus;
+    public String SecInTime;
+    public String SecOutTime;
+    public String WeiInTime;
+    public String WeiOutTime;
+    public String BilInTime;
+    public String BilOutTime;
+    public String IPFLabInTime;
+    public String IPFLabOutTime;
+    public String IPFProInTime;
+    public String IPFProOutTime;
+    public String BLFLabInTime;
+    public String BLFLabOutTime;
+    public String BLFProInTime;
+    public String BLFProOutTime;
+    public String DesInTime;
+    public String DesOutTime;
+    public String BRFBilInTime;
+    public String BRFBilOutTime;
+    public String BRFProInTime;
+    public String BRFProOutTime;
+    public String BRFLabInTime;
+    public String BRFLabOutTime;
+
+    public boolean isReporting() {
+        return IsReporting;
+    }
+
+    public void setReporting(boolean reporting) {
+        IsReporting = reporting;
+    }
+
+    public String getSecInTime() {
+        return SecInTime;
+    }
+
+    public void setSecInTime(String secInTime) {
+        SecInTime = secInTime;
+    }
+
+    public String getSecOutTime() {
+        return SecOutTime;
+    }
+
+    public void setSecOutTime(String secOutTime) {
+        SecOutTime = secOutTime;
+    }
+
+    public String getWeiInTime() {
+        return WeiInTime;
+    }
+
+    public void setWeiInTime(String weiInTime) {
+        WeiInTime = weiInTime;
+    }
+
+    public String getWeiOutTime() {
+        return WeiOutTime;
+    }
+
+    public void setWeiOutTime(String weiOutTime) {
+        WeiOutTime = weiOutTime;
+    }
+
+    public String getBilInTime() {
+        return BilInTime;
+    }
+
+    public void setBilInTime(String bilInTime) {
+        BilInTime = bilInTime;
+    }
+
+    public String getBilOutTime() {
+        return BilOutTime;
+    }
+
+    public void setBilOutTime(String bilOutTime) {
+        BilOutTime = bilOutTime;
+    }
+
+    public String getIPFLabInTime() {
+        return IPFLabInTime;
+    }
+
+    public void setIPFLabInTime(String IPFLabInTime) {
+        this.IPFLabInTime = IPFLabInTime;
+    }
+
+    public String getIPFLabOutTime() {
+        return IPFLabOutTime;
+    }
+
+    public void setIPFLabOutTime(String IPFLabOutTime) {
+        this.IPFLabOutTime = IPFLabOutTime;
+    }
+
+    public String getIPFProInTime() {
+        return IPFProInTime;
+    }
+
+    public void setIPFProInTime(String IPFProInTime) {
+        this.IPFProInTime = IPFProInTime;
+    }
+
+    public String getIPFProOutTime() {
+        return IPFProOutTime;
+    }
+
+    public void setIPFProOutTime(String IPFProOutTime) {
+        this.IPFProOutTime = IPFProOutTime;
+    }
+
+    public String getBLFLabInTime() {
+        return BLFLabInTime;
+    }
+
+    public void setBLFLabInTime(String BLFLabInTime) {
+        this.BLFLabInTime = BLFLabInTime;
+    }
+
+    public String getBLFLabOutTime() {
+        return BLFLabOutTime;
+    }
+
+    public void setBLFLabOutTime(String BLFLabOutTime) {
+        this.BLFLabOutTime = BLFLabOutTime;
+    }
+
+    public String getBLFProInTime() {
+        return BLFProInTime;
+    }
+
+    public void setBLFProInTime(String BLFProInTime) {
+        this.BLFProInTime = BLFProInTime;
+    }
+
+    public String getBLFProOutTime() {
+        return BLFProOutTime;
+    }
+
+    public void setBLFProOutTime(String BLFProOutTime) {
+        this.BLFProOutTime = BLFProOutTime;
+    }
+
+    public String getDesInTime() {
+        return DesInTime;
+    }
+
+    public void setDesInTime(String despatchInTime) {
+        DesInTime = despatchInTime;
+    }
+
+    public String getDesOutTime() {
+        return DesOutTime;
+    }
+
+    public void setDesOutTime(String despatchOutTime) {
+        DesOutTime = despatchOutTime;
+    }
+
+    public String getBRFBilInTime() {
+        return BRFBilInTime;
+    }
+
+    public void setBRFBilInTime(String BRFBilInTime) {
+        this.BRFBilInTime = BRFBilInTime;
+    }
+
+    public String getBRFBilOutTime() {
+        return BRFBilOutTime;
+    }
+
+    public void setBRFBilOutTime(String BRFBilOutTime) {
+        this.BRFBilOutTime = BRFBilOutTime;
+    }
+
+    public String getBRFProInTime() {
+        return BRFProInTime;
+    }
+
+    public void setBRFProInTime(String BRFProInTime) {
+        this.BRFProInTime = BRFProInTime;
+    }
+
+    public String getBRFProOutTime() {
+        return BRFProOutTime;
+    }
+
+    public void setBRFProOutTime(String BRFProOutTime) {
+        this.BRFProOutTime = BRFProOutTime;
+    }
+
+    public String getBRFLabInTime() {
+        return BRFLabInTime;
+    }
+
+    public void setBRFLabInTime(String BRFLabInTime) {
+        this.BRFLabInTime = BRFLabInTime;
+    }
+
+    public String getBRFLabOutTime() {
+        return BRFLabOutTime;
+    }
+
+    public void setBRFLabOutTime(String BRFLabOutTime) {
+        this.BRFLabOutTime = BRFLabOutTime;
+    }
 
     public String getCurrStatus() {
         return CurrStatus;

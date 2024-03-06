@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+import android.widget.TextView;
 
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
@@ -25,6 +26,7 @@ import es.dmoral.toasty.Toasty;
 
 public class Inward_Truck extends AppCompatActivity {
     Button btnlogout;
+    TextView username,empid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +36,14 @@ public class Inward_Truck extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "");
 
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override

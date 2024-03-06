@@ -5,16 +5,22 @@
     android:layout_width="wrap_content"
     android:layout_height="40dp">
 
-
     <TextView
-        android:id="@+id/textSerialNumber"
+        android:id="@+id/textoutwardgridStatus"
         android:layout_width="120dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
     <TextView
-        android:id="@+id/textVehicleNumber"
+        android:id="@+id/textoutwardgridSerialNumber"
+        android:layout_width="120dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:id="@+id/textoutwardgridVehicleNumber"
         android:layout_width="150dp"
         android:layout_marginStart="5dp"
         android:clickable="true"
@@ -25,7 +31,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textMaterial"
+        android:id="@+id/textoutwardgridMaterial"
         android:layout_width="120dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -33,24 +39,167 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textStatus"
         android:layout_width="120dp"
+        android:id="@+id/textoutwardgridSecInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textInTime"
         android:layout_width="120dp"
+        android:id="@+id/textoutwardgridSecOutTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textOutTime"
         android:layout_width="120dp"
+        android:id="@+id/textoutwardgridWeiInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridWeiOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBilInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBilOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridIPFLabInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridIPFLabOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridIPFProInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridIPFProOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBLFLabInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBLFLabOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBLFProInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBLFProOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridDesInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridDesOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBRFBilInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBRFBilOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBRFProInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBRFProOutTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBRFLabInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textoutwardgridBRFLabOutTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
