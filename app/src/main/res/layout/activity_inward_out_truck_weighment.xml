@@ -169,7 +169,7 @@
                 >
 
                 <ImageView
-                    android:id="@+id/imageView1"
+                    android:id="@+id/inwardtruckoutvehicleimg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/camera"
@@ -187,7 +187,7 @@
                 >
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/inwardtruckoutdriverimg"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/camera"
