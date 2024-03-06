@@ -57,26 +57,6 @@
         android:padding="5sp"/>
 
     <TextView
-        android:id="@+id/textcoSamplingInTime"
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:text="SampleReceivingTime"
-        android:layout_height="wrap_content"
-        android:textSize="12dp"
-        android:minWidth="95dp"
-        android:padding="5sp"/>
-
-    <TextView
-        android:id="@+id/textcoSamplingOutTime"
-        android:layout_width="wrap_content"
-        android:layout_weight="1"
-        android:text="SamppleSubmittedTime"
-        android:layout_height="wrap_content"
-        android:textSize="12dp"
-        android:minWidth="95dp"
-        android:padding="5sp"/>
-
-    <TextView
         android:id="@+id/textcodate"
         android:layout_width="wrap_content"
         android:layout_weight="1"
