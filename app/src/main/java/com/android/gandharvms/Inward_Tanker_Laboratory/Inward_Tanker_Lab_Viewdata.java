@@ -65,7 +65,7 @@ public class Inward_Tanker_Lab_Viewdata extends AppCompatActivity {
         String FromDate = getCurrentDateTime();
         String Todate = getCurrentDateTime();
 
-        GetLabListData(FromDate,Todate,vehicleType,inOut);
+        GetLabListData(FromDate,Todate,vehicleType,null,inOut);
 
         /*db= FirebaseFirestore.getInstance();
         db.collection("Inward Tanker Laboratory").get()
@@ -103,8 +103,8 @@ public class Inward_Tanker_Lab_Viewdata extends AppCompatActivity {
         return dateFormat.format(now);
     }
 
-    private void GetLabListData(String FromDate,String Todate,String vehicletype,char inout) {
-        Call<List<CommonResponseModelForAllDepartment>> call = labdetails.getIntankLabListData(FromDate,Todate,vehicletype,inout);
+    private void GetLabListData(String FromDate,String Todate,String vehicletype,String vehicleno,char inout) {
+        Call<List<CommonResponseModelForAllDepartment>> call = labdetails.getIntankLabListData(FromDate,Todate,vehicletype,vehicleno,inout);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {

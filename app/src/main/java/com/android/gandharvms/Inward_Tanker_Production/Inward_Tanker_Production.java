@@ -70,7 +70,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     final Calendar calendar = Calendar.getInstance();
     EditText etint, etserno, edunloadabovematerial, abovematerialunload, etconbyop, opratorname, etconunloadDateTime, etMaterial, etVehicleNumber;
     /*  Button viewdata;*/
-    Button prosubmit;
+    Button prosubmit,viewlabreport;
     FirebaseFirestore prodbroot;
     DatePickerDialog picker;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
@@ -108,6 +108,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         etconbyop = findViewById(R.id.etconbyop);
         abovematerialunload = findViewById(R.id.ettankno);
         opratorname = findViewById(R.id.tanknoun);
+        viewlabreport=findViewById(R.id.btn_ViewlabReport);
 
         prosubmit = findViewById(R.id.prosubmit);
         apiInTankerProduction = RetroApiclient_In_Tanker_Security.getinproductionApi();
@@ -162,10 +163,11 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         etVehicleNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    String vehicltype= Global_Var.getInstance().MenuType;
-                    char DeptType= Global_Var.getInstance().DeptType;
+                    String vehicltype = Global_Var.getInstance().MenuType;
+                    char DeptType = Global_Var.getInstance().DeptType;
                     char InOutType = Global_Var.getInstance().InOutType;
-                    FetchVehicleDetails(etVehicleNumber.getText().toString().trim(),vehicltype,DeptType,InOutType);
+                    FetchVehicleDetails(etVehicleNumber.getText().toString().trim(), vehicltype, DeptType, InOutType);
+
                 }
             }
 
@@ -217,13 +219,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         });
     }
 
-    public void btn_clicktoViewLabReport(View view) {
-    }
 
-    public void ProductionViewclick(View view) {
-        Intent intent = new Intent(this, grid.class);
-        startActivity(intent);
-    }
 
     private String getCurrentTime() {
         // Get the current time
@@ -315,6 +311,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                         etconunloadDateTime.setEnabled(false);
                         etint.requestFocus();
                         etint.callOnClick();
+                        viewlabreport.setVisibility(View.VISIBLE);
                     }
                 }
             }
@@ -341,6 +338,18 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     }
     public void statusgrid(View view){
         Intent intent = new Intent(this, GridCompleted.class);
+        startActivity(intent);
+    }
+
+    public void btn_clicktoViewLabReport(View view) {
+        Global_Var.getInstance().DeptType='L';
+        Intent intent = new Intent(this, GridCompleted.class);
+        intent.putExtra("vehiclenumber",etVehicleNumber.getText());
+        view.getContext().startActivity(intent);
+    }
+
+    public void ProductionViewclick(View view) {
+        Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }
 }

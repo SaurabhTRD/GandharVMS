@@ -73,20 +73,29 @@ public class GridCompleted extends AppCompatActivity {
         productiondetails= RetroApiclient_In_Tanker_Security.getinproductionApi();
         storedetails=RetroApiClient.getStoreDetails();
 
+        String strvehiclenumber;
+
         String fromdate = "2024-01-01";
         String todate = getCurrentDateTime();
         initViews();
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
         {
+            if(getIntent().hasExtra("vehiclenumber")==true)
+            {
+                strvehiclenumber= getIntent().getExtras().get("vehiclenumber").toString();
+            }
+            else{
+                strvehiclenumber="x";
+            }
             if(nextProcess=='S')
             {
                 fetchDataFromApiforSec(fromdate,todate,vehicleType,inOut);
             } else if (nextProcess=='W') {
-                fetchDataFromApiforweigh(fromdate,todate,vehicleType,inOut);
+                fetchDataFromApiforweigh(fromdate,todate,vehicleType,strvehiclenumber,inOut);
             }else if (nextProcess=='M') {
-                fetchDataFromApiforSam(fromdate,todate,vehicleType,inOut);
+                fetchDataFromApiforSam(fromdate,todate,vehicleType,strvehiclenumber,inOut);
             }else if (nextProcess=='L') {
-                fetchDataFromApiforLab(fromdate,todate,vehicleType,inOut);
+                fetchDataFromApiforLab(fromdate,todate,vehicleType,strvehiclenumber,inOut);
             }else if (nextProcess=='P') {
                 fetchDataFromApiforPro(fromdate,todate,vehicleType,inOut);
             }else if (nextProcess=='R') {
@@ -172,9 +181,9 @@ public class GridCompleted extends AppCompatActivity {
         });
     }
 
-    public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType, char inOut) {
+    public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = WeighmentDetails.getIntankWeighListingData(FromDate, Todate, vehicleType, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call = WeighmentDetails.getIntankWeighListingData(FromDate, Todate, vehicleType, vehicleno,inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
@@ -207,9 +216,9 @@ public class GridCompleted extends AppCompatActivity {
         });
     }
 
-    public void fetchDataFromApiforSam(String FromDate,String Todate,String vehicleType, char inOut) {
+    public void fetchDataFromApiforSam(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = samplingdetails.getIntankSamplingListingData(FromDate,Todate, vehicleType, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call = samplingdetails.getIntankSamplingListingData(FromDate,Todate, vehicleType,vehicleno, inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
@@ -242,9 +251,9 @@ public class GridCompleted extends AppCompatActivity {
         });
     }
 
-    public void fetchDataFromApiforLab(String FromDate,String Todate,String vehicleType, char inOut) {
+    public void fetchDataFromApiforLab(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = LaboratoryDetails.getIntankLabListData(FromDate, Todate, vehicleType, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call = LaboratoryDetails.getIntankLabListData(FromDate, Todate, vehicleType,vehicleno,inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {

@@ -7,7 +7,7 @@
     tools:context=".Inward_Tanker_Laboratory.Inward_Tanker_Laboratory">
 
     <Button
-        android:id="@+id/btn_ViewlabReport"
+        android:id="@+id/btn_viewsampleReport"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,6 +16,7 @@
         android:layout_marginRight="30dp"
         android:onClick="btn_clicktoViewSAMPLEREPORT"
         android:text="View SAMPLE DATA"
+        android:visibility="invisible"
         android:textSize="18dp"
         android:textStyle="bold"
         tools:ignore="MissingConstraints"></Button>
@@ -37,28 +38,12 @@
         android:layout_marginRight="10dp">
 
         <Button
-            android:id="@+id/btn_clicktoViewWEIGHMENTREPORT"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="match_parent"
-            android:layout_height="-20dp"
-            android:layout_marginLeft="21dp"
-            android:layout_marginTop="45dp"
-            android:layout_marginRight="21dp"
-            android:onClick="weViewclick"
-            android:text="View WEIGHMENT Data"
-            android:textSize="18dp"
-            android:textStyle="bold"
-            tools:ignore="MissingConstraints">
-
-        </Button>
-
-        <Button
             android:id="@+id/btn_clicktoViewLaboratoryREPORT"
             style="@style/Widget.MaterialComponents.Button"
             android:layout_width="match_parent"
             android:layout_height="-20dp"
             android:layout_marginLeft="21dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="40dp"
             android:layout_marginRight="21dp"
             android:onClick="Labviewclick"
             android:text="Pending Vehicles"

@@ -77,7 +77,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     ArrayAdapter<String> remarkarray;
     EditText etintime, etserialnumber, etpsample, etvehiclenumber, etpapperance, etpodor, etpcolour, etpdensity, etqty, etPrcstest, etpkv, ethundred, etanline, etflash, etpaddtest, etpsamplere, etpremark, etpsignQc, etpdatesignofsign, etMaterial, etsupplier, remarkdisc, etviscosity;
     Button etlabsub;
-    Button view;
+    Button view,viewsamplereporting;
     TimePickerDialog tpicker;
 
     FirebaseFirestore dblabroot;
@@ -106,14 +106,11 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_laboratory);
 
-
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         labdetails = RetroApiClient.getLabDetails();//Call retrofit api
-
         userDetails = RetroApiClient.getLoginApi();
-
 
         regAutoCompleteTextView = findViewById(R.id.etpremark);
         remarkarray = new ArrayAdapter<String>(this, R.layout.in_tanker_labremarkitem, remark);
@@ -152,6 +149,10 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etviscosity = (EditText) findViewById(R.id.etviscosityindex);
         etlabsub = (Button) findViewById(R.id.etlabsub);
 
+        viewsamplereporting=(Button)findViewById(R.id.btn_viewsampleReport);
+/*
+        viewweighmentreporting=(Button)findViewById(R.id.btn_clicktoViewWEIGHMENTREPORT);
+*/
         /*view = findViewById(R.id.viewclick);*/
         /*view.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,13 +324,18 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     }
 
     public void btn_clicktoViewSAMPLEREPORT(View view) {
-
+        Global_Var.getInstance().DeptType='M';
+        Intent intent = new Intent(this, GridCompleted.class);
+        intent.putExtra("vehiclenumber",etvehiclenumber.getText());
+        view.getContext().startActivity(intent);
     }
 
-    public void weViewclick(View view) {
-        Intent intent = new Intent(this, Inward_Tanker_Weighment_Viewdata.class);
-        startActivity(intent);
-    }
+    /*public void weViewclick(View view) {
+        Global_Var.getInstance().DeptType='W';
+        Intent intent = new Intent(this, GridCompleted.class);
+        intent.putExtra("vehiclenumber",etvehiclenumber.getText());
+        view.getContext().startActivity(intent);
+    }*/
 
     public void Labviewclick(View view) {
         Intent intent = new Intent(this, grid.class);
@@ -437,6 +443,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etpsample.setEnabled(false);
                         etintime.requestFocus();
                         etintime.callOnClick();
+                        viewsamplereporting.setVisibility(view.VISIBLE);
                     } else {
                         Toasty.success(Inward_Tanker_Laboratory.this, "Vehicle Is Not Available", Toast.LENGTH_SHORT).show();
                     }

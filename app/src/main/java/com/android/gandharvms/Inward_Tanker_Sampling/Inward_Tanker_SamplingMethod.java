@@ -16,6 +16,7 @@ public interface Inward_Tanker_SamplingMethod {
     Call<List<CommonResponseModelForAllDepartment>> getIntankSamplingListingData(@Query("FromDate") String FromDate,
                                                                                  @Query("Todate") String Todate,
                                                                                  @Query("vehicleType") String vehicleType,
+                                                                                 @Query("vehicleno")String vehicleno,
                                                                                  @Query("inout") char inout);
     @POST("api/InwardSampling/Add")
     Call<Boolean> insertSamplingData(@Body Inward_Tanker_SamplingRequestModel inward_Tanker_SamplingRequestModel);

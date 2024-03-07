@@ -63,7 +63,7 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
     public void onBindViewHolder(gridadaptercompleted.myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         CommonResponseModelForAllDepartment club = filteredGridList.get(position);
         int intimelength = club.getInTime()!=null ? club.getInTime().length() : 0;
-        int outtimelength = club.getOutTime()!=null?club.getOutTime().length() : 0;
+        int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
         if(nextProcess=='S')
         {
             bindSColumns(holder, club, intimelength, outtimelength);
