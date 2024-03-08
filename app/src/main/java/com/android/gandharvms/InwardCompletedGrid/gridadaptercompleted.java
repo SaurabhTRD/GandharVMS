@@ -2,6 +2,7 @@ package com.android.gandharvms.InwardCompletedGrid;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,11 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.squareup.picasso.Picasso;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercompleted.myviewHolder> implements Filterable {
     private static final int TYPE_ROW = 0;
@@ -32,6 +36,7 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
     private final char inOut = Global_Var.getInstance().InOutType;
     private Context context;
 
+    String formattedDate;
 
     public gridadaptercompleted(List<CommonResponseModelForAllDepartment> inwardcomresponsemodel) {
         this.Gridmodel = inwardcomresponsemodel;
@@ -94,7 +99,8 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         if (outtimelength > 0) {
             holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
-        holder.date.setText(club.getDate());
+        formattedDate = formatDate(club.getDate());
+        holder.date.setText(formattedDate);
         holder.partyname.setText(club.getPartyName());
         holder.qty.setText(String.valueOf(club.getQty()));
         holder.qtyuom.setText(String.valueOf(club.getQtyUOM()));
@@ -123,7 +129,8 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.material.setText(club.getMaterial());
         holder.partyname.setText(club.getPartyName());
-        holder.date.setText(club.getDate());
+        formattedDate = formatDate(club.getDate());
+        holder.date.setText(formattedDate);
         holder.oapo.setText(club.getOA_PO_number());
         holder.mob.setText(club.getDriver_MobileNo());
         holder.grossweight.setText(String.valueOf(club.getGrossWeight()));
@@ -147,7 +154,8 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
     }
 
     private void bindMColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
-        holder.date.setText(club.getDate());
+        formattedDate = formatDate(club.getDate());
+        holder.date.setText(formattedDate);
         holder.vehiclenum.setText(club.getVehicleNo());
         if (intimelength > 0) {
             holder.intime.setText(club.getInTime().substring(12, intimelength));
@@ -168,7 +176,8 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.material.setText(club.getMaterial());
         holder.partyname.setText(club.getPartyName());
-        holder.date.setText(club.getDate());
+        formattedDate = formatDate(club.getDate());
+        holder.date.setText(formattedDate);
         holder.Apperance.setText(club.getApperance());
         holder.Odor.setText(club.getOdor());
         holder.Color.setText(club.getColor());
@@ -196,7 +205,8 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.material.setText(club.getMaterial());
-        holder.date.setText(club.getDate());
+        formattedDate = formatDate(club.getDate());
+        holder.date.setText(formattedDate);
         holder.UnloadAboveMaterialInTK.setText(String.valueOf(club.getUnloadAboveMaterialInTK()));
         holder.ProductName.setText(club.getProductName());
         holder.AboveMaterialIsUnloadInTK.setText(String.valueOf(club.getAboveMaterialIsUnloadInTK()));
@@ -324,6 +334,19 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
             ReceiveQTY=view.findViewById(R.id.textcoReceiveQTY);
             ReceiveQTYUOM=view.findViewById(R.id.textcoReceiveQTYUOM);
             StoreExtramaterials=view.findViewById(R.id.textcoStoreExtramaterials);
+        }
+    }
+
+    private String formatDate(String inputDate) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("MMM dd yyyy hh:mma", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            // Handle the ParseException or return the original inputDate if parsing fails
+            return inputDate;
         }
     }
 }

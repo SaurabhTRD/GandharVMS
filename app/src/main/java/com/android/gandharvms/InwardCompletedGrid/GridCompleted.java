@@ -4,12 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
@@ -62,6 +67,11 @@ public class GridCompleted extends AppCompatActivity {
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    Button fromDate,toDate;
+    TextView totrec;
+    String fromdate;
+    String todate;
+    String strvehiclenumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,11 +83,78 @@ public class GridCompleted extends AppCompatActivity {
         productiondetails= RetroApiclient_In_Tanker_Security.getinproductionApi();
         storedetails=RetroApiClient.getStoreDetails();
 
-        String strvehiclenumber;
+        fromDate=findViewById(R.id.btnfromDate);
+        toDate=findViewById(R.id.btntoDate);
+        totrec=findViewById(R.id.totrecdepartmentwise);
+        fromdate="2024-01-01";
+        todate = getCurrentDateTime();
 
-        String fromdate = "2024-01-01";
-        String todate = getCurrentDateTime();
+        fromDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the onClick for fromDate button
+                showDatePickerDialog(fromDate,true);
+            }
+        });
+
+        toDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the onClick for fromDate button
+                showDatePickerDialog(toDate,false);
+            }
+        });
         initViews();
+        getDatabydateselection();
+        rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
+        {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
+            {
+                super.onScrolled(recyclerView, dx, dy);
+                scrollX += dx;
+                headerscroll.scrollTo(scrollX, 0);
+            }
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
+            {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+        });
+
+    }
+
+    private void showDatePickerDialog(final TextView dateTextView,final boolean isFromDate) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the TextView with the selected date
+                        String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+                        dateTextView.setText(selectedDate);
+                        if (isFromDate) {
+                            fromdate = selectedDate;
+                        } else {
+                            todate = selectedDate;
+                        }
+                        getDatabydateselection();
+                    }
+                },
+                year, month, day);
+
+        // Show the date picker dialog
+        datePickerDialog.show();
+    }
+
+    private void getDatabydateselection()
+    {
+
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
         {
             if(getIntent().hasExtra("vehiclenumber")==true)
@@ -104,23 +181,8 @@ public class GridCompleted extends AppCompatActivity {
         }
         else{
         }
-
-        rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
-                super.onScrolled(recyclerView, dx, dy);
-                scrollX += dx;
-                headerscroll.scrollTo(scrollX, 0);
-            }
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
-            {
-                super.onScrollStateChanged(recyclerView, newState);
-            }
-        });
     }
+
     private String getCurrentDateTime() {
         // Get current date and time
         Calendar calendar = Calendar.getInstance();
@@ -155,6 +217,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -190,6 +254,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -225,6 +291,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -260,6 +328,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -295,6 +365,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -330,6 +402,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
