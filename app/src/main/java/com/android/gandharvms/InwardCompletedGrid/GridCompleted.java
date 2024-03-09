@@ -31,6 +31,7 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -137,17 +138,34 @@ public class GridCompleted extends AppCompatActivity {
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
                         // Update the TextView with the selected date
                         String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                        dateTextView.setText(selectedDate);
-                        if (isFromDate) {
-                            fromdate = selectedDate;
+                        if ((isFromDate || !isFromDate)) {
+                            dateTextView.setText(selectedDate);
+                            if (isFromDate) {
+                                fromdate = selectedDate;
+                            } else {
+                                todate = selectedDate;
+                            }
+                            getDatabydateselection();
                         } else {
-                            todate = selectedDate;
+                            // Show an error message or take appropriate action
+                            Toasty.warning(GridCompleted.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
                         }
-                        getDatabydateselection();
                     }
                 },
                 year, month, day);
-
+        if (isFromDate && !todate.isEmpty()) {
+            try {
+                datePickerDialog.getDatePicker().setMaxDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(todate).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else if (!isFromDate && !fromdate.isEmpty()) {
+            try {
+                datePickerDialog.getDatePicker().setMinDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(fromdate).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
         // Show the date picker dialog
         datePickerDialog.show();
     }

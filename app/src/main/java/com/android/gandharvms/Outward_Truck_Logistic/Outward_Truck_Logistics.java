@@ -242,7 +242,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
             InTrLogisticRequestModel trucklogmodel = new InTrLogisticRequestModel(inwardid, etintime, outTime,
-                    EmployeId, EmployeId, etremark, 'L', etserialnumber, etvehiclenumber,
+                    EmployeId, EmployeId, etremark, 'G', etserialnumber, etvehiclenumber,
                     etoanumber, 'W', inOut, vehicleType);
             Call<Boolean> call = logisticdetails.insertLogisticData(trucklogmodel);
             call.enqueue(new Callback<Boolean>() {
