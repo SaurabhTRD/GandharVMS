@@ -41,6 +41,9 @@ public class CommonResponseModelForAllDepartment {
     public int ContainerNo;
     public String InVehicleImage;
     public String InDriverImage;
+
+    public String OutVehicleImage;
+    public String OutDriverImage;
     public String Apperance;
     public String Odor;
     public String Color;
@@ -383,6 +386,22 @@ public class CommonResponseModelForAllDepartment {
 
     public void setInDriverImage(String inDriverImage) {
         InDriverImage = inDriverImage;
+    }
+
+    public String getOutVehicleImage() {
+        return OutVehicleImage;
+    }
+
+    public void setOutVehicleImage(String outVehicleImage) {
+        OutVehicleImage = outVehicleImage;
+    }
+
+    public String getOutDriverImage() {
+        return OutDriverImage;
+    }
+
+    public void setOutDriverImage(String outDriverImage) {
+        OutDriverImage = outDriverImage;
     }
 
     public String getApperance() {

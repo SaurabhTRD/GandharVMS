@@ -496,7 +496,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     }
 
     public void inweighmenttankergridclick(View view) {
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, it_in_weigh_Completedgrid.class);
         startActivity(intent);
     }
 }
