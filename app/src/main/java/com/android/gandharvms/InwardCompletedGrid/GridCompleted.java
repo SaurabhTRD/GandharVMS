@@ -4,12 +4,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
@@ -26,6 +31,7 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -62,6 +68,11 @@ public class GridCompleted extends AppCompatActivity {
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    Button fromDate,toDate;
+    TextView totrec;
+    String fromdate;
+    String todate;
+    String strvehiclenumber;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,29 +84,29 @@ public class GridCompleted extends AppCompatActivity {
         productiondetails= RetroApiclient_In_Tanker_Security.getinproductionApi();
         storedetails=RetroApiClient.getStoreDetails();
 
-        String fromdate = "2024-01-01";
-        String todate = getCurrentDateTime();
-        initViews();
-        if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
-        {
-            if(nextProcess=='S')
-            {
-                fetchDataFromApiforSec(fromdate,todate,vehicleType,inOut);
-            } else if (nextProcess=='W') {
-                fetchDataFromApiforweigh(fromdate,todate,vehicleType,inOut);
-            }else if (nextProcess=='M') {
-                fetchDataFromApiforSam(fromdate,todate,vehicleType,inOut);
-            }else if (nextProcess=='L') {
-                fetchDataFromApiforLab(fromdate,todate,vehicleType,inOut);
-            }else if (nextProcess=='P') {
-                fetchDataFromApiforPro(fromdate,todate,vehicleType,inOut);
-            }else if (nextProcess=='R') {
-                fetchDataFromApiforstore(fromdate,todate,vehicleType,inOut);
-            }
-        }
-        else{
-        }
+        fromDate=findViewById(R.id.btnfromDate);
+        toDate=findViewById(R.id.btntoDate);
+        totrec=findViewById(R.id.totrecdepartmentwise);
+        fromdate="2024-01-01";
+        todate = getCurrentDateTime();
 
+        fromDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the onClick for fromDate button
+                showDatePickerDialog(fromDate,true);
+            }
+        });
+
+        toDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the onClick for fromDate button
+                showDatePickerDialog(toDate,false);
+            }
+        });
+        initViews();
+        getDatabydateselection();
         rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
             @Override
@@ -111,7 +122,85 @@ public class GridCompleted extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
     }
+
+    private void showDatePickerDialog(final TextView dateTextView,final boolean isFromDate) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the TextView with the selected date
+                        String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+                        if ((isFromDate || !isFromDate)) {
+                            dateTextView.setText(selectedDate);
+                            if (isFromDate) {
+                                fromdate = selectedDate;
+                            } else {
+                                todate = selectedDate;
+                            }
+                            getDatabydateselection();
+                        } else {
+                            // Show an error message or take appropriate action
+                            Toasty.warning(GridCompleted.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                year, month, day);
+        if (isFromDate && !todate.isEmpty()) {
+            try {
+                datePickerDialog.getDatePicker().setMaxDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(todate).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else if (!isFromDate && !fromdate.isEmpty()) {
+            try {
+                datePickerDialog.getDatePicker().setMinDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(fromdate).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        // Show the date picker dialog
+        datePickerDialog.show();
+    }
+
+    private void getDatabydateselection()
+    {
+
+        if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
+        {
+            if(getIntent().hasExtra("vehiclenumber")==true)
+            {
+                strvehiclenumber= getIntent().getExtras().get("vehiclenumber").toString();
+            }
+            else{
+                strvehiclenumber="x";
+            }
+            if(nextProcess=='S')
+            {
+                fetchDataFromApiforSec(fromdate,todate,vehicleType,inOut);
+            } else if (nextProcess=='W') {
+                fetchDataFromApiforweigh(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+            }else if (nextProcess=='M') {
+                fetchDataFromApiforSam(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+            }else if (nextProcess=='L') {
+                fetchDataFromApiforLab(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+            }else if (nextProcess=='P') {
+                fetchDataFromApiforPro(fromdate,todate,vehicleType,inOut);
+            }else if (nextProcess=='R') {
+                fetchDataFromApiforstore(fromdate,todate,vehicleType,inOut);
+            }
+        }
+        else{
+        }
+    }
+
     private String getCurrentDateTime() {
         // Get current date and time
         Calendar calendar = Calendar.getInstance();
@@ -146,6 +235,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -172,15 +263,17 @@ public class GridCompleted extends AppCompatActivity {
         });
     }
 
-    public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType, char inOut) {
+    public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = WeighmentDetails.getIntankWeighListingData(FromDate, Todate, vehicleType, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call = WeighmentDetails.getIntankWeighListingData(FromDate, Todate, vehicleType, vehicleno,inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -207,15 +300,17 @@ public class GridCompleted extends AppCompatActivity {
         });
     }
 
-    public void fetchDataFromApiforSam(String FromDate,String Todate,String vehicleType, char inOut) {
+    public void fetchDataFromApiforSam(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = samplingdetails.getIntankSamplingListingData(FromDate,Todate, vehicleType, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call = samplingdetails.getIntankSamplingListingData(FromDate,Todate, vehicleType,vehicleno, inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -242,15 +337,17 @@ public class GridCompleted extends AppCompatActivity {
         });
     }
 
-    public void fetchDataFromApiforLab(String FromDate,String Todate,String vehicleType, char inOut) {
+    public void fetchDataFromApiforLab(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = LaboratoryDetails.getIntankLabListData(FromDate, Todate, vehicleType, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call = LaboratoryDetails.getIntankLabListData(FromDate, Todate, vehicleType,vehicleno,inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -286,6 +383,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }
@@ -321,6 +420,8 @@ public class GridCompleted extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body().size() > 0) {
                         List<CommonResponseModelForAllDepartment> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
                     }

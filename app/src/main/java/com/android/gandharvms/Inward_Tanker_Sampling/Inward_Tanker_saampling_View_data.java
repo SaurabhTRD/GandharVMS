@@ -55,7 +55,7 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
 
         String FromDate = getCurrentDateTime();
         String Todate = getCurrentDateTime();
-        GetInward_Tanker_saamplingListData(FromDate,Todate,vehicleType,inOut);
+        GetInward_Tanker_saamplingListData(FromDate,Todate,vehicleType,null,inOut);
 
         /*db = FirebaseFirestore.getInstance();
         db.collection("Inward Tanker Sampling").get()
@@ -86,9 +86,9 @@ public class Inward_Tanker_saampling_View_data extends AppCompatActivity {
         java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return dateFormat.format(now);
     }
-    private void GetInward_Tanker_saamplingListData(String FromDate,String Todate,String vehicletype,char inout) {
+    private void GetInward_Tanker_saamplingListData(String FromDate,String Todate,String vehicletype,String vehicleno,char inout) {
         inward_Tanker_SamplingMethod= RetroApiClient.getInward_Tanker_Sampling();
-        Call<List<CommonResponseModelForAllDepartment>> call = inward_Tanker_SamplingMethod.getIntankSamplingListingData(FromDate,Todate,vehicletype,inout);
+        Call<List<CommonResponseModelForAllDepartment>> call = inward_Tanker_SamplingMethod.getIntankSamplingListingData(FromDate,Todate,vehicletype,vehicleno,inout);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {

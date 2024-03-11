@@ -82,7 +82,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
         String FromDate = getCurrentDateTime();
         String Todate = getCurrentDateTime();
-        GetWeighmentListData(FromDate,Todate,vehicleType,inOut);
+        GetWeighmentListData(FromDate,Todate,vehicleType,null,inOut);
     }
 
     private String getCurrentDateTime() {
@@ -94,8 +94,8 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
         java.text.SimpleDateFormat dateFormat = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault());
         return dateFormat.format(now);
     }
-    private void GetWeighmentListData(String FromDate,String Todate,String vehicletype,char inout) {
-        Call<List<CommonResponseModelForAllDepartment>> call = weighmentdetails.getIntankWeighListingData(FromDate,Todate,vehicletype,inout);
+    private void GetWeighmentListData(String FromDate,String Todate,String vehicletype,String vehicleno,char inout) {
+        Call<List<CommonResponseModelForAllDepartment>> call = weighmentdetails.getIntankWeighListingData(FromDate,Todate,vehicletype,vehicleno,inout);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {

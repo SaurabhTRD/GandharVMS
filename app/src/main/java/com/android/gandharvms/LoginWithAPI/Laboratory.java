@@ -20,6 +20,7 @@ public interface Laboratory {
     Call<List<CommonResponseModelForAllDepartment>> getIntankLabListData(@Query("FromDate") String FromDate,
                                                                          @Query("Todate") String Todate,
                                                                          @Query("vehicleType") String vehicleType,
+                                                                         @Query("vehicleno")String vehicleno,
                                                                          @Query("inout") char inout);
     @GET("api/InwardLaboratory/GetLaboratoryByFetchVehicleDetails")
     Call<InTanLabResponseModel> getLabbyfetchVehData(@Query("vehicleNo") String vehicleNo,

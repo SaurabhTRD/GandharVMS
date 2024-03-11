@@ -21,6 +21,7 @@ public interface Weighment {
     Call<List<CommonResponseModelForAllDepartment>> getIntankWeighListingData(@Query("FromDate") String FromDate,
                                                                               @Query("Todate") String Todate,
                                                                               @Query("vehicleType") String vehicleType,
+                                                                              @Query("vehicleno")String vehicleno,
                                                                               @Query("inout") char inout);
     @GET("api/InwardWeighment/GetWeighmentByFetchVehicleDetails")
     Call<InTanWeighResponseModel> getWeighbyfetchVehData(@Query("vehicleNo") String vehicleNo,
