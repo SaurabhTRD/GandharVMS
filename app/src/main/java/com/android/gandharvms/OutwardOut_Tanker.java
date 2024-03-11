@@ -23,7 +23,7 @@ public class OutwardOut_Tanker extends AppCompatActivity {
     public void outwardouttankersecurity(View view){
         if(Global_Var.getInstance().Department.contains("Security")){
             Global_Var.getInstance().DeptType='S';
-            startActivity(new Intent(this, Outward_Tanker_Security.class));
+            startActivity(new Intent(this, OutwardOut_Tanker_Security.class));
         } else {
             Toasty.warning(OutwardOut_Tanker.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
         }
