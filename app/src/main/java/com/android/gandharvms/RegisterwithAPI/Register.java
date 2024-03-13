@@ -291,9 +291,9 @@ public class Register extends AppCompatActivity {
         } else if (sampling.isChecked()) {
             setRole = 3;
         } else if (production.isChecked()) {
-            setRole = 4;
-        } else if (laboratary.isChecked()) {
             setRole = 5;
+        } else if (laboratary.isChecked()) {
+            setRole = 4;
         } else if (stores.isChecked()) {
             setRole = 6;
         } else if (logistic.isChecked()) {

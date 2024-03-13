@@ -62,6 +62,9 @@ public class Lab_Model__Outward_Tanker {
     public String Blending_Ratio;
     public String Batch_No;
     public String VehicleType;
+    public boolean IsBlendingReq;
+    public boolean IsFlushingReq;
+    public String Flushing_No;
 
 
 
@@ -543,6 +546,30 @@ public class Lab_Model__Outward_Tanker {
 
     public void setVehicleType(String vehicleType) {
         VehicleType = vehicleType;
+    }
+
+    public boolean isBlendingReq() {
+        return IsBlendingReq;
+    }
+
+    public void setBlendingReq(boolean blendingReq) {
+        IsBlendingReq = blendingReq;
+    }
+
+    public boolean isFlushingReq() {
+        return IsFlushingReq;
+    }
+
+    public void setFlushingReq(boolean flushingReq) {
+        IsFlushingReq = flushingReq;
+    }
+
+    public String getFlushingNo() {
+        return Flushing_No;
+    }
+
+    public void setFlushingNo(String flushingNo) {
+        Flushing_No = flushingNo;
     }
 
     public Lab_Model__Outward_Tanker(int outwardId, String createdBy, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String blending_Ratio, String vehicleType) {

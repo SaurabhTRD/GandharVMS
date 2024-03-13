@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.R;
 
 public class inprocessrequestform extends AppCompatActivity {
@@ -18,10 +19,12 @@ public class inprocessrequestform extends AppCompatActivity {
 
     }
     public void processformproduction(View view){
+        Global_Var.getInstance().DeptType='I';
         Intent intent = new Intent(this, Outward_Tanker_Production.class);
         startActivity(intent);
     }
     public void bulkloadingproduction(View view){
+        Global_Var.getInstance().DeptType='U';
         Intent intent = new Intent(this, bulkloadingproduction.class);
         startActivity(intent);
     }

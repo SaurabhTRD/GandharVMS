@@ -59,7 +59,7 @@ public class Outward_Tanker extends AppCompatActivity {
     }
     public void productionouttanker(View view){
         if(Global_Var.getInstance().Department.contains("Production")){
-            Global_Var.getInstance().DeptType='P';
+            //Global_Var.getInstance().DeptType='P';
             startActivity(new Intent(this, inprocessrequestform.class));
         } else {
             Toasty.warning(Outward_Tanker.this, "You are not in Production Department", Toast.LENGTH_SHORT).show();

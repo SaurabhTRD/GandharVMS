@@ -47,7 +47,7 @@ import retrofit2.Response;
 public class Outward_Tanker_Billing extends AppCompatActivity {
 
     EditText intime,serialnumber,vehiclenumber,tankernumber,qty,transporter,product,tankeno,oanumber,date,pqty,partyname,location,
-    status,salesman,remark;
+    status,salesman,remark,etcust,etprod,ethowmuch;
 
     FirebaseFirestore dbroot;
     Button submit;
@@ -90,6 +90,12 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
 
         submit=findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
+
+        etcust = findViewById(R.id.etcustomer);
+        etprod = findViewById(R.id.etproduct);
+        ethowmuch = findViewById(R.id.ethowmuch);
+        location = findViewById(R.id.etloca);
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -251,8 +257,13 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         String etremark = remark.getText().toString().trim();
         String outTime = getCurrentTime();
 
+        String ucustname = etcust.getText().toString().trim();
+        String uproduct = etprod.getText().toString().trim();
+        int uhowmuch = Integer.parseInt(ethowmuch.getText().toString().trim());
+        String ulocation = location.getText().toString().trim();
+
         if (etintime.isEmpty()|| etserilnumber.isEmpty()||etvehiclenumber.isEmpty()||
-       etoanumber.isEmpty()||etdate.isEmpty()|| etremark.isEmpty()){
+       etoanumber.isEmpty()||etdate.isEmpty()|| etremark.isEmpty()|| ucustname.isEmpty()||uproduct.isEmpty()||ulocation.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
 //            Map<String,String>items = new HashMap<>();
@@ -281,7 +292,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
 //                        }
 //                    });
             Respons_Outward_Tanker_Billing responsOutwardTankerBilling = new Respons_Outward_Tanker_Billing(OutwardId,etintime,outTime,
-                    "",EmployeId,EmployeId,'B',etremark,etserilnumber,etvehiclenumber,etoanumber,'W',inOut,
+                    "",EmployeId,EmployeId,'B',etremark,etserilnumber,etvehiclenumber,etoanumber,ucustname,uproduct,uhowmuch,ulocation,'W',inOut,
                     vehicleType);
             Call<Boolean> call = outwardTankerBillinginterface.updatebillingoanumber(responsOutwardTankerBilling);
             call.enqueue(new Callback<Boolean>() {

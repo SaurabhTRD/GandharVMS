@@ -3,6 +3,7 @@ package com.android.gandharvms.outward_Tanker_Lab_forms;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Outward;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Update;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_bulkloading_model;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Request_Model_blendflush;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -48,4 +49,12 @@ public interface Outward_Tanker_Lab {
     //update production bulkloading form
     @POST("api/OutwardBulkProductionAndLaboratory/UpdateOutwardBulkProductionFormOperatorDetails")
     Call<Boolean> updatebulkloadingproduction(@Body Production_Model_Update request);
+
+    //request_flush_blending_production_to_lab
+    @POST("api/OutwardProductionAndLaboratory/BlendingnFlushingReq")
+    Call<Boolean> requestflushblend(@Body Request_Model_blendflush request);
+
+    //update_flush_blending_production_to_lab
+    @POST("api/OutwardProductionAndLaboratory/UpdateBlendingnFlushingStatus")
+    Call<Boolean> updateflushblend(@Body Blending_Flushing_Model request);
 }
