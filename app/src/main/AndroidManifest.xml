@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Inward_Tanker_Sampling.it_in_Samp_Completedgrid"
+            android:exported="false" />
+        <activity
             android:name=".Inward_Tanker_Weighment.it_in_weigh_Completedgrid"
             android:exported="false" />
         <activity

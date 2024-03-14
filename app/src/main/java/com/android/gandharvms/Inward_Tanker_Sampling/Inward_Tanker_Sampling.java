@@ -333,7 +333,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         startActivity(intent);
     }
     public void SamplingViewclick(View view){
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, it_in_Samp_Completedgrid.class);
         startActivity(intent);
     }
 }

@@ -81,7 +81,7 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
         int secintimelength = club.getSecIntime().length();
         if(secintimelength>0)
         {
-            holder.secintime.setText(club.getSecIntime().substring(12, secintimelength));
+            holder.secintime.setText(club.getSecIntime());
         }
         int secouttimelength = club.getSecOuttime().length();
         if(secouttimelength>0)
