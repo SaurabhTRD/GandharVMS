@@ -14,8 +14,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -60,7 +63,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
     ArrayAdapter<String> adapterItems;
     EditText intime,serialnum,vehiclnum,blendingratio,appreance,color,odor,kv40,density25,kv100,viscosity,tbn,anlinepoint,
             breakdownvoltage,ddf,watercontent,interfacialtension,flashpoint,pourpoint,rcstest,remark,approveqc,dt,samplecondition,samplerecivdt,samplereleasedate
-            ,correctionrequird;
+            ,correctionrequird,etflushpara;
     TextInputLayout retil;
     CardView btnc;
 
@@ -79,6 +82,9 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
     private String token;
     private LoginMethod userDetails;
     private String labvehicl;
+    public RadioButton etisblendingyes,etisblendingno,etisflushingyes,etisflushingno;
+    public CheckBox cisblending,cisflushing;
+    public LinearLayout etbelow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +107,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         intime = findViewById(R.id.etintime);
         serialnum = findViewById(R.id.etserialnumber);
         vehiclnum = findViewById(R.id.etvehicleno);
-        blendingratio = findViewById(R.id.elblendingratio);
+//        blendingratio = findViewById(R.id.elblendingratio);
         appreance = findViewById(R.id.etapperance);
         color = findViewById(R.id.etcolor);
         odor = findViewById(R.id.etodor);
@@ -129,12 +135,29 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
 
         retil = findViewById(R.id.remarktil);
         btnc = findViewById(R.id.btncdview);
+        etbelow = findViewById(R.id.belowflush);
 
 
 
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
+
+        etisblendingyes = findViewById(R.id.outwaoutrb_blendingYes);
+        etisblendingno = findViewById(R.id.outwaourb_blendingNo);
+        etisflushingyes = findViewById(R.id.outwaoutrb_flushingYes);
+        etisflushingno = findViewById(R.id.outwaourb_flushingNo);
+
+        cisblending = findViewById(R.id.isblendinglab);
+        cisflushing = findViewById(R.id.isflushinglab);
+        etflushpara = findViewById(R.id.etflushingpara);
+
+        cisflushing.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            checkbelowparam();
+        });
+        cisblending.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            checkbelowparam();
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -145,7 +168,8 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendblendingratio();
+//                sendblendingratio();
+                sendflusblend();
             }
         });
 
@@ -282,23 +306,68 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
     }
 
 
-    private void sendblendingratio() {
-        String userialnumber = serialnum.getText().toString().trim();
-        String uvehiclnum = vehiclnum.getText().toString().trim();
-        String blending = blendingratio.getText().toString().trim();
+//    private void sendblendingratio() {
+//        String userialnumber = serialnum.getText().toString().trim();
+//        String uvehiclnum = vehiclnum.getText().toString().trim();
+//        String blending = blendingratio.getText().toString().trim();
+//
+//        if (userialnumber.isEmpty()||uvehiclnum.isEmpty()||blending.isEmpty()){
+//            Toast.makeText(this, "all field must be filled", Toast.LENGTH_SHORT).show();
+//        }else {
+//            Lab_Model__Outward_Tanker labModel__outwardTanker = new Lab_Model__Outward_Tanker(OutwardId,EmployeId,EmployeId,userialnumber,
+//                    uvehiclnum,'P',inOut,blending,vehicleType);
+//            Call<Boolean> call =outwardTankerLab.addblendingration(labModel__outwardTanker);
+//            call.enqueue(new Callback<Boolean>() {
+//                @Override
+//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                    if (response.isSuccessful() && response.body() && response.body() == true){
+//
+//                        Toast.makeText(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+//                    }else {
+//                        Log.e("Retrofit", "Error Response Body: " + response.code());
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Boolean> call, Throwable t) {
+//
+//                    Log.e("Retrofit", "Failure: " + t.getMessage());
+//                    // Check if there's a response body in case of an HTTP error
+//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+//                        Response<?> response = ((HttpException) t).response();
+//                        if (response != null) {
+//                            Log.e("Retrofit", "Error Response Code: " + response.code());
+//                            try {
+//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                    Toasty.error(Outward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
+//    }
 
-        if (userialnumber.isEmpty()||uvehiclnum.isEmpty()||blending.isEmpty()){
-            Toast.makeText(this, "all field must be filled", Toast.LENGTH_SHORT).show();
+    public void sendflusblend(){
+        String fintime = intime.getText().toString().trim();
+        char blendingstatus= etisblendingyes.isChecked() ? 'Y' : 'N';
+        char flushingstatus = etisflushingyes.isChecked() ? 'Y' : 'N';
+        String outTime = getCurrentTime();
+
+        if (fintime.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
-            Lab_Model__Outward_Tanker labModel__outwardTanker = new Lab_Model__Outward_Tanker(OutwardId,EmployeId,EmployeId,userialnumber,
-                    uvehiclnum,'P',inOut,blending,vehicleType);
-            Call<Boolean> call =outwardTankerLab.addblendingration(labModel__outwardTanker);
+
+            Blending_Flushing_Model blendingFlushingModel = new Blending_Flushing_Model(OutwardId,fintime,outTime,flushingstatus,
+                    blendingstatus,0,EmployeId,'I',inOut,vehicleType);
+            Call<Boolean> call = outwardTankerLab.updateflushblend(blendingFlushingModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
-
-                        Toast.makeText(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Outward_Tanker_Laboratory.this,"Data Inserted Successfully",Toasty.LENGTH_SHORT,true).show();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
@@ -323,6 +392,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                     Toasty.error(Outward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
+
         }
     }
 
@@ -342,82 +412,93 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
 
                         serialnum.setEnabled(false);
                         vehiclnum.setEnabled(false);
-                        if (data.getBlending_Ratio() != null ){
-                        if (data.getBlending_Ratio().isEmpty() ){
-                            intime.setVisibility(View.GONE);
-                            appreance.setVisibility(View.GONE);
-                            color.setVisibility(View.GONE);
-                            odor.setVisibility(View.GONE);
-                            density25.setVisibility(View.GONE);
-                            kv40.setVisibility(View.GONE);
-                            kv100.setVisibility(View.GONE);
-                            viscosity.setVisibility(View.GONE);
-//                            tbn.setVisibility(View.GONE);
-                            anlinepoint.setVisibility(View.GONE);
-                            breakdownvoltage.setVisibility(View.GONE);
-                            ddf.setVisibility(View.GONE);
-                            watercontent.setVisibility(View.GONE);
-                            interfacialtension.setVisibility(View.GONE);
-                            flashpoint.setVisibility(View.GONE);
-                            pourpoint.setVisibility(View.GONE);
-                            rcstest.setVisibility(View.GONE);
-
-                            samplecondition.setVisibility(View.GONE);
-                            samplerecivdt.setVisibility(View.GONE);
-                            samplereleasedate.setVisibility(View.GONE);
-                            correctionrequird.setVisibility(View.GONE);
-                            tbn.setVisibility(View.GONE);
-                          //  remark.setVisibility(View.GONE);
-//                            autoCompleteTextView.setVisibility(View.GONE);
-                            retil.setVisibility(View.GONE);
-                            btnc.setVisibility(View.GONE);
-
-//                            autoCompleteTextView.setVisibility(View.GONE);
-//                            approveqc.setVisibility(View.GONE);
-//                            dt.setVisibility(View.GONE);
-//                            remark.setVisibility(View.GONE);
-//                            sendbtn.setEnabled(true);
-
-                        }else {
-                            blendingratio.setText(data.getBlending_Ratio());
-                            intime.setVisibility(View.VISIBLE);
-                            appreance.setVisibility(View.VISIBLE);
-                            color.setVisibility(View.VISIBLE);
-                            odor.setVisibility(View.VISIBLE);
-                            density25.setVisibility(View.VISIBLE);
-                            kv40.setVisibility(View.VISIBLE);
-                            kv100.setVisibility(View.VISIBLE);
-                            viscosity.setVisibility(View.VISIBLE);
-//                            tbn.setVisibility(View.GONE);
-                            anlinepoint.setVisibility(View.VISIBLE);
-                            breakdownvoltage.setVisibility(View.VISIBLE);
-                            ddf.setVisibility(View.VISIBLE);
-                            watercontent.setVisibility(View.VISIBLE);
-                            interfacialtension.setVisibility(View.VISIBLE);
-                            flashpoint.setVisibility(View.VISIBLE);
-                            pourpoint.setVisibility(View.VISIBLE);
-                            rcstest.setVisibility(View.VISIBLE);
-
-                            samplecondition.setVisibility(View.VISIBLE);
-                            samplerecivdt.setVisibility(View.VISIBLE);
-                            samplereleasedate.setVisibility(View.VISIBLE);
-                            correctionrequird.setVisibility(View.VISIBLE);
-                            tbn.setVisibility(View.VISIBLE);
-                            //  remark.setVisibility(View.GONE);
-//                            autoCompleteTextView.setVisibility(View.GONE);
-                            retil.setVisibility(View.VISIBLE);
-                            btnc.setVisibility(View.VISIBLE);
-                            sendbtn.setVisibility(View.GONE);
 
 
-//                            autoCompleteTextView.setEnabled(true);
-//                            remark.setEnabled(true);
+                       cisblending.setChecked(true);
+                       cisflushing.setChecked(true);
+                       cisblending.setEnabled(false);
+                       cisflushing.setEnabled(false);
+                       etflushpara.setText(data.getFlushingNo());
+                       etflushpara.setEnabled(false);
 
-                        }
 
-                        }else {
-                            Toasty.warning(Outward_Tanker_Laboratory.this, "Not Exist Blending Ratio..!", Toast.LENGTH_SHORT).show();
-                        }
+
+//                        if (data.getBlending_Ratio() != null ){
+////                        if (data.getBlending_Ratio().isEmpty() ){
+////                            intime.setVisibility(View.GONE);
+////                            appreance.setVisibility(View.GONE);
+////                            color.setVisibility(View.GONE);
+////                            odor.setVisibility(View.GONE);
+////                            density25.setVisibility(View.GONE);
+////                            kv40.setVisibility(View.GONE);
+////                            kv100.setVisibility(View.GONE);
+////                            viscosity.setVisibility(View.GONE);
+//////                            tbn.setVisibility(View.GONE);
+////                            anlinepoint.setVisibility(View.GONE);
+////                            breakdownvoltage.setVisibility(View.GONE);
+////                            ddf.setVisibility(View.GONE);
+////                            watercontent.setVisibility(View.GONE);
+////                            interfacialtension.setVisibility(View.GONE);
+////                            flashpoint.setVisibility(View.GONE);
+////                            pourpoint.setVisibility(View.GONE);
+////                            rcstest.setVisibility(View.GONE);
+////
+////                            samplecondition.setVisibility(View.GONE);
+////                            samplerecivdt.setVisibility(View.GONE);
+////                            samplereleasedate.setVisibility(View.GONE);
+////                            correctionrequird.setVisibility(View.GONE);
+////                            tbn.setVisibility(View.GONE);
+////                          //  remark.setVisibility(View.GONE);
+//////                            autoCompleteTextView.setVisibility(View.GONE);
+////                            retil.setVisibility(View.GONE);
+////                            btnc.setVisibility(View.GONE);
+////
+//////                            autoCompleteTextView.setVisibility(View.GONE);
+//////                            approveqc.setVisibility(View.GONE);
+//////                            dt.setVisibility(View.GONE);
+//////                            remark.setVisibility(View.GONE);
+//////                            sendbtn.setEnabled(true);
+////
+////                        }else {
+////                            blendingratio.setText(data.getBlending_Ratio());
+////                            intime.setVisibility(View.VISIBLE);
+////                            appreance.setVisibility(View.VISIBLE);
+////                            color.setVisibility(View.VISIBLE);
+////                            odor.setVisibility(View.VISIBLE);
+////                            density25.setVisibility(View.VISIBLE);
+////                            kv40.setVisibility(View.VISIBLE);
+////                            kv100.setVisibility(View.VISIBLE);
+////                            viscosity.setVisibility(View.VISIBLE);
+//////                            tbn.setVisibility(View.GONE);
+////                            anlinepoint.setVisibility(View.VISIBLE);
+////                            breakdownvoltage.setVisibility(View.VISIBLE);
+////                            ddf.setVisibility(View.VISIBLE);
+////                            watercontent.setVisibility(View.VISIBLE);
+////                            interfacialtension.setVisibility(View.VISIBLE);
+////                            flashpoint.setVisibility(View.VISIBLE);
+////                            pourpoint.setVisibility(View.VISIBLE);
+////                            rcstest.setVisibility(View.VISIBLE);
+////
+////                            samplecondition.setVisibility(View.VISIBLE);
+////                            samplerecivdt.setVisibility(View.VISIBLE);
+////                            samplereleasedate.setVisibility(View.VISIBLE);
+////                            correctionrequird.setVisibility(View.VISIBLE);
+////                            tbn.setVisibility(View.VISIBLE);
+////                            //  remark.setVisibility(View.GONE);
+//////                            autoCompleteTextView.setVisibility(View.GONE);
+////                            retil.setVisibility(View.VISIBLE);
+////                            btnc.setVisibility(View.VISIBLE);
+////                            sendbtn.setVisibility(View.GONE);
+////
+////
+//////                            autoCompleteTextView.setEnabled(true);
+//////                            remark.setEnabled(true);
+////
+////                        }
+//
+//                        }else {
+//                            Toasty.warning(Outward_Tanker_Laboratory.this, "Not Exist Blending Ratio..!", Toast.LENGTH_SHORT).show();
+//                        }
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -442,6 +523,37 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                 }
             }
         });
+    }
+    public void checkbelowparam(){
+        if (cisflushing.isChecked() && cisblending.isChecked())
+        {
+            if (cisflushing.isChecked()){
+                etflushpara.setVisibility(View.VISIBLE);
+            }else {
+                etflushpara.setVisibility(View.GONE);
+            }
+
+            sendbtn.setVisibility(View.VISIBLE);
+            etbelow.setVisibility(View.GONE);
+        }
+        else if(cisflushing.isChecked() || cisblending.isChecked())
+        {
+
+            if (cisflushing.isChecked()){
+                etflushpara.setVisibility(View.VISIBLE);
+            }else {
+                etflushpara.setVisibility(View.GONE);
+            }
+            sendbtn.setVisibility(View.VISIBLE);
+            etbelow.setVisibility(View.GONE);
+        }
+        else if(!cisflushing.isChecked() && !cisblending.isChecked()){
+            // Hide the TextInputLayout and Button
+            etflushpara.setVisibility(View.GONE);
+            sendbtn.setVisibility(View.GONE);
+//                clinerar.setVisibility(View.GONE);
+            etbelow.setVisibility(View.VISIBLE);
+        }
     }
 
     public void insert(){

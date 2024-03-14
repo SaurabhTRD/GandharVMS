@@ -13,8 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -60,8 +62,8 @@ import retrofit2.Response;
 public class Outward_Tanker_Production extends AppCompatActivity {
 
     EditText intime,serialnumber,vehiclenumber,blenderno,transporter,product,howmuch,customer,location,blendingratio,batchno,
-            productspesification,custref,packingsatus,rinsingstatus,decisionrule,blendingmaterial,signof,dt,oanum,remark;
-    Button submit;
+            productspesification,custref,packingsatus,rinsingstatus,decisionrule,blendingmaterial,signof,dt,oanum,remark,etflush;
+    Button submit,etsend;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -81,6 +83,10 @@ public class Outward_Tanker_Production extends AppCompatActivity {
     private LoginMethod userDetails;
     private String nvehiclenumber;
 
+    private CheckBox isblending,isflushing;
+    public LinearLayout clinerar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,6 +94,23 @@ public class Outward_Tanker_Production extends AppCompatActivity {
 
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
+
+        isblending =findViewById(R.id.isblending);
+        isflushing = findViewById(R.id.isflushing);
+        etflush = findViewById(R.id.etflushingno);
+        etsend = findViewById(R.id.sendbtn);
+        clinerar = findViewById(R.id.checklinear);
+
+        etflush.setVisibility(View.GONE);
+        etsend.setVisibility(View.GONE);
+
+        isflushing.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            ischecktoDisplay();
+        });
+        isblending.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            ischecktoDisplay();
+        });
+
 
         autoCompleteTextView = findViewById(R.id.etpackingstatus);
         adapterItems = new ArrayAdapter<String>(this,R.layout.packing_status_dropdown,items);
@@ -135,6 +158,12 @@ public class Outward_Tanker_Production extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 insert();
+            }
+        });
+        etsend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                request();
             }
         });
 
@@ -189,6 +218,39 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         });
 
     }
+
+    public void ischecktoDisplay(){
+        if (isflushing.isChecked() && isblending.isChecked())
+        {
+            if (isflushing.isChecked()){
+                etflush.setVisibility(View.VISIBLE);
+            }else {
+                etflush.setVisibility(View.GONE);
+            }
+
+                    etsend.setVisibility(View.VISIBLE);
+                    clinerar.setVisibility(View.GONE);
+                }
+        else if(isflushing.isChecked() || isblending.isChecked())
+        {
+
+            if (isflushing.isChecked()){
+                etflush.setVisibility(View.VISIBLE);
+            }else {
+                etflush.setVisibility(View.GONE);
+            }
+            etsend.setVisibility(View.VISIBLE);
+            clinerar.setVisibility(View.GONE);
+        }
+        else if(!isflushing.isChecked() && !isblending.isChecked()){
+                    // Hide the TextInputLayout and Button
+                    etflush.setVisibility(View.GONE);
+                    etsend.setVisibility(View.GONE);
+//                clinerar.setVisibility(View.GONE);
+                    clinerar.setVisibility(View.VISIBLE);
+                }
+
+    }
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
@@ -241,7 +303,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
     }
 
 
-    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
+    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
         Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo,vehicleType,nextProcess,inOut);
         call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
             @Override
@@ -260,7 +322,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                         howmuch.setText(String.valueOf(data.getHowMuchQuantityFilled()));
                         customer.setText(data.getCustomerName());
                         location.setText(data.getLocation());
-                        blendingratio.setText(data.getBlending_Ratio());
+//                        blendingratio.setText(data.getBlending_Ratio());
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -292,6 +354,63 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         return sdf.format(new Date());
     }
 
+    public void request(){
+        String rintime = intime.getText().toString().trim();
+        String rserialno = serialnumber.getText().toString().trim();
+        String rvehicle = vehiclenumber.getText().toString().trim();
+        String rflushing = etflush.getText().toString().trim();
+        String outTime = getCurrentTime();
+        boolean rblending = false;
+        if (isblending.isChecked()){
+            rblending = true;
+        }
+        boolean reflushing = false;
+        if (isflushing.isChecked()){
+            reflushing= true;
+        }
+        if (rintime.isEmpty()||rserialno.isEmpty()||rvehicle.isEmpty()||rflushing.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
+        }else {
+
+            Request_Model_blendflush requestModelBlendflush = new Request_Model_blendflush(rintime,outTime,rblending,reflushing,rflushing,EmployeId,EmployeId,OutwardId,'Q',
+                    rvehicle,vehicleType,rserialno,inOut);
+            Call<Boolean> call = outwardTankerLab.requestflushblend(requestModelBlendflush);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body() == true){
+                        Toasty.success(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+                        startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
+                        finish();
+                    }else {
+                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+
+                }
+            });
+
+        }
+    }
+
     public void insert(){
 //        intime,serialnumber,vehiclenumber,blenderno,transporter,product,howmuch,customer,location,blendingratio,batchno,
 //                productspesification,custref,packingsatus,rinsingstatus,decisionrule,blendingmaterial,signof,dt;
@@ -309,8 +428,6 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         String etblendingmaterial = blendingmaterial.getText().toString().trim();
         String  etsignof = signof.getText().toString().trim();
         String etbatchno = batchno.getText().toString().trim();
-
-
 //        String etserialnumber = serialnumber.getText().toString().trim();
 //        String etvehiclnumber = vehiclenumber.getText().toString().trim();
 //        String etblenderno = blenderno.getText().toString().trim();
@@ -322,9 +439,6 @@ public class Outward_Tanker_Production extends AppCompatActivity {
 //        String etblendingratio = blendingratio.getText().toString().trim();
 //        String etproductspesification = productspesification.getText().toString().trim();
 //        String etdt = dt.getText().toString().trim();
-
-
-
 
         if (etintime.isEmpty()|| etbatchno.isEmpty()||packstatus.isEmpty()||etrinisingstatus.isEmpty()||etdecisionrule.isEmpty()||etblendingmaterial.isEmpty()||etsignof.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();

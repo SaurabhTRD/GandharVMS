@@ -79,7 +79,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         tareweight =findViewById(R.id.ettareweight);
         tankernumber = findViewById(R.id.ettankernumber);
         etremark = findViewById(R.id.etremark);
-        product = findViewById(R.id.etproduct);
+//        product = findViewById(R.id.etproduct);
         howmuchqty = findViewById(R.id.ethowmuchqtyfill);
         elocation = findViewById(R.id.etlocation);
 
@@ -189,6 +189,9 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
                         serialnumber.setEnabled(false);
                         oanum.setEnabled(false);
                         vehiclenumber.setEnabled(false);
+                        materialname.setText(data.getMaterialName());
+                        custname.setText(data.getCustomerName());
+                        howmuchqty.setText(String.valueOf(data.getHowMuchQuantityFilled()));
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -225,19 +228,18 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         String etintime = intime.getText().toString().trim();
         String etserialnumber = serialnumber.getText().toString().trim();
         String etvehiclenumber = vehiclenumber.getText().toString().trim();
-        String etmaterialname = materialname.getText().toString().trim();
-        String  etcustname = custname.getText().toString().trim();
-        String etoam = oanum.getText().toString().trim();
+//        String etmaterialname = materialname.getText().toString().trim();
+//        String  etcustname = custname.getText().toString().trim();
+//        String etoam = oanum.getText().toString().trim();
         String ettareweight = tareweight.getText().toString().trim();
         String outTime = getCurrentTime();
-        int tankno = Integer.parseInt(tankernumber.getText().toString().trim());
+//        int tankno = Integer.parseInt(tankernumber.getText().toString().trim());
         String uremark = etremark.getText().toString().trim();
-        String uprodcut = product.getText().toString().trim();
-        int uhowmuch = Integer.parseInt(howmuchqty.getText().toString().trim());
-        String ulocation = elocation.getText().toString().trim();
+//        String uprodcut = product.getText().toString().trim();
+//        int uhowmuch = Integer.parseInt(howmuchqty.getText().toString().trim());
+//        String ulocation = elocation.getText().toString().trim();
 
-        if (etintime.isEmpty()|| etserialnumber.isEmpty()|| etvehiclenumber.isEmpty()|| etmaterialname.isEmpty()|| etcustname.isEmpty()||
-        etoam.isEmpty() || ettareweight.isEmpty()||uremark.isEmpty()){
+        if (etintime.isEmpty()|| etserialnumber.isEmpty()|| etvehiclenumber.isEmpty()|| ettareweight.isEmpty()||uremark.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }
         else {
@@ -257,11 +259,10 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
 //                            Toast.makeText(Outward_Tanker_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
 //                        }
 //                    });
-
             Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(OutwardId,etintime,
                    outTime,"","","","","","",ettareweight,"",
-                    "","","",'W',uremark,EmployeId,"",etmaterialname,
-                    etcustname,tankno,uprodcut,uhowmuch,ulocation,'L',inOut,vehicleType);
+                    "","","",'W',uremark,EmployeId,EmployeId,"",
+                    "",0,"",0,"",'I',inOut,vehicleType,etserialnumber,etvehiclenumber);
             Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override

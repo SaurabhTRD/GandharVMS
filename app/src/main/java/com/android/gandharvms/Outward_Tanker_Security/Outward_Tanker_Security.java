@@ -123,7 +123,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         place = findViewById(R.id.etplace);
         mobilenum = findViewById(R.id.etmobilenumber);
         edremark = findViewById(R.id.etremark);
-        capacityvehicle = findViewById(R.id.etcapacityofvehicle);
+//        capacityvehicle = findViewById(R.id.etcapacityofvehicle);
 
         rbvehpermityes = findViewById(R.id.vehiclepermityes);
         rbvehpermitno = findViewById(R.id.vehiclepermitno);
@@ -484,7 +484,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         String etmobilenum = mobilenum.getText().toString().trim();
         String remark = edremark.getText().toString().trim();
         String outTime = getCurrentTime();
-        String capacity = capacityvehicle.getText().toString().trim();
+//        String capacity = capacityvehicle.getText().toString().trim();
 
         String permitselection = rbvehpermityes.isChecked() ? "Yes" : "No";
         String pucselection = rbpucyes.isChecked() ? "Yes" : "No";
@@ -519,7 +519,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
             Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, etintime,
                     outTime, etkl, etplace, permitselection, pucselection, insuranceselection, vehfitnesselection, licselection, rcselection, "", "",
                     "", "", remark, "", "", "", "", "", outTime, EmployeId,  false,
-                    "", 'S', etserialnum, etvehiclnum, ettransname, etmobilenum, capacity, "",
+                    "", 'S', etserialnum, etvehiclnum, ettransname, etmobilenum, "", "",
                     date, "", "", "", 0, "", 0, "",
                     'B', inOut, vehicleType, etintime, "");
 

@@ -9,7 +9,7 @@ public class RetroApiclient_In_Tanker_Security {
 
     private static Retrofit retrofit = null;
 
-    private static String BASE_URL = "https://gandhar.azurewebsites.net/";
+    private static String BASE_URL = "https://gandhardevapi.azurewebsites.net/";
 
     public static Retrofit getRetrofit() {
         if (retrofit == null){

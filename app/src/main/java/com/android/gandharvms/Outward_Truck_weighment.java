@@ -259,7 +259,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                     outTime,"","","","","","",ettareweight,
                     "","","","",'W',uremark,EmployeId,"",
                     etmaterial,etcustomer,0,"",0,"",'D',inOut,
-                    vehicleType);
+                    vehicleType,"","");
             Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override
