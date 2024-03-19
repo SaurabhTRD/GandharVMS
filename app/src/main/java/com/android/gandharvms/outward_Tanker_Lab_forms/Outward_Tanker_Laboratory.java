@@ -19,6 +19,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -28,6 +29,7 @@ import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -58,33 +60,39 @@ import retrofit2.Response;
 
 public class Outward_Tanker_Laboratory extends AppCompatActivity {
 
-    String [] items = {"OK","Not OK","Correction"};
-    AutoCompleteTextView autoCompleteTextView;
-    ArrayAdapter<String> adapterItems;
-    EditText intime,serialnum,vehiclnum,blendingratio,appreance,color,odor,kv40,density25,kv100,viscosity,tbn,anlinepoint,
-            breakdownvoltage,ddf,watercontent,interfacialtension,flashpoint,pourpoint,rcstest,remark,approveqc,dt,samplecondition,samplerecivdt,samplereleasedate
-            ,correctionrequird,etflushpara;
-    TextInputLayout retil;
-    CardView btnc;
-
-    Button submit,sendbtn;
-    FirebaseFirestore dbroot;
-    TimePickerDialog tpicker;
-    Calendar calendar = Calendar.getInstance();
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
-    private int OutwardId;
-    private Outward_Tanker_Lab outwardTankerLab;
+    public RadioButton etisblendingyes, etisblendingno, etisflushingyes, etisflushingno;
+    public CheckBox cisblending, cisflushing;
+    public LinearLayout etbelow;
+    public char blendingstatus;
+    public char flushingstatus;
+    public int statuscount;
+    public String labintime;
+    String[] items = {"OK", "Not OK", "Correction"};
+    AutoCompleteTextView autoCompleteTextView;
+    ArrayAdapter<String> adapterItems;
+    EditText intime, serialnum, vehiclnum, blendingratio, appreance, color, odor, kv40, density25, kv100, viscosity, tbn, anlinepoint,
+            breakdownvoltage, ddf, watercontent, interfacialtension, flashpoint, pourpoint, rcstest, remark,
+            approveqc, dt, samplecondition, samplerecivdt, samplereleasedate, correctionrequird, etflushpara
+            ,restivity,infrared;
+    TextInputLayout retil;
+    CardView btnc;
+    Button submit, sendbtn;
+    FirebaseFirestore dbroot;
+    TimePickerDialog tpicker;
+    Calendar calendar = Calendar.getInstance();
     SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     DatePickerDialog picker;
+    private int OutwardId;
+    private Outward_Tanker_Lab outwardTankerLab;
     private String token;
     private LoginMethod userDetails;
     private String labvehicl;
-    public RadioButton etisblendingyes,etisblendingno,etisflushingyes,etisflushingno;
-    public CheckBox cisblending,cisflushing;
-    public LinearLayout etbelow;
+    public RadioGroup blendingyesno,flushingyesno;
+    private int etkv40, etkv100,etviscosity,etanlinepoint,etbreakdown,etdensity25;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,13 +102,13 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         userDetails = RetroApiClient.getLoginApi();
 
         autoCompleteTextView = findViewById(R.id.etremark);
-        adapterItems = new ArrayAdapter<String>(this,R.layout.dropdown_outward_securitytanker,items);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.dropdown_outward_securitytanker, items);
         autoCompleteTextView.setAdapter(adapterItems);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item"+items, Toast.LENGTH_SHORT).show();
+                Toasty.success(getApplicationContext(), "Remark:- " + items + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -125,23 +133,23 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         pourpoint = findViewById(R.id.etpourpoint);
         rcstest = findViewById(R.id.etrcstest);
         remark = findViewById(R.id.etremark);
-//        approveqc= findViewById(R.id.etapprove);
-//        dt = findViewById(R.id.etdatetime);
         sendbtn = findViewById(R.id.saveButton);
         samplecondition = findViewById(R.id.etsamplecondition);
         samplerecivdt = findViewById(R.id.etsampledt);
         samplereleasedate = findViewById(R.id.etsamplereleasedate);
         correctionrequird = findViewById(R.id.etcorrection);
+        restivity=findViewById(R.id.etotinprocesslabrestivity);
+        infrared=findViewById(R.id.etotinprocesslabInfrared);
+
+        blendingyesno=findViewById(R.id.isblendingyesno);
+        flushingyesno=findViewById(R.id.isflushingyesno);
 
         retil = findViewById(R.id.remarktil);
         btnc = findViewById(R.id.btncdview);
         etbelow = findViewById(R.id.belowflush);
 
-
-
-
         submit = findViewById(R.id.etssubmit);
-        dbroot= FirebaseFirestore.getInstance();
+        dbroot = FirebaseFirestore.getInstance();
 
         etisblendingyes = findViewById(R.id.outwaoutrb_blendingYes);
         etisblendingno = findViewById(R.id.outwaourb_blendingNo);
@@ -159,39 +167,42 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
             checkbelowparam();
         });
 
+        etbelow.setVisibility(View.GONE);
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    insert();
+                insert();
             }
         });
         sendbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                sendblendingratio();
-                sendflusblend();
+                if (blendingstatus == 'x' || flushingstatus == 'x') {
+                    updatefirst();
+                } else {
+                    updatesecond();
+                }
             }
         });
 
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
-                // Array of month abbreviations
-                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-                picker = new DatePickerDialog(Outward_Tanker_Laboratory.this, new DatePickerDialog.OnDateSetListener() {
+                Calendar calendar = Calendar.getInstance();
+                int hours = calendar.get(Calendar.HOUR_OF_DAY);
+                int mins = calendar.get(Calendar.MINUTE);
+                tpicker = new TimePickerDialog(Outward_Tanker_Laboratory.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Use the month abbreviation from the array
-                        String monthAbbreviation = monthAbbreviations[month];
-                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        intime.setText(dtFormat.format(calendar.getTime()));
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        c.set(Calendar.MINUTE, minute);
+
+                        // Set the formatted time to the EditText
+                        intime.setText(hourOfDay + ":" + minute);
                     }
-                }, year, month, day);
-                picker.show();
+                }, hours, mins, false);
+                tpicker.show();
             }
         });
         samplerecivdt.setOnClickListener(new View.OnClickListener() {
@@ -245,24 +256,23 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                 }
             }
         });
-
-
-
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Laboratory";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -278,8 +288,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -305,70 +314,30 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         });
     }
 
-
-//    private void sendblendingratio() {
-//        String userialnumber = serialnum.getText().toString().trim();
-//        String uvehiclnum = vehiclnum.getText().toString().trim();
-//        String blending = blendingratio.getText().toString().trim();
-//
-//        if (userialnumber.isEmpty()||uvehiclnum.isEmpty()||blending.isEmpty()){
-//            Toast.makeText(this, "all field must be filled", Toast.LENGTH_SHORT).show();
-//        }else {
-//            Lab_Model__Outward_Tanker labModel__outwardTanker = new Lab_Model__Outward_Tanker(OutwardId,EmployeId,EmployeId,userialnumber,
-//                    uvehiclnum,'P',inOut,blending,vehicleType);
-//            Call<Boolean> call =outwardTankerLab.addblendingration(labModel__outwardTanker);
-//            call.enqueue(new Callback<Boolean>() {
-//                @Override
-//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                    if (response.isSuccessful() && response.body() && response.body() == true){
-//
-//                        Toast.makeText(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                    }else {
-//                        Log.e("Retrofit", "Error Response Body: " + response.code());
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Boolean> call, Throwable t) {
-//
-//                    Log.e("Retrofit", "Failure: " + t.getMessage());
-//                    // Check if there's a response body in case of an HTTP error
-//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-//                        Response<?> response = ((HttpException) t).response();
-//                        if (response != null) {
-//                            Log.e("Retrofit", "Error Response Code: " + response.code());
-//                            try {
-//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                    Toasty.error(Outward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    }
-
-    public void sendflusblend(){
+    public void updatefirst() {
         String fintime = intime.getText().toString().trim();
-        char blendingstatus= etisblendingyes.isChecked() ? 'Y' : 'N';
+        char blendingstatus = etisblendingyes.isChecked() ? 'Y' : 'N';
         char flushingstatus = etisflushingyes.isChecked() ? 'Y' : 'N';
-        String outTime = getCurrentTime();
-
-        if (fintime.isEmpty()){
+        //String outTime = getCurrentTime();
+        String labouttime="";
+        if (fintime.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        }else {
-
-            Blending_Flushing_Model blendingFlushingModel = new Blending_Flushing_Model(OutwardId,fintime,outTime,flushingstatus,
-                    blendingstatus,0,EmployeId,'I',inOut,vehicleType);
+        } else {
+            if(blendingstatus == 'Y' && flushingstatus == 'Y')
+            {
+                labouttime = getCurrentTime();
+            }
+            Blending_Flushing_Model blendingFlushingModel = new Blending_Flushing_Model(OutwardId, fintime, labouttime, flushingstatus,
+                    blendingstatus, statuscount, 'I', inOut, vehicleType, EmployeId);
             Call<Boolean> call = outwardTankerLab.updateflushblend(blendingFlushingModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
-                        Toasty.success(Outward_Tanker_Laboratory.this,"Data Inserted Successfully",Toasty.LENGTH_SHORT,true).show();
-                    }else {
+                    if (response.isSuccessful() && response.body() && response.body()) {
+                        Toasty.success(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toasty.LENGTH_SHORT, true).show();
+                        startActivity(new Intent(Outward_Tanker_Laboratory.this, Outward_Tanker.class));
+                        finish();
+                    } else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
                 }
@@ -392,115 +361,115 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                     Toasty.error(Outward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
-
         }
     }
 
+    public void updatesecond() {
+        char blendingstatus = etisblendingyes.isChecked() ? 'Y' : 'N';
+        char flushingstatus = etisflushingyes.isChecked() ? 'Y' : 'N';
+        String labouttime="";
+        if(blendingstatus == 'Y' && flushingstatus == 'Y')
+        {
+            labouttime = getCurrentTime();
+        }
+        Blending_Flushing_Model blendingFlushingModel = new Blending_Flushing_Model(OutwardId, labintime, labouttime, flushingstatus,
+                blendingstatus, statuscount, 'I', inOut, vehicleType, EmployeId);
+        Call<Boolean> call = outwardTankerLab.updateflushblend(blendingFlushingModel);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() && response.body()) {
+                    Toasty.success(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toasty.LENGTH_SHORT, true).show();
+                    startActivity(new Intent(Outward_Tanker_Laboratory.this, Outward_Tanker.class));
+                    finish();
+                } else {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
-        Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo,vehicleType,nextProcess,inOut);
+        Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo, vehicleType, nextProcess, inOut);
         call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
             @Override
             public void onResponse(Call<Lab_Model__Outward_Tanker> call, Response<Lab_Model__Outward_Tanker> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Lab_Model__Outward_Tanker data = response.body();
-                    if (data.getVehicleNumber()!= ""){
+                    if (data.getVehicleNumber() != null && data.getVehicleNumber() != "") {
                         OutwardId = data.getOutwardId();
+                        statuscount = data.getStatusCount();
+                        blendingstatus = data.getBlendingStatus();
+                        flushingstatus = data.getFlushingStatus();
                         serialnum.setText(data.getSerialNumber());
-                        labvehicl= data.getVehicleNumber();
+                        labvehicl = data.getVehicleNumber();
+                        labintime = data.getIPFLabInTime();
                         vehiclnum.setText(data.getVehicleNumber());
-
                         serialnum.setEnabled(false);
                         vehiclnum.setEnabled(false);
-
-
-                       cisblending.setChecked(true);
-                       cisflushing.setChecked(true);
-                       cisblending.setEnabled(false);
-                       cisflushing.setEnabled(false);
-                       etflushpara.setText(data.getFlushingNo());
-                       etflushpara.setEnabled(false);
-
-
-
-//                        if (data.getBlending_Ratio() != null ){
-////                        if (data.getBlending_Ratio().isEmpty() ){
-////                            intime.setVisibility(View.GONE);
-////                            appreance.setVisibility(View.GONE);
-////                            color.setVisibility(View.GONE);
-////                            odor.setVisibility(View.GONE);
-////                            density25.setVisibility(View.GONE);
-////                            kv40.setVisibility(View.GONE);
-////                            kv100.setVisibility(View.GONE);
-////                            viscosity.setVisibility(View.GONE);
-//////                            tbn.setVisibility(View.GONE);
-////                            anlinepoint.setVisibility(View.GONE);
-////                            breakdownvoltage.setVisibility(View.GONE);
-////                            ddf.setVisibility(View.GONE);
-////                            watercontent.setVisibility(View.GONE);
-////                            interfacialtension.setVisibility(View.GONE);
-////                            flashpoint.setVisibility(View.GONE);
-////                            pourpoint.setVisibility(View.GONE);
-////                            rcstest.setVisibility(View.GONE);
-////
-////                            samplecondition.setVisibility(View.GONE);
-////                            samplerecivdt.setVisibility(View.GONE);
-////                            samplereleasedate.setVisibility(View.GONE);
-////                            correctionrequird.setVisibility(View.GONE);
-////                            tbn.setVisibility(View.GONE);
-////                          //  remark.setVisibility(View.GONE);
-//////                            autoCompleteTextView.setVisibility(View.GONE);
-////                            retil.setVisibility(View.GONE);
-////                            btnc.setVisibility(View.GONE);
-////
-//////                            autoCompleteTextView.setVisibility(View.GONE);
-//////                            approveqc.setVisibility(View.GONE);
-//////                            dt.setVisibility(View.GONE);
-//////                            remark.setVisibility(View.GONE);
-//////                            sendbtn.setEnabled(true);
-////
-////                        }else {
-////                            blendingratio.setText(data.getBlending_Ratio());
-////                            intime.setVisibility(View.VISIBLE);
-////                            appreance.setVisibility(View.VISIBLE);
-////                            color.setVisibility(View.VISIBLE);
-////                            odor.setVisibility(View.VISIBLE);
-////                            density25.setVisibility(View.VISIBLE);
-////                            kv40.setVisibility(View.VISIBLE);
-////                            kv100.setVisibility(View.VISIBLE);
-////                            viscosity.setVisibility(View.VISIBLE);
-//////                            tbn.setVisibility(View.GONE);
-////                            anlinepoint.setVisibility(View.VISIBLE);
-////                            breakdownvoltage.setVisibility(View.VISIBLE);
-////                            ddf.setVisibility(View.VISIBLE);
-////                            watercontent.setVisibility(View.VISIBLE);
-////                            interfacialtension.setVisibility(View.VISIBLE);
-////                            flashpoint.setVisibility(View.VISIBLE);
-////                            pourpoint.setVisibility(View.VISIBLE);
-////                            rcstest.setVisibility(View.VISIBLE);
-////
-////                            samplecondition.setVisibility(View.VISIBLE);
-////                            samplerecivdt.setVisibility(View.VISIBLE);
-////                            samplereleasedate.setVisibility(View.VISIBLE);
-////                            correctionrequird.setVisibility(View.VISIBLE);
-////                            tbn.setVisibility(View.VISIBLE);
-////                            //  remark.setVisibility(View.GONE);
-//////                            autoCompleteTextView.setVisibility(View.GONE);
-////                            retil.setVisibility(View.VISIBLE);
-////                            btnc.setVisibility(View.VISIBLE);
-////                            sendbtn.setVisibility(View.GONE);
-////
-////
-//////                            autoCompleteTextView.setEnabled(true);
-//////                            remark.setEnabled(true);
-////
-////                        }
-//
-//                        }else {
-//                            Toasty.warning(Outward_Tanker_Laboratory.this, "Not Exist Blending Ratio..!", Toast.LENGTH_SHORT).show();
-//                        }
+                        cisblending.setChecked(data.IsBlendingReq);
+                        cisflushing.setChecked(data.IsFlushingReq);
+                        cisblending.setEnabled(false);
+                        cisflushing.setEnabled(false);
+                        etflushpara.setText(data.getFlushingNo());
+                        etflushpara.setEnabled(false);
+                        if(cisblending.isChecked()==true && blendingstatus=='Y')
+                        {
+                            etisblendingyes.setChecked(true);
+                            etisblendingyes.setEnabled(false);
+                            etisblendingno.setEnabled(false);
+                        }else{
+                            etisblendingyes.setChecked(false);
+                        }
+                        if(cisflushing.isChecked()==true && flushingstatus=='Y')
+                        {
+                            etisflushingyes.setChecked(true);
+                            etisflushingyes.setEnabled(false);
+                            etisflushingno.setEnabled(false);
+                        }
+                        else {
+                            etisflushingyes.setChecked(false);
+                        }
+                        if (blendingstatus == 'Y' && flushingstatus == 'Y' && statuscount > 0) {
+                            intime.setVisibility(View.GONE);
+                            etbelow.setVisibility(View.VISIBLE);
+                            sendbtn.setVisibility(View.GONE);
+                        } else {
+                            if (statuscount > 0) {
+                                intime.setVisibility(View.GONE);
+                                sendbtn.setText("Resend");
+                                Toasty.success(Outward_Tanker_Laboratory.this, "IsBlending or IsFlushing Should Be Required.Repeat The Task", Toasty.LENGTH_SHORT, true).show();
+                            }
+                            else{
+                                /*intime.requestFocus();
+                                intime.callOnClick();*/
+                                sendbtn.setText("send");
+                            }
+                        }
+                    } else {
+                        Toasty.error(Outward_Tanker_Laboratory.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
@@ -524,30 +493,27 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
             }
         });
     }
-    public void checkbelowparam(){
-        if (cisflushing.isChecked() && cisblending.isChecked())
-        {
-            if (cisflushing.isChecked()){
+
+    public void checkbelowparam() {
+        if (cisflushing.isChecked() && cisblending.isChecked()) {
+            if (cisflushing.isChecked()) {
                 etflushpara.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 etflushpara.setVisibility(View.GONE);
             }
 
             sendbtn.setVisibility(View.VISIBLE);
             etbelow.setVisibility(View.GONE);
-        }
-        else if(cisflushing.isChecked() || cisblending.isChecked())
-        {
+        } else if (cisflushing.isChecked() || cisblending.isChecked()) {
 
-            if (cisflushing.isChecked()){
+            if (cisflushing.isChecked()) {
                 etflushpara.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 etflushpara.setVisibility(View.GONE);
             }
             sendbtn.setVisibility(View.VISIBLE);
             etbelow.setVisibility(View.GONE);
-        }
-        else if(!cisflushing.isChecked() && !cisblending.isChecked()){
+        } else if (!cisflushing.isChecked() && !cisblending.isChecked()) {
             // Hide the TextInputLayout and Button
             etflushpara.setVisibility(View.GONE);
             sendbtn.setVisibility(View.GONE);
@@ -556,10 +522,8 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         }
     }
 
-    public void insert(){
-//        intime,serialnum,vehiclnum,blendingratio,appreance,color,odor,kv40,density25,kv100,viscosity,tbn,anlinepoint,
-//                breakdownvoltage,ddf,watercontent,interfacialtension,flashpoint,pourpoint,rcstest,remark,approveqc,dt;
-        String etintime = intime.getText().toString().trim();
+    public void insert() {
+        //String etintime = intime.getText().toString().trim();
         String outTime = getCurrentTime();
         String etremark = remark.getText().toString().trim();
         String etsamplecondition = samplecondition.getText().toString().trim();
@@ -568,77 +532,155 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         String etapperance = appreance.getText().toString().trim();
         String etodor = odor.getText().toString().trim();
         String etcolor = color.getText().toString().trim();
-        int etkv40 = Integer.parseInt(kv40.getText().toString().trim());
-        int etkv100 = Integer.parseInt(kv100.getText().toString().trim());
-        int etviscosity = Integer.parseInt(viscosity.getText().toString().trim());
+        if (!kv40.getText().toString().isEmpty()) {
+            try {
+                String input = kv40.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                etkv40 = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toasty.warning(this, "KV40°C Cannot be Empty", Toast.LENGTH_SHORT).show();
+        }
+        if (!kv100.getText().toString().isEmpty()) {
+            try {
+                String input = kv100.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                etkv100 = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toasty.warning(this, "KV100°C Cannot be Empty", Toast.LENGTH_SHORT).show();
+        }
+        if(!viscosity.getText().toString().isEmpty())
+        {
+            try {
+                etviscosity=Integer.parseInt(viscosity.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toasty.warning(this, "ViscosityIndex Cannot be Empty", Toast.LENGTH_SHORT).show();
+        }
         String ettbn = tbn.getText().toString().trim();
-        int etanlinepoint = Integer.parseInt(anlinepoint.getText().toString().trim());
-        int etbreakdown = Integer.parseInt(breakdownvoltage.getText().toString().trim());
+        if(!anlinepoint.getText().toString().isEmpty())
+        {
+            try {
+                etanlinepoint=Integer.parseInt(anlinepoint.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toasty.warning(this, "AnlinePoint Cannot be Empty", Toast.LENGTH_SHORT).show();
+        }
+        if(!breakdownvoltage.getText().toString().isEmpty())
+        {
+            try {
+                etbreakdown=Integer.parseInt(breakdownvoltage.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toasty.warning(this, "BreakDownVoltage Cannot be Empty", Toast.LENGTH_SHORT).show();
+        }
         String etddf = ddf.getText().toString().trim();
         String etwatercontent = watercontent.getText().toString().trim();
         String etinetrfacial = interfacialtension.getText().toString().trim();
         String etflashpoint = flashpoint.getText().toString().trim();
-        String etpourpoint =  pourpoint.getText().toString().trim();
+        String etpourpoint = pourpoint.getText().toString().trim();
         String etrcstest = rcstest.getText().toString().trim();
         String etcorrectionrequird = correctionrequird.getText().toString().trim();
-        int etdensity25 = Integer.parseInt(density25.getText().toString().trim());
+        if (!density25.getText().toString().isEmpty()) {
+            try {
+                String input = density25.getText().toString().trim();
+                int integerValue;
 
-//        String etserialnum = serialnum.getText().toString().trim();
-//        String etvehicl = vehiclnum.getText().toString().trim();
-//        String etblending = blendingratio.getText().toString().trim();
-//        String etapprove = approveqc.getText().toString().trim();
-//        String etdt = dt.getText().toString().trim();
-        if (etintime.isEmpty() || etapperance.isEmpty()||etcolor.isEmpty()||
-                etodor.isEmpty()||ettbn.isEmpty()||etddf.isEmpty()||etwatercontent.isEmpty()||
-                etinetrfacial.isEmpty()||etflashpoint.isEmpty()||etpourpoint.isEmpty()|| etrcstest.isEmpty()||etremark.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-//            Map<String,String> items = new HashMap<>();
-//            items.put("In_Time",intime.getText().toString().trim());
-//            items.put("Serial_Number",serialnum.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclnum.getText().toString().trim());
-//            items.put("Blending_Ratio",blendingratio.getText().toString().trim());
-//            items.put("Appearance",approveqc.getText().toString().trim());
-//            items.put("Color",color.getText().toString().trim());
-//            items.put("Odor",odor.getText().toString().trim());
-//            items.put("Density_at_29.5°C",density25.getText().toString().trim());
-//            items.put("K.Viscosity_at_40°_c",kv40.getText().toString().trim());
-//            items.put("K.Viscosity_at_100°_c",kv100.getText().toString().trim());
-//            items.put("Viscosity_Index",viscosity.getText().toString().trim());
-//            items.put("TBN_TAN",tbn.getText().toString().trim());
-//            items.put("Anilin_Point",anlinepoint.getText().toString().trim());
-//            items.put("BreakDown_Voltage",breakdownvoltage.getText().toString().trim());
-//            items.put("DDF_at_90°C",ddf.getText().toString().trim());
-//            items.put("Water_Content",watercontent.getText().toString().trim());
-//            items.put("Interfacial_Tension",interfacialtension.getText().toString().trim());
-//            items.put("Flash_Point",flashpoint.getText().toString().trim());
-//            items.put("Pour_Point",pourpoint.getText().toString().trim());
-//            items.put("RCS_Test",rcstest.getText().toString().trim());
-//            items.put("Remark",remark.getText().toString().trim());
-//            items.put("Approved_By_Qc_Manager",approveqc.getText().toString().trim());
-//            items.put("Date_Time",dt.getText().toString().trim());
-//
-//            dbroot.collection("Outward_Tanker_Laboratory(In)").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
 
-            Lab_Model_insert_Outward_Tanker labModelInsertOutwardTanker = new Lab_Model_insert_Outward_Tanker(OutwardId,etintime,outTime,
-                    etremark,etsamplecondition,etsamplereceving,etsamplerelease,etapperance,etodor,etcolor,etdensity25,
-                    etkv40,etkv100,etviscosity,ettbn,etanlinepoint,etbreakdown,
-                    etddf,etwatercontent,etinetrfacial,etflashpoint,etpourpoint,etrcstest,etcorrectionrequird,
-                    EmployeId,'P',inOut,'L',vehicleType);
+                etdensity25 = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        } else {
+            Toasty.warning(this, "Density Cannot be Empty", Toast.LENGTH_SHORT).show();
+        }
+        String etrestivity=restivity.getText().toString().trim();
+        String etinfrared=infrared.getText().toString().trim();
+
+        if (etapperance.isEmpty() || etcolor.isEmpty() ||
+                etodor.isEmpty() || ettbn.isEmpty() || etddf.isEmpty() || etwatercontent.isEmpty() ||
+                etinetrfacial.isEmpty() || etflashpoint.isEmpty() || etpourpoint.isEmpty() || etrcstest.isEmpty() || etremark.isEmpty()) {
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        } else {
+            Lab_Model_insert_Outward_Tanker labModelInsertOutwardTanker = new Lab_Model_insert_Outward_Tanker(OutwardId, outTime,
+                    etremark, etsamplecondition, etsamplereceving, etsamplerelease, etapperance, etodor, etcolor, etdensity25,
+                    etkv40, etkv100, etviscosity, ettbn, etanlinepoint, etbreakdown,
+                    etddf, etwatercontent, etinetrfacial, etflashpoint, etpourpoint, etrcstest, etcorrectionrequird,etrestivity,etinfrared,
+                    EmployeId, 'U', inOut, 'L', vehicleType);
             Call<Boolean> call = outwardTankerLab.insertinprocessLaboratory(labModelInsertOutwardTanker);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
+                    if (response.isSuccessful() && response.body() && response.body()) {
                         makeNotification(labvehicl, outTime);
-                        Toast.makeText(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                    }else {
+                        Toasty.success(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_Tanker_Laboratory.this, Outward_Tanker.class));
+                        finish();
+                    } else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
                 }
@@ -666,8 +708,13 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
 
 
     }
-    public void outtankerlabinprocpending(View view){
+
+    public void outtankerlabinprocpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
+    }
+    public void otinprocesslabcompleted(View view) {
+        /*Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);*/
     }
 }

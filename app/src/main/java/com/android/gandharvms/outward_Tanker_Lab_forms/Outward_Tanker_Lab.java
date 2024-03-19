@@ -1,5 +1,6 @@
 package com.android.gandharvms.outward_Tanker_Lab_forms;
 
+import com.android.gandharvms.OutwardOutDataEntryForm_Production.otoutDataEntryProduction_RequestModel;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Outward;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Update;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_bulkloading_model;
@@ -43,7 +44,7 @@ public interface Outward_Tanker_Lab {
     );
 
     // update bulk loading outward tanker lab
-    @POST("api/OutwardBulkProductionAndLaboratory/UpdateOutwardBulkLaboratoryForm")
+    @POST("api/OutwardBulkProductionAndLaboratory/UpdateOutwardBulkLabBatchNo")
     Call<Boolean> updatebulkloadingform(@Body Lab_Model_Bulkloading request);
 
     //update production bulkloading form
@@ -57,4 +58,7 @@ public interface Outward_Tanker_Lab {
     //update_flush_blending_production_to_lab
     @POST("api/OutwardProductionAndLaboratory/UpdateBlendingnFlushingStatus")
     Call<Boolean> updateflushblend(@Body Blending_Flushing_Model request);
+
+    @POST("api/OutwardProductionAndLaboratory/UpdateDataEntryProductionData")
+    Call<Boolean> updateDataEntryFormProduction(@Body otoutDataEntryProduction_RequestModel request);
 }

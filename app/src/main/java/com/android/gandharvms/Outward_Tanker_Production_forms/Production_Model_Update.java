@@ -48,11 +48,11 @@ public class Production_Model_Update {
     public char I_O ;
     public String VehicleType ;
 
-    public Production_Model_Update(int outwardId, String tankOrBlenderNo, String bulkPqty, String batchNo, String updatedBy, char nextProcess, char i_O, String vehicleType) {
+    public Production_Model_Update(int outwardId, String tankOrBlenderNo, String bulkPqty,String proOutTime,String updatedBy, char nextProcess, char i_O, String vehicleType) {
         OutwardId = outwardId;
         TankOrBlenderNo = tankOrBlenderNo;
         BulkPqty = bulkPqty;
-        BatchNo = batchNo;
+        ProOutTime=proOutTime;
         UpdatedBy = updatedBy;
         NextProcess = nextProcess;
         I_O = i_O;

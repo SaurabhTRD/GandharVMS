@@ -30,6 +30,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".OutwardOutTankerBilling.ot_outBilling"
+            android:exported="false" />
+        <activity
+            android:name=".OutwardOutDataEntryForm_Production.DataEntryForm_Production"
+            android:exported="false" />
+        <activity
             android:name=".Inward_Tanker_Sampling.it_in_Samp_Completedgrid"
             android:exported="false" />
         <activity

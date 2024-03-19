@@ -9,13 +9,15 @@ public class Production_bulkloading_model {
     char ProductionProcess;
     String CreatedBy;
     String UpdatedBy;
-    String SerialNumber;
-    String VehicleNumber;
+    public String SerialNumber;
+    public String VehicleNumber;
     char NextProcess;
     char I_O;
     String VehicleType;
 
-    public Production_bulkloading_model(int outwardId, String proInTime, String proOutTime, String proRemark, String psign, char productionProcess, String createdBy, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String vehicleType) {
+    public Production_bulkloading_model(int outwardId, String proInTime, String proOutTime, String proRemark,
+           String psign, char productionProcess, String createdBy, String updatedBy, char nextProcess,String serialNumber
+           ,String vehicleNumber, char i_O, String vehicleType) {
         OutwardId = outwardId;
         ProInTime = proInTime;
         ProOutTime = proOutTime;
@@ -24,9 +26,9 @@ public class Production_bulkloading_model {
         ProductionProcess = productionProcess;
         CreatedBy = createdBy;
         UpdatedBy = updatedBy;
-        SerialNumber = serialNumber;
-        VehicleNumber = vehicleNumber;
         NextProcess = nextProcess;
+        SerialNumber=serialNumber;
+        VehicleNumber=vehicleNumber;
         I_O = i_O;
         VehicleType = vehicleType;
     }

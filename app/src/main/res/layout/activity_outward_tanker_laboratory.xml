@@ -30,10 +30,6 @@
         android:layout_height="650dp"
         android:orientation="vertical"
        >
-
-
-
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -92,26 +88,6 @@
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <com.google.android.material.textfield.TextInputLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-<!--            android:layout_marginLeft="30dp"-->
-<!--            android:layout_marginRight="30dp"-->
-<!--            android:layout_marginTop="10dp"-->
-
-
-<!--            >-->
-<!--            <EditText-->
-<!--                android:id="@+id/elblendingratio"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:hint="Blending Ratio"-->
-<!--                android:inputType="numberDecimal"-->
-<!--                android:textSize="17dp"-->
-<!--                android:textStyle="bold" />-->
-<!--        </com.google.android.material.textfield.TextInputLayout>-->
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,18 +130,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/isblendingyesno">
                 <RadioButton
                     android:id="@+id/outwaoutrb_blendingYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:text="Yes"/>
                 <RadioButton
                     android:id="@+id/outwaourb_blendingNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
+                    android:checked="true"
                     android:text="No"/>
             </RadioGroup>
 
@@ -193,18 +170,19 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="40dp"
                 android:layout_marginTop="10dp"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:id="@+id/isflushingyesno">
                 <RadioButton
                     android:id="@+id/outwaoutrb_flushingYes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true"
                     android:text="Yes"/>
                 <RadioButton
                     android:id="@+id/outwaourb_flushingNo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="25dp"
+                    android:checked="true"
                     android:text="No"/>
             </RadioGroup>
 
@@ -249,7 +227,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Appearance"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -269,7 +247,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Condition of Sample Received"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -288,7 +266,7 @@
                 android:id="@+id/etsampledt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Sample receving Time"
+                android:hint="Sample Receving Date"
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -309,7 +287,7 @@
                 android:id="@+id/etsamplereleasedate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Sample release time"
+                android:hint="Sample Release Date"
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -334,7 +312,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Color"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -354,7 +332,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Odor"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -434,7 +412,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Viscosity Index"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -454,7 +432,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="TBN/TAN"
-                android:inputType="numberDecimal"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -474,7 +452,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Aniline Point"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -494,7 +472,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="BreakDown Voltage"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -615,7 +593,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="RCS Test"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -656,11 +634,50 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Correction Required"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+
+                >
+                <EditText
+                    android:id="@+id/etotinprocesslabrestivity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Restivity"
+                    android:inputType="numberDecimal"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+
+
+                >
+                <EditText
+                    android:id="@+id/etotinprocesslabInfrared"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Infra-Red"
+                    android:inputType="numberDecimal"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
@@ -674,8 +691,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:orientation="horizontal">
-
-                <androidx.appcompat.widget.AppCompatButton
+                <!--<androidx.appcompat.widget.AppCompatButton
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
                     android:layout_below="@id/OUM."
@@ -684,30 +700,27 @@
                     android:textSize="22dp"
                     android:textStyle="bold">
 
-                </androidx.appcompat.widget.AppCompatButton>
+                </androidx.appcompat.widget.AppCompatButton>-->
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="100dp"
+                    android:layout_width="130dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/samplingview"
-                    android:layout_marginLeft="15dp"
-                    android:text="View"
-                    android:textSize="22dp"
+                    android:layout_marginLeft="45dp"
+                    android:text="COMPLETED"
+                    android:textSize="17dp"
                     android:textStyle="bold"
-                    android:onClick="Viewclick">
-
+                    android:onClick="otinprocesslabcompleted">
                 </androidx.appcompat.widget.AppCompatButton>
 
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/etssubmit"
-                    android:layout_width="110dp"
+                    android:layout_width="130dp"
                     android:layout_height="match_parent"
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="10dp"
-                    android:text="Update"
-
-                    android:textSize="22dp"
+                    android:text="SUBMIT"
+                    android:textSize="17dp"
                     android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>

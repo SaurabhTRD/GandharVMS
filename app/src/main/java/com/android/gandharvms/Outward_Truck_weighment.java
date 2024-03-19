@@ -230,8 +230,8 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         String etcustomer = customer.getText().toString().trim();
         String  uremark = etremark.getText().toString().trim();
 
-//        String etserialnumber = serialnumber.getText().toString().trim();
-//        String etvehiclenumber = vehiclenumber.getText().toString().trim();
+       String etserialnumber = serialnumber.getText().toString().trim();
+       String etvehiclenumber = vehiclenumber.getText().toString().trim();
 //        String etoanumber = oanumber.getText().toString().trim();
 //
 //
@@ -255,11 +255,10 @@ public class Outward_Truck_weighment extends AppCompatActivity {
 //                            Toast.makeText(Outward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
 //                        }
 //                    });
-            Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(OutwardId,etintime,
-                    outTime,"","","","","","",ettareweight,
-                    "","","","",'W',uremark,EmployeId,"",
-                    etmaterial,etcustomer,0,"",0,"",'D',inOut,
-                    vehicleType,"","");
+            Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(OutwardId,
+                    etintime, outTime,"","","","","","",
+                    ettareweight, "","","","",'W',uremark,EmployeId,
+                    "", 'D','I', vehicleType,etserialnumber,etvehiclenumber);
             Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override

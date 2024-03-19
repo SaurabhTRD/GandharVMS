@@ -15,8 +15,6 @@ public class inprocessrequestform extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inprocessrequestform);
-
-
     }
     public void processformproduction(View view){
         Global_Var.getInstance().DeptType='I';

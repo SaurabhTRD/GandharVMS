@@ -18,10 +18,11 @@ public class Production_Model_Outward {
     String Batch_No;
     String VehicleType;
 
-    public Production_Model_Outward(int outwardId, String proInTime, String proOutTime, String proRemark, int customerReferenceNumber, String packingStatus, String rinsingStatus, String decisionRuleforCustomer, String blendingMaterialStatus, String signatureofOfficer, String updatedBy, char nextProcess, char i_O, char barrelProductionProcess, String batch_No, String vehicleType) {
+    public Production_Model_Outward(int outwardId, int customerReferenceNumber, String packingStatus,
+                                    String rinsingStatus, String decisionRuleforCustomer, String blendingMaterialStatus,
+                                    String signatureofOfficer, String updatedBy, char nextProcess, char i_O,
+                                    char barrelProductionProcess,String proRemark,String proouttime, String vehicleType) {
         OutwardId = outwardId;
-        ProInTime = proInTime;
-        ProOutTime = proOutTime;
         ProRemark = proRemark;
         CustomerReferenceNumber = customerReferenceNumber;
         PackingStatus = packingStatus;
@@ -33,7 +34,7 @@ public class Production_Model_Outward {
         NextProcess = nextProcess;
         I_O = i_O;
         BarrelProductionProcess = barrelProductionProcess;
-        Batch_No = batch_No;
+        ProOutTime=proouttime;
         VehicleType = vehicleType;
     }
 

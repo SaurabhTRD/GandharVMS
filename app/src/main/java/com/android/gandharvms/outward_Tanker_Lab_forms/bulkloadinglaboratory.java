@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
@@ -22,6 +24,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Tanker_Production_forms.bulkloadingproduction;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.R;
@@ -44,13 +47,14 @@ public class bulkloadinglaboratory extends AppCompatActivity {
     String[] remark = {"OK", "NOT OK"};
     AutoCompleteTextView OKNOTOK;
     ArrayAdapter<String> remarkarray;
-    EditText intime,etserialnumber,etvehiclenumber,etflushing,etflushing1,etflushing2,etflushing3,etflushing4,etflushing5,etstatus,etremark,qcofficer;
+    EditText intime,etserialnumber,etvehiclenumber,etremark,etbatchno,etbulklabdensity;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_Tanker_Lab outwardTankerLab;
+    TimePickerDialog tpicker;
 
     Button grid,view,submit;
     private String token;
@@ -65,32 +69,24 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         setContentView(R.layout.activity_bulkloadinglaboratory);
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
 
-        OKNOTOK = findViewById(R.id.etoknotok);
-
         intime = findViewById(R.id.etintime);
         etserialnumber = findViewById(R.id.etserialno);
         etvehiclenumber = findViewById(R.id.etvehicle);
-        etflushing = findViewById(R.id.flushingno);
-        etflushing1 = findViewById(R.id.flushing1);
-        etflushing2 = findViewById(R.id.flushing2);
-        etflushing3 = findViewById(R.id.flushing3);
-        etflushing4 = findViewById(R.id.flushing4);
-        etflushing5 = findViewById(R.id.flushing5);
-        etstatus = findViewById(R.id.etoknotok);
         etremark = findViewById(R.id.remark);
-        qcofficer = findViewById(R.id.etqcsign);
+        etbatchno =findViewById(R.id.etbatchno);
+        etbulklabdensity=findViewById(R.id.etbulklabdensity25);
 
         submit= findViewById(R.id.etlabsub);
 
         remarkarray = new ArrayAdapter<String>(this, R.layout.inout, remark);
-        OKNOTOK.setAdapter(remarkarray);
+        /*OKNOTOK.setAdapter(remarkarray);
         OKNOTOK.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
                 Toast.makeText(getApplicationContext(), "Item: " + items + "Selected", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
         etvehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
@@ -101,28 +97,28 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 insert();
             }
         });
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
-                // Array of month abbreviations
-                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-                picker = new DatePickerDialog(bulkloadinglaboratory.this, new DatePickerDialog.OnDateSetListener() {
+                Calendar calendar = Calendar.getInstance();
+                int hours = calendar.get(Calendar.HOUR_OF_DAY);
+                int mins = calendar.get(Calendar.MINUTE);
+                tpicker = new TimePickerDialog(bulkloadinglaboratory.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Use the month abbreviation from the array
-                        String monthAbbreviation = monthAbbreviations[month];
-                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        intime.setText(dtFormat.format(calendar.getTime()));
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        Calendar c = Calendar.getInstance();
+                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        c.set(Calendar.MINUTE, minute);
+
+                        // Set the formatted time to the EditText
+                        intime.setText(hourOfDay + ":" + minute);
                     }
-                }, year, month, day);
-                picker.show();
+                }, hours, mins, false);
+                tpicker.show();
             }
         });
 
@@ -193,11 +189,20 @@ public class bulkloadinglaboratory extends AppCompatActivity {
             public void onResponse(Call<Lab_Model_Bulkloading> call, Response<Lab_Model_Bulkloading> response) {
                 if (response.isSuccessful()){
                     Lab_Model_Bulkloading data = response.body();
-                    if (data.getVehicleNumber()!= ""){
+                    if (data.getVehicleNumber()!= "" && data.getVehicleNumber()!=null){
                         OutwardId = data.getOutwardId();
                         etserialnumber.setText(data.getSerialNumber());
+                        etserialnumber.setEnabled(false);
                         bulklabvehiclenumber = data.getVehicleNumber();
+                        etbulklabdensity.setText(String.valueOf(data.getDensity_29_5C()));
+                        etbulklabdensity.setEnabled(false);
                         etvehiclenumber.setText(data.getVehicleNumber());
+                        etvehiclenumber.setEnabled(false);
+                        /*intime.requestFocus();
+                        intime.callOnClick();*/
+                    }
+                    else {
+                        Toasty.error(bulkloadinglaboratory.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -228,29 +233,20 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         String outTime = getCurrentTime();
         String userialnumber = etserialnumber.getText().toString().trim();
         String uvehiclenum = etvehiclenumber.getText().toString().trim();
-        int uflushing = Integer.parseInt(etflushing.getText().toString().trim());
-        int flush1 = Integer.parseInt(etflushing1.getText().toString().trim());
-        int flush2 = Integer.parseInt(etflushing2.getText().toString().trim());
-        int flush3 = Integer.parseInt(etflushing3.getText().toString().trim());
-        int flush4 = Integer.parseInt(etflushing4.getText().toString().trim());
-        int flush5 = Integer.parseInt(etflushing5.getText().toString().trim());
-        String ustatus = etstatus.getText().toString().trim();
-        String uqcoprator = qcofficer.getText().toString().trim();
+        String ubatchno = etbatchno.getText().toString().trim();
         String uremark = etremark.getText().toString().trim();
 
-        if (uintime.isEmpty()||userialnumber.isEmpty()||uvehiclenum.isEmpty()){
+        if (uintime.isEmpty()||ubatchno.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-            Lab_Model_Bulkloading labModelBulkloading = new Lab_Model_Bulkloading(OutwardId,uintime,outTime,uremark,uflushing,
-                    flush1,flush2,flush3,flush4,flush5,ustatus,uqcoprator,
-                    uqcoprator,'L',EmployeId,userialnumber,uvehiclenum,'P',inOut,vehicleType);
+            Lab_Model_Bulkloading labModelBulkloading = new Lab_Model_Bulkloading(OutwardId,uintime,outTime,ubatchno,uremark,
+                    'L',EmployeId,userialnumber,uvehiclenum,'U',inOut,vehicleType);
 
             Call<Boolean> call = outwardTankerLab.updatebulkloadingform(labModelBulkloading);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
-                        makeNotification(bulklabvehiclenumber, outTime);
                         Toasty.success(bulkloadinglaboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(bulkloadinglaboratory.this, Outward_Tanker.class));
                         finish();
@@ -285,4 +281,8 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void bulklabcompletedclick(View view){
+        /*Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);*/
+    }
 }

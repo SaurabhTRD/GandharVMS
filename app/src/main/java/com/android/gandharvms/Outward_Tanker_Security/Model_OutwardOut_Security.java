@@ -60,10 +60,10 @@ public class Model_OutwardOut_Security {
     public int OutNetWeightUOMId;
 
 
-    public Model_OutwardOut_Security(int outwardId, String invoiceNumber, String nameofParty, String descriptionofGoods, String signature, String transportLRcopy, String tremcard, String ewaybill, String test_Report, String invoice, String outInTime,String updatedBy ,char nextProcess, char i_O, String vehicleType,String outSRemark,int outQty,String outNetWeight,int outQtyUOMId,int outNetWeightUOMId) {
+    public Model_OutwardOut_Security(int outwardId, String descriptionofGoods, String signature, String transportLRcopy,
+           String tremcard, String ewaybill, String test_Report, String invoice, String outInTime,String updatedBy ,
+           char nextProcess, char i_O, String vehicleType,String outSRemark) {
         OutwardId = outwardId;
-        InvoiceNumber = invoiceNumber;
-        NameofParty = nameofParty;
         DescriptionofGoods = descriptionofGoods;
         Signature = signature;
         TransportLRcopy = transportLRcopy;
@@ -77,10 +77,5 @@ public class Model_OutwardOut_Security {
         I_O = i_O;
         VehicleType = vehicleType;
         OutSRemark = outSRemark;
-        OutQty = outQty;
-        OutNetWeight = outNetWeight;
-        OutQtyUOMId= outQtyUOMId;
-        OutNetWeightUOMId = outNetWeightUOMId;
-
     }
 }

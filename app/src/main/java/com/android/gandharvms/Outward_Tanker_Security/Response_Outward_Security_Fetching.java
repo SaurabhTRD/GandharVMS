@@ -2,6 +2,34 @@ package com.android.gandharvms.Outward_Tanker_Security;
 
 public class Response_Outward_Security_Fetching {
 
+    public String CurrStatus;
+    public String SecInTime;
+    public String SecOutTime;
+    public String WeiInTime;
+    public String WeiOutTime;
+    public String BilInTime;
+    public String BilOutTime;
+    public String IPFLabInTime;
+    public String IPFLabOutTime;
+    public String IPFProInTime;
+    public String IPFProOutTime;
+    public String BLFLabInTime;
+    public String BLFLabOutTime;
+    public String BLFProInTime;
+    public String BLFProOutTime;
+    public String DesInTime;
+    public String DesOutTime;
+    public String BRFBilInTime;
+    public String BRFBilOutTime;
+    public String BRFProInTime;
+    public String BRFProOutTime;
+    public String BRFLabInTime;
+    public String BRFLabOutTime;
+    public String NetWeight;
+    public String OutTotalQty;
+    public int OutTotalQtyUOM;
+    public String OutInvoiceNumber;
+    public String unitofmeasurementname;
     private int Id;
     private int OutwardId;
     private String InTime;
@@ -11,11 +39,11 @@ public class Response_Outward_Security_Fetching {
     private String VehiclePermit;
     private String Puc;
     private String Insurance;
-    private String  VehicleFitnessCertificate;
+    private String VehicleFitnessCertificate;
     private String DriverLicenses;
     private String RcBook;
-    private String  InvoiceNumber;
-    private String  NameofParty;
+    private String InvoiceNumber;
+    private String NameofParty;
     private String DescriptionofGoods;
     private String Signature;
     private String Remark;
@@ -51,29 +79,45 @@ public class Response_Outward_Security_Fetching {
     private char I_O;
     private String VehicleType;
 
-    public String CurrStatus;
-    public String SecInTime;
-    public String SecOutTime;
-    public String WeiInTime;
-    public String WeiOutTime;
-    public String BilInTime;
-    public String BilOutTime;
-    public String IPFLabInTime;
-    public String IPFLabOutTime;
-    public String IPFProInTime;
-    public String IPFProOutTime;
-    public String BLFLabInTime;
-    public String BLFLabOutTime;
-    public String BLFProInTime;
-    public String BLFProOutTime;
-    public String DesInTime;
-    public String DesOutTime;
-    public String BRFBilInTime;
-    public String BRFBilOutTime;
-    public String BRFProInTime;
-    public String BRFProOutTime;
-    public String BRFLabInTime;
-    public String BRFLabOutTime;
+    public String getNetWeight() {
+        return NetWeight;
+    }
+
+    public void setNetWeight(String netWeight) {
+        NetWeight = netWeight;
+    }
+
+    public String getOutTotalQty() {
+        return OutTotalQty;
+    }
+
+    public void setOutTotalQty(String outTotalQty) {
+        OutTotalQty = outTotalQty;
+    }
+
+    public int getOutTotalQtyUOM() {
+        return OutTotalQtyUOM;
+    }
+
+    public void setOutTotalQtyUOM(int outTotalQtyUOM) {
+        OutTotalQtyUOM = outTotalQtyUOM;
+    }
+
+    public String getOutInvoiceNumber() {
+        return OutInvoiceNumber;
+    }
+
+    public String getUnitofmeasurementname() {
+        return unitofmeasurementname;
+    }
+
+    public void setUnitofmeasurementname(String unitofmeasurementname) {
+        this.unitofmeasurementname = unitofmeasurementname;
+    }
+
+    public void setOutInvoiceNumber(String outInvoiceNumber) {
+        OutInvoiceNumber = outInvoiceNumber;
+    }
 
     public boolean isReporting() {
         return IsReporting;

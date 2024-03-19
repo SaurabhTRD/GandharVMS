@@ -66,7 +66,7 @@ public class Outward_Tanker extends AppCompatActivity {
         }
     }
     public void samplingouttanker(View view){
-        if(Global_Var.getInstance().Department.contains("Sampling")){
+        if(Global_Var.getInstance().Department.contains("Billing")){
             Global_Var.getInstance().DeptType='B';
             startActivity(new Intent(this, Outward_Tanker_Billing.class));
         } else {

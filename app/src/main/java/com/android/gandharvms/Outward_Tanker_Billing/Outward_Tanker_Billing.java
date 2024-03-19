@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker_Laboratory.in_tanker_lab_grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
@@ -24,6 +25,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.R;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -46,8 +48,8 @@ import retrofit2.Response;
 
 public class Outward_Tanker_Billing extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,tankernumber,qty,transporter,product,tankeno,oanumber,date,pqty,partyname,location,
-    status,salesman,remark,etcust,etprod,ethowmuch;
+    EditText intime,serialnumber,vehiclenumber,transporter,oanumber,date,location,
+    remark,etcust,etprod,ethowmuch;
 
     FirebaseFirestore dbroot;
     Button submit;
@@ -62,6 +64,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
     private int OutwardId;
     private String token;
     private LoginMethod userDetails;
+    private int uhowmuch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,33 +72,20 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
 
         outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
         userDetails = RetroApiClient.getLoginApi();
-
         setContentView(R.layout.activity_outward_tanker_billing);
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
         vehiclenumber = findViewById(R.id.etvehicleno);
-//        tankernumber = findViewById(R.id.ettankerno);
-//        qty = findViewById(R.id.etqty);
         transporter = findViewById(R.id.ettransportname);
-//        product = findViewById(R.id.etproduct);
-//        tankeno = findViewById(R.id.ettankno);
         oanumber = findViewById(R.id.etoanumber);
         date= findViewById(R.id.etdate);
-//        pqty = findViewById(R.id.etpqty);
-//        partyname = findViewById(R.id.etpartyname);
-//        location = findViewById(R.id.etlocation);
-//        status = findViewById(R.id.etstatus);
-//        salesman = findViewById(R.id.etsalesmen);
         remark = findViewById(R.id.etremark);
-
         submit=findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
-
         etcust = findViewById(R.id.etcustomer);
         etprod = findViewById(R.id.etproduct);
         ethowmuch = findViewById(R.id.ethowmuch);
         location = findViewById(R.id.etloca);
-
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -193,7 +183,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
             public void onResponse(Call<Respons_Outward_Tanker_Billing> call, Response<Respons_Outward_Tanker_Billing> response) {
                 if (response.isSuccessful()){
                     Respons_Outward_Tanker_Billing data = response.body();
-                    if (data.getVehicleNumber() != ""){
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber()!=null){
                         OutwardId = data.getOutwardId();
                         vehiclenumber.setText(data.getVehicleNumber());
                         serialnumber.setText(data.getSerialNumber());
@@ -203,8 +193,11 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                         serialnumber.setEnabled(false);
                         date.setEnabled(false);
                         transporter.setEnabled(false);
-                        oanumber.callOnClick();
-
+                        /*intime.callOnClick();
+                        intime.requestFocus();*/
+                    }
+                    else {
+                        Toasty.error(Outward_Tanker_Billing.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -237,60 +230,32 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         return sdf.format(new Date());
     }
     public void insert(){
-//        intime,serialnumber,vehiclenumber,tankernumber,qty,transporter,product,tankeno,oanumber,date,pqty,partyname,location,
-//                status,salesman,remark;
         String etintime = intime.getText().toString().trim();
         String etserilnumber = serialnumber.getText().toString().trim();
         String etvehiclenumber = vehiclenumber.getText().toString().trim();
-//        String ettankernumber = tankernumber.getText().toString().trim();
-//        String etqty = qty.getText().toString().trim();
-//        String ettransporter = transporter.getText().toString().trim();
-//        String etproduct = product .getText().toString().trim();
-//        String ettankno = tankeno.getText().toString().trim();
         String etoanumber = oanumber.getText().toString().trim();
         String etdate = date.getText().toString().trim();
-//        String etpqty = qty.getText().toString().trim();
-//        String etpartyname = partyname.getText().toString().trim();
-//        String etlocation = location.getText().toString().trim();
-//        String etstatus = status.getText().toString().trim();
-//        String etsalesman = salesman.getText().toString().trim();
         String etremark = remark.getText().toString().trim();
         String outTime = getCurrentTime();
-
         String ucustname = etcust.getText().toString().trim();
         String uproduct = etprod.getText().toString().trim();
-        int uhowmuch = Integer.parseInt(ethowmuch.getText().toString().trim());
+        if(!ethowmuch.getText().toString().isEmpty())
+        {
+            try {
+                uhowmuch=Integer.parseInt(ethowmuch.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toasty.warning(this, "How Much Quantity Is Empty", Toast.LENGTH_SHORT).show();
+        }
         String ulocation = location.getText().toString().trim();
-
         if (etintime.isEmpty()|| etserilnumber.isEmpty()||etvehiclenumber.isEmpty()||
-       etoanumber.isEmpty()||etdate.isEmpty()|| etremark.isEmpty()|| ucustname.isEmpty()||uproduct.isEmpty()||ulocation.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+       etoanumber.isEmpty()||etdate.isEmpty()|| etremark.isEmpty()|| ucustname.isEmpty()||
+                uproduct.isEmpty()||ulocation.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-//            Map<String,String>items = new HashMap<>();
-//            items.put("In_Time",intime.getText().toString().trim());
-//            items.put("Serial_Number",serialnumber.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclenumber.getText().toString().trim());
-//            items.put("Tanker_Number",tankernumber.getText().toString().trim());
-//            items.put("QTY",qty.getText().toString().trim());
-//            items.put("Transporter",transporter.getText().toString().trim());
-//            items.put("Product",product.getText().toString().trim());
-//            items.put("Tanke_No",tankeno.getText().toString().trim());
-//            items.put("OA_Number",oanumber.getText().toString().trim());
-//            items.put("Date",date.getText().toString().trim());
-//            items.put("P/Qty",pqty.getText().toString().trim());
-//            items.put("Party_Name",partyname.getText().toString().trim());
-//            items.put("Location",location.getText().toString().trim());
-//            items.put("Status",status.getText().toString().trim());
-//            items.put("Salesman",salesman.getText().toString().trim());
-//            items.put("Remark",remark.getText().toString().trim());
-//
-//            dbroot.collection("Outward Tanker Billing (IN) ").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
             Respons_Outward_Tanker_Billing responsOutwardTankerBilling = new Respons_Outward_Tanker_Billing(OutwardId,etintime,outTime,
                     "",EmployeId,EmployeId,'B',etremark,etserilnumber,etvehiclenumber,etoanumber,ucustname,uproduct,uhowmuch,ulocation,'W',inOut,
                     vehicleType);
@@ -333,5 +298,9 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
     public void outtankerbillpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
+    }
+    public void otinbilonclickevent(View view) {
+        /*Intent intent = new Intent(this, in_tanker_lab_grid.class);
+        startActivity(intent);*/
     }
 }

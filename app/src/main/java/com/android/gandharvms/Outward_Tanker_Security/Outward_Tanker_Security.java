@@ -28,6 +28,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
@@ -71,6 +72,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
     CheckBox cbox;
     private String token;
     private LoginMethod userDetails;
+    private int ukl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -317,14 +319,6 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         String serial = serialnumber.getText().toString().trim();
         String vehicle = vehiclenum.getText().toString().trim();
         String date = eddate.getText().toString().trim();
-//        String etintime = "";
-//        int etkl= 0;
-//        String ettransname = "";
-//        String etplace= "";
-//        String etmobilenum= "";
-//        String remark= "";
-//        String outTime = "";
-//        String capacity= "";
         String edremark = "";
         Boolean isreporting = false;
         if (cbox.isChecked()) {
@@ -345,7 +339,9 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true) {
-                        Toast.makeText(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_Tanker_Security.this, com.android.gandharvms.Outward_Tanker.class));
+                        finish();
                     }
                 }
 
@@ -365,7 +361,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                             }
                         }
                     }
-                    Toast.makeText(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -388,16 +384,16 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                         vehiclenum.setText(obj.getVehicleNumber());
                         vehiclenum.setEnabled(false);
                         eddate.setText(obj.getDate());
+                        eddate.setEnabled(false);
                         cbox.setChecked(true);
                         cbox.setEnabled(false);
                         saveButton.setVisibility(View.GONE);
                         reportingremark.setEnabled(false);
                         reportingremark.setVisibility(View.GONE);
-                        intime.callOnClick();
-                        eddate.setEnabled(false);
+                        /*intime.callOnClick();*/
                     }
                 } else {
-                    Log.e("Retrofit", "Error" + response.code());
+                    Toasty.error(Outward_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -458,7 +454,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                         }
                     }
                 }
-                Toast.makeText(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 // Handle the failure
 
             }
@@ -477,7 +473,17 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         String etintime = intime.getText().toString().trim();
         String date = eddate.getText().toString().trim();
         String etserialnum = serialnumber.getText().toString().trim();
-        int etkl = Integer.parseInt(kl.getText().toString().trim());
+        if(!kl.getText().toString().isEmpty())
+        {
+            try {
+                ukl=Integer.parseInt(kl.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toasty.warning(this, "Kl is Empty", Toast.LENGTH_SHORT).show();
+        }
         String etvehiclnum = vehiclenum.getText().toString().trim();
         String ettransname = transname.getText().toString().trim();
         String etplace = place.getText().toString().trim();
@@ -497,27 +503,8 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 etplace.isEmpty() || etmobilenum.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
-//            Map<String,String> items = new HashMap<>();
-//            items.put("In_Time",intime.getText().toString().trim());
-//            items.put("Serial_Number",serialnumber.getText().toString().trim());
-//            items.put("kl",kl.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclenum.getText().toString().trim());
-//            items.put("Transporter",transname.getText().toString().trim());
-//            items.put("Place",place.getText().toString().trim());
-//            items.put("Mobile_Number",mobilenum.getText().toString().trim());
-//
-//            dbroot.collection("Outward Tanker Security(In)").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(Outward_Tanker_Security.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-
-//            Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security('0','0',etintime,outTime,kl,etplace,
-//                    )
             Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, etintime,
-                    outTime, etkl, etplace, permitselection, pucselection, insuranceselection, vehfitnesselection, licselection, rcselection, "", "",
+                    outTime, ukl, etplace, permitselection, pucselection, insuranceselection, vehfitnesselection, licselection, rcselection, "", "",
                     "", "", remark, "", "", "", "", "", outTime, EmployeId,  false,
                     "", 'S', etserialnum, etvehiclnum, ettransname, etmobilenum, "", "",
                     date, "", "", "", 0, "", 0, "",
@@ -531,7 +518,9 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true) {
                         makeNotification(etvehiclnum, outTime);
-                        Toast.makeText(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_Tanker_Security.this, com.android.gandharvms.Outward_Tanker.class));
+                        finish();
                     }
                 }
 
@@ -550,14 +539,10 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                             }
                         }
                     }
-                    Toast.makeText(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
-
+                    Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 }
             });
-
-
         }
-
     }
 
     private void updateData() {
@@ -565,11 +550,21 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         String uvehicle = vehiclenum.getText().toString().trim();
         String udate = eddate.getText().toString().trim();
         String uintime = intime.getText().toString().trim();
-        int ukl = Integer.parseInt(kl.getText().toString().trim());
+        if(!kl.getText().toString().isEmpty())
+        {
+            try {
+                ukl=Integer.parseInt(kl.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toasty.warning(this, "Kl is Empty", Toast.LENGTH_SHORT).show();
+        }
         String utransporter = transname.getText().toString().trim();
         String uplace = place.getText().toString().trim();
         String umobile = mobilenum.getText().toString().trim();
-        String ucapacity = capacityvehicle.getText().toString().trim();
+        //String ucapacity = capacityvehicle.getText().toString().trim();
         String uremark = edremark.getText().toString().trim();
         String outTime = getCurrentTime();
 
@@ -581,15 +576,15 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         String rcselection = rcyes.isChecked() ? "Yes" : "No";
 
         if (serial.isEmpty()||uvehicle.isEmpty()||udate.isEmpty()||uintime.isEmpty()||utransporter.isEmpty()||uplace.isEmpty()||
-        umobile.isEmpty()||ucapacity.isEmpty()||uremark.isEmpty()||permitselection.isEmpty()||pucselection.isEmpty()||insuranceselection.isEmpty()||
+        umobile.isEmpty()||uremark.isEmpty()||permitselection.isEmpty()||pucselection.isEmpty()||insuranceselection.isEmpty()||
         vehfitnesselection.isEmpty()||licselection.isEmpty()||rcselection.isEmpty()){
             Toasty.warning(this,"All fields must be filled",Toast.LENGTH_SHORT,true).show();
         }else {
             Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId,uintime,outTime,
                     ukl,uplace,permitselection,pucselection,insuranceselection,vehfitnesselection,licselection,rcselection,"",
                     "","","",uremark,"",EmployeId,"","","",
-                    "","",'S',serial,uvehicle,utransporter,umobile,ucapacity,"","","","",0,
-                    "",0,"",'W',inOut,vehicleType,uintime,"");
+                    "","",'S',serial,uvehicle,utransporter,umobile,"","","","","",0,
+                    "",0,"",'B',inOut,vehicleType,uintime,"");
 
             Call<Boolean> call = outwardTanker.updateoutwardsecurity(isreportingupdateSecurityModel);
             call.enqueue(new Callback<Boolean>() {
@@ -598,7 +593,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         makeNotification(uvehicle, outTime);
                         Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Outward_Tanker_Security.this, Inward_Truck.class));
+                        startActivity(new Intent(Outward_Tanker_Security.this,com.android.gandharvms.Outward_Tanker.class));
                         finish();
                     }
                 }

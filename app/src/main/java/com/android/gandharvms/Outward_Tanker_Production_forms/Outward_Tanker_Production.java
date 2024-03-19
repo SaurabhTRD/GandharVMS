@@ -37,8 +37,10 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.R;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Blending_Flushing_Model;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -61,31 +63,36 @@ import retrofit2.Response;
 
 public class Outward_Tanker_Production extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,blenderno,transporter,product,howmuch,customer,location,blendingratio,batchno,
-            productspesification,custref,packingsatus,rinsingstatus,decisionrule,blendingmaterial,signof,dt,oanum,remark,etflush;
-    Button submit,etsend;
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
+    public char inOut = Global_Var.getInstance().InOutType;
+    public LinearLayout clinerar;
+    public char blendingstatus;
+    public char flushingstatus;
+    public String labintime;
+    public int statuscount;
+    EditText intime, serialnumber, vehiclenumber, blenderno, transporter, product, howmuch, customer, location, blendingratio, batchno,
+            productspesification, custref, packingsatus, rinsingstatus, decisionrule, blendingmaterial, signof, dt, oanum, remark, etflush;
+    Button submit, etsend;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
-    private final String vehicleType = Global_Var.getInstance().MenuType;
-    private final char nextProcess = Global_Var.getInstance().DeptType;
-    private final char inOut = Global_Var.getInstance().InOutType;
-    private final String EmployeId = Global_Var.getInstance().EmpId;
-    private int OutwardId;
-    private Outward_Tanker_Lab outwardTankerLab;
     DatePickerDialog picker;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
-    String [] items = {"For Small Pack","Barrel","Tanker Filling","Other"};
-    RadioButton rbrinsingyes,rbrinsingno,rbdecisionyes,rbdecisionno;
+    String[] items = {"For Small Pack", "Barrel", "Tanker Filling", "Other"};
+    RadioButton rbrinsingyes, rbrinsingno, rbdecisionyes, rbdecisionno;
+    private int oploutwardid = 0;
+    private int OutwardId;
+    private Outward_Tanker_Lab outwardTankerLab;
     private String token;
     private LoginMethod userDetails;
     private String nvehiclenumber;
+    private CheckBox isblending, isflushing;
 
-    private CheckBox isblending,isflushing;
-    public LinearLayout clinerar;
-
+    private int etcustref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,13 +102,14 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
 
-        isblending =findViewById(R.id.isblending);
+        isblending = findViewById(R.id.isblending);
         isflushing = findViewById(R.id.isflushing);
         etflush = findViewById(R.id.etflushingno);
         etsend = findViewById(R.id.sendbtn);
         clinerar = findViewById(R.id.checklinear);
 
-        etflush.setVisibility(View.GONE);
+        //
+        // etflush.setVisibility(View.GONE);
         etsend.setVisibility(View.GONE);
 
         isflushing.setOnCheckedChangeListener((buttonView, isChecked) -> {
@@ -111,35 +119,38 @@ public class Outward_Tanker_Production extends AppCompatActivity {
             ischecktoDisplay();
         });
 
+        clinerar.setVisibility(View.GONE);
+        etflush.setVisibility(View.VISIBLE);
+        etsend.setVisibility(View.VISIBLE);
 
         autoCompleteTextView = findViewById(R.id.etpackingstatus);
-        adapterItems = new ArrayAdapter<String>(this,R.layout.packing_status_dropdown,items);
+        adapterItems = new ArrayAdapter<String>(this, R.layout.packing_status_dropdown, items);
         autoCompleteTextView.setAdapter(adapterItems);
         autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item"+items, Toast.LENGTH_SHORT).show();
+                Toasty.success(getApplicationContext(), "Packing Status:- " + items +" Selected", Toast.LENGTH_SHORT).show();
             }
         });
 
 
-        intime= findViewById(R.id.etintime);
-        serialnumber=findViewById(R.id.etserialnumber);
+        intime = findViewById(R.id.etintime);
+        serialnumber = findViewById(R.id.etserialnumber);
         vehiclenumber = findViewById(R.id.etvehicleno);
-        blenderno = findViewById(R.id.elblendingno);
+       //blenderno = findViewById(R.id.elblendingno);
         transporter = findViewById(R.id.ettransportername);
-        product =findViewById(R.id.etproductname);
+        product = findViewById(R.id.etproductname);
         howmuch = findViewById(R.id.ethowmuch);
         customer = findViewById(R.id.etcustname);
         location = findViewById(R.id.etlocation);
-        blendingratio = findViewById(R.id.etblendingrationrec);
-        batchno = findViewById(R.id.etbatchno);
-        productspesification = findViewById(R.id.etproductspesification);
-        custref = findViewById(R.id.etcustrefno);
+        //blendingratio = findViewById(R.id.etblendingrationrec);
+        /*batchno = findViewById(R.id.etbatchno);*/
+        //productspesification = findViewById(R.id.etproductspesification);
+       // custref = findViewById(R.id.etcustrefno);
         packingsatus = findViewById(R.id.etpackingstatus);
-        rinsingstatus = findViewById(R.id.etrinsingstatus);
-        decisionrule = findViewById(R.id.etdecisionrule);
+        //rinsingstatus = findViewById(R.id.etrinsingstatus);
+        //decisionrule = findViewById(R.id.etdecisionrule);
         blendingmaterial = findViewById(R.id.etblendingstatus);
         signof = findViewById(R.id.etsignofproduction);
         remark = findViewById(R.id.etremark);
@@ -151,8 +162,8 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         rbdecisionyes = findViewById(R.id.decisionyes);
         rbdecisionno = findViewById(R.id.decisionno);
 
-        submit=findViewById(R.id.etssubmit);
-        dbroot= FirebaseFirestore.getInstance();
+        submit = findViewById(R.id.etssubmit);
+        dbroot = FirebaseFirestore.getInstance();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,10 +174,13 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         etsend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request();
+                if (oploutwardid == 0) {
+                    request();
+                } else {
+                    recheckandUpdate();
+                }
             }
         });
-
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -177,37 +191,16 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
+                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        c.set(Calendar.MINUTE, minute);
 
                         // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
+                        intime.setText(hourOfDay + ":" + minute);
                     }
-                },hours,mins,false);
+                }, hours, mins, false);
                 tpicker.show();
             }
         });
-//        dt.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                final Calendar calendar = Calendar.getInstance();
-//                int day = calendar.get(Calendar.DAY_OF_MONTH);
-//                int month = calendar.get(Calendar.MONTH);
-//                int year = calendar.get(Calendar.YEAR);
-//                // Array of month abbreviations
-//                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-//                picker = new DatePickerDialog(Outward_Tanker_Production.this, new DatePickerDialog.OnDateSetListener() {
-//                    @Override
-//                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-//                        // Use the month abbreviation from the array
-//                        String monthAbbreviation = monthAbbreviations[month];
-//                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-//                        dt.setText(dateFormat.format(calendar.getTime()));
-//                    }
-//                }, year, month, day);
-//                picker.show();
-//            }
-//        });
 
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
@@ -216,50 +209,43 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                 }
             }
         });
-
     }
 
-    public void ischecktoDisplay(){
-        if (isflushing.isChecked() && isblending.isChecked())
-        {
-            if (isflushing.isChecked()){
+    public void ischecktoDisplay() {
+        if (isflushing.isChecked() && isblending.isChecked()) {
+            if (isflushing.isChecked()) {
                 etflush.setVisibility(View.VISIBLE);
-            }else {
-                etflush.setVisibility(View.GONE);
-            }
-
-                    etsend.setVisibility(View.VISIBLE);
-                    clinerar.setVisibility(View.GONE);
-                }
-        else if(isflushing.isChecked() || isblending.isChecked())
-        {
-
-            if (isflushing.isChecked()){
-                etflush.setVisibility(View.VISIBLE);
-            }else {
+            } else {
                 etflush.setVisibility(View.GONE);
             }
             etsend.setVisibility(View.VISIBLE);
             clinerar.setVisibility(View.GONE);
-        }
-        else if(!isflushing.isChecked() && !isblending.isChecked()){
-                    // Hide the TextInputLayout and Button
-                    etflush.setVisibility(View.GONE);
-                    etsend.setVisibility(View.GONE);
+        } else if (isflushing.isChecked() || isblending.isChecked()) {
+            if (isflushing.isChecked()) {
+                etflush.setVisibility(View.VISIBLE);
+            } else {
+                etflush.setVisibility(View.GONE);
+            }
+            etsend.setVisibility(View.VISIBLE);
+            clinerar.setVisibility(View.GONE);
+        } else if (!isflushing.isChecked() && !isblending.isChecked()) {
+            // Hide the TextInputLayout and Button
+            etflush.setVisibility(View.GONE);
+            etsend.setVisibility(View.VISIBLE);
 //                clinerar.setVisibility(View.GONE);
-                    clinerar.setVisibility(View.VISIBLE);
-                }
-
+            //clinerar.setVisibility(View.VISIBLE);
+        }
     }
-    public void makeNotification(String vehicleNumber, String outTime) {
+
+    public void makeNotification(String vehicleNumber) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Production";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -267,7 +253,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Outward Tanker Production In Process form  Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at ",
                                         getApplicationContext(),
                                         Outward_Tanker_Production.this
                                 );
@@ -275,8 +261,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -304,27 +289,85 @@ public class Outward_Tanker_Production extends AppCompatActivity {
 
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
-        Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo,vehicleType,nextProcess,inOut);
+        Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo, vehicleType, nextProcess, inOut);
         call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
             @Override
             public void onResponse(Call<Lab_Model__Outward_Tanker> call, Response<Lab_Model__Outward_Tanker> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Lab_Model__Outward_Tanker data = response.body();
-                    if (data.getVehicleNumber()!= ""){
+                    if (data.getVehicleNumber() != null && data.getVehicleNumber() != "") {
+                        oploutwardid = data.getOplOutwardId();
                         OutwardId = data.getOutwardId();
+                        statuscount = data.getStatusCount();
+                        blendingstatus = data.getBlendingStatus();
+                        flushingstatus = data.getFlushingStatus();
+                        labintime = data.getIPFLabInTime();
                         serialnumber.setText(data.getSerialNumber());
-                        nvehiclenumber=data.getVehicleNumber();
+                        serialnumber.setEnabled(false);
+                        nvehiclenumber = data.getVehicleNumber();
                         vehiclenumber.setText(data.getVehicleNumber());
-                        oanum.setText(data.getOAnumber());
-                        blenderno.setText(String.valueOf(data.getTankerNumber()));
-                        transporter.setText(data.getTransportName());
-                        product.setText(data.getProductName());
-                        howmuch.setText(String.valueOf(data.getHowMuchQuantityFilled()));
-                        customer.setText(data.getCustomerName());
-                        location.setText(data.getLocation());
-//                        blendingratio.setText(data.getBlending_Ratio());
+                        vehiclenumber.setEnabled(false);
+                        etflush.setText(data.getFlushing_No());
+                        serialnumber.setEnabled(false);
+                        isblending.setChecked(data.IsBlendingReq);
+                        isflushing.setChecked(data.IsFlushingReq);
+                        //isblending.setEnabled(false);
+                        //isflushing.setEnabled(false);
+                        etflush.setVisibility(View.GONE);
+                        etsend.setVisibility(View.VISIBLE);
+                        if (isflushing.isChecked() && isblending.isChecked()) {
+                            if (isflushing.isChecked()) {
+                                etflush.setVisibility(View.VISIBLE);
+                                etflush.setEnabled(false);
+                                isflushing.setEnabled(false);
+                                isblending.setEnabled(false);
+                            } else {
+                                etflush.setVisibility(View.GONE);
+                            }
+                        }
+                        if (oploutwardid == 0) {
+                            intime.setVisibility(View.VISIBLE);
+                            /*intime.requestFocus();
+                            intime.callOnClick();*/
+                        } else {
+                            intime.setVisibility(View.GONE);
+                        }
+                        if (oploutwardid > 0 && blendingstatus == 'Y' && flushingstatus == 'Y') {
+                            etflush.setText(data.getFlushing_No());
+                            etsend.setVisibility(View.GONE);
+                            intime.setVisibility(View.GONE);
+                            isblending.setEnabled(false);
+                            isflushing.setEnabled(false);
+                            intime.setEnabled(false);
+                            clinerar.setVisibility(View.VISIBLE);
+                            oanum.setText(data.getOAnumber());
+                            oanum.setEnabled(false);
+                            /*blenderno.setText(String.valueOf(data.getTankerNumber()));
+                            blenderno.setEnabled(false);*/
+                            transporter.setText(data.getTransportName());
+                            transporter.setEnabled(false);
+                            product.setText(data.getProductName());
+                            product.setEnabled(false);
+                            howmuch.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+                            howmuch.setEnabled(false);
+                            customer.setText(data.getCustomerName());
+                            customer.setEnabled(false);
+                            location.setText(data.getLocation());
+                            location.setEnabled(false);
+                        } else {
+                            if (statuscount == 2) {
+                                etsend.setText("Reject");
+                            } else if (oploutwardid > 0) {
+                                etsend.setText("Recheck");
+                                Toasty.success(Outward_Tanker_Production.this, "Blending or Flushing Ratio Should Be Okay.Repeat The Task", Toasty.LENGTH_SHORT, true).show();
+                            } else {
+                                etsend.setText("check");
+                            }
+                        }
+                    } else {
+                        Toasty.error(Outward_Tanker_Production.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
@@ -348,41 +391,45 @@ public class Outward_Tanker_Production extends AppCompatActivity {
             }
         });
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
 
-    public void request(){
+    public void request() {
         String rintime = intime.getText().toString().trim();
         String rserialno = serialnumber.getText().toString().trim();
         String rvehicle = vehiclenumber.getText().toString().trim();
         String rflushing = etflush.getText().toString().trim();
-        String outTime = getCurrentTime();
-        boolean rblending = false;
-        if (isblending.isChecked()){
-            rblending = true;
-        }
-        boolean reflushing = false;
-        if (isflushing.isChecked()){
-            reflushing= true;
-        }
-        if (rintime.isEmpty()||rserialno.isEmpty()||rvehicle.isEmpty()||rflushing.isEmpty()){
-            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
-        }else {
-
-            Request_Model_blendflush requestModelBlendflush = new Request_Model_blendflush(rintime,outTime,rblending,reflushing,rflushing,EmployeId,EmployeId,OutwardId,'Q',
-                    rvehicle,vehicleType,rserialno,inOut);
+        String proouttime="";
+        boolean rblending = isblending.isChecked();
+        boolean reflushing = isflushing.isChecked();
+        char nextprocess = 'Q';
+        if (rintime.isEmpty() || rserialno.isEmpty() || rvehicle.isEmpty()) {
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+        } else {
+            if (!isblending.isChecked() && !isflushing.isChecked()) {
+                nextprocess = 'U';
+                proouttime = getCurrentTime();
+            }
+            Request_Model_blendflush requestModelBlendflush = new Request_Model_blendflush(rintime, proouttime, rblending,
+                    reflushing, rflushing, EmployeId, EmployeId, OutwardId, nextprocess,
+                    rvehicle, vehicleType, rserialno, inOut);
             Call<Boolean> call = outwardTankerLab.requestflushblend(requestModelBlendflush);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
-                        Toasty.success(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+                    if (response.isSuccessful() && response.body() && response.body()==true) {
+                        if (!isblending.isChecked() && !isflushing.isChecked()) {
+                            Toasty.success(Outward_Tanker_Production.this, "No Flushing or Blending Required", Toast.LENGTH_SHORT, true).show();
+                        } else {
+                            Toasty.success(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+                        }
                         startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
                         finish();
-                    }else {
+                    } else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
                 }
@@ -404,113 +451,127 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                         }
                     }
                     Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
-
                 }
             });
-
         }
     }
 
-    public void insert(){
-//        intime,serialnumber,vehiclenumber,blenderno,transporter,product,howmuch,customer,location,blendingratio,batchno,
-//                productspesification,custref,packingsatus,rinsingstatus,decisionrule,blendingmaterial,signof,dt;
-        String etintime = intime.getText().toString().trim();
+    public void recheckandUpdate() {
+        char nextprocess = 'Q';
+        String labouttime="";
+        if (statuscount == 2) {
+            labouttime = getCurrentTime();
+            nextprocess = 'W';
+            inOut = 'O';
+        }
+        Blending_Flushing_Model blendingFlushingModel = new Blending_Flushing_Model(OutwardId, labintime, labouttime, flushingstatus,
+                blendingstatus, statuscount + 1, nextprocess, inOut, vehicleType, EmployeId);
+        Call<Boolean> call = outwardTankerLab.updateflushblend(blendingFlushingModel);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() && response.body()==true) {
+                    if (statuscount == 2) {
+                        Toasty.success(Outward_Tanker_Production.this, "Vehicle Send To Reject", Toasty.LENGTH_SHORT, true).show();
+                    } else {
+                        Toasty.success(Outward_Tanker_Production.this, "Send For Recheck", Toasty.LENGTH_SHORT, true).show();
+                    }
+                    startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
+                    finish();
+                } else {
+                    Toasty.error(Outward_Tanker_Production.this, "Recheck Failed", Toasty.LENGTH_SHORT, true).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void insert() {
         String outTime = getCurrentTime();
         String uremark = remark.getText().toString().trim();
-        int etcustref = Integer.parseInt(custref.getText().toString().trim());
+        /*if(!custref.getText().toString().isEmpty())
+        {
+            try {
+                etcustref=Integer.parseInt(custref.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toasty.warning(this, "CustomerReferenceNumber Cannot be Empty", Toast.LENGTH_SHORT).show();
+        }*/
         String packstatus = packingsatus.getText().toString().trim();
-//        String etrinisingstatus = rinsingstatus.getText().toString().trim();
-//        String etdecisionrule = decisionrule.getText().toString().trim();
-
         String etrinisingstatus = rbrinsingyes.isChecked() ? "Yes" : "No";
         String etdecisionrule = rbdecisionyes.isChecked() ? "Yes" : "No";
-
         String etblendingmaterial = blendingmaterial.getText().toString().trim();
-        String  etsignof = signof.getText().toString().trim();
+        String etsignof = signof.getText().toString().trim();
+/*
         String etbatchno = batchno.getText().toString().trim();
-//        String etserialnumber = serialnumber.getText().toString().trim();
-//        String etvehiclnumber = vehiclenumber.getText().toString().trim();
-//        String etblenderno = blenderno.getText().toString().trim();
-//        String ettrasnporter = transporter.getText().toString().trim();
-//        String etproduct = product.getText().toString().trim();
-//        String ethowmuch = howmuch.getText().toString().trim();
-//        String etcustomer = customer.getText().toString().trim();
-//        String etlocation = location.getText().toString().trim();
-//        String etblendingratio = blendingratio.getText().toString().trim();
-//        String etproductspesification = productspesification.getText().toString().trim();
-//        String etdt = dt.getText().toString().trim();
+*/
 
-        if (etintime.isEmpty()|| etbatchno.isEmpty()||packstatus.isEmpty()||etrinisingstatus.isEmpty()||etdecisionrule.isEmpty()||etblendingmaterial.isEmpty()||etsignof.isEmpty()){
+        if (packstatus.isEmpty() || etrinisingstatus.isEmpty() || etdecisionrule.isEmpty() || etblendingmaterial.isEmpty() || etsignof.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-//            Map<String,String> items = new HashMap<>();
-//            items.put("In_Time",intime.getText().toString().trim());
-//            items.put("Serial_Number",serialnumber.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclenumber.getText().toString().trim());
-//            items.put("Blender_No",blenderno.getText().toString().trim());
-//            items.put("Transporter",transporter.getText().toString().trim());
-//            items.put("Product",product.getText().toString().trim());
-//            items.put("How_Much_Qty_Of_Oil_To_Be_Filled",howmuch.getText().toString().trim());
-//            items.put("Customer",customer.getText().toString().trim());
-//            items.put("Location",location.getText().toString().trim());
-//            items.put("Blending_Ratio",blendingratio.getText().toString().trim());
-//            items.put("Batch_No",batchno.getText().toString().trim());
-//            items.put("Product_Spesification",productspesification.getText().toString().trim());
-//            items.put("Customer_Refrence_Number",custref.getText().toString().trim());
-//            items.put("Packing_Status",packingsatus.getText().toString().trim());
-//            items.put("Rinsing_Status",rinsingstatus.getText().toString().trim());
-//            items.put("Decision_Rule_Applicable_to_Customer",decisionrule.getText().toString().trim());
-//            items.put("Blending_Material_Status",blendingmaterial.getText().toString().trim());
-//            items.put("Date_Time",dt.getText().toString().trim());
-//
-//            dbroot.collection("Outward Tanker Production(IN)").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-           Production_Model_Outward productionModelOutward = new Production_Model_Outward(OutwardId,etintime,outTime,uremark,
-                   etcustref,packstatus,etrinisingstatus,etdecisionrule,etblendingmaterial,etsignof,
-                   EmployeId,'L',inOut,'P',etbatchno,vehicleType);
+        } else {
+            Production_Model_Outward productionModelOutward = new Production_Model_Outward(OutwardId,
+                    0, packstatus, etrinisingstatus, etdecisionrule, etblendingmaterial, etsignof,
+                    EmployeId, 'Q', inOut, 'P', uremark,outTime, vehicleType);
 
-           Call<Boolean> call = outwardTankerLab.insertinprocessproduction(productionModelOutward);
-           call.enqueue(new Callback<Boolean>() {
-               @Override
-               public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                   if (response.isSuccessful() && response.body() && response.body() == true){
-                       makeNotification(nvehiclenumber, outTime);
-                       Toasty.success(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                       startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
-                       finish();
-                   }else {
-                       Log.e("Retrofit", "Error Response Body: " + response.code());
-                   }
-               }
+            Call<Boolean> call = outwardTankerLab.insertinprocessproduction(productionModelOutward);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body()==true) {
+                        makeNotification(nvehiclenumber);
+                        Toasty.success(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+                        startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
+                        finish();
+                    } else {
+                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    }
+                }
 
-               @Override
-               public void onFailure(Call<Boolean> call, Throwable t) {
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
 
-                   Log.e("Retrofit", "Failure: " + t.getMessage());
-                   // Check if there's a response body in case of an HTTP error
-                   if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                       Response<?> response = ((HttpException) t).response();
-                       if (response != null) {
-                           Log.e("Retrofit", "Error Response Code: " + response.code());
-                           try {
-                               Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                           } catch (IOException e) {
-                               e.printStackTrace();
-                           }
-                       }
-                   }
-                   Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
-               }
-           });
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
-
     }
-    public void outtankerproinprocpending(View view){
+
+
+    public void outtankerproinprocpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }

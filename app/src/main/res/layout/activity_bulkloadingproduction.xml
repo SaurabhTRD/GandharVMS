@@ -30,6 +30,7 @@
             android:layout_height="650dp"
             android:orientation="vertical">
 
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -37,27 +38,6 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="50dp"
-
-                >
-                <EditText
-                    android:id="@+id/etintime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="In Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:focusable="false"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
 
                 >
                 <EditText
@@ -83,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Vehicle Number"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -124,7 +104,7 @@
 <!--                    android:textStyle="bold"/>-->
 <!--            </com.google.android.material.textfield.TextInputLayout>-->
 
-            <com.google.android.material.textfield.TextInputLayout
+            <!--<com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -140,7 +120,7 @@
                     android:inputType="text"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
-            </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -231,59 +211,69 @@
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                >
-                <EditText
-                    android:id="@+id/etsign"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Name Dispatch/Production officer"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"/>
-            </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                >
-                <EditText
-                    android:id="@+id/ettankorblender"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Tank OR Blender No"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical"
+                android:id="@+id/productionlinearlayout">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-                >
-                <EditText
-                    android:id="@+id/etbulkqty"
+                <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Bulk Qty."
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+
+                    >
+                    <EditText
+                        android:id="@+id/etintime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="In Time"
+                        android:inputType="text"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        android:focusable="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <EditText
+                        android:id="@+id/etsign"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Name Dispatch/Production officer"
+                        android:inputType="textCapCharacters"
+                        android:textSize="17dp"
+                        android:textStyle="bold"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <EditText
+                        android:id="@+id/etremark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Remark"
+                        android:inputType="textCapCharacters"
+                        android:textSize="17dp"
+                        android:textStyle="bold"/>
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -303,8 +293,23 @@
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-
-
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                >
+                <EditText
+                    android:id="@+id/ettankorblender"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Tank OR Blender No"
+                    android:inputType="number"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -315,11 +320,11 @@
                 android:layout_marginTop="10dp"
                 >
                 <EditText
-                    android:id="@+id/etremark"
+                    android:id="@+id/etbulkqty"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Remark"
-                    android:inputType="text"
+                    android:hint="Bulk Qty."
+                    android:inputType="number"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -338,7 +343,7 @@
                     android:layout_height="55dp"
                     android:orientation="horizontal">
 
-                    <androidx.appcompat.widget.AppCompatButton
+                    <!--<androidx.appcompat.widget.AppCompatButton
                         android:layout_width="110dp"
                         android:layout_height="match_parent"
                         android:layout_below="@id/OUM."
@@ -347,17 +352,17 @@
                         android:textSize="22dp"
                         android:textStyle="bold">
 
-                    </androidx.appcompat.widget.AppCompatButton>
+                    </androidx.appcompat.widget.AppCompatButton>-->
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="100dp"
+                        android:layout_width="130dp"
                         android:layout_height="match_parent"
                         android:id="@+id/samplingview"
-                        android:layout_marginLeft="15dp"
-                        android:text="View"
-                        android:textSize="22dp"
+                        android:layout_marginLeft="55dp"
+                        android:text="COMPLETED"
+                        android:textSize="17dp"
                         android:textStyle="bold"
-                        android:onClick="Viewclick">
+                        android:onClick="otinbulproductioncompletedclick">
 
                     </androidx.appcompat.widget.AppCompatButton>
 
@@ -369,7 +374,6 @@
                         android:layout_below="@id/OUM."
                         android:layout_marginLeft="10dp"
                         android:text="SUBMIT"
-
                         android:textSize="22dp"
                         android:textStyle="bold">
 
@@ -377,14 +381,6 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
-
-
-
-
-
-
-
-
 
         </LinearLayout>
     </ScrollView>

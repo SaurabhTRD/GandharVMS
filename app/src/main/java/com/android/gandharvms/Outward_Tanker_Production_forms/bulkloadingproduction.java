@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -18,12 +19,15 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.R;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model_Bulkloading;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
+import com.android.gandharvms.outward_Tanker_Lab_forms.bulkloadinglaboratory;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -40,21 +44,22 @@ import retrofit2.Response;
 
 
 public class bulkloadingproduction extends AppCompatActivity {
-    EditText etintime,etserialno,etvehicle,etoanumber,etdate,ettankno,etproduct,etcustomer,etdestination,etqtykl,
-            ettransporter,etnameofficer,etremark,ettankblender,etbultqty,etbatchno;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    EditText etintime, etserialno, etvehicle, etoanumber, etdate, ettankno, etproduct, etcustomer, etdestination, etqtykl,
+            ettransporter, etnameofficer, etremark, ettankblender, etbultqty,etbatchno;
+    Button grid, view, submit;
+    TimePickerDialog tpicker;
     private int OutwardId;
     private Outward_Tanker_Lab outwardTankerLab;
-
-    Button grid,view,submit;
-    TimePickerDialog tpicker;
     private String token;
     private LoginMethod userDetails;
     private String bulkprovehicl;
+    private LinearLayout linearproduction;
 
+    private int bulkproNlabOutwardId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +72,9 @@ public class bulkloadingproduction extends AppCompatActivity {
         etserialno = findViewById(R.id.etserialnumber);
         etvehicle = findViewById(R.id.etvehicleno);
         etoanumber = findViewById(R.id.etoanumber);
+        etbatchno=findViewById(R.id.etbatchno);
 //        etdate = findViewById(R.id.etdate);
-        ettankno = findViewById(R.id.ettankerno);
+        //ettankno = findViewById(R.id.ettankerno);
         etproduct = findViewById(R.id.etproduct);
         etcustomer = findViewById(R.id.etcustomer);
         etdestination = findViewById(R.id.etdestination);
@@ -79,7 +85,12 @@ public class bulkloadingproduction extends AppCompatActivity {
 
         ettankblender = findViewById(R.id.ettankorblender);
         etbultqty = findViewById(R.id.etbulkqty);
-        etbatchno =findViewById(R.id.etbatchno);
+
+        linearproduction = findViewById(R.id.productionlinearlayout);
+
+        ettankblender.setVisibility(View.GONE);
+        etbultqty.setVisibility(View.GONE);
+        etbatchno.setVisibility(View.GONE);
 
         submit = findViewById(R.id.etssubmit);
 
@@ -100,13 +111,13 @@ public class bulkloadingproduction extends AppCompatActivity {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                         Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
+                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        c.set(Calendar.MINUTE, minute);
 
                         // Set the formatted time to the EditText
-                        etintime.setText(hourOfDay +":"+ minute );
+                        etintime.setText(hourOfDay + ":" + minute);
                     }
-                },hours,mins,false);
+                }, hours, mins, false);
                 tpicker.show();
             }
         });
@@ -114,31 +125,32 @@ public class bulkloadingproduction extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insert();
+                if(bulkproNlabOutwardId==0)
+                {
+                    insert();
+                }
+                else{
+                    update();
+                }
             }
         });
-        submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                update();
-            }
-        });
-
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Production";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -154,8 +166,7 @@ public class bulkloadingproduction extends AppCompatActivity {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -182,47 +193,53 @@ public class bulkloadingproduction extends AppCompatActivity {
     }
 
 
-
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
-        Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo,vehicleType,nextProcess,inOut);
-        call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
+        Call<Lab_Model_Bulkloading> call = outwardTankerLab.fetchlabbulkloding(vehicleNo, vehicleType, nextProcess, inOut);
+        call.enqueue(new Callback<Lab_Model_Bulkloading>() {
             @Override
-            public void onResponse(Call<Lab_Model__Outward_Tanker> call, Response<Lab_Model__Outward_Tanker> response) {
-                if (response.isSuccessful()){
-                    Lab_Model__Outward_Tanker data = response.body();
-                    if (data.getVehicleNumber()!= ""){
+            public void onResponse(Call<Lab_Model_Bulkloading> call, Response<Lab_Model_Bulkloading> response) {
+                if (response.isSuccessful()) {
+                    Lab_Model_Bulkloading data = response.body();
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
                         OutwardId = data.getOutwardId();
-                        ettankno.setText (String.valueOf(data.getTankerNumber()));
+                        //ettankno.setText(String.valueOf(data.getTankerNumber()));
                         etproduct.setText(data.getProductName());
+                        etproduct.setEnabled(false);
                         etcustomer.setText(data.getCustomerName());
+                        etcustomer.setEnabled(false);
                         etdestination.setText(data.getLocation());
+                        etdestination.setEnabled(false);
                         etqtykl.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+                        etqtykl.setEnabled(false);
                         ettransporter.setText(data.getTransportName());
+                        ettransporter.setEnabled(false);
                         etserialno.setText(data.getSerialNumber());
-                        bulkprovehicl=data.getVehicleNumber();
+                        etserialno.setEnabled(false);
+                        bulkprovehicl = data.getVehicleNumber();
                         etvehicle.setText(data.getVehicleNumber());
+                        etvehicle.setEnabled(false);
                         etoanumber.setText(data.getOAnumber());
-
-                        if (data.getBatch_No() != null){
-                            if (data.getBatch_No().isEmpty()){
-                                ettankno.setVisibility(View.GONE);
-                                etbultqty.setVisibility(View.GONE);
-                                etbatchno.setVisibility(View.GONE);
-                            }else {
-                                ettankno.setText(data.getTankerNumber());
-                                etbatchno.setText(data.getBatch_No());
-
-                            }
+                        etoanumber.setEnabled(false);
+                        bulkproNlabOutwardId=data.getObplOutwardId();
+                        /*etintime.requestFocus();
+                        etintime.callOnClick();*/
+                        if (data.getBatchNo() != null) {
+                            etbatchno.setText(data.getBatchNo());
+                            etbatchno.setEnabled(false);
+                            linearproduction.setVisibility(View.GONE);
+                            ettankblender.setVisibility(View.VISIBLE);
+                            etbultqty.setVisibility(View.VISIBLE);
                         }
-
+                    } else {
+                        Toasty.error(bulkloadingproduction.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
 
             @Override
-            public void onFailure(Call<Lab_Model__Outward_Tanker> call, Throwable t) {
+            public void onFailure(Call<Lab_Model_Bulkloading> call, Throwable t) {
 
                 Log.e("Retrofit", "Failure: " + t.getMessage());
                 // Check if there's a response body in case of an HTTP error
@@ -240,28 +257,31 @@ public class bulkloadingproduction extends AppCompatActivity {
             }
         });
     }
+
     private void insert() {
         String uintime = etintime.getText().toString().trim();
         String usign = etnameofficer.getText().toString().trim();
         String uremark = etremark.getText().toString().trim();
-        String userialnumber = etserialno.getText().toString().trim();
-        String uvehicleno = etvehicle.getText().toString().trim();
+        String userialnumber=etserialno.getText().toString().trim();
+        String uvehiclenumber=etvehicle.getText().toString().trim();
         String outTime = getCurrentTime();
 
-        if (uintime.isEmpty()||usign.isEmpty()||userialnumber.isEmpty()||uvehicleno.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-            Production_bulkloading_model productionBulkloadingModel = new Production_bulkloading_model(OutwardId,uintime,outTime,
-                    uremark,usign,'P',EmployeId,EmployeId,userialnumber,uvehicleno,'L',inOut,
+        if (uintime.isEmpty() || usign.isEmpty() ||uremark.isEmpty()||userialnumber.isEmpty()||uvehiclenumber.isEmpty()) {
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        } else {
+            Production_bulkloading_model productionBulkloadingModel = new Production_bulkloading_model(OutwardId, uintime, "",
+                    uremark, usign, 'P', EmployeId, EmployeId, 'K',userialnumber,uvehiclenumber, inOut,
                     vehicleType);
             Call<Boolean> call = outwardTankerLab.insertbulkloadingproduction(productionBulkloadingModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() ==true){
+                    if (response.isSuccessful() && response.body() && response.body()==true) {
                         makeNotification(bulkprovehicl, outTime);
-                        Toast.makeText(bulkloadingproduction.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                    }else {
+                        Toasty.success(bulkloadingproduction.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(bulkloadingproduction.this, Outward_Tanker.class));
+                        finish();
+                    } else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
                 }
@@ -287,23 +307,27 @@ public class bulkloadingproduction extends AppCompatActivity {
             });
         }
     }
+
     private void update() {
         String utankboblend = ettankblender.getText().toString().trim();
         String ubulkqty = etbultqty.getText().toString().trim();
-        String ubatchno = etbatchno.getText().toString().trim();
+        //String ubatchno = etbatchno.getText().toString().trim();
+        String outTime = getCurrentTime();
 
-        if (utankboblend.isEmpty()||ubulkqty.isEmpty()||ubatchno.isEmpty()){
+        if (utankboblend.isEmpty() || ubulkqty.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-            Production_Model_Update productionModelUpdate = new Production_Model_Update(OutwardId,utankboblend,ubulkqty,ubatchno,EmployeId,
-                    'W','O',vehicleType);
+        } else {
+            Production_Model_Update productionModelUpdate = new Production_Model_Update(OutwardId, utankboblend, ubulkqty,outTime, EmployeId,
+                    'W', 'O', vehicleType);
             Call<Boolean> call = outwardTankerLab.updatebulkloadingproduction(productionModelUpdate);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body()==true){
-                        Toast.makeText(bulkloadingproduction.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                    }else {
+                    if (response.isSuccessful() && response.body() && response.body()==true) {
+                        Toasty.success(bulkloadingproduction.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(bulkloadingproduction.this, Outward_Tanker.class));
+                        finish();
+                    } else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
                 }
@@ -330,9 +354,8 @@ public class bulkloadingproduction extends AppCompatActivity {
         }
     }
 
-    public void outtankerprobulkpending(View view){
+    public void outtankerprobulkpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }
-
 }

@@ -19,7 +19,7 @@ public class Lab_Model_Bulkloading {
     public String QcSign ;
     public String TankOrBlenderNo ;
     public String BulkPqty ;
-    public String BatchNo ;
+    public String BatchNo;
     public String Psign ;
     public String OperatorSign ;
     public char ProductionProcess ;
@@ -46,6 +46,23 @@ public class Lab_Model_Bulkloading {
     public char NextProcess ;
     public char I_O ;
     public String VehicleType ;
+    public int Density_29_5C;
+    public int obplOutwardId;
+    public int getObplOutwardId() {
+        return obplOutwardId;
+    }
+
+    public void setObplOutwardId(int obplOutwardId) {
+        this.obplOutwardId = obplOutwardId;
+    }
+
+    public int getDensity_29_5C() {
+        return Density_29_5C;
+    }
+
+    public void setDensity_29_5C(int density_29_5C) {
+        Density_29_5C = density_29_5C;
+    }
 
     public int getId() {
         return Id;
@@ -407,20 +424,12 @@ public class Lab_Model_Bulkloading {
         VehicleType = vehicleType;
     }
 
-    public Lab_Model_Bulkloading(int outwardId, String labInTime, String labOutTime, String labRemark, int flushingNo, int qtyChginLtr1, int qtyChginLtr2, int qtyChginLtr3, int qtyChginLtr4, int qtyChginLtr5, String status, String qcSign, String operatorSign, char laboratoryProcess, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String vehicleType) {
+    public Lab_Model_Bulkloading(int outwardId, String labInTime, String labOutTime,String batchno, String labRemark, char laboratoryProcess, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String vehicleType) {
         OutwardId = outwardId;
         LabInTime = labInTime;
         LabOutTime = labOutTime;
+        BatchNo=batchno;
         LabRemark = labRemark;
-        FlushingNo = flushingNo;
-        QtyChginLtr1 = qtyChginLtr1;
-        QtyChginLtr2 = qtyChginLtr2;
-        QtyChginLtr3 = qtyChginLtr3;
-        QtyChginLtr4 = qtyChginLtr4;
-        QtyChginLtr5 = qtyChginLtr5;
-        Status = status;
-        QcSign = qcSign;
-        OperatorSign = operatorSign;
         LaboratoryProcess = laboratoryProcess;
         UpdatedBy = updatedBy;
         SerialNumber = serialNumber;

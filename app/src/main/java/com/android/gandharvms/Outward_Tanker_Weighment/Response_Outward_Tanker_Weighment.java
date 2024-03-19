@@ -40,6 +40,15 @@ public class Response_Outward_Tanker_Weighment {
     public char NextProcess;
     public char I_O;
     public String VehicleType;
+    public int Density_29_5C;
+
+    public int getDensity_29_5C() {
+        return Density_29_5C;
+    }
+
+    public void setDensity_29_5C(int density_29_5C) {
+        Density_29_5C = density_29_5C;
+    }
 
     public int getId() {
         return Id;
@@ -353,7 +362,13 @@ public class Response_Outward_Tanker_Weighment {
         VehicleType = vehicleType;
     }
 
-    public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage, String inVehicleImage, String outDriverImage, String outVehicleImage, String outInTime, String netWeight, String tareWeight, String grossWeight, String numberofPack, String outWRemark, String sealNumber, char currentProcess, String remark, String createdBy, String updatedBy, String materialName, String customerName, int tankerNumber, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType,String serialNumber,String vehicleNumber) {
+    public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage,
+                                             String inVehicleImage, String outDriverImage, String outVehicleImage,
+                                             String outInTime, String netWeight, String tareWeight, String grossWeight,
+                                             String numberofPack, String outWRemark, String sealNumber,
+                                             char currentProcess, String remark, String createdBy,
+                                             String updatedBy, char nextProcess, char i_O, String vehicleType,
+                                             String serialNumber,String vehicleNumber) {
         OutwardId = outwardId;
         Intime = intime;
         OutTime = outTime;
@@ -372,12 +387,6 @@ public class Response_Outward_Tanker_Weighment {
         Remark = remark;
         CreatedBy = createdBy;
         UpdatedBy = updatedBy;
-        MaterialName = materialName;
-        CustomerName = customerName;
-        TankerNumber = tankerNumber;
-
-        HowMuchQuantityFilled = howMuchQuantityFilled;
-        Location = location;
         NextProcess = nextProcess;
         I_O = i_O;
         VehicleType = vehicleType;

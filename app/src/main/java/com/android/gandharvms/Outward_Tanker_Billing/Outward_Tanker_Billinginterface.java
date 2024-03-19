@@ -1,5 +1,7 @@
 package com.android.gandharvms.Outward_Tanker_Billing;
 
+import com.android.gandharvms.OutwardOutTankerBilling.ot_outBillingRequestModel;
+
 import java.util.List;
 
 import retrofit2.Call;
@@ -18,4 +20,7 @@ public interface Outward_Tanker_Billinginterface {
 
     @POST("api/OutwardBilling/Add")
     Call<Boolean> updatebillingoanumber(@Body Respons_Outward_Tanker_Billing request);
+
+    @POST("api/OutwardBilling/UpdateOutwardOutBillingData")
+    Call<Boolean> UpdateOutBillingDetails(@Body ot_outBillingRequestModel request);
 }

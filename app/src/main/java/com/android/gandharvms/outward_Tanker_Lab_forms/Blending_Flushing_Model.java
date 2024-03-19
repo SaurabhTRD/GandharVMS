@@ -12,16 +12,16 @@ public class Blending_Flushing_Model {
     public char I_O;
     public String VehicleType;
 
-    public Blending_Flushing_Model(int outwardId, String labInTime, String labOutTime, char flushingStatus, char blendingStatus, int statusCount, String updatedBy, char nextProcess, char i_O, String vehicleType) {
+    public Blending_Flushing_Model(int outwardId, String labInTime, String labOutTime, char flushingStatus, char blendingStatus, int statusCount, char nextProcess, char i_O, String vehicleType,String updatedBy) {
         OutwardId = outwardId;
         LabInTime = labInTime;
         LabOutTime = labOutTime;
         FlushingStatus = flushingStatus;
         BlendingStatus = blendingStatus;
         StatusCount = statusCount;
-        UpdatedBy = updatedBy;
         NextProcess = nextProcess;
         I_O = i_O;
         VehicleType = vehicleType;
+        UpdatedBy = updatedBy;
     }
 }

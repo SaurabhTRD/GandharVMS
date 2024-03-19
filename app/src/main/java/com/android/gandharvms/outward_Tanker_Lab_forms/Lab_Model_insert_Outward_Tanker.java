@@ -31,10 +31,17 @@ public class Lab_Model_insert_Outward_Tanker {
     char I_O;
     char BarrelLaboratoryProcess;
     String VehicleType;
+    String Restivity;
+    String Infra_Red;
 
-    public Lab_Model_insert_Outward_Tanker(int outwardId, String labInTime, String labOutTime, String labRemark, String sampleCondition, String sample_receiving, String sample_Release_Date, String apperance, String odour, String color, int density_29_5C, int _40KV, int _100KV, int viscosity_Index, String TBN_TAN, int anline_Point, int breakdownvoltage_BDV, String DDF_90C, String waterContent, String interfacialTension, String flash_Point, String pourPoint, String rcs_Test, String correctionRequired, String updatedBy, char nextProcess, char i_O, char barrelLaboratoryProcess, String vehicleType) {
+
+    public Lab_Model_insert_Outward_Tanker(int outwardId,String labOutTime, String labRemark, String sampleCondition,
+                    String sample_receiving, String sample_Release_Date, String apperance, String odour, String color,
+                    int density_29_5C, int _40KV, int _100KV, int viscosity_Index, String TBN_TAN, int anline_Point,
+                    int breakdownvoltage_BDV, String DDF_90C, String waterContent, String interfacialTension,
+                    String flash_Point, String pourPoint, String rcs_Test, String correctionRequired,String restivity,String infrared, String updatedBy,
+                    char nextProcess, char i_O, char barrelLaboratoryProcess, String vehicleType) {
         OutwardId = outwardId;
-        LabInTime = labInTime;
         LabOutTime = labOutTime;
         LabRemark = labRemark;
         SampleCondition = sampleCondition;
@@ -57,6 +64,8 @@ public class Lab_Model_insert_Outward_Tanker {
         PourPoint = pourPoint;
         Rcs_Test = rcs_Test;
         CorrectionRequired = correctionRequired;
+        Restivity=restivity;
+        Infra_Red=infrared;
         this.updatedBy = updatedBy;
         NextProcess = nextProcess;
         I_O = i_O;

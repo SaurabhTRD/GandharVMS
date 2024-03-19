@@ -4,6 +4,7 @@ public class Lab_Model__Outward_Tanker {
 
     public int Id;
     public int OutwardId;
+    public int oplOutwardId;
     public String LabInTime;
     public String LabOutTime;
     public String ProInTime;
@@ -60,13 +61,79 @@ public class Lab_Model__Outward_Tanker {
     public char BarrelProductionProcess;
     public char BarrelLaboratoryProcess;
     public String Blending_Ratio;
-    public String Batch_No;
+    public String BatchNo;
     public String VehicleType;
     public boolean IsBlendingReq;
     public boolean IsFlushingReq;
+
+    public char FlushingStatus;
+    public char BlendingStatus;
     public String Flushing_No;
+    public int StatusCount;
+    public String IPFLabInTime;
 
+    public String DataEntryInTime;
+    public String DataEntryOutTim;
+    public String DataEntryRemark;
+    public String SealNumber;
 
+    public int obplOutwardId;
+
+    public String getBatchNo() {
+        return BatchNo;
+    }
+
+    public void setBatchNo(String batchNo) {
+        BatchNo = batchNo;
+    }
+
+    public int getObplOutwardId() {
+        return obplOutwardId;
+    }
+
+    public void setObplOutwardId(int obplOutwardId) {
+        this.obplOutwardId = obplOutwardId;
+    }
+
+    public String getSealNumber() {
+        return SealNumber;
+    }
+
+    public void setSealNumber(String sealNumber) {
+        SealNumber = sealNumber;
+    }
+
+    public String getIPFLabInTime() {
+        return IPFLabInTime;
+    }
+
+    public void setIPFLabInTime(String IPFLabInTime) {
+        this.IPFLabInTime = IPFLabInTime;
+    }
+
+    public int getStatusCount() {
+        return StatusCount;
+    }
+
+    public void setStatusCount(int statusCount) {
+        StatusCount = statusCount;
+    }
+
+    public int getOplOutwardId() {
+        return oplOutwardId;
+    }
+
+    public void setOplOutwardId(int oplOutwardId) {
+        this.oplOutwardId = oplOutwardId;
+    }
+
+    public String getFlushing_No() {
+        return Flushing_No;
+    }
+
+    public void setFlushing_No(String flushing_No) {
+        Flushing_No = flushing_No;
+    }
 
     public int getId() {
         return Id;
@@ -170,6 +237,22 @@ public class Lab_Model__Outward_Tanker {
 
     public void setBlendingMaterialStatus(String blendingMaterialStatus) {
         BlendingMaterialStatus = blendingMaterialStatus;
+    }
+
+    public char getFlushingStatus() {
+        return  FlushingStatus;
+    }
+
+    public void setFlushingStatus(char  FlushingStatus) {
+        this.FlushingStatus =  FlushingStatus;
+    }
+
+    public char getBlendingStatus() {
+        return   BlendingStatus;
+    }
+
+    public void setBlendingStatus(char   BlendingStatus) {
+        this.BlendingStatus =   BlendingStatus;
     }
 
     public String getSignatureofOfficer() {
@@ -530,14 +613,6 @@ public class Lab_Model__Outward_Tanker {
 
     public void setBlending_Ratio(String blending_Ratio) {
         Blending_Ratio = blending_Ratio;
-    }
-
-    public String getBatch_No() {
-        return Batch_No;
-    }
-
-    public void setBatch_No(String batch_No) {
-        Batch_No = batch_No;
     }
 
     public String getVehicleType() {

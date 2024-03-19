@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".OutwardOut_Tanker_Security">
 
+    <Button
+        style="@style/Widget.MaterialComponents.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp"
+        android:onClick="outwardoutpendingSecurityViewclick"
+        android:text="Pending Vehicles"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints"></Button>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -13,16 +25,152 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
         android:layout_marginTop="10dp"
-
         android:layout_marginBottom="10dp"
         android:orientation="vertical"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="50dp"
+
+            >
+            <EditText
+                android:id="@+id/etserialnumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Serial Number"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+            <EditText
+                android:id="@+id/etvehicleno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Vehicle Number"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+            <EditText
+                android:id="@+id/etpartyname"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Party Name"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
 
 
+            >
+            <EditText
+                android:id="@+id/etinvoicenumber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Invoice Number"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="360dp"
+            android:layout_height="60dp"
+            android:layout_weight="2"
+            android:background="@color/gray"
+            >
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="165dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="5dp"
+                >
+                <EditText
+                    android:id="@+id/etotoutsecuritytotalQuantity"
+                    android:layout_width="165dp"
+                    android:layout_height="wrap_content"
+                    android:hint="Total-Quantity"
+                    android:inputType="numberDecimal"
+                    android:clickable="false"
+                    android:enabled="false"
+                    android:textSize="17dp"
+                    android:textStyle="bold"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="135dp"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_marginLeft="200dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="10dp"
+
+                >
+                <AutoCompleteTextView
+                    android:id="@+id/etotoutsecuritytotalQuantityUOM"
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:hint="UOM"
+                    android:inputType="none"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+            <EditText
+                android:id="@+id/etnetweight"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Net Weight"
+                android:inputType="number"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -52,85 +200,6 @@
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
 
-            >
-            <EditText
-                android:id="@+id/etserialnumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Serial Number"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-            >
-            <EditText
-                android:id="@+id/etvehicleno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Vehicle Number"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold"/>
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-
-
-            >
-            <EditText
-                android:id="@+id/etinvoicenumber"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Invoice Number"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-
-
-            >
-            <EditText
-                android:id="@+id/etpartyname"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Party Name"
-                android:inputType="text"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-
 
             >
             <EditText
@@ -139,46 +208,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Goods Discription"
                 android:inputType="textCapCharacters"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-
-
-            >
-            <EditText
-                android:id="@+id/etqty"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Qty"
-                android:inputType="number"
-                android:textSize="17dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="10dp"
-
-
-            >
-            <EditText
-                android:id="@+id/etnetweight"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Net Weight"
-                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -422,14 +451,7 @@
                     android:text="No"
                     android:layout_marginLeft="26dp"/>
             </RadioGroup>
-
         </LinearLayout>
-
-
-
-
-
-
 
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
@@ -442,7 +464,7 @@
                 android:layout_height="55dp"
                 android:orientation="horizontal">
 
-                <androidx.appcompat.widget.AppCompatButton
+                <!--<androidx.appcompat.widget.AppCompatButton
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
                     android:layout_below="@id/OUM."
@@ -451,20 +473,18 @@
                     android:textSize="22dp"
                     android:textStyle="bold">
 
-                </androidx.appcompat.widget.AppCompatButton>
+                </androidx.appcompat.widget.AppCompatButton>-->
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="100dp"
+                    android:layout_width="130dp"
                     android:layout_height="match_parent"
                     android:id="@+id/samplingview"
-                    android:layout_marginLeft="15dp"
-                    android:text="View"
-                    android:textSize="22dp"
+                    android:layout_marginLeft="55dp"
+                    android:text="COMPLETED"
+                    android:textSize="17dp"
                     android:textStyle="bold"
-                    android:onClick="Viewclick">
-
+                    android:onClick="otoutsecuritycompletedclick">
                 </androidx.appcompat.widget.AppCompatButton>
-
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/etssubmit"
@@ -473,8 +493,7 @@
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="10dp"
                     android:text="SUBMIT"
-
-                    android:textSize="22dp"
+                    android:textSize="17dp"
                     android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>
