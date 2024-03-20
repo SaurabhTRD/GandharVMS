@@ -103,7 +103,11 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadImagesAndUpdate();
+                if (image1 == null || image2 == null) {
+                    Toasty.warning(OutwardOut_Tanker_Weighment.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
+                } else {
+                    UploadImagesAndUpdate();
+                }
             }
         });
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -114,6 +118,9 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
         netweight.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -227,10 +234,8 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         String ugrosswt = grossw.getText().toString().trim();
         String unumberpack = etnumberpack.getText().toString().trim()!=null?etnumberpack.getText().toString():"";
         String uremark = etremark.getText().toString().trim()!=null?etremark.getText().toString():"";
-
         if (etintime.isEmpty()||etsealnumber.isEmpty()||etnetweight.isEmpty()||ugrosswt.isEmpty()
-                ||uremark.isEmpty()||unumberpack.isEmpty())
-        {
+                ||uremark.isEmpty()||unumberpack.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             Model_OutwardOut_Weighment modelOutwardOutWeighment = new Model_OutwardOut_Weighment(OutwardId,imgPath2,imgPath1,

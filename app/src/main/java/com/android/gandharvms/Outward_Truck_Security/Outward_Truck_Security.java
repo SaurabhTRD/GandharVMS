@@ -176,10 +176,10 @@ public class Outward_Truck_Security extends AppCompatActivity {
         }
 
         if (sharedPreferences != null) {
-            if (getIntent().hasExtra("VehicleNumber")) {
-                FetchVehicleDetail(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
+            if (getIntent().hasExtra("vehiclenum")) {
+                FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
                 saveButton.setVisibility(View.GONE);
-            } else {
+            }else {
                 GetMaxSerialNo(formattedDate);
             }
 
@@ -232,10 +232,14 @@ public class Outward_Truck_Security extends AppCompatActivity {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    FetchVehicleDetail(vehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
+                    FetchVehicleDetails(vehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
                 }
             }
         });
+
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
@@ -341,7 +345,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
 
         }
     }
-    private void FetchVehicleDetail(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
+    private void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
 
         Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);
         call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {

@@ -19,7 +19,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="130dp"
                 android:id="@+id/textoutwardgridStatus"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -29,7 +29,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-            <TextView
+            <!--<TextView
                 android:layout_width="120dp"
                 android:id="@+id/textoutwardgridSerialNumber"
                 android:textStyle="bold"
@@ -38,9 +38,9 @@
                 android:textAllCaps="true"
                 android:gravity="center|start"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
             <TextView
-                android:layout_width="150dp"
+                android:layout_width="120dp"
                 android:id="@+id/textoutwardgridVehicleNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -50,7 +50,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-            <TextView
+            <!--<TextView
                 android:layout_width="120dp"
                 android:id="@+id/textoutwardgridMaterial"
                 android:gravity="center|start"
@@ -59,7 +59,7 @@
                 android:text="Material"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
                 android:layout_width="120dp"

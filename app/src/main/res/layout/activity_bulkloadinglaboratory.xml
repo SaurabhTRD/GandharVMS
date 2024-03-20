@@ -104,7 +104,8 @@
                     android:hint="In Time"
                     android:inputType="text"
                     android:textSize="17dp"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:focusable="false"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <!--<com.google.android.material.textfield.TextInputLayout

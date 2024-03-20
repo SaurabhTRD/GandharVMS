@@ -19,12 +19,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
+import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_Production;
+import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
+import com.android.gandharvms.OutwardOut_Tanker_Security;
 import com.android.gandharvms.OutwardOut_Tanker_Weighment;
+import com.android.gandharvms.OutwardOut_Truck_Billing;
+import com.android.gandharvms.OutwardOut_Truck_Security;
+import com.android.gandharvms.OutwardOut_Truck_Weighment;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Tanker_Production_forms.bulkloadingproduction;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
+import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
+import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
+import com.android.gandharvms.Outward_Truck_weighment;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
+import com.android.gandharvms.outward_Tanker_Lab_forms.bulkloadinglaboratory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +83,9 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
     public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         Response_Outward_Security_Fetching club = outwardfilteredGridList.get(position);
         holder.Status.setText(club.getCurrStatus());
-        holder.sernum.setText(club.getSerialNumber());
+        //holder.sernum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
-        holder.material.setText(club.getMaterialName());
+        //holder.material.setText(club.getMaterialName());
         int secintimelength = club.getSecInTime()!=null ? club.getSecInTime().length() : 0;
         if (secintimelength > 0) {
             holder.secInTime.setText(club.getSecInTime().substring(12, secintimelength));
@@ -182,27 +194,58 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                 char io = club.getI_O();
                 Intent intent = new Intent();
                 if (vehicletype.equals("OT") && io == 'I') {
-                    if (currentst.equals("Billing")) {
-                        intent = new Intent(view.getContext(), Outward_Tanker_Billing.class);
-                    } else if (currentst.equals("Security Reported")) {
+                    if (currentst.equals("Security Reported")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_Security.class);
+                    }else if (currentst.equals("Billing")) {
+                        intent = new Intent(view.getContext(), Outward_Tanker_Billing.class);
                     }else if (currentst.equals("Weighment")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_weighment.class);
-                    }else if (currentst.equals("Laboratory")) {
-                        intent = new Intent(view.getContext(), Outward_Tanker_Laboratory.class);
-                    }else if (currentst.equals("Production")) {
+                    }else if (currentst.equals("InProcessProduction")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_Production.class);
+                    }else if (currentst.equals("InProcessLaboratory")) {
+                        intent = new Intent(view.getContext(), Outward_Tanker_Laboratory.class);
+                    }else if (currentst.equals("BulkProduction")) {
+                        intent = new Intent(view.getContext(), bulkloadingproduction.class);
+                    }else if (currentst.equals("BulkLaboratory")) {
+                        intent = new Intent(view.getContext(), bulkloadinglaboratory.class);
+                    }
+                } else if (vehicletype.equals("OT") && io == 'O') {
+                    if (currentst.equals("OutWeighment")) {
+                        intent = new Intent(view.getContext(), OutwardOut_Tanker_Weighment.class);
+                    }else if (currentst.equals("OutDataEntry")) {
+                        intent = new Intent(view.getContext(), DataEntryForm_Production.class);
+                    }else if (currentst.equals("OutBilling")) {
+                        intent = new Intent(view.getContext(), ot_outBilling.class);
+                    }else if (currentst.equals("SecurityVehicleOut")) {
+                        intent = new Intent(view.getContext(), OutwardOut_Tanker_Security.class);
+                    }
+                }else if (vehicletype.equals("OR") && io == 'I') {
+                    if (currentst.equals("Security Reported")) {
+                        intent = new Intent(view.getContext(), Outward_Truck_Security.class);
+                    }  else if (currentst.equals("Logistic")) {
+                        intent = new Intent(view.getContext(), Outward_Truck_Logistics.class);
+                    } else if (currentst.equals("Weighment")) {
+                        intent = new Intent(view.getContext(), Outward_Truck_weighment.class);
+                    }else if (currentst.equals("Dispatch")) {
+                        intent = new Intent(view.getContext(), Outward_Truck_Dispatch.class);
                     }
                 }
-
+                else if (vehicletype.equals("OR") && io == 'O') {
+                    if (currentst.equals("OutWeighment")) {
+                        intent = new Intent(view.getContext(), OutwardOut_Truck_Weighment.class);
+                    }  else if (currentst.equals("OutBilling")) {
+                        intent = new Intent(view.getContext(), OutwardOut_Truck_Billing.class);
+                    } else if (currentst.equals("SecurityVehicleOut")) {
+                        intent = new Intent(view.getContext(), OutwardOut_Truck_Security.class);
+                    }
+                }
                 intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("SerialNumber", club.getSerialNumber());
-                intent.putExtra("VehicleNumber", club.getVehicleNumber());
-                intent.putExtra("CurrStatus", club.getCurrentProcess());
+                intent.putExtra("serialnumber", club.getSerialNumber());
+                intent.putExtra("vehiclenum", club.getVehicleNumber());
+                intent.putExtra("currstatus", club.getCurrStatus());
                 view.getContext().startActivity(intent);
             }
         });
-
     }
 
     @Override
@@ -218,9 +261,9 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
 
         public myviewHolder(View view) {
             super(view);
-            sernum = view.findViewById(R.id.textoutwardgridSerialNumber);
+            //sernum = view.findViewById(R.id.textoutwardgridSerialNumber);
             vehiclenum = view.findViewById(R.id.textoutwardgridVehicleNumber);
-            material = view.findViewById(R.id.textoutwardgridMaterial);
+            //material = view.findViewById(R.id.textoutwardgridMaterial);
             Status = view.findViewById(R.id.textoutwardgridStatus);
             secInTime = view.findViewById(R.id.textoutwardgridSecInTime);
             secOutTime = view.findViewById(R.id.textoutwardgridSecOutTime);

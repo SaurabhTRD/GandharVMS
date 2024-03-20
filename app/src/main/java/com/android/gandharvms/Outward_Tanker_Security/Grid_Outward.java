@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.HorizontalScrollView;
 
 import com.android.gandharvms.Global_Var;
@@ -12,11 +13,13 @@ import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class Grid_Outward extends AppCompatActivity {
@@ -44,8 +47,6 @@ public class Grid_Outward extends AppCompatActivity {
         else{
             fetchDataFromApi("x",vehicleType,'x','x');
         }
-
-
         rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
             @Override
@@ -92,14 +93,25 @@ public class Grid_Outward extends AppCompatActivity {
                         List<Response_Outward_Security_Fetching> data = response.body();
                         outwardclublist= data;
                         setUpRecyclerView();
-
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
-
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         });
     }

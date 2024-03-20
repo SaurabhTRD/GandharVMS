@@ -181,6 +181,10 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                 }
             }
         });
+
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -425,7 +429,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                         if (!isblending.isChecked() && !isflushing.isChecked()) {
                             Toasty.success(Outward_Tanker_Production.this, "No Flushing or Blending Required", Toast.LENGTH_SHORT, true).show();
                         } else {
-                            Toasty.success(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+                            Toasty.success(Outward_Tanker_Production.this, "Flushing Or Blending is Send For Checking to Lab", Toast.LENGTH_SHORT, true).show();
                         }
                         startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
                         finish();

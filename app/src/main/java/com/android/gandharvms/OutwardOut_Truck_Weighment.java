@@ -172,6 +172,10 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                 Toasty.error(OutwardOut_Truck_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
+
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
     }
 
 

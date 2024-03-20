@@ -185,6 +185,9 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -450,7 +453,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                         else {
                             etisflushingyes.setChecked(false);
                         }
-                        if (blendingstatus == 'Y' && flushingstatus == 'Y' && statuscount > 0) {
+                        if (blendingstatus == 'Y' && flushingstatus == 'Y' && statuscount >= 0) {
                             intime.setVisibility(View.GONE);
                             etbelow.setVisibility(View.VISIBLE);
                             sendbtn.setVisibility(View.GONE);

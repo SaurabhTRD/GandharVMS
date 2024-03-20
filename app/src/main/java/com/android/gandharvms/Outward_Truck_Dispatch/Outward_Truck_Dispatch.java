@@ -191,7 +191,9 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
             }
         });
 
-
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {

@@ -96,6 +96,10 @@ public class ot_outBilling extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
+
         totqtyautoCompleteTextView2 = findViewById(R.id.etotoutbiltotalQuantityUOM);
         totqtyUomMapping= new HashMap<>();
         totqtyUomMapping.put("NA",1);

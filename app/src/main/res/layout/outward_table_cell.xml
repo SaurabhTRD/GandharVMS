@@ -7,35 +7,21 @@
 
     <TextView
         android:id="@+id/textoutwardgridStatus"
-        android:layout_width="120dp"
+        android:layout_width="130dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
-    <TextView
-        android:id="@+id/textoutwardgridSerialNumber"
-        android:layout_width="120dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
+
     <TextView
         android:id="@+id/textoutwardgridVehicleNumber"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:layout_marginStart="5dp"
         android:clickable="true"
         android:textStyle="bold"
         android:gravity="center|start"
         android:textColor="@color/blue"
         android:backgroundTint="@android:color/darker_gray"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textoutwardgridMaterial"
-        android:layout_width="120dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
     <TextView

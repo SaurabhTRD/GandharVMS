@@ -97,10 +97,14 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 insert();
             }
         });
+
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
+
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

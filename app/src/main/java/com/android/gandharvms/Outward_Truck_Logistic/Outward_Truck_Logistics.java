@@ -99,6 +99,10 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 }
             }
         });
+
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

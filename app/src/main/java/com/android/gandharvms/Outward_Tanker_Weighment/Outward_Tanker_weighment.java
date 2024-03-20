@@ -116,7 +116,11 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UploadImagesAndUpdate();
+                if (image1 == null || image2 == null) {
+                    Toasty.warning(Outward_Tanker_weighment.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
+                } else {
+                    UploadImagesAndUpdate();
+                }
             }
         });
         intime.setOnClickListener(new View.OnClickListener() {
@@ -146,6 +150,10 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
                 }
             }
         });
+
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
 
     }
 
@@ -207,7 +215,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
             public void onResponse(Call<Response_Outward_Tanker_Weighment> call, Response<Response_Outward_Tanker_Weighment> response) {
                 if (response.isSuccessful()) {
                     Response_Outward_Tanker_Weighment data = response.body();
-                    if (data.getVehicleNumber() != "" && data.getVehicleNumber()!=null) {
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
                         OutwardId = data.getOutwardId();
                         serialNo = data.getSerialNumber();
                         serialnumber.setText(data.getSerialNumber());
@@ -228,8 +236,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
                         elocation.setEnabled(false);
                         /*intime.requestFocus();
                         intime.callOnClick();*/
-                    }
-                    else {
+                    } else {
                         Toasty.error(Outward_Tanker_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
@@ -271,55 +278,51 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         String ettareweight = tareweight.getText().toString().trim();
         String outTime = getCurrentTime();
         String uremark = etremark.getText().toString().trim();
-        if (imgPath2 == null || imgPath1 == null) {
-            Toasty.warning(this, "Please Upload Image", Toast.LENGTH_SHORT).show();
+        if (etintime.isEmpty() || etserialnumber.isEmpty() || etvehiclenumber.isEmpty() || ettareweight.isEmpty() || uremark.isEmpty()) {
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
-            if (etintime.isEmpty() || etserialnumber.isEmpty() || etvehiclenumber.isEmpty() || ettareweight.isEmpty() || uremark.isEmpty()) {
-                Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-            } else {
-                Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(
-                        OutwardId, etintime, outTime, imgPath2, imgPath1, "", "", "",
-                        "", ettareweight, "", "", "", "", 'W',
-                        uremark, EmployeId, EmployeId, 'I', 'I', vehicleType, etserialnumber, etvehiclenumber);
-                Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
-                call.enqueue(new Callback<Boolean>() {
-                    @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful() && response.body() && response.body()) {
-                            makeNotification(etvehiclenumber, outTime);
-                            Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                            startActivity(new Intent(Outward_Tanker_weighment.this, Outward_Tanker.class));
-                            finish();
-                        } else {
-                            Log.e("Retrofit", "Error Response Body: " + response.code());
-                        }
-
+            Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(
+                    OutwardId, etintime, outTime, imgPath2, imgPath1, "", "", "",
+                    "", ettareweight, "", "", "", "", 'W',
+                    uremark, EmployeId, EmployeId, 'I', 'I', vehicleType, etserialnumber, etvehiclenumber);
+            Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body()==true) {
+                        //makeNotification(etvehiclenumber, outTime);
+                        Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+                        startActivity(new Intent(Outward_Tanker_weighment.this, Outward_Tanker.class));
+                        finish();
+                    } else {
+                        Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
+                }
 
-                    @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
 
-                        Log.e("Retrofit", "Failure: " + t.getMessage());
-                        // Check if there's a response body in case of an HTTP error
-                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                            Response<?> response = ((HttpException) t).response();
-                            if (response != null) {
-                                Log.e("Retrofit", "Error Response Code: " + response.code());
-                                try {
-                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
                             }
                         }
-                        Toasty.error(Outward_Tanker_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
                     }
-                });
-            }
+                    Toasty.error(Outward_Tanker_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                }
+            });
         }
     }
 
     public void UploadImagesAndUpdate() {
+
         String FileInitial = "OutwardVeh_In_";
         arrayOfByteArrays[0] = ImgVehicle;
         arrayOfByteArrays[1] = ImgDriver;

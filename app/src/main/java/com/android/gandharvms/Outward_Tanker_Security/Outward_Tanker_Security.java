@@ -162,8 +162,8 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         }
 
         if (sharedPreferences != null) {
-            if (getIntent().hasExtra("VehicleNumber")) {
-                FetchVehicleDetail(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
+            if (getIntent().hasExtra("vehiclenum")) {
+                FetchVehicleDetail(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
 //                etreg.setText(getIntent().getStringExtra("SerialNumber"));
 //                etreg.setEnabled(false);
 //                etvehical.setText(getIntent().getStringExtra("VehicleNumber"));

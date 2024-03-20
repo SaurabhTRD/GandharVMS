@@ -122,6 +122,9 @@ public class bulkloadingproduction extends AppCompatActivity {
             }
         });
 
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -221,9 +224,8 @@ public class bulkloadingproduction extends AppCompatActivity {
                         etoanumber.setText(data.getOAnumber());
                         etoanumber.setEnabled(false);
                         bulkproNlabOutwardId=data.getObplOutwardId();
-                        /*etintime.requestFocus();
-                        etintime.callOnClick();*/
-                        if (data.getBatchNo() != null) {
+                        //linearproduction.setVisibility(View.GONE);
+                        if (bulkproNlabOutwardId>0) {
                             etbatchno.setText(data.getBatchNo());
                             etbatchno.setEnabled(false);
                             linearproduction.setVisibility(View.GONE);
