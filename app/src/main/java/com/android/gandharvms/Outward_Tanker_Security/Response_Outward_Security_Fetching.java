@@ -25,6 +25,7 @@ public class Response_Outward_Security_Fetching {
     public String BRFProOutTime;
     public String BRFLabInTime;
     public String BRFLabOutTime;
+    public String LogInTime;
     public String NetWeight;
     public String OutTotalQty;
     public int OutTotalQtyUOM;
@@ -78,6 +79,14 @@ public class Response_Outward_Security_Fetching {
     private char NextProcess;
     private char I_O;
     private String VehicleType;
+
+    public String getLogInTime() {
+        return LogInTime;
+    }
+
+    public void setLogInTime(String logInTime) {
+        LogInTime = logInTime;
+    }
 
     public String getNetWeight() {
         return NetWeight;

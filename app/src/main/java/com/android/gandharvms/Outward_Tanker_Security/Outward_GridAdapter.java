@@ -74,115 +74,53 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
         }
     }
 
-
-//    public Outward_GridAdapter.myviewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-//        return null;
-//    }
-
     @Override
     public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         Response_Outward_Security_Fetching club = outwardfilteredGridList.get(position);
-        holder.Status.setText(club.getCurrStatus());
-        //holder.sernum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
-        //holder.material.setText(club.getMaterialName());
+        holder.Status.setText(club.getCurrStatus());
         int secintimelength = club.getSecInTime()!=null ? club.getSecInTime().length() : 0;
         if (secintimelength > 0) {
-            holder.secInTime.setText(club.getSecInTime().substring(12, secintimelength));
-        }
-        int secouttimelength = club.getSecOutTime()!=null ? club.getSecOutTime().length() : 0;
-        if (secouttimelength > 0) {
-            holder.secOutTime.setText(club.getSecOutTime().substring(12, secouttimelength));
+            holder.secInTime.setText(club.getSecInTime());
         }
 
         int weiInTimelength = club.getWeiInTime()!=null ? club.getWeiInTime().length() : 0;
         if (weiInTimelength > 0) {
-            holder.weiInTime.setText(club.getWeiInTime().substring(12, weiInTimelength));
-        }
-        int weiOutTimelength = club.getWeiOutTime()!=null ? club.getWeiOutTime().length() : 0;
-        if (weiOutTimelength > 0) {
-            holder.weiOutTime.setText(club.getWeiOutTime().substring(12, weiOutTimelength));
+            holder.weiInTime.setText(club.getWeiInTime());
         }
 
         int bilInTimelength = club.getBilInTime()!=null ? club.getBilInTime().length() : 0;
         if (bilInTimelength > 0) {
-            holder.bilInTime.setText(club.getBilInTime().substring(12, bilInTimelength));
-        }
-        int bilOutTimelength = club.getBilOutTime()!=null ? club.getBilOutTime().length() : 0;
-        if (bilOutTimelength > 0) {
-            holder.bilOutTime.setText(club.getBilOutTime().substring(12, bilOutTimelength));
+            holder.bilInTime.setText(club.getBilInTime());
         }
 
         int ipfLabInTimelength = club.getIPFLabInTime()!=null ? club.getIPFLabInTime().length() : 0;
         if (ipfLabInTimelength > 0) {
-            holder.ipfLabInTime.setText(club.getIPFLabInTime().substring(12 ,ipfLabInTimelength));
-        }
-        int ipfLabOutTimelength = club.getIPFLabOutTime()!=null ? club.getIPFLabOutTime().length() : 0;
-        if (ipfLabOutTimelength > 0) {
-            holder.ipfLabOutTime.setText(club.getIPFLabOutTime().substring(12 ,ipfLabOutTimelength));
+            holder.ipfLabInTime.setText(club.getIPFLabInTime());
         }
 
         int ipfProInTimelength = club.getIPFProInTime()!=null ? club.getIPFProInTime().length() : 0;
         if (ipfProInTimelength > 0) {
-            holder.ipfProInTime.setText(club.getIPFProInTime().substring(12 ,ipfProInTimelength));
-        }
-        int ipfProOutTimelength = club.getIPFProOutTime()!=null ? club.getIPFProOutTime().length() : 0;
-        if (ipfProOutTimelength > 0) {
-            holder.ipfProOutTime.setText(club.getIPFProOutTime().substring(12 ,ipfProOutTimelength));
+            holder.ipfProInTime.setText(club.getIPFProInTime());
         }
 
         int blfLabInTimelength = club.getBLFLabInTime()!=null ? club.getBLFLabInTime().length() : 0;
         if (blfLabInTimelength > 0) {
-            holder.blfLabInTime.setText(club.getBLFLabInTime().substring(12 ,blfLabInTimelength));
-        }
-        int blfLabOutTimelength = club.getBLFLabOutTime()!=null ? club.getBLFLabOutTime().length() : 0;
-        if (blfLabOutTimelength > 0) {
-            holder.blfLabOutTime.setText(club.getBLFLabOutTime().substring(12 ,blfLabOutTimelength));
+            holder.blfLabInTime.setText(club.getBLFLabInTime());
         }
 
         int blfProInTimelength = club.getBLFProInTime()!=null ? club.getBLFProInTime().length() : 0;
         if (blfProInTimelength > 0) {
-            holder.blfProInTime.setText(club.getBLFProInTime().substring(12 ,blfProInTimelength));
+            holder.blfProInTime.setText(club.getBLFProInTime());
         }
-        int blfProOutTimelength = club.getBLFProOutTime()!=null ? club.getBLFProOutTime().length() : 0;
-        if (blfProOutTimelength > 0) {
-            holder.blfProOutTime.setText(club.getBLFProOutTime().substring(12 ,blfProOutTimelength));
-        }
-
         int desInTimeInTimelength = club.getDesInTime()!=null ? club.getDesInTime().length() : 0;
         if (desInTimeInTimelength > 0) {
-            holder.desInTime.setText(club.getDesInTime().substring(12 ,desInTimeInTimelength));
+            holder.desInTime.setText(club.getDesInTime());
         }
-        int desOutTimelength = club.getDesOutTime()!=null ? club.getDesOutTime().length() : 0;
-        if (desOutTimelength > 0) {
-            holder.desOutTime.setText(club.getDesOutTime().substring(12 ,desOutTimelength));
-        }
-
-        int brfBilInTimelength = club.getBRFBilInTime()!=null ? club.getBRFBilInTime().length() : 0;
-        if (brfBilInTimelength > 0) {
-            holder.brfBilInTime.setText(club.getBRFBilInTime().substring(12 ,brfBilInTimelength));
-        }
-        int brfBilOutTimelength = club.getBRFBilOutTime()!=null ? club.getBRFBilOutTime().length() : 0;
-        if (brfBilOutTimelength > 0) {
-            holder.brfBilOutTime.setText(club.getBRFBilOutTime().substring(12 ,brfBilOutTimelength));
-        }
-
-        int brfLabInTimelength = club.getBRFLabInTime()!=null ? club.getBRFLabInTime().length() : 0;
-        if (brfLabInTimelength > 0) {
-            holder.brfLabInTime.setText(club.getBRFLabInTime().substring(12 ,brfLabInTimelength));
-        }
-        int brfLabOutTimelength = club.getBRFLabOutTime()!=null ? club.getBRFLabOutTime().length() : 0;
-        if (brfLabOutTimelength > 0) {
-            holder.brfLabOutTime.setText(club.getBRFLabOutTime().substring(12 ,brfLabOutTimelength));
-        }
-
-        int brfProInTimelength = club.getBRFProInTime()!=null ? club.getBRFProInTime().length() : 0;
-        if (brfProInTimelength > 0) {
-            holder.brfProInTime.setText(club.getBRFProInTime().substring(12 ,brfProInTimelength));
-        }
-        int brfProOutTimelength = club.getBRFProOutTime()!=null ? club.getBRFProOutTime().length() : 0;
-        if (brfProOutTimelength > 0) {
-            holder.brfProOutTime.setText(club.getBRFProOutTime().substring(12 ,brfProOutTimelength));
+        int logintime=club.getLogInTime()!=null?club.getLogInTime().length():0;
+        if(logintime>0)
+        {
+            holder.logintime.setText(club.getLogInTime());
         }
 
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
@@ -254,39 +192,23 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView sernum, vehiclenum, material, Status, secInTime,secOutTime,weiInTime,weiOutTime,
-                bilInTime,bilOutTime,ipfLabInTime, ipfLabOutTime,ipfProInTime,ipfProOutTime,blfLabInTime,blfLabOutTime,
-                blfProInTime,blfProOutTime,desInTime,desOutTime,brfBilInTime,brfBilOutTime,
-                brfProInTime,brfProOutTime,brfLabInTime,brfLabOutTime;
+        public TextView vehiclenum, material, Status, secInTime,weiInTime,
+                bilInTime,ipfLabInTime,ipfProInTime,blfLabInTime,
+                blfProInTime,desInTime,logintime;
 
         public myviewHolder(View view) {
             super(view);
-            //sernum = view.findViewById(R.id.textoutwardgridSerialNumber);
             vehiclenum = view.findViewById(R.id.textoutwardgridVehicleNumber);
-            //material = view.findViewById(R.id.textoutwardgridMaterial);
             Status = view.findViewById(R.id.textoutwardgridStatus);
             secInTime = view.findViewById(R.id.textoutwardgridSecInTime);
-            secOutTime = view.findViewById(R.id.textoutwardgridSecOutTime);
             weiInTime = view.findViewById(R.id.textoutwardgridWeiInTime);
-            weiOutTime = view.findViewById(R.id.textoutwardgridWeiOutTime);
             bilInTime = view.findViewById(R.id.textoutwardgridBilInTime);
-            bilOutTime = view.findViewById(R.id.textoutwardgridBilOutTime);
             ipfLabInTime = view.findViewById(R.id.textoutwardgridIPFLabInTime);
-            ipfLabOutTime = view.findViewById(R.id.textoutwardgridIPFLabOutTime);
             ipfProInTime = view.findViewById(R.id.textoutwardgridIPFProInTime);
-            ipfProOutTime = view.findViewById(R.id.textoutwardgridIPFProOutTime);
             blfLabInTime = view.findViewById(R.id.textoutwardgridBLFLabInTime);
-            blfLabOutTime = view.findViewById(R.id.textoutwardgridBLFLabOutTime);
             blfProInTime = view.findViewById(R.id.textoutwardgridBLFProInTime);
-            blfProOutTime = view.findViewById(R.id.textoutwardgridBLFProOutTime);
             desInTime = view.findViewById(R.id.textoutwardgridDesInTime);
-            desOutTime = view.findViewById(R.id.textoutwardgridDesOutTime);
-            brfBilInTime = view.findViewById(R.id.textoutwardgridBRFBilInTime);
-            brfBilOutTime = view.findViewById(R.id.textoutwardgridBRFBilOutTime);
-            brfProInTime = view.findViewById(R.id.textoutwardgridBRFProInTime);
-            brfProOutTime = view.findViewById(R.id.textoutwardgridBRFProOutTime);
-            brfLabInTime = view.findViewById(R.id.textoutwardgridBRFLabInTime);
-            brfLabOutTime = view.findViewById(R.id.textoutwardgridBRFLabOutTime);
+            logintime=view.findViewById(R.id.textoutwardgridLogInTime);
         }
     }
 

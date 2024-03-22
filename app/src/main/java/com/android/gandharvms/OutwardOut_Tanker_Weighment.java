@@ -25,6 +25,9 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Model_OutwardOut_Weighment;
@@ -36,6 +39,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -43,6 +47,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -65,6 +70,8 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_weighment outwardWeighment;
+    private LoginMethod userDetails;
+    private String token;
 
     private static final int CAMERA_PERM_CODE1 = 100;
     private static final int CAMERA_PERM_CODE = 101;
@@ -76,11 +83,13 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
     byte[][] arrayOfByteArrays = new byte[2][];
     private String imgPath1, imgPath2;
     private String etSerialNumber;
+    private String vehicleNum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_out_tanker_weighment);
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
+        userDetails = RetroApiClient.getLoginApi();
 
         intime= findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
@@ -99,6 +108,7 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
 
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -142,20 +152,9 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(OutwardOut_Tanker_Weighment.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
     }
@@ -186,6 +185,7 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
                         serialnumber.setEnabled(false);
                         vehiclenumber.setText(data.getVehicleNumber());
                         vehiclenumber.setEnabled(false);
+                        vehicleNum=data.getVehicleNumber();
                         fetchdensity.setText(String.valueOf(data.getDensity_29_5C()));
                         fetchdensity.setEnabled(false);
                         tareweight.setText(String.valueOf(data.getTareWeight()));
@@ -226,6 +226,56 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         return sdf.format(new Date());
     }
 
+    public void makeNotification(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Production";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker OutWeighment Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed OutWeighment Process",
+                                        getApplicationContext(),
+                                        OutwardOut_Tanker_Weighment.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(OutwardOut_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
     public void insert(){
         String etintime = intime.getText().toString().trim();
         String etsealnumber = sealnumber.getText().toString().trim();
@@ -245,6 +295,7 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
+                        makeNotification(vehicleNum);
                         Toasty.success(OutwardOut_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
                         startActivity(new Intent(OutwardOut_Tanker_Weighment.this, OutwardOut_Tanker.class));
                         finish();

@@ -30,6 +30,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -72,6 +73,8 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
 
         outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
         userDetails = RetroApiClient.getLoginApi();
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
+
         setContentView(R.layout.activity_outward_tanker_billing);
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
@@ -98,20 +101,9 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Outward_Tanker_Billing.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -127,7 +119,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
             FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
     }
-    public void makeNotification(String vehicleNumber, String outTime) {
+    public void makeNotificationforweighment(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -136,14 +128,65 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Billing";
+                            String specificRole = "Weighment";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Outward Tanker Security Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        "Outward Tanker Billing Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Billing process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Tanker_Billing.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void makeNotificationforproduction(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Production";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Billing Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Billing process at " + outTime,
                                         getApplicationContext(),
                                         Outward_Tanker_Billing.this
                                 );
@@ -268,7 +311,8 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
 
                     if (response.isSuccessful() && response.body() != null && response.body()==true){
-                        makeNotification(etvehiclenumber, outTime);
+                        makeNotificationforweighment(etvehiclenumber, outTime);
+                        makeNotificationforproduction(etvehiclenumber, outTime);
                         Toasty.success(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         startActivity(new Intent(Outward_Tanker_Billing.this, Outward_Tanker.class));
                         finish();

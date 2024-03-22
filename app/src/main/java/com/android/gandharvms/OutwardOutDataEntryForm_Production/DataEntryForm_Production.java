@@ -13,7 +13,11 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.OutwardOut_Tanker_Weighment;
 import com.android.gandharvms.Outward_Tanker;
@@ -24,11 +28,13 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import es.dmoral.toasty.Toasty;
@@ -47,7 +53,10 @@ public class DataEntryForm_Production extends AppCompatActivity {
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private Outward_Tanker_Lab outwardTankerLab;
+    private LoginMethod userDetails;
+    private String token;
     private int OutwardId;
+    private String odvehiclenum;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,6 +73,8 @@ public class DataEntryForm_Production extends AppCompatActivity {
 
         odesubmit=findViewById(R.id.etoutdataentrysubmit);
 
+        userDetails = RetroApiClient.getLoginApi();
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
         odesubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -75,20 +86,9 @@ public class DataEntryForm_Production extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(DataEntryForm_Production.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        odeintime.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                odeintime.setText(time);
             }
         });
 
@@ -118,6 +118,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
                         odeserialnumber.setEnabled(false);
                         odevehiclenumber.setText(data.getVehicleNumber());
                         odevehiclenumber.setEnabled(false);
+                        odvehiclenum=data.getVehicleNumber();
                         odedensity.setText(String.valueOf(data.getDensity_29_5C()));
                         odedensity.setEnabled(false);
                         odesealnumber.setText(String.valueOf(data.getSealNumber()));
@@ -157,6 +158,58 @@ public class DataEntryForm_Production extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+
+    public void makeNotification(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Billing";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker OutDataEntryForm Process Done",
+                                        "Vehicle Number:-" + vehicleNumber + " has Completed OutDataEntryForm Process",
+                                        getApplicationContext(),
+                                        DataEntryForm_Production.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(DataEntryForm_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void update() {
         String odfintime = odeintime.getText().toString().trim();
         String odfremark=odeetremark.getText().toString().trim();
@@ -171,6 +224,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true) {
+                        makeNotification(odvehiclenum);
                         Toasty.success(DataEntryForm_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
                         startActivity(new Intent(DataEntryForm_Production.this, OutwardOut_Tanker.class));
                         finish();

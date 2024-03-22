@@ -30,16 +30,6 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textSerialNumber"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="Serial No"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
                 android:layout_width="150dp"
                 android:id="@+id/textVehicleNumber"
                 android:textStyle="bold"
@@ -51,119 +41,67 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="90dp"
-                android:id="@+id/textMaterial"
-                android:gravity="center|start"
-                android:layout_marginStart="5dp"
+                android:layout_width="100dp"
+                android:id="@+id/textSecurityInTime"
                 android:textStyle="bold"
-                android:text="Material"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Sec-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/SecurityInTime"
+                android:id="@+id/textWeighmentInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Sec-InTime"
+                android:text="Wei-Time"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/textSamplingInTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Sam-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/SecurityOutTime"
+                android:id="@+id/textLoboratoryInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Sec-OutTime"
+                android:text="Lab-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/WeighmentInTime"
+                android:id="@+id/textProductionInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Wei-InTime"
+                android:text="Pro-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/WeighmentOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Wei-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/SamplingInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Sam-InTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/SamplingOutTime"
+                android:id="@+id/textStoreInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Sam-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/LoboratoryInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Lab-InTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/LoboratoryOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Lab-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/ProductionInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Pro-InTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/ProductionOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Pro-OutTime"
+                android:text="Store-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>

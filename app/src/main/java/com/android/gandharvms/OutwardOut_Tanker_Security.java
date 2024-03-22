@@ -14,6 +14,9 @@ import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Model_OutwardOut_Security;
@@ -25,6 +28,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -55,12 +59,19 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
     private String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_Tanker outwardTanker;
+
+    private String outsecvehiclenum;
+    private LoginMethod userDetails;
+    private String token;
     RadioButton Trasnportyes,transportno,tremyes,tremno,ewayyes,ewayno,testyes,testno,invoiceyes,invoicenono;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_out_tanker_security);
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+
+        userDetails = RetroApiClient.getLoginApi();
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
@@ -98,20 +109,9 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(OutwardOut_Tanker_Security.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -143,6 +143,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
                         serialnumber.setEnabled(false);
                         vehiclenumber.setText(obj.getVehicleNumber());
                         vehiclenumber.setEnabled(false);
+                        outsecvehiclenum=obj.getVehicleNumber();
                         partyname.setText(obj.getCustomerName());
                         partyname.setEnabled(false);
                         invoiceno.setText(obj.getOutInvoiceNumber());
@@ -188,6 +189,17 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+
+    public void makeNotification(String vehicleNumber) {
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                "/topics/all",
+                "Outward Tanker OutSecurity Process Completed",
+                "This Vehicle:-" + vehicleNumber + " has Completed The Outward Tanker Completed",
+                getApplicationContext(),
+                OutwardOut_Tanker_Security.this
+        );
+        notificationsSender.SendNotifications();
+    }
     public void insert(){
         String etgooddiscription = goodsdiscription.getText().toString().trim();
         String etsign = sign.getText().toString().trim();
@@ -210,6 +222,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
+                        makeNotification(outsecvehiclenum);
                         Toasty.success(OutwardOut_Tanker_Security.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         startActivity(new Intent(OutwardOut_Tanker_Security.this,OutwardOut_Tanker.class));
                         finish();

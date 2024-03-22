@@ -30,6 +30,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -81,6 +82,8 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         getmaxserialno = Outward_RetroApiclient.insertoutwardtankersecurity();
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
         userDetails = RetroApiClient.getLoginApi();
+
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         isReportingCheckBox = findViewById(R.id.isreporting);
         reportingRemarkLayout = findViewById(R.id.edtreportingremark);
@@ -213,20 +216,9 @@ public class Outward_Tanker_Security extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Outward_Tanker_Security.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -271,7 +263,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Security";
+                            String specificRole = "Billing";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
@@ -312,8 +304,6 @@ public class Outward_Tanker_Security extends AppCompatActivity {
             }
         });
     }
-
-
 
     private void insertreporting() {
         String serial = serialnumber.getText().toString().trim();

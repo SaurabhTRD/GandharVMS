@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.HorizontalScrollView;
+import android.widget.TextView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
@@ -15,7 +17,10 @@ import com.android.gandharvms.Util.FixedGridLayoutManager;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -34,10 +39,16 @@ public class Grid_Outward extends AppCompatActivity {
     List<Response_Outward_Security_Fetching> outwardclublist = new ArrayList<>();
     Outward_GridAdapter outwardGridAdapter;
 
+    TextView currdate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_outward);
+
+        currdate=findViewById(R.id.otgridcurrrentdate);
+
+        currdate.setText(getCurrentDateTime().toString().trim());
 
         initViews();
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
@@ -114,5 +125,15 @@ public class Grid_Outward extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private String getCurrentDateTime() {
+        // Get current date and time
+        Calendar calendar = Calendar.getInstance();
+        Date now = calendar.getTime();
+
+        // Format the date and time as a string
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM/dd/yyyy", Locale.getDefault());
+        return dateFormat.format(now);
     }
 }

@@ -45,6 +45,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -101,6 +102,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
 
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         isblending = findViewById(R.id.isblending);
         isflushing = findViewById(R.id.isflushing);
@@ -189,20 +191,9 @@ public class Outward_Tanker_Production extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Outward_Tanker_Production.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -241,7 +232,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         }
     }
 
-    public void makeNotification(String vehicleNumber) {
+    public void makeNotificationforiplabifblNflUntick(String vehicleNumber) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -250,14 +241,164 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null) {
                         for (ResponseModel resmodel : userList) {
-                            String specificRole = "Production";
+                            String specificRole = "Laboratory";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Outward Tanker Production In Process form  Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at ",
+                                        "Outward Tanker Production No Blending and Flushing",
+                                        "Vehicle Number:-" + vehicleNumber + " has Not Require Blending and Flushing",
+                                        getApplicationContext(),
+                                        Outward_Tanker_Production.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                } else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void makeNotificationforiplab(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
+                            String specificRole = "Laboratory";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Production Send Blending and Flushing",
+                                        "Vehicle Number:-" + vehicleNumber + " has send To Laboratory for Check Blending and Flushing",
+                                        getApplicationContext(),
+                                        Outward_Tanker_Production.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                } else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void makeNotificationforipprocom(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
+                            String specificRole = "Laboratory";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Production InProcessForm Completed",
+                                        "Vehicle Number:-" + vehicleNumber + " has Completed Production InProcessForm",
+                                        getApplicationContext(),
+                                        Outward_Tanker_Production.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                } else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void makeNotificationoutweigh(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
+                            String specificRole = "Weighment";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker Reject Due To Blending and Flushing Not Received..!",
+                                        "This Vehicle Number:-" + vehicleNumber + " has been Rejected",
                                         getApplicationContext(),
                                         Outward_Tanker_Production.this
                                 );
@@ -427,8 +568,10 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body()==true) {
                         if (!isblending.isChecked() && !isflushing.isChecked()) {
+                            makeNotificationforiplabifblNflUntick(rvehicle);
                             Toasty.success(Outward_Tanker_Production.this, "No Flushing or Blending Required", Toast.LENGTH_SHORT, true).show();
                         } else {
+                            makeNotificationforiplab(rvehicle);
                             Toasty.success(Outward_Tanker_Production.this, "Flushing Or Blending is Send For Checking to Lab", Toast.LENGTH_SHORT, true).show();
                         }
                         startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
@@ -476,8 +619,10 @@ public class Outward_Tanker_Production extends AppCompatActivity {
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful() && response.body() && response.body()==true) {
                     if (statuscount == 2) {
+                        makeNotificationoutweigh(nvehiclenumber);
                         Toasty.success(Outward_Tanker_Production.this, "Vehicle Send To Reject", Toasty.LENGTH_SHORT, true).show();
                     } else {
+                        makeNotificationforiplab(nvehiclenumber);
                         Toasty.success(Outward_Tanker_Production.this, "Send For Recheck", Toasty.LENGTH_SHORT, true).show();
                     }
                     startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
@@ -543,7 +688,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body()==true) {
-                        makeNotification(nvehiclenumber);
+                        makeNotificationforipprocom(nvehiclenumber);
                         Toasty.success(Outward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
                         startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
                         finish();
@@ -573,8 +718,6 @@ public class Outward_Tanker_Production extends AppCompatActivity {
             });
         }
     }
-
-
     public void outtankerproinprocpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
