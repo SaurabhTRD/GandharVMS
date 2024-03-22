@@ -276,7 +276,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
 //                    });
 
             Outward_Truck_Production_Model outwardTruckProductionModel = new Outward_Truck_Production_Model(OutwardId,etintime,outTime,
-                    uremark,'P',EmployeId,'B',inOut,vehicleType);
+                    uremark,'P',EmployeId,'W','O',vehicleType);
             Call<Boolean> call = outwardTruckProductionInterface.updateouttruckproduction(outwardTruckProductionModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override

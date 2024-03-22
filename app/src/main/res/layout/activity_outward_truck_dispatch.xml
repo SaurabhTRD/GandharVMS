@@ -104,27 +104,6 @@
 
 
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-                android:id="@+id/material"
-                android:layout_below="@id/party_name"
-
-                >
-
-                <EditText
-                    android:id="@+id/etmaterial"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Material"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -148,28 +127,50 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="2dp"
+                android:id="@+id/material"
+                android:layout_below="@id/party_name"
 
-                <com.google.android.material.textfield.TextInputLayout
+                >
+
+                <EditText
+                    android:id="@+id/etoanumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="5dp"
-                    android:id="@+id/netweight"
-                    android:layout_below="@id/intime"
+                    android:hint="OA Number"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    >
-                    <AutoCompleteTextView
-                        android:id="@+id/typepacking"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Type Of Packaging"
-                        android:inputType="none"
-                        android:textSize="17dp"
-                        android:textStyle="bold"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"-->
+<!--                    android:layout_marginLeft="30dp"-->
+<!--                    android:layout_marginRight="30dp"-->
+<!--                    android:layout_marginTop="5dp"-->
+<!--                    android:id="@+id/netweight"-->
+<!--                    android:layout_below="@id/intime"-->
+
+<!--                    >-->
+<!--                    <AutoCompleteTextView-->
+<!--                        android:id="@+id/typepacking"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="Type Of Packaging"-->
+<!--                        android:inputType="none"-->
+<!--                        android:textSize="17dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -193,6 +194,69 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
+<!--            <LinearLayout-->
+<!--                android:id="@+id/truckdispatch_list"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginTop="5dp">-->
+
+<!--            </LinearLayout>-->
+
+<!--            <Button-->
+<!--                android:id="@+id/logistic_button_add"-->
+<!--                android:layout_width="360dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:text="Add Material"-->
+<!--                android:layout_marginLeft="29dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:drawableRight="@drawable/baseline_add_24"-->
+<!--                />-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_marginTop="2dp"-->
+
+<!--                android:layout_below="@id/Date"-->
+
+<!--                >-->
+<!--                <EditText-->
+<!--                    android:id="@+id/ettotaalwt"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Total Calculated Weight"-->
+<!--                    android:inputType="textCapCharacters"-->
+<!--                    android:textSize="17dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="2dp"
+
+                android:layout_below="@id/Date"
+
+                >
+                <EditText
+                    android:id="@+id/etotheroption"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Other Option"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"

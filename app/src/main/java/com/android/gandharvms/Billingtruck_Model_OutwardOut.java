@@ -1,12 +1,16 @@
-package com.android.gandharvms.Outward_Truck_Dispatch;
+package com.android.gandharvms;
 
-public class Model_Outward_Truck_Dispatch {
-    public int Id ;
+public class Billingtruck_Model_OutwardOut {
+
+    public int Id;
     public int OutwardId ;
     public String DespatchInTime ;
     public String DespatchOutTime ;
     public char DespatchProcess ;
     public String DespatchRemark ;
+    public int TotalCalCulatedWeight ;
+    public String DespatchExtraMaterial ;
+    public String DespatchOther ;
     public String Despatch_Sign ;
     public String LaboratoryInTime ;
     public String LaboratoryOutTime ;
@@ -19,9 +23,10 @@ public class Model_Outward_Truck_Dispatch {
     public String BillingInTime ;
     public String BillingOutTime ;
     public String BillingProcess ;
-    public char BillingRemark ;
+    public String BillingRemark ;
     public int BarrelFormQty ;
-    public int TypeOfPackagingId ;
+    public int TypeOfPackagingId  ;
+    public String TypeOfPackaging ;
     public boolean IsActive;
     public String CreatedBy;
     public String CreatedDate;
@@ -45,15 +50,10 @@ public class Model_Outward_Truck_Dispatch {
     public char NextProcess ;
     public char I_O ;
     public String VehicleType ;
-
-    public String TypeOfPackaging ;
     public String SecurityCreatedBy ;
     public String SecurityCreatedDate ;
     public String WeighmentCreatedBy ;
     public String WeighmentCreatedDate ;
-    public String DespatchExtraMaterial;
-    public String DespatchOther;
-    public int TotalCalCulatedWeight;
 
     public int getId() {
         return Id;
@@ -101,6 +101,30 @@ public class Model_Outward_Truck_Dispatch {
 
     public void setDespatchRemark(String despatchRemark) {
         DespatchRemark = despatchRemark;
+    }
+
+    public int getTotalCalCulatedWeight() {
+        return TotalCalCulatedWeight;
+    }
+
+    public void setTotalCalCulatedWeight(int totalCalCulatedWeight) {
+        TotalCalCulatedWeight = totalCalCulatedWeight;
+    }
+
+    public String getDespatchExtraMaterial() {
+        return DespatchExtraMaterial;
+    }
+
+    public void setDespatchExtraMaterial(String despatchExtraMaterial) {
+        DespatchExtraMaterial = despatchExtraMaterial;
+    }
+
+    public String getDespatchOther() {
+        return DespatchOther;
+    }
+
+    public void setDespatchOther(String despatchOther) {
+        DespatchOther = despatchOther;
     }
 
     public String getDespatch_Sign() {
@@ -199,11 +223,11 @@ public class Model_Outward_Truck_Dispatch {
         BillingProcess = billingProcess;
     }
 
-    public char getBillingRemark() {
+    public String getBillingRemark() {
         return BillingRemark;
     }
 
-    public void setBillingRemark(char billingRemark) {
+    public void setBillingRemark(String billingRemark) {
         BillingRemark = billingRemark;
     }
 
@@ -221,6 +245,14 @@ public class Model_Outward_Truck_Dispatch {
 
     public void setTypeOfPackagingId(int typeOfPackagingId) {
         TypeOfPackagingId = typeOfPackagingId;
+    }
+
+    public String getTypeOfPackaging() {
+        return TypeOfPackaging;
+    }
+
+    public void setTypeOfPackaging(String typeOfPackaging) {
+        TypeOfPackaging = typeOfPackaging;
     }
 
     public boolean isActive() {
@@ -407,14 +439,6 @@ public class Model_Outward_Truck_Dispatch {
         VehicleType = vehicleType;
     }
 
-    public String getTypeOfPackaging() {
-        return TypeOfPackaging;
-    }
-
-    public void setTypeOfPackaging(String typeOfPackaging) {
-        TypeOfPackaging = typeOfPackaging;
-    }
-
     public String getSecurityCreatedBy() {
         return SecurityCreatedBy;
     }
@@ -445,45 +469,5 @@ public class Model_Outward_Truck_Dispatch {
 
     public void setWeighmentCreatedDate(String weighmentCreatedDate) {
         WeighmentCreatedDate = weighmentCreatedDate;
-    }
-
-    public int getTotalCalCulatedWeight() {
-        return TotalCalCulatedWeight;
-    }
-
-    public void setTotalCalCulatedWeight(int totalCalCulatedWeight) {
-        TotalCalCulatedWeight = totalCalCulatedWeight;
-    }
-
-    public Model_Outward_Truck_Dispatch(int outwardId, String despatchInTime, String despatchOutTime, char despatchProcess, String despatchRemark, String despatch_Sign, int barrelFormQty, int typeOfPackagingId, String createdBy, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String vehicleType, String despatchExtraMaterial, String despatchOther) {
-        OutwardId = outwardId;
-        DespatchInTime = despatchInTime;
-        DespatchOutTime = despatchOutTime;
-        DespatchProcess = despatchProcess;
-        DespatchRemark = despatchRemark;
-        Despatch_Sign = despatch_Sign;
-        BarrelFormQty = barrelFormQty;
-        TypeOfPackagingId = typeOfPackagingId;
-        CreatedBy = createdBy;
-        UpdatedBy = updatedBy;
-        SerialNumber = serialNumber;
-        VehicleNumber = vehicleNumber;
-        NextProcess = nextProcess;
-        I_O = i_O;
-        VehicleType = vehicleType;
-        DespatchExtraMaterial = despatchExtraMaterial;
-        DespatchOther = despatchOther;
-    }
-
-    public Model_Outward_Truck_Dispatch(int outwardId, String productionInTime, String productionOutTime, String productionRemark, char productionProcess, String updatedBy, char nextProcess, char i_O, String vehicleType) {
-        OutwardId = outwardId;
-        ProductionInTime = productionInTime;
-        ProductionOutTime = productionOutTime;
-        ProductionRemark = productionRemark;
-        ProductionProcess = productionProcess;
-        UpdatedBy = updatedBy;
-        NextProcess = nextProcess;
-        I_O = i_O;
-        VehicleType = vehicleType;
     }
 }

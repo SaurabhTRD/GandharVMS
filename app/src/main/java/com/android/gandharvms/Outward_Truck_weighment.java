@@ -47,7 +47,7 @@ import retrofit2.Response;
 
 public class Outward_Truck_weighment extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,material,customer,oanumber,tareweight,etremark;
+    EditText intime,serialnumber,vehiclenumber,material,customer,oanumber,tareweight,etremark,etloaded;
     Button submit;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -78,6 +78,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         oanumber = findViewById(R.id.etoanumber);
         tareweight = findViewById(R.id.ettareweight);
         etremark = findViewById(R.id.etremark);
+        etloaded = findViewById(R.id.etloadmaterialqty);
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
@@ -192,6 +193,10 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                         oanumber.setEnabled(false);
                         vehiclenumber.setEnabled(false);
                         wvehiclenumber = data.getVehicleNumber();
+                        etloaded.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+                        etloaded.setEnabled(false);
+                        customer.setText(data.getCustomerName());
+                        customer.setEnabled(false);
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -230,7 +235,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         String  etintime = intime.getText().toString().trim();
         String ettareweight = tareweight.getText().toString().trim();
         String outTime = getCurrentTime();
-        String etmaterial = material.getText().toString().trim();
+//        String etmaterial = material.getText().toString().trim();
         String etcustomer = customer.getText().toString().trim();
         String  uremark = etremark.getText().toString().trim();
 
@@ -239,7 +244,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
 //        String etoanumber = oanumber.getText().toString().trim();
 //
 //
-        if (etintime.isEmpty()||etmaterial.isEmpty()|| etcustomer.isEmpty()||ettareweight.isEmpty()||uremark.isEmpty() ){
+        if (etintime.isEmpty()|| etcustomer.isEmpty()||ettareweight.isEmpty()||uremark.isEmpty() ){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
 
@@ -262,7 +267,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
             Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(OutwardId,
                     etintime, outTime,"","","","","","",
                     ettareweight, "","","","",'W',uremark,EmployeId,
-                    "", 'D','I', vehicleType,etserialnumber,etvehiclenumber);
+                    "", 'B','I', vehicleType,etserialnumber,etvehiclenumber);
             Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override

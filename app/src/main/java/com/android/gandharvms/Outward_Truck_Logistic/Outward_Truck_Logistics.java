@@ -51,7 +51,7 @@ import retrofit2.Response;
 
 public class Outward_Truck_Logistics extends AppCompatActivity {
 
-    EditText intime, serialnumber, vehiclenumber, transporter, place, oanumber, remark;
+    EditText intime, serialnumber, vehiclenumber, transporter, place, oanumber, remark,customername,howqty;
     Button submit;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -80,6 +80,9 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         place = findViewById(R.id.etplace);
         oanumber = findViewById(R.id.etoanumber);
         remark = findViewById(R.id.etremark);
+        howqty = findViewById(R.id.etloadedmaterqty);
+
+        customername = findViewById(R.id.etcustomername);
 
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
@@ -240,6 +243,8 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         String etoanumber = oanumber.getText().toString().trim();
         String etremark = remark.getText().toString().trim();
         String outTime = getCurrentTime();
+        String ucustoname = customername.getText().toString().trim();
+        int uhowqty = Integer.parseInt(howqty.getText().toString().trim());
 
         if (etintime.isEmpty() || etserialnumber.isEmpty() || etvehiclenumber.isEmpty() || ettransporter.isEmpty() ||
                 etoanumber.isEmpty() || etremark.isEmpty()) {
@@ -247,7 +252,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         } else {
             InTrLogisticRequestModel trucklogmodel = new InTrLogisticRequestModel(inwardid, etintime, outTime,
                     EmployeId, EmployeId, etremark, 'G', etserialnumber, etvehiclenumber,
-                    etoanumber, 'W', inOut, vehicleType);
+                    etoanumber, 'W', inOut, vehicleType,ucustoname,uhowqty);
             Call<Boolean> call = logisticdetails.insertLogisticData(trucklogmodel);
             call.enqueue(new Callback<Boolean>() {
                 @Override

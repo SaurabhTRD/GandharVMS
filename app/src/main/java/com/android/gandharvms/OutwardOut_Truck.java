@@ -35,8 +35,8 @@ public class OutwardOut_Truck extends AppCompatActivity {
             Toasty.warning(OutwardOut_Truck.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
         }
     }
-    public void storeinwardtruck(View view){
-        Global_Var.getInstance().DeptType='R';
+    public void Outwardouttruckbilling(View view){
+        Global_Var.getInstance().DeptType='B';
         Intent intent = new Intent(this, OutwardOut_Truck_Billing.class);
         startActivity(intent);
     }

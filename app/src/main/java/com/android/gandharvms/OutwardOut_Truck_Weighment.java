@@ -7,6 +7,8 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,7 +49,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Weighment extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal;
+    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare;
 
     Button submit;
     FirebaseFirestore dbroot;
@@ -81,6 +83,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         netwt = findViewById(R.id.etnetwwight);
         etremark = findViewById(R.id.remark);
         seal = findViewById(R.id.etseal);
+        ettare = findViewById(R.id.ettarewt);
 
         submit = findViewById(R.id.submit);
         dbroot= FirebaseFirestore.getInstance();
@@ -122,7 +125,38 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
             }
         });
 
+        netwt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                calculateNetWeight();
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
     }
+
+    private void calculateNetWeight() {
+
+        String trweight = ettare.getText().toString().trim();
+        String ntweight = netwt.getText().toString().trim();
+
+        double tweig = trweight.isEmpty() ? 0.0 : Double.parseDouble(trweight);
+        double netweigh = ntweight.isEmpty() ? 0.0 : Double.parseDouble(ntweight);
+
+        double grossweig = tweig + netweigh;
+
+        grosswright.setText(String.valueOf(grossweig));
+    }
+
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
@@ -194,6 +228,8 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                         vehiclenum.setEnabled(false);
                         wvehiclenumber = data.getVehicleNumber();
                         woutTime = data.getOutTime();
+                        ettare.setText(data.getTareWeight());
+                        ettare.setEnabled(false);
 
                     }
                 }else {

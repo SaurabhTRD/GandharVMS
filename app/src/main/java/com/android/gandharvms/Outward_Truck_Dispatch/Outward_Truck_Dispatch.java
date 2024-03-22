@@ -2,6 +2,7 @@ package com.android.gandharvms.Outward_Truck_Dispatch;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -15,6 +16,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -61,8 +64,8 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
     ArrayAdapter<String> adapterItems;
 
     EditText intime,serialnumber,date,vehiclenumber,material,qty,partyname,oanumber,typepackeging,qty2,disfficer,datetime,
-            secofficer,datetime2,signeweighment,datetime3,remark;
-    Button submit;
+            secofficer,datetime2,signeweighment,datetime3,remark,etother,ettotal;
+    Button submit,logisticbutton;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -79,6 +82,8 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
     SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     private LoginMethod userDetails;
     private String token;
+    LinearLayout linearLayout;
+    List<String> packinglist = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,51 +96,69 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
 //        adapterItems = new ArrayAdapter<String>(this,R.layout.dropdown_outward_truck_dispatch,items);
 //        autoCompleteTextView.setAdapter(packdrop);
 
-        autoCompleteTextView = findViewById(R.id.typepacking);
-        typepcak = new HashMap<>();
-        typepcak.put("Packing of 210 Ltr", 1);
-        typepcak.put("Packing of 50 Ltr", 2);
-        typepcak.put("Packing of 26 Ltr", 3);
-        typepcak.put("Packing of 20 Ltr", 4);
-        typepcak.put("Packing of 10 Ltr", 5);
-        typepcak.put("Packing of Box & Bucket", 6);
+//        autoCompleteTextView = findViewById(R.id.typepacking);
+//        typepcak = new HashMap<>();
+//        typepcak.put("Packing of 210 Ltr", 1);
+//        typepcak.put("Packing of 50 Ltr", 2);
+//        typepcak.put("Packing of 26 Ltr", 3);
+//        typepcak.put("Packing of 20 Ltr", 4);
+//        typepcak.put("Packing of 10 Ltr", 5);
+//        typepcak.put("Packing of Box & Bucket", 6);
 
 
-        packdrop = new ArrayAdapter<>(this,R.layout.dropdown_outward_truck_dispatch,new ArrayList<>(typepcak.keySet()));
-        autoCompleteTextView.setAdapter(packdrop);
-        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String typepcakdisplay = parent.getItemAtPosition(position).toString();
-                dropUomNumericValue = typepcak.get(typepcakdisplay);
-                if (dropUomNumericValue != null) {
-                    // Now, you can use qtyUomNumericValue when inserting into the database
-
-                    Toast.makeText(Outward_Truck_Dispatch.this, "qtyUomNumericValue : " + dropUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Handle the case where the mapping doesn't contain the display value
-                    Toast.makeText(Outward_Truck_Dispatch.this, "Unknown qtyUom : " + typepcakdisplay, Toast.LENGTH_SHORT).show();
-                }
-                Toast.makeText(getApplicationContext(), "Item"+typepcakdisplay, Toast.LENGTH_SHORT).show();
-            }
-        });
+//        packdrop = new ArrayAdapter<>(this,R.layout.dropdown_outward_truck_dispatch,new ArrayList<>(typepcak.keySet()));
+//        autoCompleteTextView.setAdapter(packdrop);
+//        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String typepcakdisplay = parent.getItemAtPosition(position).toString();
+//                dropUomNumericValue = typepcak.get(typepcakdisplay);
+//                if (dropUomNumericValue != null) {
+//                    // Now, you can use qtyUomNumericValue when inserting into the database
+//
+//                    Toast.makeText(Outward_Truck_Dispatch.this, "qtyUomNumericValue : " + dropUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    // Handle the case where the mapping doesn't contain the display value
+//                    Toast.makeText(Outward_Truck_Dispatch.this, "Unknown qtyUom : " + typepcakdisplay, Toast.LENGTH_SHORT).show();
+//                }
+//                Toast.makeText(getApplicationContext(), "Item"+typepcakdisplay, Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
 
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
         vehiclenumber = findViewById(R.id.etvehical);
-        material = findViewById(R.id.etmaterial);
+        oanumber = findViewById(R.id.etoanumber);
 
         partyname= findViewById(R.id.ettransport);
         remark = findViewById(R.id.etremark);
+//        ettotal = findViewById(R.id.ettotaalwt);
 
-        typepackeging= findViewById(R.id.typepacking);
+//        typepackeging= findViewById(R.id.typepacking);
         qty2=findViewById(R.id.etqty2);
         disfficer=findViewById(R.id.etdispatchofficer);
 
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
+
+        etother = findViewById(R.id.etotheroption);
+
+
+        // type of packaging
+
+//        linearLayout = findViewById(R.id.truckdispatch_list);
+//        logisticbutton = findViewById(R.id.logistic_button_add);
+//        logisticbutton.setOnClickListener(this::onClick);
+
+//        packinglist.add(0, "Packing of 26 Ltr");
+//        packinglist.add(1, "Packing of 10 Ltr");
+//        packinglist.add(2, "Packing of 20 Ltr");
+//        packinglist.add(3, "Packing of 210 Ltr");
+//        packinglist.add(4, "Packing of Box & Bucket");
+//        packinglist.add(5, "Packing of 50 Ltr");
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -258,12 +281,13 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenumber.setText(data.getVehicleNumber());
-                        material.setText(data.getMaterialName());
+                        oanumber.setText(data.getOAnumber());
                         partyname.setText(data.getTransportName());
-                        material.setEnabled(false);
+                        oanumber.setEnabled(false);
                         partyname.setEnabled(false);
                         serialnumber.setEnabled(false);
                         vehiclenumber.setEnabled(false);
+
 
 
                     }else {
@@ -301,15 +325,16 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
     public void insert(){
 //        intime,serialnumber,date,vehiclenumber,material,qty,partyname,oanumber,typepackeging,qty2,disfficer,datetime,
 //                secofficer,datetime2,signeweighment,datetime3;
-
         String etintime = intime.getText().toString().trim();
         String outTime = getCurrentTime();
         String uremark = remark.getText().toString().trim();
         String etdisfficer = disfficer.getText().toString().trim();
-        int etqty2 = Integer.parseInt(qty2.getText().toString().trim());
+//        int etqty2 = Integer.parseInt(qty2.getText().toString().trim());
 //        int ettypepacking = Integer.parseInt(typepackeging.getText().toString().trim());
         String etseralnumber = serialnumber.getText().toString().trim();
         String etvehiclenumber = vehiclenumber.getText().toString().trim();
+        String uother = etother.getText().toString().trim();
+//        int utotalwt = Integer.parseInt(ettotal.getText().toString().trim());
 //        String etdate = date.getText().toString().trim();
 //        String etmaterial = material.getText().toString().trim();
 //        String etqty=qty.getText().toString().trim();
@@ -349,9 +374,35 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
 //                            Toast.makeText(Outward_Truck_Dispatch.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
 //                        }
 //                    });
+
+            //Extra material dynamic view
+//            List<Map<String, String>> despatchmateriallist = new ArrayList<>();
+//
+//            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+//                View childView = linearLayout.getChildAt(i);
+//                if (childView != null) {
+//                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
+//                    EditText qtyEditText = childView.findViewById(R.id.editqty);
+//                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+//
+//                    String dynamaterial = materialEditText.getText().toString().trim();
+//                    String dynaqty = qtyEditText.getText().toString().trim();
+//                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+//
+//                    // Check if both material and quantity fields are not empty
+//                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+//                        Map<String, String> materialMap = new HashMap<>();
+//                        materialMap.put("material", dynamaterial);
+//                        materialMap.put("qty", dynaqty);
+//                        materialMap.put("qtyuom", dynaqtyuom);
+//                        // Add material data to the list
+//                        despatchmateriallist.add(materialMap);
+//                    }
+//                }
+//            }
             Model_Outward_Truck_Dispatch modelOutwardTruckDispatch = new Model_Outward_Truck_Dispatch(OutwardId,etintime,outTime,
-                    'D',uremark,etdisfficer,etqty2,1,EmployeId,EmployeId,
-                    etseralnumber,etvehiclenumber,'P',inOut,vehicleType);
+                    'D',uremark,etdisfficer,0,1,EmployeId,EmployeId,
+                    etseralnumber,etvehiclenumber,'P',inOut,vehicleType,"",uother);
             Call<Boolean> call = outwardTruckInterface.insertdispatch(modelOutwardTruckDispatch);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -387,6 +438,36 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
             });
         }
     }
+
+//    public void onClick(View v) {
+//        addlogisticmaterial();
+//    }
+//    public void addlogisticmaterial(){
+//        View logisticmaterialview = getLayoutInflater().inflate(R.layout.row_logistic_add_material, null, false);
+//
+//        EditText editText = logisticmaterialview.findViewById(R.id.editmaterial);
+//        EditText editqty = logisticmaterialview.findViewById(R.id.editqty);
+//        AppCompatSpinner spinner = logisticmaterialview.findViewById(R.id.spinner_team);
+//        ImageView img = logisticmaterialview.findViewById(R.id.editcancel);
+//
+//        linearLayout.addView(logisticmaterialview);
+//
+//        ArrayAdapter arrayAdapter = new ArrayAdapter(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, packinglist);
+//        spinner.setAdapter(arrayAdapter);
+//        img.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                removeView(logisticmaterialview);
+//            }
+//        });
+//    }
+//
+//    private void removeView(View view) {
+//
+//        linearLayout.removeView(view);
+//    }
+
+
     public void outwardtruckdespending(View view){
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
