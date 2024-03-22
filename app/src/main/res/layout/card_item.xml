@@ -13,14 +13,6 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="120dp"
-        android:id="@+id/textSerialNumber"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
         android:layout_width="150dp"
         android:id="@+id/textVehicleNumber"
         android:layout_marginStart="5dp"
@@ -32,14 +24,6 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="90dp"
-        android:id="@+id/textMaterial"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
         android:id="@+id/textSecurityInTime"
         android:layout_width="100dp"
         android:layout_marginStart="5dp"
@@ -48,23 +32,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textSecurityOutTime"
-        android:layout_width="120dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
         android:id="@+id/textWeighmentInTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textWeighmentOutTime"
         android:layout_width="100dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -80,23 +48,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textSamplingOutTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
         android:id="@+id/textLoboratoryInTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textLoboratoryOutTime"
         android:layout_width="100dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -112,7 +64,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textProductionOutTime"
+        android:id="@+id/textStoreInTime"
         android:layout_width="100dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"

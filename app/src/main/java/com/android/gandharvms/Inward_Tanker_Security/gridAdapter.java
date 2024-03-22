@@ -74,71 +74,42 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
     public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position)
     {
         Respo_Model_In_Tanker_security club = filteredGridList.get(position);
-        holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
-        holder.material.setText(club.getMaterial());
         holder.Status.setText(club.getCurrStatus());
-        int secintimelength = club.getSecIntime().length();
+        int secintimelength = club.getSecIntime()!= null? club.getSecIntime().length():0;
         if(secintimelength>0)
         {
             holder.secintime.setText(club.getSecIntime());
         }
-        int secouttimelength = club.getSecOuttime().length();
-        if(secouttimelength>0)
-        {
-            holder.secouttime.setText(club.getSecOuttime().substring(12, secouttimelength));
-        }
-        int weiintimelength = club.getWeiIntime().length();
+
+        int weiintimelength = club.getWeiIntime()!= null? club.getWeiIntime().length():0;
         if(weiintimelength>0)
         {
-            holder.wegintime.setText(club.getWeiIntime().substring(12, weiintimelength));
+            holder.wegintime.setText(club.getWeiIntime());
         }
-        int weiouttimelength = club.getWeiOuttime().length();
-        if(weiouttimelength>0)
-        {
-            holder.wegouttime.setText(club.getWeiOuttime().substring(12, weiouttimelength));
-        }
-        int samintimelength = club.getSamIntime().length();
+
+        int samintimelength = club.getSamIntime()!= null?club.getSamIntime().length():0;
         if(samintimelength>0)
         {
-            holder.samintime.setText(club.getSamIntime().substring(12, samintimelength));
+            holder.samintime.setText(club.getSamIntime());
         }
-        int samouttimelength =club.getSamOuttime()!=null?club.getSamOuttime().length():0;
-        if(samouttimelength>0)
-        {
-            holder.samouttime.setText(club.getSamOuttime().substring(12, samouttimelength));
-        }
-        int labintimelength = club.getLabIntime().length();
+
+        int labintimelength = club.getLabIntime()!= null? club.getLabIntime().length():0;
         if(labintimelength>0)
         {
-            holder.labintime.setText(club.getLabIntime().substring(12, labintimelength));
+            holder.labintime.setText(club.getLabIntime());
         }
-        int labouttimelength = club.getLabOuttime().length();
-        if(labouttimelength>0)
-        {
-            holder.labouttime.setText(club.getLabOuttime().substring(12, labouttimelength));
-        }
-        int prointimelength = club.getProIntime().length();
+
+        int prointimelength = club.getProIntime()!= null?club.getProIntime().length():0;
         if(prointimelength>0)
         {
-            holder.prointime.setText(club.getProIntime().substring(12, prointimelength));
+            holder.prointime.setText(club.getProIntime());
         }
-        int proouttimelength = club.getProOuttime().length();
-        if(proouttimelength>0)
-        {
-            holder.proouttime.setText(club.getProOuttime().substring(12, proouttimelength));
-        }
-        /*int storeintimelength = club.getStoreIntime().length();
+        int storeintimelength = club.getStoreIntime()!= null?club.getStoreIntime().length():0;
         if(storeintimelength>0)
         {
-            holder.storeintime.setText(club.getStoreIntime().substring(12, storeintimelength));
+            holder.storeintime.setText(club.getStoreIntime());
         }
-        int storeouttimelength = club.getStoreIntime().length();
-        if(storeouttimelength>0)
-        {
-            holder.storeouttime.setText(club.getStoreOuttime().substring(12, storeouttimelength));
-        }*/
-
 
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,24 +167,18 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
     public class myviewHolder extends RecyclerView.ViewHolder
     {
         public TextView Status,sernum, vehiclenum, material,secintime,secouttime,
-                wegintime,wegouttime,samintime,samouttime,labintime,labouttime,prointime,proouttime;
+                wegintime,wegouttime,samintime,samouttime,labintime,labouttime,prointime,proouttime,storeintime;
         public myviewHolder(View view)
         {
             super(view);
-            sernum = view.findViewById(R.id.textSerialNumber);
             vehiclenum = view.findViewById(R.id.textVehicleNumber);
-            material = view.findViewById(R.id.textMaterial);
             Status = view.findViewById(R.id.textStatus);
             secintime =view.findViewById(R.id.textSecurityInTime);
-            secouttime=view.findViewById(R.id.textSecurityOutTime);
             wegintime =view.findViewById(R.id.textWeighmentInTime);
-            wegouttime=view.findViewById(R.id.textWeighmentOutTime);
             samintime =view.findViewById(R.id.textSamplingInTime);
-            samouttime=view.findViewById(R.id.textSamplingOutTime);
             labintime =view.findViewById(R.id.textLoboratoryInTime);
-            labouttime=view.findViewById(R.id.textLoboratoryOutTime);
             prointime =view.findViewById(R.id.textProductionInTime);
-            proouttime=view.findViewById(R.id.textProductionOutTime);
+            storeintime=view.findViewById(R.id.textStoreInTime);
         }
     }
     @Override

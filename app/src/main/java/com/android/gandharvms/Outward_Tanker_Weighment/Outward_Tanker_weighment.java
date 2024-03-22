@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -90,7 +91,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
 
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
         userDetails = RetroApiClient.getLoginApi();
-
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
@@ -127,20 +128,9 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Outward_Tanker_weighment.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -166,14 +156,14 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null) {
                         for (ResponseModel resmodel : userList) {
-                            String specificRole = "Weighment";
+                            String specificRole = "Production";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Weighment Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        "Outward Tanker Weighment Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
                                         getApplicationContext(),
                                         Outward_Tanker_weighment.this
                                 );
@@ -290,7 +280,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body()==true) {
-                        //makeNotification(etvehiclenumber, outTime);
+                        makeNotification(etvehiclenumber, outTime);
                         Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
                         startActivity(new Intent(Outward_Tanker_weighment.this, Outward_Tanker.class));
                         finish();

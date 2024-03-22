@@ -7,6 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".Outward_Tanker_Security.Grid_Outward">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vehicle Status Of Currrent Date:- "
+            android:textColor="@color/green"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:padding="6dp"
+            />
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/otgridcurrrentdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tot-Rec: "
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:id="@+id/outwardgridheaderscroll"
@@ -19,6 +48,17 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:layout_width="100dp"
+                android:id="@+id/textoutwardgridVehicleNumber"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Vehicle No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
                 android:layout_width="130dp"
                 android:id="@+id/textoutwardgridStatus"
                 android:textStyle="bold"
@@ -29,270 +69,102 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-            <!--<TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridSerialNumber"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="Serial No"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>-->
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridVehicleNumber"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Vehicle No"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <!--<TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridMaterial"
-                android:gravity="center|start"
-                android:layout_marginStart="5dp"
-                android:textStyle="bold"
-                android:text="Material"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>-->
-
-            <TextView
-                android:layout_width="120dp"
+                android:layout_width="95dp"
                 android:id="@+id/textoutwardgridSecInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Sec-InTime"
+                android:text="Sec-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridSecOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Sec-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
+                android:layout_width="95dp"
                 android:id="@+id/textoutwardgridWeiInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Wei-InTime"
+                android:text="Wei-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridWeiOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Wei-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
+                android:layout_width="95dp"
                 android:id="@+id/textoutwardgridBilInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Bil-InTime"
+                android:text="Bil-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBilOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Bil-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
+                android:layout_width="95dp"
                 android:id="@+id/textoutwardgridIPFLabInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="IPFLab-InTime"
+                android:text="IPFLab-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridIPFLabOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="IPFLab-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
+                android:layout_width="95dp"
                 android:id="@+id/textoutwardgridIPFProInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="IPFPro-InTime"
+                android:text="IPFPro-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridIPFProOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="IPFPro-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
+                android:layout_width="95dp"
                 android:id="@+id/textoutwardgridBLFLabInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="BLFLab-InTime"
+                android:text="BLFLab-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBLFLabOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="BLFLab-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
+                android:layout_width="95dp"
                 android:id="@+id/textoutwardgridBLFProInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="BLFPro-InTime"
+                android:text="BLFPro-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBLFProOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="BLFPro-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-
-            <TextView
-                android:layout_width="120dp"
+                android:layout_width="95dp"
                 android:id="@+id/textoutwardgridDesInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Des-InTime"
+                android:text="Des-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridDesOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Des-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBRFBilInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="BRFBil-InTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBRFBilOutTime"
+                android:layout_width="95dp"
+                android:id="@+id/textoutwardgridLogInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="BRFBil-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBRFProInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="BRFPro-InTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBRFProOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="BRFPro-OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBRFLabInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="BRFLab-InTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textoutwardgridBRFLabOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="BRFLab-OutTime"
+                android:text="Log-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>

@@ -28,6 +28,7 @@ import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.android.gandharvms.outward_Tanker_Lab_forms.bulkloadinglaboratory;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -67,6 +68,7 @@ public class bulkloadingproduction extends AppCompatActivity {
         setContentView(R.layout.activity_bulkloadingproduction);
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         etintime = findViewById(R.id.etintime);
         etserialno = findViewById(R.id.etserialnumber);
@@ -105,20 +107,9 @@ public class bulkloadingproduction extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(bulkloadingproduction.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        etintime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                etintime.setText(time);
             }
         });
 
@@ -145,7 +136,7 @@ public class bulkloadingproduction extends AppCompatActivity {
         return sdf.format(new Date());
     }
 
-    public void makeNotification(String vehicleNumber, String outTime) {
+    public void makeNotificationbfopcomp(String vehicleNumber,String outtime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -154,14 +145,14 @@ public class bulkloadingproduction extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null) {
                         for (ResponseModel resmodel : userList) {
-                            String specificRole = "Production";
+                            String specificRole = "Weighment";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Outward Tanker Bulk Loading  Process form  Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        "Outward Tanker Production BulkLoadingform Completed",
+                                        "Vehicle Number:-" + vehicleNumber + " has Production BulkLoadingform Completed at"+ outtime,
                                         getApplicationContext(),
                                         bulkloadingproduction.this
                                 );
@@ -195,6 +186,55 @@ public class bulkloadingproduction extends AppCompatActivity {
         });
     }
 
+    public void makeNotificationforgetbatchno(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()) {
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
+                            String specificRole = "Laboratory";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Tanker BulkLoadingform Required Batch No",
+                                        "Vehicle Number:-" + vehicleNumber + " has Completed Bulk Form Required Batch No",
+                                        getApplicationContext(),
+                                        bulkloadingproduction.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                } else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(bulkloadingproduction.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<Lab_Model_Bulkloading> call = outwardTankerLab.fetchlabbulkloding(vehicleNo, vehicleType, nextProcess, inOut);
@@ -279,7 +319,7 @@ public class bulkloadingproduction extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body()==true) {
-                        makeNotification(bulkprovehicl, outTime);
+                        makeNotificationforgetbatchno(uvehiclenumber);
                         Toasty.success(bulkloadingproduction.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(bulkloadingproduction.this, Outward_Tanker.class));
                         finish();
@@ -326,6 +366,7 @@ public class bulkloadingproduction extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body()==true) {
+                        makeNotificationbfopcomp(bulkprovehicl,outTime);
                         Toasty.success(bulkloadingproduction.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(bulkloadingproduction.this, Outward_Tanker.class));
                         finish();

@@ -28,6 +28,7 @@ import com.android.gandharvms.Outward_Tanker_Production_forms.bulkloadingproduct
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.R;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -68,6 +69,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bulkloadinglaboratory);
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         intime = findViewById(R.id.etintime);
         etserialnumber = findViewById(R.id.etserialno);
@@ -109,20 +111,9 @@ public class bulkloadinglaboratory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(bulkloadinglaboratory.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -148,8 +139,8 @@ public class bulkloadinglaboratory extends AppCompatActivity {
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Outward Tanker Production In Process form  Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
+                                        "Outward Tanker Laboratory BulkProcessform Completed",
+                                        "This Vehicle Number:- " + vehicleNumber + " has Laboratory BulkProcessform Completed at"+outTime,
                                         getApplicationContext(),
                                         bulkloadinglaboratory.this
                                 );
@@ -250,6 +241,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    makeNotification(uvehiclenum,outTime);
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(bulkloadinglaboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(bulkloadinglaboratory.this, Outward_Tanker.class));
