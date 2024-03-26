@@ -65,7 +65,7 @@ public class Grid_Outward extends AppCompatActivity {
             {
                 super.onScrolled(recyclerView, dx, dy);
                 scrollX += dx;
-                headerscroll.scrollTo(scrollX, 0);
+                  headerscroll.scrollTo(scrollX, 0);
             }
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState)

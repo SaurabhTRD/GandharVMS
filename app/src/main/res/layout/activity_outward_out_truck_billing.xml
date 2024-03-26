@@ -52,6 +52,20 @@
             android:layout_marginRight="30dp">
         </Button>
 
+        <Button
+            android:id="@+id/wdbview"
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="30dp"
+            android:onClick="Outwardoutbillingpending"
+            android:text="Pending Vehicles"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"></Button>
+
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -310,6 +324,26 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="2dp"
+            android:layout_below="@id/regno"
+            >
+            <EditText
+                android:id="@+id/etremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Remark"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
 
 
@@ -327,29 +361,13 @@
                 android:layout_marginTop="10dp">
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="110dp"
+                    android:layout_width="130dp"
                     android:layout_height="match_parent"
-                    android:layout_below="@id/OUM."
-                    android:layout_marginLeft="30dp"
-                    android:text="Cancel"
+                    android:layout_marginLeft="80dp"
+                    android:text="COMPLETED"
+                    android:textSize="17dp"
                     android:textStyle="bold"
-                    android:textSize="22dp">
-
-                </androidx.appcompat.widget.AppCompatButton>
-
-                <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/dbview"
-                    android:layout_width="110dp"
-                    android:layout_height="match_parent"
-                    android:layout_below="@id/OUM."
-                    android:layout_marginLeft="12dp"
-                    android:text="View"
-                    android:textSize="22dp"
-                    android:textStyle="bold"
-                    android:onClick="Viewclick"
-
-                    >
-
+                    android:onClick="truckotoutbillingcompletedclick">
                 </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton

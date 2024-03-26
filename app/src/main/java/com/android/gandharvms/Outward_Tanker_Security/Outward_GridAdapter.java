@@ -32,6 +32,7 @@ import com.android.gandharvms.Outward_Tanker_Production_forms.bulkloadingproduct
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
 import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
+import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
 import com.android.gandharvms.Outward_Truck_weighment;
 import com.android.gandharvms.R;
@@ -132,48 +133,50 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                 char io = club.getI_O();
                 Intent intent = new Intent();
                 if (vehicletype.equals("OT") && io == 'I') {
-                    if (currentst.equals("Security Reported")) {
+                    if (currentst.equals("SECURITY REPORTED")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_Security.class);
-                    }else if (currentst.equals("Billing")) {
+                    }else if (currentst.equals("BILLING")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_Billing.class);
-                    }else if (currentst.equals("Weighment")) {
+                    }else if (currentst.equals("WEIGHMENT")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_weighment.class);
-                    }else if (currentst.equals("InProcessProduction")) {
+                    }else if (currentst.equals("INPROCESSPRODUCTION")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_Production.class);
-                    }else if (currentst.equals("InProcessLaboratory")) {
+                    }else if (currentst.equals("INPROCESSLABORATORY")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_Laboratory.class);
-                    }else if (currentst.equals("BulkProduction")) {
+                    }else if (currentst.equals("BULKPRODUCTION")) {
                         intent = new Intent(view.getContext(), bulkloadingproduction.class);
-                    }else if (currentst.equals("BulkLaboratory")) {
+                    }else if (currentst.equals("BULKLABORATORY")) {
                         intent = new Intent(view.getContext(), bulkloadinglaboratory.class);
                     }
                 } else if (vehicletype.equals("OT") && io == 'O') {
-                    if (currentst.equals("OutWeighment")) {
+                    if (currentst.equals("OUTWEIGHMENT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Tanker_Weighment.class);
-                    }else if (currentst.equals("OutDataEntry")) {
+                    }else if (currentst.equals("OUTDATAENTRY")) {
                         intent = new Intent(view.getContext(), DataEntryForm_Production.class);
-                    }else if (currentst.equals("OutBilling")) {
+                    }else if (currentst.equals("OUTBILLING")) {
                         intent = new Intent(view.getContext(), ot_outBilling.class);
-                    }else if (currentst.equals("SecurityVehicleOut")) {
+                    }else if (currentst.equals("SECURITYVEHICLEOUT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Tanker_Security.class);
                     }
                 }else if (vehicletype.equals("OR") && io == 'I') {
-                    if (currentst.equals("Security Reported")) {
+                    if (currentst.equals("SECURITY REPORTED")) {
                         intent = new Intent(view.getContext(), Outward_Truck_Security.class);
-                    }  else if (currentst.equals("Logistic")) {
+                    }  else if (currentst.equals("LOGISTIC")) {
                         intent = new Intent(view.getContext(), Outward_Truck_Logistics.class);
-                    } else if (currentst.equals("Weighment")) {
+                    } else if (currentst.equals("WEIGHMENT")) {
                         intent = new Intent(view.getContext(), Outward_Truck_weighment.class);
-                    }else if (currentst.equals("Dispatch")) {
+                    }else if (currentst.equals("DISPATCH")) {
                         intent = new Intent(view.getContext(), Outward_Truck_Dispatch.class);
+                    } else if (currentst.equals("DATAENTRY")) {
+                        intent = new Intent(view.getContext(), Outward_Truck_Production.class);
                     }
                 }
                 else if (vehicletype.equals("OR") && io == 'O') {
-                    if (currentst.equals("OutWeighment")) {
+                    if (currentst.equals("OUTWEIGHMENT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Truck_Weighment.class);
-                    }  else if (currentst.equals("OutBilling")) {
+                    }  else if (currentst.equals("OUTBILLING")) {
                         intent = new Intent(view.getContext(), OutwardOut_Truck_Billing.class);
-                    } else if (currentst.equals("SecurityVehicleOut")) {
+                    } else if (currentst.equals("SECURITYVEHICLEOUT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Truck_Security.class);
                     }
                 }

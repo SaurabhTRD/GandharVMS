@@ -455,7 +455,7 @@ public class Model_Outward_Truck_Dispatch {
         TotalCalCulatedWeight = totalCalCulatedWeight;
     }
 
-    public Model_Outward_Truck_Dispatch(int outwardId, String despatchInTime, String despatchOutTime, char despatchProcess, String despatchRemark, String despatch_Sign, int barrelFormQty, int typeOfPackagingId, String createdBy, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String vehicleType, String despatchExtraMaterial, String despatchOther) {
+    public Model_Outward_Truck_Dispatch(int outwardId, String despatchInTime, String despatchOutTime, char despatchProcess, String despatchRemark, String despatch_Sign, int barrelFormQty, int typeOfPackagingId, String createdBy, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String vehicleType, String despatchExtraMaterial, String despatchOther,String oanumber) {
         OutwardId = outwardId;
         DespatchInTime = despatchInTime;
         DespatchOutTime = despatchOutTime;
@@ -473,6 +473,7 @@ public class Model_Outward_Truck_Dispatch {
         VehicleType = vehicleType;
         DespatchExtraMaterial = despatchExtraMaterial;
         DespatchOther = despatchOther;
+        OAnumber = oanumber;
     }
 
     public Model_Outward_Truck_Dispatch(int outwardId, String productionInTime, String productionOutTime, String productionRemark, char productionProcess, String updatedBy, char nextProcess, char i_O, String vehicleType) {

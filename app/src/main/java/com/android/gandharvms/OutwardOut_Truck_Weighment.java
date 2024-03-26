@@ -1,12 +1,20 @@
 package com.android.gandharvms;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -14,6 +22,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -23,15 +32,18 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Model_OutwardOut_Truck_Weighment;
+import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Response_Outward_Tanker_Weighment;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
+import com.android.gandharvms.Util.MultipartTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -49,7 +61,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Weighment extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare;
+    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare,etshdip,etshwe;
 
     Button submit;
     FirebaseFirestore dbroot;
@@ -68,6 +80,18 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
     private String token;
     private String woutTime;
     private String wvehiclenumber;
+    Uri image1, image2;
+    byte[] ImgDriver, ImgVehicle;
+    byte[][] arrayOfByteArrays = new byte[2][];
+    private String imgPath1, imgPath2;
+    private String wserialNo;
+    ImageView img1, img2;
+    private static final int CAMERA_PERM_CODE1 = 100;
+    private static final int CAMERA_PERM_CODE = 101;
+    private static final int CAMERA_REQUEST_CODE = 102;
+    private static final int CAMERA_REQUEST_CODE1 = 103;
+    private int ushdip;
+    private int ushwe;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,39 +105,40 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         grosswright=findViewById(R.id.etgrossweight);
         noofpack=findViewById(R.id.etpack);
         netwt = findViewById(R.id.etnetwwight);
-        etremark = findViewById(R.id.remark);
+        etremark = findViewById(R.id.etOTW_remark);
         seal = findViewById(R.id.etseal);
         ettare = findViewById(R.id.ettarewt);
 
         submit = findViewById(R.id.submit);
         dbroot= FirebaseFirestore.getInstance();
 
+        img1 = findViewById(R.id.outwardouttruckvehicle);
+        img2 = findViewById(R.id.outwardouttruckdriver);
+        etshdip = findViewById(R.id.etshortdip);
+        etshwe = findViewById(R.id.etshortageweight);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                insert();
+                if (image1 == null || image2 == null) {
+                    Toasty.warning(OutwardOut_Truck_Weighment.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
+                } else {
+                    UploadImagesAndUpdate();
+                }
+//                insert();
             }
         });
 
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
-                // Array of month abbreviations
-                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-                picker = new DatePickerDialog(OutwardOut_Truck_Weighment.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Use the month abbreviation from the array
-                        String monthAbbreviation = monthAbbreviations[month];
-                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        intime.setText(dtFormat.format(calendar.getTime()));
-                    }
-                }, year, month, day);
-                picker.show();
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -157,7 +182,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         grosswright.setText(String.valueOf(grossweig));
     }
 
-    public void makeNotification(String vehicleNumber, String outTime) {
+    public void makeNotification(String vehicleNumber) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -166,14 +191,14 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Weighment";
+                            String specificRole = "Billing";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Security Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
+                                        "OutwardOut Truck Weighment Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at ",
                                         getApplicationContext(),
                                         OutwardOut_Truck_Weighment.this
                                 );
@@ -206,10 +231,6 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                 Toasty.error(OutwardOut_Truck_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
-
-        if (getIntent().hasExtra("vehiclenum")) {
-            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
-        }
     }
 
 
@@ -220,7 +241,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
             public void onResponse(Call<Response_Outward_Tanker_Weighment> call, Response<Response_Outward_Tanker_Weighment> response) {
                 if (response.isSuccessful()){
                     Response_Outward_Tanker_Weighment data = response.body();
-                    if (data.getVehicleNumber()!= ""){
+                    if (data.getVehicleNumber()!= "" && data.getVehicleNumber()!= null){
                         OutwardId =data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenum.setText(data.getVehicleNumber());
@@ -230,7 +251,10 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                         woutTime = data.getOutTime();
                         ettare.setText(data.getTareWeight());
                         ettare.setEnabled(false);
+                        wserialNo= data.getSerialNumber();
 
+                    }else {
+                        Toasty.error(OutwardOut_Truck_Weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -273,39 +297,47 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         String useal = seal.getText().toString().trim();
 
 
+
+        if (!etshdip.getText().toString().isEmpty()){
+            try {
+                 ushdip = Integer.parseInt(etshdip.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }else {
+            Toasty.warning(this,"Shortage Dip Is Empty",Toast.LENGTH_SHORT).show();
+//            ushdip=0;
+        }
+
+        if (!etshwe.getText().toString().isEmpty()){
+            try {
+                 ushwe = Integer.parseInt(etshwe.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }else {
+            Toasty.warning(this,"Shortage Weight Is Empty",Toast.LENGTH_SHORT).show();
+        }
+
+
 //        String etserialnumber = serialnumber.getText().toString().trim();
 //        String etvehiclenum = vehiclenum.getText().toString().trim();
 
 
 
-        if (etintime.isEmpty()||etgrossweight.isEmpty()||etnoofpack.isEmpty()){
+        if (etintime.isEmpty()||etgrossweight.isEmpty()||etnoofpack.isEmpty()||ushwe>0|| ushdip>0){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-//            Map<String,String>items = new HashMap<>();
-//
-//            items.put("In_Time",intime.getText().toString().trim());
-//            items.put("Serial_Number",serialnumber.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclenum.getText().toString().trim());
-//            items.put("Gross_Weight",grosswright.getText().toString().trim());
-//            items.put("No_Of_Pack",noofpack.getText().toString().trim());
-//
-//            dbroot.collection("OutwardOutTruck Weighment()OUT").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(OutwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
             Model_OutwardOut_Truck_Weighment modelOutwardOutTruckWeighment = new Model_OutwardOut_Truck_Weighment(OutwardId,
-                    "","",etintime,unetwt,etgrossweight,etnoofpack,uremark,useal,EmployeId,'S',inOut,
-                    vehicleType);
+                    imgPath1,imgPath2,etintime,unetwt,etgrossweight,etnoofpack,uremark,useal,EmployeId,'B',inOut,
+                    vehicleType,ushdip,ushwe);
             Call<Boolean> call = outwardWeighment.updateoutwardouttruckweighment(modelOutwardOutTruckWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful()&& response.body() && response.body() == true){
                        // not available outtime and vehicle no for notification
-                        makeNotification(wvehiclenumber, woutTime);
+                        makeNotification(wvehiclenumber);
                         Toasty.success(OutwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
                         startActivity(new Intent(OutwardOut_Truck_Weighment.this, OutwardOut_Truck.class));
                         finish();
@@ -334,8 +366,76 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                 }
             });
         }
+    }
 
+    public void UploadImagesAndUpdate() {
+        String FileInitial = "OutwardVeh_Out_";
+        arrayOfByteArrays[0] = ImgVehicle;
+        arrayOfByteArrays[1] = ImgDriver;
+        imgPath1 = "GAimages/"+ FileInitial + wserialNo.toString() + ".jpeg";
+        for (byte[] byteArray : arrayOfByteArrays) {
 
+            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + wserialNo.toString() + ".jpeg", "");
+            multipartTask.execute();
+            FileInitial = "OutwardDrv_Out_";
+        }
+        imgPath2 = "GAimages/"+ FileInitial + wserialNo.toString() + ".jpeg";
+        FileInitial = "";
+        insert();
+    }
+
+    public void captureImageFromCamera1(android.view.View view) {
+        askCameraPermission(CAMERA_REQUEST_CODE);
+    }
+
+    public void captureImageFromCamera2(android.view.View view) {
+        askCameraPermission1(CAMERA_REQUEST_CODE1);
+    }
+
+    private void askCameraPermission(int requestcode) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.CAMERA}, CAMERA_PERM_CODE);
+        } else {
+            openCamera(requestcode);
+        }
+    }
+
+    private void askCameraPermission1(int requestcode1) {
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CAMERA}, CAMERA_PERM_CODE1);
+        } else {
+            openCamera(requestcode1);
+        }
+    }
+
+    private void openCamera(int requestCode) {
+        Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            startActivityForResult(camera, CAMERA_REQUEST_CODE);
+        } else if (requestCode == CAMERA_REQUEST_CODE1) {
+            startActivityForResult(camera, CAMERA_REQUEST_CODE1);
+        }
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CAMERA_REQUEST_CODE) {
+            Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
+            img1.setImageBitmap(bimage1);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
+            image1 = Uri.parse(path);
+            ImgVehicle = baos.toByteArray();
+        } else if (requestCode == CAMERA_REQUEST_CODE1) {
+            Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
+            img2.setImageBitmap(bimage2);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
+            image2 = Uri.parse(path);
+            ImgDriver = baos.toByteArray();
+        }
     }
     public void outwardouttruckweighmentpending(View view){
         Intent intent = new Intent(this, Grid_Outward.class);

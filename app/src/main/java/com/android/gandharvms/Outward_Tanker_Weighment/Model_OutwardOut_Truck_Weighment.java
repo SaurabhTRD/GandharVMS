@@ -40,8 +40,10 @@ public class Model_OutwardOut_Truck_Weighment {
     public char NextProcess;
     public char I_O;
     public String VehicleType;
+    public int ShortageDip;
+    public int ShortageWeight;
 
-    public Model_OutwardOut_Truck_Weighment(int outwardId, String outDriverImage, String outVehicleImage, String outInTime, String netWeight, String grossWeight, String numberofPack, String outWRemark, String sealNumber, String updatedBy, char nextProcess, char i_O, String vehicleType) {
+    public Model_OutwardOut_Truck_Weighment(int outwardId, String outDriverImage, String outVehicleImage, String outInTime, String netWeight, String grossWeight, String numberofPack, String outWRemark, String sealNumber, String updatedBy, char nextProcess, char i_O, String vehicleType,int shortageDip,int shortageWeight) {
         OutwardId = outwardId;
         OutDriverImage = outDriverImage;
         OutVehicleImage = outVehicleImage;
@@ -55,5 +57,7 @@ public class Model_OutwardOut_Truck_Weighment {
         NextProcess = nextProcess;
         I_O = i_O;
         VehicleType = vehicleType;
+        ShortageDip = shortageDip;
+        ShortageWeight = shortageWeight;
     }
 }

@@ -20,10 +20,14 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
+import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
 import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
@@ -71,12 +75,16 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
     String[] netweuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
     SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     DatePickerDialog picker;
+    private LoginMethod userDetails;
+    private String token;
+    private String svehicleno;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_out_truck_security);
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        userDetails = RetroApiClient.getLoginApi();
 
         intime=findViewById(R.id.etintime);
         serialnumber=findViewById(R.id.etserialnumber);
@@ -115,26 +123,17 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                 insert();
             }
         });
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
 
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
-                // Array of month abbreviations
-                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-                picker = new DatePickerDialog(OutwardOut_Truck_Security.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Use the month abbreviation from the array
-                        String monthAbbreviation = monthAbbreviations[month];
-                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        intime.setText(dtFormat.format(calendar.getTime()));
-                    }
-                }, year, month, day);
-                picker.show();
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -197,6 +196,57 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         return sdf.format(new Date());
     }
 
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Security";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "OutwardOut Truck Billing Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
+                                        getApplicationContext(),
+                                        OutwardOut_Truck_Security.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(OutwardOut_Truck_Security.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
@@ -213,12 +263,17 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                         serialnumber.setEnabled(false);
                         vehiclenumber.setEnabled(false);
                         party.setEnabled(false);
-
-
-
+                        qty.setText(String.valueOf(obj.getOutTotalQty()));
+                        qty.setEnabled(false);
+                        uom1.setText(String.valueOf(obj.getOutTotalQtyUOM()));
+                        netweight.setText(obj.getNetWeight());
+                        netweight.setEnabled(false);
+                        svehicleno = obj.getVehicleNumber();
                     }else {
-                        Log.e("Retrofit", "Error" + response.code());
+                        Toasty.error(OutwardOut_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
+                }else {
+                    Log.e("Retrofit", "Error" + response.code());
                 }
             }
 
@@ -254,61 +309,24 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         String etintime = intime.getText().toString().trim();
         String etsign = sign.getText().toString().trim();
         String etremark = remark.getText().toString().trim();
-
         String etinvoice = invoice.getText().toString().trim();
         String etgooddis = gooddis.getText().toString().trim();
-        int etqty = Integer.parseInt(qty.getText().toString().trim());
-//        int etuom1 = Integer.parseInt(uom1.getText().toString().trim());
-        String etnetweight = netweight.getText().toString().trim();
-//        int etuom2 = Integer.parseInt(uom2.getText().toString().trim());
-
-        int qtyuom = Integer.parseInt(qtyUomNumericValue.toString().trim());
-        int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
 
 
-
-//        String etserialnumber = serialnumber.getText().toString().trim();
-//        String etvehiclenumber = vehiclenumber.getText().toString().trim();
-//
-//        String etparty= party.getText().toString().trim();
-//
-//
-
-
+//        int qtyuom = Integer.parseInt(qtyUomNumericValue.toString().trim());
+//        int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
         if (etintime.isEmpty()||etsign.isEmpty()||etremark.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-//            Map<String,String>items = new HashMap<>();
-//
-//            items.put("In_Time",intime.getText().toString().trim());
-//            items.put("Serial_Number",serialnumber.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclenumber.getText().toString().trim());
-//            items.put("Invoice_No",invoice.getText().toString().trim());
-//            items.put("Party_Name",party.getText().toString().trim());
-//            items.put("Goods_Discription",gooddis.getText().toString().trim());
-//            items.put("Qty",qty.getText().toString().trim());
-//            items.put("Uom_qty",uom1.getText().toString().trim());
-//            items.put("Net_Weight",netweight.getText().toString().trim());
-//            items.put("Uom_Netweight",uom2.getText().toString().trim());
-//            items.put("Out_Time",outtime.getText().toString().trim());
-//            items.put("Sign",sign.getText().toString().trim());
-//            items.put("Remark",remark.getText().toString().trim());
-//
-//            dbroot.collection("OutwardOut Truck Security(OUT)").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(OutwardOut_Truck_Security.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
             Model_OutwardOut_Truck_Security modelOutwardOutTruckSecurity = new Model_OutwardOut_Truck_Security(OutwardId,etinvoice,
                     "",etgooddis,etsign,lrCopySelection,tremselection,ewayselection,testreselection,invoiceselection,
-                    outTime,EmployeId,'S',inOut,vehicleType,etremark,etqty,etnetweight,qtyuom,netweuom);
+                    outTime,EmployeId,'S',inOut,vehicleType,etremark);
             Call<Boolean> call = outwardTanker.updateout_Truck_wardoutsecurity(modelOutwardOutTruckSecurity);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
+                        makeNotification(svehicleno, outTime);
                         Toasty.success(OutwardOut_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(OutwardOut_Truck_Security.this, Menu.class));
                         finish();

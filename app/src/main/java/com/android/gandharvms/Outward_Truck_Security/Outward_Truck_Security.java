@@ -15,12 +15,14 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.RadioButton;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
@@ -29,6 +31,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Isreportingupdate_Security_model;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Security.Request_Model_Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
 import com.android.gandharvms.Outward_Truck;
@@ -62,7 +65,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
     SimpleDateFormat datef = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
     private EditText reportingRemarkLayout;
-    Button saveButton;
+    Button saveButton,btcompleted;
 
     private String vehicleType = Global_Var.getInstance().MenuType;
     private char nextProcess = Global_Var.getInstance().DeptType;
@@ -88,6 +91,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
         isReportingCheckBox = findViewById(R.id.trsisreporting);
         reportingRemarkLayout = findViewById(R.id.edtrsreportingremark);
         saveButton = findViewById(R.id.saveButton);
+        btcompleted = findViewById(R.id.outwardtrucksecuritycompleted);
 
         reportingRemarkLayout.setVisibility(View.GONE);
         saveButton.setVisibility(View.GONE);
@@ -152,6 +156,12 @@ public class Outward_Truck_Security extends AppCompatActivity {
 
             }
         });
+        btcompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Outward_Truck_Security.this, GridCompleted.class));
+            }
+        });
 
         saveButton = findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -191,20 +201,9 @@ public class Outward_Truck_Security extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Outward_Truck_Security.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
         date.setOnClickListener(new View.OnClickListener() {
@@ -251,13 +250,13 @@ public class Outward_Truck_Security extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Security";
+                            String specificRole = "Logistic";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Security Process Done..!",
+                                        "Outward Truck Security Process Done..!",
                                         "Vehicle Number:-" + vehicleNumber + " has completed Security process at " + outTime,
                                         getApplicationContext(),
                                         Outward_Truck_Security.this
@@ -298,6 +297,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
         String vehicle = vehiclenumber.getText().toString().trim();
         String cudate = date.getText().toString().trim();
         String edremark = "";
+        String outTime = getCurrentTime();
         Boolean isreporting = false;
         if (cbox.isChecked()) {
             edremark = reportingremark.getText().toString().trim();
@@ -306,7 +306,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
         if (vehicle.isEmpty() || cudate.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-            Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, "", "",
+            Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, "", outTime,
                     '0', "", "", "", "", "", "", "", "", "",
                     "", "", "", "", "", "", "", "", "", EmployeId,
                     isreporting, edremark, 'S', serial, vehicle, "", "", "","",
@@ -317,6 +317,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true) {
+                        makeNotification(vehicle,outTime);
                         Toasty.success(Outward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Outward_Truck_Security.this, Outward_Truck.class));
                         finish();
@@ -370,7 +371,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
                         intime.callOnClick();
                     }
                 } else {
-                    Log.e("Retrofit", "Error" + response.code());
+                    Toasty.error(Outward_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                 }
             }
 

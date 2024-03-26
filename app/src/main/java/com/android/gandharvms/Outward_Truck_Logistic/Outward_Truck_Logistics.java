@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabResponseModel;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
@@ -52,7 +53,7 @@ import retrofit2.Response;
 public class Outward_Truck_Logistics extends AppCompatActivity {
 
     EditText intime, serialnumber, vehiclenumber, transporter, place, oanumber, remark,customername,howqty;
-    Button submit;
+    Button submit,btnlogisticcompletd;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -85,6 +86,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         customername = findViewById(R.id.etcustomername);
 
         submit = findViewById(R.id.etssubmit);
+        btnlogisticcompletd = findViewById(R.id.outwardtruckcompletedlogistic);
         dbroot = FirebaseFirestore.getInstance();
 
         logisticdetails = RetroApiClient.getLogisticDetails();
@@ -92,6 +94,12 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 insert();
+            }
+        });
+        btnlogisticcompletd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Outward_Truck_Logistics.this, GridCompleted.class));
             }
         });
 
@@ -109,22 +117,10 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
-                // Array of month abbreviations
-                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-                picker = new DatePickerDialog(Outward_Truck_Logistics.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Use the month abbreviation from the array
-                        String monthAbbreviation = monthAbbreviations[month];
-                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        intime.setText(dtFormat.format(calendar.getTime()));
-                    }
-                }, year, month, day);
-                picker.show();
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -143,7 +139,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
             public void onResponse(Call<InTrLogisticResponseModel> call, Response<InTrLogisticResponseModel> response) {
                 if (response.isSuccessful()) {
                     InTrLogisticResponseModel data = response.body();
-                    if (data.getVehicleNumber() != "") {
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
                         inwardid = data.getOutwardId();
                         vehiclenumber.setText(data.getVehicleNumber());
                         vehiclenumber.setEnabled(false);
@@ -182,7 +178,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
             }
         });
     }
-    public void makeNotification(String vehicleNumber, String outTime) {
+    public void makeNotificationLogistic(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -191,13 +187,13 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Logistic";
+                            String specificRole = "Weighment";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Security Process Done..!",
+                                        "Outward Truck Logistic Process Done..!",
                                         "Vehicle Number:-" + vehicleNumber + " has completed Logistic process at " + outTime,
                                         getApplicationContext(),
                                         Outward_Truck_Logistics.this
@@ -258,7 +254,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
-                        makeNotification(etvehiclenumber, outTime);
+                        makeNotificationLogistic(etvehiclenumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Outward_Truck_Logistics.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Outward_Truck_Logistics.this, Outward_Truck.class));

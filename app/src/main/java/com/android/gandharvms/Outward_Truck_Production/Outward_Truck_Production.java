@@ -103,20 +103,9 @@ public class Outward_Truck_Production extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Outward_Truck_Production.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -126,6 +115,9 @@ public class Outward_Truck_Production extends AppCompatActivity {
                 }
             }
         });
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
 
     }
     public void makeNotification(String vehicleNumber, String outTime) {
@@ -137,13 +129,13 @@ public class Outward_Truck_Production extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Production";
+                            String specificRole = "Weighment";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Security Process Done..!",
+                                        "Outward Truck Production(Data Entry) Process Done..!",
                                         "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
                                         getApplicationContext(),
                                         Outward_Truck_Production.this
@@ -187,7 +179,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
             public void onResponse(Call<Model_Outward_Truck_Dispatch> call, Response<Model_Outward_Truck_Dispatch> response) {
                 if (response.isSuccessful()){
                     Model_Outward_Truck_Dispatch data = response.body();
-                    if (data.getVehicleNumber() != ""){
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber()!= null){
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenumber.setText(data.getVehicleNumber());

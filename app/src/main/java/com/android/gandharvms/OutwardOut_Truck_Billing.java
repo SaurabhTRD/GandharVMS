@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,19 +13,31 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
+import com.android.gandharvms.OutwardOutTankerBilling.ot_outBillingRequestModel;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Billing;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
+import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.HttpException;
@@ -32,7 +45,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Billing extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,etoanumber,ettramsname,etdrivermob,etgrs,ettare,etnet,etseal,etbatch,etdensity;
+    EditText intime,serialnumber,vehiclenumber,etoanumber,ettramsname,etdrivermob,etgrs,ettare,etnet,etseal,etbatch,etdensity,etremark;
     Button submit;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -43,12 +56,16 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_Tanker_Billinginterface outwardTankerBillinginterface;
+    private LoginMethod userDetails;
+    private String token;
+    private String bvehicleno;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_out_truck_billing);
 
         outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
+        userDetails = RetroApiClient.getLoginApi();
 
         intime=findViewById(R.id.etintime);
         serialnumber=findViewById(R.id.etserialnumber);
@@ -62,6 +79,7 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
         etseal = findViewById(R.id.etsealnum);
         etbatch = findViewById(R.id.etbacthno);
         etdensity = findViewById(R.id.etdensity);
+        etremark = findViewById(R.id.etremark);
 
 
 
@@ -74,25 +92,17 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
                 insert();
             }
         });
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
 
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(OutwardOut_Truck_Billing.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        intime.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -104,6 +114,62 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
             }
         });
 
+    }
+    private String getCurrentTime() {
+        // Get the current time
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return sdf.format(new Date());
+    }
+
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Security";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "OutwardOut Truck Billing Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
+                                        getApplicationContext(),
+                                        OutwardOut_Truck_Billing.this
+                                );
+                                notificationsSender.SendNotifications();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(OutwardOut_Truck_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
@@ -138,6 +204,10 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
                         etdensity.setText(String.valueOf(data.getDensity_29_5C()));
                         etdensity.setEnabled(false);
 
+                        bvehicleno= data.getVehicleNumber();
+
+                    }else {
+                        Toasty.error(OutwardOut_Truck_Billing.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -165,36 +235,55 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
     }
 
     public void insert(){
-//        intime,serialnumber,vehiclenumber,invoiceno,ewbnumber;
-
-//        String etintime = intime.getText().toString().trim();
-//        String etserialnumber = serialnumber.getText().toString().trim();
-//        String etvehiclenumber = vehiclenumber.getText().toString().trim();
-//        String etinvoiceno = invoiceno.getText().toString().trim();
-//        String etewbnumber = ewbnumber.getText().toString().trim();
-//
-//        if (etintime.isEmpty()||etserialnumber.isEmpty()||etvehiclenumber.isEmpty()||etinvoiceno.isEmpty()||etewbnumber.isEmpty()){
-//            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-//        }else {
-//            Map<String,String>items = new HashMap<>();
-//
-//            items.put("In_Time",intime.getText().toString().trim());
-//            items.put("Serial_Number",serialnumber.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclenumber.getText().toString().trim());
-//            items.put("Invoice_No",invoiceno.getText().toString().trim());
-//            items.put("EWB_Number",ewbnumber.getText().toString().trim());
-//
-//            dbroot.collection("OutwardOut_Truck_Billing(OUT)").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(OutwardOut_Truck_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-//        }
         String uintime = intime.getText().toString().trim();
         String ubatch = etbatch.getText().toString().trim();
+        String obOutTime=getCurrentTime();
+        String uremark = etremark.getText().toString().trim();
+
+        if (uintime.isEmpty()|| ubatch.isEmpty()||obOutTime.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        }else {
+            ot_outBillingRequestModel requestoutBilmodel = new ot_outBillingRequestModel(OutwardId,uintime,obOutTime,"",
+                    0,"",uremark,'S',inOut,vehicleType,EmployeId);
+            Call<Boolean> call = outwardTankerBillinginterface.UpdateOutBillingDetails(requestoutBilmodel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body()==true){
+                        makeNotification(bvehicleno, obOutTime);
+                        Toasty.success(OutwardOut_Truck_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
+                        startActivity(new Intent(OutwardOut_Truck_Billing.this, OutwardOut_Truck.class));
+                        finish();
+                    }else {
+                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(OutwardOut_Truck_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
 
+    }
+    public void Outwardoutbillingpending(View view){
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
     }
 }

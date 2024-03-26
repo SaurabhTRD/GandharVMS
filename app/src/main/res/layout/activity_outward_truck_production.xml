@@ -255,7 +255,7 @@
                 android:id="@+id/etdtweighment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Security Date Time"
+                android:hint="Weighment Date Time"
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -306,23 +306,12 @@
             android:orientation="horizontal">
 
             <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="110dp"
+                android:layout_width="160dp"
                 android:layout_height="match_parent"
-                android:layout_below="@id/OUM."
-                android:layout_marginLeft="25dp"
-                android:text="Cancel"
-                android:textSize="22dp"
-                android:textStyle="bold">
-
-            </androidx.appcompat.widget.AppCompatButton>
-
-            <androidx.appcompat.widget.AppCompatButton
-                android:layout_width="100dp"
-                android:layout_height="match_parent"
-                android:id="@+id/samplingview"
-                android:layout_marginLeft="15dp"
-                android:text="View"
-                android:textSize="22dp"
+                android:id="@+id/Outwaprocompleted"
+                android:layout_marginLeft="50dp"
+                android:text="Completed"
+                android:textSize="17dp"
                 android:textStyle="bold"
                 android:onClick="Viewclick">
 

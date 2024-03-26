@@ -215,6 +215,7 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/OUM."
                 android:layout_marginLeft="50dp"
+                android:id="@+id/outwardtruckcompletedlogistic"
                 android:text="Completed"
                 android:textSize="17dp"
                 android:textStyle="bold">

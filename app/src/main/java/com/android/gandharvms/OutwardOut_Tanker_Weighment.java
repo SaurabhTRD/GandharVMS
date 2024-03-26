@@ -59,7 +59,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,sealnumber,tareweight,netweight,grossw,etnumberpack,etremark,fetchdensity;
+    EditText intime,serialnumber,vehiclenumber,sealnumber,tareweight,netweight,grossw,etnumberpack,etremark,fetchdensity,etotdip,etotwt;
     Button submit;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -107,6 +107,8 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
+        etotdip = findViewById(R.id.otouttankeretshortdip);
+        etotwt = findViewById(R.id.otouttankeretshortwt);
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
@@ -284,12 +286,14 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         String ugrosswt = grossw.getText().toString().trim();
         String unumberpack = etnumberpack.getText().toString().trim()!=null?etnumberpack.getText().toString():"";
         String uremark = etremark.getText().toString().trim()!=null?etremark.getText().toString():"";
+        int ushdip = Integer.parseInt(etotdip.getText().toString().trim());
+        int ushwt = Integer.parseInt(etotwt.getText().toString().trim());
         if (etintime.isEmpty()||etsealnumber.isEmpty()||etnetweight.isEmpty()||ugrosswt.isEmpty()
                 ||uremark.isEmpty()||unumberpack.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             Model_OutwardOut_Weighment modelOutwardOutWeighment = new Model_OutwardOut_Weighment(OutwardId,imgPath2,imgPath1,
-                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType);
+                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType,ushdip,ushwt);
             Call<Boolean> call = outwardWeighment.updateoutwardoutweighment(modelOutwardOutWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override

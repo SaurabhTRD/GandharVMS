@@ -224,7 +224,7 @@
                 >
 
                 <ImageView
-                    android:id="@+id/imageView1"
+                    android:id="@+id/outwardtriuckinvehicle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/camera"
@@ -242,7 +242,7 @@
                 >
 
                 <ImageView
-                    android:id="@+id/imageView2"
+                    android:id="@+id/outwardtruckindriver"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:src="@drawable/camera"
@@ -310,7 +310,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="160dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/truckweighmentcompleted"
+                    android:id="@+id/outwardtruckweighmentcompleted"
                     android:layout_below="@id/OUM."
                     android:layout_marginLeft="50dp"
                     android:text="Completed"

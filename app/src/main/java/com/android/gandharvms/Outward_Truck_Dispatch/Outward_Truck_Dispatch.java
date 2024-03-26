@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
@@ -65,7 +66,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
 
     EditText intime,serialnumber,date,vehiclenumber,material,qty,partyname,oanumber,typepackeging,qty2,disfficer,datetime,
             secofficer,datetime2,signeweighment,datetime3,remark,etother,ettotal;
-    Button submit,logisticbutton;
+    Button submit,logisticbutton,btnlogicomplted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -141,6 +142,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
 
 
         submit = findViewById(R.id.etssubmit);
+        btnlogicomplted = findViewById(R.id.outwardtruckdespatchcompleted);
         dbroot= FirebaseFirestore.getInstance();
 
         etother = findViewById(R.id.etotheroption);
@@ -166,26 +168,20 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
                 insert();
             }
         });
+        btnlogicomplted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Outward_Truck_Dispatch.this, GridCompleted.class));
+            }
+        });
 
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final Calendar calendar = Calendar.getInstance();
-                int day = calendar.get(Calendar.DAY_OF_MONTH);
-                int month = calendar.get(Calendar.MONTH);
-                int year = calendar.get(Calendar.YEAR);
-                // Array of month abbreviations
-                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
-                picker = new DatePickerDialog(Outward_Truck_Dispatch.this, new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Use the month abbreviation from the array
-                        String monthAbbreviation = monthAbbreviations[month];
-                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        intime.setText(dtFormat.format(calendar.getTime()));
-                    }
-                }, year, month, day);
-                picker.show();
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                intime.setText(time);
             }
         });
 
@@ -228,13 +224,13 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Despatch";
+                            String specificRole = "Production";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "Inward Tanker Security Process Done..!",
+                                        "Outward Tanker Despatch Process Done..!",
                                         "Vehicle Number:-" + vehicleNumber + " has completed Despatch process at " + outTime,
                                         getApplicationContext(),
                                         Outward_Truck_Dispatch.this
@@ -277,22 +273,21 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
             public void onResponse(Call<Model_Outward_Truck_Dispatch> call, Response<Model_Outward_Truck_Dispatch> response) {
                 if (response.isSuccessful()){
                     Model_Outward_Truck_Dispatch data = response.body();
-                    if (data.getVehicleNumber() != ""){
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber()!= null){
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenumber.setText(data.getVehicleNumber());
                         oanumber.setText(data.getOAnumber());
                         partyname.setText(data.getTransportName());
-                        oanumber.setEnabled(false);
                         partyname.setEnabled(false);
                         serialnumber.setEnabled(false);
                         vehiclenumber.setEnabled(false);
 
-
-
                     }else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                        Toasty.error(Outward_Truck_Dispatch.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
+                }else {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
 
@@ -334,6 +329,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
         String etseralnumber = serialnumber.getText().toString().trim();
         String etvehiclenumber = vehiclenumber.getText().toString().trim();
         String uother = etother.getText().toString().trim();
+        String updateoa = oanumber.getText().toString().trim();
 //        int utotalwt = Integer.parseInt(ettotal.getText().toString().trim());
 //        String etdate = date.getText().toString().trim();
 //        String etmaterial = material.getText().toString().trim();
@@ -402,7 +398,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
 //            }
             Model_Outward_Truck_Dispatch modelOutwardTruckDispatch = new Model_Outward_Truck_Dispatch(OutwardId,etintime,outTime,
                     'D',uremark,etdisfficer,0,1,EmployeId,EmployeId,
-                    etseralnumber,etvehiclenumber,'P',inOut,vehicleType,"",uother);
+                    etseralnumber,etvehiclenumber,'P',inOut,vehicleType,"",uother,updateoa);
             Call<Boolean> call = outwardTruckInterface.insertdispatch(modelOutwardTruckDispatch);
             call.enqueue(new Callback<Boolean>() {
                 @Override
