@@ -1,12 +1,7 @@
 plugins {
     id("com.android.application")
     id("com.google.gms.google-services")
-
-
-
-
 }
-
 android {
     namespace = "com.android.gandharvms"
     compileSdk = 33
@@ -38,11 +33,11 @@ android {
     viewBinding {
       enable = true
     }
-
+    buildFeatures {
+        viewBinding = true
+    }
 }
-
 dependencies {
-
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.9.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
@@ -51,6 +46,10 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
     implementation("com.android.volley:volley:1.2.1")
+
+
+
+//    implementation("androidx.activity:activity:1.8.0")
 //    implementation("com.google.firebase:firebase-firestore:24.9.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
@@ -79,13 +78,5 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview:1.1.0")
     // For control over item selection of both touch and mouse driven selection
     implementation ("androidx.recyclerview:recyclerview-selection:1.1.0")
-
-
-
-
-
-
-
-
 
 }
