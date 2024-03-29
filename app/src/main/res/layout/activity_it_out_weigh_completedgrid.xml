@@ -41,7 +41,7 @@
         android:padding="8dp"/>
 
     <ImageButton
-        android:id="@+id/btn_itinweighExportToExcel"
+        android:id="@+id/btn_itoutweighExportToExcel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/iconsexportcsv"
@@ -52,7 +52,7 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/itinweighcoheaderscroll"
+        android:id="@+id/itoutweighcoheaderscroll"
         android:layout_marginTop="8dp"
         android:layout_height="40dp">
 
@@ -63,19 +63,8 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itinweitextcoSerialNumber"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="Serial No"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
                 android:layout_width="130dp"
-                android:id="@+id/itinweitextcoVehicleNumber"
+                android:id="@+id/itoutweitextcoVehicleNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -85,19 +74,8 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itinweitextcoMaterial"
-                android:gravity="center|start"
-                android:layout_marginStart="5dp"
-                android:textStyle="bold"
-                android:text="Material"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
                 android:layout_width="130dp"
-                android:id="@+id/itinweitextcoInTime"
+                android:id="@+id/itoutweitextcoOutInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -107,69 +85,8 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itinweitextcoOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itinweitextcodate"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Date"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itinweitextcopartyname"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SupplierName"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itinweitextcoremark"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Remark"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itinweitextcooapo"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OAPONumber"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
                 android:layout_width="110dp"
-                android:id="@+id/itinweitextcomob"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Mobile No"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itinweitextcogrossweight"
+                android:id="@+id/itoutweitextcogrossweight"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -177,56 +94,79 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
                 android:layout_width="110dp"
-                android:id="@+id/itinweitextcocontainerno"
+                android:id="@+id/itoutweitextcotareweight"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="ContainerNo"
+                android:text="TareWeight"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:id="@+id/itinweitextInVehicleImage"
-                android:layout_width="120dp"
+                android:layout_width="110dp"
+                android:id="@+id/itoutweitextconetweight"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="NetWeight"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/itoutweitextcoshortagedip"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ShortageDip"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/itoutweitextcoshortageweight"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ShortageWeight"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:id="@+id/itoutweitextcoOutVehicleImage"
+                android:layout_width="130dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:textStyle="bold"
-                android:text="InVehicleImage"
+                android:text="OutVehicleImage"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"/>
 
             <TextView
-                android:id="@+id/itinweitextInDriverImage"
+                android:id="@+id/itoutweitextcoOutDriverImage"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:textStyle="bold"
-                android:text="InDriverImage"
+                android:text="OutDriverImage"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"/>
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itinweitextcosighby"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SighBy"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
 
         </LinearLayout>
-
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitinweighcogrid"
+        android:id="@+id/recyclerviewitOutweighcogrid"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 </LinearLayout>

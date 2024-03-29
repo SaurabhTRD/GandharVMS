@@ -411,7 +411,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
     }
 
     public void itasecoutViewclick(View view){
-        Intent intent = new Intent(this, grid.class);
+        Intent intent = new Intent(this, it_out_weigh_completedgrid.class);
         startActivity(intent);
     }
 }

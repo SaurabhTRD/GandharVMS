@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@android:color/darker_gray"
+    android:layout_width="wrap_content"
+    android:layout_height="40dp">
+
+    <TextView
+        android:layout_width="130dp"
+        android:id="@+id/itoutsectextcoVehicleNumber"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/itoutsectextcoMaterial"
+        android:gravity="center|start"
+        android:layout_marginStart="5dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="130dp"
+        android:id="@+id/itoutsectextcopartyname"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="140dp"
+        android:id="@+id/itoutsectextcoInvoiceNo"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="130dp"
+        android:id="@+id/itoutsectextcoOutInTime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="130dp"
+        android:id="@+id/itoutsectextcoIrCopy"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="140dp"
+        android:id="@+id/itoutsectextcoDeliveryBill"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="140dp"
+        android:id="@+id/itoutsectextcoTaxInvoice"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="140dp"
+        android:id="@+id/itoutsectextcoEwayBill"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

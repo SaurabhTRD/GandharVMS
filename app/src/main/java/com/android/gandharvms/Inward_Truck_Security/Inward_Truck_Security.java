@@ -816,7 +816,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
         startActivity(intent);
     }
     public void truckseccompletedclick(View view) {
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, ir_in_sec_Completedgrid.class);
         startActivity(intent);
     }
 }

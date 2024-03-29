@@ -242,7 +242,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
     }
 
     public void intrsecoutgridclick(View view) {
-        Intent intent = new Intent(this, grid.class);
+        Intent intent = new Intent(this, it_out_sec_Completedgrid.class);
         startActivity(intent);
     }
 }

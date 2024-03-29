@@ -30,6 +30,30 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Inward_Truck_store.ir_stor_Completedgrid"
+            android:exported="false" />
+        <!--<activity
+            android:name=".Inward_Truck_Weighment.ir_in_weigh_Completedgrid"
+            android:exported="false" />-->
+        <activity
+            android:name=".Inward_Truck_Security.ir_in_sec_Completedgrid"
+            android:exported="false" />
+        <activity
+            android:name=".it_out_weigh_completedgrid"
+            android:exported="false" />
+        <activity
+            android:name=".it_out_sec_Completedgrid"
+            android:exported="false" />
+        <!--<activity
+            android:name=".Util.it_out_sec_Completedgrid"
+            android:exported="false" />-->
+        <activity
+            android:name=".Inward_Tanker_Production.it_pro_Completedgrid"
+            android:exported="false" />
+        <activity
+            android:name=".Inward_Tanker_Laboratory.it_Lab_Completedgrid"
+            android:exported="false" />
+        <activity
             android:name=".OutwardOutTankerBilling.ot_outBilling"
             android:exported="false" />
         <activity
@@ -68,18 +92,18 @@
         <activity
             android:name=".Inward_Tanker_Sampling.in_Tanker_sampling_grid"
             android:exported="false" />
-        <activity
+        <!--<activity
             android:name=".Inward_Tanker_Sampling.in"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".Inward_Tanker_Weighment.in_Tanker_weighment_grid"
             android:exported="false" />
         <activity
             android:name=".Inward_Tanker_Security.grid"
             android:exported="false" />
-        <activity
+        <!--<activity
             android:name=".Inward_Tanker_Security.completedgrid"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".OutwardOut_Truck_Billing"
             android:exported="false" />
