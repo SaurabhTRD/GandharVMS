@@ -325,7 +325,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
 
 
 
-        if (etintime.isEmpty()||etgrossweight.isEmpty()||etnoofpack.isEmpty()||ushwe>0|| ushdip>0){
+        if (etintime.isEmpty()||etgrossweight.isEmpty()||etnoofpack.isEmpty() ){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             Model_OutwardOut_Truck_Weighment modelOutwardOutTruckWeighment = new Model_OutwardOut_Truck_Weighment(OutwardId,

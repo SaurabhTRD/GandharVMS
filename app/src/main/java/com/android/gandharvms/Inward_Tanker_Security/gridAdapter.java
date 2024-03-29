@@ -120,35 +120,35 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
                 char io = club.getI_O();
                 Intent intent= new Intent();
                 if(vehitype.equals("IT") && io=='I') {
-                    if (crst.equals("Weighment") ) {
+                    if (crst.equals("WEIGHMENT") ) {
                         intent = new Intent(view.getContext(), Inward_Tanker_Weighment.class);
-                    } else if (crst.equals("Security Reported")) {
+                    } else if (crst.equals("SECURITY REPORTED")) {
                         intent = new Intent(view.getContext(), Inward_Tanker_Security.class);
-                    } else if (crst.equals("Sampling")) {
+                    } else if (crst.equals("SAMPLING")) {
                         intent = new Intent(view.getContext(), Inward_Tanker_Sampling.class);
-                    } else if (crst.equals("Laboratory")) {
+                    } else if (crst.equals("LABORATORY")) {
                         intent = new Intent(view.getContext(), Inward_Tanker_Laboratory.class);
-                    } else if (crst.equals("Production")) {
+                    } else if (crst.equals("PRODUCTION")) {
                         intent = new Intent(view.getContext(), Inward_Tanker_Production.class);
                     }
                 } else if (vehitype.equals("IR") && io=='I') {
-                    if (crst.equals("Weighment")) {
+                    if (crst.equals("WEIGHMENT")) {
                         intent = new Intent(view.getContext(), Inward_Truck_weighment.class);
-                    } else if (crst.equals("Security Reported")) {
+                    } else if (crst.equals("SECURITY REPORTED")) {
                         intent = new Intent(view.getContext(), Inward_Truck_Security.class);
-                    } else if (crst.equals("Store")) {
+                    } else if (crst.equals("STORE")) {
                         intent = new Intent(view.getContext(), Inward_Truck_Store.class);
                     }
                 }else if (vehitype.equals("IT") && io=='O') {
-                    if (crst.equals("OutSecurity")) {
+                    if (crst.equals("OUTSECURITY")) {
                         intent = new Intent(view.getContext(), InwardOut_Tanker_Weighment.class);
-                    } else if (crst.equals("VehicleOut")) {
+                    } else if (crst.equals("VEHICLEOUT")) {
                         intent = new Intent(view.getContext(), InwardOut_Tanker_Security.class);
                     }
                 }else if (vehitype.equals("IR") && io=='O') {
-                    if (crst.equals("OutSecurity")) {
+                    if (crst.equals("OUTSECURITY")) {
                         intent = new Intent(view.getContext(), InwardOut_Truck_Weighment.class);
-                    } else if (crst.equals("VehicleOut")) {
+                    } else if (crst.equals("VEHICLEOUT")) {
                         intent = new Intent(view.getContext(), InwardOut_Truck_Security.class);
                     }
                 }

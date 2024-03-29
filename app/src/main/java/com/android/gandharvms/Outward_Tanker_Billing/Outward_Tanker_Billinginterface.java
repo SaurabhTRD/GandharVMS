@@ -1,6 +1,7 @@
 package com.android.gandharvms.Outward_Tanker_Billing;
 
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBillingRequestModel;
+import com.android.gandharvms.Outward_Truck_Billing.Model_OutwardOut_Truck_Billing;
 
 import java.util.List;
 
@@ -23,4 +24,8 @@ public interface Outward_Tanker_Billinginterface {
 
     @POST("api/OutwardBilling/UpdateOutwardOutBillingData")
     Call<Boolean> UpdateOutBillingDetails(@Body ot_outBillingRequestModel request);
+
+    //outwardout_truck_billing
+    @POST("api/OutwardTruckBillingDispatch/UpdateOutwardTruckBilling")
+    Call<Boolean> updateouttruckbilling(@Body Model_OutwardOut_Truck_Billing request);
 }

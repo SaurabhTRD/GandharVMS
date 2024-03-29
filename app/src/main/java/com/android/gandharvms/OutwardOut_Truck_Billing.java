@@ -23,6 +23,7 @@ import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Bill
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
+import com.android.gandharvms.Outward_Truck_Billing.Model_OutwardOut_Truck_Billing;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -243,9 +244,9 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
         if (uintime.isEmpty()|| ubatch.isEmpty()||obOutTime.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-            ot_outBillingRequestModel requestoutBilmodel = new ot_outBillingRequestModel(OutwardId,uintime,obOutTime,"",
-                    0,"",uremark,'S',inOut,vehicleType,EmployeId);
-            Call<Boolean> call = outwardTankerBillinginterface.UpdateOutBillingDetails(requestoutBilmodel);
+            Model_OutwardOut_Truck_Billing requestoutBilmodel = new Model_OutwardOut_Truck_Billing(OutwardId,uintime,obOutTime,"B",
+                    uremark,ubatch,EmployeId,'S',inOut,vehicleType);
+            Call<Boolean> call = outwardTankerBillinginterface.updateouttruckbilling(requestoutBilmodel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
