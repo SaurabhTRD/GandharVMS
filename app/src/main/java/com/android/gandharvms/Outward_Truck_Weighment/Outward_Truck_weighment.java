@@ -1,4 +1,4 @@
-package com.android.gandharvms;
+package com.android.gandharvms.Outward_Truck_Weighment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,27 +18,23 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
-import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Response_Outward_Tanker_Weighment;
-import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
-import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
+import com.android.gandharvms.Outward_Truck;
+import com.android.gandharvms.R;
 import com.android.gandharvms.Util.MultipartTask;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.ByteArrayOutputStream;
@@ -46,10 +42,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -123,7 +117,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         btnweighmenttruck.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Outward_Truck_weighment.this, GridCompleted.class));
+                startActivity(new Intent(Outward_Truck_weighment.this, Weigh_OR_Complete.class));
             }
         });
 

@@ -31,6 +31,7 @@ import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
 import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
+import com.android.gandharvms.Outward_Truck_Security.SecOut_OR_Complete;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -55,7 +56,7 @@ import retrofit2.Response;
 public class OutwardOut_Truck_Security extends AppCompatActivity {
 
     EditText intime,serialnumber,vehiclenumber,invoice,party,gooddis,qty,uom1,netweight,uom2,outtime,sign,remark;
-    Button submit;
+    Button submit,complete;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -100,6 +101,7 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         remark=findViewById(R.id.etremark);
 
         submit = findViewById(R.id.submit);
+        complete = findViewById(R.id.truckotoutsecuritycompleted);
         dbroot= FirebaseFirestore.getInstance();
 
         Trasnportyes = findViewById(R.id.outwaoutrb_LRCopyYes);
@@ -121,6 +123,12 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 insert();
+            }
+        });
+        complete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OutwardOut_Truck_Security.this, SecOut_OR_Complete.class));
             }
         });
         if (getIntent().hasExtra("vehiclenum")) {

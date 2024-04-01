@@ -133,6 +133,8 @@ public class Common_Outward_model {
     public String WeighmentCreatedBy ;
     public String WeighmentCreatedDate ;
 
+
+
     public int getId() {
         return Id;
     }

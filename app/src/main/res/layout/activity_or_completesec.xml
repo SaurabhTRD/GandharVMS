@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".Outward_Truck_Security.OR_Completesec">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left">
+        <Button
+            android:id="@+id/orbtnfromDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From-Date"/>
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/orbtntoDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To-Date"/>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/totrecdepartmentwise"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tot-Rec: "
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginTop="-45dp"
+        android:layout_marginLeft="235dp"
+        android:padding="8dp"/>
+
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:id="@+id/itinweighcoheaderscroll_truckwe"
+        android:layout_marginTop="8dp"
+        android:layout_height="40dp">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/navyblue"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orsinsecuritydate"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="Date"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/orsinserialnum"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Serial No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsvehiclenum"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Vehicle No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/orsintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/orsouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+<!--            <TextView-->
+<!--                android:layout_width="120dp"-->
+<!--                android:id="@+id/itinweitextcodate"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:gravity="center|start"-->
+<!--                android:text="Date"-->
+<!--                android:textAllCaps="true"-->
+<!--                android:textColor="@android:color/white"-->
+<!--                android:layout_height="match_parent"/>-->
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/orsintransporter"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Transporter"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsinplace"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Place"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsinmob"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Mobile No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orsinremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Remark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+        </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:id="@+id/recyclerviewitinweighcogrid_truckin"
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

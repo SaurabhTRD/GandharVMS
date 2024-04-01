@@ -29,8 +29,27 @@
         android:theme="@style/Theme.GandharVMS"
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
-
-
+        <activity
+            android:name=".Outward_Truck_Security.SecOut_OR_Complete"
+            android:exported="false" />
+        <activity
+            android:name=".OutwardOut_Truck_Billing.Billing_Out_OR_Complete"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Weighment.Weigh_Out_OR_Complete"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Dispatch.Disp_OR_Complete"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Weighment.Weigh_OR_Complete"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Logistic.Logi_OR_Complete"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Truck_Security.OR_Completesec"
+            android:exported="false" />
         <activity
             android:name=".OutwardOutTankerBilling.ot_outBilling"
             android:exported="false" />
@@ -83,7 +102,7 @@
             android:name=".Inward_Tanker_Security.completedgrid"
             android:exported="false" />
         <activity
-            android:name=".OutwardOut_Truck_Billing"
+            android:name=".OutwardOut_Truck_Billing.OutwardOut_Truck_Billing"
             android:exported="false" />
         <activity
             android:name=".OutwardOut_Truck_Weighment"
@@ -146,7 +165,7 @@
             android:name=".Inward_Tanker_Production.Tanker_Production_Lab_Report_Data"
             android:exported="false" />
         <activity
-            android:name=".Outward_Truck_weighment"
+            android:name=".Outward_Truck_Weighment.Outward_Truck_weighment"
             android:exported="false" />
         <activity
             android:name=".Outward_Truck_Security.Outward_Truck_Security"

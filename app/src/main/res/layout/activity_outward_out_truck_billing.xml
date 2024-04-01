@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OutwardOut_Truck_Billing">
+    tools:context=".OutwardOut_Truck_Billing.OutwardOut_Truck_Billing">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -364,6 +364,7 @@
                     android:layout_width="130dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="80dp"
+                    android:id="@+id/truckotoutbillingcompleted"
                     android:text="COMPLETED"
                     android:textSize="17dp"
                     android:textStyle="bold"

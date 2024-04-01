@@ -1,8 +1,4 @@
-package com.android.gandharvms.Inward_Tanker_Weighment;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
+package com.android.gandharvms.Outward_Truck_Dispatch;
 
 import android.app.DatePickerDialog;
 import android.icu.text.SimpleDateFormat;
@@ -15,12 +11,20 @@ import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
-import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
-import com.android.gandharvms.InwardCompletedGrid.gridadaptercompleted;
-import com.android.gandharvms.LoginWithAPI.RetroApiClient;
-import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
+import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
+import com.android.gandharvms.Outward_Truck_Weighment.Adapter_Weigh_Complete;
+import com.android.gandharvms.Outward_Truck_Weighment.Weigh_OR_Complete;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
@@ -38,14 +42,14 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class it_in_weigh_Completedgrid extends AppCompatActivity {
+public class Disp_OR_Complete extends AppCompatActivity {
 
     int scrollX = 0;
-    List<CommonResponseModelForAllDepartment> clubList = new ArrayList<>();
+    List<Common_Outward_model> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
-    it_in_weigh_CompletedgridAdapter itinweighgridadaptercomp;
-    private Weighment WeighmentDetails;
+    Adapter_Disp_completed adapterDispCompleted;
+    private Outward_Tanker outwardTanker;
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
@@ -59,11 +63,17 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_it_in_weigh_completedgrid);
-        WeighmentDetails= RetroApiClient.getWeighmentDetails();
-        fromDate=findViewById(R.id.btnfromDate);
-        toDate=findViewById(R.id.btntoDate);
+        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_disp_or_complete);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
         totrec=findViewById(R.id.totrecdepartmentwise);
+        fromDate=findViewById(R.id.orbtnfromDate);
+        toDate=findViewById(R.id.orbtntoDate);
         fromdate="2024-01-01";
         todate = getCurrentDateTime();
 
@@ -74,7 +84,6 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
                 showDatePickerDialog(fromDate,true);
             }
         });
-
         toDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,7 +101,7 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
             else{
                 strvehiclenumber="x";
             }
-            fetchDataFromApiforweigh(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+            fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
         }
         else{
         }
@@ -111,6 +120,8 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
+
     }
     private void showDatePickerDialog(final TextView dateTextView,final boolean isFromDate) {
         Calendar calendar = Calendar.getInstance();
@@ -141,13 +152,13 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
                                 else{
                                     strvehiclenumber="x";
                                 }
-                                fetchDataFromApiforweigh(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+                                fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
                             }
                             else{
                             }
                         } else {
                             // Show an error message or take appropriate action
-                            Toasty.warning(it_in_weigh_Completedgrid.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(Disp_OR_Complete.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -168,9 +179,6 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
         // Show the date picker dialog
         datePickerDialog.show();
     }
-
-
-
     private String getCurrentDateTime()     {
         // Get current date and time
         Calendar calendar = Calendar.getInstance();
@@ -182,29 +190,27 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
     }
     private void initViews()
     {
-        rvClub = findViewById(R.id.recyclerviewitinweighcogrid);
-        headerscroll = findViewById(R.id.itinweighcoheaderscroll);
+        rvClub = findViewById(R.id.recyclerviewitin_Desp_hcogrid_truckin);
+        headerscroll = findViewById(R.id.itin_Desp_coheaderscroll_truckwe);
     }
-
     private void setUpRecyclerView()
     {
-        itinweighgridadaptercomp  = new it_in_weigh_CompletedgridAdapter(clubList);
+        adapterDispCompleted  = new Adapter_Disp_completed(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
-        rvClub.setAdapter(itinweighgridadaptercomp);
+        rvClub.setAdapter(adapterDispCompleted);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
+    public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
 
-    public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
-
-        Call<List<CommonResponseModelForAllDepartment>> call = WeighmentDetails.getIntankWeighListingData(FromDate, Todate, vehicleType, vehicleno,inOut);
-        call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
+        Call<List<Common_Outward_model>> call = outwardTanker.gettruckdespatchcomplete(FromDate,Todate,vehicleType,nextprocess,inOut);
+        call.enqueue(new Callback<List<Common_Outward_model>>() {
             @Override
-            public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body().size() > 0) {
-                        List<CommonResponseModelForAllDepartment> data = response.body();
+            public void onResponse(Call<List<Common_Outward_model>> call, Response<List<Common_Outward_model>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size()>0){
+                        List<Common_Outward_model> data = response.body();
                         int totalcount = data.size();
                         totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
@@ -214,7 +220,7 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<CommonResponseModelForAllDepartment>> call, Throwable t) {
+            public void onFailure(Call<List<Common_Outward_model>> call, Throwable t) {
                 Log.e("Retrofit", "Failure: " + t.getMessage());
                 // Check if there's a response body in case of an HTTP error
                 if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
@@ -228,7 +234,7 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(it_in_weigh_Completedgrid.this,"failed..!", Toast.LENGTH_SHORT).show();
+                Toasty.error(Disp_OR_Complete.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }

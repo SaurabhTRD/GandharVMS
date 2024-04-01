@@ -4,7 +4,7 @@ plugins {
 }
 android {
     namespace = "com.android.gandharvms"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.android.gandharvms"
@@ -46,7 +46,9 @@ dependencies {
     implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
     implementation("com.google.firebase:firebase-messaging:23.3.1")
     implementation("com.android.volley:volley:1.2.1")
-
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0")
+    implementation ("androidx.core:core-ktx:1.12.0")
+    implementation("androidx.activity:activity:1.8.0")
 
 
 //    implementation("androidx.activity:activity:1.8.0")
