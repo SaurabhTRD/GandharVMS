@@ -642,7 +642,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
     }
 
     public void truckstorecompletedclick(View view){
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, ir_stor_Completedgrid.class);
         startActivity(intent);
     }
 }

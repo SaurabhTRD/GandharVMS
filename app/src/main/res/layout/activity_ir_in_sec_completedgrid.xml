@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".Inward_Tanker_Weighment.it_in_weigh_Completedgrid">
+    tools:context=".MainActivity">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -41,7 +41,7 @@
         android:padding="8dp"/>
 
     <ImageButton
-        android:id="@+id/btn_itinweighExportToExcel"
+        android:id="@+id/btn_irinsecExportToExcel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/iconsexportcsv"
@@ -52,7 +52,7 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/itinweighcoheaderscroll"
+        android:id="@+id/irinseccoheaderscroll"
         android:layout_marginTop="8dp"
         android:layout_height="40dp">
 
@@ -63,8 +63,41 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:layout_width="100dp"
+                android:id="@+id/irinsectextcoInTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/irinsectextcoOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/irinsectextcodate"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Date"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            
+            <TextView
                 android:layout_width="110dp"
-                android:id="@+id/itinweitextcoSerialNumber"
+                android:id="@+id/irinsectextcoSerialNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:text="Serial No"
@@ -75,7 +108,7 @@
 
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/itinweitextcoVehicleNumber"
+                android:id="@+id/irinsectextcoVehicleNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -85,8 +118,19 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="140dp"
+                android:id="@+id/irinsectextcoInvoiceNo"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Invoice-No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
                 android:layout_width="120dp"
-                android:id="@+id/itinweitextcoMaterial"
+                android:id="@+id/irinsectextcoMaterial"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
@@ -95,41 +139,10 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+            
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/itinweitextcoInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="InTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itinweitextcoOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itinweitextcodate"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Date"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itinweitextcopartyname"
+                android:id="@+id/irinsectextcopartyname"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -137,19 +150,10 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itinweitextcoremark"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Remark"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itinweitextcooapo"
+                android:layout_width="130dp"
+                android:id="@+id/irinsectextcooapo"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -157,9 +161,10 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itinweitextcomob"
+                android:layout_width="140dp"
+                android:id="@+id/irinsectextcomob"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -167,66 +172,147 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itinweitextcogrossweight"
+                android:layout_width="140dp"
+                android:id="@+id/irinsectextcoreoprtingre"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="GrossWeight"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itinweitextcocontainerno"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ContainerNo"
+                android:text="ReportingRemark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:id="@+id/itinweitextInVehicleImage"
+                android:layout_width="100dp"
+                android:id="@+id/irinsectextcoqty"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="QTY"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
                 android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:textStyle="bold"
-                android:text="InVehicleImage"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"/>
-
-            <TextView
-                android:id="@+id/itinweitextInDriverImage"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:textStyle="bold"
-                android:text="InDriverImage"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"/>
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itinweitextcosighby"
+                android:id="@+id/irinsectextcoqtyuom"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="SighBy"
+                android:text="QTYUOM"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/irinsectextconetweight"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Netweight"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/irinsectextconetweightuom"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="NetweightUOM"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/irinsectextcoSelectregister"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="SelectRegister"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/irinsectextcoIrCopy"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LrCopy"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/irinsectextcoDeliveryBill"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="DeliveryBill"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/irinsectextcoTaxInvoice"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="TaxInvoice"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/irinsectextcoEwayBill"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="EwayBill"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/irinsectextcoextramaterials"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Extramatrials"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/irinsectextcoremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Remark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            
         </LinearLayout>
 
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitinweighcogrid"
+        android:id="@+id/recyclerviewirinseccogrid"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
+
 </LinearLayout>

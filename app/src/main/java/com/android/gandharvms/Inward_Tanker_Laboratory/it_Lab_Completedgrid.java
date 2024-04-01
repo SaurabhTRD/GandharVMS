@@ -1,4 +1,4 @@
-package com.android.gandharvms.Inward_Tanker_Sampling;
+package com.android.gandharvms.Inward_Tanker_Laboratory;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,12 +8,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
-import android.app.DownloadManager;
 import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
 import android.util.Log;
@@ -27,14 +24,11 @@ import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
-import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
-import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
-import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_CompletedgridAdapter;
+import com.android.gandharvms.LoginWithAPI.Laboratory;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -55,15 +49,15 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class it_in_Samp_Completedgrid extends AppCompatActivity {
+public class it_Lab_Completedgrid extends AppCompatActivity {
 
     int scrollX = 0;
     List<CommonResponseModelForAllDepartment> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
-    it_in_Samp_CompletedgridAdapter itinweighgridadaptercomp;
+    it_Lab_CompletedgridAdapter itlabgridadaptercomp;
 
-    private Inward_Tanker_SamplingMethod samplingdetails;
+    private Laboratory labdetails;
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
@@ -81,15 +75,15 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_it_in_samp_completedgrid);
+        setContentView(R.layout.activity_it_lab_completedgrid);
 
-        samplingdetails= RetroApiClient.getInward_Tanker_Sampling();
+        labdetails= RetroApiClient.getLabDetails();
         fromDate=findViewById(R.id.btnfromDate);
         toDate=findViewById(R.id.btntoDate);
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromdate="2024-01-01";
         todate = getCurrentDateTime();
-        imgBtnExportToExcel=findViewById(R.id.btn_itsamExportToExcel);
+        imgBtnExportToExcel=findViewById(R.id.btn_itLabExportToExcel);
         hssfWorkBook = new HSSFWorkbook();
         fromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +124,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
             else{
                 strvehiclenumber="x";
             }
-            fetchDataFromApiforSam(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+            fetchDataFromApiforLab(fromdate,todate,vehicleType,strvehiclenumber,inOut);
         }
         else{
         }
@@ -150,6 +144,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
             }
         });
     }
+
     private void showDatePickerDialog(final TextView dateTextView,final boolean isFromDate) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -179,7 +174,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                                 else{
                                     strvehiclenumber="x";
                                 }
-                                fetchDataFromApiforSam(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+                                fetchDataFromApiforLab(fromdate,todate,vehicleType,strvehiclenumber,inOut);
                             }
                             else{
                             }
@@ -200,7 +195,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                             });
                         } else {
                             // Show an error message or take appropriate action
-                            Toasty.warning(it_in_Samp_Completedgrid.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(it_Lab_Completedgrid.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -224,13 +219,34 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
 
     private void exportToExcel(List<CommonResponseModelForAllDepartment> datalist) {
         try {
-            Sheet sheet = hssfWorkBook.createSheet("InwardTankerSamplingData");
+            Sheet sheet = hssfWorkBook.createSheet("InwardTankerLaboratoryData");
             // Create header row
             Row headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("DATE");
             headerRow.createCell(1).setCellValue("VEHICLE_No");
-            headerRow.createCell(2).setCellValue("SAMPLE SUBMITTED TIME");
-            headerRow.createCell(3).setCellValue("SAMPLE RECEIVING TIME");
+            headerRow.createCell(2).setCellValue("SERIAL_No");
+            headerRow.createCell(3).setCellValue("MATERIAL_NAME");
+            headerRow.createCell(4).setCellValue("SUPPLIER_NAME");
+            headerRow.createCell(5).setCellValue("IN_TIME");
+            headerRow.createCell(6).setCellValue("OUT_TIME");
+            headerRow.createCell(7).setCellValue("APPERANCE");
+            headerRow.createCell(8).setCellValue("ODOR");
+            headerRow.createCell(9).setCellValue("COLOR");
+            headerRow.createCell(10).setCellValue("QTY");
+            headerRow.createCell(11).setCellValue("DENSITY 29.5°C");
+            headerRow.createCell(12).setCellValue("RCSTEST");
+            headerRow.createCell(13).setCellValue("ANLINEPOINT");
+            headerRow.createCell(14).setCellValue("FLASHPOINT");
+            headerRow.createCell(15).setCellValue("KV 40°C");
+            headerRow.createCell(16).setCellValue("KV 100°C");
+            headerRow.createCell(17).setCellValue("ADDITIONALTEST");
+            headerRow.createCell(18).setCellValue("SAMPLERELEASEDDATE");
+            headerRow.createCell(19).setCellValue("SIGNOF");
+            headerRow.createCell(20).setCellValue("REMARK");
+            headerRow.createCell(21).setCellValue("DATEANDTIME");
+            headerRow.createCell(22).setCellValue("REMARKDESCRIPTION");
+            headerRow.createCell(23).setCellValue("VISCOSITYINDEX");
+
 
             // Populate data rows
             for (int i = 0; i < datalist.size(); i++) {
@@ -240,14 +256,35 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                 int outtimelength = dataItem.getOutTime()!=null ? dataItem.getOutTime().length() : 0;
                 dataRow.createCell(0).setCellValue(formattedDate = formatDate(dataItem.getDate()));
                 dataRow.createCell(1).setCellValue(dataItem.getVehicleNo());
+                dataRow.createCell(2).setCellValue(dataItem.getSerialNo());
+                dataRow.createCell(3).setCellValue(dataItem.getMaterial());
+                dataRow.createCell(4).setCellValue(dataItem.getPartyName());
                 if(intimelength>0)
                 {
-                    dataRow.createCell(2).setCellValue(dataItem.getInTime().substring(12,intimelength));
+                    dataRow.createCell(5).setCellValue(dataItem.getInTime().substring(12,intimelength));
                 }
                 if(outtimelength>0)
                 {
-                    dataRow.createCell(3).setCellValue(dataItem.getOutTime().substring(12,outtimelength));
+                    dataRow.createCell(6).setCellValue(dataItem.getOutTime().substring(12,outtimelength));
                 }
+                dataRow.createCell(7).setCellValue(dataItem.getApperance());
+                dataRow.createCell(8).setCellValue(dataItem.getOdor());
+                dataRow.createCell(9).setCellValue(dataItem.getColor());
+                dataRow.createCell(10).setCellValue(dataItem.getLQty());
+                dataRow.createCell(11).setCellValue(dataItem.getDensity());
+                dataRow.createCell(12).setCellValue(dataItem.getRcsTest());
+                dataRow.createCell(13).setCellValue(dataItem.getAnLinePoint());
+                dataRow.createCell(14).setCellValue(dataItem.getFlashPoint());
+                dataRow.createCell(15).setCellValue(dataItem.get_40KV());
+                dataRow.createCell(16).setCellValue(dataItem.get_100KV());
+                dataRow.createCell(17).setCellValue(dataItem.getAdditionalTest());
+                dataRow.createCell(18).setCellValue(dataItem.getSampleTest());
+                dataRow.createCell(19).setCellValue(dataItem.getSignOf());
+                dataRow.createCell(20).setCellValue(dataItem.getRemark());
+                dataRow.createCell(21).setCellValue(dataItem.getDateAndTime());
+                dataRow.createCell(22).setCellValue(dataItem.getRemarkDescription());
+                dataRow.createCell(23).setCellValue(dataItem.getViscosityIndex());
+
             }
             // Save the workbook
             saveWorkBook(hssfWorkBook);
@@ -293,11 +330,11 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                 String dateTimeSuffix = new SimpleDateFormat("ddMMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
                 int counter = 1;
-                String fileName = "Inward Tanker Sampling Data_" + dateTimeSuffix + ".xls";
+                String fileName = "Inward Tanker Laboratory Data_" + dateTimeSuffix + ".xls";
                 File outputfile = new File(storageVolume.getDirectory().getPath() + "/Download/" + fileName);
                 while (outputfile.exists()) {
                     counter++;
-                    fileName = "Inward Tanker Sampling Data_" + dateTimeSuffix + "_" + counter + ".xls";
+                    fileName = "Inward Tanker Laboratory Data_" + dateTimeSuffix + "_" + counter + ".xls";
                     outputfile = new File(storageVolume.getDirectory().getPath() + "/Download/" + fileName);
                 }
                 try {
@@ -339,23 +376,23 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
     }
     private void initViews()
     {
-        rvClub = findViewById(R.id.recyclerviewitinsampcogrid);
-        headerscroll = findViewById(R.id.itinsampcoheaderscroll);
+        rvClub = findViewById(R.id.recyclerviewitLabcogrid);
+        headerscroll = findViewById(R.id.itLabcoheaderscroll);
     }
 
     private void setUpRecyclerView()
     {
-        itinweighgridadaptercomp  = new it_in_Samp_CompletedgridAdapter(clubList);
+        itlabgridadaptercomp  = new it_Lab_CompletedgridAdapter(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
-        rvClub.setAdapter(itinweighgridadaptercomp);
+        rvClub.setAdapter(itlabgridadaptercomp);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
-    public void fetchDataFromApiforSam(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
+    public void fetchDataFromApiforLab(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = samplingdetails.getIntankSamplingListingData(FromDate,Todate, vehicleType,vehicleno, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call = labdetails.getIntankLabListData(FromDate, Todate, vehicleType,vehicleno,inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
@@ -385,7 +422,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(it_in_Samp_Completedgrid.this,"failed..!", Toast.LENGTH_SHORT).show();
+                Toasty.error(it_Lab_Completedgrid.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }

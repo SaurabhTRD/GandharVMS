@@ -240,6 +240,11 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
         finish();
     }
 
+    public void irosecclickevent(View view){
+        Intent intent = new Intent(this, it_out_sec_Completedgrid.class);
+        startActivity(intent);
+    }
+
     public void inwardtrOutSecurityPendingClick(View view){
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);

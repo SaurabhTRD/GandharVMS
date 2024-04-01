@@ -320,7 +320,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
     }
 
     public void intrwegridclick(View view){
-        Intent intent = new Intent(this, grid.class);
+        Intent intent = new Intent(this, it_out_weigh_completedgrid.class);
         startActivity(intent);
     }
 

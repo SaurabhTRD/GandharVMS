@@ -63,7 +63,7 @@ public class GridCompleted extends AppCompatActivity {
     private Laboratory LaboratoryDetails;
     private Inward_Tanker_SamplingMethod samplingdetails;
     private API_In_Tanker_production productiondetails;
-    private Store storedetails;;
+    private Store storedetails;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;

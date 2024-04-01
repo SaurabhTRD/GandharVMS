@@ -1,4 +1,4 @@
-package com.android.gandharvms.Inward_Tanker_Sampling;
+package com.android.gandharvms.Inward_Tanker_Production;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -8,12 +8,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
-import android.app.DownloadManager;
 import android.content.pm.PackageManager;
 import android.icu.text.SimpleDateFormat;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.storage.StorageManager;
 import android.os.storage.StorageVolume;
 import android.util.Log;
@@ -28,13 +25,13 @@ import android.widget.Toast;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
-import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
-import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_CompletedgridAdapter;
+import com.android.gandharvms.Inward_Tanker_Laboratory.it_Lab_Completedgrid;
+import com.android.gandharvms.Inward_Tanker_Laboratory.it_Lab_CompletedgridAdapter;
+import com.android.gandharvms.Inward_Tanker_Security.RetroApiclient_In_Tanker_Security;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -55,16 +52,12 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class it_in_Samp_Completedgrid extends AppCompatActivity {
-
+public class it_pro_Completedgrid extends AppCompatActivity {
     int scrollX = 0;
     List<CommonResponseModelForAllDepartment> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
-    it_in_Samp_CompletedgridAdapter itinweighgridadaptercomp;
-
-    private Inward_Tanker_SamplingMethod samplingdetails;
-
+    it_pro_CompletedgridAdapter itprogridadaptercomp;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
@@ -78,19 +71,23 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
     ImageButton imgBtnExportToExcel;
     private HSSFWorkbook hssfWorkBook;
     private static final int WRITE_EXTERNAL_STORAGE_REQUEST = 123;
+
+    private API_In_Tanker_production apiInTankerProduction;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_it_in_samp_completedgrid);
+        setContentView(R.layout.activity_it_pro_completedgrid);
 
-        samplingdetails= RetroApiClient.getInward_Tanker_Sampling();
+        apiInTankerProduction = RetroApiclient_In_Tanker_Security.getinproductionApi();
         fromDate=findViewById(R.id.btnfromDate);
         toDate=findViewById(R.id.btntoDate);
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromdate="2024-01-01";
         todate = getCurrentDateTime();
-        imgBtnExportToExcel=findViewById(R.id.btn_itsamExportToExcel);
+        imgBtnExportToExcel=findViewById(R.id.btn_itproExportToExcel);
         hssfWorkBook = new HSSFWorkbook();
+
         fromDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,7 +127,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
             else{
                 strvehiclenumber="x";
             }
-            fetchDataFromApiforSam(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+            fetchDataFromApiforPro(fromdate,todate,vehicleType,inOut);
         }
         else{
         }
@@ -150,6 +147,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
             }
         });
     }
+
     private void showDatePickerDialog(final TextView dateTextView,final boolean isFromDate) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -179,7 +177,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                                 else{
                                     strvehiclenumber="x";
                                 }
-                                fetchDataFromApiforSam(fromdate,todate,vehicleType,strvehiclenumber,inOut);
+                                fetchDataFromApiforPro(fromdate,todate,vehicleType,inOut);
                             }
                             else{
                             }
@@ -200,7 +198,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                             });
                         } else {
                             // Show an error message or take appropriate action
-                            Toasty.warning(it_in_Samp_Completedgrid.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(it_pro_Completedgrid.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -224,13 +222,20 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
 
     private void exportToExcel(List<CommonResponseModelForAllDepartment> datalist) {
         try {
-            Sheet sheet = hssfWorkBook.createSheet("InwardTankerSamplingData");
+            Sheet sheet = hssfWorkBook.createSheet("InwardTankerProductionData");
             // Create header row
             Row headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("DATE");
             headerRow.createCell(1).setCellValue("VEHICLE_No");
-            headerRow.createCell(2).setCellValue("SAMPLE SUBMITTED TIME");
-            headerRow.createCell(3).setCellValue("SAMPLE RECEIVING TIME");
+            headerRow.createCell(2).setCellValue("SERIAL_No");
+            headerRow.createCell(3).setCellValue("MATERIAL_NAME");
+            headerRow.createCell(4).setCellValue("IN_TIME");
+            headerRow.createCell(5).setCellValue("OUT_TIME");
+            headerRow.createCell(6).setCellValue("UNLOADABOVEMATERIALINTK");
+            headerRow.createCell(7).setCellValue("PRODUCTNAME");
+            headerRow.createCell(8).setCellValue("ABOVEMATERIALISUNLOADINTK");
+            headerRow.createCell(9).setCellValue("OPERATORNAME");
+
 
             // Populate data rows
             for (int i = 0; i < datalist.size(); i++) {
@@ -240,14 +245,20 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                 int outtimelength = dataItem.getOutTime()!=null ? dataItem.getOutTime().length() : 0;
                 dataRow.createCell(0).setCellValue(formattedDate = formatDate(dataItem.getDate()));
                 dataRow.createCell(1).setCellValue(dataItem.getVehicleNo());
+                dataRow.createCell(2).setCellValue(dataItem.getSerialNo());
+                dataRow.createCell(3).setCellValue(dataItem.getMaterial());
                 if(intimelength>0)
                 {
-                    dataRow.createCell(2).setCellValue(dataItem.getInTime().substring(12,intimelength));
+                    dataRow.createCell(4).setCellValue(dataItem.getInTime().substring(12,intimelength));
                 }
                 if(outtimelength>0)
                 {
-                    dataRow.createCell(3).setCellValue(dataItem.getOutTime().substring(12,outtimelength));
+                    dataRow.createCell(5).setCellValue(dataItem.getOutTime().substring(12,outtimelength));
                 }
+                dataRow.createCell(6).setCellValue(dataItem.getUnloadAboveMaterialInTK());
+                dataRow.createCell(7).setCellValue(dataItem.getProductName());
+                dataRow.createCell(8).setCellValue(dataItem.getAboveMaterialIsUnloadInTK());
+                dataRow.createCell(9).setCellValue(dataItem.getOperatorName());
             }
             // Save the workbook
             saveWorkBook(hssfWorkBook);
@@ -293,11 +304,11 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                 String dateTimeSuffix = new SimpleDateFormat("ddMMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
                 int counter = 1;
-                String fileName = "Inward Tanker Sampling Data_" + dateTimeSuffix + ".xls";
+                String fileName = "Inward Tanker Production Data_" + dateTimeSuffix + ".xls";
                 File outputfile = new File(storageVolume.getDirectory().getPath() + "/Download/" + fileName);
                 while (outputfile.exists()) {
                     counter++;
-                    fileName = "Inward Tanker Sampling Data_" + dateTimeSuffix + "_" + counter + ".xls";
+                    fileName = "Inward Tanker Production Data_" + dateTimeSuffix + "_" + counter + ".xls";
                     outputfile = new File(storageVolume.getDirectory().getPath() + "/Download/" + fileName);
                 }
                 try {
@@ -339,23 +350,23 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
     }
     private void initViews()
     {
-        rvClub = findViewById(R.id.recyclerviewitinsampcogrid);
-        headerscroll = findViewById(R.id.itinsampcoheaderscroll);
+        rvClub = findViewById(R.id.recyclerviewitprocogrid);
+        headerscroll = findViewById(R.id.itprocoheaderscroll);
     }
 
     private void setUpRecyclerView()
     {
-        itinweighgridadaptercomp  = new it_in_Samp_CompletedgridAdapter(clubList);
+        itprogridadaptercomp  = new it_pro_CompletedgridAdapter(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
-        rvClub.setAdapter(itinweighgridadaptercomp);
+        rvClub.setAdapter(itprogridadaptercomp);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
-    public void fetchDataFromApiforSam(String FromDate,String Todate,String vehicleType,String vehicleno, char inOut) {
+    public void fetchDataFromApiforPro(String FromDate,String Todate,String vehicleType, char inOut) {
 
-        Call<List<CommonResponseModelForAllDepartment>> call = samplingdetails.getIntankSamplingListingData(FromDate,Todate, vehicleType,vehicleno, inOut);
+        Call<List<CommonResponseModelForAllDepartment>> call =apiInTankerProduction.getintankerproductionListdata(FromDate,Todate, vehicleType, inOut);
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
@@ -385,7 +396,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(it_in_Samp_Completedgrid.this,"failed..!", Toast.LENGTH_SHORT).show();
+                Toasty.error(it_pro_Completedgrid.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }

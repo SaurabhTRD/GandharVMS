@@ -337,7 +337,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         });
     }
     public void statusgrid(View view){
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, it_pro_Completedgrid.class);
         startActivity(intent);
     }
 

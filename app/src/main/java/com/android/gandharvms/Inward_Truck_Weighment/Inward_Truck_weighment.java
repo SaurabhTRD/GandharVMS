@@ -35,6 +35,7 @@ import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -489,7 +490,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         startActivity(intent);
     }
     public void truckweicompletedclick(View view){
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, it_in_weigh_Completedgrid.class);
         startActivity(intent);
     }
 }

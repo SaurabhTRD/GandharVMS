@@ -483,7 +483,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         startActivity(intent);
     }
     public void labviewclick(View view) {
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, it_Lab_Completedgrid.class);
         startActivity(intent);
     }
 }

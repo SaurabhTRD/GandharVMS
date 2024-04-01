@@ -68,6 +68,45 @@ public class CommonResponseModelForAllDepartment {
     public String ReceiveQTYUOM;
     public String StoreExtramaterials;
 
+    public String OutInTime;
+
+    public String UnitOfQTY;
+    public String UnitOfNetWeight;
+
+    public String ReQTYUom ;
+
+    public String getReQTYUom() {
+        return ReQTYUom;
+    }
+
+    public void setReQTYUom(String reQTYUom) {
+        ReQTYUom = reQTYUom;
+    }
+
+    public String getUnitOfQTY() {
+        return UnitOfQTY;
+    }
+
+    public void setUnitOfQTY(String unitOfQTY) {
+        UnitOfQTY = unitOfQTY;
+    }
+
+    public String getUnitOfNetWeight() {
+        return UnitOfNetWeight;
+    }
+
+    public void setUnitOfNetWeight(String unitOfNetWeight) {
+        UnitOfNetWeight = unitOfNetWeight;
+    }
+
+    public String getOutInTime() {
+        return OutInTime;
+    }
+
+    public void setOutInTime(String outInTime) {
+        OutInTime = outInTime;
+    }
+
     public int getInwardId() {
         return InwardId;
     }
