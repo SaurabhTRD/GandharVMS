@@ -171,7 +171,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
         btnlogicomplted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Outward_Truck_Dispatch.this, GridCompleted.class));
+                startActivity(new Intent(Outward_Truck_Dispatch.this, Disp_OR_Complete.class));
             }
         });
 

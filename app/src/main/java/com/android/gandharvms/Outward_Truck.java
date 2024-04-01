@@ -7,12 +7,11 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
-import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
 import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
 import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
+import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
 

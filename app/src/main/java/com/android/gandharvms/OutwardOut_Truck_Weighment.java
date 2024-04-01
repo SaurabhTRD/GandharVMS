@@ -37,6 +37,7 @@ import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Response_Outward_Tanker_Weighment;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
+import com.android.gandharvms.Outward_Truck_Weighment.Weigh_Out_OR_Complete;
 import com.android.gandharvms.Util.MultipartTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -63,7 +64,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
 
     EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare,etshdip,etshwe;
 
-    Button submit;
+    Button submit,etcompleted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -110,6 +111,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         ettare = findViewById(R.id.ettarewt);
 
         submit = findViewById(R.id.submit);
+        etcompleted = findViewById(R.id.orweoutcomple);
         dbroot= FirebaseFirestore.getInstance();
 
         img1 = findViewById(R.id.outwardouttruckvehicle);
@@ -126,6 +128,13 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                     UploadImagesAndUpdate();
                 }
 //                insert();
+            }
+        });
+        etcompleted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+               startActivity(new Intent(OutwardOut_Truck_Weighment.this,Weigh_Out_OR_Complete.class));
+
             }
         });
 

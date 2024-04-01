@@ -1,4 +1,4 @@
-package com.android.gandharvms;
+package com.android.gandharvms.OutwardOut_Truck_Billing;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,33 +10,28 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
-import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
-import com.android.gandharvms.OutwardOutTankerBilling.ot_outBillingRequestModel;
+import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
-import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Truck_Billing.Model_OutwardOut_Truck_Billing;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
+import com.android.gandharvms.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -47,7 +42,7 @@ import retrofit2.Response;
 public class OutwardOut_Truck_Billing extends AppCompatActivity {
 
     EditText intime,serialnumber,vehiclenumber,etoanumber,ettramsname,etdrivermob,etgrs,ettare,etnet,etseal,etbatch,etdensity,etremark;
-    Button submit;
+    Button submit,billcomp;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -85,6 +80,7 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
 
 
         submit = findViewById(R.id.submit);
+        billcomp = findViewById(R.id.truckotoutbillingcompleted);
         dbroot= FirebaseFirestore.getInstance();
 
         submit.setOnClickListener(new View.OnClickListener() {
@@ -112,6 +108,13 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
                 if (!hasFocus) {
                     FetchVehicleDetails(vehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
                 }
+            }
+        });
+        billcomp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                startActivity(new Intent(OutwardOut_Truck_Billing.this, Billing_Out_OR_Complete.class));
             }
         });
 

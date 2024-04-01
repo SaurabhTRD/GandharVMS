@@ -99,7 +99,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         btnlogisticcompletd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Outward_Truck_Logistics.this, GridCompleted.class));
+                startActivity(new Intent(Outward_Truck_Logistics.this, Logi_OR_Complete.class));
             }
         });
 

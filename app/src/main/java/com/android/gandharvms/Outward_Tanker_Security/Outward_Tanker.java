@@ -1,5 +1,6 @@
 package com.android.gandharvms.Outward_Tanker_Security;
 
+import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
 
 import java.util.List;
@@ -34,5 +35,45 @@ public interface Outward_Tanker {
     Call<Boolean> updateout_Truck_wardoutsecurity(@Body Model_OutwardOut_Truck_Security request);
 
 
+    //outwardtruck_completed
+    @GET("api/OutwardSecurity/GetOutwardSecurityList")
+    Call<List<Common_Outward_model>> getintrucksecuritycompleted(@Query("FromDate")String FromDate,
+                                                                  @Query("Todate") String Todate,
+                                                                 @Query("vehicletype") String vehicletype,
+                                                                 @Query("nextprocess") char nextprocess,
+                                                                 @Query("inout") char inout);
 
+
+    //OR_Logi
+    @GET("api/OutwardLogistic/GetOutwardLogisticList")
+    Call<List<Common_Outward_model>> getintrucklogicomplete(@Query("FromDate")String FromDate,
+                                                            @Query("Todate") String Todate,
+                                                            @Query("vehicletype") String vehicletype,
+                                                            @Query("nextprocess") char nextprocess,
+                                                            @Query("inout") char inout);
+
+
+    //OR_Weigh_complete
+    @GET("api/OutwardWeighment/GetOutwardWeighmentList")
+    Call<List<Common_Outward_model>> gettruckweighcomplete(@Query("FromDate")String FromDate,
+                                                           @Query("Todate") String Todate,
+                                                           @Query("vehicletype") String vehicletype,
+                                                           @Query("nextprocess") char nextprocess,
+                                                           @Query("inout") char inout);
+
+    //OR_Desp_Complete
+    @GET("api/OutwardTruckBillingDispatch/GetOutwardTruckBillingDispatchList")
+    Call<List<Common_Outward_model>> gettruckdespatchcomplete(@Query("FromDate")String FromDate,
+                                                              @Query("Todate") String Todate,
+                                                              @Query("vehicletype") String vehicletype,
+                                                              @Query("nextprocess") char nextprocess,
+                                                              @Query("inout") char inout);
+
+    //OR_Billing
+    @GET("api/OutwardTruckBillingDispatch/GetOutwardTruckBillingDispatchList")
+    Call<List<Common_Outward_model>> gettruckoutbillingcomplete(@Query("FromDate")String FromDate,
+                                                                @Query("Todate") String Todate,
+                                                                @Query("vehicletype") String vehicletype,
+                                                                @Query("nextprocess") char nextprocess,
+                                                                @Query("inout") char inout);
 }

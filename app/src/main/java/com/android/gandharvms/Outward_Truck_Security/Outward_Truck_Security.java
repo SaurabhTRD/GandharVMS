@@ -91,7 +91,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
         isReportingCheckBox = findViewById(R.id.trsisreporting);
         reportingRemarkLayout = findViewById(R.id.edtrsreportingremark);
         saveButton = findViewById(R.id.saveButton);
-        btcompleted = findViewById(R.id.outwardtrucksecuritycompleted);
+        btcompleted = findViewById(R.id.outwardtrucksecuritycomp);
 
         reportingRemarkLayout.setVisibility(View.GONE);
         saveButton.setVisibility(View.GONE);
@@ -159,7 +159,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
         btcompleted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Outward_Truck_Security.this, GridCompleted.class));
+                startActivity(new Intent(Outward_Truck_Security.this, OR_Completesec.class));
             }
         });
 
@@ -573,6 +573,10 @@ public class Outward_Truck_Security extends AppCompatActivity {
     }
     public void  outtrucksecuritypending(View view){
         Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
+    }
+    public void outwardtrucksecurityc(View view){
+        Intent intent = new Intent(this,OR_Completesec.class);
         startActivity(intent);
     }
 }
