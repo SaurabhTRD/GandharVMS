@@ -256,6 +256,8 @@ public class it_out_weigh_completedgrid extends AppCompatActivity {
                         totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
+                    }else{
+                        Toasty.error(it_out_weigh_completedgrid.this, "No Data Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }

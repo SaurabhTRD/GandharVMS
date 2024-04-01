@@ -41,7 +41,7 @@
         android:padding="8dp"/>
 
     <ImageButton
-        android:id="@+id/btn_itLabExportToExcel"
+        android:id="@+id/btn_itinsecExportToExcel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/iconsexportcsv"
@@ -49,10 +49,10 @@
         android:background="@null"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"/>
-    
+
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/itLabcoheaderscroll"
+        android:id="@+id/itinseccoheaderscroll"
         android:layout_marginTop="8dp"
         android:layout_height="40dp">
 
@@ -63,8 +63,30 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itLabtextcodate"
+                android:layout_width="100dp"
+                android:id="@+id/itinsectextcoInTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/itinsectextcoOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/itinsectextcodate"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -74,19 +96,8 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itLabtextcoVehicleNumber"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Vehicle No"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
                 android:layout_width="110dp"
-                android:id="@+id/itLabtextcoSerialNumber"
+                android:id="@+id/itinsectextcoSerialNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:text="Serial No"
@@ -96,8 +107,30 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="130dp"
+                android:id="@+id/itinsectextcoVehicleNumber"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Vehicle No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/itinsectextcoInvoiceNo"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Invoice-No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
                 android:layout_width="120dp"
-                android:id="@+id/itLabtextcoMaterial"
+                android:id="@+id/itinsectextcoMaterial"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
@@ -106,9 +139,10 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/itLabtextcopartyname"
+                android:id="@+id/itinsectextcopartyname"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -119,209 +153,88 @@
 
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/itLabtextcoInTime"
+                android:id="@+id/itinsectextcooapo"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="InTime"
+                android:text="OAPONumber"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itLabtextcoOutTime"
+                android:layout_width="140dp"
+                android:id="@+id/itinsectextcomob"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OutTime"
+                android:text="Mobile No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itLabtextcoApperance"
+                android:layout_width="140dp"
+                android:id="@+id/itinsectextcoreoprtingre"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Apperance"
+                android:text="ReportingRemark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itLabtextcoOdor"
+                android:layout_width="100dp"
+                android:id="@+id/itinsectextcoqty"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Odor"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itLabtextcoColor"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Color"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/itLabtextcoLQty"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="LQty"
+                android:text="QTY"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/itLabtextcoRcsTest"
+                android:id="@+id/itinsectextcoqtyuom"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="RcsTest"
+                android:text="QTYUOM"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itLabtextcoDensity"
+                android:layout_width="100dp"
+                android:id="@+id/itinsectextconetweight"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Density"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itLabtextco_40KV"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="_40°KV"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itLabtextco_100KV"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="_100°KV"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itLabtextcoAnLinePoint"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="AnLinePoint"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itLabtextcoFlashPoint"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="FlashPoint"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itLabtextcoAdditionalTest"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="AdditionalTest"
+                android:text="Netweight"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="150dp"
-                android:id="@+id/itLabtextcoSampleTest"
+                android:id="@+id/itinsectextconetweightuom"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="ResultReleaseDate"
+                android:text="NetweightUOM"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itLabtextcoViscosityIndex"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ViscosityIndex"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itLabtextcoSignOf"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SignOf"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/itLabtextcoremark"
+                android:layout_width="100dp"
+                android:id="@+id/itinsectextcoremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Remark"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/itLabtextcoDateAndTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="DateAndTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="150dp"
-                android:id="@+id/itLabtextcoRemarkDescription"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="RemarkDescription"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
@@ -332,7 +245,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitLabcogrid"
+        android:id="@+id/recyclerviewitinseccogrid"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 

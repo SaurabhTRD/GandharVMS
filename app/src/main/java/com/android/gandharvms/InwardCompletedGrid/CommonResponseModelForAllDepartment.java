@@ -75,6 +75,16 @@ public class CommonResponseModelForAllDepartment {
 
     public String ReQTYUom ;
 
+    public String WeiNetWeight;
+
+    public String getWeiNetWeight() {
+        return WeiNetWeight;
+    }
+
+    public void setWeiNetWeight(String weiNetWeight) {
+        WeiNetWeight = weiNetWeight;
+    }
+
     public String getReQTYUom() {
         return ReQTYUom;
     }

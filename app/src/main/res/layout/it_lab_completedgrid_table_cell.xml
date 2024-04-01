@@ -168,7 +168,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="150dp"
         android:id="@+id/itLabtextcoSampleTest"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -213,7 +213,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="150dp"
         android:id="@+id/itLabtextcoRemarkDescription"
         android:textStyle="bold"
         android:layout_marginStart="5dp"

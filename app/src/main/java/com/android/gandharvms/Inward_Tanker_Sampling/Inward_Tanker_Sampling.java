@@ -121,19 +121,9 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Inward_Tanker_Sampling.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-                        // Set the formatted time to the EditText
-                        etssignofproduction.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                etssignofproduction.setText(time);
             }
         });
 
@@ -141,20 +131,9 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Inward_Tanker_Sampling.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-                        // Set the formatted time to the EditText
-                        etinvoiceno.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
-
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                etinvoiceno.setText(time);
             }
         });
 
@@ -254,7 +233,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                         else {
                             // Registration failed
                             Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
-                            Toasty.error(Inward_Tanker_Sampling.this, "Insertion failed..!", Toast.LENGTH_SHORT).show();
+                            Toasty.error(Inward_Tanker_Sampling.this, "Data Insertion failed..!", Toast.LENGTH_SHORT).show();
                         }
                     }else {
                         // Registration failed
@@ -292,12 +271,16 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
                 if(response.isSuccessful())
                 {
                     InTanSamplingResponseModel data=response.body();
-                    if(data.getVehicleNo()!="")
+                    if(data.getVehicleNo()!="" && data.getVehicleNo()!=null)
                     {
                         inwardid = data.getInwardId();
                         serialnumber = data.getSerialNo();
                         etvehicleno.setText(data.getVehicleNo());
+                        etvehicleno.setEnabled(false);
+                    }else{
+                        Toasty.error(Inward_Tanker_Sampling.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
+
                 }else
                 {
                     Log.e("Retrofit", "Error Response Body: " + response.code());

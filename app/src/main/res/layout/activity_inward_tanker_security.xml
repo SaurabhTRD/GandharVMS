@@ -88,6 +88,8 @@
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"
+                android:focusable="false"
+                android:clickable="false"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -108,7 +110,6 @@
                 android:layout_height="wrap_content"
                 android:hint="Vehicle Number"
                 android:inputType="textCapCharacters"
-
                 android:textSize="17dp"
                 android:textStyle="bold"
                 />
@@ -307,7 +308,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="2dp"
             android:layout_marginRight="30dp"
-
             android:id="@+id/intime"
             android:layout_below="@id/material"
 
@@ -318,7 +318,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Qty"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -381,10 +381,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-
             android:id="@+id/QTY."
-
-
             >
             <EditText
 
@@ -392,7 +389,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Net Weight"
-                android:inputType="numberDecimal"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 />
@@ -427,7 +424,6 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="2dp"
-
             android:layout_below="@id/Date"
 
             >
@@ -454,20 +450,7 @@
                   android:orientation="horizontal"
                   android:layout_marginTop="10dp">
 
-                  <!--<androidx.appcompat.widget.AppCompatButton
-                      android:layout_width="110dp"
-                      android:layout_height="match_parent"
-                      android:layout_below="@id/OUM."
-                      android:layout_marginLeft="30dp"
-                      android:onClick="gridclick"
-                      android:text="Pending"
-                      android:textStyle="bold"
-                      android:textSize="15dp">
-
-                  </androidx.appcompat.widget.AppCompatButton>-->
-
                   <androidx.appcompat.widget.AppCompatButton
-                      android:id="@+id/dbview"
                       android:layout_width="130dp"
                       android:layout_height="match_parent"
                       android:layout_below="@id/OUM."
