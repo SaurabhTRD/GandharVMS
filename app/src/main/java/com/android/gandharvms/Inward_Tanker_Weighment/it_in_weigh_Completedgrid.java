@@ -111,6 +111,7 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
                 showDatePickerDialog(toDate,false);
             }
         });
+
         initViews();
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
         {
@@ -347,13 +348,14 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
                 dataRow.createCell(14).setCellValue(dataItem.getInDriverImage());
             }
             // Save the workbook
-            saveWorkBook(hssfWorkBook);
+            //saveWorkBook(hssfWorkBook);
+            saveWorkbookToFile(hssfWorkBook);
         }catch(Exception ex){
             throw new RuntimeException(ex);
         }
     }
 
-    private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
+   /* private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
         try {
             // Check if permission is granted
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -381,7 +383,7 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
                 Toasty.warning(this, "Permission denied. Cannot save file.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 
     private void saveWorkbookToFile(HSSFWorkbook hssfWorkBook) {
         try {

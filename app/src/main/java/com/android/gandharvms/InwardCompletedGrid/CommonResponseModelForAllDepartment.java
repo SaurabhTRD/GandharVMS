@@ -64,8 +64,8 @@ public class CommonResponseModelForAllDepartment {
     public String ProductName;
     public int AboveMaterialIsUnloadInTK;
     public String OperatorName;
-    public String ReceiveQTY;
-    public String ReceiveQTYUOM;
+    public int ReceiveQTY;
+    public int ReceiveQTYUOM;
     public String StoreExtramaterials;
 
     public String OutInTime;
@@ -613,19 +613,19 @@ public class CommonResponseModelForAllDepartment {
         OperatorName = operatorName;
     }
 
-    public String getReceiveQTY() {
+    public int getReceiveQTY() {
         return ReceiveQTY;
     }
 
-    public void setReceiveQTY(String receiveQTY) {
+    public void setReceiveQTY(int receiveQTY) {
         ReceiveQTY = receiveQTY;
     }
 
-    public String getReceiveQTYUOM() {
+    public int getReceiveQTYUOM() {
         return ReceiveQTYUOM;
     }
 
-    public void setReceiveQTYUOM(String receiveQTYUOM) {
+    public void setReceiveQTYUOM(int receiveQTYUOM) {
         ReceiveQTYUOM = receiveQTYUOM;
     }
 

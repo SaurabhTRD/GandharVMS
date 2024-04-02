@@ -270,13 +270,19 @@ public class it_Lab_Completedgrid extends AppCompatActivity {
                 dataRow.createCell(7).setCellValue(dataItem.getApperance());
                 dataRow.createCell(8).setCellValue(dataItem.getOdor());
                 dataRow.createCell(9).setCellValue(dataItem.getColor());
-                dataRow.createCell(10).setCellValue(dataItem.getLQty());
-                dataRow.createCell(11).setCellValue(dataItem.getDensity());
+                String lqty=String.format("%.2f", dataItem.getLQty() / 100.0);
+                dataRow.createCell(10).setCellValue(lqty);
+                String density=String.format("%.2f", dataItem.getDensity() / 100.0);
+                dataRow.createCell(11).setCellValue(density);
+                String anlinepoint=String.format("%.2f", dataItem.getAnLinePoint() / 100.0);
                 dataRow.createCell(12).setCellValue(dataItem.getRcsTest());
-                dataRow.createCell(13).setCellValue(dataItem.getAnLinePoint());
-                dataRow.createCell(14).setCellValue(dataItem.getFlashPoint());
-                dataRow.createCell(15).setCellValue(dataItem.get_40KV());
-                dataRow.createCell(16).setCellValue(dataItem.get_100KV());
+                dataRow.createCell(13).setCellValue(anlinepoint);
+                String flashpoint=String.format("%.2f", dataItem.getFlashPoint() / 100.0);
+                dataRow.createCell(14).setCellValue(flashpoint);
+                String kv40=String.format("%.2f", dataItem.get_40KV() / 100.0);
+                dataRow.createCell(15).setCellValue(kv40);
+                String kv100=String.format("%.2f", dataItem.get_100KV() / 100.0);
+                dataRow.createCell(16).setCellValue(kv100);
                 dataRow.createCell(17).setCellValue(dataItem.getAdditionalTest());
                 dataRow.createCell(18).setCellValue(dataItem.getSampleTest());
                 dataRow.createCell(19).setCellValue(dataItem.getSignOf());
@@ -287,13 +293,14 @@ public class it_Lab_Completedgrid extends AppCompatActivity {
 
             }
             // Save the workbook
-            saveWorkBook(hssfWorkBook);
+            //saveWorkBook(hssfWorkBook);
+            saveWorkbookToFile(hssfWorkBook);
         }catch(Exception ex){
             throw new RuntimeException(ex);
         }
     }
 
-    private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
+    /*private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
         try {
             // Check if permission is granted
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -321,7 +328,7 @@ public class it_Lab_Completedgrid extends AppCompatActivity {
                 Toasty.warning(this, "Permission denied. Cannot save file.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 
     private void saveWorkbookToFile(HSSFWorkbook hssfWorkBook) {
         try {

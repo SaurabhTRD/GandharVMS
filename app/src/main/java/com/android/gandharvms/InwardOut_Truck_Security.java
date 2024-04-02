@@ -80,6 +80,7 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 update();
             }
         });
@@ -99,18 +100,9 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(InwardOut_Truck_Security.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-                        edintime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                edintime.setText(time);
             }
         });
 
@@ -182,13 +174,14 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
         String supplier = etsupplier.getText().toString().trim();
         String invoice = etinvoice.getText().toString().trim();
 
-        if (lrCopySelection.isEmpty()|| deliverySelection.isEmpty()||taxInvoiceSelection.isEmpty()||ewayBillSelection.isEmpty()||
+        if (lrCopySelection.isEmpty()|| deliverySelection.isEmpty()||taxInvoiceSelection.isEmpty()||
+                ewayBillSelection.isEmpty()||outinintime.isEmpty()||
                 vehiclenumber.isEmpty()||material.isEmpty()||supplier.isEmpty()||invoice.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             UpdateOutSecurityRequestModel updateOutSecRequestModel = new UpdateOutSecurityRequestModel(outinintime,
                     InwardId,lrCopySelection,deliverySelection,taxInvoiceSelection,ewayBillSelection
-                    ,'S','O',vehicltype,EmployeId);
+                    ,'F','O',vehicltype,EmployeId);
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.intankersecurityoutupdate(updateOutSecRequestModel);
             call.enqueue(new Callback<Boolean>() {
@@ -199,6 +192,9 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
                         makeNotification(vehiclenumber);
                         startActivity(new Intent(InwardOut_Truck_Security.this, submenu_Inward_Tanker.class));
                         finish();
+                    }
+                    else{
+                        Toasty.error(InwardOut_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override

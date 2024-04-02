@@ -89,7 +89,8 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
         holder.invoiceno.setText(club.getInvoiceNo());
         formattedDate = formatDate(club.getDate());
         holder.invoicedate.setText(formattedDate);
-        holder.ReceiveQTY.setText(String.valueOf(club.getReceiveQTY()));
+        String recqty=String.format("%.2f", club.getReceiveQTY() / 100.0);
+        holder.ReceiveQTY.setText(recqty);
         holder.ReQTYUom.setText(club.getReQTYUom());
         holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
         holder.remark.setText(club.getRemark());

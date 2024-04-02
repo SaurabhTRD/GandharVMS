@@ -264,6 +264,34 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
         });*/
 
+        etmobilenum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = etmobilenum.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 16) {
+                    // Clear any previous error message when valid
+                    etmobilenum.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etmobilenum.setText(trimmedText);
+                        etmobilenum.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
+        });
+
         etnetweight.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -277,13 +305,17 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String currentText = etqty.getText().toString();
                 if (editable.length() > 0 && editable.length() <= 8) {
                     // Clear any previous error message when valid
                     etnetweight.setError(null);
                 } else {
                     String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-                    etnetweight.setText(trimmedText);
-                    etnetweight.setSelection(trimmedText.length()); // Move cursor to the end
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etnetweight.setText(trimmedText);
+                        etnetweight.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
                 }
             }
         });
@@ -301,13 +333,17 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String currentText = etqty.getText().toString();
                 if (editable.length() > 0 && editable.length() <= 8) {
                     // Clear any previous error message when valid
                     etqty.setError(null);
                 } else {
                     String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-                    etqty.setText(trimmedText);
-                    etqty.setSelection(trimmedText.length()); // Move cursor to the end
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etqty.setText(trimmedText);
+                        etqty.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
                 }
             }
         });

@@ -40,6 +40,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.Util.MultipartTask;
 import com.google.firebase.Timestamp;
 
 import com.android.gandharvms.FcmNotificationsSender;
@@ -105,6 +106,9 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE1 = 103;
     ImageView img1, img2;
     Uri image1, image2;
+    byte[] ImgDriver, ImgVehicle;
+    byte[][] arrayOfByteArrays = new byte[2][];
+
     private String imgPath1, imgPath2;
 
     FirebaseStorage storage;
@@ -194,20 +198,9 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Inward_Truck_weighment.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY,hourOfDay);
-                        c.set(Calendar.MINUTE,minute);
-
-                        // Set the formatted time to the EditText
-                        etint.setText(hourOfDay +":"+ minute );
-                    }
-                },hours,mins,false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                etint.setText(time);
             }
         });
 
@@ -215,8 +208,11 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         intsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                uploadimg(image1, image2);
-                intrinsert();
+                if (image1 == null || image2 == null) {
+                    Toasty.warning(Inward_Truck_weighment.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
+                } else {
+                    UploadImagesAndInsert();
+                }
             }
         });
     }
@@ -297,8 +293,10 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }
         else {
-            InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,Grossweight,tareweight,netweight, remark,signby,Integer.parseInt(container),"","",serialnumber,
-                    vehicalnumber,date,supplier,material,oanumber,Driver,'R',inOut,vehicleType,EmployeId,EmployeId,"","","");
+            InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,Grossweight,tareweight,
+                    netweight, remark,signby,Integer.parseInt(container),imgPath1,imgPath2,serialnumber,
+                    vehicalnumber,date,supplier,material,oanumber,Driver,'R',inOut,vehicleType,
+                    EmployeId,EmployeId,"","","");
 
             Call<Boolean> call=weighmentdetails.insertWeighData(weighReqModel);
             call.enqueue(new Callback<Boolean>() {
@@ -306,15 +304,14 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body()!=null && response.body()==true)
                     {
-                        makeNotification(vehicalnumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        makeNotification(vehicalnumber, outTime);
                         startActivity(new Intent(Inward_Truck_weighment.this, Inward_Truck.class));
                         finish();
                     }
-                    else
-                    {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    else{
+                        Toasty.error(Inward_Truck_weighment.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -338,39 +335,22 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             });
         }
     }
-    public void uploadimg(Uri Image1, Uri Image2) {
-        StorageReference storageReference = storage.getReference();
-        if (Image1 != null) {
-            String InVehicleImage = "image1_" + UUID.randomUUID().toString() + ".jpeg";
-            StorageReference imgref1 = storageReference.child("/WeighmentTruckImage1" + "/" + InVehicleImage);
-            imgPath1 = "/WeighmentTruckImage1%2F" + InVehicleImage;
-            imgref1.putFile(Image1)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        imgref1.getDownloadUrl().addOnSuccessListener(uri -> {
-                            final String imageUrl = uri.toString();
-                            img1.setImageURI(Uri.parse(imageUrl));
-                        });
-                    }).addOnFailureListener(e -> {
-                        Toast.makeText(Inward_Truck_weighment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
+    public void UploadImagesAndInsert() {
+        String FileInitial = "IRVeh_In_";
+        arrayOfByteArrays[0] = ImgVehicle;
+        arrayOfByteArrays[1] = ImgDriver;
+        imgPath1 = "GAimages/"+ FileInitial + etserialnumber.getText().toString() + ".jpeg";
+        for (byte[] byteArray : arrayOfByteArrays) {
 
+            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + etserialnumber.getText().toString() + ".jpeg", "");
+            multipartTask.execute();
+            FileInitial = "IRDrv_In_";
         }
-
-        if (Image2 != null) {
-            String InDriverImage = "image2_" + UUID.randomUUID().toString() + ".jpeg";
-            StorageReference imgref2 = storageReference.child("/WeighmentTruckImage2" + "/" + InDriverImage);
-            imgPath2 = "/WeighmentTruckImage2%2F" + InDriverImage;
-            imgref2.putFile(Image2)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        imgref2.getDownloadUrl().addOnSuccessListener(uri -> {
-                            final String imageUrl = uri.toString();
-                            img2.setImageURI(Uri.parse(imageUrl));
-                        });
-                    }).addOnFailureListener(e -> {
-                        Toast.makeText(Inward_Truck_weighment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-        }
+        imgPath2 = "GAimages/"+ FileInitial + etserialnumber.getText().toString() + ".jpeg";
+        FileInitial = "";
+        intrinsert();
     }
+
     //  image upload firebase
     public void captureImageFromCamera1(android.view.View view) {
         askCameraPermission(CAMERA_REQUEST_CODE);
@@ -407,22 +387,37 @@ public class Inward_Truck_weighment extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
-            img1.setImageBitmap(bimage1);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
-            image1 = Uri.parse(path);
-
-
-        } else if (requestCode == CAMERA_REQUEST_CODE1) {
-            Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
-            img2.setImageBitmap(bimage2);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
-            image2 = Uri.parse(path);
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE && data != null) {
+                Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
+                if (bimage1 != null) {
+                    img1.setImageBitmap(bimage1);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
+                    image1 = Uri.parse(path);
+                    ImgVehicle = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            } else if (requestCode == CAMERA_REQUEST_CODE1 && data != null) {
+                Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
+                if (bimage2 != null) {
+                    img2.setImageBitmap(bimage2);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
+                    image2 = Uri.parse(path);
+                    ImgDriver = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            // Handle case when camera activity is canceled
+            Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -440,7 +435,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                 if(response.isSuccessful())
                 {
                     InTanWeighResponseModel data=response.body();
-                    if(data.getVehicleNo()!="")
+                    if(data.getVehicleNo()!="" && data.getVehicleNo() != null)
                     {
                         inwardid=data.getInwardId();
                         etserialnumber.setText(data.getSerialNo());
@@ -457,8 +452,11 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                         etdriver.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);
-                        etint.requestFocus();
-                        etint.callOnClick();
+                       /* etint.requestFocus();
+                        etint.callOnClick();*/
+                    }
+                    else {
+                        Toasty.error(Inward_Truck_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }else
                 {

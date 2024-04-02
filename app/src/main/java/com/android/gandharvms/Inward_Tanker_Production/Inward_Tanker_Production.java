@@ -155,13 +155,17 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String currentText = edunloadabovematerial.getText().toString();
                 if (editable.length() > 0 && editable.length() <= 8) {
                     // Clear any previous error message when valid
                     edunloadabovematerial.setError(null);
                 } else {
                     String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-                    edunloadabovematerial.setText(trimmedText);
-                    edunloadabovematerial.setSelection(trimmedText.length()); // Move cursor to the end
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        edunloadabovematerial.setText(trimmedText);
+                        edunloadabovematerial.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
                 }
             }
         });
@@ -179,13 +183,17 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String currentText = abovematerialunload.getText().toString();
                 if (editable.length() > 0 && editable.length() <= 8) {
                     // Clear any previous error message when valid
                     abovematerialunload.setError(null);
                 } else {
                     String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-                    abovematerialunload.setText(trimmedText);
-                    abovematerialunload.setSelection(trimmedText.length()); // Move cursor to the end
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        abovematerialunload.setText(trimmedText);
+                        abovematerialunload.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
                 }
             }
         });
@@ -210,7 +218,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
                 }
             }
-
         });
 
         prodbroot = FirebaseFirestore.getInstance();

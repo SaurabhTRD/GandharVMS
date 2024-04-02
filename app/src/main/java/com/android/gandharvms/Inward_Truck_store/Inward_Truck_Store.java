@@ -112,6 +112,9 @@ public class Inward_Truck_Store extends AppCompatActivity {
     private int inwardid;
     private Store storedetails;
     private LoginMethod userDetails;
+
+    private int recqtyoum;
+    private int recqty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,9 +150,9 @@ public class Inward_Truck_Store extends AppCompatActivity {
                 // Retrieve the corresponding numerical value from the mapping
                 qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
                 if (qtyUomNumericValue != null) {
-                    Toasty.success(Inward_Truck_Store.this, "RecQty : " + qtyUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
+                    Toasty.success(Inward_Truck_Store.this, "RecQty : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toasty.warning(Inward_Truck_Store.this, "Unknown qtyUom : " + qtyUomDisplay, Toast.LENGTH_SHORT).show();
+                    Toasty.warning(Inward_Truck_Store.this, "Default ReceiveQTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -170,7 +173,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
                     Toasty.success(Inward_Truck_Store.this, "Invoice QTY: " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    Toasty.warning(Inward_Truck_Store.this, "Unknown qtyUom : " + netweuom, Toast.LENGTH_SHORT).show();
+                    Toasty.warning(Inward_Truck_Store.this, "Invoice QTY : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -225,19 +228,9 @@ public class Inward_Truck_Store extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-
-                intruckspicker = new TimePickerDialog(Inward_Truck_Store.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-                        etintime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                intruckspicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                etintime.setText(time);
             }
         });
 
@@ -267,6 +260,34 @@ public class Inward_Truck_Store extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus) {
                     FetchVehicleDetails(etvehicalnum.getText().toString().trim(),vehicleType,nextProcess,inOut);
+                }
+            }
+        });
+
+        etqty.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = etqty.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 8) {
+                    // Clear any previous error message when valid
+                    etqty.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etqty.setText(trimmedText);
+                        etqty.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
                 }
             }
         });
@@ -372,9 +393,44 @@ public class Inward_Truck_Store extends AppCompatActivity {
         String date = etpodate.getText().toString().trim();
         String supplier = etmaterialrdate.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
-        String qty = etqty.getText().toString().trim();
+        //recqty= etqty.getText().toString().trim();
+        if(!etqty.getText().toString().isEmpty())
+        {
+            try {
+                String input = etqty.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                recqty = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        //recqtyoum = Integer.parseInt( qtyUomNumericValue.toString().trim());
+        if(!qtyUomNumericValue.toString().isEmpty())
+        {
+            try {
+                recqtyoum=Integer.parseInt(qtyUomNumericValue.toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
         String invqtyuom = etinvqtyuom.getText().toString().trim();
-        int recqtyoum = Integer.parseInt( qtyUomNumericValue.toString().trim());
         String remark = etremark.getText().toString().trim();
         String invqty = etinvqty.getText().toString().trim();
         String invdate = etinvdate.getText().toString().trim();
@@ -382,7 +438,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
         String outTime = getCurrentTime();
 
         if (intime.isEmpty() || serialnumber.isEmpty() || vehicalnumber.isEmpty() || invoicenum.isEmpty()
-                || date.isEmpty() || supplier.isEmpty() || material.isEmpty() || qty.isEmpty()
+                || date.isEmpty() || supplier.isEmpty() || material.isEmpty() || recqty<0 ||recqtyoum <0
                 || remark.isEmpty() || invqty.isEmpty() || invdate.isEmpty() || invNum.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
@@ -413,22 +469,22 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
             InTruckStoreRequestModel storeRequestModel= new InTruckStoreRequestModel(inwardid,intime,outTime,
                     EmployeId,EmployeId,vehicalnumber,serialnumber
-                    ,'W','O',vehicleType,Integer.parseInt(qty),recqtyoum
+                    ,'W','O',vehicleType,recqty,recqtyoum
                     ,remark,materialList.toString());
             Call<Boolean> call=storedetails.insertStoreData(storeRequestModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body()!=null && response.body()==true)
-                    {   makeNotification(vehicalnumber, outTime);
+                    {
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Truck_Store.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        makeNotification(vehicalnumber, outTime);
                         startActivity(new Intent(Inward_Truck_Store.this, Inward_Truck.class));
                         finish();
                     }
-                    else
-                    {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    else{
+                        Toasty.error(Inward_Truck_Store.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -450,54 +506,11 @@ public class Inward_Truck_Store extends AppCompatActivity {
                     Toasty.error(Inward_Truck_Store.this,"failed..!",Toast.LENGTH_SHORT).show();
                 }
             });
-            /*Map<String, Object> trsitens = new HashMap<>();
-            trsitens.put("In_Time", etintime.getText().toString().trim());
-            trsitens.put("Serial_Number", etserialnumber.getText().toString().trim());
-            trsitens.put("Vehicle_Number", etvehicalnum.getText().toString().trim());
-            trsitens.put("PO_No", etpo.getText().toString().trim());
-            trsitens.put("Po_Date", timestamp);
-            trsitens.put("Material_Rec_Date", etmaterialrdate.getText().toString().trim());
-            trsitens.put("extramaterials", materialList.toString().replace("[]",""));
-            trsitens.put("Material", etmaterial.getText().toString().trim());
-            trsitens.put("Qty", etqty.getText().toString().trim());
-            trsitens.put("ReceiveQTY_Uom", etoum.getText().toString().trim());
-            trsitens.put("Remarks", etremark.getText().toString().trim());
-            trsitens.put("Invoice_Quantity", etinvqty.getText().toString().trim());
-            trsitens.put("Inv_QuantityUom", etinqtyuom.getText().toString().trim());
-            trsitens.put("Invoice_Date", etinvdate.getText().toString().trim());
-            trsitens.put("Invoice_Number", etinvnum.getText().toString().trim());
-            trsitens.put("outTime", outTime);
-
-
-            makeNotification(etvehicalnum.getText().toString(), outTime);
-            trsdbroot.collection("Inward Truck Store").add(trsitens)
-                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DocumentReference> task) {
-                            etintime.setText("");
-                            etserialnumber.setText("");
-                            etvehicalnum.setText("");
-                            etpo.setText("");
-                            etpodate.setText("");
-                            etmaterialrdate.setText("");
-                            etmaterial.setText("");
-                            etqty.setText("");
-                            etoum.setText("");
-                            etinvqty.setText("");
-                            etinqtyuom.setText("");
-                            etinvdate.setText("");
-                            etinvnum.setText("");
-                            Toasty.success(Inward_Truck_Store.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        }
-                    });
-            Intent intent = new Intent(this, Inward_Truck.class);
-            startActivity(intent);*/
         }
     }
 
 
     public void onClick(View view) {
-
         addview();
     }
 
@@ -523,7 +536,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
     }
 
     private void removeView(View view) {
-
         linearLayout.removeView(view);
     }
 
@@ -540,7 +552,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
                 if(response.isSuccessful())
                 {
                     InTruckStoreResponseModel data=response.body();
-                    if(data.getVehicleNo()!="")
+                    if(data.getVehicleNo()!="" && data.getVehicleNo() != null)
                     {
                         inwardid=data.getInwardId();
                         etvehicalnum.setText(data.getVehicleNo());
@@ -564,8 +576,11 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etinvqtyuom.setText(data.UnitOfMeasurement);
                         /*etqty.setText(String.valueOf(data.getQty()));
                         etqty.setEnabled(false);*/
-                        etintime.requestFocus();
-                        etintime.callOnClick();
+                        /*etintime.requestFocus();
+                        etintime.callOnClick();*/
+                    }
+                    else {
+                        Toasty.error(Inward_Truck_Store.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }else
                 {
@@ -591,51 +606,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
         });
     }
-    /*public void FetchVehicleDetails(@NonNull String VehicleNo) {
-        CollectionReference collectionReference = FirebaseFirestore.getInstance().collection("Inward Truck Weighment");
-        String searchText = VehicleNo.trim();
-        Query query = collectionReference.whereEqualTo("Vehicle_Number", searchText)
-                .whereNotEqualTo("In_Time","" );
-        query.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (task.isSuccessful()) {
-                    int totalCount = task.getResult().size();
-                    if(totalCount == 0) {
-                        etvehicalnum.setText("");
-                        etserialnumber.setText("");
-                        etmaterial.setText("");
-                        etpo.setText("");
-                        etpodate.setText("");
-                        etvehicalnum.requestFocus();
-                        Toasty.warning(Inward_Truck_Store.this, "Vehicle Number not Available for Weighment", Toast.LENGTH_SHORT,true).show();
-                    }
-                    else {
-                        for (QueryDocumentSnapshot document : task.getResult()) {
-                            In_Truck_weigment_list obj = document.toObject(In_Truck_weigment_list.class);
-                            // Check if the object already exists to avoid duplicates
-                            if (totalCount > 0) {
-                                etserialnumber.setText(obj.getSerial_Number());
-                                etserialnumber.setEnabled(true);
-                                etvehicalnum.setText(obj.getVehicle_Number());
-                                etvehicalnum.setEnabled(true);
-                                etpo.setText(obj.getOA_Number());
-                                etpo.setEnabled(true);
-                                etmaterial.setText(obj.getMaterial());
-                                etmaterial.setEnabled(true);
-                                etpodate.setText(dateFormat.format(obj.getDate().toDate()));
-                                etpodate.setEnabled(true);
-                                etintime.requestFocus();
-                                etintime.callOnClick();
-                            }
-                        }
-                    }
-                } else {
-                    Log.w("FirestoreData", "Error getting documents.", task.getException());
-                }
-            }
-        });
-    }*/
     public void StoreViewclick(View view){
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);

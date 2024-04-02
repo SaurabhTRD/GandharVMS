@@ -172,10 +172,6 @@ public class Inward_Truck_Security extends AppCompatActivity {
             }
         });
 
-        String dateFormatPattern = "ddMMyyyy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
-        String formattedDate = dateFormat.format(currentDate);
-
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
@@ -211,7 +207,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                 // Retrieve the corresponding numerical value from the mapping
                 qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
                 if (qtyUomNumericValue != null) {
-                    Toasty.success(Inward_Truck_Security.this, "qtyUomNumericValue : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
+                    Toasty.success(Inward_Truck_Security.this, "QtyUomNumericValue : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
                 } else {
                     // Handle the case where the mapping doesn't contain the display value
                     Toasty.warning(Inward_Truck_Security.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
@@ -324,13 +320,45 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String currentText = etsnetwt.getText().toString();
                 if (editable.length() > 0 && editable.length() <= 8) {
                     // Clear any previous error message when valid
                     etsnetwt.setError(null);
                 } else {
                     String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-                    etsnetwt.setText(trimmedText);
-                    etsnetwt.setSelection(trimmedText.length()); // Move cursor to the end
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etsnetwt.setText(trimmedText);
+                        etsnetwt.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
+        });
+
+        etmobile.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = etmobile.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 16) {
+                    // Clear any previous error message when valid
+                    etmobile.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etmobile.setText(trimmedText);
+                        etmobile.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
                 }
             }
         });
@@ -348,16 +376,24 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                String currentText = etsqty.getText().toString();
                 if (editable.length() > 0 && editable.length() <= 8) {
                     // Clear any previous error message when valid
                     etsqty.setError(null);
                 } else {
                     String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-                    etsqty.setText(trimmedText);
-                    etsqty.setSelection(trimmedText.length()); // Move cursor to the end
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etsqty.setText(trimmedText);
+                        etsqty.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
                 }
             }
         });
+
+        String dateFormatPattern = "ddMMyyyy";
+        SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
+        String formattedDate = dateFormat.format(currentDate);
 
         if (getIntent().hasExtra("VehicleNumber")) {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
@@ -423,12 +459,6 @@ public class Inward_Truck_Security extends AppCompatActivity {
             editor.putInt("lastDay", currentDay);
             editor.apply();
         }
-
-        /*if (sharedPreferences != null) {
-
-        } else {
-            Log.e("MainActivity", "SharedPreferences is null");
-        }*/
     }
 
     public void onClick(View v) {
