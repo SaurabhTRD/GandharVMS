@@ -81,7 +81,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
             ,restivity,infrared;
     TextInputLayout retil;
     CardView btnc;
-    Button submit, sendbtn;
+    Button submit, sendbtn,completd;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -152,6 +152,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
 
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
+        completd = findViewById(R.id.proclabcompletd);
 
         etisblendingyes = findViewById(R.id.outwaoutrb_blendingYes);
         etisblendingno = findViewById(R.id.outwaourb_blendingNo);
@@ -184,6 +185,12 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                 } else {
                     updatesecond();
                 }
+            }
+        });
+        completd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Tanker_Laboratory.this, OT_Completed_inproc_laboratory.class));
             }
         });
 

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Outward_Truck_Dispatch.Disp_OR_Complete">
+    tools:context=".Outward_Tanker_Security.OT_Complete_sec">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -43,7 +43,7 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/itin_Desp_coheaderscroll_truckwe"
+        android:id="@+id/itincoheaderscroll_tankersec"
         android:layout_marginTop="8dp"
         android:layout_height="40dp">
 
@@ -55,30 +55,18 @@
 
             <TextView
                 android:layout_width="110dp"
-                android:id="@+id/ordesintime"
+                android:id="@+id/otsecuritydate"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:text="In Time"
+                android:text="Date"
                 android:textAllCaps="true"
                 android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/ordesouttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="Out Time"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
 
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/ordesinserial"
+                android:id="@+id/otsinserialnum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -89,7 +77,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/ordesinvehicle"
+                android:id="@+id/otsvehiclenum"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
@@ -100,7 +88,40 @@
 
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/ordestransporter"
+                android:id="@+id/otsintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/otsouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/otsecuritykl"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="KL"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/otsintransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -108,51 +129,29 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
-
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/ordesinoa"
+                android:layout_width="120dp"
+                android:id="@+id/otsinplace"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OA Number"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/ordesinqty"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Qty"
+                android:text="Place"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/ordesother"
+                android:id="@+id/otsinmob"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Other Option"
+                android:text="Mobile No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/ordesinofficer"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Sign By"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/ordesinremark"
+                android:layout_width="110dp"
+                android:id="@+id/otsinremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -167,8 +166,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitin_Desp_hcogrid_truckin"
+        android:id="@+id/recyclerviewitinweighcogrid_tankerin"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
-
 </LinearLayout>

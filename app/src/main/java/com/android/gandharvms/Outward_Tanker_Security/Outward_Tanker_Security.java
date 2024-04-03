@@ -55,7 +55,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
     Calendar calendar = Calendar.getInstance();
     private CheckBox isReportingCheckBox;
     private EditText reportingRemarkLayout;
-    Button saveButton,dbbutton;;
+    Button saveButton,completed;;
     RadioButton rbvehpermityes, rbvehpermitno, rbpucyes, rbpucno, rbinsuranceyes, rbinsuranceno, vehfitnessyes, vehfitnessno, licye, licno, rcyes, rcno;
     private String vehicleType = Global_Var.getInstance().MenuType;
     private char nextProcess = Global_Var.getInstance().DeptType;
@@ -92,7 +92,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         reportingRemarkLayout.setVisibility(View.GONE);
         saveButton.setVisibility(View.GONE);
 
-        dbbutton = findViewById(R.id.samplingview);
+        completed = findViewById(R.id.otsecuritycompleted);
 
         isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
             if (isChecked) {
@@ -107,10 +107,10 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         });
 
         //        listdata button
-        dbbutton.setOnClickListener(new View.OnClickListener() {
+        completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(Outward_Tanker_Security.this, GridCompleted.class));
+                startActivity(new Intent(Outward_Tanker_Security.this, OT_Complete_sec.class));
             }
         });
 

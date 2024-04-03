@@ -67,13 +67,13 @@ public class Adapter_Disp_completed extends RecyclerView.Adapter<Adapter_Disp_co
     public void onBindViewHolder(@NonNull Adapter_Disp_completed.myviewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Common_Outward_model obj = filteredGridList.get(position);
-        int intimelength = obj.getIntime() != null ? obj.getIntime().length() :0;
-        int outtimelength = obj.getOutTime()!= null ? obj.getOutTime().length() :0;
+        int intimelength = obj.getDespatchInTime() != null ? obj.getDespatchInTime().length() :0;
+        int outtimelength = obj.getDespatchOutTime()!= null ? obj.getDespatchOutTime().length() :0;
         if (intimelength > 0 ){
-            holder.intime.setText(obj.getIntime().substring(12,intimelength));
+            holder.intime.setText(obj.getDespatchOutTime().substring(12,intimelength));
         }
         if (outtimelength > 0){
-            holder.outtime.setText(obj.getOutTime().substring(12,outtimelength));
+            holder.outtime.setText(obj.getDespatchOutTime().substring(12,outtimelength));
         }
         holder.serialnum.setText(obj.getSerialNumber());
         holder.vehiclenum.setText(obj.getVehicleNumber());

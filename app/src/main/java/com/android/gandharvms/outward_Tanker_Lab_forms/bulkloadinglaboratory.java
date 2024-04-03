@@ -57,7 +57,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
     private Outward_Tanker_Lab outwardTankerLab;
     TimePickerDialog tpicker;
 
-    Button grid,view,submit;
+    Button grid,view,submit,competed;
     private String token;
     private LoginMethod userDetails;
     private String bulklabvehiclenumber;
@@ -79,6 +79,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         etbulklabdensity=findViewById(R.id.etbulklabdensity25);
 
         submit= findViewById(R.id.etlabsub);
+        competed = findViewById(R.id.bulkloadlabcompleted);
 
         remarkarray = new ArrayAdapter<String>(this, R.layout.inout, remark);
         /*OKNOTOK.setAdapter(remarkarray);
@@ -100,6 +101,12 @@ public class bulkloadinglaboratory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 insert();
+            }
+        });
+        competed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(bulkloadinglaboratory.this,OT_Completd_bilkload_laboratory.class));
             }
         });
 

@@ -63,21 +63,21 @@ public class Adapter_Security_Out extends RecyclerView.Adapter<Adapter_Security_
     public void onBindViewHolder(@NonNull Adapter_Security_Out.myviewHolder holder, int position) {
 
         Common_Outward_model club = filteredGridList.get(position);
-        int intimelength = club.getIntime()!= null ? club.getIntime().length() :0;
+        int intimelength = club.getOutInTime()!= null ? club.getOutInTime().length() :0;
         int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
         if (intimelength > 0) {
-            holder.intime.setText(club.getIntime().substring(12, intimelength));
+            holder.intime.setText(club.getOutInTime().substring(12, intimelength));
         }
         if (outtimelength > 0) {
             holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
-        holder.serialnum.setText(club.getIntime());
+        holder.serialnum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
-        holder.partyname.setText(club.getNameofParty());
+        holder.partyname.setText(club.getCustomerName());
         holder.sign.setText(club.getSignature());
-        holder.invoice.setText(club.getInvoice());
+        holder.invoice.setText(club.getInvoiceNumber());
         holder.discription.setText(club.getDescriptionofGoods());
-        holder.remark.setText(club.getRemark());
+        holder.remark.setText(club.getOutSRemark());
 
     }
 
@@ -131,6 +131,7 @@ public class Adapter_Security_Out extends RecyclerView.Adapter<Adapter_Security_
             sign = itemView.findViewById(R.id.oroutsecsign);
             invoice = itemView.findViewById(R.id.oroutsecinvoice);
             discription = itemView.findViewById(R.id.oroutsecdiscription);
+            remark = itemView.findViewById(R.id.oroutsecremark);
         }
     }
 }

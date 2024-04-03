@@ -53,7 +53,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
     remark,etcust,etprod,ethowmuch;
 
     FirebaseFirestore dbroot;
-    Button submit;
+    Button submit,completed;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
 
@@ -90,10 +90,18 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         ethowmuch = findViewById(R.id.ethowmuch);
         location = findViewById(R.id.etloca);
 
+        completed = findViewById(R.id.otbillincompleted);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 insert();
+            }
+        });
+        completed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Tanker_Billing.this,OT_Completed_Billing.class));
             }
         });
 

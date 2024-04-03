@@ -337,6 +337,7 @@
                         android:layout_width="130dp"
                         android:layout_height="55dp"
                         android:layout_marginLeft="15dp"
+                        android:id="@+id/bulkloadlabcompleted"
                         android:layout_marginTop="5dp"
                         android:onClick="bulklabcompletedclick"
                         android:text="COMPLETED"

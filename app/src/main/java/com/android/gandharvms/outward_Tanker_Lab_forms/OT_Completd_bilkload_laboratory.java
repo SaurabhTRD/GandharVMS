@@ -1,4 +1,4 @@
-package com.android.gandharvms.Outward_Truck_Security;
+package com.android.gandharvms.outward_Tanker_Lab_forms;
 
 import android.app.DatePickerDialog;
 import android.icu.text.SimpleDateFormat;
@@ -20,8 +20,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Adapter_OT_completed_bulkload_production;
+import com.android.gandharvms.Outward_Tanker_Production_forms.OT_Completed_bulkload_production;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
+import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
@@ -39,12 +42,12 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class SecOut_OR_Complete extends AppCompatActivity {
+public class OT_Completd_bilkload_laboratory extends AppCompatActivity {
     int scrollX = 0;
     List<Common_Outward_model> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
-    Adapter_Security_Out adapterSecurityOut;
+    Adapter_OT_completed_bulkload_laboratory adapterOtCompletedBulkloadLaboratory;
     private Outward_Tanker outwardTanker;
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
@@ -56,13 +59,12 @@ public class SecOut_OR_Complete extends AppCompatActivity {
     String fromdate;
     String todate;
     String strvehiclenumber;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_sec_out_or_complete);
+        setContentView(R.layout.activity_ot_completd_bilkload_laboratory);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -153,7 +155,7 @@ public class SecOut_OR_Complete extends AppCompatActivity {
                             }
                         } else {
                             // Show an error message or take appropriate action
-                            Toasty.warning(SecOut_OR_Complete.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(OT_Completd_bilkload_laboratory.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -174,7 +176,6 @@ public class SecOut_OR_Complete extends AppCompatActivity {
         // Show the date picker dialog
         datePickerDialog.show();
     }
-
     private String getCurrentDateTime()     {
         // Get current date and time
         Calendar calendar = Calendar.getInstance();
@@ -186,23 +187,22 @@ public class SecOut_OR_Complete extends AppCompatActivity {
     }
     private void initViews()
     {
-        rvClub = findViewById(R.id.recyclerviewitinsecurity_truckout);
-        headerscroll = findViewById(R.id.itinsecuritycoheaderscroll_truckout);
+        rvClub = findViewById(R.id.recyclerviewitin_bulkloadlab_cogrid_tankerkin);
+        headerscroll = findViewById(R.id.itin_bulkloadlab_coheaderscroll_tankerin);
     }
 
     private void setUpRecyclerView()
     {
-        adapterSecurityOut  = new Adapter_Security_Out(clubList);
+        adapterOtCompletedBulkloadLaboratory  = new Adapter_OT_completed_bulkload_laboratory(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
-        rvClub.setAdapter(adapterSecurityOut);
+        rvClub.setAdapter(adapterOtCompletedBulkloadLaboratory);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
 
-
-        Call<List<Common_Outward_model>> call = outwardTanker.getintrucksecuritycompleted(FromDate,Todate,vehicleType,nextprocess,inOut);
+        Call<List<Common_Outward_model>> call = outwardTanker.get_tanker_bulkload_production_completed(FromDate,Todate,vehicleType,nextprocess,inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {
             @Override
             public void onResponse(Call<List<Common_Outward_model>> call, Response<List<Common_Outward_model>> response) {
@@ -213,7 +213,6 @@ public class SecOut_OR_Complete extends AppCompatActivity {
                         totrec.setText("Tot-Rec: "+ totalcount);
                         clubList = data;
                         setUpRecyclerView();
-
                     }
                 }
             }
@@ -234,9 +233,8 @@ public class SecOut_OR_Complete extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(SecOut_OR_Complete.this,"failed..!", Toast.LENGTH_SHORT).show();
+                Toasty.error(OT_Completd_bilkload_laboratory.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
-     }
-
     }
+}

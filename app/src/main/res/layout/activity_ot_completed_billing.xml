@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Outward_Truck_Dispatch.Disp_OR_Complete">
+    tools:context=".Outward_Tanker_Billing.OT_Completed_Billing">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -43,7 +43,7 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/itin_Desp_coheaderscroll_truckwe"
+        android:id="@+id/itin_billing_coheaderscroll_tankerin"
         android:layout_marginTop="8dp"
         android:layout_height="40dp">
 
@@ -54,31 +54,8 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="110dp"
-                android:id="@+id/ordesintime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="In Time"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/ordesouttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="Out Time"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-
-            <TextView
                 android:layout_width="130dp"
-                android:id="@+id/ordesinserial"
+                android:id="@+id/otbillinserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -89,7 +66,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/ordesinvehicle"
+                android:id="@+id/otbillinvehicle"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
@@ -99,8 +76,19 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="110dp"
+                android:id="@+id/otbillindate"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="Date"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
                 android:layout_width="130dp"
-                android:id="@+id/ordestransporter"
+                android:id="@+id/otbillintransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -111,7 +99,30 @@
 
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/ordesinoa"
+                android:id="@+id/otbillinintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/otbilliniuttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbillinoanum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -121,8 +132,28 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/ordesinqty"
+                android:layout_width="120dp"
+                android:id="@+id/otbillincustname"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Customername"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbillinproduct"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Product"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/otbillinhowmuchqty"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -131,28 +162,18 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/ordesother"
+                android:layout_width="110dp"
+                android:id="@+id/otbillinlocation"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Other Option"
+                android:text="Location"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/ordesinofficer"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Sign By"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/ordesinremark"
+                android:layout_width="110dp"
+                android:id="@+id/otbillinremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -167,7 +188,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitin_Desp_hcogrid_truckin"
+        android:id="@+id/recyclerviewitin_billing_cogrid_tankerkin"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 

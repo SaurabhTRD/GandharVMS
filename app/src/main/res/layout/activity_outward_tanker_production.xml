@@ -645,6 +645,7 @@
                         android:text="COMPLETED"
                         android:textSize="17dp"
                         android:textStyle="bold"
+                        android:id="@+id/inproceproduction"
                         android:onClick="inprocesprocompletedclick">
 
                     </androidx.appcompat.widget.AppCompatButton>

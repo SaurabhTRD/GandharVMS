@@ -589,7 +589,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="160dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/samplingview"
+                    android:id="@+id/otsecuritycompleted"
                     android:layout_marginLeft="50dp"
                     android:text="Completed"
                     android:textSize="17dp"

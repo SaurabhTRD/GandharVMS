@@ -67,10 +67,10 @@ public class Adapter_Logi_complete extends RecyclerView.Adapter<Adapter_Logi_com
     @Override
     public void onBindViewHolder(@NonNull Adapter_Logi_complete.myviewHolder holder, int position) {
         Common_Outward_model club = filteredGridList.get(position);
-        int intimelength = club.getIntime()!= null ? club.getIntime().length() :0;
+        int intimelength = club.getInTime()!= null ? club.getInTime().length() :0;
         int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
         if (intimelength > 0){
-            holder.intime.setText(club.getIntime().substring(12, intimelength));
+            holder.intime.setText(club.getInTime().substring(12, intimelength));
         }
         if (outtimelength > 0){
             holder.outtime.setText(club.getOutTime().substring(12,outtimelength));
@@ -78,10 +78,10 @@ public class Adapter_Logi_complete extends RecyclerView.Adapter<Adapter_Logi_com
         holder.serialnum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
         holder.transporter.setText(club.getTransportName());
-        holder.place.setText(club.getPlace());
+        holder.place.setText(club.getLocation());
         holder.oanumber.setText(club.getOAnumber());
         holder.custname.setText(club.getCustomerName());
-//        holder.loadedqty.setText(club.getHowMuchQuantityFilled());
+        holder.loadedqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
         holder.remark.setText(club.getRemark());
 
     }

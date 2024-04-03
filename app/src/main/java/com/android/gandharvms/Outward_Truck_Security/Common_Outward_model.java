@@ -133,7 +133,375 @@ public class Common_Outward_model {
     public String WeighmentCreatedBy ;
     public String WeighmentCreatedDate ;
 
+    public String WeighmentGrossWeight ;
+    public String InTime;
 
+    public String intime;
+
+    public int oplOutwardId;
+    public int CustomerReferenceNumber;
+    public String PackingStatus;
+    public String RinsingStatus;
+    public String DecisionRuleforCustomer;
+    public String BlendingMaterialStatus;
+    public String SignatureofOfficer;
+    public String SampleCondition;
+    public String sample_receiving;
+    public String Sample_Release_Date;
+    public String Apperance;
+    public String Odour;
+    public String Color;
+    public int _40KV;
+    public int _100KV;
+    public int Viscosity_Index;
+    public String TBN_TAN;
+    public int Anline_Point;
+    public int Breakdownvoltage_BDV;
+    public String DDF_90C;
+    public String WaterContent;
+    public String InterfacialTension;
+    public String Flash_Point;
+    public String PourPoint;
+    public String Rcs_Test;
+    public String CorrectionRequired;
+    public char BarrelProductionProcess;
+    public char BarrelLaboratoryProcess;
+    public String Blending_Ratio;
+    public char FlushingStatus;
+    public char BlendingStatus;
+    public int StatusCount;
+    public String IPFLabInTime;
+    public String DataEntryInTime;
+    public String DataEntryOutTim;
+    public String DataEntryRemark;
+    public String Restivity;
+    public String Infra_Red;
+
+    public String getRestivity() {
+        return Restivity;
+    }
+
+    public void setRestivity(String restivity) {
+        Restivity = restivity;
+    }
+
+    public String getInfra_Red() {
+        return Infra_Red;
+    }
+
+    public void setInfra_Red(String infra_Red) {
+        Infra_Red = infra_Red;
+    }
+
+    public int getOplOutwardId() {
+        return oplOutwardId;
+    }
+
+    public void setOplOutwardId(int oplOutwardId) {
+        this.oplOutwardId = oplOutwardId;
+    }
+
+    public int getCustomerReferenceNumber() {
+        return CustomerReferenceNumber;
+    }
+
+    public void setCustomerReferenceNumber(int customerReferenceNumber) {
+        CustomerReferenceNumber = customerReferenceNumber;
+    }
+
+    public String getPackingStatus() {
+        return PackingStatus;
+    }
+
+    public void setPackingStatus(String packingStatus) {
+        PackingStatus = packingStatus;
+    }
+
+    public String getRinsingStatus() {
+        return RinsingStatus;
+    }
+
+    public void setRinsingStatus(String rinsingStatus) {
+        RinsingStatus = rinsingStatus;
+    }
+
+    public String getDecisionRuleforCustomer() {
+        return DecisionRuleforCustomer;
+    }
+
+    public void setDecisionRuleforCustomer(String decisionRuleforCustomer) {
+        DecisionRuleforCustomer = decisionRuleforCustomer;
+    }
+
+    public String getBlendingMaterialStatus() {
+        return BlendingMaterialStatus;
+    }
+
+    public void setBlendingMaterialStatus(String blendingMaterialStatus) {
+        BlendingMaterialStatus = blendingMaterialStatus;
+    }
+
+    public String getSignatureofOfficer() {
+        return SignatureofOfficer;
+    }
+
+    public void setSignatureofOfficer(String signatureofOfficer) {
+        SignatureofOfficer = signatureofOfficer;
+    }
+
+    public String getSampleCondition() {
+        return SampleCondition;
+    }
+
+    public void setSampleCondition(String sampleCondition) {
+        SampleCondition = sampleCondition;
+    }
+
+    public String getSample_receiving() {
+        return sample_receiving;
+    }
+
+    public void setSample_receiving(String sample_receiving) {
+        this.sample_receiving = sample_receiving;
+    }
+
+    public String getSample_Release_Date() {
+        return Sample_Release_Date;
+    }
+
+    public void setSample_Release_Date(String sample_Release_Date) {
+        Sample_Release_Date = sample_Release_Date;
+    }
+
+    public String getApperance() {
+        return Apperance;
+    }
+
+    public void setApperance(String apperance) {
+        Apperance = apperance;
+    }
+
+    public String getOdour() {
+        return Odour;
+    }
+
+    public void setOdour(String odour) {
+        Odour = odour;
+    }
+
+    public String getColor() {
+        return Color;
+    }
+
+    public void setColor(String color) {
+        Color = color;
+    }
+
+    public int get_40KV() {
+        return _40KV;
+    }
+
+    public void set_40KV(int _40KV) {
+        this._40KV = _40KV;
+    }
+
+    public int get_100KV() {
+        return _100KV;
+    }
+
+    public void set_100KV(int _100KV) {
+        this._100KV = _100KV;
+    }
+
+    public int getViscosity_Index() {
+        return Viscosity_Index;
+    }
+
+    public void setViscosity_Index(int viscosity_Index) {
+        Viscosity_Index = viscosity_Index;
+    }
+
+    public String getTBN_TAN() {
+        return TBN_TAN;
+    }
+
+    public void setTBN_TAN(String TBN_TAN) {
+        this.TBN_TAN = TBN_TAN;
+    }
+
+    public int getAnline_Point() {
+        return Anline_Point;
+    }
+
+    public void setAnline_Point(int anline_Point) {
+        Anline_Point = anline_Point;
+    }
+
+    public int getBreakdownvoltage_BDV() {
+        return Breakdownvoltage_BDV;
+    }
+
+    public void setBreakdownvoltage_BDV(int breakdownvoltage_BDV) {
+        Breakdownvoltage_BDV = breakdownvoltage_BDV;
+    }
+
+    public String getDDF_90C() {
+        return DDF_90C;
+    }
+
+    public void setDDF_90C(String DDF_90C) {
+        this.DDF_90C = DDF_90C;
+    }
+
+    public String getWaterContent() {
+        return WaterContent;
+    }
+
+    public void setWaterContent(String waterContent) {
+        WaterContent = waterContent;
+    }
+
+    public String getInterfacialTension() {
+        return InterfacialTension;
+    }
+
+    public void setInterfacialTension(String interfacialTension) {
+        InterfacialTension = interfacialTension;
+    }
+
+    public String getFlash_Point() {
+        return Flash_Point;
+    }
+
+    public void setFlash_Point(String flash_Point) {
+        Flash_Point = flash_Point;
+    }
+
+    public String getPourPoint() {
+        return PourPoint;
+    }
+
+    public void setPourPoint(String pourPoint) {
+        PourPoint = pourPoint;
+    }
+
+    public String getRcs_Test() {
+        return Rcs_Test;
+    }
+
+    public void setRcs_Test(String rcs_Test) {
+        Rcs_Test = rcs_Test;
+    }
+
+    public String getCorrectionRequired() {
+        return CorrectionRequired;
+    }
+
+    public void setCorrectionRequired(String correctionRequired) {
+        CorrectionRequired = correctionRequired;
+    }
+
+    public char getBarrelProductionProcess() {
+        return BarrelProductionProcess;
+    }
+
+    public void setBarrelProductionProcess(char barrelProductionProcess) {
+        BarrelProductionProcess = barrelProductionProcess;
+    }
+
+    public char getBarrelLaboratoryProcess() {
+        return BarrelLaboratoryProcess;
+    }
+
+    public void setBarrelLaboratoryProcess(char barrelLaboratoryProcess) {
+        BarrelLaboratoryProcess = barrelLaboratoryProcess;
+    }
+
+    public String getBlending_Ratio() {
+        return Blending_Ratio;
+    }
+
+    public void setBlending_Ratio(String blending_Ratio) {
+        Blending_Ratio = blending_Ratio;
+    }
+
+    public char getFlushingStatus() {
+        return FlushingStatus;
+    }
+
+    public void setFlushingStatus(char flushingStatus) {
+        FlushingStatus = flushingStatus;
+    }
+
+    public char getBlendingStatus() {
+        return BlendingStatus;
+    }
+
+    public void setBlendingStatus(char blendingStatus) {
+        BlendingStatus = blendingStatus;
+    }
+
+    public int getStatusCount() {
+        return StatusCount;
+    }
+
+    public void setStatusCount(int statusCount) {
+        StatusCount = statusCount;
+    }
+
+    public String getIPFLabInTime() {
+        return IPFLabInTime;
+    }
+
+    public void setIPFLabInTime(String IPFLabInTime) {
+        this.IPFLabInTime = IPFLabInTime;
+    }
+
+    public String getDataEntryInTime() {
+        return DataEntryInTime;
+    }
+
+    public void setDataEntryInTime(String dataEntryInTime) {
+        DataEntryInTime = dataEntryInTime;
+    }
+
+    public String getDataEntryOutTim() {
+        return DataEntryOutTim;
+    }
+
+    public void setDataEntryOutTim(String dataEntryOutTim) {
+        DataEntryOutTim = dataEntryOutTim;
+    }
+
+    public String getDataEntryRemark() {
+        return DataEntryRemark;
+    }
+
+    public void setDataEntryRemark(String dataEntryRemark) {
+        DataEntryRemark = dataEntryRemark;
+    }
+
+    public String getintime(){
+        return intime;
+    }
+    public void setintime(String intime){
+        intime = intime;
+    }
+    public String getInTime() {
+        return InTime;
+    }
+
+    public void setInTime(String inTime) {
+        InTime = inTime;
+    }
+
+    public String getWeighmentGrossWeight() {
+        return WeighmentGrossWeight;
+    }
+
+    public void setWeighmentGrossWeight(String weighmentGrossWeight) {
+        WeighmentGrossWeight = weighmentGrossWeight;
+    }
 
     public int getId() {
         return Id;

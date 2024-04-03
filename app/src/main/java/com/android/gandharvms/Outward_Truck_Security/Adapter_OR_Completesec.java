@@ -64,10 +64,10 @@ public class Adapter_OR_Completesec extends RecyclerView.Adapter<Adapter_OR_Comp
     @Override
     public void onBindViewHolder(@NonNull Adapter_OR_Completesec.myviewHolder holder,@SuppressLint("RecyclerView") int position) {
         Common_Outward_model club = filteredGridList.get(position);
-        int intimelength = club.getIntime()!= null ? club.getIntime().length() :0;
+        int intimelength = club.getInTime()!= null ? club.getInTime().length() :0;
         int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
         if (intimelength > 0) {
-            holder.intime.setText(club.getIntime().substring(12, intimelength));
+            holder.intime.setText(club.getInTime().substring(12, intimelength));
         }
         if (outtimelength > 0) {
             holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
@@ -75,7 +75,7 @@ public class Adapter_OR_Completesec extends RecyclerView.Adapter<Adapter_OR_Comp
         holder.date.setText(club.getDate());
         holder.serialnumber.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
-        holder.intime.setText(club.getIntime());
+        //holder.intime.setText(club.getIntime());
         holder.transporter.setText(club.getTransportName());
         holder.place.setText(club.getPlace());
         holder.mobilenum.setText(club.getMobileNumber());

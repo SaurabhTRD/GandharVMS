@@ -53,7 +53,7 @@ public interface Outward_Tanker {
                                                             @Query("inout") char inout);
 
 
-    //OR_Weigh_complete
+    //OR_AND_OT_Weigh_complete
     @GET("api/OutwardWeighment/GetOutwardWeighmentList")
     Call<List<Common_Outward_model>> gettruckweighcomplete(@Query("FromDate")String FromDate,
                                                            @Query("Todate") String Todate,
@@ -76,4 +76,35 @@ public interface Outward_Tanker {
                                                                 @Query("vehicletype") String vehicletype,
                                                                 @Query("nextprocess") char nextprocess,
                                                                 @Query("inout") char inout);
+
+    //OT_In_security
+    @GET("api/OutwardSecurity/GetOutwardSecurityList")
+    Call<List<Common_Outward_model>> get_tankerin_security_complete(@Query("FromDate")String FromDate,
+                                                                    @Query("Todate") String Todate,
+                                                                    @Query("vehicletype") String vehicletype,
+                                                                    @Query("nextprocess") char nextprocess,
+                                                                    @Query("inout") char inout);
+
+    //OT_IN_Billing
+    @GET("api/OutwardBilling/GetOutwardBillingList")
+    Call<List<Common_Outward_model>> get_tankerin_billing_completed(@Query("FromDate")String FromDate,
+                                                                    @Query("Todate") String Todate,
+                                                                    @Query("vehicletype") String vehicletype,
+                                                                    @Query("nextprocess") char nextprocess,
+                                                                    @Query("inout") char inout);
+
+
+    @GET("api/OutwardProductionAndLaboratory/GetOutwardProductionAndLaboratoryList")
+    Call<List<Common_Outward_model>> get_tanker_production_inprocesscompleted(@Query("FromDate")String FromDate,
+                                                                              @Query("Todate") String Todate,
+                                                                              @Query("vehicletype") String vehicletype,
+                                                                              @Query("nextprocess") char nextprocess,
+                                                                              @Query("inout") char inout);
+
+    @GET("api/OutwardBulkProductionAndLaboratory/GetOutwardBulkProductionAndLaboratoryList")
+    Call<List<Common_Outward_model>> get_tanker_bulkload_production_completed(@Query("FromDate")String FromDate,
+                                                                              @Query("Todate") String Todate,
+                                                                              @Query("vehicletype") String vehicletype,
+                                                                              @Query("nextprocess") char nextprocess,
+                                                                              @Query("inout") char inout);
 }

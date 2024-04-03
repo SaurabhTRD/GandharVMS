@@ -357,7 +357,7 @@
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="130dp"
                         android:layout_height="match_parent"
-                        android:id="@+id/samplingview"
+                        android:id="@+id/bulkloadproductioncompleted"
                         android:layout_marginLeft="55dp"
                         android:text="COMPLETED"
                         android:textSize="17dp"

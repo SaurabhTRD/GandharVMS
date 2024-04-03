@@ -51,7 +51,7 @@ public class bulkloadingproduction extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     EditText etintime, etserialno, etvehicle, etoanumber, etdate, ettankno, etproduct, etcustomer, etdestination, etqtykl,
             ettransporter, etnameofficer, etremark, ettankblender, etbultqty,etbatchno;
-    Button grid, view, submit;
+    Button grid, view, submit,completd;
     TimePickerDialog tpicker;
     private int OutwardId;
     private Outward_Tanker_Lab outwardTankerLab;
@@ -95,6 +95,7 @@ public class bulkloadingproduction extends AppCompatActivity {
         etbatchno.setVisibility(View.GONE);
 
         submit = findViewById(R.id.etssubmit);
+        completd = findViewById(R.id.bulkloadproductioncompleted);
 
         etvehicle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
@@ -126,6 +127,12 @@ public class bulkloadingproduction extends AppCompatActivity {
                 else{
                     update();
                 }
+            }
+        });
+        completd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(bulkloadingproduction.this,OT_Completed_bulkload_production.class));
             }
         });
     }

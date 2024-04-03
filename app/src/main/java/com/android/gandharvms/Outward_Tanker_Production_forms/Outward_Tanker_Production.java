@@ -75,7 +75,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
     public int statuscount;
     EditText intime, serialnumber, vehiclenumber, blenderno, transporter, product, howmuch, customer, location, blendingratio, batchno,
             productspesification, custref, packingsatus, rinsingstatus, decisionrule, blendingmaterial, signof, dt, oanum, remark, etflush;
-    Button submit, etsend;
+    Button submit, etsend,completed;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -166,11 +166,18 @@ public class Outward_Tanker_Production extends AppCompatActivity {
 
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
+        completed = findViewById(R.id.inproceproduction);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 insert();
+            }
+        });
+        completed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Tanker_Production.this,OT_Completed_inproc_production.class));
             }
         });
         etsend.setOnClickListener(new View.OnClickListener() {

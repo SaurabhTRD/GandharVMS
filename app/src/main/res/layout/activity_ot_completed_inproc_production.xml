@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Outward_Truck_Dispatch.Disp_OR_Complete">
+    tools:context=".Outward_Tanker_Production_forms.OT_Completed_inproc_production">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -43,7 +43,7 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/itin_Desp_coheaderscroll_truckwe"
+        android:id="@+id/itin_inprocprocustion_coheaderscroll_tankerin"
         android:layout_marginTop="8dp"
         android:layout_height="40dp">
 
@@ -54,31 +54,8 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="110dp"
-                android:id="@+id/ordesintime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="In Time"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/ordesouttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="Out Time"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-
-            <TextView
                 android:layout_width="130dp"
-                android:id="@+id/ordesinserial"
+                android:id="@+id/otinprocserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -89,7 +66,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/ordesinvehicle"
+                android:id="@+id/otinprocvehicle"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
@@ -99,19 +76,19 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/ordestransporter"
+                android:layout_width="110dp"
+                android:id="@+id/otinprocflushing"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Transporter"
+                android:text="Flushing no"
                 android:textAllCaps="true"
+                android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/ordesinoa"
+                android:id="@+id/otinprocoanum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -122,37 +99,91 @@
 
             <TextView
                 android:layout_width="130dp"
-                android:id="@+id/ordesinqty"
+                android:id="@+id/otinproctransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Qty"
+                android:text="Transporter"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/otinprocprodcut"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Prodcut"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/otinprochowqty"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="How Qty"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otinproccustomer"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Customer"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otinproclocation"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Location"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/ordesother"
+                android:id="@+id/otinprocpackingstatus"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Other Option"
+                android:text="Packing Status"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/ordesinofficer"
+                android:layout_width="110dp"
+                android:id="@+id/otinprocblendingstatus"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Sign By"
+                android:text="Blending Status"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/ordesinremark"
+                android:layout_width="110dp"
+                android:id="@+id/otinprocsigh"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Pro Sign"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/otinprocremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -167,8 +198,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitin_Desp_hcogrid_truckin"
+        android:id="@+id/recyclerviewitin_inprcproduction_cogrid_tankerkin"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
-
 </LinearLayout>

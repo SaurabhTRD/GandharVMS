@@ -69,7 +69,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     EditText intime, serialnumber, vehiclenumber, materialname, custname, oanum, tareweight, tankernumber, etremark, transportername, howmuchqty, elocation;
-    Button submit;
+    Button submit,complted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -112,6 +112,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
 
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
+        complted = findViewById(R.id.otinweighcompleted);
 
         tankernumber.setVisibility(View.GONE);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -122,6 +123,12 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
                 } else {
                     UploadImagesAndUpdate();
                 }
+            }
+        });
+        complted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Tanker_weighment.this,OT_Completed_Weighment.class));
             }
         });
         intime.setOnClickListener(new View.OnClickListener() {
