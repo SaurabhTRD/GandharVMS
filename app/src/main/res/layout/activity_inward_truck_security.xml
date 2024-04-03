@@ -77,8 +77,6 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
-
-
             >
             <EditText
                 android:id="@+id/etserialnumber"
@@ -87,7 +85,9 @@
                 android:hint="Serial Number"
                 android:inputType="text"
                 android:textSize="17dp"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:focusable="false"
+                android:clickable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -195,7 +195,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Driver Mobile No"
-                android:inputType="textCapCharacters"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>

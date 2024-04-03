@@ -73,7 +73,7 @@ public class it_out_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_o
         }
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.grossweight.setText(String.valueOf(club.getGrossWeight()));
-        holder.netweight.setText(String.valueOf(club.getNetWeight()));
+        holder.netweight.setText(String.valueOf(club.getWeiNetWeight()));
         holder.tareweight.setText(String.valueOf(club.getTareWeight()));
         holder.shortagedip.setText(String.valueOf(club.getShortageDip()));
         holder.shortageweight.setText(String.valueOf(club.getShortageWeight()));

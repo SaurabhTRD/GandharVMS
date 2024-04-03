@@ -109,10 +109,8 @@ public class ir_stor_Completedgrid extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (clubList != null && !clubList.isEmpty()) {
-                    // Export data to Excel
                     exportToExcel(clubList);
                 } else {
-                    // Show a message indicating no data to export
                     Toasty.warning(getApplicationContext(), "No data to export", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -267,19 +265,21 @@ public class ir_stor_Completedgrid extends AppCompatActivity {
                 dataRow.createCell(9).setCellValue(dataItem.getUnitOfQTY());
                 dataRow.createCell(10).setCellValue(dataItem.getInvoiceNo());
                 dataRow.createCell(11).setCellValue(formattedDate = formatDate(dataItem.getDate()));
-                dataRow.createCell(12).setCellValue(dataItem.getReceiveQTY());
+                String recqty=String.format("%.2f", dataItem.getReceiveQTY() / 100.0);
+                dataRow.createCell(12).setCellValue(recqty);
                 dataRow.createCell(13).setCellValue(dataItem.getReQTYUom());
                 dataRow.createCell(14).setCellValue(dataItem.getStoreExtramaterials());
                 dataRow.createCell(15).setCellValue(dataItem.getRemark());
             }
             // Save the workbook
-            saveWorkBook(hssfWorkBook);
+            //saveWorkBook(hssfWorkBook);
+            saveWorkbookToFile(hssfWorkBook);
         }catch(Exception ex){
             throw new RuntimeException(ex);
         }
     }
 
-    private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
+    /*private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
         try {
             // Check if permission is granted
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -290,24 +290,28 @@ public class ir_stor_Completedgrid extends AppCompatActivity {
                 ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_REQUEST);
             }
         } catch (Exception ex) {
-            throw new RuntimeException(ex);
+            // Handle any exceptions here
+            Toasty.error(this, "You Dont't Have Permission to Exprot.", Toast.LENGTH_SHORT).show();
+            ex.printStackTrace(); // Print the stack trace for debugging purposes
         }
-    }
+    }*/
 
     // Override onRequestPermissionsResult method to handle the result of the permission request
-    @Override
+   /* @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == WRITE_EXTERNAL_STORAGE_REQUEST) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission is granted, proceed with saving the workbook
-                saveWorkbookToFile(hssfWorkBook);
+                exportToExcel(clubList);
             } else {
-                // Permission is denied, show a message to the user
+                // Permission is denied, request permission from the user again
+                // Show a message to the user indicating permission denial
                 Toasty.warning(this, "Permission denied. Cannot save file.", Toast.LENGTH_SHORT).show();
+                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, WRITE_EXTERNAL_STORAGE_REQUEST);
             }
         }
-    }
+    }*/
 
     private void saveWorkbookToFile(HSSFWorkbook hssfWorkBook) {
         try {

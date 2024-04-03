@@ -229,8 +229,8 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
             Row headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("DATE");
             headerRow.createCell(1).setCellValue("VEHICLE_No");
-            headerRow.createCell(2).setCellValue("SAMPLE SUBMITTED TIME");
-            headerRow.createCell(3).setCellValue("SAMPLE RECEIVING TIME");
+            headerRow.createCell(2).setCellValue("SAMPLE RECEIVING TIME");
+            headerRow.createCell(3).setCellValue("SAMPLE SUBMITTED TIME");
 
             // Populate data rows
             for (int i = 0; i < datalist.size(); i++) {
@@ -250,13 +250,14 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                 }
             }
             // Save the workbook
-            saveWorkBook(hssfWorkBook);
+            //saveWorkBook(hssfWorkBook);
+            saveWorkbookToFile(hssfWorkBook);
         }catch(Exception ex){
             throw new RuntimeException(ex);
         }
     }
 
-    private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
+    /*private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
         try {
             // Check if permission is granted
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -284,7 +285,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
                 Toasty.warning(this, "Permission denied. Cannot save file.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 
     private void saveWorkbookToFile(HSSFWorkbook hssfWorkBook) {
         try {

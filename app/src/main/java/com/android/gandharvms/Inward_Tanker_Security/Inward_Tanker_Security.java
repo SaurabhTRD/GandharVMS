@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.ColorSpace;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,6 +40,7 @@ import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -85,7 +88,8 @@ import retrofit2.Retrofit;
 public class Inward_Tanker_Security extends AppCompatActivity implements View.OnClickListener {
 
     final Calendar calendar = Calendar.getInstance();
-    public int MAX_LENGTH = 10;
+    private final String dateTimeString = "";
+    private final String EmployeId = Global_Var.getInstance().EmpId;
     public LoginMethod getmaxserialno;
     String[] items = {"Capital Register", "General Register", "Inward Register"};
     String DocId = "";
@@ -96,9 +100,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     Integer netweuomvalue = 1;
     char input = 'i';
     int isReportingInt = 0;
-
-
-//     String vehicleType = String.valueOf(T);
+    //     String vehicleType = String.valueOf(T);
     String isReportingString = "0";  // or "1"
     boolean isReporting = isReportingString.equals("1");
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -127,12 +129,17 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     private CheckBox isReportingCheckBox;
     private EditText reportingRemarkLayout;
     private String token;
-    private final String dateTimeString = "";
     private API_In_Tanker_Security apiInTankerSecurity;
-    private final String EmployeId = Global_Var.getInstance().EmpId;
     private int InwardId;
     private LoginMethod userDetails;
 
+    private int insertqty;
+    private int insertnetweight;
+
+    private int insertqtyUom;
+    private int insertnetweightUom;
+
+    final int maxLength = 8;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -189,21 +196,14 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
                 if (qtyUomNumericValue != null) {
                     // Now, you can use qtyUomNumericValue when inserting into the database
-
-                    Toast.makeText(Inward_Tanker_Security.this, "qtyUomNumericValue : " + qtyUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
+                    Toasty.success(Inward_Tanker_Security.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
                 } else {
                     // Handle the case where the mapping doesn't contain the display value
-                    Toast.makeText(Inward_Tanker_Security.this, "Unknown qtyUom : " + qtyUomDisplay, Toast.LENGTH_SHORT).show();
+                    Toasty.error(Inward_Tanker_Security.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-//        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String qtyuom = parent.getItemAtPosition(position).toString();
-//                Toast.makeText(Inward_Tanker_Security.this, "qtyuom : " + qtyuom + " Selected", Toast.LENGTH_SHORT).show();
-//            }
-//
+
         autoCompleteTextView2 = findViewById(R.id.netweuom);
         netweuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_nw, new ArrayList<>(qtyUomMapping.keySet()));
         autoCompleteTextView2.setAdapter(netweuomdrop);
@@ -213,23 +213,12 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 String neweuom = parent.getItemAtPosition(position).toString();
                 netweuomvalue = qtyUomMapping.get(neweuom);
                 if (qtyUomNumericValue != null) {
-                    Toast.makeText(Inward_Tanker_Security.this, "netwe: " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
-
+                    Toasty.success(Inward_Tanker_Security.this, "NetWeighUnitofMeasurement : " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Inward_Tanker_Security.this, "Unknown qtyUom : " + netweuom, Toast.LENGTH_SHORT).show();
+                    Toasty.error(Inward_Tanker_Security.this, "Default NetWeighUnitofMeasurement : " + "NA", Toast.LENGTH_SHORT).show();
                 }
             }
         });
-//        autoCompleteTextView1 = findViewById(R.id.qtyuomtanker);
-//        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, qtyuom);
-//        autoCompleteTextView1.setAdapter(qtyuomdrop);
-//        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String qtyuom = parent.getItemAtPosition(position).toString();
-//                Toast.makeText(Inward_Tanker_Security.this, "qtyuom: " + qtyuom + " Selected", Toast.LENGTH_SHORT).show();
-//            }
-//        });
 
         etreg = findViewById(R.id.etserialnumber);
         etvehical = findViewById(R.id.etvehical);
@@ -258,7 +247,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         linearLayout = findViewById(R.id.layout_list);
         button1 = findViewById(R.id.button_add);
         button1.setOnClickListener(this);
-        dbbutton = findViewById(R.id.dbview);
+        //dbbutton = findViewById(R.id.dbview);
 
 
         teamList.add(0, "Ton");
@@ -268,13 +257,96 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         teamList.add(4, "Pcs");
 
 //        listdata button
-        dbbutton.setOnClickListener(new View.OnClickListener() {
+        /*dbbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Inward_Tanker_Security.this, GridCompleted.class));
             }
+        });*/
+
+        etmobilenum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = etmobilenum.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 16) {
+                    // Clear any previous error message when valid
+                    etmobilenum.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etmobilenum.setText(trimmedText);
+                        etmobilenum.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
         });
 
+        etnetweight.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = etqty.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 8) {
+                    // Clear any previous error message when valid
+                    etnetweight.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etnetweight.setText(trimmedText);
+                        etnetweight.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
+        });
+
+        etqty.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = etqty.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 8) {
+                    // Clear any previous error message when valid
+                    etqty.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etqty.setText(trimmedText);
+                        etqty.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
+        });
 
         etdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -302,20 +374,9 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Inward_Tanker_Security.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        etintime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                etintime.setText(time);
             }
         });
 
@@ -348,8 +409,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         etvehical.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-
-//                    String VehicleNo = etvehical.getText().toString();
                     String vehicltype = Global_Var.getInstance().MenuType;
                     char DeptType = Global_Var.getInstance().DeptType;
                     char InOutType = Global_Var.getInstance().InOutType;
@@ -394,7 +453,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
     private void addview() {
         View materialview = getLayoutInflater().inflate(R.layout.row_add_material, null, false);
-
         EditText editText = materialview.findViewById(R.id.editmaterial);
         EditText editqty = materialview.findViewById(R.id.editqty);
         AppCompatSpinner spinner = materialview.findViewById(R.id.spinner_team);
@@ -422,10 +480,10 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Weighment";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -441,8 +499,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -481,21 +538,53 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String Date = etdate.getText().toString().trim();
         String partyname = etsupplier.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
-        int qty = Integer.parseInt(etqty.getText().toString().trim());
-        int netweight = Integer.parseInt(etnetweight.getText().toString().trim());
+        if(!etqty.getText().toString().isEmpty())
+        {
+            try {
+                insertqty=Integer.parseInt(etqty.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        //int netweight = Integer.parseInt(etnetweight.getText().toString().trim());
+        if(!etnetweight.getText().toString().isEmpty())
+        {
+            try {
+                insertnetweight=Integer.parseInt(etnetweight.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
         String intime = etintime.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
-        int qtyuom = Integer.parseInt(qtyUomNumericValue.toString().trim());
+        //int qtyuom = Integer.parseInt(qtyUomNumericValue.toString().trim());
+        if(!qtyUomNumericValue.toString().isEmpty())
+        {
+            try {
+                insertqtyUom=Integer.parseInt(qtyUomNumericValue.toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
         String vehicltype = Global_Var.getInstance().MenuType;
         char InOutType = Global_Var.getInstance().InOutType;
         char DeptType = Global_Var.getInstance().DeptType;
-        int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
+        //int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
+        if(!netweuomvalue.toString().isEmpty())
+        {
+            try {
+                insertnetweightUom=Integer.parseInt(netweuomvalue.toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
         String remark = etremark.getText().toString().trim();
         String pooa = edpooa.getText().toString().trim();
         String mobnumber = etmobilenum.getText().toString().trim();
         String edremark = repremark.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() || partyname.isEmpty() ||
-                intime.isEmpty() || material.isEmpty() ||remark.isEmpty() ) {
+                intime.isEmpty() || material.isEmpty() || remark.isEmpty()||pooa.isEmpty()||mobnumber.isEmpty()
+                || insertqty < 0 || insertnetweight < 0 || insertqtyUom < 0 || insertnetweightUom < 0) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
 
@@ -526,7 +615,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             }
 
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'W', 'I', Date,
-                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, materialList.toString().replace("[]", ""), remark, false, "No", "", "", "", "", "", EmployeId,"",InwardId);
+                    "", vehicltype, intime, outTime, insertqtyUom, insertnetweightUom, insertnetweight, insertqty, materialList.toString().replace("[]", ""), remark, false, "No", "", "", "", "", "", EmployeId, "", InwardId);
 
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
             call.enqueue(new Callback<Boolean>() {
@@ -537,8 +626,11 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
                         finish();
+                    }else{
+                        Toasty.error(Inward_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("Retrofit", "Failure: " + t.getMessage());
@@ -554,7 +646,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                             }
                         }
                     }
-                    Toast.makeText(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -590,7 +682,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'S', InOutType, "",
-                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId,"",InwardId);
+                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId, "", InwardId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
@@ -601,8 +693,11 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
                         finish();
+                    }else{
+                        Toasty.error(Inward_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
 
@@ -631,13 +726,10 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             @Override
             public void onResponse(Call<List<Respo_Model_In_Tanker_security>> call, Response<List<Respo_Model_In_Tanker_security>> response) {
                 if (response.isSuccessful()) {
-
                     if (response.body().size() > 0) {
                         List<Respo_Model_In_Tanker_security> Data = response.body();
                         Respo_Model_In_Tanker_security obj = Data.get(0);
                         InwardId = obj.getInwardId();
-                        /*int intimelength = obj.getInTime().length();
-                        etintime.setText(obj.getInTime().substring(12, intimelength));*/
                         etreg.setText(obj.getSerialNo());
                         etreg.setEnabled(false);
                         etvehical.setText(obj.getVehicleNo());
@@ -646,8 +738,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         repremark.setEnabled(false);
                         etdate.setText(obj.getDate());
                         etdate.setEnabled(false);
-                        etnetweight.setText(String.valueOf(obj.getNetWeight()));
-                        etnetweight.setEnabled(false);
                         cbox.setChecked(true);
                         cbox.setEnabled(false);
                         saveButton.setVisibility(View.GONE);
@@ -655,11 +745,9 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         etreg.setEnabled(false);
                         etdate.setEnabled(false);
 //                            DocId = document.getId();
-                        etqty.requestFocus();
-                        etqty.callOnClick();
                     }
                 } else {
-                    Log.e("Retrofit", "Error" + response.code());
+                    Toasty.error(Inward_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -736,21 +824,50 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String party = etsupplier.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
         String oapo = edpooa.getText().toString().trim();
-        int netweight = Integer.parseInt(etnetweight.getText().toString().trim());
-        int netwtuom = Integer.parseInt(netweuomvalue.toString());
-        int qty = Integer.parseInt(etqty.getText().toString().trim());
+        if(!etnetweight.getText().toString().isEmpty())
+        {
+            try {
+                insertnetweight=Integer.parseInt(etnetweight.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        if(!netweuomvalue.toString().isEmpty())
+        {
+            try {
+                insertnetweightUom=Integer.parseInt(netweuomvalue.toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        if(!etqty.getText().toString().isEmpty())
+        {
+            try {
+                insertqty=Integer.parseInt(etqty.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
 //        int qtyuom = Integer.parseInt( qtyUomNumericValue.toString().trim());
-        int qtyuom = Integer.parseInt(qtyUomNumericValue.toString().trim());
+        if(!qtyUomNumericValue.toString().isEmpty())
+        {
+            try {
+                insertqtyUom=Integer.parseInt(qtyUomNumericValue.toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
         String remark = etremark.getText().toString().trim();
         String outTime = getCurrentTime();
         String vehicltype = Global_Var.getInstance().MenuType;
         char InOutType = Global_Var.getInstance().InOutType;
         char DeptType = Global_Var.getInstance().DeptType;
 
-        if (invoice.isEmpty() || party.isEmpty() || material.isEmpty() || oapo.isEmpty() || outTime.isEmpty()) {
+        if (invoice.isEmpty() || party.isEmpty() || material.isEmpty() || oapo.isEmpty() ||drivermobile.isEmpty()||
+                insertqty < 0 || insertnetweight < 0 || insertqtyUom < 0 || insertnetweightUom < 0
+        ) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-
 
             //Extra material dynamic view
             List<Map<String, String>> materialList = new ArrayList<>();
@@ -778,8 +895,12 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 }
             }
 
-            Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId, serialnumber, invoice, vehiclenumber, Date, party, material, oapo, drivermobile, 'W', 'I', Date,
-                    "", vehicltype, intime, outTime, qtyuom, netwtuom, netweight, qty, materialList.toString().replace("[]", ""), remark, "", "", "", "", "", EmployeId);
+            Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(
+                    InwardId, serialnumber, invoice, vehiclenumber, Date, party, material, oapo, drivermobile,
+                    'W', 'I', Date, "", vehicltype, intime, outTime, insertqtyUom,
+                    insertnetweightUom, insertnetweight, insertqty,
+                    materialList.toString(), remark, "", "",
+                    "", "", "", EmployeId,"");
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.updatesecuritydata(requestModelInTankerSecurityupdate);
@@ -788,9 +909,11 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotification(vehiclenumber, outTime);
-                        Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully..!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
                         finish();
+                    }else{
+                        Toasty.error(Inward_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -820,9 +943,9 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         startActivity(intent);
     }
 
-    /*public void olcViewclick(View view) {
-        Intent intent = new Intent(this, gridadaptercompleted.class);
+    public void olcViewclick(View view) {
+        Intent intent = new Intent(this, it_in_sec_Completedgrid.class);
         startActivity(intent);
-    }*/
+    }
 }
 

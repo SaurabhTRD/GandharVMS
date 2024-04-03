@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".Inward_Tanker_Security.it_in_sec_Completedgrid"
+            android:exported="false" />
+        <activity
             android:name=".outward_Tanker_Lab_forms.OT_Completd_bilkload_laboratory"
             android:exported="false" />
         <activity

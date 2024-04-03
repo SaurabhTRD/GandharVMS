@@ -22,6 +22,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
+import com.android.gandharvms.Inward_Tanker_Laboratory.it_Lab_Completedgrid;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
@@ -86,7 +87,8 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     private String EmployeName=Global_Var.getInstance().Name;
     private String EmployeId=Global_Var.getInstance().EmpId;
     private LoginMethod userDetails;
-
+    private int reqtounload;
+    private int abovematerialtank;
 
 
     @Override
@@ -139,24 +141,70 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                 picker.show();
             }
         });
+
+        edunloadabovematerial.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = edunloadabovematerial.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 8) {
+                    // Clear any previous error message when valid
+                    edunloadabovematerial.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        edunloadabovematerial.setText(trimmedText);
+                        edunloadabovematerial.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
+        });
+
+        abovematerialunload.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = abovematerialunload.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 8) {
+                    // Clear any previous error message when valid
+                    abovematerialunload.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        abovematerialunload.setText(trimmedText);
+                        abovematerialunload.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
+        });
+
         etint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Inward_Tanker_Production.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        etint.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                etint.setText(time);
             }
         });
 
@@ -170,7 +218,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
                 }
             }
-
         });
 
         prodbroot = FirebaseFirestore.getInstance();
@@ -231,8 +278,24 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         String intime = etint.getText().toString().trim();
         String etser = etserno.getText().toString().trim();
         String eddate = etconunloadDateTime.getText().toString().trim();
-        int reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
-        int abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
+        //int reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
+        if(!edunloadabovematerial.getText().toString().isEmpty())
+        {
+            try {
+                reqtounload=Integer.parseInt(edunloadabovematerial.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        //int abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
+        if(!abovematerialunload.getText().toString().isEmpty())
+        {
+            try {
+                abovematerialtank=Integer.parseInt(abovematerialunload.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
         String confirmunload = etconbyop.getText().toString().trim();
         String oprator = opratorname.getText().toString().trim();
         String conunload = etconunloadDateTime.getText().toString().trim();
@@ -240,10 +303,11 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         String material = etMaterial.getText().toString().trim();
         String vehicleNumber = etVehicleNumber.getText().toString().trim();
 
-        if (intime.isEmpty() ||   confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
+        if (intime.isEmpty() || reqtounload < 0|| abovematerialtank < 0||  confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
             Toasty.warning(this, "All Fields must be filled", Toast.LENGTH_SHORT,true).show();
         } else {
-            Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid,intime,outTime,reqtounload,confirmunload,abovematerialtank,oprator,
+            Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid,intime,
+                    outTime,reqtounload, confirmunload,abovematerialtank,oprator,
                     EmployeId,vehicleNumber,etser,'W','O',vehicleType,eddate,material,EmployeName);
 
             Call<Boolean> call = apiInTankerProduction.insertproductionData(requestInTankerProduction);
@@ -256,10 +320,9 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                         Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Production.this, Inward_Tanker.class));
                         finish();
-
                     }
-                    else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    else{
+                        Toasty.error(Inward_Tanker_Production.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -299,7 +362,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             public void onResponse(Call<Respo_Model_In_Tanker_Production> call, Response<Respo_Model_In_Tanker_Production> response) {
                 if (response.isSuccessful()){
                     Respo_Model_In_Tanker_Production data = response.body();
-                    if (data.getVehicleNo()!= ""){
+                    if (data.getVehicleNo()!= "" && data.getVehicleNo() != null){
                         inwardid = data.getInwardId();
                         etserno.setText(data.getSerialNo());
                         etserno.setEnabled(false);
@@ -309,9 +372,11 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                         etMaterial.setEnabled(false);
                         etconunloadDateTime.setText(data.getDate());
                         etconunloadDateTime.setEnabled(false);
-                        etint.requestFocus();
-                        etint.callOnClick();
+                        /*etint.requestFocus();
+                        etint.callOnClick();*/
                         viewlabreport.setVisibility(View.VISIBLE);
+                    }else {
+                        Toasty.error(Inward_Tanker_Production.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }
             }
@@ -343,7 +408,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
 
     public void btn_clicktoViewLabReport(View view) {
         Global_Var.getInstance().DeptType='L';
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, it_Lab_Completedgrid.class);
         intent.putExtra("vehiclenumber",etVehicleNumber.getText());
         view.getContext().startActivity(intent);
     }

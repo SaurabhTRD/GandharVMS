@@ -2,7 +2,7 @@ package com.android.gandharvms.Inward_Tanker_Security;
 
 import com.google.type.DateTime;
 
-public class    Respo_Model_In_Tanker_security {
+public class   Respo_Model_In_Tanker_security {
 
     private int Id ;
     private int InwardId ;

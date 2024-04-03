@@ -45,6 +45,7 @@ import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.Register;
 import com.android.gandharvms.Util.MultipartTask;
@@ -150,9 +151,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etremark = findViewById(R.id.etremark);
         etsignby = findViewById(R.id.etsignby);
         etcontainer = findViewById(R.id.container);
-//        etshortagedip = findViewById(R.id.shortagedip);
-//        etshortageweight = findViewById(R.id.shortageweight);
-
         //Call Api method
         weighmentdetails = RetroApiClient.getWeighmentDetails();
 
@@ -178,20 +176,9 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Inward_Tanker_Weighment.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        etint.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                etint.setText(time);
             }
         });
 
@@ -209,11 +196,13 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         wesubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (image1 == null || image2 == null) {
+                    Toasty.warning(Inward_Tanker_Weighment.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
+                } else {
+                    UploadImagesAndInsert();
+                }
                 //  uploadimg(image1, image2);
-                UploadImagesAndInsert();
             }
-
-
         });
     }
 
@@ -283,8 +272,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         String remark = etremark.getText().toString().trim();
         String signby = etsignby.getText().toString().trim();
         String container = etcontainer.getText().toString().trim();
-//        String shortagedip = etshortagedip.getText().toString().trim();
-//        String shortageweight = etshortageweight.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
 
 
@@ -301,14 +288,15 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()) {
+                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotification(vehicelnumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Weighment.this, Inward_Tanker.class));
                         finish();
-                    } else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    }
+                    else{
+                        Toasty.error(Inward_Tanker_Weighment.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -332,40 +320,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             });
         }
     }
-
-    /*public void uploadimg(Uri Image1, Uri Image2) {
-        StorageReference storageReference = storage.getReference();
-        if (Image1 != null) {
-            String InVehicleImage = "image1_1" + UUID.randomUUID().toString() + ".jpeg";
-            StorageReference imgref1 = storageReference.child("/WeighmentImage1" + "/" + InVehicleImage);
-            imgPath1 = "/WeighmentImage1%2F" + InVehicleImage;
-            imgref1.putFile(Image1)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        imgref1.getDownloadUrl().addOnSuccessListener(uri -> {
-                            final String imageUrl = uri.toString();
-                            img1.setImageURI(Uri.parse(imageUrl));
-                        });
-                    }).addOnFailureListener(e -> {
-                        Toast.makeText(Inward_Tanker_Weighment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-
-        }
-
-        if (Image2 != null) {
-            String InDriverImage = "image2_1" + UUID.randomUUID().toString() + ".jpeg";
-            StorageReference imgref2 = storageReference.child("/WeighmentImage2" + "/" + InDriverImage);
-            imgPath2 = "/WeighmentImage2%2F" + InDriverImage;
-            imgref2.putFile(Image2)
-                    .addOnSuccessListener(taskSnapshot -> {
-                        imgref2.getDownloadUrl().addOnSuccessListener(uri -> {
-                            final String imageUrl = uri.toString();
-                            img2.setImageURI(Uri.parse(imageUrl));
-                        });
-                    }).addOnFailureListener(e -> {
-                        Toast.makeText(Inward_Tanker_Weighment.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    });
-        }
-    }*/
 
     public void UploadImagesAndInsert() {
         String FileInitial = "InVeh_In_";
@@ -419,22 +373,37 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
-            img1.setImageBitmap(bimage1);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
-            image1 = Uri.parse(path);
-            ImgVehicle = baos.toByteArray();
-        } else if (requestCode == CAMERA_REQUEST_CODE1) {
-            Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
-            img2.setImageBitmap(bimage2);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
-            image2 = Uri.parse(path);
-            ImgDriver = baos.toByteArray();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE && data != null) {
+                Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
+                if (bimage1 != null) {
+                    img1.setImageBitmap(bimage1);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
+                    image1 = Uri.parse(path);
+                    ImgVehicle = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            } else if (requestCode == CAMERA_REQUEST_CODE1 && data != null) {
+                Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
+                if (bimage2 != null) {
+                    img2.setImageBitmap(bimage2);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
+                    image2 = Uri.parse(path);
+                    ImgDriver = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            // Handle case when camera activity is canceled
+            Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -451,7 +420,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             public void onResponse(Call<InTanWeighResponseModel> call, Response<InTanWeighResponseModel> response) {
                 if (response.isSuccessful()) {
                     InTanWeighResponseModel data = response.body();
-                    if (data.getVehicleNo() != "") {
+                    if (data.getVehicleNo() != "" && data.getVehicleNo() != null) {
                         inwardid = data.getInwardId();
                         etserialnumber.setText(data.getSerialNo());
                         etserialnumber.setEnabled(false);
@@ -467,8 +436,9 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                         etdriverno.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);
-                        etint.requestFocus();
-                        etint.callOnClick();
+                    }
+                    else {
+                        Toasty.error(Inward_Tanker_Weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());

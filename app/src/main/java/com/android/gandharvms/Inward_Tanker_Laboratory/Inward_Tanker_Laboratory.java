@@ -26,6 +26,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_saampling_View_data;
+import com.android.gandharvms.Inward_Tanker_Sampling.it_in_Samp_Completedgrid;
 import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
@@ -100,6 +101,12 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     private char nextProcess = Global_Var.getInstance().DeptType;
     private char inOut = Global_Var.getInstance().InOutType;
     private String EmployeId = Global_Var.getInstance().EmpId;
+    private int qty;
+    private int density;
+    private int kv;
+    private int hundred;
+    private int anline;
+    private int flash;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +126,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String items = parent.getItemAtPosition(position).toString();
-                Toast.makeText(getApplicationContext(), "Item: " + items + "Selected", Toast.LENGTH_SHORT).show();
+                Toasty.success(getApplicationContext(), "Remark : " + items + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -165,20 +172,9 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
-                int hours = calendar.get(Calendar.HOUR_OF_DAY);
-                int mins = calendar.get(Calendar.MINUTE);
-                tpicker = new TimePickerDialog(Inward_Tanker_Laboratory.this, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        Calendar c = Calendar.getInstance();
-                        c.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        c.set(Calendar.MINUTE, minute);
-
-                        // Set the formatted time to the EditText
-                        etintime.setText(hourOfDay + ":" + minute);
-                    }
-                }, hours, mins, false);
-                tpicker.show();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                etintime.setText(time);
             }
         });
 
@@ -325,7 +321,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
     public void btn_clicktoViewSAMPLEREPORT(View view) {
         Global_Var.getInstance().DeptType='M';
-        Intent intent = new Intent(this, GridCompleted.class);
+        Intent intent = new Intent(this, it_in_Samp_Completedgrid.class);
         intent.putExtra("vehiclenumber",etvehiclenumber.getText());
         view.getContext().startActivity(intent);
     }
@@ -355,13 +351,169 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String apperance = etpapperance.getText().toString().trim();
         String odor = etpodor.getText().toString().trim();
         String color = etpcolour.getText().toString().trim();
-        String qty = etqty.getText().toString().trim();
-        String density = etpdensity.getText().toString().trim();
+        //int qty = Integer.parseInt(etqty.getText().toString().trim());
+        if (!etqty.getText().toString().isEmpty()) {
+            try {
+                String input = etqty.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                qty = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        //int density = Integer.parseInt(etpdensity.getText().toString().trim());
+        if (!etpdensity.getText().toString().isEmpty()) {
+            try {
+                String input = etpdensity.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                density = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
         String rcsTest = etPrcstest.getText().toString().trim();
-        String kv = etpkv.getText().toString().trim();
-        String hundred = ethundred.getText().toString().trim();
-        String anline = etanline.getText().toString().trim();
-        String flash = etflash.getText().toString().trim();
+        //int kv = Integer.parseInt(etpkv.getText().toString().trim());
+        if (!etpkv.getText().toString().isEmpty()) {
+            try {
+                String input = etpkv.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                kv = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        //int hundred = Integer.parseInt(ethundred.getText().toString().trim());
+        if (!ethundred.getText().toString().isEmpty()) {
+            try {
+                String input = ethundred.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                hundred = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        //int anline = Integer.parseInt(etanline.getText().toString().trim());
+        if (!etanline.getText().toString().isEmpty()) {
+            try {
+                String input = etanline.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                anline = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        //int flash = Integer.parseInt(etflash.getText().toString().trim());
+        if (!etflash.getText().toString().isEmpty()) {
+            try {
+                String input = etflash.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    // Input contains a decimal point
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    // Adjust decimal part to two digits
+                    if (parts[1].length() > 2) {
+                        // Take only first two digits after decimal point
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    // Combine integer and decimal parts
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    // Input is a whole number
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                flash = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
         String addTest = etpaddtest.getText().toString().trim();
         String samplereceivingdate = etpsamplere.getText().toString().trim();
         String remark = etpremark.getText().toString().trim();
@@ -373,17 +525,17 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String viscosity = etviscosity.getText().toString().trim();
         String disc = remarkdisc.getText().toString().trim();
         if (intime.isEmpty() || serialNumber.isEmpty() ||remark.isEmpty()|| date.isEmpty() ||
-                hundred.isEmpty() || vehicle.isEmpty() || apperance.isEmpty() || odor.isEmpty() ||
-                color.isEmpty() || qty.isEmpty() || anline.isEmpty() || flash.isEmpty() || density.isEmpty() ||
-                rcsTest.isEmpty() || kv.isEmpty() || disc.isEmpty() || addTest.isEmpty() ||
-                samplereceivingdate.isEmpty() || viscosity.isEmpty() || remark.isEmpty() ||
+                hundred < 0 || vehicle.isEmpty() || apperance.isEmpty() || odor.isEmpty() ||
+                color.isEmpty() || qty < 0 || anline < 0 || flash < 0|| density < 0 ||
+                rcsTest.isEmpty() || kv < 0 || disc.isEmpty() || addTest.isEmpty() ||
+                samplereceivingdate.isEmpty() || viscosity.isEmpty() ||
                 signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             InTanLabRequestModel labRequestModel = new InTanLabRequestModel(inwardid, intime, outTime, date,
-                    samplereceivingdate, apperance, odor, color, Integer.parseInt(qty), Integer.parseInt(density),
-                    rcsTest, Integer.parseInt(kv), Integer.parseInt(hundred), Integer.parseInt(anline),
-                    Integer.parseInt(flash), addTest, samplereceivingdate, remark, signQc, dateSignOfSign,
+                    samplereceivingdate, apperance, odor, color,qty, density,
+                    rcsTest, kv, hundred,anline,
+                    flash, addTest, samplereceivingdate, remark, signQc, dateSignOfSign,
                     disc, Integer.parseInt(viscosity), EmployeId, EmployeId, vehicle, material,
                     serialNumber, 'P', inOut, vehicleType, edsupplier);
             Call<Boolean> call = labdetails.insertLabData(labRequestModel);
@@ -396,8 +548,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker.class));
                         finish();
-                    } else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
+                    } else{
+                        Toasty.error(Inward_Tanker_Laboratory.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -429,7 +581,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             public void onResponse(Call<InTanLabResponseModel> call, Response<InTanLabResponseModel> response) {
                 if (response.isSuccessful()) {
                     InTanLabResponseModel data = response.body();
-                    if (data.getVehicleNo() != "") {
+                    if (data.getVehicleNo() != "" && data.getVehicleNo() != null) {
                         inwardid = data.getInwardId();
                         etvehiclenumber.setText(data.getVehicleNo());
                         etvehiclenumber.setEnabled(false);
@@ -441,11 +593,9 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etMaterial.setEnabled(false);
                         etpsample.setText(data.getDate());
                         etpsample.setEnabled(false);
-                        etintime.requestFocus();
-                        etintime.callOnClick();
                         viewsamplereporting.setVisibility(view.VISIBLE);
                     } else {
-                        Toasty.success(Inward_Tanker_Laboratory.this, "Vehicle Is Not Available", Toast.LENGTH_SHORT).show();
+                        Toasty.error(Inward_Tanker_Laboratory.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());

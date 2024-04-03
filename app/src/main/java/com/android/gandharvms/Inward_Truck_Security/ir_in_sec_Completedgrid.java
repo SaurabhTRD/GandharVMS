@@ -273,13 +273,14 @@ public class ir_in_sec_Completedgrid extends AppCompatActivity {
                 dataRow.createCell(21).setCellValue(dataItem.getEwayBill());
             }
             // Save the workbook
-            saveWorkBook(hssfWorkBook);
+            //saveWorkBook(hssfWorkBook);
+            saveWorkbookToFile(hssfWorkBook);
         }catch(Exception ex){
             throw new RuntimeException(ex);
         }
     }
 
-    private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
+    /*private void saveWorkBook(HSSFWorkbook hssfWorkBook) {
         try {
             // Check if permission is granted
             if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
@@ -307,7 +308,7 @@ public class ir_in_sec_Completedgrid extends AppCompatActivity {
                 Toasty.warning(this, "Permission denied. Cannot save file.", Toast.LENGTH_SHORT).show();
             }
         }
-    }
+    }*/
 
     private void saveWorkbookToFile(HSSFWorkbook hssfWorkBook) {
         try {

@@ -30,35 +30,13 @@
         android:layout_marginRight="10dp"
         >
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="155dp"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="60dp"
-                android:layout_gravity="left"
-
-                >
-                <EditText
-                    android:id="@+id/etintime"
-                    android:layout_width="155dp"
-                    android:layout_height="wrap_content"
-                    android:hint="In Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:focusable="false"
-                    android:clickable="false"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
-
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="70dp"
 
             >
             <EditText
@@ -128,7 +106,25 @@
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp"
+            >
+            <EditText
+                android:id="@+id/etintime"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="In Time"
+                android:inputType="text"
+                android:textSize="17dp"
+                android:textStyle="bold"
+                android:focusable="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
