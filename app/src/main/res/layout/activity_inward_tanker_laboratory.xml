@@ -54,19 +54,24 @@
         </Button>
 
         <androidx.cardview.widget.CardView
-            android:layout_width="405dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="2"
             >
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-                android:id="@+id/regno"
+                android:layout_marginEnd="2.5dp"
                 >
                 <EditText
                     android:id="@+id/etpsample"
@@ -79,12 +84,15 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="185dp"
-                android:layout_height="wrap_content"
+                android:id="@+id/regno"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginLeft="200dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
+                android:layout_weight="1"
+                android:layout_marginEnd="5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp">
                 <EditText
                     android:id="@+id/et_materialname"
                     android:layout_width="match_parent"
@@ -93,7 +101,9 @@
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
         </androidx.cardview.widget.CardView>
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"

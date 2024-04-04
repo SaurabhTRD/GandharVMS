@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="75dp"
         android:gravity="top"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="20dp"
         android:layout_above="@+id/flip">
       <ImageView
           android:layout_width="match_parent"
@@ -33,7 +33,7 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="395dp"
+        android:layout_width="match_parent"
         android:layout_height="65dp"
         android:text="Vehicle Management System"
         android:textColor="@color/blue"
@@ -184,7 +184,7 @@
        android:gravity="center_horizontal"
        android:text="Developed By : Techlink Infoware Pvt.ltd"
        android:textSize="20dp"
-       android:layout_marginTop="60dp"
+       android:layout_marginTop="30dp"
        android:textStyle="bold"
        android:textColor="@color/blue"
        />

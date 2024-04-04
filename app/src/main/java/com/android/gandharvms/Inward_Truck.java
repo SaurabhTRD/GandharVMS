@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -25,7 +26,7 @@ import com.google.firebase.database.ValueEventListener;
 import es.dmoral.toasty.Toasty;
 
 public class Inward_Truck extends AppCompatActivity {
-    Button btnlogout;
+    ImageView btnlogout;
     TextView username,empid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

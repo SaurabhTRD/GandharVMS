@@ -39,10 +39,12 @@
                 android:textSize="20sp"/>
         </LinearLayout>
 
-        <Button
+        <ImageView
             android:id="@+id/btn_logoutButton"
-            android:layout_width="wrap_content"
+            android:layout_width="50dp"
             android:layout_height="wrap_content"
-            android:text="Logout"/>
+            android:layout_marginRight="5dp"
+            android:text="Logout"
+            android:src="@drawable/logout"/>
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>

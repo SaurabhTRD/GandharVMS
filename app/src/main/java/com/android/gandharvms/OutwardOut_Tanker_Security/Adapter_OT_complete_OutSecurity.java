@@ -1,4 +1,4 @@
-package com.android.gandharvms.Outward_Tanker_Production_forms;
+package com.android.gandharvms.OutwardOut_Tanker_Security;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -13,14 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Outward_Tanker_Security.Adapter_OT__Complete_sec;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Adapter_OT_completed_bulkload_production extends RecyclerView.Adapter<Adapter_OT_completed_bulkload_production.myviewHolder> implements Filterable {
-
+public class Adapter_OT_complete_OutSecurity extends RecyclerView.Adapter<Adapter_OT_complete_OutSecurity.myviewHolder> implements Filterable {
     private static final int TYPE_ROW = 0;
     private static final int TYPE_ROW_COLORFUL = 1;
 
@@ -30,12 +30,15 @@ public class Adapter_OT_completed_bulkload_production extends RecyclerView.Adapt
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private Context context;
+
     String formattedDate;
-    public Adapter_OT_completed_bulkload_production(List<Common_Outward_model> gridmodel) {
+
+    public Adapter_OT_complete_OutSecurity(List<Common_Outward_model> gridmodel) {
         Gridmodel = gridmodel;
         this.filteredGridList = gridmodel;
 //        this.context = context;
     }
+
     @Override
     public int getItemViewType(int position) {
         if (position % 2 == 0) {
@@ -44,41 +47,42 @@ public class Adapter_OT_completed_bulkload_production extends RecyclerView.Adapt
         return TYPE_ROW;
     }
 
+
     @NonNull
     @Override
-    public Adapter_OT_completed_bulkload_production.myviewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
+    public Adapter_OT_complete_OutSecurity.myviewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
         if (viewType == TYPE_ROW){
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ot_in_bulkloadprod_complete_tablecell,viewGroup,false);
-            return new Adapter_OT_completed_bulkload_production.myviewHolder(view);
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ot_out_sec_complete_table_cell,viewGroup,false);
+            return new Adapter_OT_complete_OutSecurity.myviewHolder(view);
         }else {
-            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ot_in_bulkload_prod_tablecell, viewGroup, false);
-            return new Adapter_OT_completed_bulkload_production.myviewHolder(view);
+            View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ot_out_sec_tableitem,
+                    viewGroup, false);
+            return new Adapter_OT_complete_OutSecurity.myviewHolder(view);
         }
     }
 
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_OT_completed_bulkload_production.myviewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Adapter_OT_complete_OutSecurity.myviewHolder holder, int position) {
 
         Common_Outward_model club = filteredGridList.get(position);
-        int intimelength = club.getProInTime()!= null ? club.getProInTime().length() :0;
-        int outtimelength = club.getProOutTime()!=null ? club.getProOutTime().length() : 0;
+        int intimelength = club.getInTime()!= null ? club.getInTime().length() :0;
+        int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
         if (intimelength > 0) {
-            holder.intime.setText(club.getProInTime().substring(12, intimelength));
+            holder.initime.setText(club.getInTime().substring(12, intimelength));
         }
         if (outtimelength > 0) {
-            holder.outtime.setText(club.getProOutTime().substring(12, outtimelength));
+            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
-        holder.serialnum.setText(club.getSerialNumber());
-        holder.vehiclenum.setText(club.getVehicleNumber());
-        holder.oanum.setText(club.getOAnumber());
-        holder.product.setText(club.getProductName());
-        holder.customer.setText(club.getCustomerName());
-        holder.destination.setText(club.getLocation());
-        holder.qtykl.setText(String.valueOf(club.getHowMuchQuantityFilled()));
-        holder.transporter.setText(club.getTransportName());
-        holder.officer.setText(club.getPsign());
-        holder.remark.setText(club.getProRemark());
+        holder.serial.setText(club.getSerialNumber());
+        holder.vehicle.setText(club.getVehicleNumber());
+        holder.partyname.setText(club.getNameofParty());
+        holder.invoicenum.setText(club.getInvoiceNumber());
+        holder.totalqty.setText(String.valueOf(club.getOutTotalQty()));
+        holder.netwt.setText(String.valueOf(club.getNetWeight()));
+        holder.goodsdisc.setText(club.getDescriptionofGoods());
+        holder.sign.setText(club.getSignature());
+        holder.remark.setText(club.getRemark());
     }
 
     @Override
@@ -119,21 +123,20 @@ public class Adapter_OT_completed_bulkload_production extends RecyclerView.Adapt
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder{
-        public TextView serialnum,vehiclenum,oanum,product,customer,destination,qtykl,transporter,intime,outtime,officer,remark;
+        public TextView serial,vehicle,partyname,invoicenum,totalqty,netwt,initime,outtime,goodsdisc,sign,remark;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
-            serialnum = itemView.findViewById(R.id.otbulkpserial);
-            vehiclenum = itemView.findViewById(R.id.otbulkpvehicle);
-            oanum = itemView.findViewById(R.id.otbulkpoanum);
-            product = itemView.findViewById(R.id.otbulkpproduct);
-            customer = itemView.findViewById(R.id.otbulkpcustomer);
-            destination = itemView.findViewById(R.id.otbulkpdestination);
-            qtykl = itemView.findViewById(R.id.otbulkpqtykl);
-            transporter = itemView.findViewById(R.id.otbulkptransporter);
-            intime = itemView.findViewById(R.id.otbulkpintime);
-            outtime = itemView.findViewById(R.id.otbulkpouttime);
-            officer = itemView.findViewById(R.id.otbulkpofficer);
-            remark = itemView.findViewById(R.id.otbulkpremark);
+            serial = itemView.findViewById(R.id.otoutsecserial);
+            vehicle = itemView.findViewById(R.id.otoutsecvehicle);
+            partyname = itemView.findViewById(R.id.otoutsecparty);
+            invoicenum = itemView.findViewById(R.id.otoutsecinvoicenum);
+            totalqty = itemView.findViewById(R.id.otoutsectotalqty);
+            netwt = itemView.findViewById(R.id.otoutsecnetwt);
+            initime = itemView.findViewById(R.id.otoutsecintime);
+            outtime = itemView.findViewById(R.id.otoutsecouttime);
+            goodsdisc = itemView.findViewById(R.id.otoutgoodsdisc);
+            sign = itemView.findViewById(R.id.otoutsecsign);
+            remark = itemView.findViewById(R.id.otoutsecremark);
         }
     }
 }

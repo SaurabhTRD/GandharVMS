@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OutwardOut_Tanker_Weighment">
+    tools:context=".Outwardout_Tanker_Weighment.OutwardOut_Tanker_Weighment">
 
     <Button
         style="@style/Widget.MaterialComponents.Button"
@@ -357,6 +357,7 @@
                         android:layout_width="130dp"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="50dp"
+                        android:id="@+id/otoutweighcompleted"
                         android:text="COMPLETED"
                         android:textSize="17dp"
                         android:textStyle="bold"

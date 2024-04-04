@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
@@ -19,10 +18,6 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.OutwardOut_Tanker;
-import com.android.gandharvms.OutwardOut_Tanker_Weighment;
-import com.android.gandharvms.Outward_Tanker;
-import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
-import com.android.gandharvms.Outward_Tanker_Production_forms.Request_Model_blendflush;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.R;
@@ -45,7 +40,7 @@ import retrofit2.Response;
 
 public class DataEntryForm_Production extends AppCompatActivity {
     EditText odeintime,odeserialnumber,odevehiclenumber,odedensity,odesealnumber,odeetremark;
-    Button odesubmit;
+    Button odesubmit,completd;
     TimePickerDialog tpicker;
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
@@ -70,6 +65,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
         odedensity=findViewById(R.id.etoutdataentrydensity);
         odesealnumber=findViewById(R.id.etoutdataentrysealnumber);
         odeetremark=findViewById(R.id.etoutdataentryremakr);
+        completd =findViewById(R.id.outdataentrycompletd);
 
         odesubmit=findViewById(R.id.etoutdataentrysubmit);
 
@@ -79,6 +75,12 @@ public class DataEntryForm_Production extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 update();
+            }
+        });
+        completd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(DataEntryForm_Production.this, OT_Completed_outdataentry.class));
             }
         });
 

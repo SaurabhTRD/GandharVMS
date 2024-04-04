@@ -17,8 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_Production;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
-import com.android.gandharvms.OutwardOut_Tanker_Security;
-import com.android.gandharvms.OutwardOut_Tanker_Weighment;
+import com.android.gandharvms.OutwardOut_Tanker_Security.OutwardOut_Tanker_Security;
+import com.android.gandharvms.Outwardout_Tanker_Weighment.OutwardOut_Tanker_Weighment;
 import com.android.gandharvms.OutwardOut_Truck_Billing.OutwardOut_Truck_Billing;
 import com.android.gandharvms.OutwardOut_Truck_Security;
 import com.android.gandharvms.OutwardOut_Truck_Weighment;

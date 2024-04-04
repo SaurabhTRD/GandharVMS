@@ -115,8 +115,9 @@
       </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.cardview.widget.CardView
-        android:layout_width="405dp"
+        android:layout_width="match_parent"
         android:layout_height="55dp"
+        android:layout_marginTop="10dp"
 
         >
       <LinearLayout
@@ -153,7 +154,7 @@
             android:layout_width="130dp"
             android:layout_height="match_parent"
             android:layout_below="@id/OUM."
-            android:layout_marginLeft="5dp"
+            android:layout_marginLeft="140dp"
             android:text="SUBMIT"
             android:textSize="17dp"
             android:textStyle="bold">

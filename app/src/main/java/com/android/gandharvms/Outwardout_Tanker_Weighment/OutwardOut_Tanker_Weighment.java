@@ -1,4 +1,4 @@
-package com.android.gandharvms;
+package com.android.gandharvms.Outwardout_Tanker_Weighment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,23 +21,21 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
+import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Model_OutwardOut_Weighment;
-import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Response_Outward_Tanker_Weighment;
+import com.android.gandharvms.R;
 import com.android.gandharvms.Util.MultipartTask;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -46,10 +44,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -60,7 +56,7 @@ import retrofit2.Response;
 public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
 
     EditText intime,serialnumber,vehiclenumber,sealnumber,tareweight,netweight,grossw,etnumberpack,etremark,fetchdensity,etotdip,etotwt;
-    Button submit;
+    Button submit,completed;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -109,6 +105,7 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         dbroot= FirebaseFirestore.getInstance();
         etotdip = findViewById(R.id.otouttankeretshortdip);
         etotwt = findViewById(R.id.otouttankeretshortwt);
+        completed = findViewById(R.id.otoutweighcompleted);
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
@@ -120,6 +117,12 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
                 } else {
                     UploadImagesAndUpdate();
                 }
+            }
+        });
+        completed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OutwardOut_Tanker_Weighment.this,OT_Completed_Outweighment.class));
             }
         });
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {

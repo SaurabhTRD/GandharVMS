@@ -357,7 +357,7 @@
 
         <Button
             android:id="@+id/button_add"
-            android:layout_width="360dp"
+            android:layout_width="460dp"
             android:layout_height="50dp"
             android:text="Add Material"
             android:layout_marginLeft="29dp"

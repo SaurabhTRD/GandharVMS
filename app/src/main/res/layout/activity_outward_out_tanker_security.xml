@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".OutwardOut_Tanker_Security">
+    tools:context=".OutwardOut_Tanker_Security.OutwardOut_Tanker_Security">
 
     <Button
         style="@style/Widget.MaterialComponents.Button"
@@ -478,7 +478,7 @@
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="130dp"
                     android:layout_height="match_parent"
-                    android:id="@+id/samplingview"
+                    android:id="@+id/otoutseccompletd"
                     android:layout_marginLeft="55dp"
                     android:text="COMPLETED"
                     android:textSize="17dp"

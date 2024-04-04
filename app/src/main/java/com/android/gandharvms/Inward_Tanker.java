@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 import android.widget.TextView;
 
@@ -30,7 +31,7 @@ import es.dmoral.toasty.Toasty;
 public class Inward_Tanker extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String userRole="default";
-    Button btnlogout;
+    ImageView btnlogout;
     TextView username,empid;
     private String role=Global_Var.getInstance().Department;
     private String Empid= Global_Var.getInstance().EmpId;

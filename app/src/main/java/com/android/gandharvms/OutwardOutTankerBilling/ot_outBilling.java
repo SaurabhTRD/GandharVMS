@@ -13,19 +13,14 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.OutwardOut_Tanker;
-import com.android.gandharvms.OutwardOut_Tanker_Weighment;
-import com.android.gandharvms.Outward_Tanker;
-import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
@@ -61,7 +56,7 @@ public class ot_outBilling extends AppCompatActivity {
     EditText oobintime,oobserialnumber,oobvehiclenumber,oobsealnumber,oobtareweight,
             oobnetweight,oobgrossw,oobetremark,oobfetchdensity,oobOANumber,
             oobTransporter,oobdriverno,oobbatchno,oobtotalQuantity,oobinvoicenumber;
-    Button oobsubmit;
+    Button oobsubmit,completed;
     TimePickerDialog tpicker;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
@@ -99,6 +94,7 @@ public class ot_outBilling extends AppCompatActivity {
         oobinvoicenumber=findViewById(R.id.etotoutbilinvoicenumber);
 
         oobsubmit=findViewById(R.id.etotoutbilsubmit);
+        completed = findViewById(R.id.otoutbillcompleted);
 
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -106,6 +102,12 @@ public class ot_outBilling extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 insert();
+            }
+        });
+        completed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ot_outBilling.this, OT_out_Billing_Completed.class));
             }
         });
 

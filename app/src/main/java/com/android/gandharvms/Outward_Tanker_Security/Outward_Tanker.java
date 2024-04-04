@@ -85,7 +85,7 @@ public interface Outward_Tanker {
                                                                     @Query("nextprocess") char nextprocess,
                                                                     @Query("inout") char inout);
 
-    //OT_IN_Billing
+    //OT_IN_Billing & use OT_Out_Billing also
     @GET("api/OutwardBilling/GetOutwardBillingList")
     Call<List<Common_Outward_model>> get_tankerin_billing_completed(@Query("FromDate")String FromDate,
                                                                     @Query("Todate") String Todate,
@@ -94,6 +94,8 @@ public interface Outward_Tanker {
                                                                     @Query("inout") char inout);
 
 
+
+    //using OT_out_dataentry_also
     @GET("api/OutwardProductionAndLaboratory/GetOutwardProductionAndLaboratoryList")
     Call<List<Common_Outward_model>> get_tanker_production_inprocesscompleted(@Query("FromDate")String FromDate,
                                                                               @Query("Todate") String Todate,

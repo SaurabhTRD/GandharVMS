@@ -176,6 +176,35 @@ public class Common_Outward_model {
     public String DataEntryRemark;
     public String Restivity;
     public String Infra_Red;
+    public String OutOutTime;
+    public String OutInvoiceNumber;
+    public String OutTotalQty;
+
+
+
+    public String getOutTotalQty() {
+        return OutTotalQty;
+    }
+
+    public void setOutTotalQty(String outTotalQty) {
+        OutTotalQty = outTotalQty;
+    }
+
+    public String getOutInvoiceNumber() {
+        return OutInvoiceNumber;
+    }
+
+    public void setOutInvoiceNumber(String outInvoiceNumber) {
+        OutInvoiceNumber = outInvoiceNumber;
+    }
+
+    public String getOutOutTime() {
+        return OutOutTime;
+    }
+
+    public void setOutOutTime(String outOutTime) {
+        OutOutTime = outOutTime;
+    }
 
     public String getRestivity() {
         return Restivity;

@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.gandharvms.Global_Var;
@@ -17,7 +18,7 @@ import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.R;
 
 public class submenu_Inward_Truck extends AppCompatActivity {
-    Button btnlogout;
+    ImageView btnlogout;
     TextView username,empid;
 
     @Override

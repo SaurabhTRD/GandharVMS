@@ -9,8 +9,8 @@ import android.widget.Toast;
 
 import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_Production;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
-import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
+import com.android.gandharvms.OutwardOut_Tanker_Security.OutwardOut_Tanker_Security;
+import com.android.gandharvms.Outwardout_Tanker_Weighment.OutwardOut_Tanker_Weighment;
 
 import es.dmoral.toasty.Toasty;
 

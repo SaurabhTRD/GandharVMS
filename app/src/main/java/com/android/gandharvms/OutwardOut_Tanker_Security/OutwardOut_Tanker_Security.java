@@ -1,4 +1,4 @@
-package com.android.gandharvms;
+package com.android.gandharvms.OutwardOut_Tanker_Security;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,22 +11,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
-import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
-import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
+import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Model_OutwardOut_Security;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.DocumentReference;
+import com.android.gandharvms.R;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -34,10 +31,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -48,7 +43,7 @@ import retrofit2.Response;
 public class OutwardOut_Tanker_Security extends AppCompatActivity {
 
     EditText intime,serialnumber,date,vehiclenumber,invoiceno,partyname,goodsdiscription,qty,otoutsecqtyuom,netweight,sign,remark;
-    Button submit;
+    Button submit,complted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -87,6 +82,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
+        complted = findViewById(R.id.otoutseccompletd);
 
         Trasnportyes = findViewById(R.id.outwaoutrb_LRCopyYes);
         transportno = findViewById(R.id.outwaourb_LRCopyNo);
@@ -103,6 +99,12 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 insert();
+            }
+        });
+        complted.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OutwardOut_Tanker_Security.this,OT_Complete_Out_security.class));
             }
         });
         intime.setOnClickListener(new View.OnClickListener() {
@@ -224,7 +226,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         makeNotification(outsecvehiclenum);
                         Toasty.success(OutwardOut_Tanker_Security.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        startActivity(new Intent(OutwardOut_Tanker_Security.this,OutwardOut_Tanker.class));
+                        startActivity(new Intent(OutwardOut_Tanker_Security.this, OutwardOut_Tanker.class));
                         finish();
                     }
                 }
