@@ -3,6 +3,7 @@ package com.android.gandharvms.LoginWithAPI;
 import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabRequestModel;
 import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabResponseModel;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Tanker_Laboratory.it_lab_UpdateByInwardid_request_Model;
 
 import java.util.List;
 
@@ -29,4 +30,7 @@ public interface Laboratory {
                                                          @Query("inOut") char inOut);
     @POST("api/InwardLaboratory/Add")
     Call<Boolean> insertLabData(@Body InTanLabRequestModel insertLabmodel);
+
+    @POST("api/InwardLaboratory/UpdateInwardTLaborataryByInwardId")
+    Call<Boolean> updateLabByInwardId(@Body it_lab_UpdateByInwardid_request_Model updateLabbyinwardid);
 }

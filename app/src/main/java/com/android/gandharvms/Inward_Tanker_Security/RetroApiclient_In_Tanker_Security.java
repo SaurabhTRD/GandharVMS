@@ -1,6 +1,7 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
 import com.android.gandharvms.Inward_Tanker_Production.API_In_Tanker_production;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,7 +10,7 @@ public class RetroApiclient_In_Tanker_Security {
 
     private static Retrofit retrofit = null;
 
-    private static String BASE_URL = "https://gandhardevapi.azurewebsites.net/";
+    private static String BASE_URL = RetroApiClient.BASE_URL;
 
     public static Retrofit getRetrofit() {
         if (retrofit == null){

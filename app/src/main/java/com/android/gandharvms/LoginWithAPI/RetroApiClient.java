@@ -11,6 +11,7 @@ public class RetroApiClient {
     public static Retrofit retrofit = null;
     public static String BASE_URL = "https://gandhardevapi.azurewebsites.net/";
 //    private static String BASE_URL = "http://52.183.160.211:8097/";
+    //public static String UploadImage_URL="https://gandhardevapi.azurewebsites.net/api/Common/Upload";
 
     public static Retrofit getClient() {
         if (retrofit == null) {

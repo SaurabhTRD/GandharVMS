@@ -68,6 +68,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -108,7 +109,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     Uri image1, image2;
     byte[] ImgDriver, ImgVehicle;
     byte[][] arrayOfByteArrays = new byte[2][];
-
+    String[] LocalImgPath = new String[2];
     private String imgPath1, imgPath2;
 
     FirebaseStorage storage;
@@ -212,6 +213,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     Toasty.warning(Inward_Truck_weighment.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
                 } else {
                     UploadImagesAndInsert();
+                    //deleteLocalImage();
                 }
             }
         });
@@ -395,6 +397,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
                     String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
+                    LocalImgPath[0] = path;
                     image1 = Uri.parse(path);
                     ImgVehicle = baos.toByteArray();
                 } else {
@@ -408,6 +411,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
                     String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
+                    LocalImgPath[1] = path;
                     image2 = Uri.parse(path);
                     ImgDriver = baos.toByteArray();
                 } else {
@@ -420,6 +424,51 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
         }
     }
+
+    // Function to upload image to server and delete local image after successful upload
+    /*private void uploadAndDeleteLocalImage(byte[] imageData, String imageName) {
+        boolean uploadSuccessful = true;
+        if (uploadSuccessful) {
+            // If upload is successful, delete the local image file
+            deleteLocalImage();
+            // Call the method to insert the image URL into the database
+            intrinsert();
+        } else {
+            // Handle upload failure if necessary
+        }
+    }*/
+
+    // Function to delete local image
+    /*private void deleteLocalImage() {
+        File imageFile;
+        *//*try {
+            for (String imgpath : LocalImgPath) {
+                File imageFile = new File(imgpath);
+                if (imageFile.exists()) {
+                    imageFile.delete();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*//*
+        try {
+            for (String imgpath : LocalImgPath) {
+                if (imgpath != null) {
+                    imageFile = new File(imgpath);
+                    if (imageFile.exists()) {
+                        boolean isDeleted = imageFile.delete();
+                        if (isDeleted) {
+                            Log.d("ImageDeletion", "Image deleted successfully: " + imgpath);
+                        } else {
+                            Log.d("ImageDeletion", "Failed to delete image: " + imgpath);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }*/
 
     public void onBackPressed(){
         Intent intent = new Intent(this, Menu.class);
@@ -452,8 +501,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                         etdriver.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);
-                       /* etint.requestFocus();
-                        etint.callOnClick();*/
                     }
                     else {
                         Toasty.error(Inward_Truck_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();

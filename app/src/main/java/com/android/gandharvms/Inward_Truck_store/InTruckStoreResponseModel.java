@@ -28,6 +28,24 @@ public class InTruckStoreResponseModel {
     int Qty;
     int QtyUOM;
     String UnitOfMeasurement;
+    String ReQTYUom;
+    String storeRemark;
+
+    public String getReQTYUom() {
+        return ReQTYUom;
+    }
+
+    public void setReQTYUom(String reQTYUom) {
+        ReQTYUom = reQTYUom;
+    }
+
+    public String getStoreRemark() {
+        return storeRemark;
+    }
+
+    public void setStoreRemark(String storeRemark) {
+        this.storeRemark = storeRemark;
+    }
 
     public String getUnitOfMeasurement() {
         return UnitOfMeasurement;

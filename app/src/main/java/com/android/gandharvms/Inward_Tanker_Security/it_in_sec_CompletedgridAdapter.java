@@ -2,6 +2,7 @@ package com.android.gandharvms.Inward_Tanker_Security;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -80,7 +81,6 @@ public class it_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_in_s
         if (outtimelength > 0) {
             holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
-
         holder.partyname.setText(club.getPartyName());
         holder.qty.setText(String.valueOf(club.getQty()));
         holder.qtyuom.setText(club.getUnitOfQTY());
@@ -90,6 +90,18 @@ public class it_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_in_s
         holder.remark.setText(club.getRemark());
         holder.oapo.setText(club.getOA_PO_number());
         holder.mob.setText(club.getDriver_MobileNo());
+
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommonResponseModelForAllDepartment club = filteredGridList.get(position);
+                Intent intent;
+                intent = new Intent(view.getContext(), Inward_Tanker_Security.class);
+                intent.putExtra("VehicleNumber",club.getVehicleNo());
+                intent.putExtra("Action","Up");
+                view.getContext().startActivity(intent);
+            }
+        });
     }
     public int getItemCount() {
         return Gridmodel.size();

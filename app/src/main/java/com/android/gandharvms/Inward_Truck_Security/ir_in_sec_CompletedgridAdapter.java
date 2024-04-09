@@ -2,6 +2,7 @@ package com.android.gandharvms.Inward_Truck_Security;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.R;
 import com.android.gandharvms.it_out_sec_CompletedgridAdapter;
 
@@ -96,6 +98,17 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
         holder.DeliveryBill.setText(club.getDeliveryBill());
         holder.TaxInvoice.setText(club.getTaxInvoice());
         holder.EwayBill.setText(club.getEwayBill());
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommonResponseModelForAllDepartment club = filteredGridList.get(position);
+                Intent intent;
+                intent = new Intent(view.getContext(), Inward_Truck_Security.class);
+                intent.putExtra("VehicleNumber",club.getVehicleNo());
+                intent.putExtra("Action","Up");
+                view.getContext().startActivity(intent);
+            }
+        });
     }
     public int getItemCount() {
         return Gridmodel.size();

@@ -2,6 +2,7 @@ package com.android.gandharvms.Inward_Tanker_Laboratory;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.R;
 
 import java.text.ParseException;
@@ -103,6 +105,17 @@ public class it_Lab_CompletedgridAdapter extends RecyclerView.Adapter<it_Lab_Com
         holder.DateAndTime.setText(club.getDateAndTime());
         holder.RemarkDescription.setText(club.getRemarkDescription());
         holder.ViscosityIndex.setText(String.valueOf(club.getViscosityIndex()));
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CommonResponseModelForAllDepartment club = filteredGridList.get(position);
+                Intent intent;
+                intent = new Intent(view.getContext(), Inward_Tanker_Laboratory.class);
+                intent.putExtra("VehicleNumber",club.getVehicleNo());
+                intent.putExtra("Action","Up");
+                view.getContext().startActivity(intent);
+            }
+        });
     }
     public int getItemCount() {
         return Gridmodel.size();

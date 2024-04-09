@@ -117,7 +117,7 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/material"
                 android:layout_below="@id/party_name"
-
+                android:focusable="false"
                 >
                 <EditText
                     android:id="@+id/etconunloadDateTime"
@@ -126,8 +126,7 @@
                     android:hint="Date"
                     android:inputType="text"
                     android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:focusable="false"/>
+                    android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -241,6 +240,18 @@
                     android:layout_height="55dp"
                     android:gravity="center"
                     android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:layout_width="110dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/itproupdateclick"
+                        android:layout_below="@id/OUM."
+                        android:layout_marginRight="40dp"
+                        android:text="Update"
+                        android:textSize="17dp"
+                        android:visibility="gone"
+                        android:textStyle="bold">
+                    </androidx.appcompat.widget.AppCompatButton>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="115dp"
