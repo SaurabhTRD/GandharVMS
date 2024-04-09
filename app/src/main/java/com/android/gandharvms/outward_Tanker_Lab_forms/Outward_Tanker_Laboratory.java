@@ -386,7 +386,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body()==true) {
                         makeNotificationforresend(labvehicl);
-                        Toasty.success(Outward_Tanker_Laboratory.this, "Data Inserted Successfully", Toasty.LENGTH_SHORT, true).show();
+                        Toasty.success(Outward_Tanker_Laboratory.this, "Blending And Flushing Send To Production for Verify", Toasty.LENGTH_LONG, true).show();
                         startActivity(new Intent(Outward_Tanker_Laboratory.this, Outward_Tanker.class));
                         finish();
                     } else {

@@ -364,7 +364,7 @@ public class bulkloadingproduction extends AppCompatActivity {
         String outTime = getCurrentTime();
 
         if (utankboblend.isEmpty() || ubulkqty.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
             Production_Model_Update productionModelUpdate = new Production_Model_Update(OutwardId, utankboblend, ubulkqty,outTime, EmployeId,
                     'W', 'O', vehicleType);
