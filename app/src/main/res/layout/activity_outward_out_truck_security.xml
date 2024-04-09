@@ -126,70 +126,70 @@
 
 
 
-            <LinearLayout
-                android:id="@+id/wthree"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-                android:layout_weight="2"
-                android:orientation="horizontal"
+<!--            <LinearLayout-->
+<!--                android:id="@+id/wthree"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_weight="2"-->
+<!--                android:orientation="horizontal"-->
 
-                >
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginRight="30dp"
+<!--                >-->
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="170dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                    android:layout_marginLeft="2dp"-->
+<!--                    android:layout_marginRight="30dp"-->
 
-                    android:id="@+id/intime"
-                    android:layout_below="@id/material"
+<!--                    android:id="@+id/intime"-->
+<!--                    android:layout_below="@id/material"-->
 
-                    >
-                    <EditText
-                        android:id="@+id/etqty"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Qty"
-                        android:inputType="numberDecimal"
-                        android:textSize="17dp"
-                        android:textStyle="bold"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                    >-->
+<!--                    <EditText-->
+<!--                        android:id="@+id/etqty"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="Qty"-->
+<!--                        android:inputType="numberDecimal"-->
+<!--                        android:textSize="17dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="170dp"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
-                    android:layout_marginLeft="-22dp"
-                    android:layout_marginTop="2dp"
-                    android:id="@+id/netweight"
-                    android:layout_below="@id/intime"
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    android:layout_width="170dp"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"-->
+<!--                    android:layout_marginLeft="-22dp"-->
+<!--                    android:layout_marginTop="2dp"-->
+<!--                    android:id="@+id/netweight"-->
+<!--                    android:layout_below="@id/intime"-->
 
-                    >
-                    <AutoCompleteTextView
-                        android:id="@+id/qtyuom"
-                        android:layout_width="185dp"
-                        android:layout_height="wrap_content"
-                        android:hint="UOM"
-                        android:inputType="none"
-                        android:textSize="17dp"
-                        android:textStyle="bold"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+<!--                    >-->
+<!--                    <AutoCompleteTextView-->
+<!--                        android:id="@+id/qtyuom"-->
+<!--                        android:layout_width="185dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="UOM"-->
+<!--                        android:inputType="none"-->
+<!--                        android:textSize="17dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
-            <LinearLayout
-                android:id="@+id/layout_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp">
+<!--            <LinearLayout-->
+<!--                android:id="@+id/layout_list"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:orientation="vertical"-->
+<!--                android:layout_marginTop="5dp">-->
 
-            </LinearLayout>
+<!--            </LinearLayout>-->
 
 
             <LinearLayout
@@ -208,6 +208,7 @@
                     style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
+                    android:layout_marginBottom="2dp"
 
                     android:id="@+id/QTY."
 
@@ -243,6 +244,7 @@
                         android:inputType="none"
                         android:textSize="17dp"
                         android:textStyle="bold"
+                        android:layout_marginTop="5dp"
                         />
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
@@ -269,27 +271,27 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_marginTop="2dp"-->
 
-                android:layout_below="@id/vehicalno"
+<!--                android:layout_below="@id/vehicalno"-->
 
-                >
-                <EditText
-                    android:id="@+id/etinvoice"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Invoice No"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                >-->
+<!--                <EditText-->
+<!--                    android:id="@+id/etinvoice"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Invoice No"-->
+<!--                    android:inputType="text"-->
+<!--                    android:textSize="17dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -543,6 +545,8 @@
                 android:layout_height="55dp"
                 android:layout_weight="3"
                 android:layout_below="@id/OUM."
+                android:layout_marginLeft="40dp"
+                android:layout_marginTop="5dp"
                 >
                 <LinearLayout
                     android:layout_width="match_parent"

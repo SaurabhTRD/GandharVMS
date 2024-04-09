@@ -90,11 +90,11 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         intime=findViewById(R.id.etintime);
         serialnumber=findViewById(R.id.etserialnumber);
         vehiclenumber=findViewById(R.id.etvehical);
-        invoice=findViewById(R.id.etinvoice);
+//        invoice=findViewById(R.id.etinvoice);
         party=findViewById(R.id.etpartyname);
         gooddis=findViewById(R.id.etdisc);
-        qty=findViewById(R.id.etqty);
-        uom1=findViewById(R.id.qtyuom);
+//        qty=findViewById(R.id.etqty);
+//        uom1=findViewById(R.id.qtyuom);
         netweight=findViewById(R.id.etnetweight);
         uom2=findViewById(R.id.netweuom);
         sign=findViewById(R.id.etsign);
@@ -153,33 +153,33 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                 }
             }
         });
-        autoCompleteTextView1outwardoutse = findViewById(R.id.qtyuom);
-        qtyUomMapping = new HashMap<>();
-        qtyUomMapping.put("NA", 1);
-        qtyUomMapping.put("Ton", 2);
-        qtyUomMapping.put("Litre", 3);
-        qtyUomMapping.put("KL", 4);
-        qtyUomMapping.put("Kgs", 5);
-        qtyUomMapping.put("pcs", 6);
-
-        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.outwaout_securityqty, new ArrayList<>(qtyUomMapping.keySet()));
-        autoCompleteTextView1outwardoutse.setAdapter(qtyuomdrop);
-        autoCompleteTextView1outwardoutse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
-                // Retrieve the corresponding numerical value from the mapping
-                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
-                if (qtyUomNumericValue != null) {
-                    // Now, you can use qtyUomNumericValue when inserting into the database
-
-                    Toast.makeText(OutwardOut_Truck_Security.this, "qtyUomNumericValue : " + qtyUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Handle the case where the mapping doesn't contain the display value
-                    Toast.makeText(OutwardOut_Truck_Security.this, "Unknown qtyUom : " + qtyUomDisplay, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        autoCompleteTextView1outwardoutse = findViewById(R.id.qtyuom);
+//        qtyUomMapping = new HashMap<>();
+//        qtyUomMapping.put("NA", 1);
+//        qtyUomMapping.put("Ton", 2);
+//        qtyUomMapping.put("Litre", 3);
+//        qtyUomMapping.put("KL", 4);
+//        qtyUomMapping.put("Kgs", 5);
+//        qtyUomMapping.put("pcs", 6);
+//
+//        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.outwaout_securityqty, new ArrayList<>(qtyUomMapping.keySet()));
+//        autoCompleteTextView1outwardoutse.setAdapter(qtyuomdrop);
+//        autoCompleteTextView1outwardoutse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
+//                // Retrieve the corresponding numerical value from the mapping
+//                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
+//                if (qtyUomNumericValue != null) {
+//                    // Now, you can use qtyUomNumericValue when inserting into the database
+//
+//                    Toast.makeText(OutwardOut_Truck_Security.this, "qtyUomNumericValue : " + qtyUomNumericValue + " Selected", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    // Handle the case where the mapping doesn't contain the display value
+//                    Toast.makeText(OutwardOut_Truck_Security.this, "Unknown qtyUom : " + qtyUomDisplay, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         autoCompleteTextView2outwardoutse = findViewById(R.id.netweuom);
         netweuomdrop = new ArrayAdapter<String>(this, R.layout.outwaout_netwt, new ArrayList<>(qtyUomMapping.keySet()));
@@ -271,12 +271,13 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                         serialnumber.setEnabled(false);
                         vehiclenumber.setEnabled(false);
                         party.setEnabled(false);
-                        qty.setText(String.valueOf(obj.getOutTotalQty()));
-                        qty.setEnabled(false);
-                        uom1.setText(String.valueOf(obj.getOutTotalQtyUOM()));
+//                        qty.setText(String.valueOf(obj.getOutTotalQty()));
+//                        qty.setEnabled(false);
+//                        uom1.setText(String.valueOf(obj.getOutTotalQtyUOM()));
                         netweight.setText(obj.getNetWeight());
                         netweight.setEnabled(false);
                         svehicleno = obj.getVehicleNumber();
+//                        invoice.setText(obj.getInvoiceNumber());
                     }else {
                         Toasty.error(OutwardOut_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
@@ -317,7 +318,7 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         String etintime = intime.getText().toString().trim();
         String etsign = sign.getText().toString().trim();
         String etremark = remark.getText().toString().trim();
-        String etinvoice = invoice.getText().toString().trim();
+//        String etinvoice = invoice.getText().toString().trim();
         String etgooddis = gooddis.getText().toString().trim();
 
 
@@ -326,7 +327,7 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         if (etintime.isEmpty()||etsign.isEmpty()||etremark.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-            Model_OutwardOut_Truck_Security modelOutwardOutTruckSecurity = new Model_OutwardOut_Truck_Security(OutwardId,etinvoice,
+            Model_OutwardOut_Truck_Security modelOutwardOutTruckSecurity = new Model_OutwardOut_Truck_Security(OutwardId,"",
                     "",etgooddis,etsign,lrCopySelection,tremselection,ewayselection,testreselection,invoiceselection,
                     outTime,EmployeId,'S',inOut,vehicleType,etremark);
             Call<Boolean> call = outwardTanker.updateout_Truck_wardoutsecurity(modelOutwardOutTruckSecurity);

@@ -177,13 +177,13 @@ public class Outward_Truck_Production extends AppCompatActivity {
         call.enqueue(new Callback<Model_Outward_Truck_Dispatch>() {
             @Override
             public void onResponse(Call<Model_Outward_Truck_Dispatch> call, Response<Model_Outward_Truck_Dispatch> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful() ){
                     Model_Outward_Truck_Dispatch data = response.body();
                     if (data.getVehicleNumber() != "" && data.getVehicleNumber()!= null){
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenumber.setText(data.getVehicleNumber());
-                        etqty.setText(String.valueOf(data.getBarrelFormQty()));
+                        etqty.setText(String.valueOf(data.getTotalCalCulatedWeight()));//set qty as totalcalculated wt
                         typepack.setText(String.valueOf(data.getTypeOfPackagingId()));
                         signdis.setText(data.getDespatch_Sign());
 //                        dtdis.setText(data.getDespatchInTime());

@@ -64,7 +64,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
     AutoCompleteTextView autoCompleteTextView;
     ArrayAdapter<String> adapterItems;
 
-    EditText intime,serialnumber,date,vehiclenumber,material,qty,partyname,oanumber,typepackeging,qty2,disfficer,datetime,
+    EditText intime,serialnumber,date,vehiclenumber,material,qty,partyname,oanumber,typepackeging,disfficer,datetime,
             secofficer,datetime2,signeweighment,datetime3,remark,etother,ettotal;
     Button submit,logisticbutton,btnlogicomplted;
     FirebaseFirestore dbroot;
@@ -85,6 +85,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
     private String token;
     LinearLayout linearLayout;
     List<String> packinglist = new ArrayList<>();
+    private int uqty;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,7 +138,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
 //        ettotal = findViewById(R.id.ettotaalwt);
 
 //        typepackeging= findViewById(R.id.typepacking);
-        qty2=findViewById(R.id.etqty2);
+        qty=findViewById(R.id.etqty2);
         disfficer=findViewById(R.id.etdispatchofficer);
 
 
@@ -325,6 +326,13 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
         String uremark = remark.getText().toString().trim();
         String etdisfficer = disfficer.getText().toString().trim();
 //        int etqty2 = Integer.parseInt(qty2.getText().toString().trim());
+        if (!qty.getText().toString().isEmpty()){
+            try {
+                uqty = Integer.parseInt(qty.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
 //        int ettypepacking = Integer.parseInt(typepackeging.getText().toString().trim());
         String etseralnumber = serialnumber.getText().toString().trim();
         String etvehiclenumber = vehiclenumber.getText().toString().trim();
@@ -397,7 +405,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
 //                }
 //            }
             Model_Outward_Truck_Dispatch modelOutwardTruckDispatch = new Model_Outward_Truck_Dispatch(OutwardId,etintime,outTime,
-                    'D',uremark,etdisfficer,0,1,EmployeId,EmployeId,
+                    'D',uremark,etdisfficer,uqty,1,EmployeId,EmployeId,
                     etseralnumber,etvehiclenumber,'P',inOut,vehicleType,"",uother,updateoa);
             Call<Boolean> call = outwardTruckInterface.insertdispatch(modelOutwardTruckDispatch);
             call.enqueue(new Callback<Boolean>() {

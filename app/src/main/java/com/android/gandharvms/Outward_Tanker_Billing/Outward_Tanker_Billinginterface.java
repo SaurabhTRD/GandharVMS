@@ -26,6 +26,6 @@ public interface Outward_Tanker_Billinginterface {
     Call<Boolean> UpdateOutBillingDetails(@Body ot_outBillingRequestModel request);
 
     //outwardout_truck_billing
-    @POST("api/OutwardTruckBillingDispatch/UpdateOutwardTruckBilling")
+    @POST("api/OutwardBilling/AddOutTruckBillingData")
     Call<Boolean> updateouttruckbilling(@Body Model_OutwardOut_Truck_Billing request);
 }

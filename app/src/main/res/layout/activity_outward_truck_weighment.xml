@@ -166,7 +166,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Loaded Material Qty."
-                android:inputType="textCapCharacters"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
@@ -180,6 +180,7 @@
             android:layout_height="20dp"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="60dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -213,7 +214,8 @@
             android:layout_width="match_parent"
             android:layout_height="115dp"
             android:weightSum="2"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="60dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imgtr"
@@ -300,6 +302,7 @@
             android:layout_width="405dp"
             android:layout_height="55dp"
             android:layout_marginTop="10dp"
+            android:layout_marginLeft="50dp"
 
             >
             <LinearLayout

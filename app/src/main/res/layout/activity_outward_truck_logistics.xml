@@ -174,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Loaded Material Qty "
-                android:inputType="textCapCharacters"
+                android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -208,7 +208,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="55dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginLeft="60dp">
 
             <androidx.appcompat.widget.AppCompatButton
                 android:layout_width="160dp"

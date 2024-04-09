@@ -67,6 +67,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
     DatePickerDialog picker;
     private LoginMethod userDetails;
     private String token;
+    public int uhowqty;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -240,7 +241,14 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         String etremark = remark.getText().toString().trim();
         String outTime = getCurrentTime();
         String ucustoname = customername.getText().toString().trim();
-        int uhowqty = Integer.parseInt(howqty.getText().toString().trim());
+//        int uhowqty = Integer.parseInt(howqty.getText().toString().trim());
+        if (!howqty.getText().toString().isEmpty()){
+            try {
+                uhowqty = Integer.parseInt(howqty.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
 
         if (etintime.isEmpty() || etserialnumber.isEmpty() || etvehiclenumber.isEmpty() || ettransporter.isEmpty() ||
                 etoanumber.isEmpty() || etremark.isEmpty()) {

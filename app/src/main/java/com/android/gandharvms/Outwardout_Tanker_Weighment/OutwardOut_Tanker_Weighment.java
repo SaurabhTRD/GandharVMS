@@ -80,6 +80,8 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
     private String imgPath1, imgPath2;
     private String etSerialNumber;
     private String vehicleNum;
+    private int isemushdip;
+    private int iseushwt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -289,14 +291,31 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         String ugrosswt = grossw.getText().toString().trim();
         String unumberpack = etnumberpack.getText().toString().trim()!=null?etnumberpack.getText().toString():"";
         String uremark = etremark.getText().toString().trim()!=null?etremark.getText().toString():"";
-        int ushdip = Integer.parseInt(etotdip.getText().toString().trim());
-        int ushwt = Integer.parseInt(etotwt.getText().toString().trim());
+//        int ushdip = Integer.parseInt(etotdip.getText().toString().trim());
+//        int ushwt = Integer.parseInt(etotwt.getText().toString().trim());
+        if (!etotdip.toString().isEmpty())
+        {
+            try {
+                isemushdip = Integer.parseInt(etotdip.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+
+        }
+        if (!etotwt.toString().isEmpty())
+        {
+            try {
+                iseushwt = Integer.parseInt(etotwt.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
         if (etintime.isEmpty()||etsealnumber.isEmpty()||etnetweight.isEmpty()||ugrosswt.isEmpty()
                 ||uremark.isEmpty()||unumberpack.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             Model_OutwardOut_Weighment modelOutwardOutWeighment = new Model_OutwardOut_Weighment(OutwardId,imgPath2,imgPath1,
-                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType,ushdip,ushwt);
+                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType,isemushdip,iseushwt);
             Call<Boolean> call = outwardWeighment.updateoutwardoutweighment(modelOutwardOutWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -384,22 +403,37 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
-            img1.setImageBitmap(bimage1);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
-            image1 = Uri.parse(path);
-            ImgVehicle = baos.toByteArray();
-        } else if (requestCode == CAMERA_REQUEST_CODE1) {
-            Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
-            img2.setImageBitmap(bimage2);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
-            image2 = Uri.parse(path);
-            ImgDriver = baos.toByteArray();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE && data != null) {
+                Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
+                if (bimage1 != null) {
+                    img1.setImageBitmap(bimage1);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
+                    image1 = Uri.parse(path);
+                    ImgVehicle = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            } else if (requestCode == CAMERA_REQUEST_CODE1 && data != null) {
+                Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
+                if (bimage2 != null) {
+                    img2.setImageBitmap(bimage2);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
+                    image2 = Uri.parse(path);
+                    ImgDriver = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            // Handle case when camera activity is canceled
+            Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
         }
     }
 

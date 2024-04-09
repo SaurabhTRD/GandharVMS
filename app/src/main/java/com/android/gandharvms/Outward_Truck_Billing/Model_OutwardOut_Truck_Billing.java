@@ -55,6 +55,14 @@ public class Model_OutwardOut_Truck_Billing {
     public String SecurityCreatedDate ;
     public String WeighmentCreatedBy ;
     public String WeighmentCreatedDate ;
+    public String OutInvoiceNumber;
+
+    public String OutInTime;
+    public String OutOutTime;
+    public String OutRemark;
+    public String OutTotalQty;
+    public int OutTotalQtyUOM;
+   public String OutTrBatchNo;
 
 
     public int getId() {
@@ -481,16 +489,37 @@ public class Model_OutwardOut_Truck_Billing {
         WeighmentCreatedDate = weighmentCreatedDate;
     }
 
-    public Model_OutwardOut_Truck_Billing(int outwardId, String billingInTime, String billingOutTime, String billingProcess, String billingRemark, String billingOutBatchNo, String updatedBy, char nextProcess, char i_O, String vehicleType) {
+//    public Model_OutwardOut_Truck_Billing(int outwardId, String billingInTime, String billingOutTime, String billingProcess, String billingRemark, String billingOutBatchNo, String updatedBy, char nextProcess, char i_O, String vehicleType,String outInvoiceNumber) {
+//        OutwardId = outwardId;
+//        BillingInTime = billingInTime;
+//        BillingOutTime = billingOutTime;
+//        BillingProcess = billingProcess;
+//        BillingRemark = billingRemark;
+//        BillingOutBatchNo = billingOutBatchNo;
+//        UpdatedBy = updatedBy;
+//        NextProcess = nextProcess;
+//        I_O = i_O;
+//        VehicleType = vehicleType;
+//        OutInvoiceNumber = outInvoiceNumber;
+//    }
+
+    public Model_OutwardOut_Truck_Billing(String serialNumber,String vehicleNumber,  int outwardId, String outInTime, String outOutTime,String outtotqty,
+                                     int outtotqtyuom, String outinvnumber, String outRemark,String outTrBatchNo,
+                                     char nextProcess, char i_O, String vehicleType, String createdBy,String updatedBy) {
+        SerialNumber = serialNumber;
+        VehicleNumber= vehicleNumber;
         OutwardId = outwardId;
-        BillingInTime = billingInTime;
-        BillingOutTime = billingOutTime;
-        BillingProcess = billingProcess;
-        BillingRemark = billingRemark;
-        BillingOutBatchNo = billingOutBatchNo;
-        UpdatedBy = updatedBy;
+        OutInTime = outInTime;
+        OutOutTime = outOutTime;
+        OutTotalQty=outtotqty;
+        OutTotalQtyUOM=outtotqtyuom;
+        OutInvoiceNumber=outinvnumber;
+        OutRemark = outRemark;
+        OutTrBatchNo = outTrBatchNo;
         NextProcess = nextProcess;
         I_O = i_O;
         VehicleType = vehicleType;
+        CreatedBy = createdBy;
+        UpdatedBy = updatedBy;
     }
 }

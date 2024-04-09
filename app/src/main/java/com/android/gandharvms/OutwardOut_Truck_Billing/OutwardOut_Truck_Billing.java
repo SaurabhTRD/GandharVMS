@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,6 +20,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Billing;
@@ -28,10 +32,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -41,7 +48,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Billing extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,etoanumber,ettramsname,etdrivermob,etgrs,ettare,etnet,etseal,etbatch,etdensity,etremark;
+    EditText intime,serialnumber,vehiclenumber,etoanumber,ettramsname,etdrivermob,etgrs,ettare,etnet,etseal,etbatch,etdensity,etremark,invoicenum,totalqty;
     Button submit,billcomp;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -55,6 +62,13 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
     private LoginMethod userDetails;
     private String token;
     private String bvehicleno;
+    String[] items1 = {"Ton", "Litre", "KL", "Kgs", "pcs"};
+    AutoCompleteTextView totqtyautoCompleteTextView2;
+    ArrayAdapter<String> nettotqtyuomdrop;
+    Map<String, Integer> totqtyUomMapping= new HashMap<>();
+    Integer nettotqtyuomvalue = 3;
+    private int netweuom;
+//    public String userialnumber,uvehiclenumer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,8 +88,10 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
         etnet = findViewById(R.id.etnetwt);
         etseal = findViewById(R.id.etsealnum);
         etbatch = findViewById(R.id.etbacthno);
-        etdensity = findViewById(R.id.etdensity);
+//        etdensity = findViewById(R.id.etdensity);
         etremark = findViewById(R.id.etremark);
+        invoicenum = findViewById(R.id.etinvoicenum);
+        totalqty = findViewById(R.id.oroutbiltotalQuantity);
 
 
 
@@ -115,6 +131,31 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
             public void onClick(View view) {
 
                 startActivity(new Intent(OutwardOut_Truck_Billing.this, Billing_Out_OR_Complete.class));
+            }
+        });
+
+        totqtyautoCompleteTextView2 = findViewById(R.id.oroutbiltotalQuantityUOM);
+        totqtyUomMapping= new HashMap<>();
+        totqtyUomMapping.put("NA",1);
+        totqtyUomMapping.put("Ton", 2);
+        totqtyUomMapping.put("Litre", 3);
+        totqtyUomMapping.put("KL", 4);
+        totqtyUomMapping.put("Kgs", 5);
+        totqtyUomMapping.put("pcs", 6);
+
+        nettotqtyuomdrop = new ArrayAdapter<String>(this,R.layout.or_uom_outbill,new ArrayList<>(totqtyUomMapping.keySet()));
+        totqtyautoCompleteTextView2.setAdapter(nettotqtyuomdrop);
+        totqtyautoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item2 = parent.getItemAtPosition(position).toString();
+                nettotqtyuomvalue = totqtyUomMapping.get(item2);
+                if (nettotqtyuomvalue != null){
+                    Toasty.success(OutwardOut_Truck_Billing.this, "Total-Quantity:- " + item2 + " Selected", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toasty.warning(OutwardOut_Truck_Billing.this, "Unknown Total-QuantityUom:- " + item2, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -203,10 +244,13 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
                         etnet.setEnabled(false);
                         etseal.setText(data.getSealNumber());
                         etseal.setEnabled(false);
+//                        userialnumber = data.getSerialNumber();
+//                        uvehiclenumer = data.getVehicleNumber();
+
 //                        etbatch.setText(data.getBatchNo());
 //                        etbatch.setEnabled(false);
-                        etdensity.setText(String.valueOf(data.getDensity_29_5C()));
-                        etdensity.setEnabled(false);
+//                        etdensity.setText(String.valueOf(data.getDensity_29_5C()));
+//                        etdensity.setEnabled(false);
 
                         bvehicleno= data.getVehicleNumber();
 
@@ -239,16 +283,20 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
     }
 
     public void insert(){
+        String uvehiclenumer = vehiclenumber.getText().toString().trim();
+        String userialnumber = serialnumber.getText().toString().trim();
         String uintime = intime.getText().toString().trim();
         String ubatch = etbatch.getText().toString().trim();
         String obOutTime=getCurrentTime();
         String uremark = etremark.getText().toString().trim();
+        String uinvoicenum = invoicenum.getText().toString().trim();
+        String uqty = totalqty.getText().toString().trim();
 
         if (uintime.isEmpty()|| ubatch.isEmpty()||obOutTime.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-            Model_OutwardOut_Truck_Billing requestoutBilmodel = new Model_OutwardOut_Truck_Billing(OutwardId,uintime,obOutTime,"B",
-                    uremark,ubatch,EmployeId,'S',inOut,vehicleType);
+            Model_OutwardOut_Truck_Billing requestoutBilmodel = new Model_OutwardOut_Truck_Billing(userialnumber,uvehiclenumer,OutwardId,uintime,obOutTime,uqty,netweuom,
+                    uinvoicenum,uremark,ubatch,'S',inOut,vehicleType,EmployeId,EmployeId);
             Call<Boolean> call = outwardTankerBillinginterface.updateouttruckbilling(requestoutBilmodel);
             call.enqueue(new Callback<Boolean>() {
                 @Override

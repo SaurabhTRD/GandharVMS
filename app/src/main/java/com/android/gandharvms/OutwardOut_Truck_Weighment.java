@@ -381,14 +381,14 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         String FileInitial = "OutwardVeh_Out_";
         arrayOfByteArrays[0] = ImgVehicle;
         arrayOfByteArrays[1] = ImgDriver;
-        imgPath1 = "GAimages/"+ FileInitial + wserialNo.toString() + ".jpeg";
+        imgPath1 = "GAimages/"+ FileInitial + serialnumber.getText().toString() + ".jpeg";
         for (byte[] byteArray : arrayOfByteArrays) {
 
-            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + wserialNo.toString() + ".jpeg", "");
+            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + serialnumber.getText().toString() + ".jpeg", "");
             multipartTask.execute();
             FileInitial = "OutwardDrv_Out_";
         }
-        imgPath2 = "GAimages/"+ FileInitial + wserialNo.toString() + ".jpeg";
+        imgPath2 = "GAimages/"+ FileInitial + serialnumber.getText().toString() + ".jpeg";
         FileInitial = "";
         insert();
     }
@@ -428,22 +428,37 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == CAMERA_REQUEST_CODE) {
-            Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
-            img1.setImageBitmap(bimage1);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
-            image1 = Uri.parse(path);
-            ImgVehicle = baos.toByteArray();
-        } else if (requestCode == CAMERA_REQUEST_CODE1) {
-            Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
-            img2.setImageBitmap(bimage2);
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-            String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
-            image2 = Uri.parse(path);
-            ImgDriver = baos.toByteArray();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE && data != null) {
+                Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
+                if (bimage1 != null) {
+                    img1.setImageBitmap(bimage1);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
+                    image1 = Uri.parse(path);
+                    ImgVehicle = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            } else if (requestCode == CAMERA_REQUEST_CODE1 && data != null) {
+                Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
+                if (bimage2 != null) {
+                    img2.setImageBitmap(bimage2);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
+                    image2 = Uri.parse(path);
+                    ImgDriver = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            // Handle case when camera activity is canceled
+            Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
         }
     }
     public void outwardouttruckweighmentpending(View view){
