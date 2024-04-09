@@ -451,6 +451,18 @@
                   android:layout_marginTop="10dp">
 
                   <androidx.appcompat.widget.AppCompatButton
+                      android:layout_width="110dp"
+                      android:layout_height="match_parent"
+                      android:id="@+id/itinsecupdateclick"
+                      android:layout_below="@id/OUM."
+                      android:layout_marginLeft="30dp"
+                      android:text="Update"
+                      android:textSize="17dp"
+                      android:visibility="gone"
+                      android:textStyle="bold">
+                  </androidx.appcompat.widget.AppCompatButton>
+
+                  <androidx.appcompat.widget.AppCompatButton
                       android:layout_width="130dp"
                       android:layout_height="match_parent"
                       android:layout_below="@id/OUM."
@@ -463,10 +475,10 @@
 
                   <androidx.appcompat.widget.AppCompatButton
                       android:id="@+id/submit"
-                      android:layout_width="130dp"
+                      android:layout_width="110dp"
                       android:layout_height="match_parent"
                       android:layout_below="@id/OUM."
-                      android:layout_marginLeft="10dp"
+                      android:layout_marginLeft="1dp"
                       android:text="SUBMIT"
                       android:textSize="17dp"
                       android:textStyle="bold">

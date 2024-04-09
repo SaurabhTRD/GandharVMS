@@ -1,6 +1,7 @@
 package com.android.gandharvms.Inward_Tanker_Security;
 
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Truck_Security.ir_in_updsecbyinwardid_re_model;
 
 import java.util.List;
 
@@ -18,8 +19,17 @@ public interface API_In_Tanker_Security {
     @POST("api/InwardSecurity/UpdateReport")
     Call<Boolean> updatesecuritydata(@Body Update_Request_Model_Insequrity request);
 
+    @POST("api/InwardSecurity/UpdateIRInSecurityByInwardId")
+    Call<Boolean> irinupdsecbyinwardid(@Body ir_in_updsecbyinwardid_re_model irinsecupdbyinwardid);
+
     @GET("api/InwardSecurity/GetSecurityByFetchVehicleDetails")
     Call<List<Respo_Model_In_Tanker_security>> GetIntankerSecurityByVehicle(
+            @Query("vehicleNo") String VehicleNo,
+            @Query("vehicleType") String vehicleType,
+            @Query("NextProcess") char NextProcess,
+            @Query("inOut") char inOut);
+
+    Call<List<CommonResponseModelForAllDepartment>> GetInTankerSecurityByFetchVehicle(
             @Query("vehicleNo") String VehicleNo,
             @Query("vehicleType") String vehicleType,
             @Query("NextProcess") char NextProcess,
@@ -34,6 +44,9 @@ public interface API_In_Tanker_Security {
 
     @POST("api/InwardSecurity/UpdateOutSecurityDetails")
     Call<Boolean> intankersecurityoutupdate(@Body UpdateOutSecurityRequestModel updateOutSecurity);
+
+    @POST("api/InwardSecurity/UpdateITInSecurityByInwardId")
+    Call<Boolean> itinsecupd(@Body It_in_updsecbyinwardid_req_model updsecititin);
 }
 
 

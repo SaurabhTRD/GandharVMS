@@ -488,7 +488,7 @@
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
                     android:hint="Qty"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -517,10 +517,8 @@
 
 
         <androidx.cardview.widget.CardView
-
             android:layout_width="405dp"
             android:layout_height="75dp"
-
             android:layout_weight="2"
             >
             <com.google.android.material.textfield.TextInputLayout
@@ -537,7 +535,7 @@
                     android:layout_width="185dp"
                     android:layout_height="wrap_content"
                     android:hint="Net Weight"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:textSize="17dp"
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
@@ -595,16 +593,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:orientation="horizontal">
-                <!--<androidx.appcompat.widget.AppCompatButton
+
+                <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="9dp"
-                    android:text="Pending"
-                    android:onClick="Truckgridclick"
-                    android:textSize="15dp"
+                    android:id="@+id/irinsecupdateclick"
+                    android:layout_below="@id/OUM."
+                    android:layout_marginLeft="30dp"
+                    android:text="Update"
+                    android:textSize="17dp"
+                    android:visibility="gone"
                     android:textStyle="bold">
-
-                </androidx.appcompat.widget.AppCompatButton>-->
+                </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="130dp"
@@ -614,7 +614,6 @@
                     android:textSize="17dp"
                     android:textStyle="bold"
                     android:onClick="truckseccompletedclick">
-
                 </androidx.appcompat.widget.AppCompatButton>
 
 

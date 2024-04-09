@@ -69,23 +69,22 @@ import retrofit2.Response;
 public class Inward_Tanker_Production extends AppCompatActivity {
 
     final Calendar calendar = Calendar.getInstance();
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
+    private final String EmployeName = Global_Var.getInstance().Name;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
     EditText etint, etserno, edunloadabovematerial, abovematerialunload, etconbyop, opratorname, etconunloadDateTime, etMaterial, etVehicleNumber;
     /*  Button viewdata;*/
-    Button prosubmit,viewlabreport;
+    Button prosubmit, viewlabreport, updateproclick;
     FirebaseFirestore prodbroot;
     DatePickerDialog picker;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
     Timestamp timestamp = new Timestamp(calendar.getTime());
-
     TimePickerDialog tpicker;
     private String token;
     private API_In_Tanker_production apiInTankerProduction;
     private int inwardid;
-    private String vehicleType= Global_Var.getInstance().MenuType;
-    private char nextProcess=Global_Var.getInstance().DeptType;
-    private char inOut=Global_Var.getInstance().InOutType;
-    private String EmployeName=Global_Var.getInstance().Name;
-    private String EmployeId=Global_Var.getInstance().EmpId;
     private LoginMethod userDetails;
     private int reqtounload;
     private int abovematerialtank;
@@ -110,16 +109,22 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         etconbyop = findViewById(R.id.etconbyop);
         abovematerialunload = findViewById(R.id.ettankno);
         opratorname = findViewById(R.id.tanknoun);
-        viewlabreport=findViewById(R.id.btn_ViewlabReport);
+        viewlabreport = findViewById(R.id.btn_ViewlabReport);
 
         prosubmit = findViewById(R.id.prosubmit);
+        updateproclick = findViewById(R.id.itproupdateclick);
         apiInTankerProduction = RetroApiclient_In_Tanker_Security.getinproductionApi();
-                //datetimepickertesting
+        //datetimepickertesting
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
 
-            if (getIntent().hasExtra("VehicleNumber")) {
+        if (getIntent().hasExtra("VehicleNumber")) {
+            String action = getIntent().getStringExtra("Action");
+            if (action != null && action.equals("Up")) {
+                FetchVehicleDetailsforUpdate(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'x', 'O');
+            } else {
                 FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
             }
+        }
         etconunloadDateTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -229,6 +234,13 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             }
         });
 
+        updateproclick.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                proupdatebyinwardid();
+            }
+        });
+
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
@@ -236,12 +248,12 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel responseModel :userList){
+                    if (userList != null) {
+                        for (ResponseModel responseModel : userList) {
                             String specificrole = "Weighment";
-                            if (specificrole.equals(responseModel.getDepartment())){
+                            if (specificrole.equals(responseModel.getDepartment())) {
                                 token = responseModel.getToken();
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
@@ -254,7 +266,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                             }
                         }
                     }
-                }else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -265,7 +277,6 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             }
         });
     }
-
 
 
     private String getCurrentTime() {
@@ -279,20 +290,18 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         String etser = etserno.getText().toString().trim();
         String eddate = etconunloadDateTime.getText().toString().trim();
         //int reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
-        if(!edunloadabovematerial.getText().toString().isEmpty())
-        {
+        if (!edunloadabovematerial.getText().toString().isEmpty()) {
             try {
-                reqtounload=Integer.parseInt(edunloadabovematerial.getText().toString().trim());
-            }catch (NumberFormatException e){
+                reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
         //int abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
-        if(!abovematerialunload.getText().toString().isEmpty())
-        {
+        if (!abovematerialunload.getText().toString().isEmpty()) {
             try {
-                abovematerialtank=Integer.parseInt(abovematerialunload.getText().toString().trim());
-            }catch (NumberFormatException e){
+                abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
@@ -303,25 +312,24 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         String material = etMaterial.getText().toString().trim();
         String vehicleNumber = etVehicleNumber.getText().toString().trim();
 
-        if (intime.isEmpty() || reqtounload < 0|| abovematerialtank < 0||  confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
-            Toasty.warning(this, "All Fields must be filled", Toast.LENGTH_SHORT,true).show();
+        if (intime.isEmpty() || reqtounload < 0 || abovematerialtank < 0 || confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || material.isEmpty() || vehicleNumber.isEmpty()) {
+            Toasty.warning(this, "All Fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-            Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid,intime,
-                    outTime,reqtounload, confirmunload,abovematerialtank,oprator,
-                    EmployeId,vehicleNumber,etser,'W','O',vehicleType,eddate,material,EmployeName);
+            Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid, intime,
+                    outTime, reqtounload, confirmunload, abovematerialtank, oprator,
+                    EmployeId, vehicleNumber, etser, 'W', 'O', vehicleType, eddate, material, EmployeName);
 
             Call<Boolean> call = apiInTankerProduction.insertproductionData(requestInTankerProduction);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body()!=null && response.body()==true){
+                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotification(vehicleNumber, outTime);
                         Log.d("Production", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Production.this, Inward_Tanker.class));
                         finish();
-                    }
-                    else{
+                    } else {
                         Toasty.error(Inward_Tanker_Production.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -343,7 +351,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                             }
                         }
                     }
-                    Toasty.error(Inward_Tanker_Production.this,"failed..!",Toast.LENGTH_SHORT).show();
+                    Toasty.error(Inward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -355,14 +363,14 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         finish();
     }
 
-    public void FetchVehicleDetails(@NonNull String VehicleNo,String vehicltype,char DeptType, char InOutType) {
-        Call<Respo_Model_In_Tanker_Production>  call = apiInTankerProduction.GetinTankerprodcutionByvehicle(VehicleNo,vehicltype,DeptType,InOutType);
+    public void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
+        Call<Respo_Model_In_Tanker_Production> call = apiInTankerProduction.GetinTankerprodcutionByvehicle(VehicleNo, vehicltype, DeptType, InOutType);
         call.enqueue(new Callback<Respo_Model_In_Tanker_Production>() {
             @Override
             public void onResponse(Call<Respo_Model_In_Tanker_Production> call, Response<Respo_Model_In_Tanker_Production> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Respo_Model_In_Tanker_Production data = response.body();
-                    if (data.getVehicleNo()!= "" && data.getVehicleNo() != null){
+                    if (data.getVehicleNo() != "" && data.getVehicleNo() != null) {
                         inwardid = data.getInwardId();
                         etserno.setText(data.getSerialNo());
                         etserno.setEnabled(false);
@@ -372,10 +380,8 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                         etMaterial.setEnabled(false);
                         etconunloadDateTime.setText(data.getDate());
                         etconunloadDateTime.setEnabled(false);
-                        /*etint.requestFocus();
-                        etint.callOnClick();*/
                         viewlabreport.setVisibility(View.VISIBLE);
-                    }else {
+                    } else {
                         Toasty.error(Inward_Tanker_Production.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -397,19 +403,135 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(Inward_Tanker_Production.this,"failed..!",Toast.LENGTH_SHORT).show();
+                Toasty.error(Inward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
-    public void statusgrid(View view){
+
+    public void FetchVehicleDetailsforUpdate(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
+        Call<Respo_Model_In_Tanker_Production> call = apiInTankerProduction.GetinTankerprodcutionByvehicle(VehicleNo, vehicltype, DeptType, InOutType);
+        call.enqueue(new Callback<Respo_Model_In_Tanker_Production>() {
+            @Override
+            public void onResponse(Call<Respo_Model_In_Tanker_Production> call, Response<Respo_Model_In_Tanker_Production> response) {
+                if (response.isSuccessful()) {
+                    Respo_Model_In_Tanker_Production data = response.body();
+                    if (data.getVehicleNo() != "" && data.getVehicleNo() != null) {
+                        inwardid = data.getInwardId();
+                        etserno.setText(data.getSerialNo());
+                        etserno.setEnabled(false);
+                        etVehicleNumber.setText(data.getVehicleNo());
+                        etVehicleNumber.setEnabled(false);
+                        etMaterial.setText(data.getMaterial());
+                        etMaterial.setEnabled(false);
+                        etconunloadDateTime.setText(data.getDate());
+                        etconunloadDateTime.setEnabled(false);
+                        edunloadabovematerial.setText(String.valueOf(data.getUnloadAboveMaterialInTK()));
+                        edunloadabovematerial.setEnabled(true);
+                        etconbyop.setText(data.getProductName());
+                        etconbyop.setEnabled(true);
+                        abovematerialunload.setText(String.valueOf(data.getAboveMaterialIsUnloadInTK()));
+                        abovematerialunload.setEnabled(true);
+                        opratorname.setText(data.getOperatorName());
+                        opratorname.setEnabled(true);
+                        viewlabreport.setVisibility(View.VISIBLE);
+                        updateproclick.setVisibility(View.VISIBLE);
+                        prosubmit.setVisibility(View.GONE);
+                        etint.setVisibility(View.GONE);
+                    } else {
+                        Toasty.error(Inward_Tanker_Production.this, "This Vehicle Number Is Out From Factory.\n You Can Not Update", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(Inward_Tanker_Production.this, it_pro_Completedgrid.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Respo_Model_In_Tanker_Production> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void proupdatebyinwardid() {
+        if (!edunloadabovematerial.getText().toString().isEmpty()) {
+            try {
+                reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!abovematerialunload.getText().toString().isEmpty()) {
+            try {
+                abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        String confirmunload = etconbyop.getText().toString().trim();
+        String oprator = opratorname.getText().toString().trim();
+
+        It_Pro_UpdateByInwardid_req_model updproreqmodel = new It_Pro_UpdateByInwardid_req_model(inwardid,
+                reqtounload, confirmunload, abovematerialtank, oprator,
+                EmployeId);
+
+        Call<Boolean> call = apiInTankerProduction.updprobyinwardid(updproreqmodel);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null && response.body()==true) {
+                    Log.d("Production", "Response Body: " + response.body());
+                    Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Inward_Tanker_Production.this, Inward_Tanker.class));
+                    finish();
+                } else {
+                    Toasty.error(Inward_Tanker_Production.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    public void statusgrid(View view) {
         Intent intent = new Intent(this, it_pro_Completedgrid.class);
         startActivity(intent);
     }
 
     public void btn_clicktoViewLabReport(View view) {
-        Global_Var.getInstance().DeptType='L';
+        Global_Var.getInstance().DeptType = 'L';
         Intent intent = new Intent(this, it_Lab_Completedgrid.class);
-        intent.putExtra("vehiclenumber",etVehicleNumber.getText());
+        intent.putExtra("vehiclenumber", etVehicleNumber.getText());
         view.getContext().startActivity(intent);
     }
 

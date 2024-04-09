@@ -23,6 +23,9 @@ public interface API_In_Tanker_production {
     @POST("api/InwardProduction/Add")
     Call<Boolean> insertproductionData(@Body Request_In_Tanker_Production requestInTankerProduction);
 
+    @POST("api/InwardProduction/UpdateInwardTProductionByInwardId")
+    Call<Boolean> updprobyinwardid(@Body It_Pro_UpdateByInwardid_req_model updproreqmodel);
+
     /*@GET("api/InwardProduction/GetProductionList")
     Call<List<ListingResponse_InTankerproduction>> getintankerproductionListdata(@Query("NextProcess")char nextProcess);*/
 

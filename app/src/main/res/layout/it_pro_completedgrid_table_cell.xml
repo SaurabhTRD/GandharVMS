@@ -19,7 +19,8 @@
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@android:color/black"
+        android:textColor="@color/blue"
+        android:backgroundTint="@color/lightgray"
         android:layout_height="match_parent"/>
 
     <TextView

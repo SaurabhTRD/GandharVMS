@@ -2,6 +2,8 @@ package com.android.gandharvms.Util;
 
 import android.os.AsyncTask;
 
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class MultipartTask extends AsyncTask<String, Void, String> {
     }
     @Override
     protected String doInBackground(String... params) {
-        String uploadUrl = "https://gandhar.azurewebsites.net/api/Common/Upload"; // Replace with your actual API endpoint
+        String uploadUrl = RetroApiClient.BASE_URL+"api/Common/Upload"; // Replace with your actual API endpoint
         String imagePath = path ; // The path to the image file on the device
 
         try {

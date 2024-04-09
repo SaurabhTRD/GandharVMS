@@ -632,20 +632,17 @@
                 android:orientation="horizontal"
                 android:gravity="center">
 
-                <!--<androidx.appcompat.widget.AppCompatButton
-                    android:layout_width="115dp"
-                    android:layout_height="55dp"
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="110dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/itlabupdateclick"
                     android:layout_below="@id/OUM."
-                    android:layout_marginLeft="2dp"
-                    android:layout_marginTop="5dp"
-                    android:onClick="vgrid"
-                    android:text="V Status"
-                    android:textStyle="bold"
-                    android:textSize="19dp"
-
-                    >
-
-                </androidx.appcompat.widget.AppCompatButton>-->
+                    android:layout_marginLeft="30dp"
+                    android:text="Update"
+                    android:textSize="17dp"
+                    android:visibility="gone"
+                    android:textStyle="bold">
+                </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="130dp"

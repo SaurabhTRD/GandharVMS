@@ -35,6 +35,20 @@ public class InTanLabResponseModel {
     String VehicleType ;
     String PartyName ;
 
+    String LabRemark;
+
+    public void setAnLinePoint(int anLinePoint) {
+        AnLinePoint = anLinePoint;
+    }
+
+    public String getLabRemark() {
+        return LabRemark;
+    }
+
+    public void setLabRemark(String labRemark) {
+        LabRemark = labRemark;
+    }
+
     public int getId() {
         return Id;
     }

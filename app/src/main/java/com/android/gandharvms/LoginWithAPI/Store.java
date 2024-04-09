@@ -3,6 +3,7 @@ package com.android.gandharvms.LoginWithAPI;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.Inward_Truck_store.InTruckStoreRequestModel;
 import com.android.gandharvms.Inward_Truck_store.InTruckStoreResponseModel;
+import com.android.gandharvms.Inward_Truck_store.ir_updstorebyinwardid_req_model;
 
 import java.util.List;
 
@@ -25,4 +26,7 @@ public interface Store {
                                                      @Query("inOut") char inOut);
     @POST("api/InwardStore/Add")
     Call<Boolean> insertStoreData(@Body InTruckStoreRequestModel insertstoremodel);
+
+    @POST("api/InwardStore/UpdateInwardTStoreByInwardId")
+    Call<Boolean> updstoredatabyinwardid(@Body ir_updstorebyinwardid_req_model updreqmodel);
 }
