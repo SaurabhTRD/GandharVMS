@@ -511,7 +511,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                                 etsend.setText("Reject");
                             } else if (oploutwardid > 0) {
                                 etsend.setText("Recheck");
-                                Toasty.success(Outward_Tanker_Production.this, "Blending or Flushing Ratio Should Be Okay.Repeat The Task", Toasty.LENGTH_SHORT, true).show();
+                                Toasty.success(Outward_Tanker_Production.this, "Blending or Flushing Ratio Would Be Okay.Repeat The Task", Toasty.LENGTH_LONG, true).show();
                             } else {
                                 etsend.setText("check");
                             }
@@ -579,7 +579,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                             Toasty.success(Outward_Tanker_Production.this, "No Flushing or Blending Required", Toast.LENGTH_SHORT, true).show();
                         } else {
                             makeNotificationforiplab(rvehicle);
-                            Toasty.success(Outward_Tanker_Production.this, "Flushing Or Blending is Send For Checking to Lab", Toast.LENGTH_SHORT, true).show();
+                            Toasty.success(Outward_Tanker_Production.this, "Flushing Or Blending is Send For Checking to Lab", Toast.LENGTH_LONG, true).show();
                         }
                         startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
                         finish();
@@ -630,7 +630,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                         Toasty.success(Outward_Tanker_Production.this, "Vehicle Send To Reject", Toasty.LENGTH_SHORT, true).show();
                     } else {
                         makeNotificationforiplab(nvehiclenumber);
-                        Toasty.success(Outward_Tanker_Production.this, "Send For Recheck", Toasty.LENGTH_SHORT, true).show();
+                        Toasty.success(Outward_Tanker_Production.this, "Blending and Flushing Send For Recheck", Toasty.LENGTH_SHORT, true).show();
                     }
                     startActivity(new Intent(Outward_Tanker_Production.this, Outward_Tanker.class));
                     finish();

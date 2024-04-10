@@ -22,6 +22,7 @@ import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
 import com.android.gandharvms.Outward_Tanker_Production_forms.bulkloadingproduction;
@@ -69,6 +70,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bulkloadinglaboratory);
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+        userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         intime = findViewById(R.id.etintime);
@@ -238,8 +240,8 @@ public class bulkloadinglaboratory extends AppCompatActivity {
         String ubatchno = etbatchno.getText().toString().trim();
         String uremark = etremark.getText().toString().trim();
 
-        if (uintime.isEmpty()||ubatchno.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        if (uintime.isEmpty()||ubatchno.isEmpty()||uremark.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             Lab_Model_Bulkloading labModelBulkloading = new Lab_Model_Bulkloading(OutwardId,uintime,outTime,ubatchno,uremark,
                     'L',EmployeId,userialnumber,uvehiclenum,'U',inOut,vehicleType);
@@ -248,9 +250,9 @@ public class bulkloadinglaboratory extends AppCompatActivity {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    makeNotification(uvehiclenum,outTime);
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(bulkloadinglaboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                        makeNotification(bulklabvehiclenumber,outTime);
                         startActivity(new Intent(bulkloadinglaboratory.this, Outward_Tanker.class));
                         finish();
                     }else {
