@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -36,11 +37,13 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
@@ -74,6 +77,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
     Uri image1, image2;
     byte[] ImgDriver, ImgVehicle;
     byte[][] arrayOfByteArrays = new byte[2][];
+    Uri[] LocalImgPath = new Uri[2];
     private String imgPath1, imgPath2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +94,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         ettarewt = findViewById(R.id.ettareweight);
         shdip = findViewById(R.id.irinweishortagedip);
         shwe = findViewById(R.id.irinweishortageweight);
-        
+
         submit = findViewById(R.id.prosubmit);
 
         img1=findViewById(R.id.inwardtruckoutvehicleimg);
@@ -279,10 +283,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         Log.d("Registration", "Response Body: " + response.body());
-                        makeNotification(vehicleno);
-                        Toasty.success(InwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(InwardOut_Truck_Weighment.this, submenu_Inward_Tanker.class));
-                        finish();
+                        deleteLocalImage(vehicleno);
                     }else{
                         Toasty.error(InwardOut_Truck_Weighment.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                     }
@@ -376,6 +377,7 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        ContentResolver contentResolver = getContentResolver();
         if (resultCode == RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE && data != null) {
                 Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
@@ -383,8 +385,12 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                     img1.setImageBitmap(bimage1);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
-                    image1 = Uri.parse(path);
+                    image1 = ImageUtils.insertImage(contentResolver, bimage1, "", null);
+                    if (image1 != null) {
+                        String imagePath = ImageUtils.getImagePath(contentResolver, image1);
+                        LocalImgPath[0] = image1;
+                    }
+
                     ImgVehicle = baos.toByteArray();
                 } else {
                     // Handle case when no image is captured
@@ -396,8 +402,11 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
                     img2.setImageBitmap(bimage2);
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
                     bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
-                    image2 = Uri.parse(path);
+                    image2 = ImageUtils.insertImage(contentResolver, bimage2, "", null);
+                    if (image2 != null) {
+                        String imagePath = ImageUtils.getImagePath(contentResolver, image2);
+                        LocalImgPath[1] = image2;
+                    }
                     ImgDriver = baos.toByteArray();
                 } else {
                     // Handle case when no image is captured
@@ -407,6 +416,21 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         } else {
             // Handle case when camera activity is canceled
             Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void deleteLocalImage(String vehicalnumber) {
+        File imageFile;
+        try {
+            for (Uri imgpath : LocalImgPath) {
+                ImageUtils.deleteImage(this,imgpath);
+            }
+            Toasty.success(InwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+            makeNotification(vehicalnumber);
+            startActivity(new Intent(InwardOut_Truck_Weighment.this, Inward_Truck_Out.class));
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

@@ -7,15 +7,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck_Logistic.Adapter_Logi_complete;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -79,6 +82,18 @@ public class Adapter_Weigh_Complete extends RecyclerView.Adapter<Adapter_Weigh_C
         holder.oanum.setText(obj.getOAnumber());
         holder.loadedqty.setText(String.valueOf(obj.getHowMuchQuantityFilled()) );
         holder.tarewe.setText(obj.getTareWeight());
+        Picasso.get()
+                .load(RetroApiClient.BASE_URL  + obj.getInVehicleImage() + "?alt=media")
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.invehicleimage);
+        Picasso.get()
+                .load(RetroApiClient.BASE_URL + obj.getInDriverImage() + "?alt=media")
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.indriverimage);
         holder.remark.setText(obj.getRemark());
 
     }
@@ -122,6 +137,8 @@ public class Adapter_Weigh_Complete extends RecyclerView.Adapter<Adapter_Weigh_C
     }
     public class myviewHolder extends RecyclerView.ViewHolder{
         public TextView intime,serialnum,vehicle,customer,oanum,loadedqty,tarewe,remark,outtime;
+
+        ImageView invehicleimage,indriverimage;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             intime = itemView.findViewById(R.id.orweintime);
@@ -131,6 +148,8 @@ public class Adapter_Weigh_Complete extends RecyclerView.Adapter<Adapter_Weigh_C
             oanum = itemView.findViewById(R.id.orweinoa);
             loadedqty = itemView.findViewById(R.id.orweinloaded);
             tarewe = itemView.findViewById(R.id.orweintare);
+            invehicleimage=itemView.findViewById(R.id.orweinInVehicleImage);
+            indriverimage=itemView.findViewById(R.id.orweinInDriverImage);
             remark = itemView.findViewById(R.id.orweinremark);
             outtime = itemView.findViewById(R.id.orweouttime);
         }

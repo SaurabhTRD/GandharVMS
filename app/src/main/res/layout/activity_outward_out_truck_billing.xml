@@ -17,9 +17,8 @@
 
 
         <Button
-            android:onClick="btn_clicktoViewLabReport"
+            android:onClick="btn_clicktoViewWeighmentSlip"
             android:text="View Weighment Slip"
-            android:id="@+id/btn_Viewweigmentslip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Button"
@@ -29,9 +28,8 @@
         </Button>
 
         <Button
-            android:onClick="btn_clicktoViewLabReport"
+            android:onClick="btn_clicktoViewBarrelForm"
             android:text="View Barrel Loading Form"
-            android:id="@+id/btn_Viewloadingslip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Button"
@@ -41,9 +39,8 @@
         </Button>
 
         <Button
-            android:onClick="btn_clicktoViewLabReport"
+            android:onClick="btn_clicktoViewTestReport"
             android:text="View Test Report"
-            android:id="@+id/btn_Viewtestslip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Button"

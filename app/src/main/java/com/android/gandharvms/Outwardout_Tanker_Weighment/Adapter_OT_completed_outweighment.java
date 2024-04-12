@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -13,9 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Adapter_OT_completed_Weighment;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +83,18 @@ public class Adapter_OT_completed_outweighment extends RecyclerView.Adapter<Adap
         holder.numpack.setText(club.getNumberofPack());
         holder.shdip.setText(String.valueOf(club.getShortageDip()));
         holder.shshort.setText(String.valueOf(club.getShortageWeight()));
+        Picasso.get()
+                .load(RetroApiClient.BASE_URL  + club.getOutVehicleImage() + "?alt=media")
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.invehicleimage);
+        Picasso.get()
+                .load(RetroApiClient.BASE_URL + club.getOutDriverImage() + "?alt=media")
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.indriverimage);
         holder.remark.setText(club.getRemark());
     }
 
@@ -123,6 +138,8 @@ public class Adapter_OT_completed_outweighment extends RecyclerView.Adapter<Adap
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public TextView serial,vehiclenum,density,tarewt,intime,outtime,netwt,grswt,sealnum,numpack,shdip,shshort,remark;
+
+        ImageView invehicleimage,indriverimage;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             serial = itemView.findViewById(R.id.otweighoutserial);
@@ -137,6 +154,8 @@ public class Adapter_OT_completed_outweighment extends RecyclerView.Adapter<Adap
             numpack = itemView.findViewById(R.id.otweighoutnumberpack);
             shdip = itemView.findViewById(R.id.otweighoutshdip);
             shshort = itemView.findViewById(R.id.otweighoutshwt);
+            invehicleimage=itemView.findViewById(R.id.otweighoutInVehicleImage);
+            indriverimage=itemView.findViewById(R.id.otweighoutInDriverImage);
             remark = itemView.findViewById(R.id.otweighouremark);
         }
     }

@@ -153,7 +153,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                         intime.requestFocus();
                         intime.callOnClick();
                     } else {
-                        Toasty.success(Outward_Truck_Logistics.this, "Vehicle Is Not Available", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Outward_Truck_Logistics.this, "This Vehicle Number Is Not Available", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());

@@ -76,6 +76,20 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
+    <ImageView
+        android:id="@+id/orweinInVehicleImage"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"/>
+
+    <ImageView
+        android:id="@+id/orweinInDriverImage"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"/>
+
     <TextView
         android:layout_width="120dp"
         android:id="@+id/orweinremark"

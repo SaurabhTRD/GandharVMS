@@ -350,7 +350,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
 //        String etdatetime3 = datetime3.getText().toString().trim();
 
         if (etintime.isEmpty()||etseralnumber.isEmpty()|| etvehiclenumber.isEmpty()|| etdisfficer.isEmpty()||uremark.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
 //            Map<String,String>items = new HashMap<>();
 //

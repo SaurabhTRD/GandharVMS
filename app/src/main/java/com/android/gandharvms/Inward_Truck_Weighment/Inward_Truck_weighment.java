@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat;
 import android.Manifest;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -40,6 +41,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.google.firebase.Timestamp;
 
@@ -109,7 +111,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     Uri image1, image2;
     byte[] ImgDriver, ImgVehicle;
     byte[][] arrayOfByteArrays = new byte[2][];
-    String[] LocalImgPath = new String[2];
+    Uri[] LocalImgPath = new Uri[2];
     private String imgPath1, imgPath2;
 
     FirebaseStorage storage;
@@ -213,7 +215,6 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     Toasty.warning(Inward_Truck_weighment.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
                 } else {
                     UploadImagesAndInsert();
-                    //deleteLocalImage();
                 }
             }
         });
@@ -307,10 +308,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                     if (response.isSuccessful() && response.body()!=null && response.body()==true)
                     {
                         Log.d("Registration", "Response Body: " + response.body());
-                        Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        makeNotification(vehicalnumber, outTime);
-                        startActivity(new Intent(Inward_Truck_weighment.this, Inward_Truck.class));
-                        finish();
+                        deleteLocalImage(vehicalnumber, outTime);
                     }
                     else{
                         Toasty.error(Inward_Truck_weighment.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
@@ -387,7 +385,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         }
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    /*protected void onActivityResult1(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             if (requestCode == CAMERA_REQUEST_CODE && data != null) {
@@ -423,52 +421,67 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             // Handle case when camera activity is canceled
             Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
         }
+    }*/
+
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        ContentResolver contentResolver = getContentResolver();
+        if (resultCode == RESULT_OK) {
+            if (requestCode == CAMERA_REQUEST_CODE && data != null) {
+                Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
+                if (bimage1 != null) {
+                    img1.setImageBitmap(bimage1);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    image1 = ImageUtils.insertImage(contentResolver, bimage1, "", null);
+                    if (image1 != null) {
+                        String imagePath = ImageUtils.getImagePath(contentResolver, image1);
+                        LocalImgPath[0] = image1;
+                    }
+
+                    ImgVehicle = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            } else if (requestCode == CAMERA_REQUEST_CODE1 && data != null) {
+                Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
+                if (bimage2 != null) {
+                    img2.setImageBitmap(bimage2);
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
+                    image2 = ImageUtils.insertImage(contentResolver, bimage2, "", null);
+                    if (image2 != null) {
+                        String imagePath = ImageUtils.getImagePath(contentResolver, image2);
+                        LocalImgPath[1] = image2;
+                    }
+                    ImgDriver = baos.toByteArray();
+                } else {
+                    // Handle case when no image is captured
+                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
+                }
+            }
+        } else {
+            // Handle case when camera activity is canceled
+            Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
+        }
     }
 
     // Function to upload image to server and delete local image after successful upload
-    /*private void uploadAndDeleteLocalImage(byte[] imageData, String imageName) {
-        boolean uploadSuccessful = true;
-        if (uploadSuccessful) {
-            // If upload is successful, delete the local image file
-            deleteLocalImage();
-            // Call the method to insert the image URL into the database
-            intrinsert();
-        } else {
-            // Handle upload failure if necessary
-        }
-    }*/
-
-    // Function to delete local image
-    /*private void deleteLocalImage() {
+    private void deleteLocalImage(String vehicalnumber,String outTime) {
         File imageFile;
-        *//*try {
-            for (String imgpath : LocalImgPath) {
-                File imageFile = new File(imgpath);
-                if (imageFile.exists()) {
-                    imageFile.delete();
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*//*
         try {
-            for (String imgpath : LocalImgPath) {
-                if (imgpath != null) {
-                    imageFile = new File(imgpath);
-                    if (imageFile.exists()) {
-                        boolean isDeleted = imageFile.delete();
-                        if (isDeleted) {
-                            Log.d("ImageDeletion", "Image deleted successfully: " + imgpath);
-                        } else {
-                            Log.d("ImageDeletion", "Failed to delete image: " + imgpath);
-                        }
-                    }
-                }
+            for (Uri imgpath : LocalImgPath) {
+                ImageUtils.deleteImage(this,imgpath);
             }
+            Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+            makeNotification(vehicalnumber, outTime);
+            startActivity(new Intent(Inward_Truck_weighment.this, Inward_Truck.class));
+            finish();
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
     public void onBackPressed(){
         Intent intent = new Intent(this, Menu.class);

@@ -191,6 +191,30 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/otweighoutInVehicleImage"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InVehicleImage"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/otweighoutInDriverImage"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InDriverImage"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
             <TextView
                 android:layout_width="110dp"
                 android:id="@+id/otweighouremark"
