@@ -568,11 +568,6 @@
             </RadioGroup>
 
         </LinearLayout>
-
-
-
-
-
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
             android:layout_height="55dp"
@@ -613,9 +608,6 @@
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
-
-
-
     </LinearLayout>
 
     </ScrollView>

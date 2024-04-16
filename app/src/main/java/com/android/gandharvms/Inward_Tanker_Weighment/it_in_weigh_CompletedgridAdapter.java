@@ -37,14 +37,13 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private Context context;
-
+    private OnImageClickListener imageClickListener;
     String formattedDate;
 
     public it_in_weigh_CompletedgridAdapter(List<CommonResponseModelForAllDepartment> inwardcomresponsemodel) {
         this.Gridmodel = inwardcomresponsemodel;
         this.filteredGridList = inwardcomresponsemodel;
     }
-
     @Override
     public int getItemViewType(int position) {
         if (position % 2 == 0) {
@@ -101,6 +100,24 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
                 .error(R.drawable.gandhar2)
                 .noFade().resize(120,120)
                 .centerCrop().into(holder.indriverimage);
+        holder.invehicleimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageClickListener != null) {
+                    imageClickListener.onImageClick(RetroApiClient.BASE_URL + club.getInVehicleImage());
+                }
+            }
+        });
+
+        // Set click listener for the indriverimage
+        holder.indriverimage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (imageClickListener != null) {
+                    imageClickListener.onImageClick(RetroApiClient.BASE_URL + club.getInDriverImage());
+                }
+            }
+        });
     }
     public int getItemCount() {
         return Gridmodel.size();
@@ -138,6 +155,13 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
         };
     }
 
+    public interface OnImageClickListener{
+        void onImageClick(String imageUrl);
+    }
+
+    public void setImageClickListener(OnImageClickListener listener) {
+        this.imageClickListener = listener;
+    }
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
         TextView sernum, vehiclenum, material, intime, outtime,date,partyname,remark,oapo,mob,

@@ -59,6 +59,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -80,7 +81,9 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     String[] remark = {"Accepted", "Rejected"};
     AutoCompleteTextView regAutoCompleteTextView;
     ArrayAdapter<String> remarkarray;
-    EditText etintime, etserialnumber, etpsample, etvehiclenumber, etpapperance, etpodor, etpcolour, etpdensity, etqty, etPrcstest, etpkv, ethundred, etanline, etflash, etpaddtest, etpsamplere, etpremark, etpsignQc, etpdatesignofsign, etMaterial, etsupplier, remarkdisc, etviscosity;
+    EditText etintime, etserialnumber, etpsample, etvehiclenumber, etpapperance, etpodor, etpcolour, etpdensity,
+            etqty, etPrcstest, etpkv, ethundred, etanline, etflash, etpaddtest, etpsamplere, etpremark, etpsignQc,
+            etpdatesignofsign, etMaterial, etsupplier, remarkdisc, etviscosity,etfetchSecQty,etfetchlabqtyoum;
     Button etlabsub, updateclick;
     Button view, viewsamplereporting;
     TimePickerDialog tpicker;
@@ -99,6 +102,12 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    String[] qtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
+    Integer qtyUomNumericValue = 1;
+    AutoCompleteTextView  autoCompleteTextView1;
+    Map<String, Integer> qtyUomMapping = new HashMap<>();
+    ArrayAdapter<String> qtyuomdrop;
+    List<String> teamList = new ArrayList<>();
     private int qty;
     private int density;
     private int kv;
@@ -116,6 +125,34 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
         labdetails = RetroApiClient.getLabDetails();//Call retrofit api
         userDetails = RetroApiClient.getLoginApi();
+
+        autoCompleteTextView1 = findViewById(R.id.fetchlabqtyuomtanker);
+        qtyUomMapping = new HashMap<>();
+        qtyUomMapping.put("NA", 1);
+        qtyUomMapping.put("Ton", 2);
+        qtyUomMapping.put("Litre", 3);
+        qtyUomMapping.put("KL", 4);
+        qtyUomMapping.put("Kgs", 5);
+        qtyUomMapping.put("pcs", 6);
+        qtyUomMapping.put("M3", 7);
+
+        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
+        autoCompleteTextView1.setAdapter(qtyuomdrop);
+        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
+                // Retrieve the corresponding numerical value from the mapping
+                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
+                if (qtyUomNumericValue != null) {
+                    // Now, you can use qtyUomNumericValue when inserting into the database
+                    Toasty.success(Inward_Tanker_Laboratory.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Handle the case where the mapping doesn't contain the display value
+                    Toasty.error(Inward_Tanker_Laboratory.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         regAutoCompleteTextView = findViewById(R.id.etpremark);
         remarkarray = new ArrayAdapter<String>(this, R.layout.in_tanker_labremarkitem, remark);
@@ -148,6 +185,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etpsignQc = (EditText) findViewById(R.id.etpsignQc);
         etpdatesignofsign = (EditText) findViewById(R.id.etpdatesignofsign);
         etMaterial = (EditText) findViewById(R.id.et_materialname);
+        etfetchSecQty=(EditText)findViewById(R.id.etfetchlabqty);
+        etfetchlabqtyoum = findViewById(R.id.fetchlabqtyuomtanker);
 
         etsupplier = (EditText) findViewById(R.id.supplier);
         remarkdisc = (EditText) findViewById(R.id.remarkdisc);
@@ -604,6 +643,10 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etMaterial.setEnabled(false);
                         etpsample.setText(data.getDate());
                         etpsample.setEnabled(false);
+                        etfetchSecQty.setText(String.valueOf(data.getQty()));
+                        etfetchSecQty.setEnabled(true);
+                        etfetchlabqtyoum.setText(data.getUnitOfMeasurement());
+                        etfetchlabqtyoum.setEnabled(true);
                         viewsamplereporting.setVisibility(View.VISIBLE);
                     } else {
                         Toasty.error(Inward_Tanker_Laboratory.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();

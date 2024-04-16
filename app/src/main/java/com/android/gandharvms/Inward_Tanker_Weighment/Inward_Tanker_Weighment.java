@@ -26,6 +26,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -111,7 +114,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     EditText etint, etserialnumber, etvehicalno, etsuppliername, etmaterialname, etdriverno, etoano, etdate,
-            etgrossweight, etremark, etsignby, etcontainer, etshortagedip, etshortageweight;
+            etgrossweight, etremark, etsignby, etcontainer, etshortagedip, etshortageweight,etweighqty;
     Button wesubmit;
     FirebaseFirestore wedbroot;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
@@ -132,6 +135,12 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private String token;
     private int inwardid;
     private LoginMethod userDetails;
+    String[] weighqtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
+    Integer weighqtyUomNumericValue = 1;
+    AutoCompleteTextView weighautoCompleteTextView1;
+    Map<String, Integer> weighqtyUomMapping = new HashMap<>();
+    ArrayAdapter<String> weighqtyuomdrop;
+    List<String> teamList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +166,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etremark = findViewById(R.id.etremark);
         etsignby = findViewById(R.id.etsignby);
         etcontainer = findViewById(R.id.container);
+        etweighqty=findViewById(R.id.etitweighqty);
         //Call Api method
         weighmentdetails = RetroApiClient.getWeighmentDetails();
 
@@ -166,6 +176,90 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
             }
         }
+
+        weighautoCompleteTextView1 = findViewById(R.id.itweighqtyuomtanker);
+        weighqtyUomMapping = new HashMap<>();
+        weighqtyUomMapping.put("NA", 1);
+        weighqtyUomMapping.put("Ton", 2);
+        weighqtyUomMapping.put("Litre", 3);
+        weighqtyUomMapping.put("KL", 4);
+        weighqtyUomMapping.put("Kgs", 5);
+        weighqtyUomMapping.put("pcs", 6);
+        weighqtyUomMapping.put("M3", 7);
+
+        weighqtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(weighqtyUomMapping.keySet()));
+        weighautoCompleteTextView1.setAdapter(weighqtyuomdrop);
+        weighautoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
+                // Retrieve the corresponding numerical value from the mapping
+                weighqtyUomNumericValue = weighqtyUomMapping.get(qtyUomDisplay);
+                if (weighqtyUomNumericValue != null) {
+                    // Now, you can use qtyUomNumericValue when inserting into the database
+                    Toasty.success(Inward_Tanker_Weighment.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
+                } else {
+                    // Handle the case where the mapping doesn't contain the display value
+                    Toasty.error(Inward_Tanker_Weighment.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        etweighqty.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = etweighqty.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 8) {
+                    // Clear any previous error message when valid
+                    etweighqty.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etweighqty.setText(trimmedText);
+                        etweighqty.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
+        });
+
+        etdriverno.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Not needed for this implementation
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String currentText = etdriverno.getText().toString();
+                if (editable.length() > 0 && editable.length() <= 16) {
+                    // Clear any previous error message when valid
+                    etdriverno.setError(null);
+                } else {
+                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+                    if (!currentText.equals(trimmedText)) {
+                        // Only set text and move cursor if the modification is not the desired text
+                        etdriverno.setText(trimmedText);
+                        etdriverno.setSelection(trimmedText.length()); // Move cursor to the end
+                    }
+                }
+            }
+        });
 
         storage = FirebaseStorage.getInstance();
         //view button

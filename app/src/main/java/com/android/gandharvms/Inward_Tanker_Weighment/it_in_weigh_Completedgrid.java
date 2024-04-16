@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
@@ -60,7 +61,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class it_in_weigh_Completedgrid extends AppCompatActivity {
+public class it_in_weigh_Completedgrid extends AppCompatActivity implements it_in_weigh_CompletedgridAdapter.OnImageClickListener {
 
     int scrollX = 0;
     List<CommonResponseModelForAllDepartment> clubList = new ArrayList<>();
@@ -247,6 +248,7 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
     private void setUpRecyclerView()
     {
         itinweighgridadaptercomp  = new it_in_weigh_CompletedgridAdapter(clubList);
+        itinweighgridadaptercomp.setImageClickListener(this);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
@@ -438,5 +440,12 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity {
             e.printStackTrace();
             return inputDate;
         }
+    }
+
+    @Override
+    public void onImageClick(String imageUrl) {
+        Intent intent = new Intent(this, FullSizeImage.class);
+        intent.putExtra("imageUrl", imageUrl);
+        startActivity(intent);
     }
 }

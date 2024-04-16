@@ -34,8 +34,26 @@ public class InTanLabResponseModel {
     char I_O ;
     String VehicleType ;
     String PartyName ;
+    public String UnitOfMeasurement;
+    private int Qty ;
 
     String LabRemark;
+
+    public String getUnitOfMeasurement() {
+        return UnitOfMeasurement;
+    }
+
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
+        UnitOfMeasurement = unitOfMeasurement;
+    }
+
+    public int getQty() {
+        return Qty;
+    }
+
+    public void setQty(int qty) {
+        Qty = qty;
+    }
 
     public void setAnLinePoint(int anLinePoint) {
         AnLinePoint = anLinePoint;

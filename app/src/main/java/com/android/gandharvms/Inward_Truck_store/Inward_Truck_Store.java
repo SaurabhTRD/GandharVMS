@@ -82,7 +82,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
     private final int MAX_LENGTH = 10;
     ArrayAdapter<String> adapterItems;
     ArrayAdapter<String> adapterItems1;
-    EditText etintime, etserialnumber, etvehicalnum, etpo, etpodate, etmaterialrdate, etmaterial, etqty, etrecqtyoum, etremark, etinvqty, etinvdate, etinvnum, etinvqtyuom;
+    EditText etintime,etsuppliername, etserialnumber, etvehicalnum, etpo, etpodate, etmaterialrdate, etmaterial, etqty, etrecqtyoum, etremark, etinvqty, etinvdate, etinvnum, etinvqtyuom;
     Button trssubmit, buttonadd, button1, updbtnstoreclick;
     Button view;
     DatePickerDialog picker;
@@ -196,6 +196,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
         etinvqty = findViewById(R.id.ettrinvqty);
         etinvdate = findViewById(R.id.ettrinvDate);
         etinvnum = findViewById(R.id.ettinvnumber);
+        etsuppliername=findViewById(R.id.ettrssupplier);
 
         updbtnstoreclick = findViewById(R.id.irstoreupdateclick);
 
@@ -664,6 +665,8 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         inwardid = data.getInwardId();
                         etvehicalnum.setText(data.getVehicleNo());
                         etvehicalnum.setEnabled(false);
+                        etsuppliername.setText(data.getPartyName());
+                        etsuppliername.setEnabled(false);
                         etserialnumber.setText(data.getSerialNo());
                         etserialnumber.setEnabled(false);
                         etmaterial.setText(data.getMaterial());

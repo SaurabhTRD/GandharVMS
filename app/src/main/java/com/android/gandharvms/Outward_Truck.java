@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
-import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Dispatch_IndusSmallPack;
 import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
 import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
@@ -72,7 +72,7 @@ public class Outward_Truck extends AppCompatActivity {
     public void dispatchtanker(View view){
         if(Global_Var.getInstance().Department.contains("Despatch")){
             Global_Var.getInstance().DeptType='D';
-            startActivity(new Intent(this, Outward_Truck_Dispatch.class));
+            startActivity(new Intent(this, Outward_Dispatch_IndusSmallPack.class));
         } else {
             Toasty.warning(Outward_Truck.this, "You are not in Despatch Department", Toast.LENGTH_SHORT).show();
         }
