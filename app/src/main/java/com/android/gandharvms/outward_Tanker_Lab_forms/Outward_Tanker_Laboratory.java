@@ -78,7 +78,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
     EditText intime, serialnum, vehiclnum, blendingratio, appreance, color, odor, kv40, density25, kv100, viscosity, tbn, anlinepoint,
             breakdownvoltage, ddf, watercontent, interfacialtension, flashpoint, pourpoint, rcstest, remark,
             approveqc, dt, samplecondition, samplerecivdt, samplereleasedate, correctionrequird, etflushpara
-            ,restivity,infrared;
+            ,restivity,infrared,cust,qty;
     TextInputLayout retil;
     CardView btnc;
     Button submit, sendbtn,completd;
@@ -142,6 +142,8 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
         correctionrequird = findViewById(R.id.etcorrection);
         restivity=findViewById(R.id.etotinprocesslabrestivity);
         infrared=findViewById(R.id.etotinprocesslabInfrared);
+        cust = findViewById(R.id.etotinprocesscustomer);
+        qty = findViewById(R.id.etotinprocessqty);
 
         blendingyesno=findViewById(R.id.isblendingyesno);
         flushingyesno=findViewById(R.id.isflushingyesno);
@@ -477,6 +479,8 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                         serialnum.setText(data.getSerialNumber());
                         labvehicl = data.getVehicleNumber();
                         labintime = data.getIPFLabInTime();
+                        cust.setText(data.getCustomerName());
+                        qty.setText(data.getHowMuchQuantityFilled());
                         vehiclnum.setText(data.getVehicleNumber());
                         serialnum.setEnabled(false);
                         vehiclnum.setEnabled(false);
