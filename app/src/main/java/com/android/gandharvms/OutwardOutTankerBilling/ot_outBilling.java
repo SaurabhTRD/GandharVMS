@@ -55,7 +55,7 @@ public class ot_outBilling extends AppCompatActivity {
     private int netweuom;
     EditText oobintime,oobserialnumber,oobvehiclenumber,oobsealnumber,oobtareweight,
             oobnetweight,oobgrossw,oobetremark,oobfetchdensity,oobOANumber,
-            oobTransporter,oobdriverno,oobbatchno,oobtotalQuantity,oobinvoicenumber;
+            oobTransporter,oobdriverno,oobbatchno,oobtotalQuantity,oobinvoicenumber,partyname;
     Button oobsubmit,completed;
     TimePickerDialog tpicker;
     private final String vehicleType = Global_Var.getInstance().MenuType;
@@ -92,6 +92,7 @@ public class ot_outBilling extends AppCompatActivity {
         oobbatchno=findViewById(R.id.etotoutbilBatchno);
         oobtotalQuantity=findViewById(R.id.etotoutbiltotalQuantity);
         oobinvoicenumber=findViewById(R.id.etotoutbilinvoicenumber);
+        partyname = findViewById(R.id.etpartyname);
 
         oobsubmit=findViewById(R.id.etotoutbilsubmit);
         completed = findViewById(R.id.otoutbillcompleted);
@@ -191,6 +192,8 @@ public class ot_outBilling extends AppCompatActivity {
                         oobgrossw.setEnabled(false);
                         oobsealnumber.setText(data.getSealNumber());
                         oobsealnumber.setEnabled(false);
+                        partyname.setText(data.getCustomerName());
+                        partyname.setEnabled(false);
                         calculateNetWeight();
 
 

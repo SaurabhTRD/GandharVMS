@@ -60,7 +60,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,sealnumber,tareweight,netweight,grossw,etnumberpack,etremark,fetchdensity,etotdip,etotwt;
+    EditText intime,serialnumber,vehiclenumber,sealnumber,tareweight,netweight,grossw,etnumberpack,etremark,fetchdensity,etotdip,etotwt,batch,product;
     Button submit,completed;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -105,14 +105,16 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         sealnumber = findViewById(R.id.etsealnumber);
         etnumberpack = findViewById(R.id.etnumberpack);
         etremark = findViewById(R.id.etremakr);
+        batch =findViewById(R.id.etbatchn);
+        product = findViewById(R.id.etproductnam);
 
         img1=findViewById(R.id.otoutweighvehicleimage);
         img2=findViewById(R.id.otoutweighdriverimage);
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
-        etotdip = findViewById(R.id.otouttankeretshortdip);
-        etotwt = findViewById(R.id.otouttankeretshortwt);
+//        etotdip = findViewById(R.id.otouttankeretshortdip);
+//        etotwt = findViewById(R.id.otouttankeretshortwt);
         completed = findViewById(R.id.otoutweighcompleted);
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -203,6 +205,10 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
                         fetchdensity.setEnabled(false);
                         tareweight.setText(String.valueOf(data.getTareWeight()));
                         tareweight.setEnabled(false);
+                        batch.setText(data.getBatchNo());
+                        batch.setEnabled(false);
+                        product.setText(data.getProductName());
+                        product.setEnabled(false);
                        /* intime.requestFocus();
                         intime.callOnClick();*/
                     }
@@ -299,29 +305,29 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         String uremark = etremark.getText().toString().trim()!=null?etremark.getText().toString():"";
 //        int ushdip = Integer.parseInt(etotdip.getText().toString().trim());
 //        int ushwt = Integer.parseInt(etotwt.getText().toString().trim());
-        if (!etotdip.toString().isEmpty())
-        {
-            try {
-                isemushdip = Integer.parseInt(etotdip.getText().toString().trim());
-            }catch (NumberFormatException e){
-                e.printStackTrace();
-            }
-
-        }
-        if (!etotwt.toString().isEmpty())
-        {
-            try {
-                iseushwt = Integer.parseInt(etotwt.getText().toString().trim());
-            }catch (NumberFormatException e){
-                e.printStackTrace();
-            }
-        }
+//        if (!etotdip.toString().isEmpty())
+//        {
+//            try {
+//                isemushdip = Integer.parseInt(etotdip.getText().toString().trim());
+//            }catch (NumberFormatException e){
+//                e.printStackTrace();
+//            }
+//
+//        }
+//        if (!etotwt.toString().isEmpty())
+//        {
+//            try {
+//                iseushwt = Integer.parseInt(etotwt.getText().toString().trim());
+//            }catch (NumberFormatException e){
+//                e.printStackTrace();
+//            }
+//        }
         if (etintime.isEmpty()||etsealnumber.isEmpty()||etnetweight.isEmpty()||ugrosswt.isEmpty()
                 ||uremark.isEmpty()||unumberpack.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             Model_OutwardOut_Weighment modelOutwardOutWeighment = new Model_OutwardOut_Weighment(OutwardId,imgPath2,imgPath1,
-                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType,isemushdip,iseushwt);
+                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType,0,0);
             Call<Boolean> call = outwardWeighment.updateoutwardoutweighment(modelOutwardOutWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override

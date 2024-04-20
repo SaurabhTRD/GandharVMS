@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
+import com.android.gandharvms.Inward_Tanker_Laboratory.it_Lab_Completedgrid;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
@@ -39,6 +40,7 @@ import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Blending_Flushing_Model;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
+import com.android.gandharvms.outward_Tanker_Lab_forms.OT_Completed_inproc_laboratory;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -461,6 +463,16 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                         vehiclenumber.setEnabled(false);
                         etflush.setText(data.getFlushing_No());
                         serialnumber.setEnabled(false);
+                        product.setText(data.getProductName());
+                        product.setEnabled(false);
+                        howmuch.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+                        howmuch.setEnabled(false);
+                        customer.setText(data.getCustomerName());
+                        customer.setEnabled(false);
+                        location.setText(data.getLocation());
+                        location.setEnabled(false);
+                        transporter.setText(data.getTransportName());
+                        transporter.setEnabled(false);
                         isblending.setChecked(data.IsBlendingReq);
                         isflushing.setChecked(data.IsFlushingReq);
                         //isblending.setEnabled(false);
@@ -496,16 +508,10 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                             oanum.setEnabled(false);
                             /*blenderno.setText(String.valueOf(data.getTankerNumber()));
                             blenderno.setEnabled(false);*/
-                            transporter.setText(data.getTransportName());
-                            transporter.setEnabled(false);
-                            product.setText(data.getProductName());
-                            product.setEnabled(false);
-                            howmuch.setText(String.valueOf(data.getHowMuchQuantityFilled()));
-                            howmuch.setEnabled(false);
-                            customer.setText(data.getCustomerName());
-                            customer.setEnabled(false);
-                            location.setText(data.getLocation());
-                            location.setEnabled(false);
+
+
+
+
                         } else {
                             if (statuscount == 2) {
                                 etsend.setText("Reject");
@@ -728,5 +734,11 @@ public class Outward_Tanker_Production extends AppCompatActivity {
     public void outtankerproinprocpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
+    }
+    public void btn_inporcctankerclicktoViewLabReport(View view){
+        Global_Var.getInstance().DeptType = 'Q';
+        Intent intent = new Intent(this, OT_Completed_inproc_laboratory.class);
+        intent.putExtra("vehiclenumber", vehiclenumber.getText());
+        view.getContext().startActivity(intent);
     }
 }

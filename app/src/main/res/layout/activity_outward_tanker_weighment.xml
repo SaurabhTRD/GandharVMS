@@ -236,7 +236,7 @@
                 android:id="@+id/ettareweight"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tare Weight"
+                android:hint="Tare Weight (KG)"
                 android:inputType="number"
                 android:textSize="17dp"
                 android:textStyle="bold" />

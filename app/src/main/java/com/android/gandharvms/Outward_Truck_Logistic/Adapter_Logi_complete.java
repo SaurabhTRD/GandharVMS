@@ -1,6 +1,8 @@
 package com.android.gandharvms.Outward_Truck_Logistic;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,7 +67,7 @@ public class Adapter_Logi_complete extends RecyclerView.Adapter<Adapter_Logi_com
 
 
     @Override
-    public void onBindViewHolder(@NonNull Adapter_Logi_complete.myviewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull Adapter_Logi_complete.myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         Common_Outward_model club = filteredGridList.get(position);
         int intimelength = club.getInTime()!= null ? club.getInTime().length() :0;
         int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
@@ -83,6 +85,18 @@ public class Adapter_Logi_complete extends RecyclerView.Adapter<Adapter_Logi_com
         holder.custname.setText(club.getCustomerName());
         holder.loadedqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
         holder.remark.setText(club.getRemark());
+
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common_Outward_model club = filteredGridList.get(position);
+                Intent intent;
+                 intent = new Intent(view.getContext(), Outward_Truck_Logistics.class);
+                 intent.putExtra("vehiclenum",club.getVehicleNumber());
+                 intent.putExtra("Action","Up");
+                 view.getContext().startActivity(intent);
+            }
+        });
 
     }
 

@@ -480,7 +480,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                         labvehicl = data.getVehicleNumber();
                         labintime = data.getIPFLabInTime();
                         cust.setText(data.getCustomerName());
-                        qty.setText(data.getHowMuchQuantityFilled());
+                        qty.setText(String.valueOf(data.getHowMuchQuantityFilled()));
                         vehiclnum.setText(data.getVehicleNumber());
                         serialnum.setEnabled(false);
                         vehiclnum.setEnabled(false);

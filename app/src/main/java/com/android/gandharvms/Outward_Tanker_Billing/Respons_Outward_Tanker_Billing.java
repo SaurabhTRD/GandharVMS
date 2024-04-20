@@ -29,6 +29,7 @@ public class Respons_Outward_Tanker_Billing {
     public char NextProcess;
     public char I_O;
     public String VehicleType;
+    public String HowMuchQTYUOM;
 
     int Density_29_5C;
     String SealNumber;
@@ -85,7 +86,7 @@ public class Respons_Outward_Tanker_Billing {
         BatchNo = batchNo;
     }
 
-    public Respons_Outward_Tanker_Billing(int outwardId, String intime, String outTime, String tankerPlanning, String createdBy, String updatedBy, char currentProcess, String remark, String serialNumber, String vehicleNumber, String OAnumber, String customerName, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType) {
+    public Respons_Outward_Tanker_Billing(int outwardId, String intime, String outTime, String tankerPlanning, String createdBy, String updatedBy, char currentProcess, String remark, String serialNumber, String vehicleNumber, String OAnumber, String customerName, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType,String howMuchQTYUOM) {
         OutwardId = outwardId;
         this.intime = intime;
         this.outTime = outTime;
@@ -104,6 +105,7 @@ public class Respons_Outward_Tanker_Billing {
         NextProcess = nextProcess;
         I_O = i_O;
         VehicleType = vehicleType;
+        HowMuchQTYUOM = howMuchQTYUOM;
 
     }
 

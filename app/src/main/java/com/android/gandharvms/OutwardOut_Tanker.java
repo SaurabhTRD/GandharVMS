@@ -31,11 +31,11 @@ public class OutwardOut_Tanker extends AppCompatActivity {
     }
 
     public void dataentryoutwardouttankerclick(View view){
-        if(Global_Var.getInstance().Department.contains("Production")){
+        if(Global_Var.getInstance().Department.contains("DataEntry")){
             Global_Var.getInstance().DeptType='P';
             startActivity(new Intent(this, DataEntryForm_Production.class));
         } else {
-            Toasty.warning(OutwardOut_Tanker.this, "You are not in Production Department", Toast.LENGTH_SHORT).show();
+            Toasty.warning(OutwardOut_Tanker.this, "You are not in DataEntry Department", Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -8,6 +8,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -34,6 +37,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -50,12 +54,13 @@ import retrofit2.Response;
 public class Outward_Tanker_Billing extends AppCompatActivity {
 
     EditText intime,serialnumber,vehiclenumber,transporter,oanumber,date,location,
-    remark,etcust,etprod,ethowmuch;
+    remark,etcust,etprod,ethowmuch,euom;
 
     FirebaseFirestore dbroot;
     Button submit,completed;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
+    AutoCompleteTextView uom;
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
@@ -66,6 +71,8 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
     private String token;
     private LoginMethod userDetails;
     private int uhowmuch;
+    ArrayAdapter<String> uomitem;
+    String [] uomi = {"TON","KL"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +96,20 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         etprod = findViewById(R.id.etproduct);
         ethowmuch = findViewById(R.id.ethowmuch);
         location = findViewById(R.id.etloca);
+        euom = findViewById(R.id.etuombilling);
 
         completed = findViewById(R.id.otbillincompleted);
+
+        uom = findViewById(R.id.etuombilling);
+        uomitem = new ArrayAdapter<String>(this,R.layout.outward_billing_uom,uomi);
+        uom.setAdapter(uomitem);
+        uom.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String items = parent.getItemAtPosition(position).toString();
+                Toasty.success(getApplicationContext(), "Item:- " + items + " Selected", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,6 +312,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         String outTime = getCurrentTime();
         String ucustname = etcust.getText().toString().trim();
         String uproduct = etprod.getText().toString().trim();
+        String eduom = euom.getText().toString().trim();
         if(!ethowmuch.getText().toString().isEmpty())
         {
             try {
@@ -312,7 +332,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         }else {
             Respons_Outward_Tanker_Billing responsOutwardTankerBilling = new Respons_Outward_Tanker_Billing(OutwardId,etintime,outTime,
                     "",EmployeId,EmployeId,'B',etremark,etserilnumber,etvehiclenumber,etoanumber,ucustname,uproduct,uhowmuch,ulocation,'W',inOut,
-                    vehicleType);
+                    vehicleType,eduom);
             Call<Boolean> call = outwardTankerBillinginterface.updatebillingoanumber(responsOutwardTankerBilling);
             call.enqueue(new Callback<Boolean>() {
                 @Override

@@ -41,6 +41,8 @@ public class Response_Outward_Tanker_Weighment {
     public char I_O;
     public String VehicleType;
     public int Density_29_5C;
+    String BatchNo;
+
 
     public int getDensity_29_5C() {
         return Density_29_5C;
@@ -362,13 +364,21 @@ public class Response_Outward_Tanker_Weighment {
         VehicleType = vehicleType;
     }
 
+    public String getBatchNo() {
+        return BatchNo;
+    }
+
+    public void setBatchNo(String batchNo) {
+        BatchNo = batchNo;
+    }
+
     public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage,
                                              String inVehicleImage, String outDriverImage, String outVehicleImage,
                                              String outInTime, String netWeight, String tareWeight, String grossWeight,
                                              String numberofPack, String outWRemark, String sealNumber,
                                              char currentProcess, String remark, String createdBy,
                                              String updatedBy, char nextProcess, char i_O, String vehicleType,
-                                             String serialNumber,String vehicleNumber) {
+                                             String serialNumber, String vehicleNumber) {
         OutwardId = outwardId;
         Intime = intime;
         OutTime = outTime;

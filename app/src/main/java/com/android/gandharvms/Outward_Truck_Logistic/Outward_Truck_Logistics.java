@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabResponseModel;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.Logistic;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
@@ -53,7 +55,7 @@ import retrofit2.Response;
 public class Outward_Truck_Logistics extends AppCompatActivity {
 
     EditText intime, serialnumber, vehiclenumber, transporter, place, oanumber, remark,customername,howqty;
-    Button submit,btnlogisticcompletd;
+    Button submit,btnlogisticcompletd,updatebtn;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -68,6 +70,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
     private LoginMethod userDetails;
     private String token;
     public int uhowqty;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,9 +88,11 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         howqty = findViewById(R.id.etloadedmaterqty);
 
         customername = findViewById(R.id.etcustomername);
+        sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
 
         submit = findViewById(R.id.etssubmit);
         btnlogisticcompletd = findViewById(R.id.outwardtruckcompletedlogistic);
+        updatebtn = findViewById(R.id.outwardtruckupatebtn);
         dbroot = FirebaseFirestore.getInstance();
 
         logisticdetails = RetroApiClient.getLogisticDetails();
@@ -103,18 +108,27 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 startActivity(new Intent(Outward_Truck_Logistics.this, Logi_OR_Complete.class));
             }
         });
+        updatebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                upditinsecbyinwardid();
+            }
+        });
 
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    FetchVehicleDetails(vehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
+                    String vehicltype = Global_Var.getInstance().MenuType;
+                    char DeptType = Global_Var.getInstance().DeptType;
+                    char InOutType = Global_Var.getInstance().InOutType;
+                    FetchVehicleDetails(vehiclenumber.getText().toString().trim(), vehicltype, DeptType, InOutType);
                 }
             }
         });
 
-        if (getIntent().hasExtra("vehiclenum")) {
-            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
-        }
+//        if (getIntent().hasExtra("vehiclenum")) {
+//            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+//        }
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -124,6 +138,19 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 intime.setText(time);
             }
         });
+
+        if (sharedPreferences != null){
+            if (getIntent().hasExtra("vehiclenum")) {
+                String action = getIntent().getStringExtra("Action");
+                if (action != null && action.equals("Up")){
+                    FetchVehicleDetailsforUpdate(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, 'x', 'I');
+                }else {
+                    FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+                }
+            }
+        }else {
+            Log.e("MainActivity", "SharedPreferences is null");
+        }
 
     }
 
@@ -179,6 +206,65 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
             }
         });
     }
+    public void FetchVehicleDetailsforUpdate(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
+        Call<InTrLogisticResponseModel> call = logisticdetails.getLogisticbyfetchVehData(vehicleNo, vehicleType, NextProcess, inOut);
+        call.enqueue(new Callback<InTrLogisticResponseModel>() {
+            @Override
+            public void onResponse(Call<InTrLogisticResponseModel> call, Response<InTrLogisticResponseModel> response) {
+                if (response.isSuccessful()) {
+                    InTrLogisticResponseModel data = response.body();
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
+                        inwardid = data.getOutwardId();
+                        vehiclenumber.setText(data.getVehicleNumber());
+                        vehiclenumber.setEnabled(false);
+                        serialnumber.setText(data.getSerialNumber());
+                        serialnumber.setEnabled(false);
+                        transporter.setText(data.getTransportName());
+                        transporter.setEnabled(true);
+                        place.setText(data.getPlace());
+                        place.setEnabled(false);
+                        intime.requestFocus();
+                        intime.callOnClick();
+                        oanumber.setText(data.getOAnumber());
+                        oanumber.setEnabled(true);
+                        customername.setText(data.getCustomerName());
+                        customername.setEnabled(true);
+                        updatebtn.setVisibility(View.VISIBLE);
+                        howqty.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+                        howqty.setEnabled(false);
+                        remark.setText(data.getRemark());
+                        remark.setEnabled(false);
+
+
+                    } else {
+                        Toasty.error(Outward_Truck_Logistics.this, "This Vehicle Number Is Out From Factory.\n You Can Not Update", Toast.LENGTH_LONG).show();
+                        startActivity(new Intent(Outward_Truck_Logistics.this,Logi_OR_Complete.class));
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InTrLogisticResponseModel> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Truck_Logistics.this, "failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
     public void makeNotificationLogistic(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
@@ -228,6 +314,47 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 Toasty.error(Outward_Truck_Logistics.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void upditinsecbyinwardid (){
+//        String upserialnum = serialnumber.getText().toString().trim();
+//        String upvehiclenum = vehiclenumber.getText().toString().trim();
+        String uptransporter = transporter.getText().toString().trim();
+//        String upplace = place.getText().toString().trim();
+        String upoanumber = oanumber.getText().toString().trim();
+        String upcustname = customername.getText().toString().trim();
+//        if (!howqty.getText().toString().isEmpty()){
+//            try {
+//                uhowqty = Integer.parseInt(howqty.getText().toString().trim());
+//            }catch (NumberFormatException e){
+//                e.printStackTrace();
+//            }
+//        }
+//        String upremark = remark.getText().toString().trim();
+
+        Update_Request_Model_Outward_Logistic updateRequestModelOutwardLogistic = new Update_Request_Model_Outward_Logistic(
+                inwardid,uptransporter,upoanumber,upcustname,EmployeId
+        );
+        Call<Boolean> call = logisticdetails.updateoutwardlogistic(updateRequestModelOutwardLogistic);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() && response.body()== true){
+                    Toasty.success(Outward_Truck_Logistics.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Outward_Truck_Logistics.this,Outward_Truck.class));
+                    finish();
+                }else {
+                    Toasty.error(Outward_Truck_Logistics.this,"Data Insertion Failed..!",Toasty.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+            }
+        });
+
+
     }
 
 

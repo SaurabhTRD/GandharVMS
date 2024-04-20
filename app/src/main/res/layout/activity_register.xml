@@ -260,6 +260,14 @@
                 android:layout_marginRight="25dp"
                 android:layout_weight="1"
                 android:text="Despatch" />
+            <CheckBox
+                android:id="@+id/isdataentry"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="55dp"
+                android:layout_marginRight="10dp"
+                android:layout_weight="2"
+                android:text="DataEntry" />
 
         </LinearLayout>
 

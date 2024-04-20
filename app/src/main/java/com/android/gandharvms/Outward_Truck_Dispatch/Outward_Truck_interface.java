@@ -18,4 +18,11 @@ public interface Outward_Truck_interface {
 
     @POST("api/OutwardTruckBillingDispatch/AddOutwardDispatch")
     Call<Boolean> insertdispatch(@Body Model_Outward_Truck_Dispatch request);
+
+    @GET("api/OutwardIndusSmallDispatch/GetOutwardIndusSmallDispatchByFetchVehicleDetails")
+    Call<Model_industrial> fetchindusrtial( @Query("vehicleNo")String vehicleNo,
+                                            @Query("vehicleType")String vehicleType,
+                                            @Query("NextProcess")char NextProcess,
+                                            @Query("inOut")char inOut
+    );
 }

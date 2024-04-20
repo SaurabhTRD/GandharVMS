@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 import com.android.gandharvms.R;
 
@@ -19,6 +20,7 @@ public class Outward_Dispatch_IndusSmallPack extends AppCompatActivity {
 
     public void ordespIndusOnClick(View view){
         startActivity(new Intent(this, Outward_DesIndustriaLoading_Form.class));
+        Global_Var.getInstance().DeptType='A';
         /*if(Global_Var.getInstance().Department.contains("Despatch")){
             Global_Var.getInstance().DeptType='D';
             startActivity(new Intent(this, Outward_Dispatch_IndusSmallPack.class));
@@ -29,6 +31,7 @@ public class Outward_Dispatch_IndusSmallPack extends AppCompatActivity {
 
     public void ordespsmallPackOnClick(View view){
         startActivity(new Intent(this, Outward_DesSmallPackLoading_Form.class));
+        Global_Var.getInstance().DeptType='J';
         /*if(Global_Var.getInstance().Department.contains("Logistic")){
             Global_Var.getInstance().DeptType='G';
         } else {

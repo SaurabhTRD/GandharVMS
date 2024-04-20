@@ -53,11 +53,11 @@ public class Outward_Truck extends AppCompatActivity {
         }
     }
     public void productionouttanker(View view){
-        if(Global_Var.getInstance().Department.contains("Production")){
+        if(Global_Var.getInstance().Department.contains("DataEntry")){
             Global_Var.getInstance().DeptType='P';
             startActivity(new Intent(this, Outward_Truck_Production.class));
         } else {
-            Toasty.warning(Outward_Truck.this, "You are not in Production Department", Toast.LENGTH_SHORT).show();
+            Toasty.warning(Outward_Truck.this, "You are not in DataEntry Department", Toast.LENGTH_SHORT).show();
         }
 
     }

@@ -4,6 +4,7 @@ import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabRequestModel;
 import com.android.gandharvms.Inward_Tanker_Laboratory.InTanLabResponseModel;
 import com.android.gandharvms.Outward_Truck_Logistic.InTrLogisticRequestModel;
 import com.android.gandharvms.Outward_Truck_Logistic.InTrLogisticResponseModel;
+import com.android.gandharvms.Outward_Truck_Logistic.Update_Request_Model_Outward_Logistic;
 
 import java.util.List;
 
@@ -23,4 +24,8 @@ public interface Logistic {
                                                               @Query("inOut") char inOut);
     @POST("api/OutwardLogistic/Add")
     Call<Boolean> insertLogisticData(@Body InTrLogisticRequestModel insertLogisticmodel);
+
+    //update outward logistic
+    @POST("api/OutwardLogistic/UpdateLogisticOACustTransOutwardId")
+    Call<Boolean> updateoutwardlogistic(@Body Update_Request_Model_Outward_Logistic updateRequestModelOutwardLogistic);
 }

@@ -70,6 +70,18 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="130dp"
+                android:id="@+id/textoutwardgriddate"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Date"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+
+            <TextView
                 android:layout_width="95dp"
                 android:id="@+id/textoutwardgridSecInTime"
                 android:textStyle="bold"

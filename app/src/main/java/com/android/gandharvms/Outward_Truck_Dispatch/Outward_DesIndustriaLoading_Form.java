@@ -1,5 +1,6 @@
 package com.android.gandharvms.Outward_Truck_Dispatch;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -14,8 +15,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Laboratory.it_Lab_Completedgrid;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
 import com.android.gandharvms.R;
 
 import java.util.ArrayList;
@@ -23,6 +28,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
 
@@ -35,10 +43,17 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     AutoCompleteTextView  typeofpackingautoCompleteTextView1;
     Map<String, Integer> typeofpackingMapping = new HashMap<>();
     ArrayAdapter<String> typeofpackingdrop;
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
+    private int OutwardId;
+    private Outward_Truck_interface outwardTruckInterface;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_des_industria_loading_form);
+        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
 
 //        typeofpackingautoCompleteTextView1 = findViewById(R.id.autodesindusloadTypeOfPacking);
 //        typeofpackingMapping = new HashMap<>();
@@ -95,6 +110,18 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         twotenltr.addTextChangedListener(textWatcher);
         boxbucket.addTextChangedListener(textWatcher);
 
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
+        etdesilvehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View view, boolean hasfocus) {
+                if (!hasfocus){
+                    FetchVehicleDetails(etdesilvehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
+                }
+            }
+        });
+
     }
 
     TextWatcher textWatcher = new TextWatcher() {
@@ -142,5 +169,30 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     public void btndesindusloadViewclick(View view) {
         //Intent intent = new Intent(this, it_Lab_Completedgrid.class);
         //startActivity(intent);
+    }
+    public void  ordesindusloadonclick(View view ){
+        Intent  intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
+    }
+    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut){
+        Call<Model_industrial> call = outwardTruckInterface.fetchindusrtial(vehicleNo,vehicleType,NextProcess,inOut);
+        call.enqueue(new Callback<Model_industrial>() {
+            @Override
+            public void onResponse(Call<Model_industrial> call, Response<Model_industrial> response) {
+                if (response.isSuccessful()){
+                    Model_industrial data = response.body();
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null){
+                        OutwardId = data.getOutwardId();
+                        etdesilserialnumber.setText(data.getSerialNumber());
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Model_industrial> call, Throwable t) {
+
+            }
+        });
+
     }
 }

@@ -79,6 +79,7 @@ public class Response_Outward_Security_Fetching {
     private char NextProcess;
     private char I_O;
     private String VehicleType;
+    private String SealNumber;
 
     public String getLogInTime() {
         return LogInTime;
@@ -702,5 +703,13 @@ public class Response_Outward_Security_Fetching {
 
     public void setVehicleType(String vehicleType) {
         VehicleType = vehicleType;
+    }
+
+    public String getSealNumber() {
+        return SealNumber;
+    }
+
+    public void setSealNumber(String sealNumber) {
+        SealNumber = sealNumber;
     }
 }
