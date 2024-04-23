@@ -117,7 +117,7 @@
 
             >
             <EditText
-                android:id="@+id/etsealnum"
+                android:id="@+id/etsealnumbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Seal Number"

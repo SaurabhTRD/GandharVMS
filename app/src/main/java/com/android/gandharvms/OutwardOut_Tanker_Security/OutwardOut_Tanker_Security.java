@@ -42,7 +42,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Tanker_Security extends AppCompatActivity {
 
-    EditText intime,serialnumber,date,vehiclenumber,invoiceno,partyname,goodsdiscription,qty,otoutsecqtyuom,netweight,sign,remark;
+    EditText intime,serialnumber,date,vehiclenumber,invoiceno,partyname,goodsdiscription,qty,otoutsecqtyuom,netweight,sign,remark,etsealn;
     Button submit,complted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -58,7 +58,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
     private String outsecvehiclenum;
     private LoginMethod userDetails;
     private String token;
-    RadioButton Trasnportyes,transportno,tremyes,tremno,ewayyes,ewayno,testyes,testno,invoiceyes,invoicenono,etseal;
+    RadioButton Trasnportyes,transportno,tremyes,tremno,ewayyes,ewayno,testyes,testno,invoiceyes,invoicenono;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +79,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
         netweight = findViewById(R.id.etnetweight);
         sign = findViewById(R.id.etsign);
         remark = findViewById(R.id.etremark);
+        etsealn = findViewById(R.id.etsealnumbar);
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
@@ -95,7 +96,6 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
         invoiceyes = findViewById(R.id.invoiceyes);
         invoicenono = findViewById(R.id.invoiceno);
 
-        etseal = findViewById(R.id.etsealnum);
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -158,8 +158,8 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
                         otoutsecqtyuom.setEnabled(false);
                         netweight.setText(obj.getNetWeight());
                         netweight.setEnabled(false);
-                        etseal.setText(obj.getSealNumber());
-                        etseal.setEnabled(false);
+                        etsealn.setText(obj.getSealNumber());
+                        etsealn.setEnabled(false);
                     }
                     else {
                         Toasty.error(OutwardOut_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();

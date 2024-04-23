@@ -37,6 +37,7 @@ public class Respons_Outward_Tanker_Billing {
     String TareWeight;
     String GrossWeight;
     String BatchNo;
+    private int Kl;
 
     public int getDensity_29_5C() {
         return Density_29_5C;
@@ -86,7 +87,15 @@ public class Respons_Outward_Tanker_Billing {
         BatchNo = batchNo;
     }
 
-    public Respons_Outward_Tanker_Billing(int outwardId, String intime, String outTime, String tankerPlanning, String createdBy, String updatedBy, char currentProcess, String remark, String serialNumber, String vehicleNumber, String OAnumber, String customerName, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType,String howMuchQTYUOM) {
+    public int getKl() {
+        return Kl;
+    }
+
+    public void setKl(int kl) {
+        Kl = kl;
+    }
+
+    public Respons_Outward_Tanker_Billing(int outwardId, String intime, String outTime, String tankerPlanning, String createdBy, String updatedBy, char currentProcess, String remark, String serialNumber, String vehicleNumber, String OAnumber, String customerName, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType, String howMuchQTYUOM) {
         OutwardId = outwardId;
         this.intime = intime;
         this.outTime = outTime;

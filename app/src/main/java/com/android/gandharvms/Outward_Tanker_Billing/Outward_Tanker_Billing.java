@@ -54,7 +54,7 @@ import retrofit2.Response;
 public class Outward_Tanker_Billing extends AppCompatActivity {
 
     EditText intime,serialnumber,vehiclenumber,transporter,oanumber,date,location,
-    remark,etcust,etprod,ethowmuch,euom;
+    remark,etcust,etprod,ethowmuch,euom,kl;
 
     FirebaseFirestore dbroot;
     Button submit,completed;
@@ -97,6 +97,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         ethowmuch = findViewById(R.id.ethowmuch);
         location = findViewById(R.id.etloca);
         euom = findViewById(R.id.etuombilling);
+        kl = findViewById(R.id.etkl);
 
         completed = findViewById(R.id.otbillincompleted);
 
@@ -266,6 +267,8 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                         serialnumber.setEnabled(false);
                         date.setEnabled(false);
                         transporter.setEnabled(false);
+                        kl.setText(String.valueOf(data.getKl()));
+                        kl.setEnabled(false);
                         /*intime.callOnClick();
                         intime.requestFocus();*/
                     }
