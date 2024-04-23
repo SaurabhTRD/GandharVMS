@@ -106,6 +106,44 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="1"
+            android:layout_rowWeight="1"
+            android:layout_column="1"
+            android:layout_columnWeight="1"
+            android:layout_gravity="fill"
+            app:cardBackgroundColor="@color/blue"
+            app:cardCornerRadius="8dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            android:onClick="itVehicleReportCompletedclick">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="120dp"
+                    android:layout_height="100dp"
+                    android:src="@drawable/vehiclereport"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:text="Tanker Vehicle\n Reports"
+                    android:textAlignment="center"
+                    android:textColor="@color/white"
+                    android:textStyle="bold"
+                    android:textSize="20dp"/>
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
             android:id="@+id/Statusintanker"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -143,7 +181,6 @@
 
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
 
 
     </GridLayout>

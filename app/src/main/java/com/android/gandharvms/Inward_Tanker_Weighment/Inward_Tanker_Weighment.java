@@ -140,6 +140,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     AutoCompleteTextView weighautoCompleteTextView1;
     Map<String, Integer> weighqtyUomMapping = new HashMap<>();
     ArrayAdapter<String> weighqtyuomdrop;
+    private int insertweighqty;
+    private int insertnetweighqtyUom;
     List<String> teamList = new ArrayList<>();
 
     @Override
@@ -358,6 +360,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     }
 
     public void weinsertdata() {
+
         String intime = etint.getText().toString().trim();
         String serialnumber = etserialnumber.getText().toString().trim();
         String vehicelnumber = etvehicalno.getText().toString().trim();
@@ -369,6 +372,20 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         String grossweight = etgrossweight.getText().toString().trim();
         String tareweight = "0";
         String netweight = "0";
+        if (!etweighqty.getText().toString().isEmpty()) {
+            try {
+                insertweighqty = Integer.parseInt(etweighqty.getText().toString().trim());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!weighqtyUomNumericValue.toString().isEmpty()) {
+            try {
+                insertnetweighqtyUom = Integer.parseInt(weighqtyUomNumericValue.toString().trim());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
         String remark = etremark.getText().toString().trim();
         String signby = etsignby.getText().toString().trim();
         String container = etcontainer.getText().toString().trim();
@@ -380,11 +397,12 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 signby.isEmpty() || container.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-            InTanWeighRequestModel weighReqModel = new InTanWeighRequestModel(inwardid, intime, outTime, grossweight, tareweight, netweight,
-                     remark, signby, Integer.parseInt(container), imgPath1, imgPath2, serialnumber,
-                    vehicelnumber, date, suppliername, materialname, oan, driverno, 'M', inOut, vehicleType, EmployeId, EmployeId, "", "", "");
+            ItInsweighrequestmodel weighReqModel = new ItInsweighrequestmodel(inwardid, intime, outTime, grossweight,
+                     netweight,tareweight, remark, signby, Integer.parseInt(container), imgPath1, imgPath2, serialnumber,
+                    vehicelnumber,EmployeId, suppliername, oan, driverno, 'M', inOut, vehicleType,
+                     EmployeId, "", "", "",insertweighqty,insertnetweighqtyUom);
 
-            Call<Boolean> call = weighmentdetails.insertWeighData(weighReqModel);
+            Call<Boolean> call = weighmentdetails.itinsertweighdata(weighReqModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -531,14 +549,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                         etserialnumber.setEnabled(false);
                         etvehicalno.setText(data.getVehicleNo());
                         etvehicalno.setEnabled(false);
-                        etsuppliername.setText(data.getPartyName());
-                        etsuppliername.setEnabled(false);
                         etmaterialname.setText(data.getMaterial());
                         etmaterialname.setEnabled(false);
-                        etoano.setText(data.getOA_PO_number());
-                        etoano.setEnabled(false);
-                        etdriverno.setText(data.getDriver_MobileNo());
-                        etdriverno.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);
                     }

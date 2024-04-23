@@ -6,35 +6,8 @@
     android:background="@color/lightgray">
 
     <TextView
-        android:layout_width="110dp"
-        android:id="@+id/textcoSerialNumber"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="140dp"
-        android:id="@+id/textcoVehicleNumber"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoMaterial"
-        android:gravity="center|start"
-        android:layout_marginStart="5dp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="140dp"
-        android:id="@+id/textcoInTime"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportSecIntime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -43,7 +16,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/textcoOutTime"
+        android:id="@+id/textcoitreportSecOuttime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -51,373 +24,555 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="130dp"
-        android:id="@+id/textcodate"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportdate"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcopartyname"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportSerialNumber"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoqty"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportVehicleNumber"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textconetweight"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportInvoiceNo"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoqtyuom"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportMaterial"
+        android:gravity="center|start"
+        android:layout_marginStart="5dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportnetweight"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoreoprtingre"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportnetweightuom"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textconetweightuom"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportextramaterials"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoextramaterials"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportsecremark"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoremark"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportWeiIntime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcooapo"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportWeiOuttime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcomob"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportpartyname"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcogrossweight"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportmob"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcobatchnumber"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportoapo"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcocontainerno"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportqty"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportqtyuom"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportgrossweight"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportcontainerno"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportweiremark"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportsighby"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <ImageView
-        android:id="@+id/textInVehicleImage"
+        android:id="@+id/textitreportInVehicleImage"
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"
         android:gravity="center|start"/>
+
     <ImageView
-        android:id="@+id/textInDriverImage"
+        android:id="@+id/textitreportInDriverImage"
         android:layout_width="120dp"
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"
         android:gravity="center|start"/>
 
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoSelectregister"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportSamIntime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportSamOuttime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportLabIntime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportLabOuttime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportApperance"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportOdor"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportColor"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoIrCopy"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportLQty"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportDensity"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportRcsTest"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportAnLinePoint"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportFlashPoint"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreport_40KV"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreport_100KV"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportAdditionalTest"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportSampleTest"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportSignOf"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportDateAndTime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportRemarkDescription"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportViscosityIndex"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportlabRemark"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportProIntime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportProOuttime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportUnloadAboveMaterialInTK"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportProductName"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportAboveMaterialIsUnloadInTK"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportOperatorName"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportOutWeiInTime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportOutWeiOutTime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreporttareweight"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportweinetWeight"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportshortagedip"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoDeliveryBill"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportshortageweight"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/textitreportOutVehicleImage"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"/>
+
+    <ImageView
+        android:id="@+id/textitreportOutDriverImage"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoTaxInvoice"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportOutSecInTime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoEwayBill"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportOutSecOutTime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcosighby"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportIrCopy"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoshortagedip"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportDeliveryBill"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoshortageweight"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportTaxInvoice"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoApperance"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="110dp"
-        android:id="@+id/textcoOdor"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="110dp"
-        android:id="@+id/textcoColor"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="110dp"
-        android:id="@+id/textcoLQty"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoDensity"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoRcsTest"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoAnLinePoint"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoFlashPoint"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textco_40KV"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textco_100KV"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoAdditionalTest"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoSampleTest"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoSignOf"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoDateAndTime"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoRemarkDescription"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoViscosityIndex"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoUnloadAboveMaterialInTK"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoProductName"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoAboveMaterialIsUnloadInTK"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoOperatorName"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoReceiveQTY"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoReceiveQTYUOM"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textcoStoreExtramaterials"
+        android:layout_width="120dp"
+        android:id="@+id/textcoitreportEwayBill"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"

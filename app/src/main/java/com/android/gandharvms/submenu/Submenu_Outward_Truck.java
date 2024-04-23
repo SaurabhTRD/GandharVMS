@@ -20,8 +20,6 @@ public class Submenu_Outward_Truck extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submenu_outward_truck);
 
-
-
     }
     public void intruckclick(View view){
         Global_Var.getInstance().InOutType='I';

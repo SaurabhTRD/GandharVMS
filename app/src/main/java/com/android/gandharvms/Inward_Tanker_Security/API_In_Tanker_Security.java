@@ -42,6 +42,10 @@ public interface API_In_Tanker_Security {
             @Query("vehicletype") String vehicletype,
             @Query("inout") char inout);
 
+    @GET("api/InwardCommon/GetInwardCompDepartmentWiseFactoryOutListing")
+    Call<List<CommonResponseModelForAllDepartment>> getitreportdata(
+            @Query("vehicleType") String vehicletype);
+
     @POST("api/InwardSecurity/UpdateOutSecurityDetails")
     Call<Boolean> intankersecurityoutupdate(@Body UpdateOutSecurityRequestModel updateOutSecurity);
 

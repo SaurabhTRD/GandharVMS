@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".InwardCompletedGrid.TruckCompReport.ir_Comp_Data_Report"
+            android:exported="false" />
+        <activity
             android:name=".Outward_Truck_Dispatch.Outward_DesSmallPackLoadWeigh_Form"
             android:exported="false" />
         <activity

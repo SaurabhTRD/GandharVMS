@@ -3,6 +3,7 @@ package com.android.gandharvms.LoginWithAPI;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.Inward_Tanker_Weighment.ItInsweighrequestmodel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Model_InwardOutweighment;
 
 import java.util.List;
@@ -31,6 +32,8 @@ public interface Weighment {
     @POST("api/InwardWeighment/Add")
     Call<Boolean> insertWeighData(@Body InTanWeighRequestModel insertweighmodel);
 
+    @POST("api/InwardWeighment/InsertInwardTankerWeighment")
+    Call<Boolean> itinsertweighdata(@Body ItInsweighrequestmodel insertweighreqmodel);
     @POST("api/InwardWeighment/UpdateOutWeighmentDetails")
     Call<Boolean> inwardoutweighment(@Body Model_InwardOutweighment modelInwardOutweighment);
 }

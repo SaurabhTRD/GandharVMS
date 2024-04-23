@@ -40,8 +40,35 @@ public class InTanWeighResponseModel {
 
     String OutVehicleImage;
     String OutDriverImage;
+    public int WeighQty ;
+    public int WeightQtyUOM;
+    public String WeiQTYUOM ;
     int Qty;
     public String OutInTime;
+
+    public int getWeighQty() {
+        return WeighQty;
+    }
+
+    public void setWeighQty(int weighQty) {
+        WeighQty = weighQty;
+    }
+
+    public int getWeightQtyUOM() {
+        return WeightQtyUOM;
+    }
+
+    public void setWeightQtyUOM(int weightQtyUOM) {
+        WeightQtyUOM = weightQtyUOM;
+    }
+
+    public String getWeiQTYUOM() {
+        return WeiQTYUOM;
+    }
+
+    public void setWeiQTYUOM(String weiQTYUOM) {
+        WeiQTYUOM = weiQTYUOM;
+    }
 
     public int getId() {
         return Id;

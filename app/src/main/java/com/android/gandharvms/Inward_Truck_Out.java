@@ -29,4 +29,10 @@ public class Inward_Truck_Out extends AppCompatActivity {
         Intent intent = new Intent(this,InwardOut_Truck_Weighment.class);
         startActivity(intent);
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+        finish();
+    }
 }

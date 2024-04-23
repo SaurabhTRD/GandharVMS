@@ -17,7 +17,7 @@ public class CommonResponseModelForAllDepartment {
     public String VehicleType;
     public String InTime;
     public String OutTime;
-    public int UnitOfMeasurement;
+    public String UnitOfMeasurement;
     public int QtyUOM;
     public int NetWeightUOM;
     public int NetWeight;
@@ -76,6 +76,214 @@ public class CommonResponseModelForAllDepartment {
     public String ReQTYUom ;
 
     public String WeiNetWeight;
+
+    public int WeighQty ;
+    public int WeightQtyUOM;
+    public String WeiQTYUOM ;
+    public String SecRemark;
+    public String LabRemark;
+    public String WeiRemark;
+    public String StorRemark ;
+    public String SecIntime ;
+    public String SecOuttime ;
+    public String WeiIntime ;
+    public String WeiOuttime ;
+    public String SamIntime ;
+    public String SamOuttime ;
+    public String LabIntime ;
+    public String LabOuttime ;
+    public String ProIntime ;
+    public String ProOuttime ;
+    public String StoreIntime ;
+    public String StoreOuttime ;
+    public String OutSecInTime;
+    public String OutSecOutTime;
+    public String OutWeiInTime;
+    public String OutWeiOutTime ;
+
+    public int getWeighQty() {
+        return WeighQty;
+    }
+
+    public void setWeighQty(int weighQty) {
+        WeighQty = weighQty;
+    }
+
+    public int getWeightQtyUOM() {
+        return WeightQtyUOM;
+    }
+
+    public void setWeightQtyUOM(int weightQtyUOM) {
+        WeightQtyUOM = weightQtyUOM;
+    }
+
+    public String getWeiQTYUOM() {
+        return WeiQTYUOM;
+    }
+
+    public void setWeiQTYUOM(String weiQTYUOM) {
+        WeiQTYUOM = weiQTYUOM;
+    }
+
+    public String getSecRemark() {
+        return SecRemark;
+    }
+
+    public void setSecRemark(String secRemark) {
+        SecRemark = secRemark;
+    }
+
+    public String getLabRemark() {
+        return LabRemark;
+    }
+
+    public void setLabRemark(String labRemark) {
+        LabRemark = labRemark;
+    }
+
+    public String getWeiRemark() {
+        return WeiRemark;
+    }
+
+    public void setWeiRemark(String weiRemark) {
+        WeiRemark = weiRemark;
+    }
+
+    public String getStorRemark() {
+        return StorRemark;
+    }
+
+    public void setStorRemark(String storRemark) {
+        StorRemark = storRemark;
+    }
+
+    public String getSecIntime() {
+        return SecIntime;
+    }
+
+    public void setSecIntime(String secIntime) {
+        SecIntime = secIntime;
+    }
+
+    public String getSecOuttime() {
+        return SecOuttime;
+    }
+
+    public void setSecOuttime(String secOuttime) {
+        SecOuttime = secOuttime;
+    }
+
+    public String getWeiIntime() {
+        return WeiIntime;
+    }
+
+    public void setWeiIntime(String weiIntime) {
+        WeiIntime = weiIntime;
+    }
+
+    public String getWeiOuttime() {
+        return WeiOuttime;
+    }
+
+    public void setWeiOuttime(String weiOuttime) {
+        WeiOuttime = weiOuttime;
+    }
+
+    public String getSamIntime() {
+        return SamIntime;
+    }
+
+    public void setSamIntime(String samIntime) {
+        SamIntime = samIntime;
+    }
+
+    public String getSamOuttime() {
+        return SamOuttime;
+    }
+
+    public void setSamOuttime(String samOuttime) {
+        SamOuttime = samOuttime;
+    }
+
+    public String getLabIntime() {
+        return LabIntime;
+    }
+
+    public void setLabIntime(String labIntime) {
+        LabIntime = labIntime;
+    }
+
+    public String getLabOuttime() {
+        return LabOuttime;
+    }
+
+    public void setLabOuttime(String labOuttime) {
+        LabOuttime = labOuttime;
+    }
+
+    public String getProIntime() {
+        return ProIntime;
+    }
+
+    public void setProIntime(String proIntime) {
+        ProIntime = proIntime;
+    }
+
+    public String getProOuttime() {
+        return ProOuttime;
+    }
+
+    public void setProOuttime(String proOuttime) {
+        ProOuttime = proOuttime;
+    }
+
+    public String getStoreIntime() {
+        return StoreIntime;
+    }
+
+    public void setStoreIntime(String storeIntime) {
+        StoreIntime = storeIntime;
+    }
+
+    public String getStoreOuttime() {
+        return StoreOuttime;
+    }
+
+    public void setStoreOuttime(String storeOuttime) {
+        StoreOuttime = storeOuttime;
+    }
+
+    public String getOutSecInTime() {
+        return OutSecInTime;
+    }
+
+    public void setOutSecInTime(String outSecInTime) {
+        OutSecInTime = outSecInTime;
+    }
+
+    public String getOutSecOutTime() {
+        return OutSecOutTime;
+    }
+
+    public void setOutSecOutTime(String outSecOutTime) {
+        OutSecOutTime = outSecOutTime;
+    }
+
+    public String getOutWeiInTime() {
+        return OutWeiInTime;
+    }
+
+    public void setOutWeiInTime(String outWeiInTime) {
+        OutWeiInTime = outWeiInTime;
+    }
+
+    public String getOutWeiOutTime() {
+        return OutWeiOutTime;
+    }
+
+    public void setOutWeiOutTime(String outWeiOutTime) {
+        OutWeiOutTime = outWeiOutTime;
+    }
 
     public String getWeiNetWeight() {
         return WeiNetWeight;
@@ -245,11 +453,11 @@ public class CommonResponseModelForAllDepartment {
         OutTime = outTime;
     }
 
-    public int getUnitOfMeasurement() {
+    public String getUnitOfMeasurement() {
         return UnitOfMeasurement;
     }
 
-    public void setUnitOfMeasurement(int unitOfMeasurement) {
+    public void setUnitOfMeasurement(String unitOfMeasurement) {
         UnitOfMeasurement = unitOfMeasurement;
     }
 

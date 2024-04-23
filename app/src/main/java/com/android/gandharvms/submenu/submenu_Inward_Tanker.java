@@ -8,13 +8,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Out;
+import com.android.gandharvms.Inward_Tanker_Production.Inward_Tanker_Production;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
+
+import es.dmoral.toasty.Toasty;
 
 public class submenu_Inward_Tanker extends AppCompatActivity {
     ImageView btnlogout;
@@ -63,5 +69,20 @@ public class submenu_Inward_Tanker extends AppCompatActivity {
             Intent intent = new Intent(this, grid.class);
             startActivity(intent);
 
+    }
+
+    public void itVehicleReportCompletedclick(View view){
+        if(Global_Var.getInstance().Department.contains("Production")){
+            Intent intent = new Intent(this, GridCompleted.class);
+            startActivity(intent);
+        } else {
+            Toasty.info(submenu_Inward_Tanker.this, "You Don't Have Access to View Vehicle Reports Data", Toast.LENGTH_LONG).show();
+        }
+    }
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -67,78 +67,34 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
     @Override
     public void onBindViewHolder(gridadaptercompleted.myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         CommonResponseModelForAllDepartment club = filteredGridList.get(position);
-        int intimelength = club.getInTime()!=null ? club.getInTime().length() : 0;
-        int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
-        if(nextProcess=='S')
-        {
-            bindSColumns(holder, club, intimelength, outtimelength);
-        } else if (nextProcess=='W') {
-            bindWColumns(holder, club, intimelength, outtimelength);
-        }
-        else if (nextProcess=='M') {
-            bindMColumns(holder, club, intimelength, outtimelength);
-        }
-        else if (nextProcess=='L') {
-            bindLColumns(holder, club, intimelength, outtimelength);
-        }
-        else if (nextProcess=='P') {
-            bindPColumns(holder, club, intimelength, outtimelength);
-        }
-        else if (nextProcess=='R') {
-            bindRColumns(holder, club, intimelength, outtimelength);
-        }
-    }
-
-    private void bindSColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
-        holder.sernum.setText(club.getSerialNo());
-        holder.vehiclenum.setText(club.getVehicleNo());
-        holder.material.setText(club.getMaterial());
-        if (intimelength > 0) {
-            holder.intime.setText(club.getInTime().substring(12, intimelength));
-        }
-        if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-        }
+        String secintimelength = club.getSecIntime()!=null ? club.getSecIntime() : "";
+        String secouttimelength = club.getSecOuttime()!=null ? club.getSecOuttime(): "";
+        holder.secIntime.setText(secintimelength);
+        holder.secOuttime.setText(secouttimelength);
         formattedDate = formatDate(club.getDate());
         holder.date.setText(formattedDate);
-        holder.partyname.setText(club.getPartyName());
-        holder.qty.setText(String.valueOf(club.getQty()));
-        holder.qtyuom.setText(String.valueOf(club.getQtyUOM()));
+        holder.sernum.setText(club.getSerialNo());
+        holder.vehiclenum.setText(club.getVehicleNo());
+        holder.invoiceno.setText(club.getInvoiceNo());
+        holder.material.setText(club.getMaterial());
         holder.netweight.setText(String.valueOf(club.getNetWeight()));
-        holder.netweightuom.setText(String.valueOf(club.getNetWeightUOM()));
+        holder.netweightuom.setText(club.getUnitOfNetWeight());
         holder.extramaterials.setText(club.getExtramaterials());
-        holder.reoprtingre.setText(club.getReportingRemark());
-        holder.remark.setText(club.getRemark());
-        holder.oapo.setText(club.getOA_PO_number());
-        holder.mob.setText(club.getDriver_MobileNo());
-        holder.Selectregister.setText(club.getSelectregister());
-        holder.IrCopy.setText(club.getIrCopy());
-        holder.DeliveryBill.setText(club.getDeliveryBill());
-        holder.TaxInvoice.setText(club.getTaxInvoice());
-        holder.EwayBill.setText(club.getEwayBill());
-    }
+        holder.secremark.setText(club.getSecRemark());
 
-    private void bindWColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
-        if (intimelength > 0) {
-            holder.intime.setText(club.getInTime().substring(12, intimelength));
-        }
-        if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-        }
-        holder.sernum.setText(club.getSerialNo());
-        holder.vehiclenum.setText(club.getVehicleNo());
-        holder.material.setText(club.getMaterial());
+        String weiintime = club.getWeiIntime()!=null ? club.getWeiIntime() : "";
+        String weiouttime = club.getWeiOuttime()!=null ? club.getWeiOuttime(): "";
+        holder.weiIntime.setText(weiintime);
+        holder.weiOuttime.setText(weiouttime);
         holder.partyname.setText(club.getPartyName());
-        formattedDate = formatDate(club.getDate());
-        holder.date.setText(formattedDate);
-        holder.oapo.setText(club.getOA_PO_number());
         holder.mob.setText(club.getDriver_MobileNo());
+        holder.oapo.setText(club.getOA_PO_number());
+        holder.qty.setText(String.valueOf(club.getWeighQty()));
+        holder.qtyuom.setText(club.getWeiQTYUOM());
         holder.grossweight.setText(String.valueOf(club.getGrossWeight()));
-        holder.remark.setText(club.getRemark());
         holder.containerno.setText(String.valueOf(club.getContainerNo()));
+        holder.weiremark.setText(club.getWeiRemark());
         holder.sighby.setText(club.getSignBy());
-        holder.shortagedip.setText(club.getShortageDip());
-        holder.shortageweight.setText(club.getShortageWeight());
         Picasso.get()
                 .load(RetroApiClient.BASE_URL + club.getInVehicleImage())
                 .placeholder(R.drawable.gandhar)
@@ -151,33 +107,16 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
                 .error(R.drawable.gandhar2)
                 .noFade().resize(120,120)
                 .centerCrop().into(holder.indriverimage);
-    }
 
-    private void bindMColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
-        formattedDate = formatDate(club.getDate());
-        holder.date.setText(formattedDate);
-        holder.vehiclenum.setText(club.getVehicleNo());
-        if (intimelength > 0) {
-            holder.intime.setText(club.getInTime().substring(12, intimelength));
-        }
-        if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-        }
-    }
+        String samintime = club.getSamIntime()!=null ? club.getSamIntime() : "";
+        String samouttime = club.getSamOuttime()!=null ? club.getSamOuttime(): "";
+        holder.samIntime.setText(samintime);
+        holder.samOuttime.setText(samouttime);
 
-    private void bindLColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
-        if (intimelength > 0) {
-            holder.intime.setText(club.getInTime().substring(12, intimelength));
-        }
-        if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-        }
-        holder.sernum.setText(club.getSerialNo());
-        holder.vehiclenum.setText(club.getVehicleNo());
-        holder.material.setText(club.getMaterial());
-        holder.partyname.setText(club.getPartyName());
-        formattedDate = formatDate(club.getDate());
-        holder.date.setText(formattedDate);
+        String labintime = club.getLabIntime()!=null ? club.getLabIntime() : "";
+        String labouttime = club.getLabOuttime()!=null ? club.getLabOuttime(): "";
+        holder.labIntime.setText(labintime);
+        holder.labOuttime.setText(labouttime);
         holder.Apperance.setText(club.getApperance());
         holder.Odor.setText(club.getOdor());
         holder.Color.setText(club.getColor());
@@ -194,40 +133,69 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         holder.DateAndTime.setText(club.getDateAndTime());
         holder.RemarkDescription.setText(club.getRemarkDescription());
         holder.ViscosityIndex.setText(String.valueOf(club.getViscosityIndex()));
-    }
-    private void bindPColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
-        if (intimelength > 0) {
-            holder.intime.setText(club.getInTime().substring(12, intimelength));
-        }
-        if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
-        }
-        holder.sernum.setText(club.getSerialNo());
-        holder.vehiclenum.setText(club.getVehicleNo());
-        holder.material.setText(club.getMaterial());
-        formattedDate = formatDate(club.getDate());
-        holder.date.setText(formattedDate);
+
+        String prointime = club.getProIntime()!=null ? club.getProIntime() : "";
+        String proouttime = club.getProOuttime()!=null ? club.getProOuttime(): "";
+        holder.proIntime.setText(prointime);
+        holder.proOuttime.setText(proouttime);
         holder.UnloadAboveMaterialInTK.setText(String.valueOf(club.getUnloadAboveMaterialInTK()));
         holder.ProductName.setText(club.getProductName());
         holder.AboveMaterialIsUnloadInTK.setText(String.valueOf(club.getAboveMaterialIsUnloadInTK()));
         holder.OperatorName.setText(club.getOperatorName());
+
+        String outweiIntime = club.getOutWeiInTime()!=null ? club.getOutWeiInTime() : "";
+        String outweiouttime = club.getOutWeiOutTime()!=null ? club.getOutWeiOutTime(): "";
+        holder.outWeiInTime.setText(outweiIntime);
+        holder.outWeiOutTime.setText(outweiouttime);
+        holder.tareweight.setText(club.getTareWeight());
+        holder.weinetWeight.setText(club.getWeiNetWeight());
+        holder.shortagedip.setText(club.getShortageDip());
+        holder.shortageweight.setText(club.getShortageWeight());
+        Picasso.get()
+                .load(RetroApiClient.BASE_URL + club.getOutVehicleImage())
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.outvehicleimage);
+        Picasso.get()
+                .load(RetroApiClient.BASE_URL + club.getOutDriverImage())
+                .placeholder(R.drawable.gandhar)
+                .error(R.drawable.gandhar2)
+                .noFade().resize(120,120)
+                .centerCrop().into(holder.outdriverimage);
+
+        String outsecIntime = club.getOutSecInTime()!=null ? club.getOutSecInTime() : "";
+        String outsecouttime = club.getOutSecOutTime()!=null ? club.getOutSecOutTime(): "";
+        holder.outWeiInTime.setText(outsecIntime);
+        holder.outWeiOutTime.setText(outsecouttime);
+        holder.IrCopy.setText(club.getIrCopy());
+        holder.DeliveryBill.setText(club.getDeliveryBill());
+        holder.TaxInvoice.setText(club.getTaxInvoice());
+        holder.EwayBill.setText(club.getEwayBill());
+
+        //holder.remark.setText(club.getRemark());
+        //holder.reoprtingre.setText(club.getReportingRemark());
+        //holder.remark.setText(club.getRemark());
+        //holder.Selectregister.setText(club.getSelectregister());
     }
+
+
     private void bindRColumns(gridadaptercompleted.myviewHolder holder, CommonResponseModelForAllDepartment club, int intimelength, int outtimelength) {
         holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.material.setText(club.getMaterial());
         if (intimelength > 0) {
-            holder.intime.setText(club.getInTime().substring(12, intimelength));
+            //holder.intime.setText(club.getInTime().substring(12, intimelength));
         }
         if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+            //holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
         holder.partyname.setText(club.getPartyName());
         holder.qty.setText(String.valueOf(club.getQty()));
         holder.qtyuom.setText(String.valueOf(club.getQtyUOM()));
-        holder.ReceiveQTY.setText(String.valueOf(club.getReceiveQTY()));
-        holder.ReceiveQTYUOM.setText(String.valueOf(club.getReceiveQTYUOM()));
-        holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
+        //holder.ReceiveQTY.setText(String.valueOf(club.getReceiveQTY()));
+        //holder.ReceiveQTYUOM.setText(String.valueOf(club.getReceiveQTYUOM()));
+        //holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
     }
     public int getItemCount() {
         return Gridmodel.size();
@@ -268,72 +236,124 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
-        TextView sernum, vehiclenum, material, intime, outtime,date,partyname,qty,netweight, reoprtingre,
-                 qtyuom,netweightuom,extramaterials,remark,oapo,mob,Selectregister,IrCopy,DeliveryBill,TaxInvoice,
-                 EwayBill,
-                grossweight,batchnumber,containerno, sighby,shortagedip,shortageweight,
-
-                Apperance,Odor,Color,LQty,Density,RcsTest,AnLinePoint,FlashPoint,_40KV,_100KV,
-                AdditionalTest,SampleTest,SignOf,DateAndTime,RemarkDescription,ViscosityIndex,
-
-                UnloadAboveMaterialInTK,ProductName,AboveMaterialIsUnloadInTK,OperatorName,
-                ReceiveQTY,ReceiveQTYUOM,StoreExtramaterials;
+        TextView secIntime,secOuttime,date,sernum, vehiclenum, invoiceno,material, netweight,netweightuom,
+                 extramaterials,secremark,
+                 weiIntime,weiOuttime,partyname,mob,oapo,qty,qtyuom,grossweight,containerno,weiremark, sighby;
         ImageView invehicleimage,indriverimage;
+        TextView samIntime,samOuttime,labIntime,labOuttime,
+                Apperance,Odor,Color,LQty,Density,RcsTest,AnLinePoint,FlashPoint,_40KV,_100KV,
+                AdditionalTest,SampleTest,SignOf,DateAndTime,RemarkDescription,ViscosityIndex,LabRemark,
 
+                proIntime,proOuttime,UnloadAboveMaterialInTK,ProductName,AboveMaterialIsUnloadInTK,OperatorName,
+                outWeiInTime,outWeiOutTime,tareweight,weinetWeight,shortagedip,shortageweight;
+        ImageView outvehicleimage,outdriverimage;
+
+        TextView outSecInTime,outSecOutTime,IrCopy,DeliveryBill,TaxInvoice,EwayBill;
         public myviewHolder(View view) {
             super(view);
-            sernum = view.findViewById(R.id.textcoSerialNumber);
-            vehiclenum = view.findViewById(R.id.textcoVehicleNumber);
-            material = view.findViewById(R.id.textcoMaterial);
-            intime =view.findViewById(R.id.textcoInTime);
-            outtime=view.findViewById(R.id.textcoOutTime);
-            date=view.findViewById(R.id.textcodate);
-            partyname=view.findViewById(R.id.textcopartyname);
-            qty=view.findViewById(R.id.textcoqty);
-            netweight=view.findViewById(R.id.textconetweight);
-            reoprtingre=view.findViewById(R.id.textcoreoprtingre);
-            qtyuom=view.findViewById(R.id.textcoqtyuom);
-            netweightuom=view.findViewById(R.id.textconetweightuom);
-            extramaterials=view.findViewById(R.id.textcoextramaterials);
-            remark=view.findViewById(R.id.textcoremark);
-            oapo=view.findViewById(R.id.textcooapo);
-            mob=view.findViewById(R.id.textcomob);
-            grossweight=view.findViewById(R.id.textcogrossweight);
-            batchnumber=view.findViewById(R.id.textcobatchnumber);
-            containerno=view.findViewById(R.id.textcocontainerno);
-            invehicleimage=view.findViewById(R.id.textInVehicleImage);
-            indriverimage=view.findViewById(R.id.textInDriverImage);
-            Selectregister=view.findViewById(R.id.textcoSelectregister);
-            IrCopy=view.findViewById(R.id.textcoIrCopy);
-            DeliveryBill=view.findViewById(R.id.textcoDeliveryBill);
-            TaxInvoice=view.findViewById(R.id.textcoTaxInvoice);
-            EwayBill=view.findViewById(R.id.textcoEwayBill);
-            sighby=view.findViewById(R.id.textcosighby);
-            shortagedip=view.findViewById(R.id.textcoshortagedip);
-            shortageweight=view.findViewById(R.id.textcoshortageweight);
-            Apperance=view.findViewById(R.id.textcoApperance);
-            Odor=view.findViewById(R.id.textcoOdor);
-            Color=view.findViewById(R.id.textcoColor);
-            LQty=view.findViewById(R.id.textcoLQty);
-            Density=view.findViewById(R.id.textcoDensity);
-            RcsTest=view.findViewById(R.id.textcoRcsTest);
-            AnLinePoint=view.findViewById(R.id.textcoAnLinePoint);
-            FlashPoint=view.findViewById(R.id.textcoFlashPoint);
-            _40KV=view.findViewById(R.id.textco_40KV);
-            _100KV=view.findViewById(R.id.textco_100KV);
-            AdditionalTest=view.findViewById(R.id.textcoAdditionalTest);
-            SampleTest=view.findViewById(R.id.textcoSampleTest);
-            SignOf=view.findViewById(R.id.textcoSignOf);
-            DateAndTime=view.findViewById(R.id.textcoDateAndTime);
-            RemarkDescription=view.findViewById(R.id.textcoRemarkDescription);
-            ViscosityIndex=view.findViewById(R.id.textcoViscosityIndex);
-            UnloadAboveMaterialInTK=view.findViewById(R.id.textcoUnloadAboveMaterialInTK);
-            ProductName=view.findViewById(R.id.textcoProductName);
-            AboveMaterialIsUnloadInTK=view.findViewById(R.id.textcoAboveMaterialIsUnloadInTK);
-            OperatorName=view.findViewById(R.id.textcoOperatorName);
-            ReceiveQTY=view.findViewById(R.id.textcoReceiveQTY);
-            ReceiveQTYUOM=view.findViewById(R.id.textcoReceiveQTYUOM);
-            StoreExtramaterials=view.findViewById(R.id.textcoStoreExtramaterials);
+            secIntime=view.findViewById(R.id.textcoitreportSecIntime);
+            secOuttime=view.findViewById(R.id.textcoitreportSecOuttime);
+            date=view.findViewById(R.id.textcoitreportdate);
+            sernum = view.findViewById(R.id.textcoitreportSerialNumber);
+            vehiclenum = view.findViewById(R.id.textcoitreportVehicleNumber);
+            invoiceno=view.findViewById(R.id.textcoitreportInvoiceNo);
+            material = view.findViewById(R.id.textcoitreportMaterial);
+            netweight=view.findViewById(R.id.textcoitreportnetweight);
+            netweightuom=view.findViewById(R.id.textcoitreportnetweightuom);
+            extramaterials=view.findViewById(R.id.textcoitreportextramaterials);
+            secremark=view.findViewById(R.id.textcoitreportsecremark);
+
+            weiIntime=view.findViewById(R.id.textcoitreportWeiIntime);
+            weiOuttime=view.findViewById(R.id.textcoitreportWeiOuttime);
+            partyname=view.findViewById(R.id.textcoitreportpartyname);
+            mob=view.findViewById(R.id.textcoitreportmob);
+            oapo=view.findViewById(R.id.textcoitreportoapo);
+            qty=view.findViewById(R.id.textcoitreportqty);
+            qtyuom=view.findViewById(R.id.textcoitreportqtyuom);
+            grossweight=view.findViewById(R.id.textcoitreportgrossweight);
+            containerno=view.findViewById(R.id.textcoitreportcontainerno);
+            weiremark=view.findViewById(R.id.textcoitreportweiremark);
+            sighby=view.findViewById(R.id.textcoitreportsighby);
+            invehicleimage=view.findViewById(R.id.textitreportInVehicleImage);
+            indriverimage=view.findViewById(R.id.textitreportInDriverImage);
+
+            samIntime=view.findViewById(R.id.textcoitreportSamIntime);
+            samOuttime=view.findViewById(R.id.textcoitreportSamOuttime);
+            labIntime=view.findViewById(R.id.textcoitreportLabIntime);
+            labOuttime=view.findViewById(R.id.textcoitreportLabOuttime);
+            Apperance=view.findViewById(R.id.textcoitreportApperance);
+            Odor=view.findViewById(R.id.textcoitreportOdor);
+            Color=view.findViewById(R.id.textcoitreportColor);
+            LQty=view.findViewById(R.id.textcoitreportLQty);
+            Density=view.findViewById(R.id.textcoitreportDensity);
+            RcsTest=view.findViewById(R.id.textcoitreportRcsTest);
+            AnLinePoint=view.findViewById(R.id.textcoitreportAnLinePoint);
+            FlashPoint=view.findViewById(R.id.textcoitreportFlashPoint);
+            _40KV=view.findViewById(R.id.textcoitreport_40KV);
+            _100KV=view.findViewById(R.id.textcoitreport_100KV);
+            AdditionalTest=view.findViewById(R.id.textcoitreportAdditionalTest);
+            SampleTest=view.findViewById(R.id.textcoitreportSampleTest);
+            SignOf=view.findViewById(R.id.textcoitreportSignOf);
+            DateAndTime=view.findViewById(R.id.textcoitreportDateAndTime);
+            RemarkDescription=view.findViewById(R.id.textcoitreportRemarkDescription);
+            ViscosityIndex=view.findViewById(R.id.textcoitreportViscosityIndex);
+            LabRemark=view.findViewById(R.id.textcoitreportlabRemark);
+
+            proIntime=view.findViewById(R.id.textcoitreportProIntime);
+            proOuttime=view.findViewById(R.id.textcoitreportProOuttime);
+            UnloadAboveMaterialInTK=view.findViewById(R.id.textcoitreportUnloadAboveMaterialInTK);
+            ProductName=view.findViewById(R.id.textcoitreportProductName);
+            AboveMaterialIsUnloadInTK=view.findViewById(R.id.textcoitreportAboveMaterialIsUnloadInTK);
+            OperatorName=view.findViewById(R.id.textcoitreportOperatorName);
+
+            outWeiInTime=view.findViewById(R.id.textcoitreportOutWeiInTime);
+            outWeiOutTime=view.findViewById(R.id.textcoitreportOutWeiOutTime);
+            tareweight=view.findViewById(R.id.textcoitreporttareweight);
+            weinetWeight=view.findViewById(R.id.textcoitreportweinetWeight);
+            shortagedip=view.findViewById(R.id.textcoitreportshortagedip);
+            shortageweight=view.findViewById(R.id.textcoitreportshortageweight);
+            outvehicleimage=view.findViewById(R.id.textitreportOutVehicleImage);
+            outdriverimage=view.findViewById(R.id.textitreportOutDriverImage);
+
+            outSecInTime=view.findViewById(R.id.textcoitreportOutSecInTime);
+            outSecOutTime=view.findViewById(R.id.textcoitreportOutSecOutTime);
+            IrCopy=view.findViewById(R.id.textcoitreportIrCopy);
+            DeliveryBill=view.findViewById(R.id.textcoitreportDeliveryBill);
+            TaxInvoice=view.findViewById(R.id.textcoitreportTaxInvoice);
+            EwayBill=view.findViewById(R.id.textcoitreportEwayBill);
+
+
+            //batchnumber=view.findViewById(R.id.textcoitreportbatchnumber);
+            //ReceiveQTY=view.findViewById(R.id.textcoitreportReceiveQTY);
+            //ReceiveQTYUOM=view.findViewById(R.id.textcoitreportReceiveQTYUOM);
+            //StoreExtramaterials=view.findViewById(R.id.textcoitreportStoreExtramaterials);
+            //reoprtingre=view.findViewById(R.id.textcoitreportreoprtingre);
+            //Selectregister=view.findViewById(R.id.textcoitreportSelectregister);
+            /*<TextView
+            android:layout_width="100dp"
+            android:id="@+id/textcoitreportReceiveQTY"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            android:gravity="center|start"
+            android:textColor="@android:color/black"
+            android:layout_height="match_parent"/>
+    <TextView
+            android:layout_width="100dp"
+            android:id="@+id/textcoitreportReceiveQTYUOM"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            android:gravity="center|start"
+            android:textColor="@android:color/black"
+            android:layout_height="match_parent"/>
+    <TextView
+            android:layout_width="100dp"
+            android:id="@+id/textcoitreportStoreExtramaterials"
+            android:textStyle="bold"
+            android:layout_marginStart="5dp"
+            android:gravity="center|start"
+            android:textColor="@android:color/black"
+            android:layout_height="match_parent"/>*/
+
         }
     }
 
