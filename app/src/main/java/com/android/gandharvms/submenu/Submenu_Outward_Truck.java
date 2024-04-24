@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
+import com.android.gandharvms.Menu;
 import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Truck;
@@ -39,4 +40,10 @@ public class Submenu_Outward_Truck extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+        finish();
+    }
 }

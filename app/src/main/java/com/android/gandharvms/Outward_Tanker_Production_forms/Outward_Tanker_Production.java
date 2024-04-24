@@ -77,7 +77,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
     public int statuscount;
     EditText intime, serialnumber, vehiclenumber, blenderno, transporter, product, howmuch, customer, location, blendingratio, batchno,
             productspesification, custref, packingsatus, rinsingstatus, decisionrule, blendingmaterial, signof, dt, oanum, remark, etflush;
-    Button submit, etsend,completed;
+    Button submit, etsend,completed,viewlabreport;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -111,7 +111,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         etflush = findViewById(R.id.etflushingno);
         etsend = findViewById(R.id.sendbtn);
         clinerar = findViewById(R.id.checklinear);
-
+        viewlabreport=findViewById(R.id.btn_otViewlabReport);
         //
         // etflush.setVisibility(View.GONE);
         etsend.setVisibility(View.GONE);
@@ -475,6 +475,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                         transporter.setEnabled(false);
                         isblending.setChecked(data.IsBlendingReq);
                         isflushing.setChecked(data.IsFlushingReq);
+                        viewlabreport.setVisibility(View.VISIBLE);
                         //isblending.setEnabled(false);
                         //isflushing.setEnabled(false);
                         etflush.setVisibility(View.GONE);

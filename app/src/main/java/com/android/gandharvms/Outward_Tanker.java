@@ -73,4 +73,10 @@ public class Outward_Tanker extends AppCompatActivity {
             Toasty.warning(Outward_Tanker.this, "You are not in Sampling Department", Toast.LENGTH_SHORT).show();
         }
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+        finish();
+    }
 }

@@ -55,4 +55,10 @@ public class OutwardOut_Tanker extends AppCompatActivity {
             Toasty.warning(OutwardOut_Tanker.this, "You are not in Security Department", Toast.LENGTH_SHORT).show();
         }
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+        finish();
+    }
 }

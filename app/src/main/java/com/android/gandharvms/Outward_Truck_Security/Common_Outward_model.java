@@ -47,6 +47,7 @@ public class Common_Outward_model {
     public int TankerNumber ;
     public String ProductName ;
     public int HowMuchQuantityFilled ;
+    public String HowMuchQTYUOM;
     public String Location ;
     public char NextProcess ;
     public char I_O ;
@@ -179,8 +180,402 @@ public class Common_Outward_model {
     public String OutOutTime;
     public String OutInvoiceNumber;
     public String OutTotalQty;
+    public String unitofmeasurementname;
+    public String SecInTime;
+    public String SecOutTime;
+    public String WeiInTime;
+    public String WeiOutTime;
+    public String BilInTime;
+    public String BilOutTime;
+    public String IPFLabOutTime;
+    public String IPFProInTime;
+    public String IPFProOutTime;
+    public String BLFLabInTime;
+    public String BLFLabOutTime;
+    public String BLFProInTime;
+    public String BLFProOutTime;
+    public String LogInTime;
+    public String LogOutTime;
+    public String DesInTime;
+    public String DesOutTime;
+    public String BRFBilInTime;
+    public String BRFBilOutTime;
+    public String BRFProInTime;
+    public String BRFProOutTime;
+    public String BRFLabInTime;
+    public String BRFLabOutTime;
+    public String OutWeiInTime;
+    public String OutWeiOutTime;
+    public String OutDataEntryInTime;
+    public String OutDataEntryOutTime;
+    public String OutBilInTime;
+    public String OutBilOutTime;
+    public String OutSecInTime;
+    public String OutSecOutTime;
 
+    public String SecInRemark;
+    public String BillingInRemark;
+    public String WeighmentInRemark;
+    public String InProLabRemark;
+    public String InProProRemark;
+    public String InBulkLabRemark;
+    public String InBulkProRemark;
+    public String LogisticRemark;
+    public String SecOutRemark;
+    public String BillingOutRemark;
+    public String WeighmentOutRemark;
 
+    public String getSecInTime() {
+        return SecInTime;
+    }
+
+    public void setSecInTime(String secInTime) {
+        SecInTime = secInTime;
+    }
+
+    public String getSecOutTime() {
+        return SecOutTime;
+    }
+
+    public void setSecOutTime(String secOutTime) {
+        SecOutTime = secOutTime;
+    }
+
+    public String getWeiInTime() {
+        return WeiInTime;
+    }
+
+    public void setWeiInTime(String weiInTime) {
+        WeiInTime = weiInTime;
+    }
+
+    public String getWeiOutTime() {
+        return WeiOutTime;
+    }
+
+    public void setWeiOutTime(String weiOutTime) {
+        WeiOutTime = weiOutTime;
+    }
+
+    public String getBilInTime() {
+        return BilInTime;
+    }
+
+    public void setBilInTime(String bilInTime) {
+        BilInTime = bilInTime;
+    }
+
+    public String getBilOutTime() {
+        return BilOutTime;
+    }
+
+    public void setBilOutTime(String bilOutTime) {
+        BilOutTime = bilOutTime;
+    }
+
+    public String getIPFLabOutTime() {
+        return IPFLabOutTime;
+    }
+
+    public void setIPFLabOutTime(String IPFLabOutTime) {
+        this.IPFLabOutTime = IPFLabOutTime;
+    }
+
+    public String getIPFProInTime() {
+        return IPFProInTime;
+    }
+
+    public void setIPFProInTime(String IPFProInTime) {
+        this.IPFProInTime = IPFProInTime;
+    }
+
+    public String getIPFProOutTime() {
+        return IPFProOutTime;
+    }
+
+    public void setIPFProOutTime(String IPFProOutTime) {
+        this.IPFProOutTime = IPFProOutTime;
+    }
+
+    public String getBLFLabInTime() {
+        return BLFLabInTime;
+    }
+
+    public void setBLFLabInTime(String BLFLabInTime) {
+        this.BLFLabInTime = BLFLabInTime;
+    }
+
+    public String getBLFLabOutTime() {
+        return BLFLabOutTime;
+    }
+
+    public void setBLFLabOutTime(String BLFLabOutTime) {
+        this.BLFLabOutTime = BLFLabOutTime;
+    }
+
+    public String getBLFProInTime() {
+        return BLFProInTime;
+    }
+
+    public String getUnitofmeasurementname() {
+        return unitofmeasurementname;
+    }
+
+    public void setUnitofmeasurementname(String unitofmeasurementname) {
+        this.unitofmeasurementname = unitofmeasurementname;
+    }
+
+    public void setBLFProInTime(String BLFProInTime) {
+        this.BLFProInTime = BLFProInTime;
+    }
+
+    public String getBLFProOutTime() {
+        return BLFProOutTime;
+    }
+
+    public void setBLFProOutTime(String BLFProOutTime) {
+        this.BLFProOutTime = BLFProOutTime;
+    }
+
+    public String getLogInTime() {
+        return LogInTime;
+    }
+
+    public void setLogInTime(String logInTime) {
+        LogInTime = logInTime;
+    }
+
+    public String getLogOutTime() {
+        return LogOutTime;
+    }
+
+    public void setLogOutTime(String logOutTime) {
+        LogOutTime = logOutTime;
+    }
+
+    public String getDesInTime() {
+        return DesInTime;
+    }
+
+    public void setDesInTime(String desInTime) {
+        DesInTime = desInTime;
+    }
+
+    public String getDesOutTime() {
+        return DesOutTime;
+    }
+
+    public void setDesOutTime(String desOutTime) {
+        DesOutTime = desOutTime;
+    }
+
+    public String getBRFBilInTime() {
+        return BRFBilInTime;
+    }
+
+    public void setBRFBilInTime(String BRFBilInTime) {
+        this.BRFBilInTime = BRFBilInTime;
+    }
+
+    public String getBRFBilOutTime() {
+        return BRFBilOutTime;
+    }
+
+    public void setBRFBilOutTime(String BRFBilOutTime) {
+        this.BRFBilOutTime = BRFBilOutTime;
+    }
+
+    public String getBRFProInTime() {
+        return BRFProInTime;
+    }
+
+    public void setBRFProInTime(String BRFProInTime) {
+        this.BRFProInTime = BRFProInTime;
+    }
+
+    public String getBRFProOutTime() {
+        return BRFProOutTime;
+    }
+
+    public void setBRFProOutTime(String BRFProOutTime) {
+        this.BRFProOutTime = BRFProOutTime;
+    }
+
+    public String getBRFLabInTime() {
+        return BRFLabInTime;
+    }
+
+    public void setBRFLabInTime(String BRFLabInTime) {
+        this.BRFLabInTime = BRFLabInTime;
+    }
+
+    public String getBRFLabOutTime() {
+        return BRFLabOutTime;
+    }
+
+    public void setBRFLabOutTime(String BRFLabOutTime) {
+        this.BRFLabOutTime = BRFLabOutTime;
+    }
+
+    public String getOutWeiInTime() {
+        return OutWeiInTime;
+    }
+
+    public void setOutWeiInTime(String outWeiInTime) {
+        OutWeiInTime = outWeiInTime;
+    }
+
+    public String getOutWeiOutTime() {
+        return OutWeiOutTime;
+    }
+
+    public void setOutWeiOutTime(String outWeiOutTime) {
+        OutWeiOutTime = outWeiOutTime;
+    }
+
+    public String getOutDataEntryInTime() {
+        return OutDataEntryInTime;
+    }
+
+    public void setOutDataEntryInTime(String outDataEntryInTime) {
+        OutDataEntryInTime = outDataEntryInTime;
+    }
+
+    public String getOutDataEntryOutTime() {
+        return OutDataEntryOutTime;
+    }
+
+    public void setOutDataEntryOutTime(String outDataEntryOutTime) {
+        OutDataEntryOutTime = outDataEntryOutTime;
+    }
+
+    public String getOutBilInTime() {
+        return OutBilInTime;
+    }
+
+    public void setOutBilInTime(String outBilInTime) {
+        OutBilInTime = outBilInTime;
+    }
+
+    public String getOutBilOutTime() {
+        return OutBilOutTime;
+    }
+
+    public void setOutBilOutTime(String outBilOutTime) {
+        OutBilOutTime = outBilOutTime;
+    }
+
+    public String getOutSecInTime() {
+        return OutSecInTime;
+    }
+
+    public void setOutSecInTime(String outSecInTime) {
+        OutSecInTime = outSecInTime;
+    }
+
+    public String getOutSecOutTime() {
+        return OutSecOutTime;
+    }
+
+    public void setOutSecOutTime(String outSecOutTime) {
+        OutSecOutTime = outSecOutTime;
+    }
+
+    public String getSecInRemark() {
+        return SecInRemark;
+    }
+
+    public void setSecInRemark(String secInRemark) {
+        SecInRemark = secInRemark;
+    }
+
+    public String getBillingInRemark() {
+        return BillingInRemark;
+    }
+
+    public void setBillingInRemark(String billingInRemark) {
+        BillingInRemark = billingInRemark;
+    }
+
+    public String getWeighmentInRemark() {
+        return WeighmentInRemark;
+    }
+
+    public void setWeighmentInRemark(String weighmentInRemark) {
+        WeighmentInRemark = weighmentInRemark;
+    }
+
+    public String getInProLabRemark() {
+        return InProLabRemark;
+    }
+
+    public void setInProLabRemark(String inProLabRemark) {
+        InProLabRemark = inProLabRemark;
+    }
+
+    public String getInProProRemark() {
+        return InProProRemark;
+    }
+
+    public void setInProProRemark(String inProProRemark) {
+        InProProRemark = inProProRemark;
+    }
+
+    public String getInBulkLabRemark() {
+        return InBulkLabRemark;
+    }
+
+    public void setInBulkLabRemark(String inBulkLabRemark) {
+        InBulkLabRemark = inBulkLabRemark;
+    }
+
+    public String getInBulkProRemark() {
+        return InBulkProRemark;
+    }
+
+    public String getHowMuchQTYUOM() {
+        return HowMuchQTYUOM;
+    }
+
+    public void setHowMuchQTYUOM(String howMuchQTYUOM) {
+        HowMuchQTYUOM = howMuchQTYUOM;
+    }
+
+    public void setInBulkProRemark(String inBulkProRemark) {
+        InBulkProRemark = inBulkProRemark;
+    }
+
+    public String getLogisticRemark() {
+        return LogisticRemark;
+    }
+
+    public void setLogisticRemark(String logisticRemark) {
+        LogisticRemark = logisticRemark;
+    }
+
+    public String getSecOutRemark() {
+        return SecOutRemark;
+    }
+
+    public void setSecOutRemark(String secOutRemark) {
+        SecOutRemark = secOutRemark;
+    }
+
+    public String getBillingOutRemark() {
+        return BillingOutRemark;
+    }
+
+    public void setBillingOutRemark(String billingOutRemark) {
+        BillingOutRemark = billingOutRemark;
+    }
+
+    public String getWeighmentOutRemark() {
+        return WeighmentOutRemark;
+    }
+
+    public void setWeighmentOutRemark(String weighmentOutRemark) {
+        WeighmentOutRemark = weighmentOutRemark;
+    }
 
     public String getOutTotalQty() {
         return OutTotalQty;

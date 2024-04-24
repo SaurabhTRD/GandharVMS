@@ -40,4 +40,10 @@ public class OutwardOut_Truck extends AppCompatActivity {
         Intent intent = new Intent(this, OutwardOut_Truck_Billing.class);
         startActivity(intent);
     }
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
+        finish();
+    }
 }

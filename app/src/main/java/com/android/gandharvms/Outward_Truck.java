@@ -87,7 +87,9 @@ public class Outward_Truck extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        // Call finish to close the activity
+        super.onBackPressed();
+        Intent intent = new Intent(this, Menu.class);
+        startActivity(intent);
         finish();
     }
 
