@@ -127,7 +127,7 @@ public class Outward_Tanker_CompReportAdapter extends RecyclerView.Adapter<Outwa
         holder.iplabintime.setText(club.getIPFLabInTime());
         holder.iplabouttime.setText(club.getIPFLabOutTime());
         holder.apperance.setText(club.getApperance());
-        holder.condition.setText(club.getConditionOfVehicle());
+        holder.condition.setText(club.getSampleCondition());
         holder.sampledt.setText(club.getSample_receiving());
         holder.releasedt.setText(club.getSample_Release_Date());
         holder.color.setText(club.getColor());
@@ -148,11 +148,12 @@ public class Outward_Tanker_CompReportAdapter extends RecyclerView.Adapter<Outwa
         holder.iplabremark.setText(club.getInProLabRemark());
         holder.correction.setText(club.getCorrectionRequired());
         holder.resistivity.setText(club.getRestivity());
-        holder.bkprointime.setText(club.getInfra_Red());
-        holder.bkproouttime.setText(club.getBLFProInTime());
+        holder.infrared.setText(club.getInfra_Red());
+        holder.bkprointime.setText(club.getBLFProInTime());
+        holder.bkproouttime.setText(club.getBLFProOutTime());
         holder.dispatchsign.setText(club.getPsign());
         holder.bkproremark.setText(club.getInBulkProRemark());
-        holder.bktankorblenderno.setText(club.getInfra_Red());
+        holder.bktankorblenderno.setText(club.getTankOrBlenderNo());
         holder.bkqty.setText(club.getBulkPqty());
         holder.bklabintime.setText(club.getBLFLabInTime());
         holder.bklabouttime.setText(club.getBLFLabOutTime());
