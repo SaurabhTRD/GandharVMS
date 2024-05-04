@@ -13,7 +13,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginTop="25dp"
         android:layout_marginRight="30dp"
-        android:onClick="ordesindusloadonclick"
+        android:onClick="pendsmallpack"
         android:text="Pending Vehicles"
         android:textSize="18dp"
         android:textStyle="bold"
@@ -38,7 +38,7 @@
                 android:id="@+id/regno"
                 >
                 <EditText
-                    android:id="@+id/etdesindusloadserialnumber"
+                    android:id="@+id/etsmallserialnumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Serial Number"
@@ -60,7 +60,7 @@
                 android:id="@+id/vehicalno"
                 >
                 <EditText
-                    android:id="@+id/etdesindusloadvehical"
+                    android:id="@+id/etdessmallloadvehical"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Vehicle Number"
@@ -79,7 +79,7 @@
                 android:layout_marginTop="10dp"
                 >
                 <EditText
-                    android:id="@+id/etdesindusloadtranseportname"
+                    android:id="@+id/etdessmallloadtranseportname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Transporter"
@@ -98,7 +98,7 @@
                 android:id="@+id/OUM."
                 >
                 <EditText
-                    android:id="@+id/etdesindusloadintime"
+                    android:id="@+id/etdessmallloadintime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="In Time"
@@ -842,8 +842,6 @@
                     android:inputType="text"
                     android:textSize="17dp"
                     android:textStyle="bold"
-                    android:focusable="false"
-                    android:clickable="false"
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -887,6 +885,26 @@
                     android:textSize="17dp"
                     android:textStyle="bold"
                     />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/Date"
+                >
+
+                <AutoCompleteTextView
+                    android:id="@+id/nextdeptsmall"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Next Department"
+                    android:inputType="none"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <androidx.cardview.widget.CardView

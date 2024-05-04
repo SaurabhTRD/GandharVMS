@@ -73,7 +73,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
         vehiclenumber = findViewById(R.id.etvehicleno);
         invoiceno =findViewById(R.id.etinvoicenumber);
         partyname = findViewById(R.id.etpartyname);
-        goodsdiscription = findViewById(R.id.etgoodsdisc);
+//        goodsdiscription = findViewById(R.id.etgoodsdisc);
         qty = findViewById(R.id.etotoutsecuritytotalQuantity);
         otoutsecqtyuom=findViewById(R.id.etotoutsecuritytotalQuantityUOM);
         netweight = findViewById(R.id.etnetweight);
@@ -207,7 +207,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
         notificationsSender.SendNotifications();
     }
     public void insert(){
-        String etgooddiscription = goodsdiscription.getText().toString().trim();
+//        String etgooddiscription = goodsdiscription.getText().toString().trim();
         String etsign = sign.getText().toString().trim();
         String outTime = getCurrentTime();
         String etremark = remark.getText().toString().trim();
@@ -216,10 +216,10 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
         String ewayselection = ewayyes.isChecked() ? "Yes" : "No";
         String testreselection = testyes.isChecked() ? "Yes" : "No";
         String invoiceselection = invoiceyes.isChecked() ? "Yes" : "No";
-        if (etgooddiscription.isEmpty()||etsign.isEmpty()||etremark.isEmpty()){
+        if (etsign.isEmpty()||etremark.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-            Model_OutwardOut_Security modelOutwardOutSecurity = new Model_OutwardOut_Security(OutwardId, etgooddiscription,etsign,
+            Model_OutwardOut_Security modelOutwardOutSecurity = new Model_OutwardOut_Security(OutwardId, "",etsign,
                     lrCopySelection,tremselection,ewayselection,testreselection,invoiceselection,outTime,EmployeId,
                     'S',inOut,vehicleType,etremark);
 

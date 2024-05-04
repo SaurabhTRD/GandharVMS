@@ -317,7 +317,7 @@ public class OT_Completed_bulkload_production extends AppCompatActivity {
 
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
 
-        Call<List<Common_Outward_model>> call = outwardTanker.get_tanker_bulkload_production_completed(FromDate,Todate,vehicleType,nextprocess,inOut);
+        Call<List<Common_Outward_model>> call = outwardTanker.get_tanker_bulkload_production_completed(FromDate,Todate,vehicleType,'L',inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {
             @Override
             public void onResponse(Call<List<Common_Outward_model>> call, Response<List<Common_Outward_model>> response) {

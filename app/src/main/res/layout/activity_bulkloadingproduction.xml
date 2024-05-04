@@ -7,15 +7,15 @@
     tools:context=".Outward_Tanker_Production_forms.bulkloadingproduction">
 
     <Button
-        android:id="@+id/dbview"
+        android:id="@+id/btn_otViewlabReport"
         style="@style/Widget.MaterialComponents.Button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:layout_marginRight="30dp"
-        android:onClick="outtankerprobulkpending"
-        android:text="Pending Vehicles"
+        android:onClick="btn_inporcctankerclicktoViewLabReport"
+        android:text="View Lab Report"
         android:textSize="18dp"
         android:textStyle="bold"
         tools:ignore="MissingConstraints"></Button>
@@ -29,6 +29,20 @@
             android:layout_width="match_parent"
             android:layout_height="650dp"
             android:orientation="vertical">
+
+            <Button
+                android:id="@+id/dbview"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="55dp"
+                android:layout_marginRight="30dp"
+                android:onClick="outtankerprobulkpending"
+                android:text="Pending Vehicles"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"></Button>
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -250,7 +264,7 @@
                         android:id="@+id/etsign"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Name Dispatch/Production officer"
+                        android:hint="Dispatch/Production/Oprator officer"
                         android:inputType="textCapCharacters"
                         android:textSize="17dp"
                         android:textStyle="bold"/>

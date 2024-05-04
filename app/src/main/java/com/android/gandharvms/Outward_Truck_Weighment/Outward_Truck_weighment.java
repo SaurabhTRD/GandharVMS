@@ -21,21 +21,23 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
-import com.android.gandharvms.Outward_Tanker;
+import com.android.gandharvms.Outward_Truck_Dispatch.Update_SmallPack_Model;
+import com.android.gandharvms.Outward_Truck_Dispatch.Varified_Model;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
-import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Response_Outward_Tanker_Weighment;
 import com.android.gandharvms.Outward_Truck;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
+import com.android.gandharvms.Outward_Truck_Dispatch.Verified_Small_pack;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
@@ -58,8 +60,8 @@ import retrofit2.Response;
 
 public class Outward_Truck_weighment extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,material,customer,oanumber,tareweight,etremark,etloaded;
-    Button submit,btnweighmenttruck;
+    EditText intime,serialnumber,vehiclenumber,material,customer,oanumber,tareweight,etremark,etloaded,desweight,destotalqty,etvariremark,spweight,spqty;
+    Button submit,btnweighmenttruck,varified;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     private final String vehicleType = Global_Var.getInstance().MenuType;
@@ -68,6 +70,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_weighment outwardWeighment;
+    private Outward_Truck_interface outwardTruckInterface;
     SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     DatePickerDialog picker;
     private String token;
@@ -84,11 +87,25 @@ public class Outward_Truck_weighment extends AppCompatActivity {
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int CAMERA_REQUEST_CODE1 = 103;
+    public LinearLayout layout,imglay,img;
+    private String desaweight = "0";
+    private String desatotalqty = "0";
+    public String despatchnext = "";
+
+    private String splweight = "0";
+    private String spltotalqty = "0";
+    public String smallnext = "";
+    char despatchNextChar = ' ';
+    char smallNextChar = ' ';
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck_weighment);
         userDetails = RetroApiClient.getLoginApi();
+        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+
 
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
 
@@ -109,6 +126,27 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         img1 = findViewById(R.id.outwardtriuckinvehicle);
         img2 = findViewById(R.id.outwardtruckindriver);
 
+        layout = findViewById(R.id.despatchchecklinear);
+        imglay = findViewById(R.id.imglayout);
+        img = findViewById(R.id.imglayou);
+
+        desweight = findViewById(R.id.etindussmallweight);
+        destotalqty = findViewById(R.id.ettotalqty);
+
+        layout.setVisibility(View.GONE);
+        varified = findViewById(R.id.btnvarified);
+        varified.setVisibility(View.GONE);
+        etvariremark = findViewById(R.id.etindusremark);
+        etvariremark.setVisibility(View.GONE);
+
+        desweight.setVisibility(View.GONE);
+        destotalqty.setVisibility(View.GONE);
+
+        spweight= findViewById(R.id.etsmallpackweight);
+        spweight.setVisibility(View.GONE);
+        spqty= findViewById(R.id.etsmallpackqty);
+        spqty.setVisibility(View.GONE);
+
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -118,6 +156,18 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                     UploadImagesAndUpdate_outwardtruck();
                 }
                 //insert();
+            }
+        });
+        varified.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int splweightint = Integer.parseInt(splweight);
+                int desaweightInt = Integer.parseInt(desaweight);
+                if (desaweightInt > 0) {
+                    indusverify();
+                } else if (splweightint > 0) {
+                    smallverify();
+                }
             }
         });
         btnweighmenttruck.setOnClickListener(new View.OnClickListener() {
@@ -225,6 +275,63 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                         etloaded.setEnabled(false);
                         customer.setText(data.getCustomerName());
                         customer.setEnabled(false);
+                        despatchnext = data.getPurposeProcess();
+
+
+                        desaweight = data.getIlweight();
+                        desweight.setText(data.getIlweight());
+                        desatotalqty = data.getIltotqty();
+                        destotalqty.setText(data.getIltotqty());
+                        destotalqty.setEnabled(false);
+
+                        //snallpack
+                        splweight = data.getSplweight();
+                        spltotalqty = data.getSpltotqty();
+                        spweight.setText(data.getSplweight());
+                        spweight.setEnabled(false);
+                        spqty.setText(data.getSpltotqty());
+                        spqty.setEnabled(false);
+
+                        desweight.setVisibility(View.GONE);
+                        destotalqty.setVisibility(View.GONE);
+                        if (!desaweight.equals("0") || desatotalqty.equals("0") ){
+                            layout.setVisibility(View.VISIBLE);
+                            varified.setVisibility(View.VISIBLE);
+                            etvariremark.setVisibility(View.VISIBLE);
+                            desweight.setVisibility(View.VISIBLE);
+                            destotalqty.setVisibility(View.VISIBLE);
+                            img.setVisibility(View.GONE);
+                            tareweight.setVisibility(View.GONE);
+                            etremark.setVisibility(View.GONE);
+                            imglay.setVisibility(View.GONE);
+                            intime.setVisibility(View.GONE);
+
+                        }else if (!splweight.equals("0") ||spltotalqty.equals("0")){
+                            layout.setVisibility(View.VISIBLE);
+                            varified.setVisibility(View.VISIBLE);
+                            spweight.setVisibility(View.VISIBLE);
+                            spqty.setVisibility(View.VISIBLE);
+                            etvariremark.setVisibility(View.VISIBLE);
+                            tareweight.setVisibility(View.GONE);
+                            etremark.setVisibility(View.GONE);
+                            imglay.setVisibility(View.GONE);
+                            intime.setVisibility(View.GONE);
+                            img.setVisibility(View.GONE);
+
+
+
+
+//                            layout.setVisibility(View.GONE);
+//                            varified.setVisibility(View.GONE);
+//                            etvariremark.setVisibility(View.GONE);
+//                            desweight.setVisibility(View.GONE);
+//                            destotalqty.setVisibility(View.GONE);
+                        }
+                        desweight.setText(data.getIlweight());
+                        desweight.setEnabled(false);
+//                        destotalqty.setText(data.getIltotqty());
+//                        destotalqty.setEnabled(false);
+
                     }else {
                         Toasty.error(Outward_Truck_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
@@ -306,6 +413,66 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                         }
                     }
                     Toasty.error(Outward_Truck_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+    public void indusverify(){
+
+        String uvarifuremark = etvariremark.getText().toString().trim();
+        if (despatchnext.length()>0){
+            despatchNextChar = despatchnext.charAt(0);
+        }
+        if (uvarifuremark.isEmpty()){
+            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        }else {
+//            Varified_Model varifiedModel = new Varified_Model(OutwardId,"Yes",'J',inOut,vehicleType,EmployeId,uvarifuremark);
+
+            Varified_Model varifiedModel = new Varified_Model(OutwardId,"Yes",despatchNextChar,inOut,vehicleType,EmployeId,
+                    uvarifuremark);
+            Call<Boolean> call = outwardTruckInterface.weighmentvarified(varifiedModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body() == true){
+                        Toasty.success(Outward_Truck_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_Truck_weighment.this, Outward_Truck.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                }
+            });
+        }
+    }
+
+    public void smallverify(){
+        String uvarifuremark = etvariremark.getText().toString().trim();
+        if (despatchnext.length()>0){
+            despatchNextChar = despatchnext.charAt(0);
+        }
+        if (uvarifuremark.isEmpty()){
+            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        }else {
+            Verified_Small_pack verifiedSmallPack = new Verified_Small_pack(OutwardId,"Yes",uvarifuremark,despatchNextChar,inOut,
+                    vehicleType,EmployeId);
+            Call<Boolean> call = outwardTruckInterface.smallpackvarified(verifiedSmallPack);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body() == true){
+                        Toasty.success(Outward_Truck_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_Truck_weighment.this, Outward_Truck.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
                 }
             });
         }

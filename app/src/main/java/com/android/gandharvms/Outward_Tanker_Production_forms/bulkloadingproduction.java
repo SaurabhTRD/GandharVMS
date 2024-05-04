@@ -25,6 +25,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model_Bulkloading;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
+import com.android.gandharvms.outward_Tanker_Lab_forms.OT_Completed_inproc_laboratory;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.android.gandharvms.outward_Tanker_Lab_forms.bulkloadinglaboratory;
@@ -407,5 +408,11 @@ public class bulkloadingproduction extends AppCompatActivity {
     public void outtankerprobulkpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
+    }
+    public void btn_inporcctankerclicktoViewLabReport(View view){
+        Global_Var.getInstance().DeptType = 'Q';
+        Intent intent = new Intent(this, OT_Completed_bulkload_production.class);
+        intent.putExtra("vehiclenumber", etvehicle.getText());
+        view.getContext().startActivity(intent);
     }
 }

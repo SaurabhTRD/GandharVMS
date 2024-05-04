@@ -43,6 +43,12 @@ public class Response_Outward_Tanker_Weighment {
     public int Density_29_5C;
     String BatchNo;
 
+    public String spltotqty;
+    public String splweight;
+    public String iltotqty;
+    public  String ilweight;
+    public String PurposeProcess;
+
 
     public int getDensity_29_5C() {
         return Density_29_5C;
@@ -370,6 +376,46 @@ public class Response_Outward_Tanker_Weighment {
 
     public void setBatchNo(String batchNo) {
         BatchNo = batchNo;
+    }
+
+    public String getSpltotqty() {
+        return spltotqty;
+    }
+
+    public void setSpltotqty(String spltotqty) {
+        this.spltotqty = spltotqty;
+    }
+
+    public String getSplweight() {
+        return splweight;
+    }
+
+    public void setSplweight(String splweight) {
+        this.splweight = splweight;
+    }
+
+    public String getIltotqty() {
+        return iltotqty;
+    }
+
+    public void setIltotqty(String iltotqty) {
+        this.iltotqty = iltotqty;
+    }
+
+    public String getIlweight() {
+        return ilweight;
+    }
+
+    public void setIlweight(String ilweight) {
+        this.ilweight = ilweight;
+    }
+
+    public String getPurposeProcess() {
+        return PurposeProcess;
+    }
+
+    public void setPurposeProcess(String purposeProcess) {
+        PurposeProcess = purposeProcess;
     }
 
     public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage,

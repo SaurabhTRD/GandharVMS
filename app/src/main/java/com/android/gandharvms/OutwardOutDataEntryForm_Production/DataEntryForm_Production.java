@@ -39,7 +39,7 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class DataEntryForm_Production extends AppCompatActivity {
-    EditText odeintime,odeserialnumber,odevehiclenumber,odedensity,odesealnumber,odeetremark;
+    EditText odeintime,odeserialnumber,odevehiclenumber,odedensity,odesealnumber,odeetremark,party,location,oanum,batch,product;
     Button odesubmit,completd;
     TimePickerDialog tpicker;
 
@@ -66,6 +66,12 @@ public class DataEntryForm_Production extends AppCompatActivity {
         odesealnumber=findViewById(R.id.etoutdataentrysealnumber);
         odeetremark=findViewById(R.id.etoutdataentryremakr);
         completd =findViewById(R.id.outdataentrycompletd);
+
+        party = findViewById(R.id.etpartyname);
+        location = findViewById(R.id.etlocation);
+        oanum = findViewById(R.id.etoanum);
+        batch = findViewById(R.id.etbatchno);
+        product = findViewById(R.id.etproduct);
 
         odesubmit=findViewById(R.id.etoutdataentrysubmit);
 
@@ -125,6 +131,19 @@ public class DataEntryForm_Production extends AppCompatActivity {
                         odedensity.setEnabled(false);
                         odesealnumber.setText(String.valueOf(data.getSealNumber()));
                         odesealnumber.setEnabled(false);
+
+                        party.setText(data.getCustomerName());
+                        party.setEnabled(false);
+                        location.setText(data.getLocation());
+                        location.setEnabled(false);
+                        oanum.setText(data.getOAnumber());
+                        oanum.setEnabled(false);
+                        product.setText(data.getProductName());
+                        product.setEnabled(false);
+                        batch.setText(data.getBatchNo());
+                        batch.setEnabled(false);
+
+
                         /*odeintime.requestFocus();
                         odeintime.callOnClick();*/
                     } else {

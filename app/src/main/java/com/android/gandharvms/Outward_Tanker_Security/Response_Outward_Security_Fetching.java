@@ -80,6 +80,15 @@ public class Response_Outward_Security_Fetching {
     private char I_O;
     private String VehicleType;
     private String SealNumber;
+    public String PurposeProcess;
+
+    public String getPurposeProcess() {
+        return PurposeProcess;
+    }
+
+    public void setPurposeProcess(String purposeProcess) {
+        PurposeProcess = purposeProcess;
+    }
 
     public String getLogInTime() {
         return LogInTime;

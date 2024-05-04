@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -16,28 +17,32 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
-import com.android.gandharvms.Inward_Tanker_Laboratory.it_Lab_Completedgrid;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
-import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
+import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.R;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
 import retrofit2.Callback;
+import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
 
-    Button btndesilsubmit;
+    Button btndesilsubmit,pending,submit;
     EditText etdesilserialnumber,etdesilvehiclenumber,etdesiltransport,etdesilintime,etdesiltotqty,
             etdesilremark,etdesiltypeofpackingid;
-    EditText tenltr,eighteenltr,twentyltr,twentysixltr,fiftyltr,twotenltr,boxbucket;
+    EditText tenltr,eighteenltr,twentyltr,twentysixltr,fiftyltr,twotenltr,boxbucket,weight,indussign,indusremark;
     String[] typeofpacking= {"Packing of 210 Ltr", "Packing of 50 Ltr", "Packing Of 26 Ltr", "Packing of 20 Ltr", "Packing of 10 Ltr", "Packing of Box & Bucket"};
     Integer typeofpackingNumericValue = 1;
     AutoCompleteTextView  typeofpackingautoCompleteTextView1;
@@ -49,6 +54,12 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_Truck_interface outwardTruckInterface;
+    AutoCompleteTextView dept;
+    ArrayAdapter<String> nextdeptdrop;
+    Map<String, String> nextdeptmapping = new HashMap<>();
+    String nextdeptvalue = "P";
+    String deptNumericValue = "P";
+    private int Id;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,15 +94,15 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
 //        });
 
         etdesilserialnumber=findViewById(R.id.etdesindusloadserialnumber);
-        etdesilvehiclenumber=findViewById(R.id.etdesindusloadserialnumber);
-        etdesiltransport=findViewById(R.id.etdesindusloadserialnumber);
-        etdesilintime=findViewById(R.id.etdesindusloadserialnumber);
-
-        etdesilremark=findViewById(R.id.etdesindusloadserialnumber);
+        etdesilvehiclenumber=findViewById(R.id.etdesindusloadvehical);
+        etdesiltransport=findViewById(R.id.etdesindusloadtranseportname);
+        etdesilintime=findViewById(R.id.etdesindusloadintime);
+        etdesilremark=findViewById(R.id.eddesindusloadremark);
         etdesiltypeofpackingid=findViewById(R.id.etdesindusloadserialnumber);
 //        etdesiltypeofpackingid=findViewById(R.id.autodesindusloadTypeOfPacking);
 
         btndesilsubmit=findViewById(R.id.etdesindusloadsubmit);
+        pending = findViewById(R.id.pendingindustrial);
 
         tenltr = findViewById(R.id.etdesindusloadpacking10ltrqty);
         eighteenltr = findViewById(R.id.etdesindusloadpacking18ltrqty);
@@ -101,6 +112,9 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         twotenltr = findViewById(R.id.etdesindusloadpacking210ltrqty);
         boxbucket = findViewById(R.id.etdesindusloadpackingboxbucket);
         etdesiltotqty=findViewById(R.id.etdesindusloadTotalQuantity);
+        weight = findViewById(R.id.industrialweight);
+        indussign = findViewById(R.id.industrialsign);
+        indusremark = findViewById(R.id.eddesindusloadremark);
 
         tenltr.addTextChangedListener(textWatcher);
         eighteenltr.addTextChangedListener(textWatcher);
@@ -109,6 +123,30 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         fiftyltr.addTextChangedListener(textWatcher);
         twotenltr.addTextChangedListener(textWatcher);
         boxbucket.addTextChangedListener(textWatcher);
+
+
+
+        submit = findViewById(R.id.etdesindusloadsubmit);
+        submit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (Id == 0){
+                    indusinsert();
+                }else {
+                    indusupdate();
+                }
+
+            }
+        });
+        etdesilintime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time =  format.format(calendar.getTime());
+                etdesilintime.setText(time);
+            }
+        });
 
         if (getIntent().hasExtra("vehiclenum")) {
             FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
@@ -121,6 +159,27 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
                 }
             }
         });
+
+        nextdeptmapping = new HashMap<>();
+        nextdeptmapping.put("NA", "P");
+        nextdeptmapping.put("SmallPack", "J");
+
+        dept = findViewById(R.id.nextdept);
+        nextdeptdrop = new ArrayAdapter<String>(this, R.layout.indus_nextdept, new ArrayList<>(nextdeptmapping.keySet()));
+        dept.setAdapter(nextdeptdrop);
+        dept.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String indusdept = parent.getItemAtPosition(position).toString();
+                nextdeptvalue = nextdeptmapping.get(indusdept);
+                if (deptNumericValue != null) {
+                    Toasty.success(Outward_DesIndustriaLoading_Form.this, "NetWeighUnitofMeasurement : " + indusdept + " Selected", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toasty.error(Outward_DesIndustriaLoading_Form.this, "Default NetWeighUnitofMeasurement : " + "NA", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
 
     }
 
@@ -170,10 +229,11 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         //Intent intent = new Intent(this, it_Lab_Completedgrid.class);
         //startActivity(intent);
     }
-    public void  ordesindusloadonclick(View view ){
-        Intent  intent = new Intent(this, Grid_Outward.class);
-        startActivity(intent);
-    }
+//    public void  pendingindustrial(View view ){
+//        Intent  intent = new Intent(this, Grid_Outward.class);
+//        startActivity(intent);
+//    }
+
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut){
         Call<Model_industrial> call = outwardTruckInterface.fetchindusrtial(vehicleNo,vehicleType,NextProcess,inOut);
         call.enqueue(new Callback<Model_industrial>() {
@@ -183,7 +243,14 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
                     Model_industrial data = response.body();
                     if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null){
                         OutwardId = data.getOutwardId();
+                        Id = data.getId();
                         etdesilserialnumber.setText(data.getSerialNumber());
+                        etdesilserialnumber.setEnabled(false);
+                        etdesilvehiclenumber.setText(data.getVehicleNumber());
+                        etdesilvehiclenumber.setEnabled(false);
+                        etdesiltransport.setText(data.getTransportName());
+                        etdesiltransport.setEnabled(false);
+
                     }
                 }
             }
@@ -195,4 +262,134 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         });
 
     }
+    private String getCurrentTime() {
+        // Get the current time
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return sdf.format(new Date());
+    }
+    public void indusinsert(){
+        String uintime = etdesilintime.getText().toString().trim();
+        String uouttime = getCurrentTime();
+        int u10 = Integer.parseInt(tenltr.getText().toString().trim());
+        int u18 = Integer.parseInt(eighteenltr.getText().toString().trim());
+        int u20 = Integer.parseInt(twentyltr.getText().toString().trim());
+        int u26 = Integer.parseInt(twentysixltr.getText().toString().trim());
+        int u50 = Integer.parseInt(fiftyltr.getText().toString().trim());
+        int u210 = Integer.parseInt(twotenltr.getText().toString().trim());
+        int uboxbucet = Integer.parseInt(boxbucket.getText().toString().trim());
+        String totalqty = etdesiltotqty.getText().toString().trim();
+        String uweight = weight.getText().toString().trim();
+        String uindussign = indussign.getText().toString().trim();
+        String uindusremark = indusremark.getText().toString().trim();
+
+        String uvehiclenum = etdesilvehiclenumber.getText().toString().trim();
+        String userial = etdesilserialnumber.getText().toString().trim();
+        String nextu = nextdeptvalue.toString().trim();
+
+        if (uindussign.isEmpty()||uweight.isEmpty()|| nextu.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+        }else {
+            Model_industrial modelIndustrial = new Model_industrial(OutwardId,uintime,uouttime,u10,u18,u20,
+                    u26,u50,u210,uboxbucet,totalqty,uweight,uindussign,uindusremark,EmployeId,uvehiclenum,vehicleType,userial,
+                    EmployeId,'W',inOut,nextu);
+            Call<Boolean> call = outwardTruckInterface.insertindustrial(modelIndustrial);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body() == true){
+                        Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Outward_Truck.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+
+    }
+    public void  indusupdate(){
+
+        String uintime = etdesilintime.getText().toString().trim();
+        String uouttime = getCurrentTime();
+        int u10 = Integer.parseInt(tenltr.getText().toString().trim());
+        int u18 = Integer.parseInt(eighteenltr.getText().toString().trim());
+        int u20 = Integer.parseInt(twentyltr.getText().toString().trim());
+        int u26 = Integer.parseInt(twentysixltr.getText().toString().trim());
+        int u50 = Integer.parseInt(fiftyltr.getText().toString().trim());
+        int u210 = Integer.parseInt(twotenltr.getText().toString().trim());
+        int uboxbucet = Integer.parseInt(boxbucket.getText().toString().trim());
+        String totalqty = etdesiltotqty.getText().toString().trim();
+        String uweight = weight.getText().toString().trim();
+        String uindussign = indussign.getText().toString().trim();
+        String uindusremark = indusremark.getText().toString().trim();
+        String nextu = nextdeptvalue.toString().trim();
+
+
+        //if selcet Na to go weighment and if sp select then go smallpack handle the code in this method
+        // we mila tho w pe and sp mila tho j milna chaiye
+
+
+        if (uintime.isEmpty()||uouttime.isEmpty()|| uweight.isEmpty()||uindusremark.isEmpty()||uindussign.isEmpty()||nextu.isEmpty()){
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+        }else {
+
+            Indus_update_Model indusUpdateModel = new Indus_update_Model(OutwardId,uintime,uouttime,u10,u18,u20,u26,u50,u210,uboxbucet,totalqty,
+                    uweight,uindussign,uindusremark,EmployeId,vehicleType,EmployeId,'W',inOut,nextu);
+            Call<Boolean> call = outwardTruckInterface.updateindustrial(indusUpdateModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body() == true){
+                        Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Outward_Truck.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+        }
+    }
+    public void pendingindustrial(View view){
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
+    }
+
 }

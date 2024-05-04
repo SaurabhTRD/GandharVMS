@@ -271,6 +271,29 @@
 
         </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <CheckBox
+                android:id="@+id/isdespatchsmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="35dp"
+                android:layout_marginRight="25dp"
+                android:layout_weight="1"
+                android:text="Despatch(Small Pack)" />
+            <CheckBox
+                android:id="@+id/isdespatchindustrial"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="2"
+                android:text="Despatch(Industri)" />
+
+        </LinearLayout>
+
 
 
 

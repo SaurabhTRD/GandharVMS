@@ -13,6 +13,7 @@ public class Global_Var {
     public String EmpId;
     public String Department;
     public String Name;
+    public String ProposeProcess;
     public String Token;
     public int InwardId;
     // Getter/setter

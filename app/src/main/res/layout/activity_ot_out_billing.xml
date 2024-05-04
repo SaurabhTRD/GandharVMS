@@ -232,15 +232,35 @@
                         android:textStyle="bold" />
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+
+                    >
+                    <EditText
+                        android:id="@+id/etpartyname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Party Name"
+                        android:inputType="text"
+                        android:textSize="17dp"
+                        android:textStyle="bold"
+                        android:focusable="false"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="360dp"
-                    android:layout_height="60dp"
+                    android:layout_height="70dp"
                     android:layout_weight="2"
                     android:background="@color/gray"
                     >
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="165dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_marginLeft="30dp"
                         android:layout_marginRight="20dp"
@@ -249,7 +269,7 @@
                         <EditText
                             android:id="@+id/etotoutbiltotalQuantity"
                             android:layout_width="165dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="match_parent"
                             android:hint="Total-Quantity"
                             android:inputType="numberDecimal"
                             android:clickable="false"
@@ -319,25 +339,7 @@
                         android:focusable="false"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <com.google.android.material.textfield.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_marginTop="10dp"
 
-                    >
-                    <EditText
-                        android:id="@+id/etpartyname"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="In Time"
-                        android:inputType="text"
-                        android:textSize="17dp"
-                        android:textStyle="bold"
-                        android:focusable="false"/>
-                </com.google.android.material.textfield.TextInputLayout>
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"

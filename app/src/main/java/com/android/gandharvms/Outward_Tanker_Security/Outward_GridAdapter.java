@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_Production;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Tanker_Security.OutwardOut_Tanker_Security;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesSmallPackLoading_Form;
 import com.android.gandharvms.Outwardout_Tanker_Weighment.OutwardOut_Tanker_Weighment;
 import com.android.gandharvms.OutwardOut_Truck_Billing.OutwardOut_Truck_Billing;
 import com.android.gandharvms.OutwardOut_Truck_Security;
@@ -166,7 +168,12 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                         intent = new Intent(view.getContext(), Outward_Truck_Dispatch.class);
                     } else if (currentst.equals("DATAENTRY")) {
                         intent = new Intent(view.getContext(), Outward_Truck_Production.class);
+                    } else if (currentst.equals("SMALLPACK")) {
+                        intent = new Intent(view.getContext(), Outward_DesSmallPackLoading_Form.class);
+                    } else if (currentst.equals("INDUSTRIALPACK")) {
+                        intent = new Intent(view.getContext(), Outward_DesIndustriaLoading_Form.class);
                     }
+
                 }
                 else if (vehicletype.equals("OR") && io == 'O') {
                     if (currentst.equals("OUTWEIGHMENT")) {

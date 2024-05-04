@@ -94,6 +94,8 @@
         </com.google.android.material.textfield.TextInputLayout>
 
 
+
+
 <!--        <com.google.android.material.textfield.TextInputLayout-->
 <!--            android:layout_width="match_parent"-->
 <!--            android:layout_height="wrap_content"-->
@@ -174,6 +176,10 @@
 
 
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/imglayout">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -210,12 +216,14 @@
 
         </LinearLayout>
 
+            </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="115dp"
             android:weightSum="2"
             android:orientation="horizontal"
-            android:layout_marginLeft="60dp">
+            android:layout_marginLeft="60dp"
+            android:id="@+id/imglayou">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imgtr"
@@ -293,6 +301,103 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:id="@+id/despatchchecklinear">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <EditText
+                        android:id="@+id/etindussmallweight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Industrial Pack Weight"
+                        android:inputType="textCapCharacters"
+                        android:textSize="17dp"
+                        android:textStyle="bold"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <EditText
+                        android:id="@+id/ettotalqty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Industrial Total Qty"
+                        android:inputType="textCapCharacters"
+                        android:textSize="17dp"
+                        android:textStyle="bold"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <EditText
+                        android:id="@+id/etsmallpackweight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Small Pack Weight"
+                        android:inputType="textCapCharacters"
+                        android:textSize="17dp"
+                        android:textStyle="bold"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <EditText
+                        android:id="@+id/etsmallpackqty"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint=" Small Pack Total Qty"
+                        android:inputType="textCapCharacters"
+                        android:textSize="17dp"
+                        android:textStyle="bold"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
+                    >
+                    <EditText
+                        android:id="@+id/etindusremark"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Verify Remark"
+                        android:inputType="textCapCharacters"
+                        android:textSize="17dp"
+                        android:textStyle="bold"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
 
 
 
@@ -309,6 +414,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
                 android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/btnvarified"
+                    android:layout_below="@id/OUM."
+                    android:layout_marginLeft="10dp"
+                    android:text="Verify"
+                    android:textSize="17dp"
+                    android:textStyle="bold">
+
+                </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="160dp"

@@ -736,10 +736,10 @@ public class Outward_Tanker_Production extends AppCompatActivity {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }
-    public void btn_inporcctankerclicktoViewLabReport(View view){
-        Global_Var.getInstance().DeptType = 'Q';
-        Intent intent = new Intent(this, OT_Completed_inproc_laboratory.class);
-        intent.putExtra("vehiclenumber", vehiclenumber.getText());
-        view.getContext().startActivity(intent);
-    }
+//    public void btn_inporcctankerclicktoViewLabReport(View view){
+//        Global_Var.getInstance().DeptType = 'Q';
+//        Intent intent = new Intent(this, OT_Completed_inproc_laboratory.class);
+//        intent.putExtra("vehiclenumber", vehiclenumber.getText());
+//        view.getContext().startActivity(intent);
+//    }
 }

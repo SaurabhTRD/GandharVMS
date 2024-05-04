@@ -85,7 +85,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
-        isReportingCheckBox = findViewById(R.id.isreporting);
+//        isReportingCheckBox = findViewById(R.id.isreporting);
         reportingRemarkLayout = findViewById(R.id.edtreportingremark);
         saveButton = findViewById(R.id.saveButton);
 
@@ -94,17 +94,17 @@ public class Outward_Tanker_Security extends AppCompatActivity {
 
         completed = findViewById(R.id.otsecuritycompleted);
 
-        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // Show the TextInputLayout and Button
-                reportingRemarkLayout.setVisibility(View.VISIBLE);
-                saveButton.setVisibility(View.VISIBLE);
-            } else {
-                // Hide the TextInputLayout and Button
-                reportingRemarkLayout.setVisibility(View.GONE);
-                saveButton.setVisibility(View.GONE);
-            }
-        });
+//        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (isChecked) {
+//                // Show the TextInputLayout and Button
+//                reportingRemarkLayout.setVisibility(View.VISIBLE);
+//                saveButton.setVisibility(View.VISIBLE);
+//            } else {
+//                // Hide the TextInputLayout and Button
+//                reportingRemarkLayout.setVisibility(View.GONE);
+//                saveButton.setVisibility(View.GONE);
+//            }
+//        });
 
         //        listdata button
         completed.setOnClickListener(new View.OnClickListener() {
@@ -143,7 +143,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         rcyes = findViewById(R.id.rcbook_yes);
         rcno = findViewById(R.id.rcbook_no);
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
-        cbox = findViewById(R.id.isreporting);
+//        cbox = findViewById(R.id.isreporting);
         reportingremark = findViewById(R.id.edtreportingremark);
 
 
@@ -196,7 +196,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
             public void onClick(View v) {
                 isReportingCheckBox = findViewById(R.id.isreporting);
                 if (isReportingCheckBox.isChecked()) {
-                    updateData();
+//                    updateData();
                 } else {
                     insert();
                 }
@@ -586,81 +586,81 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         }
     }
 
-    private void updateData() {
-        String serial = serialnumber.getText().toString().trim();
-        String uvehicle = vehiclenum.getText().toString().trim();
-        String udate = eddate.getText().toString().trim();
-        String uintime = intime.getText().toString().trim();
-        if(!kl.getText().toString().isEmpty())
-        {
-            try {
-                ukl=Integer.parseInt(kl.getText().toString().trim());
-            }catch (NumberFormatException e){
-                e.printStackTrace();
-            }
-        }
-        else{
-            Toasty.warning(this, "Kl is Empty", Toast.LENGTH_SHORT).show();
-        }
-        String utransporter = transname.getText().toString().trim();
-        String uplace = place.getText().toString().trim();
-        String umobile = mobilenum.getText().toString().trim();
-        //String ucapacity = capacityvehicle.getText().toString().trim();
-        String uremark = edremark.getText().toString().trim();
-        String outTime = getCurrentTime();
-
-        String permitselection = rbvehpermityes.isChecked() ? "Yes" : "No";
-        String pucselection = rbpucyes.isChecked() ? "Yes" : "No";
-        String insuranceselection = rbinsuranceyes.isChecked() ? "Yes" : "No";
-        String vehfitnesselection = vehfitnessyes.isChecked() ? "Yes" : "No";
-        String licselection = licye.isChecked() ? "Yes" : "No";
-        String rcselection = rcyes.isChecked() ? "Yes" : "No";
-
-        if (serial.isEmpty()||uvehicle.isEmpty()||udate.isEmpty()||uintime.isEmpty()||utransporter.isEmpty()||uplace.isEmpty()||
-        umobile.isEmpty()||uremark.isEmpty()||permitselection.isEmpty()||pucselection.isEmpty()||insuranceselection.isEmpty()||
-        vehfitnesselection.isEmpty()||licselection.isEmpty()||rcselection.isEmpty()){
-            Toasty.warning(this,"All fields must be filled",Toast.LENGTH_SHORT,true).show();
-        }else {
-            Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId,uintime,outTime,
-                    ukl,uplace,permitselection,pucselection,insuranceselection,vehfitnesselection,licselection,rcselection,"",
-                    "","","",uremark,"",EmployeId,"","","",
-                    "","",'S',serial,uvehicle,utransporter,umobile,"","","","","",0,
-                    "",0,"",'B',inOut,vehicleType,uintime,"");
-
-            Call<Boolean> call = outwardTanker.updateoutwardsecurity(isreportingupdateSecurityModel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
-                        makeNotification(uvehicle, outTime);
-                        productionnotification(uvehicle, outTime );
-                        Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Outward_Tanker_Security.this,com.android.gandharvms.Outward_Tanker.class));
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
+//    private void updateData() {
+//        String serial = serialnumber.getText().toString().trim();
+//        String uvehicle = vehiclenum.getText().toString().trim();
+//        String udate = eddate.getText().toString().trim();
+//        String uintime = intime.getText().toString().trim();
+//        if(!kl.getText().toString().isEmpty())
+//        {
+//            try {
+//                ukl=Integer.parseInt(kl.getText().toString().trim());
+//            }catch (NumberFormatException e){
+//                e.printStackTrace();
+//            }
+//        }
+//        else{
+//            Toasty.warning(this, "Kl is Empty", Toast.LENGTH_SHORT).show();
+//        }
+//        String utransporter = transname.getText().toString().trim();
+//        String uplace = place.getText().toString().trim();
+//        String umobile = mobilenum.getText().toString().trim();
+//        //String ucapacity = capacityvehicle.getText().toString().trim();
+//        String uremark = edremark.getText().toString().trim();
+//        String outTime = getCurrentTime();
+//
+//        String permitselection = rbvehpermityes.isChecked() ? "Yes" : "No";
+//        String pucselection = rbpucyes.isChecked() ? "Yes" : "No";
+//        String insuranceselection = rbinsuranceyes.isChecked() ? "Yes" : "No";
+//        String vehfitnesselection = vehfitnessyes.isChecked() ? "Yes" : "No";
+//        String licselection = licye.isChecked() ? "Yes" : "No";
+//        String rcselection = rcyes.isChecked() ? "Yes" : "No";
+//
+//        if (serial.isEmpty()||uvehicle.isEmpty()||udate.isEmpty()||uintime.isEmpty()||utransporter.isEmpty()||uplace.isEmpty()||
+//        umobile.isEmpty()||uremark.isEmpty()||permitselection.isEmpty()||pucselection.isEmpty()||insuranceselection.isEmpty()||
+//        vehfitnesselection.isEmpty()||licselection.isEmpty()||rcselection.isEmpty()){
+//            Toasty.warning(this,"All fields must be filled",Toast.LENGTH_SHORT,true).show();
+//        }else {
+//            Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId,uintime,outTime,
+//                    ukl,uplace,permitselection,pucselection,insuranceselection,vehfitnesselection,licselection,rcselection,"",
+//                    "","","",uremark,"",EmployeId,"","","",
+//                    "","",'S',serial,uvehicle,utransporter,umobile,"","","","","",0,
+//                    "",0,"",'B',inOut,vehicleType,uintime,"");
+//
+//            Call<Boolean> call = outwardTanker.updateoutwardsecurity(isreportingupdateSecurityModel);
+//            call.enqueue(new Callback<Boolean>() {
+//                @Override
+//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                    if (response.isSuccessful() && response.body() && response.body() == true){
+//                        makeNotification(uvehicle, outTime);
+//                        productionnotification(uvehicle, outTime );
+//                        Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(Outward_Tanker_Security.this,com.android.gandharvms.Outward_Tanker.class));
+//                        finish();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Boolean> call, Throwable t) {
+//
+//                    Log.e("Retrofit", "Failure: " + t.getMessage());
+//// Check if there's a response body in case of an HTTP error
+//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+//                        Response<?> response = ((HttpException) t).response();
+//                        if (response != null) {
+//                            Log.e("Retrofit", "Error Response Code: " + response.code());
+//                            try {
+//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                    Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
+//    }
     public void outwardolcgridclick(View view){
         Intent intent = new Intent(this,Grid_Outward.class);
         startActivity(intent);

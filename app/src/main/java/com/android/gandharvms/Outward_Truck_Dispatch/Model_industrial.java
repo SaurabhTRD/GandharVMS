@@ -58,6 +58,7 @@ public class Model_industrial {
     public char NextProcess ;
     public char I_O ;
     public String VehicleType ;
+    public String PurposeProcess;
 
     public int getId() {
         return Id;
@@ -513,5 +514,32 @@ public class Model_industrial {
 
     public void setVehicleType(String vehicleType) {
         VehicleType = vehicleType;
+    }
+
+    public Model_industrial(int outwardId, String ilInTime, String ilOutTime, int ilpackof10ltrqty, int ilpackof18ltrqty, int ilpackof20ltrqty, int ilpackof26ltrqty, int ilpackof50ltrqty, int ilpackof210ltrqty, int ilpackofboxbuxketltrqty, String iltotqty, String ilweight, String ilsign, String ilRemark, String createdBy,
+                            String VehicleNumber,String VehicleType,String SerialNumber,String updatedBy, char nextProcess, char i_O , String purposeProcess) {
+        OutwardId = outwardId;
+        this.ilInTime = ilInTime;
+        this.ilOutTime = ilOutTime;
+        this.ilpackof10ltrqty = ilpackof10ltrqty;
+        this.ilpackof18ltrqty = ilpackof18ltrqty;
+        this.ilpackof20ltrqty = ilpackof20ltrqty;
+        this.ilpackof26ltrqty = ilpackof26ltrqty;
+        this.ilpackof50ltrqty = ilpackof50ltrqty;
+        this.ilpackof210ltrqty = ilpackof210ltrqty;
+        this.ilpackofboxbuxketltrqty = ilpackofboxbuxketltrqty;
+        this.iltotqty = iltotqty;
+        this.ilweight = ilweight;
+        this.ilsign = ilsign;
+        this.ilRemark = ilRemark;
+        CreatedBy = createdBy;
+        this.VehicleNumber = VehicleNumber;
+        this.VehicleType = VehicleType;
+        this.SerialNumber = SerialNumber;
+        this.UpdatedBy = updatedBy;
+        this.NextProcess = nextProcess;
+        this.I_O = i_O;
+        this.PurposeProcess = purposeProcess;
+
     }
 }

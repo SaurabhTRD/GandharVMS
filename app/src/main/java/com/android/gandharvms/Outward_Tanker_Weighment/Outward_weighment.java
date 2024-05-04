@@ -1,5 +1,7 @@
 package com.android.gandharvms.Outward_Tanker_Weighment;
 
+import com.android.gandharvms.Outward_Truck_Dispatch.Varified_Model;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -23,4 +25,7 @@ public interface Outward_weighment {
 
     @POST("api/OutwardWeighment/UpdateOutwardOutWeighmentDetails")
     Call<Boolean> updateoutwardouttruckweighment(@Body Model_OutwardOut_Truck_Weighment request);
+
+    @POST("api/OutwardIndusSmallDispatch/AddOutwardIndusSmallDispatch")
+    Call<Boolean> varifyindus(@Body Varified_Model request);
 }
