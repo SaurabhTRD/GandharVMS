@@ -14,9 +14,13 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.Menu;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck;
@@ -42,7 +46,7 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     Button btndesilsubmit,pending,submit;
     EditText etdesilserialnumber,etdesilvehiclenumber,etdesiltransport,etdesilintime,etdesiltotqty,
             etdesilremark,etdesiltypeofpackingid;
-    EditText tenltr,eighteenltr,twentyltr,twentysixltr,fiftyltr,twotenltr,boxbucket,weight,indussign,indusremark;
+    EditText tenltr,eighteenltr,twentyltr,twentysixltr,fiftyltr,twotenltr,boxbucket,weight,indussign,indusremark,oa,party;
     String[] typeofpacking= {"Packing of 210 Ltr", "Packing of 50 Ltr", "Packing Of 26 Ltr", "Packing of 20 Ltr", "Packing of 10 Ltr", "Packing of Box & Bucket"};
     Integer typeofpackingNumericValue = 1;
     AutoCompleteTextView  typeofpackingautoCompleteTextView1;
@@ -60,6 +64,13 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     String nextdeptvalue = "P";
     String deptNumericValue = "P";
     private int Id;
+
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -99,6 +110,8 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         etdesilintime=findViewById(R.id.etdesindusloadintime);
         etdesilremark=findViewById(R.id.eddesindusloadremark);
         etdesiltypeofpackingid=findViewById(R.id.etdesindusloadserialnumber);
+        oa= findViewById(R.id.etoanumberindus);
+        party = findViewById(R.id.etpartyname);
 //        etdesiltypeofpackingid=findViewById(R.id.autodesindusloadTypeOfPacking);
 
         btndesilsubmit=findViewById(R.id.etdesindusloadsubmit);
@@ -127,6 +140,29 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
 
 
         submit = findViewById(R.id.etdesindusloadsubmit);
+
+        btnhome = findViewById(R.id.btn_homeButton);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Menu.class));
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -250,6 +286,11 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
                         etdesilvehiclenumber.setEnabled(false);
                         etdesiltransport.setText(data.getTransportName());
                         etdesiltransport.setEnabled(false);
+                        oa.setText(data.getOAnumber());
+                        oa.setEnabled(false);
+                        party.setText(data.getCustomerName());
+                        party.setEnabled(false);
+
 
                     }
                 }

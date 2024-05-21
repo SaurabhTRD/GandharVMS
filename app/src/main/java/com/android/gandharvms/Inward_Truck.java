@@ -17,6 +17,7 @@ import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.Inward_Truck_store.Inward_Truck_Store;
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,7 +27,7 @@ import com.google.firebase.database.ValueEventListener;
 import es.dmoral.toasty.Toasty;
 
 public class Inward_Truck extends AppCompatActivity {
-    ImageView btnlogout;
+    ImageView btnlogout,btnhome;
     TextView username,empid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class Inward_Truck extends AppCompatActivity {
         setContentView(R.layout.activity_inward_truck);
 
         btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
         String receivedEmplid = sharedPreferences.getString("EMPLID_KEY", "");
 
@@ -50,6 +52,12 @@ public class Inward_Truck extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Truck.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Truck.this, Menu.class));
             }
         });
     }

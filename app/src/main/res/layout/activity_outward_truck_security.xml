@@ -7,19 +7,7 @@
     tools:context=".Outward_Truck_Security.Outward_Truck_Security">
 
 
-    <Button
-        android:id="@+id/dbview"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="30dp"
-        android:onClick="outtrucksecuritypending"
-        android:text="Pending Vehicles"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"></Button>
+
 
 
     <ScrollView
@@ -34,18 +22,33 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <CheckBox
-                android:id="@+id/trsisreporting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1"
-                android:textSize="16dp"
-                android:text="Is Reporting ?"
-                android:layout_marginTop="40dp"/>
+            <include layout="@layout/header_layout"></include>
+<!--            <Button-->
+<!--                android:id="@+id/dbview"-->
+<!--                style="@style/Widget.MaterialComponents.Button"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="15dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:onClick="outtrucksecuritypending"-->
+<!--                android:text="Pending Vehicles"-->
+<!--                android:textSize="18dp"-->
+<!--                android:textStyle="bold"-->
+<!--                tools:ignore="MissingConstraints"></Button>-->
+
+<!--            <CheckBox-->
+<!--                android:id="@+id/trsisreporting"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="35dp"-->
+<!--                android:layout_marginRight="25dp"-->
+<!--                android:layout_weight="1"-->
+<!--                android:textSize="16dp"-->
+<!--                android:text="Is Reporting ?"-->
+<!--                android:layout_marginTop="10dp"/>-->
 
         </LinearLayout>
         <com.google.android.material.textfield.TextInputLayout
@@ -110,42 +113,42 @@
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="2dp"
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginRight="30dp"-->
+<!--            android:layout_marginTop="2dp"-->
 
 
-            >
-            <EditText
-                android:id="@+id/edtrsreportingremark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Reporting Remark"
-                android:inputType="textCapCharacters"
-                android:textAllCaps="true"
-                android:textSize="17dp"
-                android:textStyle="bold"
+<!--            >-->
+<!--            <EditText-->
+<!--                android:id="@+id/edtrsreportingremark"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Reporting Remark"-->
+<!--                android:inputType="textCapCharacters"-->
+<!--                android:textAllCaps="true"-->
+<!--                android:textSize="17dp"-->
+<!--                android:textStyle="bold"-->
 
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+<!--                />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="250dp"
-                android:id="@+id/saveButton"
-                android:text="Save"
-                />
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            >-->
+<!--            <Button-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="250dp"-->
+<!--                android:id="@+id/saveButton"-->
+<!--                android:text="Save"-->
+<!--                />-->
+<!--        </LinearLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

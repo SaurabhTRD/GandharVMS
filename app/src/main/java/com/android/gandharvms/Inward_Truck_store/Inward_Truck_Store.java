@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -36,6 +37,7 @@ import com.android.gandharvms.Inward_Truck_Security.In_Truck_security_list;
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.Inward_Truck_Weighment.In_Truck_weigment_list;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -43,6 +45,7 @@ import com.android.gandharvms.LoginWithAPI.Store;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
+import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -114,6 +117,9 @@ public class Inward_Truck_Store extends AppCompatActivity {
 
     private int recqtyoum;
     private int recqty;
+
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,6 +218,30 @@ public class Inward_Truck_Store extends AppCompatActivity {
         teamList.add("Pcs");
         teamList.add("NA");
 
+
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Truck_Store.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Truck_Store.this, Menu.class));
+            }
+        });
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -6,20 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Inward_Truck_store.Inward_Truck_Store">
 
-    <Button
-        style="@style/Widget.MaterialComponents.Button"
-        android:id="@+id/viewclick"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Pending Vehicles"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:onClick="StoreViewclick"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="30dp"
-        tools:ignore="MissingConstraints">
-    </Button>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -30,6 +17,23 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include layout="@layout/header_layout"></include>
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button"
+                android:id="@+id/viewclick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Pending Vehicles"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:onClick="StoreViewclick"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                tools:ignore="MissingConstraints">
+            </Button>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/vehicalno"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -37,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/regno"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp">
 
                 <EditText

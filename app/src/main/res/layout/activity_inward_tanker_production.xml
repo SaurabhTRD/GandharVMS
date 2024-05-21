@@ -6,20 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Inward_Tanker_Production.Inward_Tanker_Production">
 
-    <Button
-        android:id="@+id/btn_ViewlabReport"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:onClick="btn_clicktoViewLabReport"
-        android:visibility="invisible"
-        android:text="View Lab Report"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"></Button>
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -29,8 +16,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_margin="1dp"
-            android:orientation="vertical"
-            android:layout_gravity="center">
+            android:orientation="vertical">
+            <include layout="@layout/header_layout"></include>
+
+            <Button
+                android:id="@+id/btn_ViewlabReport"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:onClick="btn_clicktoViewLabReport"
+                android:visibility="invisible"
+                android:text="View Lab Report"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"></Button>
 
             <Button
                 android:id="@+id/view"
@@ -38,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="-20dp"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
                 android:onClick="ProductionViewclick"
                 android:text="Pending Vehicles"

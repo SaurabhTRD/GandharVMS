@@ -6,19 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Outward_Tanker_Billing.Outward_Tanker_Billing">
 
-    <Button
-        android:id="@+id/dbview"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="30dp"
-        android:onClick="outtankerbillpending"
-        android:text="Pending Vehicles"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"></Button>
+
 
 
     <ScrollView
@@ -32,13 +20,29 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp">
 
+            <include layout="@layout/header_layout"></include>
+
+            <Button
+                android:id="@+id/dbview"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="30dp"
+                android:onClick="outtankerbillpending"
+                android:text="Pending Vehicles"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"></Button>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="25dp"
 
                 >
                 <EditText

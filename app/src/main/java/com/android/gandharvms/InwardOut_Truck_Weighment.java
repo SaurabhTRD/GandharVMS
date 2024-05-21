@@ -25,6 +25,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Model_InwardOutweighment;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_Weighment_Viewdata;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -40,6 +42,7 @@ import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
+import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.ByteArrayOutputStream;
@@ -79,6 +82,9 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
     byte[][] arrayOfByteArrays = new byte[2][];
     Uri[] LocalImgPath = new Uri[2];
     private String imgPath1, imgPath2;
+
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +108,30 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
 
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
+
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(InwardOut_Truck_Weighment.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(InwardOut_Truck_Weighment.this, Menu.class));
+            }
+        });
 
         //view = findViewById(R.id.btn_Viewweigmentslip);
         /*view.setOnClickListener(new View.OnClickListener() {

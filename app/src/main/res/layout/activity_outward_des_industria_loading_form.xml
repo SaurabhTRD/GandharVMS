@@ -6,21 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form">
 
-    <Button
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/pendingindustrial"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="30dp"
-        android:onClick="pendingindustrial"
-        android:text="Pending Vehicles"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints">
 
-    </Button>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,13 +17,31 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
+            <include layout="@layout/header_layout"></include>
+
+            <Button
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/pendingindustrial"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:onClick="pendingindustrial"
+                android:text="Pending Vehicles"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints">
+
+            </Button>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="80dp"
+                android:layout_marginTop="20dp"
                 android:id="@+id/regno"
                 >
                 <EditText
@@ -86,6 +90,42 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Transporter"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                >
+                <EditText
+                    android:id="@+id/etpartyname"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Party Name"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                >
+                <EditText
+                    android:id="@+id/etoanumberindus"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="OA Number"
                     android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />

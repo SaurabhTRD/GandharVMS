@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -27,9 +28,11 @@ import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Menu;
 import com.android.gandharvms.OutwardOut_Truck_Weighment;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
@@ -89,11 +92,39 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
     private LoginMethod userDetails;
     private String serialNo;
     private String imgPath1, imgPath2;
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_tanker_weighment);
+
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Tanker_weighment.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Tanker_weighment.this, Menu.class));
+            }
+        });
 
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
         userDetails = RetroApiClient.getLoginApi();

@@ -24,7 +24,7 @@ import com.android.gandharvms.R;
 import es.dmoral.toasty.Toasty;
 
 public class submenu_Inward_Truck extends AppCompatActivity {
-    ImageView btnlogout;
+    ImageView btnlogout,btnhome;
     TextView username,empid;
 
     @Override
@@ -33,6 +33,7 @@ public class submenu_Inward_Truck extends AppCompatActivity {
         setContentView(R.layout.activity_submenu_inward_truck);
 
         btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
 
@@ -46,6 +47,12 @@ public class submenu_Inward_Truck extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(submenu_Inward_Truck.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(submenu_Inward_Truck.this, Menu.class));
             }
         });
     }

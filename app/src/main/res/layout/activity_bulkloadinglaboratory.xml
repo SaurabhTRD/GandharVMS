@@ -6,19 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".outward_Tanker_Lab_forms.bulkloadinglaboratory">
 
-    <Button
-        android:id="@+id/dbview"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="30dp"
-        android:onClick="outtankerLabbulktpending"
-        android:text="Pending Vehicles"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"></Button>
+
 
 
     <ScrollView
@@ -30,12 +18,28 @@
             android:layout_height="650dp"
             android:orientation="vertical">
 
+            <include layout="@layout/header_layout"></include>
+
+            <Button
+                android:id="@+id/dbview"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:onClick="outtankerLabbulktpending"
+                android:text="Pending Vehicles"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"></Button>
+
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginRight="30dp"
 
                 >

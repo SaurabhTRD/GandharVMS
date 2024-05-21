@@ -28,6 +28,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -45,11 +46,13 @@ import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequ
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.Inward_Truck_store.Inward_Truck_Store;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
+import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -143,6 +146,9 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
     private int insertqtyUom;
     private int insertnetweightUom;
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,24 +158,48 @@ public class Inward_Truck_Security extends AppCompatActivity {
         getmaxserialno = RetroApiClient.getLoginApi();
         userDetails = RetroApiClient.getLoginApi();
 
-        isReportingCheckBox = findViewById(R.id.isreporting);
-        reportingRemarkLayout = findViewById(R.id.edtreportingremark);
-        saveButton = findViewById(R.id.saveButton);
+//        isReportingCheckBox = findViewById(R.id.isreporting);
+//        reportingRemarkLayout = findViewById(R.id.edtreportingremark);
+//        saveButton = findViewById(R.id.saveButton);
 
-        reportingRemarkLayout.setVisibility(View.GONE);
-        saveButton.setVisibility(View.GONE);
+//        reportingRemarkLayout.setVisibility(View.GONE);
+//        saveButton.setVisibility(View.GONE);
 
-        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // Show the TextInputLayout and Button
-                reportingRemarkLayout.setVisibility(View.VISIBLE);
-                saveButton.setVisibility(View.VISIBLE);
-            } else {
-                // Hide the TextInputLayout and Button
-                reportingRemarkLayout.setVisibility(View.GONE);
-                saveButton.setVisibility(View.GONE);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Truck_Security.this, Login.class));
             }
         });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Truck_Security.this, Menu.class));
+            }
+        });
+
+//        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (isChecked) {
+//                // Show the TextInputLayout and Button
+//                reportingRemarkLayout.setVisibility(View.VISIBLE);
+//                saveButton.setVisibility(View.VISIBLE);
+//            } else {
+//                // Hide the TextInputLayout and Button
+//                reportingRemarkLayout.setVisibility(View.GONE);
+//                saveButton.setVisibility(View.GONE);
+//            }
+//        });
 
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -196,6 +226,9 @@ public class Inward_Truck_Security extends AppCompatActivity {
         qtyUomMapping.put("KL", 4);
         qtyUomMapping.put("Kgs", 5);
         qtyUomMapping.put("pcs", 6);
+        qtyUomMapping.put("M3",7);
+        qtyUomMapping.put("Meter",8);
+        qtyUomMapping.put("Feet",9);
 
         qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
         autoCompleteTextView1.setAdapter(qtyuomdrop);
@@ -261,8 +294,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
         teamList.add("Kgs");
         teamList.add("Pcs");
 
-        repremark = findViewById(R.id.edtreportingremark);
-        cbox = findViewById(R.id.isreporting);
+//        repremark = findViewById(R.id.edtreportingremark);
+//        cbox = findViewById(R.id.isreporting);
 
         lrcopyYes = findViewById(R.id.rb_LRCopyYes);
         lrcopyNo = findViewById(R.id.rb_LRCopyNo);
@@ -420,12 +453,14 @@ public class Inward_Truck_Security extends AppCompatActivity {
         wesubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isReportingCheckBox = findViewById(R.id.isreporting);
-                if (isReportingCheckBox.isChecked()) {
-                    updateData();
-                } else {
-                    trsedata();
-                }
+
+                trsedata();
+//                isReportingCheckBox = findViewById(R.id.isreporting);
+//                if (isReportingCheckBox.isChecked()) {
+//                    updateData();
+//                } else {
+//                    trsedata();
+//                }
             }
         });
 
@@ -436,17 +471,17 @@ public class Inward_Truck_Security extends AppCompatActivity {
             }
         });
 
-        saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (DocId == "") {
-                    insertreporting();
-                } else {
-                    Toasty.warning(Inward_Truck_Security.this, "Record Already exist", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        saveButton = findViewById(R.id.saveButton);
+//        saveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (DocId == "") {
+//                    insertreporting();
+//                } else {
+//                    Toasty.warning(Inward_Truck_Security.this, "Record Already exist", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         etvehicalnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -598,7 +633,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
         String remark = etremark.getText().toString().trim();
         String pooa = etoapo.getText().toString().trim();
         String mobnumber = etmobile.getText().toString().trim();
-        String edremark = repremark.getText().toString().trim();
+//        String edremark = repremark.getText().toString().trim();
         String selectregister = etregister.getText().toString().trim();
         if (serialnumber.isEmpty() || vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() || partyname.isEmpty() ||
                 intime.isEmpty() || material.isEmpty() || remark.isEmpty() || pooa.isEmpty() || mobnumber.isEmpty() || selectregister.isEmpty()
@@ -753,14 +788,14 @@ public class Inward_Truck_Security extends AppCompatActivity {
                         etserialnumber.setEnabled(false);
                         etvehicalnumber.setText(obj.getVehicleNo());
                         etvehicalnumber.setEnabled(false);
-                        repremark.setText(obj.getReportingRemark());
-                        repremark.setEnabled(false);
+//                        repremark.setText(obj.getReportingRemark());
+//                        repremark.setEnabled(false);
                         etsdate.setText(obj.getDate());
                         etsdate.setEnabled(false);
                         //etsnetwt.setText(String.valueOf(obj.getNetWeight()));
-                        cbox.setChecked(true);
-                        cbox.setEnabled(false);
-                        saveButton.setVisibility(View.GONE);
+//                        cbox.setChecked(true);
+//                        cbox.setEnabled(false);
+//                        saveButton.setVisibility(View.GONE);
 
 
 //                            DocId = document.getId();

@@ -77,6 +77,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
     public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         Response_Outward_Security_Fetching club = outwardfilteredGridList.get(position);
         holder.vehiclenum.setText(club.getVehicleNumber());
+        holder.trans.setText(club.getTransportName());
         holder.Status.setText(club.getCurrStatus());
         holder.date.setText(club.getDate());
         int secintimelength = club.getSecInTime()!=null ? club.getSecInTime().length() : 0;
@@ -201,7 +202,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
     public class myviewHolder extends RecyclerView.ViewHolder {
         public TextView vehiclenum, material, Status,date, secInTime,weiInTime,
                 bilInTime,ipfLabInTime,ipfProInTime,blfLabInTime,
-                blfProInTime,desInTime,logintime;
+                blfProInTime,desInTime,logintime,trans;
 
         public myviewHolder(View view) {
             super(view);
@@ -217,6 +218,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
             blfProInTime = view.findViewById(R.id.textoutwardgridBLFProInTime);
             desInTime = view.findViewById(R.id.textoutwardgridDesInTime);
             logintime=view.findViewById(R.id.textoutwardgridLogInTime);
+            trans = view.findViewById(R.id.textoutwardgridTransporter);
         }
     }
 

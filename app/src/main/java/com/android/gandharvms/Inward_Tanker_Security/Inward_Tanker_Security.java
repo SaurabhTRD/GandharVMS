@@ -27,6 +27,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -38,11 +39,14 @@ import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Menu;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.R;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -115,7 +119,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     ArrayAdapter<String> registeritem;
     ArrayAdapter<String> qtyuomdrop;
     ArrayAdapter<String> netweuomdrop;
-    EditText etreg, etvehical, etinvoice, etdate, etmaterial, etintime, etnetweight, etoum, etregister, etnetoum, etremark, repremark;
+    EditText etreg, etvehical, etinvoice, etdate, etmaterial, etintime, etnetweight, etoum, etregister, etnetoum, etremark, repremark,etsupplier;
     Button btnadd, button1, dbbutton, updbtnclick;
     EditText editmaterial, editqty, edituom;
     DatePickerDialog picker;
@@ -137,6 +141,12 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     private int insertnetweight;
     private int insertnetweightUom;
 
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,28 +156,51 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         userDetails = RetroApiClient.getLoginApi();
         apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
 
-        isReportingCheckBox = findViewById(R.id.isreporting);
-        reportingRemarkLayout = findViewById(R.id.edtreportingremark);
-        saveButton = findViewById(R.id.saveButton);
+//        isReportingCheckBox = findViewById(R.id.isreporting);
+//        reportingRemarkLayout = findViewById(R.id.edtreportingremark);
+//        saveButton = findViewById(R.id.saveButton);
+//
+//        reportingRemarkLayout.setVisibility(View.GONE);
+//        saveButton.setVisibility(View.GONE);
 
-        reportingRemarkLayout.setVisibility(View.GONE);
-        saveButton.setVisibility(View.GONE);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
 
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
 
-        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // Show the TextInputLayout and Button
-                reportingRemarkLayout.setVisibility(View.VISIBLE);
-                saveButton.setVisibility(View.VISIBLE);
-            } else {
-                // Hide the TextInputLayout and Button
-                reportingRemarkLayout.setVisibility(View.GONE);
-                saveButton.setVisibility(View.GONE);
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Tanker_Security.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Tanker_Security.this, Menu.class));
             }
         });
 
-        saveButton.setOnClickListener(v -> {
-        });
+//
+//        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (isChecked) {
+//                // Show the TextInputLayout and Button
+//                reportingRemarkLayout.setVisibility(View.VISIBLE);
+//                saveButton.setVisibility(View.VISIBLE);
+//            } else {
+//                // Hide the TextInputLayout and Button
+//                reportingRemarkLayout.setVisibility(View.GONE);
+//                saveButton.setVisibility(View.GONE);
+//            }
+//        });
+//
+//        saveButton.setOnClickListener(v -> {
+//        });
 
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -221,7 +254,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         etvehical = findViewById(R.id.etvehical);
         etinvoice = findViewById(R.id.etinvoice);
         etdate = findViewById(R.id.etdate);
-        //etsupplier = findViewById(R.id.etsupplier);
+        etsupplier = findViewById(R.id.etsupplier);
         etmaterial = findViewById(R.id.etmaterial);
         etintime = findViewById(R.id.etintime);
         etnetweight = findViewById(R.id.etnetweight);
@@ -234,9 +267,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         //edpooa = findViewById(R.id.etpooa);
         //etmobilenum = findViewById(R.id.etcontactnumber);
 
-        repremark = findViewById(R.id.edtreportingremark);
-
-        cbox = findViewById(R.id.isreporting);
+//        repremark = findViewById(R.id.edtreportingremark);
+//        cbox = findViewById(R.id.isreporting);
 
 
         // for Auto Genrated serial number
@@ -383,16 +415,21 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         btnadd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isReportingCheckBox = findViewById(R.id.isreporting);
-                if (isReportingCheckBox.isChecked()) {
-                    updateData();
-                } else {
-                    try {
-                        insertdata();
-                    } catch (ParseException e) {
-                        throw new RuntimeException(e);
-                    }
+                try {
+                    insertdata();
+                } catch (ParseException e) {
+                    throw new RuntimeException(e);
                 }
+//                isReportingCheckBox = findViewById(R.id.isreporting);
+//                if (isReportingCheckBox.isChecked()) {
+//                    updateData();
+//                } else {
+//                    try {
+//                        insertdata();
+//                    } catch (ParseException e) {
+//                        throw new RuntimeException(e);
+//                    }
+//                }
             }
         });
 
@@ -402,13 +439,13 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 upditinsecbyinwardid();
             }
         });
-        saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertreporting();
-            }
-        });
+//        saveButton = findViewById(R.id.saveButton);
+//        saveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                insertreporting();
+//            }
+//        });
 
         etvehical.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
@@ -544,7 +581,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String vehicalnumber = etvehical.getText().toString().trim();
         String invoicenumber = etinvoice.getText().toString().trim();
         String Date = etdate.getText().toString().trim();
-        //String partyname = etsupplier.getText().toString().trim();
+        String partyname = etsupplier.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
         /*if (!etqty.getText().toString().isEmpty()) {
             try {
@@ -585,7 +622,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         String remark = etremark.getText().toString().trim();
         //String pooa = edpooa.getText().toString().trim();
         //String mobnumber = etmobilenum.getText().toString().trim();
-        String edremark = repremark.getText().toString().trim();
+//        String edremark = repremark.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() ||
                 intime.isEmpty() || material.isEmpty() || remark.isEmpty()
                 || insertnetweight < 0 || insertnetweightUom < 0) {
@@ -618,7 +655,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 }
             }
 
-            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, "", material, "", "", 'W', 'I', Date,
+            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, "", "", 'W', 'I', Date,
                     "", vehicltype, intime, outTime, 1, insertnetweightUom, insertnetweight, 1, materialList.toString().replace("[]", ""), remark, false, "No", "", "", "", "", "", EmployeId, "", InwardId);
 
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
@@ -742,10 +779,10 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         repremark.setEnabled(false);
                         etdate.setText(obj.getDate());
                         etdate.setEnabled(false);
-                        cbox.setChecked(true);
-                        cbox.setEnabled(false);
-                        saveButton.setVisibility(View.GONE);
-                        repremark.setEnabled(false);
+//                        cbox.setChecked(true);
+//                        cbox.setEnabled(false);
+//                        saveButton.setVisibility(View.GONE);
+//                        repremark.setEnabled(false);
                         etreg.setEnabled(false);
                         etdate.setEnabled(false);
 //                            DocId = document.getId();

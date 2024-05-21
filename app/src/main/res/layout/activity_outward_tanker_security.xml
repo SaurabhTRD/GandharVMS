@@ -19,7 +19,6 @@
 <!--        android:textStyle="bold"-->
 <!--        tools:ignore="MissingConstraints"></Button>-->
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -49,6 +48,7 @@
 
 
 
+        <include layout="@layout/header_layout"></include>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -111,41 +111,41 @@
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="2dp"
+<!--        <com.google.android.material.textfield.TextInputLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            android:layout_marginRight="30dp"-->
+<!--            android:layout_marginTop="2dp"-->
 
 
-            >
-            <EditText
-                android:id="@+id/edtreportingremark"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Reporting Remark"
-                android:inputType="textCapCharacters"
-                android:textSize="17dp"
-                android:textStyle="bold"
+<!--            >-->
+<!--            <EditText-->
+<!--                android:id="@+id/edtreportingremark"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:hint="Reporting Remark"-->
+<!--                android:inputType="textCapCharacters"-->
+<!--                android:textSize="17dp"-->
+<!--                android:textStyle="bold"-->
 
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+<!--                />-->
+<!--        </com.google.android.material.textfield.TextInputLayout>-->
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
-            <Button
-                android:layout_width="100dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="250dp"
-                android:id="@+id/saveButton"
-                android:text="Save"
-                />
-        </LinearLayout>
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:orientation="horizontal"-->
+<!--            >-->
+<!--            <Button-->
+<!--                android:layout_width="100dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="250dp"-->
+<!--                android:id="@+id/saveButton"-->
+<!--                android:text="Save"-->
+<!--                />-->
+<!--        </LinearLayout>-->
 
 
 

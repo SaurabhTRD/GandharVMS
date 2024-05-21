@@ -10,7 +10,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -21,6 +23,7 @@ import com.android.gandharvms.Inward_Tanker_Security.UpdateOutSecurityRequestMod
 import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequrity;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -51,6 +54,12 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
     private int InwardId;
     private final String EmployeId = Global_Var.getInstance().EmpId;
 
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +84,29 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         taxno = findViewById(R.id.rb_TaxInvoiceNo);
         ewayyes = findViewById(R.id.rb_EwaybillYes);
         ewayno = findViewById(R.id.rb_EwaybillNo);
+
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(InwardOut_Tanker_Security.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(InwardOut_Tanker_Security.this, Menu.class));
+            }
+        });
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

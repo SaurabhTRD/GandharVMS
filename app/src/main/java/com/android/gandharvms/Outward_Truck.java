@@ -5,8 +5,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Dispatch_IndusSmallPack;
 import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
@@ -14,15 +17,45 @@ import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
+import com.android.gandharvms.submenu.Submenu_Outward_Truck;
 
 import es.dmoral.toasty.Toasty;
 
 public class Outward_Truck extends AppCompatActivity {
 
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck);
+
+        btnhome = findViewById(R.id.btn_homeButton);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Truck.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Truck.this, Menu.class));
+            }
+        });
 
     }
     public void sequirityoutwardTruck(View view){
@@ -35,7 +68,7 @@ public class Outward_Truck extends AppCompatActivity {
 
     }
 
-    public void Weighmentouttankerclick(View view){
+    public void Weighmentouttruckrclick(View view){
         if(Global_Var.getInstance().Department.contains("Weighment")){
             Global_Var.getInstance().DeptType='W';
             startActivity(new Intent(this, Outward_Truck_weighment.class));
@@ -52,7 +85,7 @@ public class Outward_Truck extends AppCompatActivity {
             Toasty.warning(Outward_Truck.this, "You are not in Laboratory Department", Toast.LENGTH_SHORT).show();
         }
     }
-    public void productionouttanker(View view){
+    public void productionouttruck(View view){
         if(Global_Var.getInstance().Department.contains("DataEntry")){
             Global_Var.getInstance().DeptType='P';
             startActivity(new Intent(this, Outward_Truck_Production.class));

@@ -39,6 +39,43 @@ public class Respons_Outward_Tanker_Billing {
     String BatchNo;
     private int Kl;
 
+    public String spltotqty;
+    public String splweight;
+    public String iltotqty;
+    public  String ilweight;
+
+    public String getSpltotqty() {
+        return spltotqty;
+    }
+
+    public void setSpltotqty(String spltotqty) {
+        this.spltotqty = spltotqty;
+    }
+
+    public String getSplweight() {
+        return splweight;
+    }
+
+    public void setSplweight(String splweight) {
+        this.splweight = splweight;
+    }
+
+    public String getIltotqty() {
+        return iltotqty;
+    }
+
+    public void setIltotqty(String iltotqty) {
+        this.iltotqty = iltotqty;
+    }
+
+    public String getIlweight() {
+        return ilweight;
+    }
+
+    public void setIlweight(String ilweight) {
+        this.ilweight = ilweight;
+    }
+
     public int getDensity_29_5C() {
         return Density_29_5C;
     }

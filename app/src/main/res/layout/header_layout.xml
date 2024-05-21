@@ -40,10 +40,19 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/btn_logoutButton"
-            android:layout_width="50dp"
+            android:id="@+id/btn_homeButton"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
+            android:layout_margin="5dp"
+            android:text="Logout"
+            android:src="@drawable/home"
+            android:tooltipText="Home"/>
+        <ImageView
+            android:id="@+id/btn_logoutButton"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:tooltipText="Logout"
             android:text="Logout"
             android:src="@drawable/logout"/>
     </LinearLayout>

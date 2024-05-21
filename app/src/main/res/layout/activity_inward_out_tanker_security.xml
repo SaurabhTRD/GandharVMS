@@ -7,18 +7,7 @@
     tools:context=".InwardOut_Tanker_Security"
     >
 
-    <Button
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="30dp"
-        android:onClick="inwardoutsecurityclick"
-        android:text="Pending Vehicles"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"></Button>
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,13 +19,27 @@
         android:layout_marginRight="10dp"
         >
 
+        <include layout="@layout/header_layout"></include>
+
+        <Button
+            style="@style/Widget.MaterialComponents.Button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="30dp"
+            android:onClick="inwardoutsecurityclick"
+            android:text="Pending Vehicles"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints"></Button>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:layout_marginTop="70dp"
+            android:layout_marginTop="20dp"
 
             >
             <EditText

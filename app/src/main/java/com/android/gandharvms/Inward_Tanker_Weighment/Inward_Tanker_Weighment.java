@@ -33,6 +33,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -46,6 +47,7 @@ import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -56,6 +58,7 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.Register;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
@@ -143,6 +146,11 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private int insertweighqty;
     private int insertnetweighqtyUom;
     List<String> teamList = new ArrayList<>();
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -171,6 +179,29 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etweighqty=findViewById(R.id.etitweighqty);
         //Call Api method
         weighmentdetails = RetroApiClient.getWeighmentDetails();
+
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Tanker_Weighment.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Tanker_Weighment.this, Menu.class));
+            }
+        });
 
         sharedPreferences = getSharedPreferences("TankerWeighment", MODE_PRIVATE);
         if (sharedPreferences != null) {

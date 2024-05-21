@@ -59,6 +59,17 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="140dp"
+                android:id="@+id/textoutwardgridTransporter"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Transporter"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
                 android:layout_width="130dp"
                 android:id="@+id/textoutwardgridStatus"
                 android:textStyle="bold"

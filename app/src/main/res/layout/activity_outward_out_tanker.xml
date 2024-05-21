@@ -9,7 +9,7 @@
     android:layout_marginTop="5dp"
     android:padding="8dp"
     >
-
+    <include layout="@layout/header_layout"></include>
     <GridLayout
         android:layout_width="match_parent"
         android:layout_height="250dp"

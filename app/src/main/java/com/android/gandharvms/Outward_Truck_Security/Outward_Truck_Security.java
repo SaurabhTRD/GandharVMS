@@ -16,7 +16,9 @@ import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridLayout;
+import android.widget.ImageView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -24,9 +26,11 @@ import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Menu;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Isreportingupdate_Security_model;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -79,6 +83,12 @@ public class Outward_Truck_Security extends AppCompatActivity {
     CheckBox cbox;
     private LoginMethod userDetails;
     private String token;
+
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,30 +98,30 @@ public class Outward_Truck_Security extends AppCompatActivity {
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
 
 
-        isReportingCheckBox = findViewById(R.id.trsisreporting);
-        reportingRemarkLayout = findViewById(R.id.edtrsreportingremark);
-        saveButton = findViewById(R.id.saveButton);
+//        isReportingCheckBox = findViewById(R.id.trsisreporting);
+//        reportingRemarkLayout = findViewById(R.id.edtrsreportingremark);
+//        saveButton = findViewById(R.id.saveButton);
         btcompleted = findViewById(R.id.outwardtrucksecuritycomp);
 
-        reportingRemarkLayout.setVisibility(View.GONE);
-        saveButton.setVisibility(View.GONE);
+//        reportingRemarkLayout.setVisibility(View.GONE);
+//        saveButton.setVisibility(View.GONE);
 
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
 
-        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                // Show the TextInputLayout and Button
-                reportingRemarkLayout.setVisibility(View.VISIBLE);
-                saveButton.setVisibility(View.VISIBLE);
-            } else {
-                // Hide the TextInputLayout and Button
-                reportingRemarkLayout.setVisibility(View.GONE);
-                saveButton.setVisibility(View.GONE);
-            }
-        });
+//        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            if (isChecked) {
+//                // Show the TextInputLayout and Button
+//                reportingRemarkLayout.setVisibility(View.VISIBLE);
+//                saveButton.setVisibility(View.VISIBLE);
+//            } else {
+//                // Hide the TextInputLayout and Button
+//                reportingRemarkLayout.setVisibility(View.GONE);
+//                saveButton.setVisibility(View.GONE);
+//            }
+//        });
 
-        saveButton.setOnClickListener(v -> {
-        });
+//        saveButton.setOnClickListener(v -> {
+//        });
 
         date=findViewById(R.id.ettrsdate);
         intime = findViewById(R.id.ettrsintime);
@@ -122,8 +132,8 @@ public class Outward_Truck_Security extends AppCompatActivity {
         place = findViewById(R.id.ettrsplace);
         mobilenumber = findViewById(R.id.ettrsmobilenumber);
         remark=findViewById(R.id.ettrsremark);
-        cbox = findViewById(R.id.trsisreporting);
-        reportingremark = findViewById(R.id.edtrsreportingremark);
+//        cbox = findViewById(R.id.trsisreporting);
+//        reportingremark = findViewById(R.id.edtrsreportingremark);
 
         rbvehpermityes=findViewById(R.id.rbtrsvehpermityes);
         rbLrCopyyes=findViewById(R.id.rb_trsLRCopyYes);
@@ -141,18 +151,43 @@ public class Outward_Truck_Security extends AppCompatActivity {
         rbdriverlicno=findViewById(R.id.rb_trsdriverlicNo);
         rbrcbookno=findViewById(R.id.rb_trsrcbookNo);
 
+        btnhome = findViewById(R.id.btn_homeButton);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Truck_Security.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Outward_Truck_Security.this, Menu.class));
+            }
+        });
+
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isReportingCheckBox = findViewById(R.id.trsisreporting);
-                if (isReportingCheckBox.isChecked()) {
-                    updateData();
-                } else {
-                    insert();
-                }
+
+                insert();
+//                isReportingCheckBox = findViewById(R.id.trsisreporting);
+//                if (isReportingCheckBox.isChecked()) {
+//                    updateData();
+//                } else {
+//                    insert();
+//                }
 
             }
         });
@@ -163,13 +198,13 @@ public class Outward_Truck_Security extends AppCompatActivity {
             }
         });
 
-        saveButton = findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                insertreporting();
-            }
-        });
+//        saveButton = findViewById(R.id.saveButton);
+//        saveButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                insertreporting();
+//            }
+//        });
 
         String dateFormatPattern = "ddMMyyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
@@ -292,60 +327,60 @@ public class Outward_Truck_Security extends AppCompatActivity {
         });
     }
 
-    private void insertreporting() {
-        String serial = serialnumber.getText().toString().trim();
-        String vehicle = vehiclenumber.getText().toString().trim();
-        String cudate = date.getText().toString().trim();
-        String edremark = "";
-        String outTime = getCurrentTime();
-        Boolean isreporting = false;
-        if (cbox.isChecked()) {
-            edremark = reportingremark.getText().toString().trim();
-            isreporting = true;
-        }
-        if (vehicle.isEmpty() || cudate.isEmpty()) {
-            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        } else {
-            Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, "", outTime,
-                    '0', "", "", "", "", "", "", "", "", "",
-                    "", "", "", "", "", "", "", "", "", EmployeId,
-                    isreporting, edremark, 'S', serial, vehicle, "", "", "","",
-                    cudate, "", "", "", '0', "", '0', "", 'S', inOut,
-                    vehicleType, "", "");
-            Call<Boolean> call = outwardTanker.outwardtankerinsert(requestModelOutwardTankerSecurity);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body() == true) {
-                        makeNotification(vehicle,outTime);
-                        Toasty.success(Outward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Outward_Truck_Security.this, Outward_Truck.class));
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    Toast.makeText(Outward_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-
-        }
-    }
+//    private void insertreporting() {
+//        String serial = serialnumber.getText().toString().trim();
+//        String vehicle = vehiclenumber.getText().toString().trim();
+//        String cudate = date.getText().toString().trim();
+//        String edremark = "";
+//        String outTime = getCurrentTime();
+//        Boolean isreporting = false;
+//        if (cbox.isChecked()) {
+//            edremark = reportingremark.getText().toString().trim();
+//            isreporting = true;
+//        }
+//        if (vehicle.isEmpty() || cudate.isEmpty()) {
+//            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+//        } else {
+//            Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, "", outTime,
+//                    '0', "", "", "", "", "", "", "", "", "",
+//                    "", "", "", "", "", "", "", "", "", EmployeId,
+//                    isreporting, edremark, 'S', serial, vehicle, "", "", "","",
+//                    cudate, "", "", "", '0', "", '0', "", 'S', inOut,
+//                    vehicleType, "", "");
+//            Call<Boolean> call = outwardTanker.outwardtankerinsert(requestModelOutwardTankerSecurity);
+//            call.enqueue(new Callback<Boolean>() {
+//                @Override
+//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                    if (response.isSuccessful() && response.body() != null && response.body() == true) {
+//                        makeNotification(vehicle,outTime);
+//                        Toasty.success(Outward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(Outward_Truck_Security.this, Outward_Truck.class));
+//                        finish();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Boolean> call, Throwable t) {
+//
+//                    Log.e("Retrofit", "Failure: " + t.getMessage());
+//// Check if there's a response body in case of an HTTP error
+//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+//                        Response<?> response = ((HttpException) t).response();
+//                        if (response != null) {
+//                            Log.e("Retrofit", "Error Response Code: " + response.code());
+//                            try {
+//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                    Toast.makeText(Outward_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//
+//        }
+//    }
     private void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
 
         Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);

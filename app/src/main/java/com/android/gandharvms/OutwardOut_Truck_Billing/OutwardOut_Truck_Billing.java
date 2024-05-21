@@ -13,13 +13,17 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Menu;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
@@ -48,7 +52,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Billing extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,etoanumber,ettramsname,etdrivermob,etgrs,ettare,etnet,etseal,etbatch,etdensity,etremark,invoicenum,totalqty;
+    EditText intime,serialnumber,vehiclenumber,etoanumber,ettramsname,etdrivermob,etgrs,ettare,etnet,etseal,etbatch,etdensity,etremark,invoicenum,totalqty,industotalqty;
     Button submit,billcomp;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -69,6 +73,12 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
     Integer nettotqtyuomvalue = 3;
     private int netweuom;
 //    public String userialnumber,uvehiclenumer;
+
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -92,12 +102,36 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
         etremark = findViewById(R.id.etremark);
         invoicenum = findViewById(R.id.etinvoicenum);
         totalqty = findViewById(R.id.oroutbiltotalQuantity);
+        industotalqty = findViewById(R.id.industotalqty);
 
 
 
         submit = findViewById(R.id.submit);
         billcomp = findViewById(R.id.truckotoutbillingcompleted);
         dbroot= FirebaseFirestore.getInstance();
+
+        btnhome = findViewById(R.id.btn_homeButton);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OutwardOut_Truck_Billing.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OutwardOut_Truck_Billing.this, Menu.class));
+            }
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -134,30 +168,30 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
             }
         });
 
-        totqtyautoCompleteTextView2 = findViewById(R.id.oroutbiltotalQuantityUOM);
-        totqtyUomMapping= new HashMap<>();
-        totqtyUomMapping.put("NA",1);
-        totqtyUomMapping.put("Ton", 2);
-        totqtyUomMapping.put("Litre", 3);
-        totqtyUomMapping.put("KL", 4);
-        totqtyUomMapping.put("Kgs", 5);
-        totqtyUomMapping.put("pcs", 6);
-
-        nettotqtyuomdrop = new ArrayAdapter<String>(this,R.layout.or_uom_outbill,new ArrayList<>(totqtyUomMapping.keySet()));
-        totqtyautoCompleteTextView2.setAdapter(nettotqtyuomdrop);
-        totqtyautoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item2 = parent.getItemAtPosition(position).toString();
-                nettotqtyuomvalue = totqtyUomMapping.get(item2);
-                if (nettotqtyuomvalue != null){
-                    Toasty.success(OutwardOut_Truck_Billing.this, "Total-Quantity:- " + item2 + " Selected", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toasty.warning(OutwardOut_Truck_Billing.this, "Unknown Total-QuantityUom:- " + item2, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        totqtyautoCompleteTextView2 = findViewById(R.id.oroutbiltotalQuantityUOM);
+//        totqtyUomMapping= new HashMap<>();
+//        totqtyUomMapping.put("NA",1);
+//        totqtyUomMapping.put("Ton", 2);
+//        totqtyUomMapping.put("Litre", 3);
+//        totqtyUomMapping.put("KL", 4);
+//        totqtyUomMapping.put("Kgs", 5);
+//        totqtyUomMapping.put("pcs", 6);
+//
+//        nettotqtyuomdrop = new ArrayAdapter<String>(this,R.layout.or_uom_outbill,new ArrayList<>(totqtyUomMapping.keySet()));
+//        totqtyautoCompleteTextView2.setAdapter(nettotqtyuomdrop);
+//        totqtyautoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String item2 = parent.getItemAtPosition(position).toString();
+//                nettotqtyuomvalue = totqtyUomMapping.get(item2);
+//                if (nettotqtyuomvalue != null){
+//                    Toasty.success(OutwardOut_Truck_Billing.this, "Total-Quantity:- " + item2 + " Selected", Toast.LENGTH_SHORT).show();
+//                }
+//                else {
+//                    Toasty.warning(OutwardOut_Truck_Billing.this, "Unknown Total-QuantityUom:- " + item2, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
     }
     private String getCurrentTime() {
@@ -244,6 +278,12 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
                         etnet.setEnabled(false);
                         etseal.setText(data.getSealNumber());
                         etseal.setEnabled(false);
+                        totalqty.setText(data.getSpltotqty());
+                        totalqty.setEnabled(false);
+                        industotalqty.setText(data.getIltotqty());
+                        industotalqty.setEnabled(false);
+
+
 //                        userialnumber = data.getSerialNumber();
 //                        uvehiclenumer = data.getVehicleNumber();
 

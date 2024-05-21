@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -37,12 +38,14 @@ import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.firebase.Timestamp;
 
 import com.android.gandharvms.FcmNotificationsSender;
@@ -129,6 +132,9 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     private int inwardid;
     private LoginMethod userDetails;
 
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -154,6 +160,30 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         etsignby =(EditText) findViewById(R.id.ettrsignby);
         etcontainer=(EditText)findViewById(R.id.ettrwcontainer);
         etremark=(EditText)findViewById(R.id.ettwremark);
+
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Truck_weighment.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Truck_weighment.this, Menu.class));
+            }
+        });
 
         // listing Data button
         img1 = findViewById(R.id.ettrimageView1);

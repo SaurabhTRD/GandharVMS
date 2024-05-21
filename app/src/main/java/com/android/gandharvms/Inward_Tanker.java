@@ -19,6 +19,7 @@ import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_Sampling;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -31,7 +32,7 @@ import es.dmoral.toasty.Toasty;
 public class Inward_Tanker extends AppCompatActivity {
     DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String userRole="default";
-    ImageView btnlogout;
+    ImageView btnlogout,btnhome;
     TextView username,empid;
     private String role=Global_Var.getInstance().Department;
     private String Empid= Global_Var.getInstance().EmpId;
@@ -40,6 +41,7 @@ public class Inward_Tanker extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker);
         btnlogout=findViewById(R.id.btn_logoutButton);
+        btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
 
@@ -55,6 +57,12 @@ public class Inward_Tanker extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Tanker.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(Inward_Tanker.this, Menu.class));
             }
         });
     }

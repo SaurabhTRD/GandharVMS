@@ -6,20 +6,7 @@
     android:layout_height="wrap_content"
     tools:context=".Inward_Tanker_Laboratory.Inward_Tanker_Laboratory">
 
-    <Button
-        android:id="@+id/btn_viewsampleReport"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:onClick="btn_clicktoViewSAMPLEREPORT"
-        android:text="View SAMPLE DATA"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        android:visibility="invisible"
-        tools:ignore="MissingConstraints"></Button>
+
 
 
     <ScrollView
@@ -37,13 +24,30 @@
             android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
+            <include layout="@layout/header_layout"></include>
+
+            <Button
+                android:id="@+id/btn_viewsampleReport"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:onClick="btn_clicktoViewSAMPLEREPORT"
+                android:text="View SAMPLE DATA"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                android:visibility="invisible"
+                tools:ignore="MissingConstraints"></Button>
+
             <Button
                 android:id="@+id/btn_clicktoViewLaboratoryREPORT"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="-20dp"
                 android:layout_marginLeft="21dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="21dp"
                 android:onClick="Labviewclick"
                 android:text="Pending Vehicles"

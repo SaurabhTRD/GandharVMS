@@ -6,19 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Outward_Tanker_Production_forms.bulkloadingproduction">
 
-    <Button
-        android:id="@+id/btn_otViewlabReport"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="30dp"
-        android:onClick="btn_inporcctankerclicktoViewLabReport"
-        android:text="View Lab Report"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"></Button>
+
 
 
     <ScrollView
@@ -30,13 +18,28 @@
             android:layout_height="650dp"
             android:orientation="vertical">
 
+            <include layout="@layout/header_layout"></include>
+
+            <Button
+                android:id="@+id/btn_otViewlabReport"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:onClick="btn_inporcctankerclicktoViewLabReport"
+                android:text="View Lab Report"
+                android:textSize="18dp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints"></Button>
             <Button
                 android:id="@+id/dbview"
                 style="@style/Widget.MaterialComponents.Button"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:layout_marginTop="55dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="30dp"
                 android:onClick="outtankerprobulkpending"
                 android:text="Pending Vehicles"
@@ -51,7 +54,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="50dp"
+                android:layout_marginTop="20dp"
 
                 >
                 <EditText

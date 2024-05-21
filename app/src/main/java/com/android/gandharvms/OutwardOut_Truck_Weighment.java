@@ -24,9 +24,11 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -98,6 +100,11 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
     private static final int CAMERA_REQUEST_CODE1 = 103;
     private int ushdip;
     private int ushwe;
+    ImageView btnlogout,btnhome;
+    TextView username,empid;
+
+    public static String Tanker;
+    public static String Truck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,6 +130,29 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         img2 = findViewById(R.id.outwardouttruckdriver);
         etshdip = findViewById(R.id.etshortdip);
         etshwe = findViewById(R.id.etshortageweight);
+
+        btnhome = findViewById(R.id.btn_homeButton);
+        btnlogout=findViewById(R.id.btn_logoutButton);
+        username=findViewById(R.id.tv_username);
+        empid=findViewById(R.id.tv_employeeId);
+
+        String userName=Global_Var.getInstance().Name;
+        String empId=Global_Var.getInstance().EmpId;
+
+        username.setText(userName);
+        empid.setText(empId);
+        btnlogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OutwardOut_Truck_Weighment.this, Login.class));
+            }
+        });
+        btnhome.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(OutwardOut_Truck_Weighment.this, Menu.class));
+            }
+        });
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

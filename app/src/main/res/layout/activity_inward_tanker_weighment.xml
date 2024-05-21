@@ -8,27 +8,13 @@
     tools:context=".Inward_Tanker_Weighment.Inward_Tanker_Weighment">
 
 
-    <Button
-        android:id="@+id/dbview"
-        style="@style/Widget.MaterialComponents.Button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="31dp"
-        android:layout_marginTop="25dp"
-        android:layout_marginRight="31dp"
-        android:onClick="Viewclick"
-        android:text="Pending Vehicles"
-        android:textSize="18dp"
-        android:textStyle="bold"
-        tools:ignore="MissingConstraints"></Button>
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -37,6 +23,21 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="vertical">
+                <include layout="@layout/header_layout"></include>
+
+                <Button
+                    android:id="@+id/dbview"
+                    style="@style/Widget.MaterialComponents.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="31dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="31dp"
+                    android:onClick="Viewclick"
+                    android:text="Pending Vehicles"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
+                    tools:ignore="MissingConstraints"></Button>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
@@ -627,7 +628,7 @@
                     </LinearLayout>
                 </androidx.cardview.widget.CardView>
             </LinearLayout>
-        </LinearLayout>
+
     </ScrollView>
 
 </LinearLayout>
