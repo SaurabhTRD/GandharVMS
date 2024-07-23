@@ -87,7 +87,7 @@ public class it_Lab_CompletedgridAdapter extends RecyclerView.Adapter<it_Lab_Com
         holder.Color.setText(club.getColor());
         String lqty=String.format("%.2f", club.getLQty() / 100.0);
         holder.LQty.setText(lqty);
-        String density=String.format("%.2f", club.getDensity() / 100.0);
+        String density=String.format("%.5f", club.getDensity() / 100.0);
         holder.Density.setText(density);
         holder.RcsTest.setText(club.getRcsTest());
         String anlinepoint=String.format("%.2f", club.getAnLinePoint() / 100.0);

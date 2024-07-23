@@ -85,7 +85,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
     private final int MAX_LENGTH = 10;
     ArrayAdapter<String> adapterItems;
     ArrayAdapter<String> adapterItems1;
-    EditText etintime,etsuppliername, etserialnumber, etvehicalnum, etpo, etpodate, etmaterialrdate, etmaterial, etqty, etrecqtyoum, etremark, etinvqty, etinvdate, etinvnum, etinvqtyuom;
+    EditText etintime,etsuppliername, etserialnumber, etvehicalnum, etpo, etpodate, etmaterialrdate, etmaterial, etqty, etrecqtyoum, etremark, etinvqty, etinvdate, etinvnum, etinvqtyuom,etextra;
     Button trssubmit, buttonadd, button1, updbtnstoreclick;
     Button view;
     DatePickerDialog picker;
@@ -203,6 +203,8 @@ public class Inward_Truck_Store extends AppCompatActivity {
         etinvdate = findViewById(R.id.ettrinvDate);
         etinvnum = findViewById(R.id.ettinvnumber);
         etsuppliername=findViewById(R.id.ettrssupplier);
+
+        etextra = findViewById(R.id.ettsmaterialextra);
 
         updbtnstoreclick = findViewById(R.id.irstoreupdateclick);
 
@@ -715,6 +717,8 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etinvqty.setEnabled(false);
                         etinvqtyuom.setText(data.UnitOfMeasurement);
                         etinvqtyuom.setEnabled(false);
+                        etextra.setText(data.getStoreExtramaterials());
+                        etextra.setEnabled(false);
                     } else {
                         Toasty.error(Inward_Truck_Store.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

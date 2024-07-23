@@ -117,7 +117,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     EditText etint, etserialnumber, etvehicalno, etsuppliername, etmaterialname, etdriverno, etoano, etdate,
-            etgrossweight, etremark, etsignby, etcontainer, etshortagedip, etshortageweight,etweighqty;
+            etgrossweight, etremark, etsignby, etcontainer, etshortagedip, etshortageweight,etweighqty,qtyuom;
     Button wesubmit;
     FirebaseFirestore wedbroot;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
@@ -177,6 +177,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etsignby = findViewById(R.id.etsignby);
         etcontainer = findViewById(R.id.container);
         etweighqty=findViewById(R.id.etitweighqty);
+        qtyuom = findViewById(R.id.itweighqtyuomtanker);
         //Call Api method
         weighmentdetails = RetroApiClient.getWeighmentDetails();
 
@@ -210,33 +211,33 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             }
         }
 
-        weighautoCompleteTextView1 = findViewById(R.id.itweighqtyuomtanker);
-        weighqtyUomMapping = new HashMap<>();
-        weighqtyUomMapping.put("NA", 1);
-        weighqtyUomMapping.put("Ton", 2);
-        weighqtyUomMapping.put("Litre", 3);
-        weighqtyUomMapping.put("KL", 4);
-        weighqtyUomMapping.put("Kgs", 5);
-        weighqtyUomMapping.put("pcs", 6);
-        weighqtyUomMapping.put("M3", 7);
-
-        weighqtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(weighqtyUomMapping.keySet()));
-        weighautoCompleteTextView1.setAdapter(weighqtyuomdrop);
-        weighautoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
-                // Retrieve the corresponding numerical value from the mapping
-                weighqtyUomNumericValue = weighqtyUomMapping.get(qtyUomDisplay);
-                if (weighqtyUomNumericValue != null) {
-                    // Now, you can use qtyUomNumericValue when inserting into the database
-                    Toasty.success(Inward_Tanker_Weighment.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Handle the case where the mapping doesn't contain the display value
-                    Toasty.error(Inward_Tanker_Weighment.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        weighautoCompleteTextView1 = findViewById(R.id.itweighqtyuomtanker);
+//        weighqtyUomMapping = new HashMap<>();
+//        weighqtyUomMapping.put("NA", 1);
+//        weighqtyUomMapping.put("Ton", 2);
+//        weighqtyUomMapping.put("Litre", 3);
+//        weighqtyUomMapping.put("KL", 4);
+//        weighqtyUomMapping.put("Kgs", 5);
+//        weighqtyUomMapping.put("pcs", 6);
+//        weighqtyUomMapping.put("M3", 7);
+//
+//        weighqtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(weighqtyUomMapping.keySet()));
+//        weighautoCompleteTextView1.setAdapter(weighqtyuomdrop);
+//        weighautoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
+//                // Retrieve the corresponding numerical value from the mapping
+//                weighqtyUomNumericValue = weighqtyUomMapping.get(qtyUomDisplay);
+//                if (weighqtyUomNumericValue != null) {
+//                    // Now, you can use qtyUomNumericValue when inserting into the database
+//                    Toasty.success(Inward_Tanker_Weighment.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    // Handle the case where the mapping doesn't contain the display value
+//                    Toasty.error(Inward_Tanker_Weighment.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         etweighqty.addTextChangedListener(new TextWatcher() {
             @Override
@@ -567,6 +568,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         finish();
     }
 
+
+
     public void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<InTanWeighResponseModel> call = weighmentdetails.getWeighbyfetchVehData(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<InTanWeighResponseModel>() {
@@ -584,6 +587,12 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                         etmaterialname.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);
+                        etsuppliername.setText(data.getPartyName());
+                        etsuppliername.setEnabled(false);
+                        etweighqty.setText(data.getNetWeight());
+                        etweighqty.setEnabled(false);
+                        qtyuom.setText(getWeightUnit(data.getSecNetWeightUOM()));
+                        qtyuom.setEnabled(false);
                     }
                     else {
                         Toasty.error(Inward_Tanker_Weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
@@ -592,6 +601,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
+
 
             @Override
             public void onFailure(Call<InTanWeighResponseModel> call, Throwable t) {
@@ -611,6 +621,26 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                 Toasty.error(Inward_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    private String getWeightUnit(int unitCode) {
+        switch (unitCode) {
+            case 1:
+                return "kl";
+            case 2:
+                return "Ton";
+            case 3:
+                return "Litre";
+            case 4:
+                return "KL";
+            case 5:
+                return "Kgs";
+            case 6:
+                return "Pcs";
+            case 7:
+                return "M3";
+            default:
+                return "unknown";// or any default value you want to set
+        }
     }
 
     // Function to upload image to server and delete local image after successful upload

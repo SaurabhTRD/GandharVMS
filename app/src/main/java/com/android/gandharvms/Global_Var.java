@@ -24,4 +24,13 @@ public class Global_Var {
         return instance;
     }
     private Global_Var() { }
+
+    public void clear() {
+        EmpId = null;
+        Department = null;
+        Name = null;
+        ProposeProcess = null;
+        Token = null;
+        InwardId = 0;
+    }
 }

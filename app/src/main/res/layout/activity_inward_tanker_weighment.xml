@@ -170,6 +170,7 @@
                                 android:layout_height="wrap_content"
                                 android:hint="Supplier"
                                 android:inputType="textCapCharacters"
+                                android:maxLines="10"
                                 android:textSize="17dp"
                                 android:textStyle="bold" />
                         </com.google.android.material.textfield.TextInputLayout>
@@ -295,23 +296,23 @@
                                 android:id="@+id/etitweighqty"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:hint="Qty"
+                                android:hint="Qty/Net Weight"
                                 android:inputType="number"
                                 android:textSize="17dp"
                                 android:textStyle="bold" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="200dp"
-                            android:layout_marginTop="15dp"
+                            android:layout_marginTop="10dp"
                             android:layout_marginEnd="5dp"
                             android:layout_marginRight="30dp"
                             android:layout_weight="1">
 
-                            <AutoCompleteTextView
+                            <EditText
                                 android:id="@+id/itweighqtyuomtanker"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"

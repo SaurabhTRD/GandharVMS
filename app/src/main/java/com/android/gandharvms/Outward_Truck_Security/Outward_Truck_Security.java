@@ -222,7 +222,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
 
         if (sharedPreferences != null) {
             if (getIntent().hasExtra("vehiclenum")) {
-                FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+//                FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
                 saveButton.setVisibility(View.GONE);
             }else {
                 GetMaxSerialNo(formattedDate);
@@ -262,18 +262,18 @@ public class Outward_Truck_Security extends AppCompatActivity {
                 picker.show();
             }
         });
-        vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
-                    FetchVehicleDetails(vehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
-                }
-            }
-        });
-
-        if (getIntent().hasExtra("vehiclenum")) {
-            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
-        }
+//        vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if (!hasFocus) {
+//                    FetchVehicleDetails(vehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
+//                }
+//            }
+//        });
+//
+//        if (getIntent().hasExtra("vehiclenum")) {
+//            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+//        }
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
@@ -381,54 +381,54 @@ public class Outward_Truck_Security extends AppCompatActivity {
 //
 //        }
 //    }
-    private void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
-
-        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);
-        call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
-            @Override
-            public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
-                if (response.isSuccessful()&& response.body()!= null ) {
-                    if (response.body().size() > 0){
-                        List<Response_Outward_Security_Fetching> data = response.body();
-                        Response_Outward_Security_Fetching obj = data.get(0);
-                        OutwardId = obj.getOutwardId();
-                        serialnumber.setText(obj.getSerialNumber());
-                        serialnumber.setEnabled(false);
-                        vehiclenumber.setText(obj.getVehicleNumber());
-                        vehiclenumber.setEnabled(false);
-                        date.setText(obj.getDate());
-                        date.setEnabled(false);
-                        cbox.setChecked(true);
-                        cbox.setEnabled(false);
-                        saveButton.setVisibility(View.GONE);
-                        reportingremark.setEnabled(false);
-                        reportingremark.setVisibility(View.GONE);
-                        intime.callOnClick();
-                    }
-                } else {
-                    Toasty.error(Outward_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
-
-                Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                    Response<?> response = ((HttpException) t).response();
-                    if (response != null) {
-                        Log.e("Retrofit", "Error Response Code: " + response.code());
-                        try {
-                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-        });
-    }
+//    private void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
+//
+//        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);
+//        call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
+//            @Override
+//            public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
+//                if (response.isSuccessful()&& response.body()!= null ) {
+//                    if (response.body().size() > 0){
+//                        List<Response_Outward_Security_Fetching> data = response.body();
+//                        Response_Outward_Security_Fetching obj = data.get(0);
+//                        OutwardId = obj.getOutwardId();
+//                        serialnumber.setText(obj.getSerialNumber());
+//                        serialnumber.setEnabled(false);
+//                        vehiclenumber.setText(obj.getVehicleNumber());
+//                        vehiclenumber.setEnabled(false);
+//                        date.setText(obj.getDate());
+//                        date.setEnabled(false);
+//                        cbox.setChecked(true);
+//                        cbox.setEnabled(false);
+//                        saveButton.setVisibility(View.GONE);
+//                        reportingremark.setEnabled(false);
+//                        reportingremark.setVisibility(View.GONE);
+//                        intime.callOnClick();
+//                    }
+//                } else {
+//                    Toasty.error(Outward_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
+//
+//                Log.e("Retrofit", "Failure: " + t.getMessage());
+//// Check if there's a response body in case of an HTTP error
+//                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+//                    Response<?> response = ((HttpException) t).response();
+//                    if (response != null) {
+//                        Log.e("Retrofit", "Error Response Code: " + response.code());
+//                        try {
+//                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     public void insert() {
         String etintime = intime.getText().toString().trim();
