@@ -5,12 +5,37 @@
       <config />
     </shared>
     <layouts>
-      <layout url="file://$USER_HOME$/.gradle/caches/transforms-3/4b08d23fe814bc8a6335024adc9ae709/transformed/appcompat-1.6.1/res/layout/support_simple_spinner_dropdown_item.xml">
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_billing_out_or_complete.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_bulkloadinglaboratory.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_bulkloadingproduction.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_data_entry_form_production.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_disp_or_complete.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_grid.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_grid_outward.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
         </config>
@@ -31,6 +56,11 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_in_tanker_weighment_grid.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inprocessrequestform.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
         </config>
@@ -65,6 +95,11 @@
           <theme>@style/Theme.GandharVMS</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_out.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_production.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
@@ -95,6 +130,21 @@
           <theme>@style/Theme.GandharVMS</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_weighment_viewdata.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_out.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_security.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
@@ -105,7 +155,137 @@
           <theme>@style/Theme.GandharVMS</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_store.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_weighment.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ir_in_sec_completedgrid.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ir_stor_completedgrid.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_it_in_sec_completedgrid.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_it_in_weigh_completedgrid.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_logi_or_complete.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_menu.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_or_completesec.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_completd_bilkload_laboratory.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_complete_out_security.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_complete_sec.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_completed_billing.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_completed_bulkload.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_completed_inproc_laboratory.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_completed_inproc_production.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_completed_outdataentry.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_completed_outweighment.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_completed_weighment.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_out_billing.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_ot_out_billing_completed.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_des_industria_loading_form.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_des_small_pack_loading_form.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_dispatch_indus_small_pack.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_out_tanker.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
         </config>
@@ -120,12 +300,147 @@
           <theme>@style/Theme.GandharVMS</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_out_truck.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_out_truck_billing.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_out_truck_security.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_out_truck_weighment.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_tanker.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_tanker_billing.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_tanker_laboratory.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_tanker_production.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_tanker_security.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_tanker_weighment.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_truck.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_truck_billing.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_truck_dispatch.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_truck_laboratory.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_truck_logistics.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_truck_production.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_truck_security.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outward_truck_weighment.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_outwardlabforms.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_sec_out_or_complete.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_submenu_inward_tanker.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_submenu_inward_truck.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_submenu_outward_tanker.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_submenu_outward_truck.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weigh_or_complete.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/activity_weigh_out_or_complete.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/card_item.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/dropdown_outward_securitytanker.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
         </config>
@@ -145,7 +460,27 @@
           <theme>@style/Theme.GandharVMS</theme>
         </config>
       </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/in_ta_se_nw.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/in_ta_se_qty.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/in_tanker_labremarkitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/in_tr_se_item.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/in_tr_se_nwe_list.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
         </config>
@@ -156,6 +491,291 @@
         </config>
       </layout>
       <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/in_truck_secuirty_item.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/indus_nextdept.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/inout.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ir_in_sec_completedgrid_card_item.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ir_in_sec_completedgrid_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ir_stor_completedgrid_card_item.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ir_stor_completedgrid_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/it_in_sec_completedgrid_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/it_in_weigh_completedgrid_card_item.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/it_in_weigh_completedgrid_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/list_itemuom.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_in_des_comple_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_in_des_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_in_logi_complete_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_in_logi_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_in_sec_complete_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_in_sec_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_in_weigh_complete_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_in_weigh_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_out_bill_complete_table.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_out_bill_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_out_sec_complete_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_out_sec_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_out_weigh_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_out_weigh_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/or_uom_outbill.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_bill_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_bill_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_bulklab_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_bulkload_prod_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_bulkloadlab_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_bulkloadprod_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_inproc_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_inproc_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_proclab_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_sec_complete_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_sec_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_weigh_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_in_weigh_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_inproclab_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_out_bill_complet_table.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_out_bill_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_out_dataentry_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_out_dataentry_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_out_sec_complete_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_out_sec_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_out_weigh_complete_tablecell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/ot_out_weigh_tableitem.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/outwaout_netwt.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/outwaout_securityqty.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/outward_billing_uom.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/outward_card_item.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/outward_table_cell.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/packing_status_dropdown.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/row_add_material.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/row_add_store.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/row_logistic_add_material.xml">
+        <config>
+          <theme>@style/Theme.GandharVMS</theme>
+        </config>
+      </layout>
+      <layout url="file://$PROJECT_DIR$/app/src/main/res/layout/security_registerlist.xml">
         <config>
           <theme>@style/Theme.GandharVMS</theme>
         </config>
@@ -181,9 +801,27 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="52192a9d-3fc5-426a-b1f7-2dcfd03fc17b" name="Changes" comment="">
+    <list default="true" id="52192a9d-3fc5-426a-b1f7-2dcfd03fc17b" name="Changes" comment="outward production and laboratory">
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/LoginWithAPI/Reqmodel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Util/AESUtils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/LoginWithAPI/RetroApiClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/LoginWithAPI/RetroApiClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Global_Var.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Global_Var.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Laboratory/it_Lab_CompletedgridAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Laboratory/it_Lab_CompletedgridAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/InTanWeighResponseModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/InTanWeighResponseModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/LoginWithAPI/Login.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/LoginWithAPI/Login.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Menu.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Menu.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_Tanker_Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_Tanker_Security.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_weighment.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_tanker_weighment.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_store.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_inward_truck_store.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/header_layout.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/header_layout.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/ir_stor_completedgrid_card_item.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/ir_stor_completedgrid_card_item.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/ir_stor_completedgrid_table_cell.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/ir_stor_completedgrid_table_cell.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -193,7 +831,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\TECHLINK-HP-SW\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -202,33 +840,12 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$/app">
-          <activation />
-        </task>
         <projects_view>
           <tree_state>
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
                 <item name="GandharVMS" type="f1a62948:ProjectNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GandharVMS" type="f1a62948:ProjectNode" />
-                <item name="app" type="2d1252cf:ModuleNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GandharVMS" type="f1a62948:ProjectNode" />
-                <item name="app" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-              </path>
-              <path>
-                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="GandharVMS" type="f1a62948:ProjectNode" />
-                <item name="app" type="2d1252cf:ModuleNode" />
-                <item name="Tasks" type="e4a08cd1:TasksNode" />
-                <item name="other" type="c8890929:TasksNode$1" />
               </path>
             </expand>
             <select />
@@ -241,9 +858,11 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="valueResourceFile" />
-        <option value="layoutResourceFile" />
         <option value="resourceFile" />
+        <option value="AnnotationType" />
+        <option value="Enum" />
         <option value="Interface" />
+        <option value="layoutResourceFile" />
         <option value="Class" />
       </list>
     </option>
@@ -255,14 +874,11 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <hideBySeverity>
-      <option value="11" />
-      <option value="15" />
-      <option value="200" />
-      <option value="300" />
-    </hideBySeverity>
     <option name="selectedTabId" value="CurrentFile" />
   </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="2afAD9cDISh2gKG5H8pvSodq4cb" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -271,29 +887,32 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "Android App.app.executor": "Debug",
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.cidr.known.project.marker": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "RunOnceActivity.readMode.enableVisualFormatting": "true",
+    "android-custom-viewC:/Users/HP-SW-2/.gradle/caches/modules-2/files-2.1/androidx.appcompat/appcompat/1.6.1/ace9a78b961165396147e8691faa18c1b0e48e20/appcompat-1.6.1-sources.jar!/androidx/appcompat/widget/AppCompatEditText.java_SELECTED": "AppCompatEditText",
+    "android-custom-viewC:/Users/HP-SW-2/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.1.0/f2bdf79e1977939817f54a9d3e2f6bc52b63bdd0/recyclerview-1.1.0-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED": "RecyclerView",
     "android-custom-viewC:/Users/HP-SW-2/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.3.1/863be7264bcda9a6591b855b6219be040badb588/recyclerview-1.3.1-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED": "RecyclerView",
     "android-custom-viewC:/Users/HP-SW-2/.gradle/caches/modules-2/files-2.1/com.google.android.material/material/1.9.0/8ad443d2a33a5bbdf4210e3964cf79cc5021f12a/material-1.9.0-sources.jar!/com/google/android/material/button/MaterialButton.java_SELECTED": "MaterialButton",
     "android-custom-viewC:/Users/HP-SW-2/AppData/Local/Android/Sdk/sources/android-33/android/view/View.java_SELECTED": "View",
     "android-custom-viewC:/Users/HP-SW-2/AppData/Local/Android/Sdk/sources/android-33/android/view/ViewGroup.java_SELECTED": "ViewGroup",
+    "android-custom-viewC:/Users/HP-SW-2/AppData/Local/Android/Sdk/sources/android-33/android/widget/AdapterView.java_SELECTED": "AdapterView",
     "android-custom-viewC:/Users/HP-SW-2/AppData/Local/Android/Sdk/sources/android-33/android/widget/HorizontalScrollView.java_SELECTED": "HorizontalScrollView",
     "android-custom-viewC:/Users/HP-SW-2/AppData/Local/Android/Sdk/sources/android-33/android/widget/TextView.java_SELECTED": "TextView",
-    "android-custom-viewC:/Users/TECHLINK-HP-SW/.gradle/caches/modules-2/files-2.1/androidx.recyclerview/recyclerview/1.3.1/863be7264bcda9a6591b855b6219be040badb588/recyclerview-1.3.1-sources.jar!/androidx/recyclerview/widget/RecyclerView.java_SELECTED": "RecyclerView",
-    "android-custom-viewC:/Users/TECHLINK-HP-SW/AppData/Local/Android/Sdk/sources/android-34/android/view/View.java_SELECTED": "View",
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "com.google.services.firebase.aqiPopupShown": "true",
     "dart.analysis.tool.window.visible": "false",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "D:/Yogesh/ADO Project Gandhar/GandharVMSAndroid/GandharVMS",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "M:/TechlinkServicesEmplAndroidApp/API/gandhar/app/src/main/res/drawable",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2",
     "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "reference.settings.ide.settings.new.ui",
+    "settings.editor.selected.configurable": "editor.preferences.import",
     "show.migrate.to.gradle.popup": "false"
   },
   "keyToStringList": {
@@ -304,17 +923,44 @@
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CreateClassDialog.RecentsKey">
+      <recent name="com.android.gandharvms.login" />
+    </key>
+    <key name="android.template.629659065">
+      <recent name="com.android.gandharvms.OutwardOut_Tanker_Security" />
+      <recent name="com.android.gandharvms.OutwardOutTankerBilling" />
+      <recent name="com.android.gandharvms.OutwardOutDataEntryForm_Production" />
+    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="M:\TechlinkServicesEmplAndroidApp\API\gandhar\app\src\main\res\drawable" />
     </key>
     <key name="android.template.-132880628">
       <recent name="com.android.gandharvms.Inward_Tanker_Security" />
     </key>
+    <key name="android.template.999549551">
+      <recent name="com.android.gandharvms" />
+    </key>
+    <key name="android.template.-1576869906">
+      <recent name="com.android.gandharvms.Outward_Truck_Security" />
+    </key>
     <key name="android.template.772173233">
       <recent name="com.android.gandharvms.Inward_Tanker_Production" />
       <recent name="com.android.gandharvms.Inward_Tanker_Laboratory" />
       <recent name="com.android.gandharvms.Inward_Tanker_Sampling" />
       <recent name="com.android.gandharvms.Inward_Tanker_Weighment" />
+    </key>
+    <key name="android.template.-1143518690">
+      <recent name="com.android.gandharvms.Outward_Tanker_Security" />
+    </key>
+    <key name="android.template.50865734">
+      <recent name="com.android.gandharvms.Outwardout_Tanker_Weighment" />
+      <recent name="com.android.gandharvms.outward_Tanker_Lab_forms" />
+      <recent name="com.android.gandharvms.Outward_Tanker_Production_forms" />
+      <recent name="com.android.gandharvms" />
+      <recent name="com.android.gandharvms.Outward_Tanker_Weighment" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.android.gandharvms.Util" />
     </key>
   </component>
   <component name="RunManager">
@@ -395,14 +1041,6 @@
       <option name="presentableId" value="Default" />
       <updated>1704699138325</updated>
     </task>
-    <task id="LOCAL-00001" summary="ok testing">
-      <option name="closed" value="true" />
-      <created>1704706373137</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1704706373137</updated>
-    </task>
     <task id="LOCAL-00002" summary="wip">
       <option name="closed" value="true" />
       <created>1704884316889</created>
@@ -459,7 +1097,343 @@
       <option name="project" value="LOCAL" />
       <updated>1705567229720</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="grid in inward">
+      <option name="closed" value="true" />
+      <created>1706620747993</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1706620747993</updated>
+    </task>
+    <task id="LOCAL-00010" summary="login">
+      <option name="closed" value="true" />
+      <created>1706788247637</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1706788247637</updated>
+    </task>
+    <task id="LOCAL-00011" summary="inwardtankersecurity insert method">
+      <option name="closed" value="true" />
+      <created>1707136621704</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1707136621704</updated>
+    </task>
+    <task id="LOCAL-00012" summary="inward_tanker_security API changes">
+      <option name="closed" value="true" />
+      <created>1707463350492</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1707463350492</updated>
+    </task>
+    <task id="LOCAL-00013" summary="inward production and truck security done without grid and listing">
+      <option name="closed" value="true" />
+      <created>1707716557681</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1707716557681</updated>
+    </task>
+    <task id="LOCAL-00014" summary="inward production and truck security done without grid and listing">
+      <option name="closed" value="true" />
+      <created>1707717529422</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1707717529422</updated>
+    </task>
+    <task id="LOCAL-00015" summary="inward production and truck security done without grid and listing">
+      <option name="closed" value="true" />
+      <created>1707829698423</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1707829698423</updated>
+    </task>
+    <task id="LOCAL-00016" summary="Grid Implementation on Security and weighment">
+      <option name="closed" value="true" />
+      <created>1707912516225</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1707912516225</updated>
+    </task>
+    <task id="LOCAL-00017" summary="notification method all inward dept">
+      <option name="closed" value="true" />
+      <created>1708002896398</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1708002896398</updated>
+    </task>
+    <task id="LOCAL-00018" summary="Inwardout and completed wip">
+      <option name="closed" value="true" />
+      <created>1708090249380</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1708090249380</updated>
+    </task>
+    <task id="LOCAL-00019" summary="Grid Implementation on Security and weighment">
+      <option name="closed" value="true" />
+      <created>1708319179822</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1708319179822</updated>
+    </task>
+    <task id="LOCAL-00020" summary="outward design">
+      <option name="closed" value="true" />
+      <created>1708421672420</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1708421672420</updated>
+    </task>
+    <task id="LOCAL-00021" summary="Grid Implementation on Security and weighment">
+      <option name="closed" value="true" />
+      <created>1708422119694</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1708422119694</updated>
+    </task>
+    <task id="LOCAL-00022" summary="outward design">
+      <option name="closed" value="true" />
+      <created>1708582568423</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1708582568423</updated>
+    </task>
+    <task id="LOCAL-00023" summary="Inwardouttanker security and weighment both done">
+      <option name="closed" value="true" />
+      <created>1708676469891</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1708676469891</updated>
+    </task>
+    <task id="LOCAL-00024" summary="Inward all in out process done">
+      <option name="closed" value="true" />
+      <created>1708766373566</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1708766373566</updated>
+    </task>
+    <task id="LOCAL-00025" summary="outward tanker complet except bulk loading">
+      <option name="closed" value="true" />
+      <created>1709100742232</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1709100742232</updated>
+    </task>
+    <task id="LOCAL-00026" summary="Outward tanker all dept complet except grid and complete listing">
+      <option name="closed" value="true" />
+      <created>1709189323465</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1709189323465</updated>
+    </task>
+    <task id="LOCAL-00027" summary="Outward truck tanker all dept complete without grid and listing">
+      <option name="closed" value="true" />
+      <created>1709356439735</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1709356439735</updated>
+    </task>
+    <task id="LOCAL-00028" summary="outward IT and OR grid and role based">
+      <option name="closed" value="true" />
+      <created>1709548740732</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1709548740732</updated>
+    </task>
+    <task id="LOCAL-00029" summary="Outward button design">
+      <option name="closed" value="true" />
+      <created>1709626792946</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1709626792946</updated>
+    </task>
+    <task id="LOCAL-00030" summary="shortage dip and weight design">
+      <option name="closed" value="true" />
+      <created>1709642357244</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1709642357244</updated>
+    </task>
+    <task id="LOCAL-00031" summary="dip and shortage wet">
+      <option name="closed" value="true" />
+      <created>1709645512362</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1709645512362</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Grid Implementation on Security and weighment">
+      <option name="closed" value="true" />
+      <created>1709645859315</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1709645859315</updated>
+    </task>
+    <task id="LOCAL-00033" summary="Grid Implementation on Security and weighment">
+      <option name="closed" value="true" />
+      <created>1709716581774</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1709716581774</updated>
+    </task>
+    <task id="LOCAL-00034" summary="inwardout weighment image">
+      <option name="closed" value="true" />
+      <created>1709730492932</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1709730492932</updated>
+    </task>
+    <task id="LOCAL-00035" summary="outwardout">
+      <option name="closed" value="true" />
+      <created>1710132171084</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1710132171084</updated>
+    </task>
+    <task id="LOCAL-00036" summary="outward production and laboratory">
+      <option name="closed" value="true" />
+      <created>1710334729431</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1710334729431</updated>
+    </task>
+    <task id="LOCAL-00037" summary="Outwardtruck without securityout">
+      <option name="closed" value="true" />
+      <created>1711112189857</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1711112189857</updated>
+    </task>
+    <task id="LOCAL-00038" summary="Outwardtruck Done without completed">
+      <option name="closed" value="true" />
+      <created>1711459361277</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1711459361277</updated>
+    </task>
+    <task id="LOCAL-00039" summary="without comp">
+      <option name="closed" value="true" />
+      <created>1711545561965</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1711545561965</updated>
+    </task>
+    <task id="LOCAL-00040" summary="outwardtruck_all dept completed done">
+      <option name="closed" value="true" />
+      <created>1711946591995</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1711946591995</updated>
+    </task>
+    <task id="LOCAL-00041" summary="Outward tanker completed done">
+      <option name="closed" value="true" />
+      <created>1712139090516</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1712139090516</updated>
+    </task>
+    <task id="LOCAL-00042" summary="tanker out complted dept done">
+      <option name="closed" value="true" />
+      <created>1712229747824</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1712229747824</updated>
+    </task>
+    <task id="LOCAL-00043" summary="excel work outward">
+      <option name="closed" value="true" />
+      <created>1712649569608</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1712649569608</updated>
+    </task>
+    <task id="LOCAL-00044" summary="design part">
+      <option name="closed" value="true" />
+      <created>1712743181466</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1712743181466</updated>
+    </task>
+    <task id="LOCAL-00045" summary="despatch design">
+      <option name="closed" value="true" />
+      <created>1713259520071</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1713259520071</updated>
+    </task>
+    <task id="LOCAL-00046" summary="design and add tanker lab field">
+      <option name="closed" value="true" />
+      <created>1713329377154</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1713329377154</updated>
+    </task>
+    <task id="LOCAL-00047" summary="corrections done 19th april">
+      <option name="closed" value="true" />
+      <created>1713609282029</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1713609282029</updated>
+    </task>
+    <task id="LOCAL-00048" summary="chamges outward tanker">
+      <option name="closed" value="true" />
+      <created>1713853902971</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1713853902971</updated>
+    </task>
+    <task id="LOCAL-00049" summary="Outward truck Indus and small all work done">
+      <option name="closed" value="true" />
+      <created>1714818013718</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1714818013718</updated>
+    </task>
+    <task id="LOCAL-00050" summary="logout btn actionbar in all dept">
+      <option name="closed" value="true" />
+      <created>1716297955997</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1716297955998</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -504,137 +1478,1258 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="ok testing" />
-    <MESSAGE value="wip" />
-    <MESSAGE value="Inward_Truck_Security reporting updateing and inserting done" />
-    <MESSAGE value="inward_truck add material" />
-    <MESSAGE value="inwardout truck vehicle number fetching" />
-    <MESSAGE value="inward truck date format changing" />
-    <MESSAGE value="inward truck driver number and oa number" />
-    <MESSAGE value="Action bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Action bar" />
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
+    <MESSAGE value="outward tanker complet except bulk loading" />
+    <MESSAGE value="Outward tanker all dept complet except grid and complete listing" />
+    <MESSAGE value="Outward truck tanker all dept complete without grid and listing" />
+    <MESSAGE value="outward IT and OR grid and role based" />
+    <MESSAGE value="Outward button design" />
+    <MESSAGE value="shortage dip and weight design" />
+    <MESSAGE value="dip and shortage wet" />
+    <MESSAGE value="inwardout weighment image" />
+    <MESSAGE value="outwardout" />
+    <MESSAGE value="Grid Implementation on Security and weighment" />
+    <MESSAGE value="Outwardtruck without securityout" />
+    <MESSAGE value="Outwardtruck Done without completed" />
+    <MESSAGE value="without comp" />
+    <MESSAGE value="outwardtruck_all dept completed done" />
+    <MESSAGE value="Outward tanker completed done" />
+    <MESSAGE value="tanker out complted dept done" />
+    <MESSAGE value="excel work outward" />
+    <MESSAGE value="design part" />
+    <MESSAGE value="despatch design" />
+    <MESSAGE value="design and add tanker lab field" />
+    <MESSAGE value="corrections done 19th april" />
+    <MESSAGE value="chamges outward tanker" />
+    <MESSAGE value="Outward truck Indus and small all work done" />
+    <MESSAGE value="outward production and laboratory" />
+    <MESSAGE value="logout btn actionbar in all dept" />
+    <option name="LAST_COMMIT_MESSAGE" value="logout btn actionbar in all dept" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/In_Truck_Security_Adapter.java</url>
-          <line>52</line>
-          <option name="timeStamp" value="25" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Laboratory/Inward_Tanker_Laboratory.java</url>
+          <line>416</line>
+          <option name="timeStamp" value="353" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Sampling/in_Tanker_sampling_grid.java</url>
-          <line>107</line>
-          <option name="timeStamp" value="38" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Laboratory/Inward_Tanker_Laboratory.java</url>
+          <line>429</line>
+          <option name="timeStamp" value="354" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Sampling/in_Tanker_sampling_grid.java</url>
-          <line>110</line>
-          <option name="timeStamp" value="39" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Laboratory/Inward_Tanker_Laboratory.java</url>
+          <line>423</line>
+          <option name="timeStamp" value="355" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Sampling/in_Tanker_sampling_grid.java</url>
-          <line>60</line>
-          <option name="timeStamp" value="40" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Production/Inward_Tanker_Production.java</url>
+          <line>340</line>
+          <option name="timeStamp" value="373" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Sampling/Inward_Tanker_Sampling.java</url>
-          <line>157</line>
-          <option name="timeStamp" value="53" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/InwardOut_Tanker_Weighment.java</url>
+          <line>359</line>
+          <option name="timeStamp" value="442" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Sampling/Inward_Tanker_Sampling.java</url>
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/InwardOut_Tanker_Weighment.java</url>
+          <line>351</line>
+          <option name="timeStamp" value="443" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Grid_Outward.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="735" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>243</line>
+          <option name="timeStamp" value="748" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>251</line>
+          <option name="timeStamp" value="749" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>264</line>
+          <option name="timeStamp" value="750" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>257</line>
+          <option name="timeStamp" value="751" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/bulkloadingproduction.java</url>
           <line>253</line>
-          <option name="timeStamp" value="68" />
+          <option name="timeStamp" value="762" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Sampling/Inward_Tanker_Sampling.java</url>
-          <line>256</line>
-          <option name="timeStamp" value="71" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/bulkloadingproduction.java</url>
+          <line>260</line>
+          <option name="timeStamp" value="763" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
-          <line>628</line>
-          <option name="timeStamp" value="81" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/bulkloadingproduction.java</url>
+          <line>264</line>
+          <option name="timeStamp" value="764" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
-          <line>608</line>
-          <option name="timeStamp" value="82" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/bulkloadingproduction.java</url>
+          <line>192</line>
+          <option name="timeStamp" value="765" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
-          <line>563</line>
-          <option name="timeStamp" value="83" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/bulkloadingproduction.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="766" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
-          <line>477</line>
-          <option name="timeStamp" value="84" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
-          <line>420</line>
-          <option name="timeStamp" value="85" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
-          <line>395</line>
-          <option name="timeStamp" value="86" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
-          <line>349</line>
-          <option name="timeStamp" value="87" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/bulkloadingproduction.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="767" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/grid.java</url>
-          <line>109</line>
-          <option name="timeStamp" value="92" />
+          <line>69</line>
+          <option name="timeStamp" value="774" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/grid.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="93" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_GridAdapter.java</url>
+          <line>36</line>
+          <option name="timeStamp" value="783" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/grid.java</url>
-          <line>114</line>
-          <option name="timeStamp" value="95" />
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_GridAdapter.java</url>
+          <line>37</line>
+          <option name="timeStamp" value="784" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/InwardOut_Truck_Security.java</url>
+          <line>131</line>
+          <option name="timeStamp" value="808" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/InwardOut_Truck_Security.java</url>
+          <line>130</line>
+          <option name="timeStamp" value="809" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/InwardOut_Truck_Security.java</url>
+          <line>136</line>
+          <option name="timeStamp" value="810" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/InwardOut_Truck_Security.java</url>
+          <line>134</line>
+          <option name="timeStamp" value="811" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/InwardOut_Truck_Security.java</url>
+          <line>149</line>
+          <option name="timeStamp" value="812" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>376</line>
+          <option name="timeStamp" value="814" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>374</line>
+          <option name="timeStamp" value="815" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>380</line>
+          <option name="timeStamp" value="816" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>385</line>
+          <option name="timeStamp" value="817" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>392</line>
+          <option name="timeStamp" value="818" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/Outward_Tanker_Billing.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="823" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/Outward_Tanker_Billing.java</url>
+          <line>296</line>
+          <option name="timeStamp" value="865" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/Outward_Tanker_Billing.java</url>
+          <line>301</line>
+          <option name="timeStamp" value="866" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>306</line>
+          <option name="timeStamp" value="867" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>310</line>
+          <option name="timeStamp" value="868" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>327</line>
+          <option name="timeStamp" value="869" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>334</line>
+          <option name="timeStamp" value="870" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>313</line>
+          <option name="timeStamp" value="871" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>314</line>
+          <option name="timeStamp" value="872" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>315</line>
+          <option name="timeStamp" value="873" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>312</line>
+          <option name="timeStamp" value="874" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>237</line>
+          <option name="timeStamp" value="902" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>241</line>
+          <option name="timeStamp" value="903" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>243</line>
+          <option name="timeStamp" value="904" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>259</line>
+          <option name="timeStamp" value="905" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>213</line>
+          <option name="timeStamp" value="918" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Security.java</url>
+          <line>250</line>
+          <option name="timeStamp" value="944" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>330</line>
+          <option name="timeStamp" value="958" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>333</line>
+          <option name="timeStamp" value="959" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>337</line>
+          <option name="timeStamp" value="960" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>344</line>
+          <option name="timeStamp" value="961" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>318</line>
+          <option name="timeStamp" value="964" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Billing/Outward_Truck_Billing.java</url>
+          <line>301</line>
+          <option name="timeStamp" value="974" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Billing/Outward_Truck_Billing.java</url>
+          <line>305</line>
+          <option name="timeStamp" value="975" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Billing/Outward_Truck_Billing.java</url>
+          <line>311</line>
+          <option name="timeStamp" value="976" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>371</line>
+          <option name="timeStamp" value="994" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>381</line>
+          <option name="timeStamp" value="995" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>291</line>
+          <option name="timeStamp" value="996" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>249</line>
+          <option name="timeStamp" value="999" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Weighment.java</url>
+          <line>339</line>
+          <option name="timeStamp" value="1000" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>578</line>
+          <option name="timeStamp" value="1008" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Logi_OR_Complete.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="1018" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Logi_OR_Complete.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="1019" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Logi_OR_Complete.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="1023" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Disp_OR_Complete.java</url>
+          <line>206</line>
+          <option name="timeStamp" value="1056" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Disp_OR_Complete.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="1057" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Disp_OR_Complete.java</url>
+          <line>212</line>
+          <option name="timeStamp" value="1060" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Weigh_Out_OR_Complete.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="1067" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Weigh_Out_OR_Complete.java</url>
+          <line>202</line>
+          <option name="timeStamp" value="1068" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Weigh_Out_OR_Complete.java</url>
+          <line>206</line>
+          <option name="timeStamp" value="1069" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Weigh_Out_OR_Complete.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="1070" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/Billing_Out_OR_Complete.java</url>
+          <line>206</line>
+          <option name="timeStamp" value="1074" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/Billing_Out_OR_Complete.java</url>
+          <line>208</line>
+          <option name="timeStamp" value="1075" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/Billing_Out_OR_Complete.java</url>
+          <line>202</line>
+          <option name="timeStamp" value="1076" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/SecOut_OR_Complete.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="1078" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/SecOut_OR_Complete.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="1079" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/OT_Complete_sec.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="1080" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/OT_Complete_sec.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="1081" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/OT_Complete_sec.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="1083" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/OT_Completed_Billing.java</url>
+          <line>216</line>
+          <option name="timeStamp" value="1087" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/OT_Completed_Billing.java</url>
+          <line>191</line>
+          <option name="timeStamp" value="1089" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/OT_Completed_Billing.java</url>
+          <line>192</line>
+          <option name="timeStamp" value="1090" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/OT_Completed_Billing.java</url>
+          <line>197</line>
+          <option name="timeStamp" value="1091" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/Adapter_OT_Completed_Billing.java</url>
+          <line>53</line>
+          <option name="timeStamp" value="1092" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/OT_Completed_Billing.java</url>
+          <line>215</line>
+          <option name="timeStamp" value="1093" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/OT_Completed_Billing.java</url>
+          <line>202</line>
+          <option name="timeStamp" value="1094" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/OT_Completed_Billing.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="1097" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/OR_Completesec.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="1105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/OR_Completesec.java</url>
+          <line>213</line>
+          <option name="timeStamp" value="1106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Weighment/OT_Completed_Weighment.java</url>
+          <line>206</line>
+          <option name="timeStamp" value="1111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Weighment/OT_Completed_Weighment.java</url>
+          <line>207</line>
+          <option name="timeStamp" value="1112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Weighment/OT_Completed_Weighment.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="1113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/OT_Completed_inproc_production.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="1121" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/OT_Completed_inproc_production.java</url>
+          <line>208</line>
+          <option name="timeStamp" value="1122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/OT_Completed_bulkload_production.java</url>
+          <line>203</line>
+          <option name="timeStamp" value="1125" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/OT_Completed_bulkload_production.java</url>
+          <line>207</line>
+          <option name="timeStamp" value="1126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/OT_Completed_inproc_laboratory.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="1129" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/OT_Completed_inproc_laboratory.java</url>
+          <line>208</line>
+          <option name="timeStamp" value="1130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/OT_Completd_bilkload_laboratory.java</url>
+          <line>204</line>
+          <option name="timeStamp" value="1138" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/OT_Completd_bilkload_laboratory.java</url>
+          <line>208</line>
+          <option name="timeStamp" value="1139" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outwardout_Tanker_Weighment/OT_Completed_Outweighment.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="1140" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outwardout_Tanker_Weighment/OT_Completed_Outweighment.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="1141" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outwardout_Tanker_Weighment/OT_Completed_Outweighment.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="1144" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOutDataEntryForm_Production/Adapter_OT_Completed_outdataentry.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="1145" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOutDataEntryForm_Production/Adapter_OT_Completed_outdataentry.java</url>
+          <line>68</line>
+          <option name="timeStamp" value="1146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOutDataEntryForm_Production/OT_Completed_outdataentry.java</url>
+          <line>206</line>
+          <option name="timeStamp" value="1147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOutDataEntryForm_Production/OT_Completed_outdataentry.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="1148" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOutTankerBilling/OT_out_Billing_Completed.java</url>
+          <line>203</line>
+          <option name="timeStamp" value="1149" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOutTankerBilling/OT_out_Billing_Completed.java</url>
+          <line>207</line>
+          <option name="timeStamp" value="1150" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Tanker_Security/OT_Complete_Out_security.java</url>
+          <line>207</line>
+          <option name="timeStamp" value="1153" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Tanker_Security/OT_Complete_Out_security.java</url>
+          <line>211</line>
+          <option name="timeStamp" value="1154" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Production/Outward_Truck_Production.java</url>
+          <line>179</line>
+          <option name="timeStamp" value="1159" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>534</line>
+          <option name="timeStamp" value="1163" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>540</line>
+          <option name="timeStamp" value="1164" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>544</line>
+          <option name="timeStamp" value="1165" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Security.java</url>
+          <line>328</line>
+          <option name="timeStamp" value="1168" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>224</line>
+          <option name="timeStamp" value="1178" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>226</line>
+          <option name="timeStamp" value="1179" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>299</line>
+          <option name="timeStamp" value="1180" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>303</line>
+          <option name="timeStamp" value="1181" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>309</line>
+          <option name="timeStamp" value="1182" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>297</line>
+          <option name="timeStamp" value="1183" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Security.java</url>
+          <line>332</line>
+          <option name="timeStamp" value="1185" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Security.java</url>
+          <line>336</line>
+          <option name="timeStamp" value="1186" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/OR_Completesec.java</url>
+          <line>113</line>
+          <option name="timeStamp" value="1189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/OR_Completesec.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="1190" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/OR_Completesec.java</url>
+          <line>266</line>
+          <option name="timeStamp" value="1198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/OR_Completesec.java</url>
+          <line>268</line>
+          <option name="timeStamp" value="1199" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Logi_OR_Complete.java</url>
+          <line>112</line>
+          <option name="timeStamp" value="1200" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Logi_OR_Complete.java</url>
+          <line>207</line>
+          <option name="timeStamp" value="1201" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Logi_OR_Complete.java</url>
+          <line>210</line>
+          <option name="timeStamp" value="1202" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Weigh_OR_Complete.java</url>
+          <line>319</line>
+          <option name="timeStamp" value="1205" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Weigh_OR_Complete.java</url>
+          <line>323</line>
+          <option name="timeStamp" value="1206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Adapter_Weigh_Complete.java</url>
+          <line>69</line>
+          <option name="timeStamp" value="1207" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Adapter_Weigh_Complete.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="1208" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Outward_Truck_Logistics.java</url>
+          <line>209</line>
+          <option name="timeStamp" value="1215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Outward_Truck_Logistics.java</url>
+          <line>213</line>
+          <option name="timeStamp" value="1216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Outward_Truck_Logistics.java</url>
+          <line>145</line>
+          <option name="timeStamp" value="1217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
+          <line>777</line>
+          <option name="timeStamp" value="1218" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
+          <line>782</line>
+          <option name="timeStamp" value="1220" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
+          <line>784</line>
+          <option name="timeStamp" value="1221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Outward_Truck_Logistics.java</url>
+          <line>334</line>
+          <option name="timeStamp" value="1225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Outward_Truck_Logistics.java</url>
+          <line>338</line>
+          <option name="timeStamp" value="1226" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Logistic/Outward_Truck_Logistics.java</url>
+          <line>341</line>
+          <option name="timeStamp" value="1227" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/Outward_Tanker_Billing.java</url>
+          <line>335</line>
+          <option name="timeStamp" value="1228" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/Outward_Tanker_Billing.java</url>
+          <line>338</line>
+          <option name="timeStamp" value="1229" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Billing/Outward_Tanker_Billing.java</url>
+          <line>343</line>
+          <option name="timeStamp" value="1230" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>212</line>
+          <option name="timeStamp" value="1232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>214</line>
+          <option name="timeStamp" value="1233" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>445</line>
+          <option name="timeStamp" value="1237" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>449</line>
+          <option name="timeStamp" value="1238" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>450</line>
+          <option name="timeStamp" value="1239" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/Outward_Tanker_Production.java</url>
+          <line>454</line>
+          <option name="timeStamp" value="1240" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>115</line>
+          <option name="timeStamp" value="1241" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="1242" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>190</line>
+          <option name="timeStamp" value="1243" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>193</line>
+          <option name="timeStamp" value="1244" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/bulkloadinglaboratory.java</url>
+          <line>195</line>
+          <option name="timeStamp" value="1245" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/Outward_Tanker_Laboratory.java</url>
+          <line>467</line>
+          <option name="timeStamp" value="1253" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/Outward_Tanker_Laboratory.java</url>
+          <line>474</line>
+          <option name="timeStamp" value="1254" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/Outward_Tanker_Laboratory.java</url>
+          <line>473</line>
+          <option name="timeStamp" value="1255" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Tanker_Security/OutwardOut_Tanker_Security.java</url>
+          <line>225</line>
+          <option name="timeStamp" value="1259" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Tanker_Security/OutwardOut_Tanker_Security.java</url>
+          <line>229</line>
+          <option name="timeStamp" value="1260" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Tanker_Security/OutwardOut_Tanker_Security.java</url>
+          <line>231</line>
+          <option name="timeStamp" value="1261" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/Adapter_OT_completed_inproc_Laboratory.java</url>
+          <line>61</line>
+          <option name="timeStamp" value="1262" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/bulkloadingproduction.java</url>
+          <line>413</line>
+          <option name="timeStamp" value="1263" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/OT_Completed_inproc_laboratory.java</url>
+          <line>352</line>
+          <option name="timeStamp" value="1264" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/OT_Completed_inproc_laboratory.java</url>
+          <line>356</line>
+          <option name="timeStamp" value="1265" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/OT_Completed_bulkload_production.java</url>
+          <line>319</line>
+          <option name="timeStamp" value="1266" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/OT_Completed_bulkload_production.java</url>
+          <line>323</line>
+          <option name="timeStamp" value="1267" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Production_forms/OT_Completed_bulkload_production.java</url>
           <line>325</line>
-          <properties method="onClick">
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="88" />
+          <option name="timeStamp" value="1268" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
-          <line>302</line>
-          <properties method="onClick">
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="89" />
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>327</line>
+          <option name="timeStamp" value="1273" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Security/Inward_Tanker_Security.java</url>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>331</line>
+          <option name="timeStamp" value="1274" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>143</line>
+          <option name="timeStamp" value="1289" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>144</line>
+          <option name="timeStamp" value="1290" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>235</line>
+          <option name="timeStamp" value="1299" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesIndustriaLoading_Form.java</url>
+          <line>243</line>
+          <option name="timeStamp" value="1306" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesIndustriaLoading_Form.java</url>
+          <line>247</line>
+          <option name="timeStamp" value="1307" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesIndustriaLoading_Form.java</url>
+          <line>250</line>
+          <option name="timeStamp" value="1308" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesIndustriaLoading_Form.java</url>
+          <line>251</line>
+          <option name="timeStamp" value="1309" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>153</line>
+          <option name="timeStamp" value="1320" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>275</line>
+          <option name="timeStamp" value="1324" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>279</line>
+          <option name="timeStamp" value="1325" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>276</line>
+          <option name="timeStamp" value="1326" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
           <line>280</line>
-          <properties method="onClick">
+          <option name="timeStamp" value="1327" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>108</line>
+          <option name="timeStamp" value="1329" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>109</line>
+          <option name="timeStamp" value="1330" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>213</line>
+          <option name="timeStamp" value="1331" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>218</line>
+          <option name="timeStamp" value="1332" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>227</line>
+          <option name="timeStamp" value="1333" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>338</line>
+          <option name="timeStamp" value="1336" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>342</line>
+          <option name="timeStamp" value="1337" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>335</line>
+          <option name="timeStamp" value="1338" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Production/Outward_Truck_Production.java</url>
+          <line>179</line>
+          <option name="timeStamp" value="1339" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Production/Outward_Truck_Production.java</url>
+          <line>175</line>
+          <option name="timeStamp" value="1340" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>214</line>
+          <option name="timeStamp" value="1341" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>142</line>
+          <option name="timeStamp" value="1364" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>141</line>
+          <option name="timeStamp" value="1365" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>220</line>
+          <option name="timeStamp" value="1368" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>436</line>
+          <option name="timeStamp" value="1383" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>268</line>
+          <option name="timeStamp" value="1386" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>273</line>
+          <option name="timeStamp" value="1387" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Dispatch/Outward_DesSmallPackLoading_Form.java</url>
+          <line>111</line>
+          <option name="timeStamp" value="1389" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>463</line>
+          <option name="timeStamp" value="1417" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>468</line>
+          <option name="timeStamp" value="1418" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>667</line>
+          <option name="timeStamp" value="1419" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>671</line>
+          <option name="timeStamp" value="1420" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>675</line>
+          <option name="timeStamp" value="1421" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>229</line>
+          <option name="timeStamp" value="1422" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>230</line>
+          <option name="timeStamp" value="1423" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>234</line>
+          <option name="timeStamp" value="1424" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>239</line>
+          <option name="timeStamp" value="1425" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>240</line>
+          <option name="timeStamp" value="1426" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_Security/Inward_Truck_Security.java</url>
+          <line>257</line>
+          <option name="timeStamp" value="1427" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Security.java</url>
+          <line>311</line>
+          <option name="timeStamp" value="1428" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Security.java</url>
+          <line>295</line>
+          <option name="timeStamp" value="1429" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Security.java</url>
+          <line>297</line>
+          <option name="timeStamp" value="1430" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>280</line>
+          <option name="timeStamp" value="1431" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/OutwardOut_Truck_Billing/OutwardOut_Truck_Billing.java</url>
+          <line>282</line>
+          <option name="timeStamp" value="1432" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_Tanker_Security.java</url>
+          <line>589</line>
+          <option name="timeStamp" value="1454" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_Tanker_Security.java</url>
+          <line>594</line>
+          <option name="timeStamp" value="1455" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_Tanker_Security.java</url>
+          <line>597</line>
+          <option name="timeStamp" value="1456" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_Tanker_Security.java</url>
+          <line>581</line>
+          <option name="timeStamp" value="1457" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Tanker_Security/Outward_Tanker_Security.java</url>
+          <line>610</line>
+          <option name="timeStamp" value="1465" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>482</line>
+          <option name="timeStamp" value="1466" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Security/Outward_Truck_Security.java</url>
+          <line>470</line>
+          <option name="timeStamp" value="1467" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store.java</url>
+          <line>689</line>
+          <option name="timeStamp" value="1469" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store.java</url>
+          <line>694</line>
+          <option name="timeStamp" value="1470" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store.java</url>
+          <line>695</line>
+          <option name="timeStamp" value="1471" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Truck_store/Inward_Truck_Store.java</url>
+          <line>698</line>
+          <option name="timeStamp" value="1472" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>579</line>
+          <option name="timeStamp" value="1476" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>574</line>
+          <option name="timeStamp" value="1477" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>437</line>
+          <option name="timeStamp" value="1480" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>441</line>
+          <option name="timeStamp" value="1481" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>440</line>
+          <option name="timeStamp" value="1482" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>436</line>
+          <option name="timeStamp" value="1483" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Inward_Tanker_Weighment/Inward_Tanker_Weighment.java</url>
+          <line>431</line>
+          <option name="timeStamp" value="1484" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>465</line>
+          <option name="timeStamp" value="1485" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>469</line>
+          <option name="timeStamp" value="1486" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>199</line>
+          <option name="timeStamp" value="1488" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/Outward_Truck_Weighment/Outward_Truck_weighment.java</url>
+          <line>201</line>
+          <option name="timeStamp" value="1489" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/android/gandharvms/outward_Tanker_Lab_forms/OT_Completed_inproc_laboratory.java</url>
+          <line>351</line>
+          <properties class="com.android.gandharvms.outward_Tanker_Lab_forms.OT_Completed_inproc_laboratory" method="fetchDataFromApiforweigh">
+            <option name="EMULATED" value="true" />
             <option name="WATCH_EXIT" value="false" />
           </properties>
-          <option name="timeStamp" value="90" />
+          <option name="timeStamp" value="1269" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <watches-manager>
       <configuration name="AndroidRunConfigurationType">
-        <watch expression="(cbox.isChecked()" />
-        <watch expression="etvehical.findFocus().requestFocus()" />
-        <watch expression="etvehical.findFocus()" />
-        <watch expression="lrcopyYes.isChecked() ? &quot;Yes&quot; : &quot;No&quot;;" />
-        <watch expression="response" />
+        <watch expression="data.getStoreExtramaterials()" language="JAVA" />
+        <watch expression="data.getStoreExtramaterials()" language="JAVA" />
       </configuration>
     </watches-manager>
   </component>

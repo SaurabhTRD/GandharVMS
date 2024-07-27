@@ -45,6 +45,15 @@ public class InTanWeighResponseModel {
     public String WeiQTYUOM ;
     int Qty;
     public String OutInTime;
+    public int SecNetWeightUOM;
+
+    public int getSecNetWeightUOM() {
+        return SecNetWeightUOM;
+    }
+
+    public void setSecNetWeightUOM(int secNetWeightUOM) {
+        SecNetWeightUOM = secNetWeightUOM;
+    }
 
     public int getWeighQty() {
         return WeighQty;
