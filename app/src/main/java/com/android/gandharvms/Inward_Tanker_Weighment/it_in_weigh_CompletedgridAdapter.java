@@ -86,7 +86,7 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
         holder.mob.setText(club.getDriver_MobileNo());
         holder.grossweight.setText(String.valueOf(club.getGrossWeight()));
         holder.remark.setText(club.getRemark());
-        holder.containerno.setText(String.valueOf(club.getContainerNo()));
+        holder.containerno.setText(club.getContainerNo());
         holder.sighby.setText(club.getSignBy());
         Picasso.get()
                 .load(RetroApiClient.BASE_URL + club.getInVehicleImage())

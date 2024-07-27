@@ -430,7 +430,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             ItInsweighrequestmodel weighReqModel = new ItInsweighrequestmodel(inwardid, intime, outTime, grossweight,
-                     netweight,tareweight, remark, signby, Integer.parseInt(container), imgPath1, imgPath2, serialnumber,
+                     netweight,tareweight, remark, signby, container, imgPath1, imgPath2, serialnumber,
                     vehicelnumber,EmployeId, suppliername, oan, driverno, 'M', inOut, vehicleType,
                      EmployeId, "", "", "",insertweighqty,insertnetweighqtyUom);
 

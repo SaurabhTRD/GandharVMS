@@ -217,6 +217,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         qtyUomMapping.put("Kgs", 5);
         qtyUomMapping.put("pcs", 6);
         qtyUomMapping.put("M3", 7);
+        qtyUomMapping.put("Meter",9);
+        qtyUomMapping.put("Feet",10);
 
         /*qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
         autoCompleteTextView1.setAdapter(qtyuomdrop);

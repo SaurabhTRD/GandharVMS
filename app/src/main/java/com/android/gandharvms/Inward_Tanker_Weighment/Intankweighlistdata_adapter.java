@@ -61,7 +61,7 @@ public class Intankweighlistdata_adapter extends RecyclerView.Adapter<Intankweig
         /*holder.tareweight.setText(data.getTare_Weight());
         holder.netweight.setText(data.getNet_Weight());*/
         holder.batchnumber.setText(data.getRemark());
-        holder.containerno.setText(String.valueOf(data.getContainerNo()));
+        holder.containerno.setText(data.getContainerNo());
         holder.sighby.setText(data.getSignBy());
         holder.shortagedip.setText(data.getShortageDip());
         holder.shortageweight.setText(data.getShortageWeight());

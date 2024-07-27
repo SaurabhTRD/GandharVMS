@@ -1,5 +1,7 @@
 package com.android.gandharvms.Inward_Tanker_Laboratory;
 
+import java.math.BigDecimal;
+
 public class it_lab_UpdateByInwardid_request_Model {
     int Id ;
     int InwardId ;
@@ -11,7 +13,7 @@ public class it_lab_UpdateByInwardid_request_Model {
     String Odor ;
     String Color ;
     int LQty ;
-    int Density ;
+    BigDecimal Density ;
     String RcsTest ;
     int _40KV ;
     int _100KV ;
@@ -38,7 +40,7 @@ public class it_lab_UpdateByInwardid_request_Model {
     String VehicleType ;
     String PartyName ;
 
-    public it_lab_UpdateByInwardid_request_Model(int inwardId, String apperance, String odor, String color, int LQty, int density, String rcsTest, int _40KV, int _100KV, int anLinePoint, int flashPoint, String additionalTest, String sampleTest, String remark, String signOf, String dateAndTime, String remarkDescription, int viscosityIndex, String updatedBy) {
+    public it_lab_UpdateByInwardid_request_Model(int inwardId, String apperance, String odor, String color, int LQty, BigDecimal density, String rcsTest, int _40KV, int _100KV, int anLinePoint, int flashPoint, String additionalTest, String sampleTest, String remark, String signOf, String dateAndTime, String remarkDescription, int viscosityIndex, String updatedBy) {
         InwardId = inwardId;
         Apperance = apperance;
         Odor = odor;

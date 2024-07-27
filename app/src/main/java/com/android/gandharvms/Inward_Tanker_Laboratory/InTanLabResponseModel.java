@@ -1,5 +1,9 @@
 package com.android.gandharvms.Inward_Tanker_Laboratory;
 
+import org.apache.poi.hpsf.Decimal;
+
+import java.math.BigDecimal;
+
 public class InTanLabResponseModel {
     int Id ;
     int InwardId ;
@@ -11,7 +15,7 @@ public class InTanLabResponseModel {
     String Odor ;
     String Color ;
     int LQty ;
-    int Density ;
+    BigDecimal Density ;
     String RcsTest ;
     int _40KV ;
     int _100KV ;
@@ -147,11 +151,11 @@ public class InTanLabResponseModel {
         LQty = qty;
     }
 
-    public int getDensity() {
+    public BigDecimal getDensity() {
         return Density;
     }
 
-    public void setDensity(int density) {
+    public void setDensity(BigDecimal density) {
         Density = density;
     }
 

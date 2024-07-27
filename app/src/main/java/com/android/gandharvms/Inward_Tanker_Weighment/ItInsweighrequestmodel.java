@@ -11,7 +11,7 @@ public class ItInsweighrequestmodel {
 //    String ShortageWeight ;
     String Remark ;
     String SignBy ;
-    int ContainerNo ;
+    String ContainerNo ;
     String InVehicleImage ;
     String InDriverImage ;
     boolean IsActive ;
@@ -34,7 +34,7 @@ public class ItInsweighrequestmodel {
     public int WeightQtyUOM;
 
     public ItInsweighrequestmodel(int inwardId, String inTime, String outTime, String grossWeight, String netWeight,
-                                  String tareWeight, String remark, String signBy, int containerNo, String inVehicleImage,
+                                  String tareWeight, String remark, String signBy, String containerNo, String inVehicleImage,
                                   String inDriverImage,String serialnumber,String vehiclenumber, String createdBy,
                                   String partyName, String OA_PO_number,
                                   String driver_MobileNo, char nextprocess, char i_O, String vehicleType,

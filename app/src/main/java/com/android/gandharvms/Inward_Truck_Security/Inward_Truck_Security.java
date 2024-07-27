@@ -227,8 +227,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
         qtyUomMapping.put("Kgs", 5);
         qtyUomMapping.put("pcs", 6);
         qtyUomMapping.put("M3",7);
-        qtyUomMapping.put("Meter",8);
-        qtyUomMapping.put("Feet",9);
+        qtyUomMapping.put("Meter",9);
+        qtyUomMapping.put("Feet",10);
 
         qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
         autoCompleteTextView1.setAdapter(qtyuomdrop);

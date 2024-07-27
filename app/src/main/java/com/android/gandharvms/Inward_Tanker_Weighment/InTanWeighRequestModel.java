@@ -19,7 +19,7 @@ public class InTanWeighRequestModel {
 //    String ShortageWeight ;
     String Remark ;
     String SignBy ;
-    int ContainerNo ;
+    String ContainerNo ;
     String InVehicleImage ;
     String InDriverImage ;
     boolean IsActive ;
@@ -42,7 +42,7 @@ public class InTanWeighRequestModel {
 
     public InTanWeighRequestModel(int inwardId, String inTime, String outTime, String grossWeight, String netWeight,
                                   String tareWeight, String remark,
-                                  String signBy, int containerNo, String inVehicleImage, String inDriverImage,
+                                  String signBy, String containerNo, String inVehicleImage, String inDriverImage,
                                   String serialNo, String vehicleNo, String date, String partyName,
                                   String material, String OA_PO_number, String driver_MobileNo, char nextprocess,
                                   char i_O, String vehicleType, String createdBy,
