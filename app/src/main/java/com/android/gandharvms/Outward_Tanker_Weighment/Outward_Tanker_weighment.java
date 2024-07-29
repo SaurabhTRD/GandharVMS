@@ -318,7 +318,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
             Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(
                     OutwardId, etintime, outTime, imgPath2, imgPath1, "", "", "",
                     "", ettareweight, "", "", "", "", 'W',
-                    uremark, EmployeId, EmployeId, 'I', 'I', vehicleType, etserialnumber, etvehiclenumber);
+                    uremark, EmployeId, EmployeId, 'P', 'I', vehicleType, etserialnumber, etvehiclenumber);
             Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override
