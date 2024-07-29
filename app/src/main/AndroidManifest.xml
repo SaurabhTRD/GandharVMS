@@ -30,6 +30,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".outward_Tanker_Lab_forms.New_Outward_tanker_Lab"
+            android:exported="false" />
+        <activity
+            android:name=".Outward_Tanker_Production_forms.New_Outward_Tanker_Production"
+            android:exported="false" />
+        <activity
             android:name=".OT_CompletedReport.Outward_Tanker_CompletedReport"
             android:exported="false" />
         <activity

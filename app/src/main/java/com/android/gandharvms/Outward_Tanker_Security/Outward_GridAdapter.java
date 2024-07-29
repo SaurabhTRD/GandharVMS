@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_Production;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Tanker_Security.OutwardOut_Tanker_Security;
+import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesSmallPackLoading_Form;
 import com.android.gandharvms.Outwardout_Tanker_Weighment.OutwardOut_Tanker_Weighment;
@@ -34,6 +35,7 @@ import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.R;
+import com.android.gandharvms.outward_Tanker_Lab_forms.New_Outward_tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.android.gandharvms.outward_Tanker_Lab_forms.bulkloadinglaboratory;
 
@@ -139,15 +141,20 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                         intent = new Intent(view.getContext(), Outward_Tanker_Billing.class);
                     }else if (currentst.equals("WEIGHMENT")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_weighment.class);
-                    }else if (currentst.equals("INPROCESSPRODUCTION")) {
-                        intent = new Intent(view.getContext(), Outward_Tanker_Production.class);
-                    }else if (currentst.equals("INPROCESSLABORATORY")) {
-                        intent = new Intent(view.getContext(), Outward_Tanker_Laboratory.class);
-                    }else if (currentst.equals("BULKPRODUCTION")) {
-                        intent = new Intent(view.getContext(), bulkloadingproduction.class);
-                    }else if (currentst.equals("BULKLABORATORY")) {
-                        intent = new Intent(view.getContext(), bulkloadinglaboratory.class);
+                    } else if (currentst.equals("PRODUCTION")) {
+                        intent = new Intent(view.getContext(), New_Outward_Tanker_Production.class);
+                    } else if (currentst.equals("LABORATORY")) {
+                        intent = new Intent(view.getContext(), New_Outward_tanker_Lab.class);
                     }
+//                    else if (currentst.equals("INPROCESSPRODUCTION")) {
+//                        intent = new Intent(view.getContext(), Outward_Tanker_Production.class);
+//                    }else if (currentst.equals("INPROCESSLABORATORY")) {
+//                        intent = new Intent(view.getContext(), Outward_Tanker_Laboratory.class);
+//                    }else if (currentst.equals("BULKPRODUCTION")) {
+//                        intent = new Intent(view.getContext(), bulkloadingproduction.class);
+//                    }else if (currentst.equals("BULKLABORATORY")) {
+//                        intent = new Intent(view.getContext(), bulkloadinglaboratory.class);
+//                    }
                 } else if (vehicletype.equals("OT") && io == 'O') {
                     if (currentst.equals("OUTWEIGHMENT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Tanker_Weighment.class);

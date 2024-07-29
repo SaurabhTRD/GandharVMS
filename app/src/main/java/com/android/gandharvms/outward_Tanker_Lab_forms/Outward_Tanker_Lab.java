@@ -1,6 +1,8 @@
 package com.android.gandharvms.outward_Tanker_Lab_forms;
 
 import com.android.gandharvms.OutwardOutDataEntryForm_Production.otoutDataEntryProduction_RequestModel;
+import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Tanker_Production_forms.New_Production_Model_Outward;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Outward;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Update;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_bulkloading_model;
@@ -61,4 +63,12 @@ public interface Outward_Tanker_Lab {
 
     @POST("api/OutwardProductionAndLaboratory/UpdateDataEntryProductionData")
     Call<Boolean> updateDataEntryFormProduction(@Body otoutDataEntryProduction_RequestModel request);
+
+    //new outward tanker production data insert
+    @POST("api/OutwardBulkProductionAndLaboratory/InsertOutwardOTProduction")
+    Call<Boolean> newOutwardTankerProduction(@Body New_Production_Model_Outward request);
+
+    //new outward tanker Laboratory data insert
+    @POST("api/OutwardProductionAndLaboratory/InsertOutwardOTLaboratory")
+    Call<Boolean> newOutwardTankerLaboratory(@Body New_Lab_Model_OutwardTanker request);
 }
