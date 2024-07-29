@@ -20,7 +20,7 @@ public class InTanWeighResponseModel {
      String ShortageWeight ;
      String Remark ;
      String SignBy ;
-     int ContainerNo ;
+    String ContainerNo ;
      String InVehicleImage ;
      String InDriverImage ;
      boolean IsActive ;
@@ -167,11 +167,11 @@ public class InTanWeighResponseModel {
         SignBy = signBy;
     }
 
-    public int getContainerNo() {
+    public String getContainerNo() {
         return ContainerNo;
     }
 
-    public void setContainerNo(int containerNo) {
+    public void setContainerNo(String containerNo) {
         ContainerNo = containerNo;
     }
 

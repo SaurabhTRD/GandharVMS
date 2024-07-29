@@ -508,14 +508,14 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                     serialnumber.setEnabled(true);
                 } else {
                     // Handle the error
-                    String serialNumber = "GA" + formattedDate + "001";
+                    String serialNumber = vehicleType + formattedDate + "001";
                     serialnumber.setText(serialNumber);
                 }
             }
 
             @Override
             public void onFailure(Call<String> call, Throwable t) {
-                String serialNumber = "GA" + formattedDate + "001";
+                String serialNumber = vehicleType + formattedDate + "001";
                 serialnumber.setText(serialNumber);
                 Log.e("Retrofit", "Failure: " + t.getMessage());
                 // Check if there's a response body in case of an HTTP error

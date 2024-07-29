@@ -1,5 +1,9 @@
 package com.android.gandharvms.Inward_Tanker_Laboratory;
 
+import org.apache.poi.hpsf.Decimal;
+
+import java.math.BigDecimal;
+
 public class InTanLabRequestModel {
     int Id ;
     int InwardId ;
@@ -11,7 +15,7 @@ public class InTanLabRequestModel {
     String Odor ;
     String Color ;
     int LQty ;
-    int Density ;
+    BigDecimal Density ;
     String RcsTest ;
     int _40KV ;
     int _100KV ;
@@ -38,7 +42,13 @@ public class InTanLabRequestModel {
     String VehicleType ;
     String PartyName ;
 
-    public InTanLabRequestModel(int inwardId, String inTime, String outTime, String date, String sampleReceiving, String apperance, String odor, String color, int qty, int density, String rcsTest, int _40KV, int _100KV, int anlinePoint, int flashPoint, String additionalTest, String sampleTest, String remark, String signOf, String dateAndTime, String remarkDescription, int viscosityIndex, String createdBy, String updatedBy, String vehicleNo, String material, String serialNo, char nextprocess, char i_O, String vehicleType, String partyName) {
+    public InTanLabRequestModel(int inwardId, String inTime, String outTime, String date, String sampleReceiving,
+                                String apperance, String odor, String color, int qty, BigDecimal density, String rcsTest,
+                                int _40KV, int _100KV, int anlinePoint, int flashPoint, String additionalTest,
+                                String sampleTest, String remark, String signOf, String dateAndTime, String remarkDescription,
+                                int viscosityIndex, String createdBy, String updatedBy, String vehicleNo,
+                                String material, String serialNo, char nextprocess, char i_O, String vehicleType,
+                                String partyName) {
 
         PartyName = partyName;
         Date = date;

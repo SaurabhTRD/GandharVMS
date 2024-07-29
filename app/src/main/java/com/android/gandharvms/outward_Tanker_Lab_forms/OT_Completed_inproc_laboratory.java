@@ -127,7 +127,7 @@ public class OT_Completed_inproc_laboratory extends AppCompatActivity {
             else{
                 strvehiclenumber="x";
             }
-            fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
+            fetchDataFromApiforweigh(fromdate,todate,vehicleType,'L',inOut);
         }
         else{
         }
@@ -176,7 +176,7 @@ public class OT_Completed_inproc_laboratory extends AppCompatActivity {
                                 else{
                                     strvehiclenumber="x";
                                 }
-                                fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
+                                fetchDataFromApiforweigh(fromdate,todate,vehicleType,'L',inOut);
                             }
                             else{
                             }

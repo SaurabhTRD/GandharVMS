@@ -38,7 +38,7 @@ public class CommonResponseModelForAllDepartment {
     public String ShortageDip;
     public String ShortageWeight;
     public String SignBy;
-    public int ContainerNo;
+    public String ContainerNo;
     public String InVehicleImage;
     public String InDriverImage;
 
@@ -621,11 +621,11 @@ public class CommonResponseModelForAllDepartment {
         SignBy = signBy;
     }
 
-    public int getContainerNo() {
+    public String getContainerNo() {
         return ContainerNo;
     }
 
-    public void setContainerNo(int containerNo) {
+    public void setContainerNo(String containerNo) {
         ContainerNo = containerNo;
     }
 

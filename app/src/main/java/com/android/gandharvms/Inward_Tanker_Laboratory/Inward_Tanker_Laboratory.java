@@ -3,6 +3,7 @@ package com.android.gandharvms.Inward_Tanker_Laboratory;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -11,6 +12,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -60,7 +62,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.auth.User;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import org.apache.poi.hpsf.Decimal;
+
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -112,7 +117,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     ArrayAdapter<String> qtyuomdrop;
     List<String> teamList = new ArrayList<>();
     private int qty;
-    private int density;
     private int kv;
     private int hundred;
     private int anline;
@@ -407,13 +411,6 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         view.getContext().startActivity(intent);
     }
 
-    /*public void weViewclick(View view) {
-        Global_Var.getInstance().DeptType='W';
-        Intent intent = new Intent(this, GridCompleted.class);
-        intent.putExtra("vehiclenumber",etvehiclenumber.getText());
-        view.getContext().startActivity(intent);
-    }*/
-
     public void Labviewclick(View view) {
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
@@ -459,33 +456,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        //int density = Integer.parseInt(etpdensity.getText().toString().trim());
-        if (!etpdensity.getText().toString().isEmpty()) {
-            try {
-                String input = etpdensity.getText().toString().trim();
-                int integerValue;
 
-                if (input.contains(".")) {
-                    // Input contains a decimal point
-                    String[] parts = input.split("\\.");
-                    int wholeNumberPart = Integer.parseInt(parts[0]);
-                    int decimalPart = Integer.parseInt(parts[1]);
-                    // Adjust decimal part to two digits
-                    if (parts[1].length() > 2) {
-                        // Take only first two digits after decimal point
-                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
-                    }
-                    // Combine integer and decimal parts
-                    integerValue = wholeNumberPart * 100 + decimalPart;
-                } else {
-                    // Input is a whole number
-                    integerValue = Integer.parseInt(input) * 100;
-                }
-                density = integerValue;
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
         String rcsTest = etPrcstest.getText().toString().trim();
         //int kv = Integer.parseInt(etpkv.getText().toString().trim());
         if (!etpkv.getText().toString().isEmpty()) {
@@ -595,6 +566,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        String densityinput = etpdensity.getText().toString().trim();
         String addTest = etpaddtest.getText().toString().trim();
         String samplereceivingdate = etpsamplere.getText().toString().trim();
         String remark = etpremark.getText().toString().trim();
@@ -607,14 +579,15 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String disc = remarkdisc.getText().toString().trim();
         if (intime.isEmpty() || serialNumber.isEmpty() || remark.isEmpty() || date.isEmpty() ||
                 hundred < 0 || vehicle.isEmpty() || apperance.isEmpty() || odor.isEmpty() ||
-                color.isEmpty() || qty < 0 || anline < 0 || flash < 0 || density < 0 ||
+                color.isEmpty() || qty < 0 || anline < 0 || flash < 0 || densityinput.isEmpty() ||
                 rcsTest.isEmpty() || kv < 0 || disc.isEmpty() || addTest.isEmpty() ||
                 samplereceivingdate.isEmpty() || viscosity.isEmpty() ||
                 signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
+            BigDecimal density = new BigDecimal(densityinput);
             InTanLabRequestModel labRequestModel = new InTanLabRequestModel(inwardid, intime, outTime, date,
-                    samplereceivingdate, apperance, odor, color, qty, density,
+                    samplereceivingdate, apperance, odor, color, qty,  density,
                     rcsTest, kv, hundred, anline,
                     flash, addTest, samplereceivingdate, remark, signQc, dateSignOfSign,
                     disc, Integer.parseInt(viscosity), EmployeId, EmployeId, vehicle, material,
@@ -734,14 +707,13 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etpcolour.setText(data.getColor());
                         etpcolour.setEnabled(true);
                         String lqty = String.format("%.2f", data.getLQty() / 100.0);
-                        String density = String.format("%.2f", data.getDensity() / 100.0);
                         String anlinepoint = String.format("%.2f", data.getAnLinePoint() / 100.0);
                         String flashpoint = String.format("%.2f", data.getFlashPoint() / 100.0);
                         String kv40 = String.format("%.2f", data.get_40KV() / 100.0);
                         String kv100 = String.format("%.2f", data.get_100KV() / 100.0);
                         etqty.setText(lqty);
                         etqty.setEnabled(true);
-                        etpdensity.setText(density);
+                        etpdensity.setText((CharSequence) data.getDensity());
                         etpdensity.setEnabled(true);
                         etPrcstest.setText(data.getRcsTest());
                         etPrcstest.setEnabled(true);
@@ -829,7 +801,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        if (!etpdensity.getText().toString().isEmpty()) {
+        /*if (!etpdensity.getText().toString().isEmpty()) {
             try {
                 String input = etpdensity.getText().toString().trim();
                 int integerValue;
@@ -854,7 +826,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
         String rcsTest = etPrcstest.getText().toString().trim();
         if (!etpkv.getText().toString().isEmpty()) {
             try {
@@ -960,6 +932,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
+        String densityinput = etpdensity.getText().toString().trim();
         String addTest = etpaddtest.getText().toString().trim();
         String samplereceivingdate = etpsamplere.getText().toString().trim();
         String remark = etpremark.getText().toString().trim();
@@ -967,6 +940,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String dateSignOfSign = etpdatesignofsign.getText().toString().trim();
         String viscosity = etviscosity.getText().toString().trim();
         String disc = remarkdisc.getText().toString().trim();
+        BigDecimal density = new BigDecimal(densityinput);
 
         it_lab_UpdateByInwardid_request_Model updlabbyinwardid = new it_lab_UpdateByInwardid_request_Model(inwardid,
                 apperance, odor, color, qty, density, rcsTest, kv, hundred, anline,
@@ -1008,6 +982,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
 
     }
 
+    @SuppressLint("MissingSuperCall")
     public void onBackPressed() {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
@@ -1023,4 +998,17 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         Intent intent = new Intent(this, it_Lab_Completedgrid.class);
         startActivity(intent);
     }
+
+    /*private boolean isValidDensity(String input) {
+        try {
+            BigDecimal density = new BigDecimal(input);
+            // Add any specific validation logic here (e.g., range check)
+            if (density.compareTo(BigDecimal.ZERO) >= 0) { // Example range check
+                return true;
+            }
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return false;
+    }*/
 }

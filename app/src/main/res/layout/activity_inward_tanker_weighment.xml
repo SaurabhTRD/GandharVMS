@@ -370,7 +370,7 @@
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:hint="Container No"
-                                android:inputType="number"
+                                android:inputType="textCapCharacters"
                                 android:textSize="17dp"
                                 android:textStyle="bold" />
                         </com.google.android.material.textfield.TextInputLayout><!---->
