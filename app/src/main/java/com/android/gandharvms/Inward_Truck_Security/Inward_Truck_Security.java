@@ -516,6 +516,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
         EditText editqty = materialview.findViewById(R.id.editqty);
         AppCompatSpinner spinner = materialview.findViewById(R.id.spinner_team);
         ImageView img = materialview.findViewById(R.id.editcancel);
+//        EditText etrecivingqty = materialview.findViewById(R.id.recivingqty);
+//        etrecivingqty.setVisibility(View.GONE);
 
         linearLayout.addView(materialview);
 
@@ -650,6 +652,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                     EditText qtyEditText = childView.findViewById(R.id.editqty);
                     AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
 
+
                     String dynamaterial = materialEditText.getText().toString().trim();
                     String dynaqty = qtyEditText.getText().toString().trim();
                     String dynaqtyuom = uomSpinner.getSelectedItem().toString();
@@ -666,7 +669,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                 }
             }
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'W', 'I', Date,
-                    "", vehicltype, intime, outTime, insertqtyUom, insertnetweightUom, insertnetweight, insertqty, materialList.toString().replace("[]", ""), remark, false, "No", selectregister, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection, EmployeId, "", InwardId);
+                    "", vehicltype, intime, outTime, insertqtyUom, insertnetweightUom, insertnetweight, insertqty, materialList.toString().replace("=", ":"), remark, false, "No", selectregister, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection, EmployeId, "", InwardId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
@@ -704,72 +707,72 @@ public class Inward_Truck_Security extends AppCompatActivity {
         }
     }
 
-    public void insertreporting() {
-        String serialnumber = etserialnumber.getText().toString().trim();
-        String vehicalnumber = etvehicalnumber.getText().toString().trim();
-        String invoicenumber = "";
-        String Date = etsdate.getText().toString().trim();
-        String partyname = "";
-        String material = "";
-        int qty = 0;
-        int netweight = 0;
-        String intime = "";
-        String outTime = "";//Insert out Time Directly to the Database
-        int qtyuom = 1;
-
-        String vehicltype = Global_Var.getInstance().MenuType;
-        char InOutType = Global_Var.getInstance().InOutType;
-        char DeptType = Global_Var.getInstance().DeptType;
-        int netweuom = 1;
-        String remark = "";
-        String pooa = "";
-        String mobnumber = "";
-        String edremark = "";
-        Boolean isreporting = false;
-        if (cbox.isChecked()) {
-            edremark = repremark.getText().toString().trim();
-            isreporting = true;
-        }
-        if (vehicalnumber.isEmpty() || Date.isEmpty()) {
-            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        } else {
-            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'S', InOutType, "",
-                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId, "", InwardId);
-
-            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
-            Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()) {
-                        Toasty.success(Inward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Truck_Security.this, Inward_Truck.class));
-                        finish();
-                    } else {
-                        Toasty.error(Inward_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    Toasty.error(Inward_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
+//    public void insertreporting() {
+//        String serialnumber = etserialnumber.getText().toString().trim();
+//        String vehicalnumber = etvehicalnumber.getText().toString().trim();
+//        String invoicenumber = "";
+//        String Date = etsdate.getText().toString().trim();
+//        String partyname = "";
+//        String material = "";
+//        int qty = 0;
+//        int netweight = 0;
+//        String intime = "";
+//        String outTime = "";//Insert out Time Directly to the Database
+//        int qtyuom = 1;
+//
+//        String vehicltype = Global_Var.getInstance().MenuType;
+//        char InOutType = Global_Var.getInstance().InOutType;
+//        char DeptType = Global_Var.getInstance().DeptType;
+//        int netweuom = 1;
+//        String remark = "";
+//        String pooa = "";
+//        String mobnumber = "";
+//        String edremark = "";
+//        Boolean isreporting = false;
+//        if (cbox.isChecked()) {
+//            edremark = repremark.getText().toString().trim();
+//            isreporting = true;
+//        }
+//        if (vehicalnumber.isEmpty() || Date.isEmpty()) {
+//            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+//        } else {
+//            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'S', InOutType, "",
+//                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId, "", InwardId);
+//
+//            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
+//            Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
+//            call.enqueue(new Callback<Boolean>() {
+//                @Override
+//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                    if (response.isSuccessful() && response.body() != null && response.body()) {
+//                        Toasty.success(Inward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(Inward_Truck_Security.this, Inward_Truck.class));
+//                        finish();
+//                    } else {
+//                        Toasty.error(Inward_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Boolean> call, Throwable t) {
+//                    Log.e("Retrofit", "Failure: " + t.getMessage());
+//// Check if there's a response body in case of an HTTP error
+//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+//                        Response<?> response = ((HttpException) t).response();
+//                        if (response != null) {
+//                            Log.e("Retrofit", "Error Response Code: " + response.code());
+//                            try {
+//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                    Toasty.error(Inward_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
+//    }
 
     public void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
         Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(VehicleNo, vehicltype, DeptType, InOutType);

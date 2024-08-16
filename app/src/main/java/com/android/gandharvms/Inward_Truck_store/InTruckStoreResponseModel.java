@@ -30,6 +30,15 @@ public class InTruckStoreResponseModel {
     String UnitOfMeasurement;
     String ReQTYUom;
     String storeRemark;
+    String Extramaterials;
+
+    public String getExtramaterials() {
+        return Extramaterials;
+    }
+
+    public void setExtramaterials(String extramaterials) {
+        Extramaterials = extramaterials;
+    }
 
     public String getReQTYUom() {
         return ReQTYUom;

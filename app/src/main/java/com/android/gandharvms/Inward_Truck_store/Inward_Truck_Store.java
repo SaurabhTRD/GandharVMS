@@ -21,6 +21,8 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -48,6 +50,7 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -61,11 +64,17 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.Timestamp;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -204,21 +213,19 @@ public class Inward_Truck_Store extends AppCompatActivity {
         etinvnum = findViewById(R.id.ettinvnumber);
         etsuppliername=findViewById(R.id.ettrssupplier);
 
-        etextra = findViewById(R.id.ettsmaterialextra);
+//        etextra = findViewById(R.id.ettsmaterialextra);
 
         updbtnstoreclick = findViewById(R.id.irstoreupdateclick);
 
-        linearLayout = findViewById(R.id.layout_list);
-        button1 = findViewById(R.id.button_add);
-        button1.setOnClickListener(this::onClick);
-
-
-        teamList.add("Ton");
-        teamList.add("Litre");
-        teamList.add("KL");
-        teamList.add("Kgs");
-        teamList.add("Pcs");
-        teamList.add("NA");
+//        linearLayout = findViewById(R.id.layout_list);
+//        button1 = findViewById(R.id.button_add);
+//        button1.setOnClickListener(this::onClick);
+//        teamList.add("Ton");
+//        teamList.add("Litre");
+//        teamList.add("KL");
+//        teamList.add("Kgs");
+//        teamList.add("Pcs");
+//        teamList.add("NA");
 
 
         btnlogout=findViewById(R.id.btn_logoutButton);
@@ -431,6 +438,11 @@ public class Inward_Truck_Store extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+    private String convertExtraMaterialsListToString1(List<ExtraMaterial> extraMaterials) {
+        Gson gson = new Gson();
+        Type type = new TypeToken<List<ExtraMaterial>>() {}.getType();
+        return gson.toJson(extraMaterials, type);
+    }
 
     public void trsinsert() {
         String intime = etintime.getText().toString().trim();
@@ -482,40 +494,95 @@ public class Inward_Truck_Store extends AppCompatActivity {
         String invNum = etinvnum.getText().toString().trim();
         String outTime = getCurrentTime();
 
+        // Validate and process received quantity
+        if (!etqty.getText().toString().isEmpty()) {
+            try {
+                String input = etqty.getText().toString().trim();
+                int integerValue;
+
+                if (input.contains(".")) {
+                    String[] parts = input.split("\\.");
+                    int wholeNumberPart = Integer.parseInt(parts[0]);
+                    int decimalPart = Integer.parseInt(parts[1]);
+                    if (parts[1].length() > 2) {
+                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+                    }
+                    integerValue = wholeNumberPart * 100 + decimalPart;
+                } else {
+                    integerValue = Integer.parseInt(input) * 100;
+                }
+                recqty = integerValue;
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Validate and process UOM quantity
+        if (!qtyUomNumericValue.toString().isEmpty()) {
+            try {
+                recqtyoum = Integer.parseInt(qtyUomNumericValue.toString().trim());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
+            }
+        }
+
+
         if (intime.isEmpty() || serialnumber.isEmpty() || vehicalnumber.isEmpty() || invoicenum.isEmpty()
                 || date.isEmpty() || supplier.isEmpty() || material.isEmpty() || recqty < 0 || recqtyoum < 0
                 || remark.isEmpty() || invqty.isEmpty() || invdate.isEmpty() || invNum.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-            // Material data handling for dynamically added fields
-            List<Map<String, String>> materialList = new ArrayList<>();
+//             Material data handling for dynamically added fields
+//            List<Map<String, String>> materialList = new ArrayList<>();
+//
+//            for (int i = 0; i < linearLayout.getChildCount(); i++) {
+//                View childView = linearLayout.getChildAt(i);
+//                if (childView != null) {
+//                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
+//                    EditText qtyEditText = childView.findViewById(R.id.editqty);
+//                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+//
+//                    String dynamaterial = materialEditText.getText().toString().trim();
+//                    String dynaqty = qtyEditText.getText().toString().trim();
+//                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+//
+//                    // Check if both material and quantity fields are not empty
+//                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+//                        Map<String, String> materialMap = new HashMap<>();
+//                        materialMap.put("Extramaterial", dynamaterial);
+//                        materialMap.put("Extraqty", dynaqty);
+//                        materialMap.put("Extraqtyuom", dynaqtyuom);
+//                        // Add material data to the list
+//                        materialList.add(materialMap);
+//                    }
+//                }
+//            }
 
+            // Get the material list
+            List<ExtraMaterial> extraMaterials = new ArrayList<>();
+            LinearLayout linearLayout = findViewById(R.id.layout_liststore);
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 View childView = linearLayout.getChildAt(i);
-                if (childView != null) {
+                if (childView!= null) {
                     EditText materialEditText = childView.findViewById(R.id.editmaterial);
                     EditText qtyEditText = childView.findViewById(R.id.editqty);
-                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+                    Spinner uomSpinner = childView.findViewById(R.id.spinner_team);
+                    EditText recivingqty = childView.findViewById(R.id.recivingqty);
 
-                    String dynamaterial = materialEditText.getText().toString().trim();
-                    String dynaqty = qtyEditText.getText().toString().trim();
-                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
-
-                    // Check if both material and quantity fields are not empty
-                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-                        Map<String, String> materialMap = new HashMap<>();
-                        materialMap.put("Extramaterial", dynamaterial);
-                        materialMap.put("Extraqty", dynaqty);
-                        materialMap.put("Extraqtyuom", dynaqtyuom);
-                        // Add material data to the list
-                        materialList.add(materialMap);
-                    }
+                    ExtraMaterial extraMaterial = new ExtraMaterial(
+                            materialEditText.getText().toString().trim(),
+                            qtyEditText.getText().toString().trim(),
+                            uomSpinner.getSelectedItem().toString(),
+                            recivingqty.getText().toString().trim()
+                    );
+                    extraMaterials.add(extraMaterial); // Add the extraMaterial to the list
                 }
             }
+            String extraMaterialsString = convertExtraMaterialsListToString1(extraMaterials);
             InTruckStoreRequestModel storeRequestModel = new InTruckStoreRequestModel(inwardid, intime, outTime,
                     EmployeId, EmployeId, vehicalnumber, serialnumber
                     , 'W', 'O', vehicleType, recqty, recqtyoum
-                    , remark, materialList.toString());
+                    , remark, extraMaterialsString.toString().replace("=", ":"));
             Call<Boolean> call = storedetails.insertStoreData(storeRequestModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -590,32 +657,53 @@ public class Inward_Truck_Store extends AppCompatActivity {
         String remark = etremark.getText().toString().trim();
 
         // Material data handling for dynamically added fields
-        List<Map<String, String>> materialList = new ArrayList<>();
+//        List<Map<String, String>> materialList = new ArrayList<>();
+//
+//        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+//            View childView = linearLayout.getChildAt(i);
+//            if (childView != null) {
+//                EditText materialEditText = childView.findViewById(R.id.editmaterial);
+//                EditText qtyEditText = childView.findViewById(R.id.editqty);
+//                AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+//
+//                String dynamaterial = materialEditText.getText().toString().trim();
+//                String dynaqty = qtyEditText.getText().toString().trim();
+//                String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+//
+//                // Check if both material and quantity fields are not empty
+//                if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+//                    Map<String, String> materialMap = new HashMap<>();
+//                    materialMap.put("Extramaterial", dynamaterial);
+//                    materialMap.put("Extraqty", dynaqty);
+//                    materialMap.put("Extraqtyuom", dynaqtyuom);
+//                    // Add material data to the list
+//                    materialList.add(materialMap);
+//                }
+//            }
+//        }
 
+        List<ExtraMaterial> extraMaterials = new ArrayList<>();
+        LinearLayout linearLayout = findViewById(R.id.layout_liststore);
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             View childView = linearLayout.getChildAt(i);
-            if (childView != null) {
+            if (childView!= null) {
                 EditText materialEditText = childView.findViewById(R.id.editmaterial);
                 EditText qtyEditText = childView.findViewById(R.id.editqty);
-                AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+                Spinner uomSpinner = childView.findViewById(R.id.spinner_team);
+                EditText recivingqty = childView.findViewById(R.id.recivingqty);
 
-                String dynamaterial = materialEditText.getText().toString().trim();
-                String dynaqty = qtyEditText.getText().toString().trim();
-                String dynaqtyuom = uomSpinner.getSelectedItem().toString();
-
-                // Check if both material and quantity fields are not empty
-                if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-                    Map<String, String> materialMap = new HashMap<>();
-                    materialMap.put("Extramaterial", dynamaterial);
-                    materialMap.put("Extraqty", dynaqty);
-                    materialMap.put("Extraqtyuom", dynaqtyuom);
-                    // Add material data to the list
-                    materialList.add(materialMap);
-                }
+                ExtraMaterial extraMaterial = new ExtraMaterial(
+                        materialEditText.getText().toString().trim(),
+                        qtyEditText.getText().toString().trim(),
+                        uomSpinner.getSelectedItem().toString(),
+                        recivingqty.getText().toString().trim()
+                );
+                extraMaterials.add(extraMaterial); // Add the extraMaterial to the list
             }
         }
+        String extraMaterialsString = convertExtraMaterialsListToString1(extraMaterials);
         ir_updstorebyinwardid_req_model updstrreqmodel = new ir_updstorebyinwardid_req_model(inwardid,
-                EmployeId, recqty, recqtyoum, remark, materialList.toString());
+                EmployeId, recqty, recqtyoum, remark, extraMaterialsString.toString().replace("=", ":"));
         Call<Boolean> call = storedetails.updstoredatabyinwardid(updstrreqmodel);
         call.enqueue(new Callback<Boolean>() {
             @Override
@@ -685,6 +773,98 @@ public class Inward_Truck_Store extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+    private List<ExtraMaterial> parseExtraMaterials(String jsonString) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            Log.e("JSON Parser", "JSON string is null or empty");
+            return new ArrayList<>(); // Return an empty list if JSON is invalid
+        }
+
+        try {
+            Log.d("JSON Parser", "JSON String: " + jsonString);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<ExtraMaterial>>() {}.getType();
+            return gson.fromJson(jsonString, listType);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
+            return new ArrayList<>(); // Return an empty list in case of parsing error
+        }
+    }
+    private void validateJson(String jsonString) {
+        try {
+            new JsonParser().parse(jsonString);
+            Log.d("JSON Validator", "Valid JSON: " + jsonString);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Validator", "Invalid JSON: " + jsonString, e);
+        }
+    }
+    public void createExtraMaterialViews(List<ExtraMaterial> extraMaterials) {
+        LinearLayout linearLayout = findViewById(R.id.layout_liststore); // Ensure this is the correct ID
+
+        // Clear previous views if any
+        linearLayout.removeAllViews();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            View materialView = getLayoutInflater().inflate(R.layout.row_logistic_add_material, null);
+
+            EditText materialEditText = materialView.findViewById(R.id.editmaterial);
+            EditText qtyEditText = materialView.findViewById(R.id.editqty);
+            Spinner uomSpinner = materialView.findViewById(R.id.spinner_team);
+            EditText recivingqty = materialView.findViewById(R.id.recivingqty);
+
+            materialEditText.setText(extraMaterial.getMaterial());
+            materialEditText.setEnabled(false);
+            qtyEditText.setText(extraMaterial.getQty());
+            qtyEditText.setEnabled(false);
+
+            List<String> teamList = Arrays.asList("Ton", "Litre", "KL","Kgs","Pcs"); // or fetch it dynamically
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
+            uomSpinner.setAdapter(arrayAdapter);
+            uomSpinner.setEnabled(false);
+
+            setSpinnerValue(uomSpinner, extraMaterial.getQtyuom());
+
+            // Add the material view to the linear layout
+            linearLayout.addView(materialView);
+        }
+        String extraMaterialsString = convertExtraMaterialsListToString(extraMaterials);
+    }
+
+    private String convertExtraMaterialsListToString(List<ExtraMaterial> extraMaterials) {
+        StringBuilder result = new StringBuilder();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            String materialString = convertExtraMaterialToString(extraMaterial);
+
+            // Add this string to the result
+            result.append(materialString).append("\n"); // Separate entries by a newline or any other delimiter
+        }
+
+        return result.toString();
+    }
+
+    private String convertExtraMaterialToString(ExtraMaterial extraMaterial) {
+        String material = extraMaterial.getMaterial();
+        String qty = extraMaterial.getQty();
+        String qtyuom = extraMaterial.getQtyuom();
+        String reciving_qty = extraMaterial.getRecivingqty();
+
+        // Concatenate fields into a single string
+        return (material + "," + qty + "," + qtyuom + "," + reciving_qty);
+    }
+
+    private void setSpinnerValue(Spinner spinner, String value) {
+        SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (adapter.getItem(i).toString().equals(value)) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        } else {
+            Log.e("Spinner Error", "Spinner adapter is null");
+        }
+    }
 
     public void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<InTruckStoreResponseModel> call = storedetails.getstorebyfetchVehData(vehicleNo, vehicleType, NextProcess, inOut);
@@ -717,8 +897,14 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etinvqty.setEnabled(false);
                         etinvqtyuom.setText(data.UnitOfMeasurement);
                         etinvqtyuom.setEnabled(false);
-                        etextra.setText(data.getStoreExtramaterials());
-                        etextra.setEnabled(false);
+//                        etextra.setText(data.getExtramaterials());
+//                        etextra.setEnabled(false);
+
+                        String extraMaterialsJson = data.getExtramaterials();
+                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+                        List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+                        createExtraMaterialViews(extraMaterials);
                     } else {
                         Toasty.error(Inward_Truck_Store.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
