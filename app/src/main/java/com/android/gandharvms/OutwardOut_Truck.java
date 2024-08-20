@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.OutwardOut_Truck_Billing.OutwardOut_Truck_Billing;
+import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production;
 import com.android.gandharvms.submenu.Submenu_Outward_Truck;
 
 import es.dmoral.toasty.Toasty;
@@ -66,6 +67,17 @@ public class OutwardOut_Truck extends AppCompatActivity {
             Toasty.warning(OutwardOut_Truck.this, "You are not in Weighment Department", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void productionouttruck(View view){
+        if(Global_Var.getInstance().Department.contains("DataEntry")){
+            Global_Var.getInstance().DeptType='P';
+            startActivity(new Intent(this, Outward_Truck_Production.class));
+        } else {
+            Toasty.warning(OutwardOut_Truck.this, "You are not in DataEntry Department", Toast.LENGTH_SHORT).show();
+        }
+
+    }
+
     public void Outwardouttruckbilling(View view){
         Global_Var.getInstance().DeptType='B';
         Intent intent = new Intent(this, OutwardOut_Truck_Billing.class);

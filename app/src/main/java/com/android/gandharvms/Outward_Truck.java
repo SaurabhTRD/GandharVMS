@@ -85,15 +85,15 @@ public class Outward_Truck extends AppCompatActivity {
             Toasty.warning(Outward_Truck.this, "You are not in Laboratory Department", Toast.LENGTH_SHORT).show();
         }
     }
-    public void productionouttruck(View view){
-        if(Global_Var.getInstance().Department.contains("DataEntry")){
-            Global_Var.getInstance().DeptType='P';
-            startActivity(new Intent(this, Outward_Truck_Production.class));
-        } else {
-            Toasty.warning(Outward_Truck.this, "You are not in DataEntry Department", Toast.LENGTH_SHORT).show();
-        }
-
-    }
+//    public void productionouttruck(View view){
+//        if(Global_Var.getInstance().Department.contains("DataEntry")){
+//            Global_Var.getInstance().DeptType='P';
+//            startActivity(new Intent(this, Outward_Truck_Production.class));
+//        } else {
+//            Toasty.warning(Outward_Truck.this, "You are not in DataEntry Department", Toast.LENGTH_SHORT).show();
+//        }
+//
+//    }
     public void Billingtanker(View view){
         if(Global_Var.getInstance().Department.contains("Billing")){
             Global_Var.getInstance().DeptType='B';

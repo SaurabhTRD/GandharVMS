@@ -50,11 +50,11 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
     AutoCompleteTextView dept;
     ArrayAdapter<String> nextdeptdrop;
     Map<String, String> nextdeptmapping = new HashMap<>();
-    String nextdeptvalue = "P";
-    String deptNumericValue = "P";
+    String nextdeptvalue = "W";
+    String deptNumericValue = "W";
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
-    private final char inOut = Global_Var.getInstance().InOutType;
+    public char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_Truck_interface outwardTruckInterface;
@@ -175,7 +175,7 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
 
 
         nextdeptmapping = new HashMap<>();
-        nextdeptmapping.put("NA", "P");
+        nextdeptmapping.put("NA", "W");
         nextdeptmapping.put("IndustrialPack", "A");
 
         dept = findViewById(R.id.nextdeptsmall);
@@ -307,11 +307,19 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
         String uremark  = remark.getText().toString().trim();
         String nextu = nextdeptvalue.toString().trim();
 
+        char Inoutins;
+        if (nextu.contains("W"))
+        {
+            Inoutins = 'O';
+        }else {
+            Inoutins = 'I';
+        }
+
         if (uintime.isEmpty()|| utotalqty.isEmpty()||uweight.isEmpty()||usign.isEmpty()||uremark.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             SmallPcak_Model smallPcakModel = new SmallPcak_Model(OutwardId,uintime,uouttime,u7,u7_5,u8_5,u10,u11,u12,u13,u15,u18,u20,u26,
-                    u50,u210,boxbucet,utotalqty,uweight,usign,uremark,EmployeId,ivehiclenu,iserial,EmployeId,'W',inOut,vehicleType,nextu);
+                    u50,u210,boxbucet,utotalqty,uweight,usign,uremark,EmployeId,ivehiclenu,iserial,EmployeId,'W',Inoutins,vehicleType,nextu);
             Call<Boolean> call = outwardTruckInterface.insertsmallpack(smallPcakModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -369,12 +377,20 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
         String uremark  = remark.getText().toString().trim();
         String nextu = nextdeptvalue.toString().trim();
 
+        char Inoutins;
+        if (nextu.contains("W"))
+        {
+            Inoutins = 'O';
+        }else {
+            Inoutins = 'I';
+        }
+
         if (uweight.isEmpty()||nextu.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             Update_SmallPack_Model updateSmallPackModel = new Update_SmallPack_Model(OutwardId,uintime,uouttime,u7,
                     u7_5,u8_5,u10,u11,u12,u13,u15,u18,u20,u26,u50,u210,boxbucet,utotalqty,uweight,usign,uremark,EmployeId,'W',
-                    inOut,vehicleType,nextu);
+                    Inoutins,vehicleType,nextu);
             Call<Boolean> call = outwardTruckInterface.updatesmallpack(updateSmallPackModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override

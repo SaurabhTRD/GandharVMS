@@ -54,15 +54,15 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     ArrayAdapter<String> typeofpackingdrop;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
-    private final char inOut = Global_Var.getInstance().InOutType;
+    public char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_Truck_interface outwardTruckInterface;
     AutoCompleteTextView dept;
     ArrayAdapter<String> nextdeptdrop;
     Map<String, String> nextdeptmapping = new HashMap<>();
-    String nextdeptvalue = "P";
-    String deptNumericValue = "P";
+    String nextdeptvalue = "W";
+    String deptNumericValue = "W";
     private int Id;
 
     ImageView btnlogout,btnhome;
@@ -197,7 +197,7 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         });
 
         nextdeptmapping = new HashMap<>();
-        nextdeptmapping.put("NA", "P");
+        nextdeptmapping.put("NA", "W");
         nextdeptmapping.put("SmallPack", "J");
 
         dept = findViewById(R.id.nextdept);
@@ -327,12 +327,20 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         String userial = etdesilserialnumber.getText().toString().trim();
         String nextu = nextdeptvalue.toString().trim();
 
+        char Inoutins;
+        if (nextu.contains("W"))
+        {
+            Inoutins = 'O';
+        }else {
+            Inoutins = 'I';
+        }
+
         if (uindussign.isEmpty()||uweight.isEmpty()|| nextu.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             Model_industrial modelIndustrial = new Model_industrial(OutwardId,uintime,uouttime,u10,u18,u20,
                     u26,u50,u210,uboxbucet,totalqty,uweight,uindussign,uindusremark,EmployeId,uvehiclenum,vehicleType,userial,
-                    EmployeId,'W',inOut,nextu);
+                    EmployeId,'W',Inoutins,nextu);
             Call<Boolean> call = outwardTruckInterface.insertindustrial(modelIndustrial);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -384,6 +392,14 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         String uindusremark = indusremark.getText().toString().trim();
         String nextu = nextdeptvalue.toString().trim();
 
+        char Inoutins;
+        if (nextu.contains("W"))
+        {
+            Inoutins = 'O';
+        }else {
+            Inoutins = 'I';
+        }
+
 
         //if selcet Na to go weighment and if sp select then go smallpack handle the code in this method
         // we mila tho w pe and sp mila tho j milna chaiye
@@ -394,7 +410,7 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         }else {
 
             Indus_update_Model indusUpdateModel = new Indus_update_Model(OutwardId,uintime,uouttime,u10,u18,u20,u26,u50,u210,uboxbucet,totalqty,
-                    uweight,uindussign,uindusremark,EmployeId,vehicleType,EmployeId,'W',inOut,nextu);
+                    uweight,uindussign,uindusremark,EmployeId,vehicleType,EmployeId,'W',Inoutins,nextu);
             Call<Boolean> call = outwardTruckInterface.updateindustrial(indusUpdateModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
