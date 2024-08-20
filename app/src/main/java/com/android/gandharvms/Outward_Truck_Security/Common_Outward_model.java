@@ -103,7 +103,7 @@ public class Common_Outward_model {
     public String OperatorSign ;
     public char ProductionProcess ;
     public char LaboratoryProcess ;
-    public int Density_29_5C;
+    public String Density_29_5C;
     public int obplOutwardId;
 
 
@@ -1255,11 +1255,11 @@ public class Common_Outward_model {
         LaboratoryProcess = laboratoryProcess;
     }
 
-    public int getDensity_29_5C() {
+    public String getDensity_29_5C() {
         return Density_29_5C;
     }
 
-    public void setDensity_29_5C(int density_29_5C) {
+    public void setDensity_29_5C(String density_29_5C) {
         Density_29_5C = density_29_5C;
     }
 

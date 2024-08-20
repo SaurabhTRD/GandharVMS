@@ -260,8 +260,8 @@ public class New_Outward_Tanker_Production extends AppCompatActivity {
         });
     }
 
-    public void new_uttankerproinprocpending(View view) {
-        Intent intent = new Intent(this, Grid_Outward.class);
+    public void inprocesprocompletedclick(View view) {
+        Intent intent = new Intent(this, OT_Completed_inproc_production.class);
         startActivity(intent);
     }
     private String getCurrentTime() {

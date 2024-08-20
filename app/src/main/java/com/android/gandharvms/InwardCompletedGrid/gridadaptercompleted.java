@@ -121,7 +121,7 @@ public class gridadaptercompleted extends RecyclerView.Adapter<gridadaptercomple
         holder.Odor.setText(club.getOdor());
         holder.Color.setText(club.getColor());
         holder.LQty.setText(String.valueOf(club.getLQty()));
-        holder.Density.setText(String.valueOf(club.getDensity()));
+        holder.Density.setText(club.getDensity());
         holder.RcsTest.setText(club.getRcsTest());
         holder.AnLinePoint.setText(String.valueOf(club.getAnLinePoint()));
         holder.FlashPoint.setText(String.valueOf(club.getFlashPoint()));

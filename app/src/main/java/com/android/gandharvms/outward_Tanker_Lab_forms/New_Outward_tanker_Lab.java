@@ -255,8 +255,8 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
             }
         });
     }
-    public void new_uttankerlabinprocpending(View view) {
-        Intent intent = new Intent(this, Grid_Outward.class);
+    public void inprocesprocompletedclick(View view) {
+        Intent intent = new Intent(this, OT_Completd_bilkload_laboratory.class);
         startActivity(intent);
     }
     private String getCurrentTime() {
