@@ -48,7 +48,7 @@ public class CommonResponseModelForAllDepartment {
     public String Odor;
     public String Color;
     public int LQty;
-    public int Density;
+    public String Density;
     public String RcsTest;
     public int _40KV;
     public int _100KV;
@@ -693,11 +693,11 @@ public class CommonResponseModelForAllDepartment {
         this.LQty = LQty;
     }
 
-    public int getDensity() {
+    public String getDensity() {
         return Density;
     }
 
-    public void setDensity(int density) {
+    public void setDensity(String density) {
         Density = density;
     }
 

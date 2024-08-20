@@ -62,41 +62,10 @@ public class Outward_Tanker_CompletedReport extends AppCompatActivity {
         setContentView(R.layout.activity_outward_tanker_completed_report);
         totrec=findViewById(R.id.totrecdepartmentwise);
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
-        /*fromDate=findViewById(R.id.orbtnfromDate);
-        toDate=findViewById(R.id.orbtntoDate);*/
-        //fromdate="2024-01-01";
-        //todate = getCurrentDateTime();
 
-        /*fromDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the onClick for fromDate button
-                showDatePickerDialog(fromDate,true);
-            }
-        });
-
-        toDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Handle the onClick for fromDate button
-                showDatePickerDialog(toDate,false);
-            }
-        });*/
         initViews();
         fetchDataFromApiforweigh(vehicleType);
-        /*if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
-        {
-            if(getIntent().hasExtra("vehiclenumber")==true)
-            {
-                strvehiclenumber= getIntent().getExtras().get("vehiclenumber").toString();
-            }
-            else{
-                strvehiclenumber="x";
-            }
 
-        }
-        else{
-        }*/
         rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
         {
             @Override
@@ -113,71 +82,7 @@ public class Outward_Tanker_CompletedReport extends AppCompatActivity {
             }
         });
     }
-    /*private void showDatePickerDialog(final TextView dateTextView,final boolean isFromDate) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Update the TextView with the selected date
-                        String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                        if ((isFromDate || !isFromDate)) {
-                            dateTextView.setText(selectedDate);
-                            if (isFromDate) {
-                                fromdate = selectedDate;
-                            } else {
-                                todate = selectedDate;
-                            }
-                            if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
-                            {
-                                if(getIntent().hasExtra("vehiclenumber")==true)
-                                {
-                                    strvehiclenumber= getIntent().getExtras().get("vehiclenumber").toString();
-                                }
-                                else{
-                                    strvehiclenumber="x";
-                                }
-                                fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
-                            }
-                            else{
-                            }
-                        } else {
-                            // Show an error message or take appropriate action
-                            Toasty.warning(OT_Complete_Out_security.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                year, month, day);
-        if (isFromDate && !todate.isEmpty()) {
-            try {
-                datePickerDialog.getDatePicker().setMaxDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(todate).getTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else if (!isFromDate && !fromdate.isEmpty()) {
-            try {
-                datePickerDialog.getDatePicker().setMinDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(fromdate).getTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        // Show the date picker dialog
-        datePickerDialog.show();
-    }*/
-    /*private String getCurrentDateTime()     {
-        // Get current date and time
-        Calendar calendar = Calendar.getInstance();
-        Date now = calendar.getTime();
-
-        // Format the date and time as a string
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        return dateFormat.format(now);
-    }*/
     private void initViews()
     {
         rvClub = findViewById(R.id.recyclerotcompletereport);

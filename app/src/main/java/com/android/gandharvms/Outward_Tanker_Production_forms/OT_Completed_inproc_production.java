@@ -325,7 +325,6 @@ public class OT_Completed_inproc_production extends AppCompatActivity {
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
-
         Call<List<Common_Outward_model>> call = outwardTanker.get_tanker_production_inprocesscompleted(FromDate,Todate,vehicleType,nextprocess,inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {
             @Override

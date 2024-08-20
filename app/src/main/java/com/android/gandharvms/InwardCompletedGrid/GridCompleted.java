@@ -120,51 +120,6 @@ public class GridCompleted extends AppCompatActivity {
 
     }
 
-    /*private void showDatePickerDialog(final TextView dateTextView, final boolean isFromDate) {
-        Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
-
-        DatePickerDialog datePickerDialog = new DatePickerDialog(
-                this,
-                new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                        // Update the TextView with the selected date
-                        String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
-                        if ((isFromDate || !isFromDate)) {
-                            dateTextView.setText(selectedDate);
-                            if (isFromDate) {
-                                fromdate = selectedDate;
-                            } else {
-                                todate = selectedDate;
-                            }
-                            getDatabydateselection();
-                        } else {
-                            // Show an error message or take appropriate action
-                            Toasty.warning(GridCompleted.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                },
-                year, month, day);
-        if (isFromDate && !todate.isEmpty()) {
-            try {
-                datePickerDialog.getDatePicker().setMaxDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(todate).getTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        } else if (!isFromDate && !fromdate.isEmpty()) {
-            try {
-                datePickerDialog.getDatePicker().setMinDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(fromdate).getTime());
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-        // Show the date picker dialog
-        datePickerDialog.show();
-    }*/
-
     private void getDatabydateselection() {
             fetchDataFromApiForCompReport(vehicleType);
     }

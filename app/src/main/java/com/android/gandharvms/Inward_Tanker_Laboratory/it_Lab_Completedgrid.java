@@ -272,8 +272,7 @@ public class it_Lab_Completedgrid extends AppCompatActivity {
                 dataRow.createCell(9).setCellValue(dataItem.getColor());
                 String lqty=String.format("%.2f", dataItem.getLQty() / 100.0);
                 dataRow.createCell(10).setCellValue(lqty);
-                String density=String.format("%.2f", dataItem.getDensity() / 100.0);
-                dataRow.createCell(11).setCellValue(density);
+                dataRow.createCell(11).setCellValue(dataItem.getDensity());
                 String anlinepoint=String.format("%.2f", dataItem.getAnLinePoint() / 100.0);
                 dataRow.createCell(12).setCellValue(dataItem.getRcsTest());
                 dataRow.createCell(13).setCellValue(anlinepoint);

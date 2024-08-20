@@ -132,7 +132,7 @@ public class Outward_Tanker_CompReportAdapter extends RecyclerView.Adapter<Outwa
         holder.releasedt.setText(club.getSample_Release_Date());
         holder.color.setText(club.getColor());
         holder.odor.setText(club.getOdour());
-        holder.density29.setText(String.valueOf(club.getDensity_29_5C()));
+        holder.density29.setText(club.getDensity_29_5C());
         holder.kv40.setText(String.valueOf(club.get_40KV()));
         holder.kv100.setText(String.valueOf(club.get_100KV()));
         holder.viscosity.setText(String.valueOf(club.getViscosity_Index()));
