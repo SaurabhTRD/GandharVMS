@@ -264,4 +264,8 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+    public void new_uttankerlabinprocpending(View view) {
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
+    }
 }

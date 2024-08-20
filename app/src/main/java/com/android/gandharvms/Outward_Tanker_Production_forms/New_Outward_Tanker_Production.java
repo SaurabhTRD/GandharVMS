@@ -269,4 +269,8 @@ public class New_Outward_Tanker_Production extends AppCompatActivity {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+    public void new_uttankerproinprocpending(View view) {
+        Intent intent = new Intent(this, Grid_Outward.class);
+        startActivity(intent);
+    }
 }
