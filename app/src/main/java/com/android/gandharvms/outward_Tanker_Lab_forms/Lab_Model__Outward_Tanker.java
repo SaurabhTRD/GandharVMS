@@ -83,6 +83,34 @@ public class Lab_Model__Outward_Tanker {
         return BatchNo;
     }
 
+    public String TankerProRemark;
+    public String TankerBillingRemark;
+    public String TankerLabRemark;
+
+    public String getTankerProRemark() {
+        return TankerProRemark;
+    }
+
+    public void setTankerProRemark(String tankerProRemark) {
+        TankerProRemark = tankerProRemark;
+    }
+
+    public String getTankerBillingRemark() {
+        return TankerBillingRemark;
+    }
+
+    public void setTankerBillingRemark(String tankerBillingRemark) {
+        TankerBillingRemark = tankerBillingRemark;
+    }
+
+    public String getTankerLabRemark() {
+        return TankerLabRemark;
+    }
+
+    public void setTankerLabRemark(String tankerLabRemark) {
+        TankerLabRemark = tankerLabRemark;
+    }
+
     public void setBatchNo(String batchNo) {
         BatchNo = batchNo;
     }

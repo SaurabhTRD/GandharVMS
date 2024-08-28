@@ -79,7 +79,7 @@ public class ir_in_sec_Completedgrid extends AppCompatActivity {
         fromDate=findViewById(R.id.btnfromDate);
         toDate=findViewById(R.id.btntoDate);
         totrec=findViewById(R.id.totrecdepartmentwise);
-        fromdate="2024-01-01";
+        fromdate=getCurrentDateTime();
         todate = getCurrentDateTime();
         imgBtnExportToExcel=findViewById(R.id.btn_irinsecExportToExcel);
         hssfWorkBook = new HSSFWorkbook();

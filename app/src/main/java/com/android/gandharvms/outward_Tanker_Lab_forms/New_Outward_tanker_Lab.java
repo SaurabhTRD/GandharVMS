@@ -53,7 +53,7 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
     private int oploutwardid = 0;
     private int OutwardId;
     EditText newlseralnum,newlvehiclenum,newloanum,newlprodcut,newlcustomername,newldestination,newlquantity,newltransporter,
-    newlintime,newlviscosity,newldentinity,newlbatchnum,newlqcofficer,newlremarks;
+    newlintime,newlviscosity,newldentinity,newlbatchnum,newlqcofficer,newlremarks,billremark,proremark;
     Button btnsubmit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +82,8 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
         newlbatchnum = findViewById(R.id.elnewlbatchnumber);
         newlqcofficer = findViewById(R.id.elnewlqcofficer);
         newlremarks = findViewById(R.id.elnewblremark);
+        billremark = findViewById(R.id.etbillingremark);
+        proremark = findViewById(R.id.etproductionremark);
 
 
         btnsubmit = findViewById(R.id.etouttankerlabsubmit);
@@ -138,6 +140,11 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
                         newlquantity.setEnabled(false);
                         newltransporter.setText(data.getCustomerName());
                         newltransporter.setEnabled(false);
+                        billremark.setText(data.getTankerBillingRemark());
+                        billremark.setEnabled(false);
+                        proremark.setText(data.getTankerProRemark());
+                        proremark.setEnabled(false);
+
                     }else {
                         Toasty.error(New_Outward_tanker_Lab.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

@@ -193,26 +193,45 @@
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"-->
+<!--                        android:layout_marginLeft="200dp"-->
+<!--                        android:layout_marginTop="15dp"-->
+<!--                        android:layout_marginEnd="5dp"-->
+<!--                        android:layout_marginRight="30dp"-->
+<!--                        android:layout_weight="1"-->
+<!--                        android:id="@+id/netweight"-->
+<!--                        >-->
+<!--                        <AutoCompleteTextView-->
+<!--                            android:id="@+id/fetchlabqtyuomtanker"-->
+<!--                            android:layout_width="200dp"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="UOM"-->
+<!--                            android:inputType="none"-->
+<!--                            android:textSize="17dp"-->
+<!--                            android:textStyle="bold"-->
+<!--                            />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
                     <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                         android:layout_marginLeft="200dp"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="10dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="30dp"
-                        android:layout_weight="1"
-                        android:id="@+id/netweight"
-                        >
-                        <AutoCompleteTextView
+                        android:layout_weight="1">
+
+                        <EditText
                             android:id="@+id/fetchlabqtyuomtanker"
-                            android:layout_width="200dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="UOM"
-                            android:inputType="none"
+                            android:inputType="textCapCharacters"
                             android:textSize="17dp"
-                            android:textStyle="bold"
-                            />
+                            android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -299,24 +318,45 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
 
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="200dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginEnd="5dp"-->
+<!--                        android:layout_marginRight="30dp"-->
+<!--                        android:layout_weight="1">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/etpodor"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="Odor"-->
+<!--                            android:inputType="textCapCharacters"-->
+<!--                            android:textSize="17dp"-->
+<!--                            android:textStyle="bold" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
+
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                         android:layout_marginLeft="200dp"
-                        android:layout_marginTop="10dp"
+                        android:layout_marginTop="15dp"
                         android:layout_marginEnd="5dp"
                         android:layout_marginRight="30dp"
-                        android:layout_weight="1">
-
-                        <EditText
+                        android:layout_weight="1"
+                        >
+                        <AutoCompleteTextView
                             android:id="@+id/etpodor"
-                            android:layout_width="match_parent"
+                            android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:hint="Odor"
-                            android:inputType="textCapCharacters"
+                            android:inputType="none"
                             android:textSize="17dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
 
                 </LinearLayout>
@@ -363,14 +403,35 @@
                         android:layout_weight="1">
 
                         <EditText
-                            android:id="@+id/qtycolor"
+                            android:id="@+id/etpdatesignofsign"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:hint="Qty"
-                            android:inputType="numberDecimal"
+                            android:focusable="false"
+                            android:hint="Date and Time Of signature"
+                            android:inputType="text"
                             android:textSize="17dp"
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>
+
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="200dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginEnd="5dp"-->
+<!--                        android:layout_marginRight="30dp"-->
+<!--                        android:layout_weight="1">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/qtycolor"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="Qty"-->
+<!--                            android:inputType="numberDecimal"-->
+<!--                            android:textSize="17dp"-->
+<!--                            android:textStyle="bold" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -406,23 +467,43 @@
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>
 
+<!--                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                        android:layout_width="0dp"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginLeft="5dp"-->
+<!--                        android:layout_marginTop="10dp"-->
+<!--                        android:layout_marginEnd="2.5dp"-->
+<!--                        android:layout_weight="1">-->
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/etPrcstest"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:hint="RCS test"-->
+<!--                            android:inputType="textCapCharacters"-->
+<!--                            android:textSize="17dp"-->
+<!--                            android:textStyle="bold" />-->
+<!--                    </com.google.android.material.textfield.TextInputLayout>-->
                     <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="5dp"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginEnd="2.5dp"
-                        android:layout_weight="1">
-
-                        <EditText
+                        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                        android:layout_marginLeft="200dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_marginRight="30dp"
+                        android:layout_weight="1"
+                        >
+                        <AutoCompleteTextView
                             android:id="@+id/etPrcstest"
-                            android:layout_width="match_parent"
+                            android:layout_width="200dp"
                             android:layout_height="wrap_content"
                             android:hint="RCS test"
-                            android:inputType="textCapCharacters"
+                            android:inputType="none"
                             android:textSize="17dp"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"
+                            />
                     </com.google.android.material.textfield.TextInputLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -683,15 +764,15 @@
                         android:layout_weight="1">
 
                         <EditText
-                            android:id="@+id/etpdatesignofsign"
+                            android:id="@+id/remarkdisc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:hint="Date and Time Of signature"
-                            android:inputType="text"
+                            android:hint="Remark Description"
+                            android:inputType="textCapCharacters"
                             android:textSize="17dp"
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>
+
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
@@ -702,25 +783,14 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="2">
 
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/party_name"
-                    android:layout_marginLeft="5dp"
-                    android:layout_marginTop="2dp"
-                    android:layout_marginRight="20dp">
+                    android:orientation="horizontal">
 
-                    <EditText
-                        android:id="@+id/remarkdisc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Remark Description"
-                        android:inputType="textCapCharacters"
-                        android:textSize="17dp"
-                        android:textStyle="bold" />
-                </com.google.android.material.textfield.TextInputLayout>
 
+
+                </LinearLayout>
             </androidx.cardview.widget.CardView>
 
 

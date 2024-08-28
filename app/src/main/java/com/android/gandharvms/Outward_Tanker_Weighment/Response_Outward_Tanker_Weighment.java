@@ -40,8 +40,8 @@ public class Response_Outward_Tanker_Weighment {
     public char NextProcess;
     public char I_O;
     public String VehicleType;
-    public int Density_29_5C;
-    String BatchNo;
+    public String Density_29_5C;
+    String Batch_No;
 
     public String spltotqty;
     public String splweight;
@@ -50,11 +50,11 @@ public class Response_Outward_Tanker_Weighment {
     public String PurposeProcess;
 
 
-    public int getDensity_29_5C() {
+    public String getDensity_29_5C() {
         return Density_29_5C;
     }
 
-    public void setDensity_29_5C(int density_29_5C) {
+    public void setDensity_29_5C(String density_29_5C) {
         Density_29_5C = density_29_5C;
     }
 
@@ -371,11 +371,11 @@ public class Response_Outward_Tanker_Weighment {
     }
 
     public String getBatchNo() {
-        return BatchNo;
+        return Batch_No;
     }
 
     public void setBatchNo(String batchNo) {
-        BatchNo = batchNo;
+        Batch_No = batchNo;
     }
 
     public String getSpltotqty() {

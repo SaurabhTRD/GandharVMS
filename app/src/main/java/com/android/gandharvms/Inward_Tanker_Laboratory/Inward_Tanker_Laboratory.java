@@ -89,6 +89,10 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     String[] remark = {"Accepted", "Rejected"};
     AutoCompleteTextView regAutoCompleteTextView;
     ArrayAdapter<String> remarkarray;
+    String[] rcsTest = {"PASS","FAIL","NA"};
+    ArrayAdapter<String> rcstest;
+    String[] odor = {"ODORLESS","ODOR PASSOUT","NA"};
+    ArrayAdapter<String> odorarray;
     EditText etintime, etserialnumber, etpsample, etvehiclenumber, etpapperance, etpodor, etpcolour, etpdensity,
             etqty, etPrcstest, etpkv, ethundred, etanline, etflash, etpaddtest, etpsamplere, etpremark, etpsignQc,
             etpdatesignofsign, etMaterial, etsupplier, remarkdisc, etviscosity,etfetchSecQty,etfetchlabqtyoum;
@@ -112,9 +116,11 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     String[] qtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
     Integer qtyUomNumericValue = 1;
-    AutoCompleteTextView  autoCompleteTextView1;
+    AutoCompleteTextView  autoCompleteTextView1,autoCompleteTextView2,autocompletTextView3;
     Map<String, Integer> qtyUomMapping = new HashMap<>();
     ArrayAdapter<String> qtyuomdrop;
+    Map<String , Integer> RcsMapping = new HashMap<>(); // Create a mapping for RcsTest
+    ArrayAdapter<String> RcsDrop;
     List<String> teamList = new ArrayList<>();
     private int qty;
     private int kv;
@@ -138,33 +144,57 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         labdetails = RetroApiClient.getLabDetails();//Call retrofit api
         userDetails = RetroApiClient.getLoginApi();
 
-        autoCompleteTextView1 = findViewById(R.id.fetchlabqtyuomtanker);
-        qtyUomMapping = new HashMap<>();
-        qtyUomMapping.put("NA", 1);
-        qtyUomMapping.put("Ton", 2);
-        qtyUomMapping.put("Litre", 3);
-        qtyUomMapping.put("KL", 4);
-        qtyUomMapping.put("Kgs", 5);
-        qtyUomMapping.put("pcs", 6);
-        qtyUomMapping.put("M3", 7);
+//        autoCompleteTextView1 = findViewById(R.id.fetchlabqtyuomtanker);
+//        qtyUomMapping = new HashMap<>();
+//        qtyUomMapping.put("NA", 1);
+//        qtyUomMapping.put("Ton", 2);
+//        qtyUomMapping.put("Litre", 3);
+//        qtyUomMapping.put("KL", 4);
+//        qtyUomMapping.put("Kgs", 5);
+//        qtyUomMapping.put("pcs", 6);
+//        qtyUomMapping.put("M3", 7);
+//
+//        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
+//        autoCompleteTextView1.setAdapter(qtyuomdrop);
+//        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
+//                // Retrieve the corresponding numerical value from the mapping
+//                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
+//                if (qtyUomNumericValue != null) {
+//                    // Now, you can use qtyUomNumericValue when inserting into the database
+//                    Toasty.success(Inward_Tanker_Laboratory.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    // Handle the case where the mapping doesn't contain the display value
+//                    Toasty.error(Inward_Tanker_Laboratory.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
-        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
-        autoCompleteTextView1.setAdapter(qtyuomdrop);
-        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        autoCompleteTextView2 = findViewById(R.id.etPrcstest);
+        rcstest = new ArrayAdapter<String>(this,R.layout.in_rcs_test,rcsTest);
+        autoCompleteTextView2.setAdapter(rcstest);
+        autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
-                // Retrieve the corresponding numerical value from the mapping
-                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
-                if (qtyUomNumericValue != null) {
-                    // Now, you can use qtyUomNumericValue when inserting into the database
-                    Toasty.success(Inward_Tanker_Laboratory.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Handle the case where the mapping doesn't contain the display value
-                    Toasty.error(Inward_Tanker_Laboratory.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-                }
+                String tests = parent.getItemAtPosition(position).toString();
+                Toasty.success(getApplicationContext(), "RcsTest : " + tests + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
+
+        autocompletTextView3 = findViewById(R.id.etpodor);
+        odorarray = new ArrayAdapter<String>(this,R.layout.odor_drop,odor);
+        autocompletTextView3.setAdapter(odorarray);
+        autocompletTextView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String items = parent.getItemAtPosition(position).toString();
+                Toasty.success(getApplicationContext(), "Odor : " + items + " Selected", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
 
         regAutoCompleteTextView = findViewById(R.id.etpremark);
         remarkarray = new ArrayAdapter<String>(this, R.layout.in_tanker_labremarkitem, remark);
@@ -184,7 +214,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etpapperance = (EditText) findViewById(R.id.etpapperance);
         etpodor = (EditText) findViewById(R.id.etpodor);
         etpcolour = (EditText) findViewById(R.id.etpcolour);
-        etqty = (EditText) findViewById(R.id.qtycolor);
+//        etqty = (EditText) findViewById(R.id.qtycolor);
         etpdensity = (EditText) findViewById(R.id.etpdensity);
         etPrcstest = (EditText) findViewById(R.id.etPrcstest);
         etpkv = (EditText) findViewById(R.id.etpkv);
@@ -430,32 +460,32 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String odor = etpodor.getText().toString().trim();
         String color = etpcolour.getText().toString().trim();
         //int qty = Integer.parseInt(etqty.getText().toString().trim());
-        if (!etqty.getText().toString().isEmpty()) {
-            try {
-                String input = etqty.getText().toString().trim();
-                int integerValue;
-
-                if (input.contains(".")) {
-                    // Input contains a decimal point
-                    String[] parts = input.split("\\.");
-                    int wholeNumberPart = Integer.parseInt(parts[0]);
-                    int decimalPart = Integer.parseInt(parts[1]);
-                    // Adjust decimal part to two digits
-                    if (parts[1].length() > 2) {
-                        // Take only first two digits after decimal point
-                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
-                    }
-                    // Combine integer and decimal parts
-                    integerValue = wholeNumberPart * 100 + decimalPart;
-                } else {
-                    // Input is a whole number
-                    integerValue = Integer.parseInt(input) * 100;
-                }
-                qty = integerValue;
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (!etqty.getText().toString().isEmpty()) {
+//            try {
+//                String input = etqty.getText().toString().trim();
+//                int integerValue;
+//
+//                if (input.contains(".")) {
+//                    // Input contains a decimal point
+//                    String[] parts = input.split("\\.");
+//                    int wholeNumberPart = Integer.parseInt(parts[0]);
+//                    int decimalPart = Integer.parseInt(parts[1]);
+//                    // Adjust decimal part to two digits
+//                    if (parts[1].length() > 2) {
+//                        // Take only first two digits after decimal point
+//                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+//                    }
+//                    // Combine integer and decimal parts
+//                    integerValue = wholeNumberPart * 100 + decimalPart;
+//                } else {
+//                    // Input is a whole number
+//                    integerValue = Integer.parseInt(input) * 100;
+//                }
+//                qty = integerValue;
+//            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
         String rcsTest = etPrcstest.getText().toString().trim();
         //int kv = Integer.parseInt(etpkv.getText().toString().trim());
@@ -587,7 +617,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         } else {
             BigDecimal density = new BigDecimal(densityinput);
             InTanLabRequestModel labRequestModel = new InTanLabRequestModel(inwardid, intime, outTime, date,
-                    samplereceivingdate, apperance, odor, color, qty,  density,
+                    samplereceivingdate, apperance, odor, color, 0,  density,
                     rcsTest, kv, hundred, anline,
                     flash, addTest, samplereceivingdate, remark, signQc, dateSignOfSign,
                     disc, Integer.parseInt(viscosity), EmployeId, EmployeId, vehicle, material,
@@ -647,10 +677,10 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etMaterial.setEnabled(false);
                         etpsample.setText(data.getDate());
                         etpsample.setEnabled(false);
-                        etfetchSecQty.setText(String.valueOf(data.getQty()));
-                        etfetchSecQty.setEnabled(true);
-                        etfetchlabqtyoum.setText(data.getUnitOfMeasurement());
-                        etfetchlabqtyoum.setEnabled(true);
+                        etfetchSecQty.setText(String.valueOf(data.getSecNetWeight()));
+                        etfetchSecQty.setEnabled(false);
+                        etfetchlabqtyoum.setText(data.getUnitOfNetWeight());
+                        etfetchlabqtyoum.setEnabled(false);
                         viewsamplereporting.setVisibility(View.VISIBLE);
                     } else {
                         Toasty.error(Inward_Tanker_Laboratory.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();
@@ -775,32 +805,32 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String apperance = etpapperance.getText().toString().trim();
         String odor = etpodor.getText().toString().trim();
         String color = etpcolour.getText().toString().trim();
-        if (!etqty.getText().toString().isEmpty()) {
-            try {
-                String input = etqty.getText().toString().trim();
-                int integerValue;
-
-                if (input.contains(".")) {
-                    // Input contains a decimal point
-                    String[] parts = input.split("\\.");
-                    int wholeNumberPart = Integer.parseInt(parts[0]);
-                    int decimalPart = Integer.parseInt(parts[1]);
-                    // Adjust decimal part to two digits
-                    if (parts[1].length() > 2) {
-                        // Take only first two digits after decimal point
-                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
-                    }
-                    // Combine integer and decimal parts
-                    integerValue = wholeNumberPart * 100 + decimalPart;
-                } else {
-                    // Input is a whole number
-                    integerValue = Integer.parseInt(input) * 100;
-                }
-                qty = integerValue;
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
+//        if (!etqty.getText().toString().isEmpty()) {
+//            try {
+//                String input = etqty.getText().toString().trim();
+//                int integerValue;
+//
+//                if (input.contains(".")) {
+//                    // Input contains a decimal point
+//                    String[] parts = input.split("\\.");
+//                    int wholeNumberPart = Integer.parseInt(parts[0]);
+//                    int decimalPart = Integer.parseInt(parts[1]);
+//                    // Adjust decimal part to two digits
+//                    if (parts[1].length() > 2) {
+//                        // Take only first two digits after decimal point
+//                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
+//                    }
+//                    // Combine integer and decimal parts
+//                    integerValue = wholeNumberPart * 100 + decimalPart;
+//                } else {
+//                    // Input is a whole number
+//                    integerValue = Integer.parseInt(input) * 100;
+//                }
+//                qty = integerValue;
+//            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+//            }
+//        }
         /*if (!etpdensity.getText().toString().isEmpty()) {
             try {
                 String input = etpdensity.getText().toString().trim();

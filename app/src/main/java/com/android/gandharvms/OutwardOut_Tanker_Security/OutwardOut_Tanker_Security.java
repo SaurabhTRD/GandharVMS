@@ -88,7 +88,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
         netweight = findViewById(R.id.etnetweight);
         sign = findViewById(R.id.etsign);
         remark = findViewById(R.id.etremark);
-        etsealn = findViewById(R.id.etsealnumbar);
+//        etsealn = findViewById(R.id.etsealnumbar);
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
@@ -191,8 +191,8 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
                         otoutsecqtyuom.setEnabled(false);
                         netweight.setText(obj.getNetWeight());
                         netweight.setEnabled(false);
-                        etsealn.setText(obj.getSealNumber());
-                        etsealn.setEnabled(false);
+//                        etsealn.setText(obj.getSealNumber());
+//                        etsealn.setEnabled(false);
                     }
                     else {
                         Toasty.error(OutwardOut_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();

@@ -233,7 +233,7 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
                         vehiclenumber.setText(data.getVehicleNumber());
                         vehiclenumber.setEnabled(false);
                         vehicleNum=data.getVehicleNumber();
-                        fetchdensity.setText(String.valueOf(data.getDensity_29_5C()));
+                        fetchdensity.setText(data.getDensity_29_5C());
                         fetchdensity.setEnabled(false);
                         tareweight.setText(String.valueOf(data.getTareWeight()));
                         tareweight.setEnabled(false);

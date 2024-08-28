@@ -58,7 +58,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Security extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,invoice,party,gooddis,qty,uom1,netweight,uom2,outtime,sign,remark,etproduct;
+    EditText intime,serialnumber,vehiclenumber,invoice,party,gooddis,qty,uom1,netweight,qtyuom,outtime,sign,remark,etproduct,erqty,erinvoice;
     Button submit,complete;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -104,9 +104,11 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
 //        qty=findViewById(R.id.etqty);
 //        uom1=findViewById(R.id.qtyuom);
         netweight=findViewById(R.id.etnetweight);
-        uom2=findViewById(R.id.netweuom);
+        qtyuom=findViewById(R.id.netweuom);
         sign=findViewById(R.id.etsign);
         remark=findViewById(R.id.etremark);
+        erqty = findViewById(R.id.etqty);
+        erinvoice = findViewById(R.id.etinvoicenum);
 
         submit = findViewById(R.id.submit);
         complete = findViewById(R.id.truckotoutsecuritycompleted);
@@ -122,7 +124,7 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         testno = findViewById(R.id.testreportno);
         invoiceyes = findViewById(R.id.invoiceyes);
         invoicenono = findViewById(R.id.invoiceno);
-        etproduct = findViewById(R.id.etproductnameoutsecurity);
+//        etproduct = findViewById(R.id.etproductnameoutsecurity);
 
         btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
@@ -213,27 +215,47 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
 //            }
 //        });
 
-        autoCompleteTextView2outwardoutse = findViewById(R.id.netweuom);
-        netweuomdrop = new ArrayAdapter<String>(this, R.layout.outwaout_netwt, new ArrayList<>(qtyUomMapping.keySet()));
-        autoCompleteTextView2outwardoutse.setAdapter(netweuomdrop);
-        autoCompleteTextView2outwardoutse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String netuomdisply = parent.getItemAtPosition(position).toString();
-                netweuomvalue = qtyUomMapping.get(netuomdisply);
-                if (qtyUomNumericValue != null) {
-                    Toast.makeText(OutwardOut_Truck_Security.this, "netwe: " + netuomdisply + " Selected", Toast.LENGTH_SHORT).show();
-
-                } else {
-                    Toast.makeText(OutwardOut_Truck_Security.this, "Unknown qtyUom : " + netweuom, Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        autoCompleteTextView2outwardoutse = findViewById(R.id.netweuom);
+//        netweuomdrop = new ArrayAdapter<String>(this, R.layout.outwaout_netwt, new ArrayList<>(qtyUomMapping.keySet()));
+//        autoCompleteTextView2outwardoutse.setAdapter(netweuomdrop);
+//        autoCompleteTextView2outwardoutse.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String netuomdisply = parent.getItemAtPosition(position).toString();
+//                netweuomvalue = qtyUomMapping.get(netuomdisply);
+//                if (qtyUomNumericValue != null) {
+//                    Toast.makeText(OutwardOut_Truck_Security.this, "netwe: " + netuomdisply + " Selected", Toast.LENGTH_SHORT).show();
+//
+//                } else {
+//                    Toast.makeText(OutwardOut_Truck_Security.this, "Unknown qtyUom : " + netweuom, Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
     }
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
+    }
+    private String getWeightUnit(int unitCode) {
+        switch (unitCode) {
+            case 1:
+                return "kl";
+            case 2:
+                return "Ton";
+            case 3:
+                return "Litre";
+            case 4:
+                return "KL";
+            case 5:
+                return "Kgs";
+            case 6:
+                return "Pcs";
+            case 7:
+                return "M3";
+            default:
+                return "unknown";// or any default value you want to set
+        }
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {
@@ -312,6 +334,12 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
 //                        etproduct.setText(obj.getProductName());
 //                        etproduct.setEnabled(false);
 //                        invoice.setText(obj.getInvoiceNumber());
+                        erinvoice.setText(obj.getOutInvoiceNumber());
+                        erinvoice.setEnabled(false);
+                        erqty.setText(obj.getOutTotalQty());
+                        erqty.setEnabled(false);
+                        qtyuom.setText(getWeightUnit(obj.getOutTotalQtyUOM()));
+                        qtyuom.setEnabled(false);
                     }else {
                         Toasty.error(OutwardOut_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

@@ -373,7 +373,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             Model_OutwardOut_Truck_Weighment modelOutwardOutTruckWeighment = new Model_OutwardOut_Truck_Weighment(OutwardId,
-                    imgPath1,imgPath2,etintime,unetwt,etgrossweight,etnoofpack,uremark,useal,EmployeId,'B',inOut,
+                    imgPath1,imgPath2,etintime,unetwt,etgrossweight,etnoofpack,uremark,useal,EmployeId,'P',inOut,
                     vehicleType,ushdip,ushwe);
             Call<Boolean> call = outwardWeighment.updateoutwardouttruckweighment(modelOutwardOutTruckWeighment);
             call.enqueue(new Callback<Boolean>() {

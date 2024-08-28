@@ -174,9 +174,11 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                         intent = new Intent(view.getContext(), Outward_Truck_weighment.class);
                     }else if (currentst.equals("DISPATCH")) {
                         intent = new Intent(view.getContext(), Outward_Truck_Dispatch.class);
-                    } else if (currentst.equals("DATAENTRY")) {
-                        intent = new Intent(view.getContext(), Outward_Truck_Production.class);
-                    } else if (currentst.equals("SMALLPACK")) {
+                    }
+//                    else if (currentst.equals("DATAENTRY")) {
+//                        intent = new Intent(view.getContext(), Outward_Truck_Production.class);
+//                    }
+                    else if (currentst.equals("SMALLPACK")) {
                         intent = new Intent(view.getContext(), Outward_DesSmallPackLoading_Form.class);
                     } else if (currentst.equals("INDUSTRIALPACK")) {
                         intent = new Intent(view.getContext(), Outward_DesIndustriaLoading_Form.class);
@@ -186,7 +188,9 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                 else if (vehicletype.equals("OR") && io == 'O') {
                     if (currentst.equals("OUTWEIGHMENT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Truck_Weighment.class);
-                    }  else if (currentst.equals("OUTBILLING")) {
+                    } else if (currentst.equals("DATAENTRY")) {
+                        intent = new Intent(view.getContext(), Outward_Truck_Production.class);
+                    } else if (currentst.equals("OUTBILLING")) {
                         intent = new Intent(view.getContext(), OutwardOut_Truck_Billing.class);
                     } else if (currentst.equals("SECURITYVEHICLEOUT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Truck_Security.class);

@@ -42,6 +42,9 @@ public class InTanLabResponseModel {
     private int Qty ;
 
     String LabRemark;
+    public  int SecNetWeightUOM;
+    public int SecNetWeight;
+    public String UnitOfNetWeight;
 
     public String getUnitOfMeasurement() {
         return UnitOfMeasurement;
@@ -333,5 +336,29 @@ public class InTanLabResponseModel {
 
     public void setPartyName(String partyName) {
         PartyName = partyName;
+    }
+
+    public int getSecNetWeightUOM() {
+        return SecNetWeightUOM;
+    }
+
+    public void setSecNetWeightUOM(int secNetWeightUOM) {
+        SecNetWeightUOM = secNetWeightUOM;
+    }
+
+    public int getSecNetWeight() {
+        return SecNetWeight;
+    }
+
+    public void setSecNetWeight(int secNetWeight) {
+        SecNetWeight = secNetWeight;
+    }
+
+    public String getUnitOfNetWeight() {
+        return UnitOfNetWeight;
+    }
+
+    public void setUnitOfNetWeight(String unitOfNetWeight) {
+        UnitOfNetWeight = unitOfNetWeight;
     }
 }

@@ -10,6 +10,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -58,7 +61,7 @@ import retrofit2.Response;
 
 public class Outward_Truck_Logistics extends AppCompatActivity {
 
-    EditText intime, serialnumber, vehiclenumber, transporter, place, oanumber, remark,customername,howqty;
+    EditText intime, serialnumber, vehiclenumber, transporter, place, oanumber, remark,customername,howqty,uomet;
     Button submit,btnlogisticcompletd,updatebtn;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -81,6 +84,9 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
 
     public static String Tanker;
     public static String Truck;
+    String[] uom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
+    AutoCompleteTextView autoCompleteTextView;
+    ArrayAdapter<String> uomdrop;
 
 
     @Override
@@ -97,6 +103,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         oanumber = findViewById(R.id.etoanumber);
         remark = findViewById(R.id.etremark);
         howqty = findViewById(R.id.etloadedmaterqty);
+        uomet = (EditText) findViewById(R.id.etuom);
 
         customername = findViewById(R.id.etcustomername);
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
@@ -115,6 +122,17 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
 
         String userName=Global_Var.getInstance().Name;
         String empId=Global_Var.getInstance().EmpId;
+
+        autoCompleteTextView = findViewById(R.id.etuom);
+        uomdrop = new ArrayAdapter<String>(this,R.layout.in_rcs_test,uom);
+        autoCompleteTextView.setAdapter(uomdrop);
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedUom = parent.getItemAtPosition(position).toString();
+                Toasty.success(getApplicationContext(), "UOM : " + selectedUom + " Selected", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         username.setText(userName);
         empid.setText(empId);
@@ -402,7 +420,9 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         String etremark = remark.getText().toString().trim();
         String outTime = getCurrentTime();
         String ucustoname = customername.getText().toString().trim();
+        String unitofm = uomet.getText().toString().trim();
 //        int uhowqty = Integer.parseInt(howqty.getText().toString().trim());
+
         if (!howqty.getText().toString().isEmpty()){
             try {
                 uhowqty = Integer.parseInt(howqty.getText().toString().trim());
@@ -417,7 +437,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
         } else {
             InTrLogisticRequestModel trucklogmodel = new InTrLogisticRequestModel(inwardid, etintime, outTime,
                     EmployeId, EmployeId, etremark, 'G', etserialnumber, etvehiclenumber,
-                    etoanumber, 'W', inOut, vehicleType,ucustoname,uhowqty);
+                    etoanumber, 'W', inOut, vehicleType,ucustoname,uhowqty,unitofm);
             Call<Boolean> call = logisticdetails.insertLogisticData(trucklogmodel);
             call.enqueue(new Callback<Boolean>() {
                 @Override

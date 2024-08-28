@@ -128,26 +128,26 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="2dp"
-                android:layout_below="@id/Date"
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginRight="30dp"-->
+<!--                android:layout_marginTop="2dp"-->
+<!--                android:layout_below="@id/Date"-->
 
-                >
-                <EditText
-                    android:id="@+id/etproductnameoutsecurity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Product Name"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    />
-            </com.google.android.material.textfield.TextInputLayout>
+<!--                >-->
+<!--                <EditText-->
+<!--                    android:id="@+id/etproductnameoutsecurity"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:hint="Product Name"-->
+<!--                    android:inputType="text"-->
+<!--                    android:textSize="17dp"-->
+<!--                    android:textStyle="bold"-->
+<!--                    />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
 
 
 
@@ -254,23 +254,34 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="170dp"
                     android:layout_height="wrap_content"
-                    style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                     android:layout_marginLeft="-22dp"
                     android:layout_marginTop="2dp"
 
                     android:layout_below="@id/intime"
 
                     >
-                    <AutoCompleteTextView
+
+                    <EditText
                         android:id="@+id/netweuom"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="UOM"
                         android:inputType="none"
                         android:textSize="17dp"
-                        android:textStyle="bold"
                         android:layout_marginTop="5dp"
+                        android:textStyle="bold"
                         />
+<!--                    <AutoCompleteTextView-->
+<!--                        android:id="@+id/netweuom"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:hint="UOM"-->
+<!--                        android:inputType="none"-->
+<!--                        android:textSize="17dp"-->
+<!--                        android:textStyle="bold"-->
+<!--                        android:layout_marginTop="5dp"-->
+<!--                        />-->
                 </com.google.android.material.textfield.TextInputLayout>
             </LinearLayout>
 
@@ -317,6 +328,50 @@
 <!--                    android:textStyle="bold"-->
 <!--                    />-->
 <!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="2dp"
+
+                android:layout_below="@id/Date"
+
+                >
+                <EditText
+                    android:id="@+id/etinvoicenum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Invoice Number"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="2dp"
+
+                android:layout_below="@id/Date"
+
+                >
+                <EditText
+                    android:id="@+id/etqty"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="QTY"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

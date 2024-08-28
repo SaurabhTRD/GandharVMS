@@ -26,9 +26,10 @@ public class InTrLogisticRequestModel {
     public char NextProcess;
     public char I_O;
     public String VehicleType;
+    public String  HowMuchQTYUOM;
 
 
-    public InTrLogisticRequestModel(int outwardId, String inTime, String outTime, String createdBy, String updatedBy, String remark, char currentProcess, String serialNumber, String vehicleNumber, String OAnumber, char nextProcess, char i_O, String vehicleType,String customerName,int howMuchQuantityFilled) {
+    public InTrLogisticRequestModel(int outwardId, String inTime, String outTime, String createdBy, String updatedBy, String remark, char currentProcess, String serialNumber, String vehicleNumber, String OAnumber, char nextProcess, char i_O, String vehicleType,String customerName,int howMuchQuantityFilled,String howMuchQTYUOM) {
         OutwardId = outwardId;
         InTime = inTime;
         OutTime = outTime;
@@ -44,5 +45,6 @@ public class InTrLogisticRequestModel {
         VehicleType = vehicleType;
         CustomerName = customerName;
         HowMuchQuantityFilled = howMuchQuantityFilled;
+        HowMuchQTYUOM = howMuchQTYUOM;
     }
 }

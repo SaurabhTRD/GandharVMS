@@ -46,7 +46,7 @@ public class Menu extends AppCompatActivity {
         // Set the version number
         TextView tvVersion = findViewById(R.id.tv_version);
 //        String versionName = BuildConfig.VERSION_NAME;
-        String versionName = "1.0.0";
+        String versionName = "1.0.1";
         tvVersion.setText("Version " + versionName);
 
         btnlogout.setOnClickListener(new View.OnClickListener() {
