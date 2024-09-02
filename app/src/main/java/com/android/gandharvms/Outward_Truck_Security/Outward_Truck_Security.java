@@ -256,7 +256,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
                         // Use the month abbreviation from the array
                         String monthAbbreviation = monthAbbreviations[month];
                         // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        date.setText(datef.format(calendar.getTime()));
+                        date.setText(datef.format(calendar.getTime()).replace("Sept","Sep"));
                     }
                 }, year, month, day);
                 picker.show();

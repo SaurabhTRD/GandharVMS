@@ -397,7 +397,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                         // Use the month abbreviation from the array
                         String monthAbbreviation = monthAbbreviations[month];
                         // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        etdate.setText(dateFormat.format(calendar.getTime()));
+                        etdate.setText(dateFormat.format(calendar.getTime()).replace("Sept","Sep"));
                     }
                 }, year, month, day);
                 picker.show();

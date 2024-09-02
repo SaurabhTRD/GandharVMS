@@ -332,7 +332,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                         // Use the month abbreviation from the array
                         String monthAbbreviation = monthAbbreviations[month];
                         // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        etsdate.setText(dateFormat.format(calendar.getTime()));
+                        etsdate.setText(dateFormat.format(calendar.getTime()).replace("Sept","Sep"));
                     }
                 }, year, month, day);
                 picker.show();

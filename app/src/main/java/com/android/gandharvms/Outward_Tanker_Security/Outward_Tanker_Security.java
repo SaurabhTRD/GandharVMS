@@ -271,7 +271,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                         // Use the month abbreviation from the array
                         String monthAbbreviation = monthAbbreviations[month];
                         // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
-                        eddate.setText(datef.format(calendar.getTime()));
+                        eddate.setText(datef.format(calendar.getTime()).replace("Sept","Sep"));
                     }
                 }, year, month, day);
                 picker.show();
