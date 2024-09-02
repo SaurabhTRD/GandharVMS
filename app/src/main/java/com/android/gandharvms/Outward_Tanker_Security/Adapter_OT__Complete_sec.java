@@ -1,6 +1,7 @@
 package com.android.gandharvms.Outward_Tanker_Security;
 
 import android.content.Context;
+import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,11 @@ import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.Outward_Truck_Weighment.Adater_Weigh_Out_Complete;
 import com.android.gandharvms.R;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class Adapter_OT__Complete_sec extends RecyclerView.Adapter<Adapter_OT__Complete_sec.myviewHolder> implements Filterable {
 
@@ -75,7 +79,8 @@ public class Adapter_OT__Complete_sec extends RecyclerView.Adapter<Adapter_OT__C
         if (outtimelength > 0) {
             holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
-        holder.date.setText(club.getDate());
+        formattedDate = formattedDate(club.getDate());
+        holder.date.setText(formattedDate);
         holder.serialnum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
         holder.kl.setText(String.valueOf(club.getKl()));
@@ -83,6 +88,18 @@ public class Adapter_OT__Complete_sec extends RecyclerView.Adapter<Adapter_OT__C
         holder.place.setText(club.getPlace());
         holder.mobile.setText(club.getMobileNumber());
         holder.remark.setText(club.getRemark());
+    }
+
+    private String formattedDate(String inputDate) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("MMM dd yyyy hh:mma", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return inputDate;
+        }
     }
 
     @Override
