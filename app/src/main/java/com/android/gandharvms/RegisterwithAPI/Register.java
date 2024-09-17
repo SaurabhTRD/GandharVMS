@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
@@ -431,7 +432,7 @@ public class Register extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Register.this, "User Register succesfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Register.this, Menu.class));
+                        startActivity(new Intent(Register.this, Login.class));
                         finish();
                     }else {
                         // Registration failed

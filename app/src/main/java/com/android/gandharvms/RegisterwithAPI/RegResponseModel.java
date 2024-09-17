@@ -2,13 +2,14 @@ package com.android.gandharvms.RegisterwithAPI;
 
 public class RegResponseModel {
     private String Name;
-    private String EmpId;
-    private String EmailId;
-    private String PhoneNo;
-    private String Password;
-    private String Token;
-    private int DeptId;
-    private String CreatedBy;
+    public String EmpId;
+    public String EmailId;
+    public String PhoneNo;
+    public String Password;
+    public String Token;
+    public int DeptId;
+    public String CreatedBy;
+    public String UpdatedBy;
 
     public String getName() {
         return Name;

@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "772719579049",
+    "firebase_url": "https://gandharvms-default-rtdb.firebaseio.com",
     "project_id": "gandharvms",
     "storage_bucket": "gandharvms.appspot.com"
   },

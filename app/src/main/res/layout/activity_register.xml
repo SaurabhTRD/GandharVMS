@@ -4,319 +4,322 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterwithAPI.Register"
-    android:background="#FFFFFF">
+    android:background="#FFFFFF"
+    tools:context=".RegisterwithAPI.Register">
 
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/namelayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="80dp"
-            android:layout_marginRight="30dp"
-            android:gravity="center"
+            android:layout_height="match_parent"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/name"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/namelayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fieldEmplName"
-                android:inputType="text"
-                android:textSize="21dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="80dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/empllayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:gravity="center"
-            android:orientation="vertical">
+                <EditText
+                    android:id="@+id/name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fieldEmplName"
+                    android:inputType="text"
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/emplid"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/empllayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Employee Id"
-                android:inputType="number"
-                android:textSize="21dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <!--    <com.google.android.material.textfield.TextInputLayout-->
-        <!--        android:layout_width="match_parent"-->
-        <!--        android:layout_height="wrap_content"-->
-        <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
-        <!--        android:layout_centerInParent="true"-->
-        <!--        android:layout_marginLeft="30dp"-->
-        <!--        android:layout_marginRight="30dp"-->
-        <!--        android:layout_marginTop="5dp"-->
-        <!--        android:orientation="vertical"-->
-        <!--        android:gravity="center"-->
-        <!--        android:id="@+id/deplayout">-->
+                <EditText
+                    android:id="@+id/emplid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Employee Id"
+                    android:inputType="number"
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-        <!--        <EditText-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:hint="Department Name"-->
-        <!--            android:id="@+id/departmentname"-->
-        <!--            android:inputType="text"-->
-        <!--            android:textStyle="bold"-->
-        <!--            android:textSize="21dp"-->
-        <!--            />-->
-        <!--    </com.google.android.material.textfield.TextInputLayout>-->
+            <!--    <com.google.android.material.textfield.TextInputLayout-->
+            <!--        android:layout_width="match_parent"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+            <!--        android:layout_centerInParent="true"-->
+            <!--        android:layout_marginLeft="30dp"-->
+            <!--        android:layout_marginRight="30dp"-->
+            <!--        android:layout_marginTop="5dp"-->
+            <!--        android:orientation="vertical"-->
+            <!--        android:gravity="center"-->
+            <!--        android:id="@+id/deplayout">-->
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/emaillayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:gravity="center"
-            android:orientation="vertical">
+            <!--        <EditText-->
+            <!--            android:layout_width="match_parent"-->
+            <!--            android:layout_height="wrap_content"-->
+            <!--            android:hint="Department Name"-->
+            <!--            android:id="@+id/departmentname"-->
+            <!--            android:inputType="text"-->
+            <!--            android:textStyle="bold"-->
+            <!--            android:textSize="21dp"-->
+            <!--            />-->
+            <!--    </com.google.android.material.textfield.TextInputLayout>-->
 
-            <EditText
-                android:id="@+id/emailid"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/emaillayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fieldEmplMail"
-                android:inputType="textEmailAddress"
-                android:textSize="21dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phonelayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:gravity="center"
-            android:orientation="vertical">
+                <EditText
+                    android:id="@+id/emailid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fieldEmplMail"
+                    android:inputType="textEmailAddress"
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/phoneno"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/phonelayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fieldEmplPhone"
-                android:inputType="number"
-                android:textSize="21dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:orientation="vertical">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordlayout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="5dp"
-            android:layout_marginRight="30dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            app:passwordToggleEnabled="true"
-            app:passwordToggleTint="#000">
+                <EditText
+                    android:id="@+id/phoneno"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fieldEmplPhone"
+                    android:inputType="number"
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/password"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/passwordlayout"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/fieldEmplPass"
-                android:inputType="number"
-                android:textSize="21dp"
-                android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_centerInParent="true"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="30dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                app:passwordToggleEnabled="true"
+                app:passwordToggleTint="#000">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/fieldEmplPass"
+                    android:inputType="number"
+                    android:textSize="21dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <CheckBox
-                android:id="@+id/isSecurity"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1"
-                android:text="Security" />
+                android:orientation="horizontal">
 
-            <CheckBox
-                android:id="@+id/isWeighment"
-                android:layout_width="wrap_content"
+                <CheckBox
+                    android:id="@+id/isSecurity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:text="Security" />
+
+                <CheckBox
+                    android:id="@+id/isWeighment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="65dp"
+                    android:layout_weight="2"
+                    android:text="Weighment" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="65dp"
-                android:layout_weight="2"
-                android:text="Weighment" />
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/isSampling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:text="Sampling" />
+
+                <CheckBox
+                    android:id="@+id/isProduction"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_weight="2"
+                    android:text="Production" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/isLaboratary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:text="Laboratary" />
+
+                <CheckBox
+                    android:id="@+id/isStores"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="38dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:text="Stores" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/isLogistic"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:text="Logistic" />
+
+                <CheckBox
+                    android:id="@+id/isbilling"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:text="Billing" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/isdespatch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:text="Despatch" />
+
+                <CheckBox
+                    android:id="@+id/isdataentry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:text="DataEntry" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <CheckBox
+                    android:id="@+id/isdespatchsmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginRight="25dp"
+                    android:layout_weight="1"
+                    android:text="Despatch(Small Pack)" />
+
+                <CheckBox
+                    android:id="@+id/isdespatchindustrial"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:layout_weight="2"
+                    android:text="Despatch(Industri)" />
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnregister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/passwordlayout"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="30dp"
+                android:background="#3BB5EC"
+                android:text="Register"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/loginlink"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btnregister"
+                android:layout_marginTop="5dp"
+                android:gravity="center_horizontal"
+                android:text="already register login here" />
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/isSampling"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1"
-                android:text="Sampling" />
-
-            <CheckBox
-                android:id="@+id/isProduction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_weight="2"
-                android:text="Production" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/isLaboratary"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1"
-                android:text="Laboratary" />
-
-            <CheckBox
-                android:id="@+id/isStores"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="38dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="2"
-                android:text="Stores" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/isLogistic"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1"
-                android:text="Logistic" />
-
-            <CheckBox
-                android:id="@+id/isbilling"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="2"
-                android:text="Billing" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/isdespatch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1"
-                android:text="Despatch" />
-            <CheckBox
-                android:id="@+id/isdataentry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_marginRight="10dp"
-                android:layout_weight="2"
-                android:text="DataEntry" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <CheckBox
-                android:id="@+id/isdespatchsmall"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="35dp"
-                android:layout_marginRight="25dp"
-                android:layout_weight="1"
-                android:text="Despatch(Small Pack)" />
-            <CheckBox
-                android:id="@+id/isdespatchindustrial"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_weight="2"
-                android:text="Despatch(Industri)" />
-
-        </LinearLayout>
-
-
-
-
-        <Button
-            android:id="@+id/btnregister"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/passwordlayout"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginRight="30dp"
-            android:background="#3BB5EC"
-            android:text="Register"
-            android:textColor="#fff" />
-
-        <TextView
-            android:id="@+id/loginlink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btnregister"
-            android:layout_marginTop="5dp"
-            android:gravity="center_horizontal"
-            android:text="already register login here" />
-    </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>

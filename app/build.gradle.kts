@@ -6,6 +6,16 @@ android {
     namespace = "com.android.gandharvms"
     compileSdk = 34
 
+    packaging {
+        resources {
+            excludes.add("META-INF/DEPENDENCIES")
+            excludes.add("META-INF/LICENSE")
+            excludes.add("META-INF/LICENSE.txt")
+            excludes.add("META-INF/NOTICE")
+            excludes.add("META-INF/NOTICE.txt")
+        }
+    }
+
     defaultConfig {
         applicationId = "com.android.gandharvms"
         minSdk = 28
@@ -36,6 +46,8 @@ android {
     buildFeatures {
         viewBinding = true
     }
+
+
 }
 dependencies {
     implementation("androidx.appcompat:appcompat:1.6.1")
@@ -82,11 +94,6 @@ dependencies {
     implementation ("androidx.recyclerview:recyclerview-selection:1.1.0")
 
     implementation("commons-io:commons-io:2.11.0")
-
-
-
-
-
-
-
+    implementation("com.google.auth:google-auth-library-credentials:1.13.0")
+    implementation("com.google.auth:google-auth-library-oauth2-http:1.13.0")
 }

@@ -27,4 +27,7 @@ public interface LoginMethod {
 
     @POST("api/Users/Add")
     Call<Boolean> postregData(@Body RegRequestModel regRequestModel);
+
+    @POST("api/Users/UpdateTokenByEmpId")
+    Call<Boolean> updateusertokenbyempid(@Body RegResponseModel regresponseModel);
 }
