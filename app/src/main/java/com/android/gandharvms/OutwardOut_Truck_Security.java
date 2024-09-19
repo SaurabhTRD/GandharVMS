@@ -278,7 +278,7 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                                         getApplicationContext(),
                                         OutwardOut_Truck_Security.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

@@ -174,7 +174,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Truck_Production.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

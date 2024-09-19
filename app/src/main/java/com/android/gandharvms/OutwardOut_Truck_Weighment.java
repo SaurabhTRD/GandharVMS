@@ -246,7 +246,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                                         getApplicationContext(),
                                         OutwardOut_Truck_Weighment.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

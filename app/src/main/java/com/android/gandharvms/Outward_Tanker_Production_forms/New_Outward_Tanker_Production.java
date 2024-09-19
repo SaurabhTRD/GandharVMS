@@ -243,7 +243,7 @@ public class New_Outward_Tanker_Production extends AppCompatActivity {
                                         getApplicationContext(),
                                         New_Outward_Tanker_Production.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

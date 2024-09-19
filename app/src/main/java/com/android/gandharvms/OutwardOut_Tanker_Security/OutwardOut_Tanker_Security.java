@@ -237,7 +237,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
                 getApplicationContext(),
                 OutwardOut_Tanker_Security.this
         );
-        notificationsSender.SendNotifications();
+        notificationsSender.triggerSendNotification();
     }
     public void insert(){
 //        String etgooddiscription = goodsdiscription.getText().toString().trim();

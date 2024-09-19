@@ -257,7 +257,7 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
                 getApplicationContext(),
                 InwardOut_Truck_Security.this
         );
-        notificationsSender.SendNotifications();
+        notificationsSender.triggerSendNotification();
     }
 
     public void onBackPressed(){

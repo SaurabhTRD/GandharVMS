@@ -233,7 +233,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
                                         getApplicationContext(),
                                         DataEntryForm_Production.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

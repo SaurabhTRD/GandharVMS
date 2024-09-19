@@ -337,7 +337,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Truck_Logistics.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

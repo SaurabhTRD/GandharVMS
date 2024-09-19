@@ -310,7 +310,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Security.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }
@@ -360,7 +360,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Security.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

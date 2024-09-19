@@ -145,7 +145,7 @@ public class Outward_Truck_Laboratory extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Truck_Laboratory.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

@@ -62,11 +62,6 @@ import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -211,34 +206,6 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             }
         }
 
-//        weighautoCompleteTextView1 = findViewById(R.id.itweighqtyuomtanker);
-//        weighqtyUomMapping = new HashMap<>();
-//        weighqtyUomMapping.put("NA", 1);
-//        weighqtyUomMapping.put("Ton", 2);
-//        weighqtyUomMapping.put("Litre", 3);
-//        weighqtyUomMapping.put("KL", 4);
-//        weighqtyUomMapping.put("Kgs", 5);
-//        weighqtyUomMapping.put("pcs", 6);
-//        weighqtyUomMapping.put("M3", 7);
-//
-//        weighqtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(weighqtyUomMapping.keySet()));
-//        weighautoCompleteTextView1.setAdapter(weighqtyuomdrop);
-//        weighautoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
-//                // Retrieve the corresponding numerical value from the mapping
-//                weighqtyUomNumericValue = weighqtyUomMapping.get(qtyUomDisplay);
-//                if (weighqtyUomNumericValue != null) {
-//                    // Now, you can use qtyUomNumericValue when inserting into the database
-//                    Toasty.success(Inward_Tanker_Weighment.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    // Handle the case where the mapping doesn't contain the display value
-//                    Toasty.error(Inward_Tanker_Weighment.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
         etweighqty.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -353,13 +320,14 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                             if (specificrole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
-                                FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Inward Tanker Weighment Process Done..!",
                                         "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
                                         getApplicationContext(),
                                         Inward_Tanker_Weighment.this
                                 );
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

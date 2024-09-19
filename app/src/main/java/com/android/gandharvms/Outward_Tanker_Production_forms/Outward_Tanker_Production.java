@@ -293,7 +293,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Production.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }
@@ -343,7 +343,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Production.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }
@@ -393,7 +393,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Production.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }
@@ -443,7 +443,7 @@ public class Outward_Tanker_Production extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Production.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

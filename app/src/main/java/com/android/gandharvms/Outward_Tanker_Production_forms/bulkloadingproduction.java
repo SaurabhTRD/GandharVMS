@@ -196,7 +196,7 @@ public class bulkloadingproduction extends AppCompatActivity {
                                         getApplicationContext(),
                                         bulkloadingproduction.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }
@@ -246,7 +246,7 @@ public class bulkloadingproduction extends AppCompatActivity {
                                         getApplicationContext(),
                                         bulkloadingproduction.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

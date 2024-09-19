@@ -303,7 +303,7 @@ public class ot_outBilling extends AppCompatActivity {
                                         getApplicationContext(),
                                         ot_outBilling.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

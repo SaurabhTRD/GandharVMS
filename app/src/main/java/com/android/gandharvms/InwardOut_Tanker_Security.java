@@ -254,7 +254,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
                 getApplicationContext(),
                 InwardOut_Tanker_Security.this
         );
-        notificationsSender.SendNotifications();
+        notificationsSender.triggerSendNotification();
     }
 
     public void onBackPressed() {

@@ -289,7 +289,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                                         getApplicationContext(),
                                         InwardOut_Tanker_Weighment.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

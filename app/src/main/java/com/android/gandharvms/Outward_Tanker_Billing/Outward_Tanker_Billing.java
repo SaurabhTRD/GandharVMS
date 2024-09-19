@@ -199,7 +199,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Billing.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }
@@ -250,7 +250,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Billing.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

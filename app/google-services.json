@@ -1,14 +1,13 @@
 {
   "project_info": {
-    "project_number": "772719579049",
-    "firebase_url": "https://gandharvms-default-rtdb.firebaseio.com",
-    "project_id": "gandharvms",
-    "storage_bucket": "gandharvms.appspot.com"
+    "project_number": "290706742229",
+    "project_id": "gandharvms-5a192",
+    "storage_bucket": "gandharvms-5a192.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:772719579049:android:437e77b082a11886573eb8",
+        "mobilesdk_app_id": "1:290706742229:android:004c49b76c9cbfd9567b5c",
         "android_client_info": {
           "package_name": "com.android.gandharvms"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCivG8lU8qP3o09ESM9iV_h9uiO-4DAjjY"
+          "current_key": "AIzaSyBJ8ootzTUyJiXRhLTBXLweoZ_f1hfT87g"
         }
       ],
       "services": {

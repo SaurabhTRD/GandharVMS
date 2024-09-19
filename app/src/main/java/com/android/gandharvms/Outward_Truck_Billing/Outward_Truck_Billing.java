@@ -168,7 +168,7 @@ public class Outward_Truck_Billing extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Truck_Billing.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

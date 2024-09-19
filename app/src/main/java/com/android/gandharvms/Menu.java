@@ -16,12 +16,10 @@ import com.android.gandharvms.submenu.Submenu_outward_tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.firebase.BuildConfig;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class Menu extends AppCompatActivity {
 
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
+    //DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String userRole = "default";
     TextView username,empid;
     ImageView btnlogout;
@@ -46,7 +44,7 @@ public class Menu extends AppCompatActivity {
         // Set the version number
         TextView tvVersion = findViewById(R.id.tv_version);
 //        String versionName = BuildConfig.VERSION_NAME;
-        String versionName = "1.0.1";
+        String versionName = "1.0.2";
         tvVersion.setText("Version " + versionName);
 
         btnlogout.setOnClickListener(new View.OnClickListener() {

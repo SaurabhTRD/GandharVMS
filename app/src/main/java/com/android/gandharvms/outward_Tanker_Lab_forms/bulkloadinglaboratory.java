@@ -186,7 +186,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
                                         getApplicationContext(),
                                         bulkloadinglaboratory.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

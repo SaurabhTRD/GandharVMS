@@ -52,11 +52,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.Timestamp;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -424,16 +419,6 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 } catch (ParseException e) {
                     throw new RuntimeException(e);
                 }
-//                isReportingCheckBox = findViewById(R.id.isreporting);
-//                if (isReportingCheckBox.isChecked()) {
-//                    updateData();
-//                } else {
-//                    try {
-//                        insertdata();
-//                    } catch (ParseException e) {
-//                        throw new RuntimeException(e);
-//                    }
-//                }
             }
         });
 
@@ -544,7 +529,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                                         getApplicationContext(),
                                         Inward_Tanker_Security.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

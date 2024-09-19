@@ -220,7 +220,7 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
                                         getApplicationContext(),
                                         OutwardOut_Truck_Billing.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

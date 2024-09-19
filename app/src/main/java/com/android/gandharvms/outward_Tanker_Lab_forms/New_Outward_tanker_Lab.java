@@ -246,7 +246,7 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
                                         getApplicationContext(),
                                         New_Outward_tanker_Lab.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

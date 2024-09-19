@@ -22,8 +22,6 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
@@ -41,7 +39,7 @@ public class Register extends AppCompatActivity {
     Button register;
     TextView loginnowbtn;
     CheckBox security, weighment, sampling, production, laboratary, stores ,logistic,billing,despatch,dataentry,smallpack,industrial;
-    DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
+    //DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private int setRole;
     private String token;
     private LoginMethod loginMethod;

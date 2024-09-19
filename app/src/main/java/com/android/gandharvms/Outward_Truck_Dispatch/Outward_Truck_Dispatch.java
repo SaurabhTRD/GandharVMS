@@ -236,7 +236,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Truck_Dispatch.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }

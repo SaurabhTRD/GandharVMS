@@ -320,7 +320,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Laboratory.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }
@@ -370,7 +370,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
                                         getApplicationContext(),
                                         Outward_Tanker_Laboratory.this
                                 );
-                                notificationsSender.SendNotifications();
+                                notificationsSender.triggerSendNotification();
                             }
                         }
                     }
