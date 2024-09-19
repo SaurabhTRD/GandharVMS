@@ -36,7 +36,7 @@ import java.util.Map;
 public class FcmNotificationsSender {
     private static final String FCM_URL = "https://fcm.googleapis.com/v1/projects/gandharvms-5a192/messages:send";
     private static final String[] SCOPES = {"https://www.googleapis.com/auth/firebase.messaging"};
-    public static final String CREDENTIAL_PATH = "gandharvms-5a192-firebase-adminsdk-sv5ch-ca3cfadcd9.json"; // Update the path
+    public static final String CREDENTIAL_PATH = "gandharvms-5a192-firebase-adminsdk-3j88x-850cbcb6aa.json"; // Update the path
     String userFcmToken, title, body;
     Context mContext;
     Activity mActivity;
