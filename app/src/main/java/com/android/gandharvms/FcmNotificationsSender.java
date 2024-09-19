@@ -74,7 +74,6 @@ public class FcmNotificationsSender {
                 e.printStackTrace();
             }
 
-            // Obtain the access token
             // Send the notification
             URL url = new URL(FCM_URL);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
