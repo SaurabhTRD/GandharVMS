@@ -68,6 +68,10 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -637,9 +641,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                 || insertqty < 0 || insertnetweight < 0 || insertqtyUom < 0 || insertnetweightUom < 0) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-
-            List<Map<String, String>> materialList = new ArrayList<>();
-
+            JSONArray extraMaterialsArray = new JSONArray();
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 View childView = linearLayout.getChildAt(i);
                 if (childView != null) {
@@ -647,24 +649,32 @@ public class Inward_Truck_Security extends AppCompatActivity {
                     EditText qtyEditText = childView.findViewById(R.id.editqty);
                     AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
 
-
                     String dynamaterial = materialEditText.getText().toString().trim();
                     String dynaqty = qtyEditText.getText().toString().trim();
                     String dynaqtyuom = uomSpinner.getSelectedItem().toString();
 
                     // Check if both material and quantity fields are not empty
                     if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-                        Map<String, String> materialMap = new HashMap<>();
-                        materialMap.put("material", dynamaterial);
-                        materialMap.put("qty", dynaqty);
-                        materialMap.put("qtyuom", dynaqtyuom);
-                        // Add material data to the list
-                        materialList.add(materialMap);
+                        try {
+                            // Create a new JSONObject for each material
+                            JSONObject materialObject = new JSONObject();
+                            materialObject.put("Material", dynamaterial);
+                            materialObject.put("Qty", Integer.parseInt(dynaqty));
+                            materialObject.put("Qtyuom", dynaqtyuom);
+
+                            // Add the material JSON object to the array
+                            extraMaterialsArray.put(materialObject);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
+
+// Convert JSONArray to string
+            String extraMaterialsString = extraMaterialsArray.toString();
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'W', 'I', Date,
-                    "", vehicltype, intime, outTime, insertqtyUom, insertnetweightUom, insertnetweight, insertqty, materialList.toString().replace("=", ":"), remark, false, "No", selectregister, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection, EmployeId, "", InwardId);
+                    "", vehicltype, intime, outTime, insertqtyUom, insertnetweightUom, insertnetweight, insertqty, extraMaterialsString.toString(), remark, false, "No", selectregister, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection, EmployeId, "", InwardId);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);

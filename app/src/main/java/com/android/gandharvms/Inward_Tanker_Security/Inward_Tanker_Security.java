@@ -61,6 +61,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -613,14 +617,16 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         //String mobnumber = etmobilenum.getText().toString().trim();
 //        String edremark = repremark.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() ||
-                intime.isEmpty() || material.isEmpty() || remark.isEmpty()
+                intime.isEmpty() || remark.isEmpty()
                 || insertnetweight < 0 || insertnetweightUom < 0) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
 
             //Extra material dynamic view
-            List<Map<String, String>> materialList = new ArrayList<>();
+            //List<Map<String, String>> materialList = new ArrayList<>();
 
+// Create a JSON array to hold the extra materials
+            JSONArray extraMaterialsArray = new JSONArray();
             for (int i = 0; i < linearLayout.getChildCount(); i++) {
                 View childView = linearLayout.getChildAt(i);
                 if (childView != null) {
@@ -634,18 +640,26 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 
                     // Check if both material and quantity fields are not empty
                     if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-                        Map<String, String> materialMap = new HashMap<>();
-                        materialMap.put("material", dynamaterial);
-                        materialMap.put("qty", dynaqty);
-                        materialMap.put("qtyuom", dynaqtyuom);
-                        // Add material data to the list
-                        materialList.add(materialMap);
+                        try {
+                            // Create a new JSONObject for each material
+                            JSONObject materialObject = new JSONObject();
+                            materialObject.put("Material", dynamaterial);
+                            materialObject.put("Qty", Integer.parseInt(dynaqty));
+                            materialObject.put("Qtyuom", dynaqtyuom);
+
+                            // Add the material JSON object to the array
+                            extraMaterialsArray.put(materialObject);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
                     }
                 }
             }
 
-            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, "", "", 'W', 'I', Date,
-                    "", vehicltype, intime, outTime, 1, insertnetweightUom, insertnetweight, 1, materialList.toString().replace("[]", ""), remark, false, "No", "", "", "", "", "", EmployeId, "", InwardId);
+// Convert JSONArray to string
+            String extraMaterialsString = extraMaterialsArray.toString();
+            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, "material", "", "", 'W', 'I', Date,
+                    "", vehicltype, intime, outTime, 1, insertnetweightUom, insertnetweight, 1, extraMaterialsString.toString(), remark, false, "No", "", "", "", "", "", EmployeId, "", InwardId);
 
             Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
             call.enqueue(new Callback<Boolean>() {
@@ -924,9 +938,9 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 // Check if both material and quantity fields are not empty
                 if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
                     Map<String, String> materialMap = new HashMap<>();
-                    materialMap.put("material", dynamaterial);
-                    materialMap.put("qty", dynaqty);
-                    materialMap.put("qtyuom", dynaqtyuom);
+                    materialMap.put("Material", dynamaterial);
+                    materialMap.put("Qty", dynaqty);
+                    materialMap.put("Qtyuom", dynaqtyuom);
                     // Add material data to the list
                     materialList.add(materialMap);
                 }
