@@ -15,7 +15,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="130dp"
+        android:layout_width="110dp"
         android:id="@+id/irstoretextcoVehicleNumber"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -25,13 +25,24 @@
         android:layout_height="match_parent"/>
 
     <TextView
+        android:id="@+id/irstoretextcoStoreExtramaterials"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="7dp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="View Material"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
+    <!--<TextView
         android:layout_width="200dp"
         android:id="@+id/irstoretextcoMaterial"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:layout_height="55dp"/>
+        android:layout_height="55dp"/>-->
 
     <TextView
         android:layout_width="120dp"
@@ -115,7 +126,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <!--<TextView
         android:layout_width="130dp"
         android:id="@+id/irstoretextcoReceiveQTY"
         android:textStyle="bold"
@@ -131,19 +142,19 @@
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
-    <TextView
+    <!--<TextView
         android:layout_width="140dp"
         android:id="@+id/irstoretextcoStoreExtramaterials"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <TextView
-        android:layout_width="130dp"
+        android:layout_width="120dp"
         android:id="@+id/irstoretextcoremark"
         android:textStyle="bold"
         android:layout_marginStart="5dp"

@@ -176,22 +176,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
         }
 
-//        autoCompleteTextViewINVUOM = findViewById(R.id.etinvqtysuom);
-//        netweuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_nw, new ArrayList<>(qtyUomMapping.keySet()));
-//        autoCompleteTextViewINVUOM.setAdapter(netweuomdrop);
-//        autoCompleteTextViewINVUOM.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String neweuom = parent.getItemAtPosition(position).toString();
-//                netweuomvalue = qtyUomMapping.get(neweuom);
-//                if (qtyUomNumericValue != null) {
-//                    Toasty.success(Inward_Truck_Store.this, "Invoice QTY: " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toasty.warning(Inward_Truck_Store.this, "Invoice QTY : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
         etintime = findViewById(R.id.etintime);
         etserialnumber = findViewById(R.id.ettrsserialnumber);
         etvehicalnum = findViewById(R.id.ettrsvehical);
@@ -306,34 +290,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
         });
 
-//        etqty.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                // Not needed for this implementation
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                // Not needed for this implementation
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String currentText = etqty.getText().toString();
-//                if (editable.length() > 0 && editable.length() <= 8) {
-//                    // Clear any previous error message when valid
-//                    etqty.setError(null);
-//                } else {
-//                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-//                    if (!currentText.equals(trimmedText)) {
-//                        // Only set text and move cursor if the modification is not the desired text
-//                        etqty.setText(trimmedText);
-//                        etqty.setSelection(trimmedText.length()); // Move cursor to the end
-//                    }
-//                }
-//            }
-//        });
-
         etinvdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -446,113 +402,13 @@ public class Inward_Truck_Store extends AppCompatActivity {
         String invoicenum = etpo.getText().toString().trim();
         String date = etpodate.getText().toString().trim();
         String supplier = etmaterialrdate.getText().toString().trim();
-//        String material = etmaterial.getText().toString().trim();
-        //recqty= etqty.getText().toString().trim();
-        if (!etqty.getText().toString().isEmpty()) {
-            try {
-                String input = etqty.getText().toString().trim();
-                int integerValue;
-
-                if (input.contains(".")) {
-                    // Input contains a decimal point
-                    String[] parts = input.split("\\.");
-                    int wholeNumberPart = Integer.parseInt(parts[0]);
-                    int decimalPart = Integer.parseInt(parts[1]);
-                    // Adjust decimal part to two digits
-                    if (parts[1].length() > 2) {
-                        // Take only first two digits after decimal point
-                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
-                    }
-                    // Combine integer and decimal parts
-                    integerValue = wholeNumberPart * 100 + decimalPart;
-                } else {
-                    // Input is a whole number
-                    integerValue = Integer.parseInt(input) * 100;
-                }
-                recqty = integerValue;
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-        //recqtyoum = Integer.parseInt( qtyUomNumericValue.toString().trim());
-        if (!qtyUomNumericValue.toString().isEmpty()) {
-            try {
-                recqtyoum = Integer.parseInt(qtyUomNumericValue.toString().trim());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-        String invqtyuom = etinvqtyuom.getText().toString().trim();
         String remark = etremark.getText().toString().trim();
-        String invqty = etinvqty.getText().toString().trim();
-        String invdate = etinvdate.getText().toString().trim();
-        String invNum = etinvnum.getText().toString().trim();
         String outTime = getCurrentTime();
 
-        // Validate and process received quantity
-        if (!etqty.getText().toString().isEmpty()) {
-            try {
-                String input = etqty.getText().toString().trim();
-                int integerValue;
-
-                if (input.contains(".")) {
-                    String[] parts = input.split("\\.");
-                    int wholeNumberPart = Integer.parseInt(parts[0]);
-                    int decimalPart = Integer.parseInt(parts[1]);
-                    if (parts[1].length() > 2) {
-                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
-                    }
-                    integerValue = wholeNumberPart * 100 + decimalPart;
-                } else {
-                    integerValue = Integer.parseInt(input) * 100;
-                }
-                recqty = integerValue;
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-
-        // Validate and process UOM quantity
-        if (!qtyUomNumericValue.toString().isEmpty()) {
-            try {
-                recqtyoum = Integer.parseInt(qtyUomNumericValue.toString().trim());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-
-
         if (intime.isEmpty() || serialnumber.isEmpty() || vehicalnumber.isEmpty() || invoicenum.isEmpty()
-                || date.isEmpty() || supplier.isEmpty() ||  recqty < 0 || recqtyoum < 0
-                || remark.isEmpty() || invqty.isEmpty() || invdate.isEmpty() || invNum.isEmpty()) {
+                || date.isEmpty() || supplier.isEmpty() || remark.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-//             Material data handling for dynamically added fields
-//            List<Map<String, String>> materialList = new ArrayList<>();
-//
-//            for (int i = 0; i < linearLayout.getChildCount(); i++) {
-//                View childView = linearLayout.getChildAt(i);
-//                if (childView != null) {
-//                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
-//                    EditText qtyEditText = childView.findViewById(R.id.editqty);
-//                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
-//
-//                    String dynamaterial = materialEditText.getText().toString().trim();
-//                    String dynaqty = qtyEditText.getText().toString().trim();
-//                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
-//
-//                    // Check if both material and quantity fields are not empty
-//                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-//                        Map<String, String> materialMap = new HashMap<>();
-//                        materialMap.put("Extramaterial", dynamaterial);
-//                        materialMap.put("Extraqty", dynaqty);
-//                        materialMap.put("Extraqtyuom", dynaqtyuom);
-//                        // Add material data to the list
-//                        materialList.add(materialMap);
-//                    }
-//                }
-//            }
-
             // Get the material list
             List<ExtraMaterial> extraMaterials = new ArrayList<>();
             LinearLayout linearLayout = findViewById(R.id.layout_liststore);
@@ -576,7 +432,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
             String extraMaterialsString = convertExtraMaterialsListToString1(extraMaterials);
             InTruckStoreRequestModel storeRequestModel = new InTruckStoreRequestModel(inwardid, intime, outTime,
                     EmployeId, EmployeId, vehicalnumber, serialnumber
-                    , 'W', 'O', vehicleType, recqty, recqtyoum
+                    , 'W', 'O', vehicleType, 1, 1
                     , remark, extraMaterialsString.toString().replace("=", ":"));
             Call<Boolean> call = storedetails.insertStoreData(storeRequestModel);
             call.enqueue(new Callback<Boolean>() {
@@ -650,32 +506,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
         }
         String remark = etremark.getText().toString().trim();
-
-        // Material data handling for dynamically added fields
-//        List<Map<String, String>> materialList = new ArrayList<>();
-//
-//        for (int i = 0; i < linearLayout.getChildCount(); i++) {
-//            View childView = linearLayout.getChildAt(i);
-//            if (childView != null) {
-//                EditText materialEditText = childView.findViewById(R.id.editmaterial);
-//                EditText qtyEditText = childView.findViewById(R.id.editqty);
-//                AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
-//
-//                String dynamaterial = materialEditText.getText().toString().trim();
-//                String dynaqty = qtyEditText.getText().toString().trim();
-//                String dynaqtyuom = uomSpinner.getSelectedItem().toString();
-//
-//                // Check if both material and quantity fields are not empty
-//                if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-//                    Map<String, String> materialMap = new HashMap<>();
-//                    materialMap.put("Extramaterial", dynamaterial);
-//                    materialMap.put("Extraqty", dynaqty);
-//                    materialMap.put("Extraqtyuom", dynaqtyuom);
-//                    // Add material data to the list
-//                    materialList.add(materialMap);
-//                }
-//            }
-//        }
 
         List<ExtraMaterial> extraMaterials = new ArrayList<>();
         LinearLayout linearLayout = findViewById(R.id.layout_liststore);
@@ -764,6 +594,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
     }
 
     public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();

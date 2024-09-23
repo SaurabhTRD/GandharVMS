@@ -129,6 +129,17 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="120dp"
+                android:id="@+id/irinsectextcoextramaterials"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Materials"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <!--<TextView
                 android:layout_width="200dp"
                 android:id="@+id/irinsectextcoMaterial"
                 android:gravity="center|start"
@@ -138,7 +149,7 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
-
+-->
             
             <TextView
                 android:layout_width="130dp"
@@ -284,18 +295,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="150dp"
-                android:id="@+id/irinsectextcoextramaterials"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Extramatrials"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:id="@+id/irinsectextcoremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

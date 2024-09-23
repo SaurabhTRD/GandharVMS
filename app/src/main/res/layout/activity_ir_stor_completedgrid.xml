@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="110dp"
                 android:id="@+id/irstoretextcoVehicleNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -86,6 +86,16 @@
 
             <TextView
                 android:layout_width="120dp"
+                android:id="@+id/irstoretextcoStoreExtramaterials"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Materials"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <!--<TextView
+                android:layout_width="120dp"
                 android:id="@+id/irstoretextcoMaterial"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
@@ -93,7 +103,7 @@
                 android:text="Material"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
                 android:layout_width="120dp"
@@ -195,7 +205,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-            <TextView
+            <!--<TextView
                 android:layout_width="130dp"
                 android:id="@+id/irstoretextcoReceiveQTY"
                 android:textStyle="bold"
@@ -215,21 +225,10 @@
                 android:text="ReceiveQTYUOM"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
-                android:layout_width="140dp"
-                android:id="@+id/irstoretextcoStoreExtramaterials"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Extramaterials"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/irstoretextcoremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

@@ -85,7 +85,7 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
         holder.date.setText(formattedDate);
         holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
-        holder.material.setText(club.getMaterial());
+        //holder.material.setText(club.getMaterial());
         holder.invoiceno.setText(club.getInvoiceNo());
         if (intimelength > 0) {
             holder.intime.setText(club.getInTime().substring(12, intimelength));
@@ -173,7 +173,7 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
-        TextView date,sernum,vehiclenum,invoiceno,material, intime, outtime,partyname,qty,
+        TextView date,sernum,vehiclenum,invoiceno, intime, outtime,partyname,qty,
                 qtyuom,netweight,netweightuom,reoprtingre,oapo,mob,Selectregister,IrCopy,DeliveryBill,TaxInvoice,
                 EwayBill,extramaterials,remark;
         TextView viewmaterial;
@@ -186,7 +186,7 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
             sernum =view.findViewById(R.id.irinsectextcoSerialNumber);
             vehiclenum = view.findViewById(R.id.irinsectextcoVehicleNumber);
             invoiceno =view.findViewById(R.id.irinsectextcoInvoiceNo);
-            material =view.findViewById(R.id.irinsectextcoMaterial);
+            //material =view.findViewById(R.id.irinsectextcoMaterial);
             oapo =view.findViewById(R.id.irinsectextcooapo);
             mob =view.findViewById(R.id.irinsectextcomob);
             partyname =view.findViewById(R.id.irinsectextcopartyname);
@@ -202,7 +202,7 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
             EwayBill =view.findViewById(R.id.irinsectextcoEwayBill);
             //extramaterials =view.findViewById(R.id.irinsectextcoextramaterials);
             remark =view.findViewById(R.id.irinsectextcoremark);
-            viewmaterial = view.findViewById(R.id.txtEditClickLink);
+            viewmaterial = view.findViewById(R.id.irinsectextcoextramaterials);
             viewmaterial.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
 //            viewmaterial.setOnClickListener(new View.OnClickListener() {
 //                @Override

@@ -66,7 +66,7 @@ public class Inward_Truck_Store_viewdata extends AppCompatActivity {
         etpartyName=findViewById(R.id.et_PartyName);
         btncleardateselection=findViewById(R.id.btn_clearDateSelectionfields);
         txtTotalCount=findViewById(R.id.tv_TotalCount);
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        //btnlogout=findViewById(R.id.btn_logoutButton);
         storedetails= RetroApiClient.getStoreDetails();
 
         recview = (RecyclerView) findViewById(R.id.recyclerview);

@@ -659,7 +659,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                             // Create a new JSONObject for each material
                             JSONObject materialObject = new JSONObject();
                             materialObject.put("Material", dynamaterial);
-                            materialObject.put("Qty", Integer.parseInt(dynaqty));
+                            materialObject.put("Qty", Double.parseDouble(dynaqty));
                             materialObject.put("Qtyuom", dynaqtyuom);
 
                             // Add the material JSON object to the array

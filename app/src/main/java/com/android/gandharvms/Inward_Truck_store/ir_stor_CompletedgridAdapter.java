@@ -3,6 +3,7 @@ package com.android.gandharvms.Inward_Truck_store;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +13,21 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
+import com.android.gandharvms.Inward_Truck_Security.Material_Adapter;
 import com.android.gandharvms.Inward_Truck_Security.ir_in_sec_CompletedgridAdapter;
+import com.android.gandharvms.Inward_Truck_Security.matriallist;
 import com.android.gandharvms.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -73,7 +82,7 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
         int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
         holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
-        holder.material.setText(club.getMaterial());
+        //holder.material.setText(club.getMaterial());
         formattedDate = formatDate(club.getDate());
         holder.matreialdate.setText(formattedDate);
         holder.invoiceno.setText(club.getInvoiceNo());
@@ -92,9 +101,13 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
         formattedDate = formatDate(club.getDate());
         holder.invoicedate.setText(formattedDate);
         String recqty=String.format("%.2f", club.getReceiveQTY() / 100.0);
-        holder.ReceiveQTY.setText(recqty);
-        holder.ReQTYUom.setText(club.getReQTYUom());
-        holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
+        //holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
+        holder.StoreExtramaterials.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMaterialDialog(v, club.getStoreExtramaterials());
+            }
+        });
         holder.remark.setText(club.getRemark());
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,15 +159,15 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
-        TextView sernum,vehiclenum,material,matreialdate, intime, outtime,oapo,oapodate,qty,
-                qtyuom,invoiceno,invoicedate,ReceiveQTY,ReQTYUom,StoreExtramaterials
+        TextView sernum,vehiclenum,matreialdate, intime, outtime,oapo,oapodate,qty,
+                qtyuom,invoiceno,invoicedate,StoreExtramaterials
                 ,remark;
 
         public myviewHolder(View view) {
             super(view);
             sernum =view.findViewById(R.id.irstoretextcoSerialNumber);
             vehiclenum = view.findViewById(R.id.irstoretextcoVehicleNumber);
-            material =view.findViewById(R.id.irstoretextcoMaterial);
+            //material =view.findViewById(R.id.irstoretextcoMaterial);
             matreialdate =view.findViewById(R.id.irstoretextcoMaRedate);
             intime =view.findViewById(R.id.irstoretextcoInTime);
             outtime =view.findViewById(R.id.irstoretextcoOutTime);
@@ -164,9 +177,10 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
             qtyuom =view.findViewById(R.id.irstoretextcoqtyuom);
             invoiceno =view.findViewById(R.id.irstoretextcoinvNo);
             invoicedate =view.findViewById(R.id.irstoretextcoinvdate);
-            ReceiveQTY =view.findViewById(R.id.irstoretextcoReceiveQTY);
-            ReQTYUom =view.findViewById(R.id.irstoretextcoReceiveQTYUOM);
+            //ReceiveQTY =view.findViewById(R.id.irstoretextcoReceiveQTY);
+            //ReQTYUom =view.findViewById(R.id.irstoretextcoReceiveQTYUOM);
             StoreExtramaterials =view.findViewById(R.id.irstoretextcoStoreExtramaterials);
+            StoreExtramaterials.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             remark =view.findViewById(R.id.irstoretextcoremark);
         }
     }
@@ -181,5 +195,43 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
             e.printStackTrace();
             return inputDate;
         }
+    }
+
+    // Function to show material dialog
+    private void showMaterialDialog(View view, String jsonMaterials) {
+        // Parse the JSON list of extra materials
+        List<ExtraMaterial> extramaterialList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonMaterials);
+            for (int i = 0; i < jsonArray.length(); i++) {
+//                materialList.add(jsonArray.getString(i));
+                JSONObject materialObject = jsonArray.getJSONObject(i);
+                String Material = materialObject.getString("Material");
+                String Qty = materialObject.getString("Qty");
+                String Qtyuom = materialObject.getString("Qtyuom");
+                String Recivingqty= materialObject.getString("recivingqty");
+                extramaterialList.add(new ExtraMaterial(Material, Qty, Qtyuom,Recivingqty));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Create a dialog to show the list of materials
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Extra Materials");
+
+        // Inflate the layout with a RecyclerView
+        View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.material_dialog, null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewDialog);
+
+        // Set up the RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        ExtraMaterial_Adapter adapter = new ExtraMaterial_Adapter(extramaterialList); // Pass the material list
+        recyclerView.setAdapter(adapter);
+
+        // Set the view and show the dialog
+        builder.setView(dialogView);
+        builder.setPositiveButton("Close", null);
+        builder.show();
     }
 }
