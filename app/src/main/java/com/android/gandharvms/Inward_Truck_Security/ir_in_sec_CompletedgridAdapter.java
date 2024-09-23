@@ -2,8 +2,11 @@ package com.android.gandharvms.Inward_Truck_Security;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +15,8 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
@@ -20,8 +25,13 @@ import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.R;
 import com.android.gandharvms.it_out_sec_CompletedgridAdapter;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -39,9 +49,10 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
 
     String formattedDate;
 
-    public ir_in_sec_CompletedgridAdapter(List<CommonResponseModelForAllDepartment> inwardcomresponsemodel) {
+    public ir_in_sec_CompletedgridAdapter(List<CommonResponseModelForAllDepartment> inwardcomresponsemodel,Context context) {
         this.Gridmodel = inwardcomresponsemodel;
         this.filteredGridList = inwardcomresponsemodel;
+        this.context = context;
     }
 
     @Override
@@ -54,19 +65,19 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
 
     @NonNull
     @Override
-    public ir_in_sec_CompletedgridAdapter.myviewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
+    public myviewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         if (viewType == TYPE_ROW) {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ir_in_sec_completedgrid_table_cell, viewGroup, false);
-            return new ir_in_sec_CompletedgridAdapter.myviewHolder(view);
+            return new myviewHolder(view);
         } else {
             View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.ir_in_sec_completedgrid_card_item,
                     viewGroup, false);
-            return new ir_in_sec_CompletedgridAdapter.myviewHolder(view);
+            return new myviewHolder(view);
         }
     }
 
     @Override
-    public void onBindViewHolder(ir_in_sec_CompletedgridAdapter.myviewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         CommonResponseModelForAllDepartment club = filteredGridList.get(position);
         int intimelength = club.getInTime()!=null ? club.getInTime().length() : 0;
         int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
@@ -88,7 +99,21 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
         holder.qtyuom.setText(club.getUnitOfQTY());
         holder.netweight.setText(String.valueOf(club.getNetWeight()));
         holder.netweightuom.setText(club.getUnitOfNetWeight());
-        holder.extramaterials.setText(club.getExtramaterials());
+//        holder.extramaterials.setText(club.getExtramaterials());
+
+//        holder.extramaterials.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                showMaterialDialog(view, club.getExtramaterials()); // Passing the view and the material list (JSON string or list)
+//            }
+//        });
+        // Setting the click listener for viewmaterial
+        holder.viewmaterial.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showMaterialDialog(v, club.getExtramaterials());
+            }
+        });
         holder.reoprtingre.setText(club.getReportingRemark());
         holder.remark.setText(club.getRemark());
         holder.oapo.setText(club.getOA_PO_number());
@@ -151,6 +176,7 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
         TextView date,sernum,vehiclenum,invoiceno,material, intime, outtime,partyname,qty,
                 qtyuom,netweight,netweightuom,reoprtingre,oapo,mob,Selectregister,IrCopy,DeliveryBill,TaxInvoice,
                 EwayBill,extramaterials,remark;
+        TextView viewmaterial;
 
         public myviewHolder(View view) {
             super(view);
@@ -174,8 +200,17 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
             DeliveryBill =view.findViewById(R.id.irinsectextcoDeliveryBill);
             TaxInvoice=view.findViewById(R.id.irinsectextcoTaxInvoice);
             EwayBill =view.findViewById(R.id.irinsectextcoEwayBill);
-            extramaterials =view.findViewById(R.id.irinsectextcoextramaterials);
+            //extramaterials =view.findViewById(R.id.irinsectextcoextramaterials);
             remark =view.findViewById(R.id.irinsectextcoremark);
+            viewmaterial = view.findViewById(R.id.txtEditClickLink);
+            viewmaterial.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+//            viewmaterial.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    showmaterialdialoge();
+//                }
+//            });
+
         }
     }
 
@@ -189,5 +224,68 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
             e.printStackTrace();
             return inputDate;
         }
+    }
+//    private void showmaterialdialoge() {
+//        // Inflate the dialog layout
+//        LayoutInflater inflater = LayoutInflater.from(context);
+//        View dialogView = inflater.inflate(R.layout.material_dialog, null);
+//
+//        // Get the RecyclerView from the dialog layout
+//        RecyclerView recyclerViewDialog = dialogView.findViewById(R.id.recyclerViewDialog);
+//        recyclerViewDialog.setLayoutManager(new LinearLayoutManager(context));
+//
+//        // Create the AlertDialog
+//        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//        builder.setView(dialogView)
+//                .setTitle("History")
+//                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//
+//        AlertDialog dialog = builder.create();
+//        dialog.show();
+//
+//        // Fetch and display the history list
+////        callhistorylist(complaintid, SPCode, recyclerViewDialog);  // Use the passed complaint ID
+//    }
+
+    // Function to show material dialog
+    private void showMaterialDialog(View view, String jsonMaterials) {
+        // Parse the JSON list of extra materials
+        List<matriallist> materialList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonMaterials);
+            for (int i = 0; i < jsonArray.length(); i++) {
+//                materialList.add(jsonArray.getString(i));
+                JSONObject materialObject = jsonArray.getJSONObject(i);
+                String Material = materialObject.getString("Material");
+                int Qty = materialObject.getInt("Qty");
+                String Qtyuom = materialObject.getString("Qtyuom");
+                materialList.add(new matriallist(Material, Qty, Qtyuom));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Create a dialog to show the list of materials
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Extra Materials");
+
+        // Inflate the layout with a RecyclerView
+        View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.material_dialog, null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewDialog);
+
+        // Set up the RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        Material_Adapter adapter = new Material_Adapter(materialList); // Pass the material list
+        recyclerView.setAdapter(adapter);
+
+        // Set the view and show the dialog
+        builder.setView(dialogView);
+        builder.setPositiveButton("Close", null);
+        builder.show();
     }
 }

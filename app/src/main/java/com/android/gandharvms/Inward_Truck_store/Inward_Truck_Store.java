@@ -142,30 +142,30 @@ public class Inward_Truck_Store extends AppCompatActivity {
 
 
         //for recqtyuom
-        autoCompleteTextViewRecQTYUOM = findViewById(R.id.recqtysuom);
-        qtyUomMapping = new HashMap<>();
-        qtyUomMapping.put("NA", 1);
-        qtyUomMapping.put("Ton", 2);
-        qtyUomMapping.put("Litre", 3);
-        qtyUomMapping.put("KL", 4);
-        qtyUomMapping.put("Kgs", 5);
-        qtyUomMapping.put("pcs", 6);
-
-        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
-        autoCompleteTextViewRecQTYUOM.setAdapter(qtyuomdrop);
-        autoCompleteTextViewRecQTYUOM.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
-                // Retrieve the corresponding numerical value from the mapping
-                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
-                if (qtyUomNumericValue != null) {
-                    Toasty.success(Inward_Truck_Store.this, "RecQty : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toasty.warning(Inward_Truck_Store.this, "Default ReceiveQTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        autoCompleteTextViewRecQTYUOM = findViewById(R.id.recqtysuom);
+//        qtyUomMapping = new HashMap<>();
+//        qtyUomMapping.put("NA", 1);
+//        qtyUomMapping.put("Ton", 2);
+//        qtyUomMapping.put("Litre", 3);
+//        qtyUomMapping.put("KL", 4);
+//        qtyUomMapping.put("Kgs", 5);
+//        qtyUomMapping.put("pcs", 6);
+//
+//        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
+//        autoCompleteTextViewRecQTYUOM.setAdapter(qtyuomdrop);
+//        autoCompleteTextViewRecQTYUOM.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
+//                // Retrieve the corresponding numerical value from the mapping
+//                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
+//                if (qtyUomNumericValue != null) {
+//                    Toasty.success(Inward_Truck_Store.this, "RecQty : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toasty.warning(Inward_Truck_Store.this, "Default ReceiveQTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         if (getIntent().hasExtra("VehicleNumber")) {
             String action = getIntent().getStringExtra("Action");
@@ -176,21 +176,21 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
         }
 
-        autoCompleteTextViewINVUOM = findViewById(R.id.etinvqtysuom);
-        netweuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_nw, new ArrayList<>(qtyUomMapping.keySet()));
-        autoCompleteTextViewINVUOM.setAdapter(netweuomdrop);
-        autoCompleteTextViewINVUOM.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String neweuom = parent.getItemAtPosition(position).toString();
-                netweuomvalue = qtyUomMapping.get(neweuom);
-                if (qtyUomNumericValue != null) {
-                    Toasty.success(Inward_Truck_Store.this, "Invoice QTY: " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toasty.warning(Inward_Truck_Store.this, "Invoice QTY : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        autoCompleteTextViewINVUOM = findViewById(R.id.etinvqtysuom);
+//        netweuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_nw, new ArrayList<>(qtyUomMapping.keySet()));
+//        autoCompleteTextViewINVUOM.setAdapter(netweuomdrop);
+//        autoCompleteTextViewINVUOM.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String neweuom = parent.getItemAtPosition(position).toString();
+//                netweuomvalue = qtyUomMapping.get(neweuom);
+//                if (qtyUomNumericValue != null) {
+//                    Toasty.success(Inward_Truck_Store.this, "Invoice QTY: " + neweuom + " Selected", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toasty.warning(Inward_Truck_Store.this, "Invoice QTY : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
 
         etintime = findViewById(R.id.etintime);
         etserialnumber = findViewById(R.id.ettrsserialnumber);
@@ -198,12 +198,12 @@ public class Inward_Truck_Store extends AppCompatActivity {
         etpo = findViewById(R.id.ettrsponumber);
         etpodate = findViewById(R.id.ettrpodate);
         etmaterialrdate = findViewById(R.id.materialrecievingdate);
-        etmaterial = findViewById(R.id.ettsmaterial);
-        etqty = findViewById(R.id.etsqty);
-        etrecqtyoum = findViewById(R.id.recqtysuom);
-        etinvqtyuom = findViewById(R.id.etinvqtysuom);
+//        etmaterial = findViewById(R.id.ettsmaterial);
+//        etqty = findViewById(R.id.etsqty);
+//        etrecqtyoum = findViewById(R.id.recqtysuom);
+//        etinvqtyuom = findViewById(R.id.etinvqtysuom);
         etremark = findViewById(R.id.etremark);
-        etinvqty = findViewById(R.id.ettrinvqty);
+//        etinvqty = findViewById(R.id.ettrinvqty);
         etinvdate = findViewById(R.id.ettrinvDate);
         etinvnum = findViewById(R.id.ettinvnumber);
         etsuppliername=findViewById(R.id.ettrssupplier);
@@ -306,33 +306,33 @@ public class Inward_Truck_Store extends AppCompatActivity {
             }
         });
 
-        etqty.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                // Not needed for this implementation
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                // Not needed for this implementation
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String currentText = etqty.getText().toString();
-                if (editable.length() > 0 && editable.length() <= 8) {
-                    // Clear any previous error message when valid
-                    etqty.setError(null);
-                } else {
-                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-                    if (!currentText.equals(trimmedText)) {
-                        // Only set text and move cursor if the modification is not the desired text
-                        etqty.setText(trimmedText);
-                        etqty.setSelection(trimmedText.length()); // Move cursor to the end
-                    }
-                }
-            }
-        });
+//        etqty.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//                // Not needed for this implementation
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                // Not needed for this implementation
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String currentText = etqty.getText().toString();
+//                if (editable.length() > 0 && editable.length() <= 8) {
+//                    // Clear any previous error message when valid
+//                    etqty.setError(null);
+//                } else {
+//                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
+//                    if (!currentText.equals(trimmedText)) {
+//                        // Only set text and move cursor if the modification is not the desired text
+//                        etqty.setText(trimmedText);
+//                        etqty.setSelection(trimmedText.length()); // Move cursor to the end
+//                    }
+//                }
+//            }
+//        });
 
         etinvdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -446,7 +446,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
         String invoicenum = etpo.getText().toString().trim();
         String date = etpodate.getText().toString().trim();
         String supplier = etmaterialrdate.getText().toString().trim();
-        String material = etmaterial.getText().toString().trim();
+//        String material = etmaterial.getText().toString().trim();
         //recqty= etqty.getText().toString().trim();
         if (!etqty.getText().toString().isEmpty()) {
             try {
@@ -523,7 +523,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
 
 
         if (intime.isEmpty() || serialnumber.isEmpty() || vehicalnumber.isEmpty() || invoicenum.isEmpty()
-                || date.isEmpty() || supplier.isEmpty() || material.isEmpty() || recqty < 0 || recqtyoum < 0
+                || date.isEmpty() || supplier.isEmpty() ||  recqty < 0 || recqtyoum < 0
                 || remark.isEmpty() || invqty.isEmpty() || invdate.isEmpty() || invNum.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
@@ -876,8 +876,8 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etsuppliername.setEnabled(false);
                         etserialnumber.setText(data.getSerialNo());
                         etserialnumber.setEnabled(false);
-                        etmaterial.setText(data.getMaterial());
-                        etmaterial.setEnabled(false);
+//                        etmaterial.setText(data.getMaterial());
+//                        etmaterial.setEnabled(false);
                         etmaterialrdate.setText(data.getDate());
                         etmaterialrdate.setEnabled(false);
                         etpo.setText(data.getOA_PO_number());
@@ -888,10 +888,10 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etinvnum.setEnabled(false);
                         etinvdate.setText(data.getDate());
                         etinvdate.setEnabled(false);
-                        etinvqty.setText(String.valueOf(data.getQty()));
-                        etinvqty.setEnabled(false);
-                        etinvqtyuom.setText(data.UnitOfMeasurement);
-                        etinvqtyuom.setEnabled(false);
+//                        etinvqty.setText(String.valueOf(data.getQty()));
+//                        etinvqty.setEnabled(false);
+//                        etinvqtyuom.setText(data.UnitOfMeasurement);
+//                        etinvqtyuom.setEnabled(false);
 //                        etextra.setText(data.getExtramaterials());
 //                        etextra.setEnabled(false);
 
@@ -900,6 +900,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
                         Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
                         createExtraMaterialViews(extraMaterials);
+
                     } else {
                         Toasty.error(Inward_Truck_Store.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

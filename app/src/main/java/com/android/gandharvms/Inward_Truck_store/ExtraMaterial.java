@@ -1,40 +1,40 @@
 package com.android.gandharvms.Inward_Truck_store;
 
 public class ExtraMaterial {
-    private String material;
-    private String qty;
-    private String qtyuom;
+    private String Material;
+    private String Qty;
+    private String Qtyuom;
     private String recivingqty;
 
     public ExtraMaterial(String material, String qty, String qtyuom, String recivingqty) {
-        this.material = material;
-        this.qty = qty;
-        this.qtyuom = qtyuom;
+        Material = material;
+        Qty = qty;
+        Qtyuom = qtyuom;
         this.recivingqty = recivingqty;
     }
 
     public String getMaterial() {
-        return material;
+        return Material;
     }
 
     public void setMaterial(String material) {
-        this.material = material;
+        Material = material;
     }
 
     public String getQty() {
-        return qty;
+        return Qty;
     }
 
     public void setQty(String qty) {
-        this.qty = qty;
+        Qty = qty;
     }
 
     public String getQtyuom() {
-        return qtyuom;
+        return Qtyuom;
     }
 
     public void setQtyuom(String qtyuom) {
-        this.qtyuom = qtyuom;
+        Qtyuom = qtyuom;
     }
 
     public String getRecivingqty() {
@@ -44,5 +44,4 @@ public class ExtraMaterial {
     public void setRecivingqty(String recivingqty) {
         this.recivingqty = recivingqty;
     }
-
 }

@@ -369,7 +369,7 @@ public class ir_in_sec_Completedgrid extends AppCompatActivity {
 
     private void setUpRecyclerView()
     {
-        irinsecgridadaptercomp = new ir_in_sec_CompletedgridAdapter(clubList);
+        irinsecgridadaptercomp = new ir_in_sec_CompletedgridAdapter(clubList,this);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);

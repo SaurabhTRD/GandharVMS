@@ -187,14 +187,26 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
+<!--    <TextView-->
+<!--        android:layout_width="150dp"-->
+<!--        android:id="@+id/irinsectextcoextramaterials"-->
+<!--        android:textStyle="bold"-->
+<!--        android:layout_marginStart="5dp"-->
+<!--        android:gravity="center|start"-->
+<!--        android:textColor="@android:color/black"-->
+<!--        android:layout_height="match_parent"/>-->
     <TextView
-        android:layout_width="150dp"
-        android:id="@+id/irinsectextcoextramaterials"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:id="@+id/txtEditClickLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonCancel"
+        android:layout_marginEnd="7dp"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="View Material"
+        android:textAlignment="textEnd"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
 
     <TextView
         android:layout_width="100dp"
