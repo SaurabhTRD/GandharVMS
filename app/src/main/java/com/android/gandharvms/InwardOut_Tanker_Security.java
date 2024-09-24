@@ -8,10 +8,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -23,13 +27,21 @@ import com.android.gandharvms.Inward_Tanker_Security.UpdateOutSecurityRequestMod
 import com.android.gandharvms.Inward_Tanker_Security.Update_Request_Model_Insequrity;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
+import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -43,7 +55,7 @@ import retrofit2.Response;
 
 public class InwardOut_Tanker_Security extends AppCompatActivity {
 
-    EditText edintime, etvehicle, etinvoice, etmaterial, etsupplier;
+    EditText edintime, etvehicle, etinvoice, etsupplier;
     Button submit;
     RadioButton Trasnportyes, transportno, deliveryes, deliveryno, taxyes, taxno, ewayyes, ewayno;
     String vehicltype = Global_Var.getInstance().MenuType;
@@ -72,7 +84,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         edintime = findViewById(R.id.etintime);
         etvehicle = findViewById(R.id.etvehicalnumber);
         etinvoice = findViewById(R.id.etsinvocieno);
-        etmaterial = findViewById(R.id.etsmaterial);
+        //etmaterial = findViewById(R.id.etsmaterial);
         etsupplier = findViewById(R.id.etssupplier);
         submit = findViewById(R.id.etssubmit);
 
@@ -161,8 +173,13 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
                         etvehicle.setEnabled(false);
                         etinvoice.setText(obj.getInvoiceNo());
                         etinvoice.setEnabled(false);
-                        etmaterial.setText(obj.getMaterial());
-                        etmaterial.setEnabled(false);
+                        String extraMaterialsJson = obj.getExtramaterials();
+                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+                        List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+                        createExtraMaterialViews(extraMaterials);
+                        //etmaterial.setText(obj.getMaterial());
+                        //etmaterial.setEnabled(false);
                         etsupplier.setText(obj.getPartyName());
                         etsupplier.setEnabled(false);
                     }else {
@@ -191,6 +208,97 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         });
     }
 
+    private List<ExtraMaterial> parseExtraMaterials(String jsonString) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            Log.e("JSON Parser", "JSON string is null or empty");
+            return new ArrayList<>(); // Return an empty list if JSON is invalid
+        }
+
+        try {
+            Log.d("JSON Parser", "JSON String: " + jsonString);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<ExtraMaterial>>() {}.getType();
+            return gson.fromJson(jsonString, listType);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
+            return new ArrayList<>(); // Return an empty list in case of parsing error
+        }
+    }
+    private void validateJson(String jsonString) {
+        try {
+            new JsonParser().parse(jsonString);
+            Log.d("JSON Validator", "Valid JSON: " + jsonString);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Validator", "Invalid JSON: " + jsonString, e);
+        }
+    }
+    public void createExtraMaterialViews(List<ExtraMaterial> extraMaterials) {
+        LinearLayout linearLayout = findViewById(R.id.layout_outsecuritylistmaterial); // Ensure this is the correct ID
+
+        // Clear previous views if any
+        linearLayout.removeAllViews();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            View materialView = getLayoutInflater().inflate(R.layout.allmaterial, null);
+
+            EditText materialEditText = materialView.findViewById(R.id.etallmaterialmet);
+            EditText qtyEditText = materialView.findViewById(R.id.etallmaterialqty);
+            Spinner uomSpinner = materialView.findViewById(R.id.allmaterialspinner_team);
+
+            materialEditText.setText(extraMaterial.getMaterial());
+            materialEditText.setEnabled(false);
+            qtyEditText.setText(extraMaterial.getQty());
+            qtyEditText.setEnabled(false);
+
+            List<String> teamList = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
+            uomSpinner.setAdapter(arrayAdapter);
+            uomSpinner.setEnabled(false);
+
+            setSpinnerValue(uomSpinner, extraMaterial.getQtyuom());
+
+            // Add the material view to the linear layout
+            linearLayout.addView(materialView);
+        }
+        String extraMaterialsString = convertExtraMaterialsListToString(extraMaterials);
+    }
+
+    private String convertExtraMaterialsListToString(List<ExtraMaterial> extraMaterials) {
+        StringBuilder result = new StringBuilder();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            String materialString = convertExtraMaterialToString(extraMaterial);
+
+            // Add this string to the result
+            result.append(materialString).append("\n"); // Separate entries by a newline or any other delimiter
+        }
+
+        return result.toString();
+    }
+
+    private String convertExtraMaterialToString(ExtraMaterial extraMaterial) {
+        String material = extraMaterial.getMaterial();
+        String qty = extraMaterial.getQty();
+        String qtyuom = extraMaterial.getQtyuom();
+
+        // Concatenate fields into a single string
+        return (material + "," + qty + "," + qtyuom);
+    }
+
+    private void setSpinnerValue(Spinner spinner, String value) {
+        SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (adapter.getItem(i).toString().equals(value)) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        } else {
+            Log.e("Spinner Error", "Spinner adapter is null");
+        }
+    }
+
     private void update() {
         String lrCopySelection = Trasnportyes.isChecked() ? "Yes" : "No";
         String deliverySelection = deliveryes.isChecked() ? "Yes" : "No";
@@ -198,13 +306,13 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         String ewayBillSelection = ewayyes.isChecked() ? "Yes" : "No";
         String outinintime = edintime.getText().toString().trim();
         String vehiclenumber = etvehicle.getText().toString().trim();
-        String material = etmaterial.getText().toString().trim();
+        //String material = etmaterial.getText().toString().trim();
         String supplier = etsupplier.getText().toString().trim();
         String invoice = etinvoice.getText().toString().trim();
 
         if (lrCopySelection.isEmpty() || deliverySelection.isEmpty() || taxInvoiceSelection.isEmpty() ||
                 ewayBillSelection.isEmpty() ||outinintime.isEmpty()||
-                vehiclenumber.isEmpty() || material.isEmpty() || supplier.isEmpty() || invoice.isEmpty()) {
+                vehiclenumber.isEmpty() || supplier.isEmpty() || invoice.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             UpdateOutSecurityRequestModel updateOutSecRequestModel = new UpdateOutSecurityRequestModel(outinintime,
@@ -258,6 +366,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
     }
 
     public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();

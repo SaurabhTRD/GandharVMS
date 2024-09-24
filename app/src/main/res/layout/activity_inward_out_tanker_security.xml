@@ -70,7 +70,15 @@
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
+            android:id="@+id/layout_outsecuritylistmaterial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+
+        </LinearLayout>
+        <!--<com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -88,7 +96,7 @@
                 android:textSize="17dp"
                 android:textStyle="bold"
                 />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

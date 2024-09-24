@@ -5,12 +5,14 @@ public class ExtraMaterial {
     private String Qty;
     private String Qtyuom;
     private String recivingqty;
+    private String recQtyUOM;
 
-    public ExtraMaterial(String material, String qty, String qtyuom, String recivingqty) {
+    public ExtraMaterial(String material, String qty, String qtyuom, String recivingqty,String receiQTYUom) {
         Material = material;
         Qty = qty;
         Qtyuom = qtyuom;
         this.recivingqty = recivingqty;
+        recQtyUOM=receiQTYUom;
     }
 
     public String getMaterial() {
@@ -43,5 +45,13 @@ public class ExtraMaterial {
 
     public void setRecivingqty(String recivingqty) {
         this.recivingqty = recivingqty;
+    }
+
+    public String getRecQtyUOM() {
+        return recQtyUOM;
+    }
+
+    public void setRecQtyUOM(String recQtyUOM) {
+        this.recQtyUOM = recQtyUOM;
     }
 }

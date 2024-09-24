@@ -54,7 +54,6 @@ public class   Respo_Model_In_Tanker_security {
     public String StoreOuttime;
     public String UnitOfNetWeight;
     public String UnitOfMeasurement;
-
     public String SecRemark;
 
     public String getSecRemark() {

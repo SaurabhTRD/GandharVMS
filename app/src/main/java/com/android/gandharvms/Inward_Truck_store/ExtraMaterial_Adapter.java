@@ -36,6 +36,8 @@ public class ExtraMaterial_Adapter extends RecyclerView.Adapter<ExtraMaterial_Ad
         holder.stroeqty.setText(String.valueOf(material.getQty()));
         holder.storeqtyuom.setText(material.getQtyuom());
         holder.stroerecqty.setText(material.getRecivingqty());
+        holder.storerecqtyuom.setText(material.getRecQtyUOM());
+
     }
 
     @Override
@@ -44,13 +46,14 @@ public class ExtraMaterial_Adapter extends RecyclerView.Adapter<ExtraMaterial_Ad
     }
 
     public class MaterialViewHolder extends RecyclerView.ViewHolder {
-        TextView stroematerial,stroeqty,storeqtyuom,stroerecqty;
+        TextView stroematerial,stroeqty,storeqtyuom,stroerecqty,storerecqtyuom;
         public MaterialViewHolder(@NonNull View itemView) {
             super(itemView);
             stroematerial = itemView.findViewById(R.id.etstorematerial);
             stroeqty = itemView.findViewById(R.id.etstroeqty);
             storeqtyuom = itemView.findViewById(R.id.etstoreunitofmeasurement);
             stroerecqty=itemView.findViewById(R.id.etstorereceiveqty);
+            storerecqtyuom=itemView.findViewById(R.id.etstorereceiveqtyuom);
         }
     }
 }

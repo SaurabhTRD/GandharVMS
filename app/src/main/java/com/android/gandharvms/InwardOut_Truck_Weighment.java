@@ -341,7 +341,8 @@ public class InwardOut_Truck_Weighment extends AppCompatActivity {
         }
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();

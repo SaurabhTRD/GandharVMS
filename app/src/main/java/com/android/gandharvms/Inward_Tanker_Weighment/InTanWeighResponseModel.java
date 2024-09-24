@@ -46,6 +46,25 @@ public class InTanWeighResponseModel {
     int Qty;
     public String OutInTime;
     public int SecNetWeightUOM;
+    public String Extramaterials;
+    public int SecNetWeight;
+    public String UnitOfNetWeight;
+
+    public int getSecNetWeight() {
+        return SecNetWeight;
+    }
+
+    public void setSecNetWeight(int secNetWeight) {
+        SecNetWeight = secNetWeight;
+    }
+
+    public String getUnitOfNetWeight() {
+        return UnitOfNetWeight;
+    }
+
+    public void setUnitOfNetWeight(String unitOfNetWeight) {
+        UnitOfNetWeight = unitOfNetWeight;
+    }
 
     public int getSecNetWeightUOM() {
         return SecNetWeightUOM;
@@ -325,5 +344,13 @@ public class InTanWeighResponseModel {
 
     public void setQty(int qty) {
         Qty = qty;
+    }
+
+    public String getExtramaterials() {
+        return Extramaterials;
+    }
+
+    public void setExtramaterials(String extramaterials) {
+        Extramaterials = extramaterials;
     }
 }

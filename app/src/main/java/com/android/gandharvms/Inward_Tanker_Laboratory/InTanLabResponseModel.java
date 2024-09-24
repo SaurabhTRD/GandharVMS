@@ -45,6 +45,7 @@ public class InTanLabResponseModel {
     public  int SecNetWeightUOM;
     public int SecNetWeight;
     public String UnitOfNetWeight;
+    public String Extramaterials;
 
     public String getUnitOfMeasurement() {
         return UnitOfMeasurement;
@@ -360,5 +361,13 @@ public class InTanLabResponseModel {
 
     public void setUnitOfNetWeight(String unitOfNetWeight) {
         UnitOfNetWeight = unitOfNetWeight;
+    }
+
+    public String getExtramaterials() {
+        return Extramaterials;
+    }
+
+    public void setExtramaterials(String extramaterials) {
+        Extramaterials = extramaterials;
     }
 }

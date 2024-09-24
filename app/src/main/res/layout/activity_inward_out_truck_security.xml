@@ -5,11 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".InwardOut_Truck_Security">
-
-
-
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="5dp"
         android:layout_marginTop="5dp"
@@ -92,7 +89,15 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
+            android:id="@+id/layout_irsecmateriallist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+        </LinearLayout>
+
+        <!--<com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -110,7 +115,7 @@
                 android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

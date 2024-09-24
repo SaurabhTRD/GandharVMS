@@ -167,8 +167,47 @@
                     android:ellipsize="end"
                     android:singleLine="true"
                     android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold">
+                    android:textSize="18dp">
+
+                </androidx.appcompat.widget.AppCompatTextView>
+
+            </LinearLayout>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/black"
+            android:layout_marginTop="0.5dp" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:orientation="horizontal">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ems="7"
+                    android:text="ReceiveQTYUOM"
+                    android:textSize="15dp" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/etstorereceiveqtyuom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/black"
+                    android:textSize="18dp">
 
                 </androidx.appcompat.widget.AppCompatTextView>
 

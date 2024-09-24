@@ -33,6 +33,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -47,6 +50,7 @@ import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
+import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
@@ -61,6 +65,7 @@ import com.android.gandharvms.Util.MultipartTask;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -72,10 +77,14 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -111,7 +120,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
-    EditText etint, etserialnumber, etvehicalno, etsuppliername, etmaterialname, etdriverno, etoano, etdate,
+    EditText etint, etserialnumber, etvehicalno, etsuppliername, etdriverno, etoano, etdate,
             etgrossweight, etremark, etsignby, etcontainer, etshortagedip, etshortageweight,etweighqty,qtyuom;
     Button wesubmit;
     FirebaseFirestore wedbroot;
@@ -163,7 +172,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         etserialnumber = findViewById(R.id.etserialnumber);
         etvehicalno = findViewById(R.id.etvehicalno);
         etsuppliername = findViewById(R.id.etsuppliername);
-        etmaterialname = findViewById(R.id.etmaterialname);
+        //etmaterialname = findViewById(R.id.etmaterialname);
         etdriverno = findViewById(R.id.etdriverno);
         etoano = findViewById(R.id.etoano);
         etdate = findViewById(R.id.etdate);
@@ -365,7 +374,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         String serialnumber = etserialnumber.getText().toString().trim();
         String vehicelnumber = etvehicalno.getText().toString().trim();
         String suppliername = etsuppliername.getText().toString().trim();
-        String materialname = etmaterialname.getText().toString().trim();
+        //String materialname = etmaterialname.getText().toString().trim();
         String driverno = etdriverno.getText().toString().trim();
         String oan = etoano.getText().toString().trim();
         String date = etdate.getText().toString().trim();
@@ -392,7 +401,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
 
 
-        if (intime.isEmpty() || serialnumber.isEmpty() || vehicelnumber.isEmpty() || suppliername.isEmpty() || materialname.isEmpty() ||
+        if (intime.isEmpty() || serialnumber.isEmpty() || vehicelnumber.isEmpty() || suppliername.isEmpty() ||
                 driverno.isEmpty() || oan.isEmpty() || grossweight.isEmpty() ||
                 signby.isEmpty() || container.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
@@ -531,6 +540,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
     }
 
     public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
@@ -551,16 +561,21 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                         etserialnumber.setEnabled(false);
                         etvehicalno.setText(data.getVehicleNo());
                         etvehicalno.setEnabled(false);
-                        etmaterialname.setText(data.getMaterial());
-                        etmaterialname.setEnabled(false);
+                        //etmaterialname.setText(data.getMaterial());
+                        //etmaterialname.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);
                         etsuppliername.setText(data.getPartyName());
                         etsuppliername.setEnabled(false);
-                        etweighqty.setText(data.getNetWeight());
+                        etweighqty.setText(data.getSecNetWeight());
                         etweighqty.setEnabled(false);
-                        qtyuom.setText(getWeightUnit(data.getSecNetWeightUOM()));
+                        qtyuom.setText(data.getUnitOfNetWeight());
                         qtyuom.setEnabled(false);
+                        String extraMaterialsJson = data.getExtramaterials();
+                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+                        List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+                        createExtraMaterialViews(extraMaterials);
                     }
                     else {
                         Toasty.error(Inward_Tanker_Weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
@@ -590,6 +605,98 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             }
         });
     }
+
+    private List<ExtraMaterial> parseExtraMaterials(String jsonString) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            Log.e("JSON Parser", "JSON string is null or empty");
+            return new ArrayList<>(); // Return an empty list if JSON is invalid
+        }
+
+        try {
+            Log.d("JSON Parser", "JSON String: " + jsonString);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<ExtraMaterial>>() {}.getType();
+            return gson.fromJson(jsonString, listType);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
+            return new ArrayList<>(); // Return an empty list in case of parsing error
+        }
+    }
+    private void validateJson(String jsonString) {
+        try {
+            new JsonParser().parse(jsonString);
+            Log.d("JSON Validator", "Valid JSON: " + jsonString);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Validator", "Invalid JSON: " + jsonString, e);
+        }
+    }
+    public void createExtraMaterialViews(List<ExtraMaterial> extraMaterials) {
+        LinearLayout linearLayout = findViewById(R.id.layout_materiallistweighment); // Ensure this is the correct ID
+
+        // Clear previous views if any
+        linearLayout.removeAllViews();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            View materialView = getLayoutInflater().inflate(R.layout.allmaterial, null);
+
+            EditText materialEditText = materialView.findViewById(R.id.etallmaterialmet);
+            EditText qtyEditText = materialView.findViewById(R.id.etallmaterialqty);
+            Spinner uomSpinner = materialView.findViewById(R.id.allmaterialspinner_team);
+
+            materialEditText.setText(extraMaterial.getMaterial());
+            materialEditText.setEnabled(false);
+            qtyEditText.setText(extraMaterial.getQty());
+            qtyEditText.setEnabled(false);
+
+            List<String> teamList = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
+            uomSpinner.setAdapter(arrayAdapter);
+            uomSpinner.setEnabled(false);
+
+            setSpinnerValue(uomSpinner, extraMaterial.getQtyuom());
+
+            // Add the material view to the linear layout
+            linearLayout.addView(materialView);
+        }
+        String extraMaterialsString = convertExtraMaterialsListToString(extraMaterials);
+    }
+
+    private String convertExtraMaterialsListToString(List<ExtraMaterial> extraMaterials) {
+        StringBuilder result = new StringBuilder();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            String materialString = convertExtraMaterialToString(extraMaterial);
+
+            // Add this string to the result
+            result.append(materialString).append("\n"); // Separate entries by a newline or any other delimiter
+        }
+
+        return result.toString();
+    }
+
+    private String convertExtraMaterialToString(ExtraMaterial extraMaterial) {
+        String material = extraMaterial.getMaterial();
+        String qty = extraMaterial.getQty();
+        String qtyuom = extraMaterial.getQtyuom();
+
+        // Concatenate fields into a single string
+        return (material + "," + qty + "," + qtyuom);
+    }
+
+    private void setSpinnerValue(Spinner spinner, String value) {
+        SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (adapter.getItem(i).toString().equals(value)) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        } else {
+            Log.e("Spinner Error", "Spinner adapter is null");
+        }
+    }
+
     private String getWeightUnit(int unitCode) {
         switch (unitCode) {
             case 1:

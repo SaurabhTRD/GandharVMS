@@ -419,12 +419,14 @@ public class Inward_Truck_Store extends AppCompatActivity {
                     EditText qtyEditText = childView.findViewById(R.id.editqty);
                     Spinner uomSpinner = childView.findViewById(R.id.spinner_team);
                     EditText recivingqty = childView.findViewById(R.id.recivingqty);
+                    Spinner recqtyuomSpinner = childView.findViewById(R.id.recuomspinner_team);
 
                     ExtraMaterial extraMaterial = new ExtraMaterial(
                             materialEditText.getText().toString().trim(),
                             qtyEditText.getText().toString().trim(),
                             uomSpinner.getSelectedItem().toString(),
-                            recivingqty.getText().toString().trim()
+                            recivingqty.getText().toString().trim(),
+                            recqtyuomSpinner.getSelectedItem().toString()
                     );
                     extraMaterials.add(extraMaterial); // Add the extraMaterial to the list
                 }
@@ -516,12 +518,14 @@ public class Inward_Truck_Store extends AppCompatActivity {
                 EditText qtyEditText = childView.findViewById(R.id.editqty);
                 Spinner uomSpinner = childView.findViewById(R.id.spinner_team);
                 EditText recivingqty = childView.findViewById(R.id.recivingqty);
+                Spinner recqtyuomSpinner = childView.findViewById(R.id.recuomspinner_team);
 
                 ExtraMaterial extraMaterial = new ExtraMaterial(
                         materialEditText.getText().toString().trim(),
                         qtyEditText.getText().toString().trim(),
                         uomSpinner.getSelectedItem().toString(),
-                        recivingqty.getText().toString().trim()
+                        recivingqty.getText().toString().trim(),
+                        recqtyuomSpinner.getSelectedItem().toString()
                 );
                 extraMaterials.add(extraMaterial); // Add the extraMaterial to the list
             }
@@ -636,18 +640,26 @@ public class Inward_Truck_Store extends AppCompatActivity {
             EditText qtyEditText = materialView.findViewById(R.id.editqty);
             Spinner uomSpinner = materialView.findViewById(R.id.spinner_team);
             EditText recivingqty = materialView.findViewById(R.id.recivingqty);
+            Spinner recuomSpinner = materialView.findViewById(R.id.recuomspinner_team);
+
 
             materialEditText.setText(extraMaterial.getMaterial());
             materialEditText.setEnabled(false);
             qtyEditText.setText(extraMaterial.getQty());
             qtyEditText.setEnabled(false);
 
-            List<String> teamList = Arrays.asList("Ton", "Litre", "KL","Kgs","Pcs"); // or fetch it dynamically
+            List<String> teamList = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
             uomSpinner.setAdapter(arrayAdapter);
             uomSpinner.setEnabled(false);
 
             setSpinnerValue(uomSpinner, extraMaterial.getQtyuom());
+
+            List<String> teamListrec = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
+            ArrayAdapter<String> arrayAdapterrec = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamListrec);
+            recuomSpinner.setAdapter(arrayAdapterrec);
+
+            setSpinnerValue(recuomSpinner, extraMaterial.getRecQtyUOM());
 
             // Add the material view to the linear layout
             linearLayout.addView(materialView);
@@ -673,9 +685,9 @@ public class Inward_Truck_Store extends AppCompatActivity {
         String qty = extraMaterial.getQty();
         String qtyuom = extraMaterial.getQtyuom();
         String reciving_qty = extraMaterial.getRecivingqty();
-
+        String receiqty_UOM=extraMaterial.getRecQtyUOM();
         // Concatenate fields into a single string
-        return (material + "," + qty + "," + qtyuom + "," + reciving_qty);
+        return (material + "," + qty + "," + qtyuom + "," + reciving_qty+"," +receiqty_UOM);
     }
 
     private void setSpinnerValue(Spinner spinner, String value) {
@@ -707,8 +719,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etsuppliername.setEnabled(false);
                         etserialnumber.setText(data.getSerialNo());
                         etserialnumber.setEnabled(false);
-//                        etmaterial.setText(data.getMaterial());
-//                        etmaterial.setEnabled(false);
                         etmaterialrdate.setText(data.getDate());
                         etmaterialrdate.setEnabled(false);
                         etpo.setText(data.getOA_PO_number());
@@ -719,12 +729,6 @@ public class Inward_Truck_Store extends AppCompatActivity {
                         etinvnum.setEnabled(false);
                         etinvdate.setText(data.getDate());
                         etinvdate.setEnabled(false);
-//                        etinvqty.setText(String.valueOf(data.getQty()));
-//                        etinvqty.setEnabled(false);
-//                        etinvqtyuom.setText(data.UnitOfMeasurement);
-//                        etinvqtyuom.setEnabled(false);
-//                        etextra.setText(data.getExtramaterials());
-//                        etextra.setEnabled(false);
 
                         String extraMaterialsJson = data.getExtramaterials();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);

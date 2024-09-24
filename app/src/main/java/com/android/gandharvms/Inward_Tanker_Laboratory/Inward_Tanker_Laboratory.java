@@ -20,6 +20,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -37,6 +40,7 @@ import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment_Viewdata;
+import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
 import com.android.gandharvms.LoginWithAPI.Laboratory;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
@@ -47,16 +51,22 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import org.apache.poi.hpsf.Decimal;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -84,7 +94,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
     ArrayAdapter<String> odorarray;
     EditText etintime, etserialnumber, etpsample, etvehiclenumber, etpapperance, etpodor, etpcolour, etpdensity,
             etqty, etPrcstest, etpkv, ethundred, etanline, etflash, etpaddtest, etpsamplere, etpremark, etpsignQc,
-            etpdatesignofsign, etMaterial, etsupplier, remarkdisc, etviscosity,etfetchSecQty,etfetchlabqtyoum;
+            etpdatesignofsign, etsupplier, remarkdisc, etviscosity,etfetchSecQty,etfetchlabqtyoum;
     Button etlabsub, updateclick;
     Button view, viewsamplereporting;
     TimePickerDialog tpicker;
@@ -215,7 +225,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         etpremark = (EditText) findViewById(R.id.etpremark);
         etpsignQc = (EditText) findViewById(R.id.etpsignQc);
         etpdatesignofsign = (EditText) findViewById(R.id.etpdatesignofsign);
-        etMaterial = (EditText) findViewById(R.id.et_materialname);
+        //etMaterial = (EditText) findViewById(R.id.et_materialname);
         etfetchSecQty=(EditText)findViewById(R.id.etfetchlabqty);
         etfetchlabqtyoum = findViewById(R.id.fetchlabqtyuomtanker);
 
@@ -592,7 +602,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         String signQc = etpsignQc.getText().toString().trim();
         String dateSignOfSign = etpdatesignofsign.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
-        String material = etMaterial.getText().toString().trim();
+        //String material = etMaterial.getText().toString().trim();
         String edsupplier = etsupplier.getText().toString().trim();
         String viscosity = etviscosity.getText().toString().trim();
         String disc = remarkdisc.getText().toString().trim();
@@ -601,7 +611,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                 color.isEmpty() || qty < 0 || anline < 0 || flash < 0 || densityinput.isEmpty() ||
                 rcsTest.isEmpty() || kv < 0 || disc.isEmpty() || addTest.isEmpty() ||
                 samplereceivingdate.isEmpty() || viscosity.isEmpty() ||
-                signQc.isEmpty() || dateSignOfSign.isEmpty() || material.isEmpty() || edsupplier.isEmpty()) {
+                signQc.isEmpty() || dateSignOfSign.isEmpty() || edsupplier.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             BigDecimal density = new BigDecimal(densityinput);
@@ -609,7 +619,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                     samplereceivingdate, apperance, odor, color, 0,  density,
                     rcsTest, kv, hundred, anline,
                     flash, addTest, samplereceivingdate, remark, signQc, dateSignOfSign,
-                    disc, Integer.parseInt(viscosity), EmployeId, EmployeId, vehicle, material,
+                    disc, Integer.parseInt(viscosity), EmployeId, EmployeId, vehicle, "material",
                     serialNumber, 'P', inOut, vehicleType, edsupplier);
             Call<Boolean> call = labdetails.insertLabData(labRequestModel);
             call.enqueue(new Callback<Boolean>() {
@@ -662,8 +672,13 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etserialnumber.setEnabled(false);
                         etsupplier.setText(data.getPartyName());
                         etsupplier.setEnabled(false);
-                        etMaterial.setText(data.getMaterial());
-                        etMaterial.setEnabled(false);
+                        //etMaterial.setText(data.getMaterial());
+                        //etMaterial.setEnabled(false);
+                        String extraMaterialsJson = data.getExtramaterials();
+                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+                        List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+                        createExtraMaterialViews(extraMaterials);
                         etpsample.setText(data.getDate());
                         etpsample.setEnabled(false);
                         etfetchSecQty.setText(String.valueOf(data.getSecNetWeight()));
@@ -671,6 +686,7 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etfetchlabqtyoum.setText(data.getUnitOfNetWeight());
                         etfetchlabqtyoum.setEnabled(false);
                         viewsamplereporting.setVisibility(View.VISIBLE);
+
                     } else {
                         Toasty.error(Inward_Tanker_Laboratory.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
@@ -699,6 +715,97 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
         });
     }
 
+    private List<ExtraMaterial> parseExtraMaterials(String jsonString) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            Log.e("JSON Parser", "JSON string is null or empty");
+            return new ArrayList<>(); // Return an empty list if JSON is invalid
+        }
+
+        try {
+            Log.d("JSON Parser", "JSON String: " + jsonString);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<ExtraMaterial>>() {}.getType();
+            return gson.fromJson(jsonString, listType);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
+            return new ArrayList<>(); // Return an empty list in case of parsing error
+        }
+    }
+    private void validateJson(String jsonString) {
+        try {
+            new JsonParser().parse(jsonString);
+            Log.d("JSON Validator", "Valid JSON: " + jsonString);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Validator", "Invalid JSON: " + jsonString, e);
+        }
+    }
+    public void createExtraMaterialViews(List<ExtraMaterial> extraMaterials) {
+        LinearLayout linearLayout = findViewById(R.id.layout_labotarylistmaterial); // Ensure this is the correct ID
+
+        // Clear previous views if any
+        linearLayout.removeAllViews();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            View materialView = getLayoutInflater().inflate(R.layout.allmaterial, null);
+
+            EditText materialEditText = materialView.findViewById(R.id.etallmaterialmet);
+            EditText qtyEditText = materialView.findViewById(R.id.etallmaterialqty);
+            Spinner uomSpinner = materialView.findViewById(R.id.allmaterialspinner_team);
+
+            materialEditText.setText(extraMaterial.getMaterial());
+            materialEditText.setEnabled(false);
+            qtyEditText.setText(extraMaterial.getQty());
+            qtyEditText.setEnabled(false);
+
+            List<String> teamList = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
+            uomSpinner.setAdapter(arrayAdapter);
+            uomSpinner.setEnabled(false);
+
+            setSpinnerValue(uomSpinner, extraMaterial.getQtyuom());
+
+            // Add the material view to the linear layout
+            linearLayout.addView(materialView);
+        }
+        String extraMaterialsString = convertExtraMaterialsListToString(extraMaterials);
+    }
+
+    private String convertExtraMaterialsListToString(List<ExtraMaterial> extraMaterials) {
+        StringBuilder result = new StringBuilder();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            String materialString = convertExtraMaterialToString(extraMaterial);
+
+            // Add this string to the result
+            result.append(materialString).append("\n"); // Separate entries by a newline or any other delimiter
+        }
+
+        return result.toString();
+    }
+
+    private String convertExtraMaterialToString(ExtraMaterial extraMaterial) {
+        String material = extraMaterial.getMaterial();
+        String qty = extraMaterial.getQty();
+        String qtyuom = extraMaterial.getQtyuom();
+
+        // Concatenate fields into a single string
+        return (material + "," + qty + "," + qtyuom);
+    }
+
+    private void setSpinnerValue(Spinner spinner, String value) {
+        SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (adapter.getItem(i).toString().equals(value)) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        } else {
+            Log.e("Spinner Error", "Spinner adapter is null");
+        }
+    }
+
     public void FetchVehicleDetailsforUpdate(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<InTanLabResponseModel> call = labdetails.getLabbyfetchVehData(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<InTanLabResponseModel>() {
@@ -714,8 +821,8 @@ public class Inward_Tanker_Laboratory extends AppCompatActivity {
                         etserialnumber.setEnabled(false);
                         etsupplier.setText(data.getPartyName());
                         etsupplier.setEnabled(false);
-                        etMaterial.setText(data.getMaterial());
-                        etMaterial.setEnabled(false);
+                        //etMaterial.setText(data.getMaterial());
+                        //etMaterial.setEnabled(false);
                         etpsample.setText(data.getDate());
                         etpsample.setEnabled(false);
                         etintime.setEnabled(false);

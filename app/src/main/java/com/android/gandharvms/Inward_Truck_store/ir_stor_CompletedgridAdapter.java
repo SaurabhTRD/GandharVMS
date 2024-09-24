@@ -209,8 +209,9 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
                 String Material = materialObject.getString("Material");
                 String Qty = materialObject.getString("Qty");
                 String Qtyuom = materialObject.getString("Qtyuom");
-                String Recivingqty= materialObject.getString("recivingqty");
-                extramaterialList.add(new ExtraMaterial(Material, Qty, Qtyuom,Recivingqty));
+                String Receivingqty= materialObject.getString("recivingqty");
+                String recqtyUOM = materialObject.getString("recQtyUOM");
+                extramaterialList.add(new ExtraMaterial(Material, Qty, Qtyuom,Receivingqty,recqtyUOM));
             }
         } catch (JSONException e) {
             e.printStackTrace();

@@ -50,7 +50,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="130dp"
+        android:layout_width="120dp"
         android:id="@+id/itinsectextcoVehicleNumber"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -62,7 +62,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="120dp"
         android:id="@+id/itinsectextcoInvoiceNo"
         android:textStyle="bold"
         android:layout_marginStart="5dp"

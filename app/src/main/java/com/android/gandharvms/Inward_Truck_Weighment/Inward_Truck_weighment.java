@@ -21,10 +21,14 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -38,6 +42,7 @@ import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
+import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
@@ -46,6 +51,7 @@ import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.Timestamp;
 
 import com.android.gandharvms.FcmNotificationsSender;
@@ -66,11 +72,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -92,7 +104,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private final int MAX_LENGTH=10;
 
-    EditText etint,etremark,etserialnumber,etcontainer,etvehicalnumber,etsupplier,etmaterial,etdriver,etoanumber,etdate,etgrossweight,etsignby;
+    EditText etint,etremark,etserialnumber,etcontainer,etvehicalnumber,etsupplier,etdriver,etoanumber,etdate,etgrossweight,etsignby;
 
     Button intsubmit;
     Button view;
@@ -147,7 +159,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         etserialnumber=(EditText) findViewById(R.id.ettrwserialnumber);
         etvehicalnumber=(EditText) findViewById(R.id.ettrwvehicalno);
         etsupplier=(EditText) findViewById(R.id.ettrwsupplier);
-        etmaterial=(EditText) findViewById(R.id.ettrwmaterial);
+        //etmaterial=(EditText) findViewById(R.id.ettrwmaterial);
         etdriver=(EditText) findViewById(R.id.ettrdriverno);
         etoanumber=(EditText) findViewById(R.id.ettroa);
         etdate= (EditText) findViewById(R.id.ettrdate);
@@ -302,7 +314,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         String serialnumber=etserialnumber.getText().toString().trim();
         String vehicalnumber=etvehicalnumber.getText().toString().trim();
         String supplier=etsupplier.getText().toString().trim();
-        String material=etmaterial.getText().toString().trim();
+        //String material=etmaterial.getText().toString().trim();
         String Driver = etdriver.getText().toString().trim();
         String oanumber = etoanumber.getText().toString().trim();
         String date = etdate.getText().toString().trim();
@@ -316,14 +328,14 @@ public class Inward_Truck_weighment extends AppCompatActivity {
 
 
         if ( intime.isEmpty()|| serialnumber.isEmpty()|| vehicalnumber.isEmpty()|| supplier.isEmpty()||
-                material.isEmpty()|| Driver.isEmpty() || oanumber.isEmpty()|| date.isEmpty()||
+                Driver.isEmpty() || oanumber.isEmpty()|| date.isEmpty()||
                 Grossweight.isEmpty()||container.isEmpty()|| remark.isEmpty() || signby.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
         }
         else {
             InTanWeighRequestModel weighReqModel=new InTanWeighRequestModel(inwardid,intime,outTime,Grossweight,tareweight,
                     netweight, remark,signby,container,imgPath1,imgPath2,serialnumber,
-                    vehicalnumber,date,supplier,material,oanumber,Driver,'R',inOut,vehicleType,
+                    vehicalnumber,date,supplier,"material",oanumber,Driver,'R',inOut,vehicleType,
                     EmployeId,EmployeId,"","","");
 
             Call<Boolean> call=weighmentdetails.insertWeighData(weighReqModel);
@@ -508,7 +520,8 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         }
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
+        super.onBackPressed();
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
@@ -531,8 +544,13 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                         etvehicalnumber.setEnabled(false);
                         etsupplier.setText(data.getPartyName());
                         etsupplier.setEnabled(false);
-                        etmaterial.setText(data.getMaterial());
-                        etmaterial.setEnabled(false);
+                        //etmaterial.setText(data.getMaterial());
+                        //etmaterial.setEnabled(false);
+                        String extraMaterialsJson = data.getExtramaterials();
+                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+                        List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+                        createExtraMaterialViews(extraMaterials);
                         etoanumber.setText(data.getOA_PO_number());
                         etoanumber.setEnabled(false);
                         etdriver.setText(String.valueOf(data.getDriver_MobileNo()));
@@ -566,6 +584,97 @@ public class Inward_Truck_weighment extends AppCompatActivity {
                 Toasty.error(Inward_Truck_weighment.this,"failed..!",Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private List<ExtraMaterial> parseExtraMaterials(String jsonString) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            Log.e("JSON Parser", "JSON string is null or empty");
+            return new ArrayList<>(); // Return an empty list if JSON is invalid
+        }
+
+        try {
+            Log.d("JSON Parser", "JSON String: " + jsonString);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<ExtraMaterial>>() {}.getType();
+            return gson.fromJson(jsonString, listType);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
+            return new ArrayList<>(); // Return an empty list in case of parsing error
+        }
+    }
+    private void validateJson(String jsonString) {
+        try {
+            new JsonParser().parse(jsonString);
+            Log.d("JSON Validator", "Valid JSON: " + jsonString);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Validator", "Invalid JSON: " + jsonString, e);
+        }
+    }
+    public void createExtraMaterialViews(List<ExtraMaterial> extraMaterials) {
+        LinearLayout linearLayout = findViewById(R.id.layout_trweighlistmaterial); // Ensure this is the correct ID
+
+        // Clear previous views if any
+        linearLayout.removeAllViews();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            View materialView = getLayoutInflater().inflate(R.layout.allmaterial, null);
+
+            EditText materialEditText = materialView.findViewById(R.id.etallmaterialmet);
+            EditText qtyEditText = materialView.findViewById(R.id.etallmaterialqty);
+            Spinner uomSpinner = materialView.findViewById(R.id.allmaterialspinner_team);
+
+            materialEditText.setText(extraMaterial.getMaterial());
+            materialEditText.setEnabled(false);
+            qtyEditText.setText(extraMaterial.getQty());
+            qtyEditText.setEnabled(false);
+
+            List<String> teamList = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
+            uomSpinner.setAdapter(arrayAdapter);
+            uomSpinner.setEnabled(false);
+
+            setSpinnerValue(uomSpinner, extraMaterial.getQtyuom());
+
+            // Add the material view to the linear layout
+            linearLayout.addView(materialView);
+        }
+        String extraMaterialsString = convertExtraMaterialsListToString(extraMaterials);
+    }
+
+    private String convertExtraMaterialsListToString(List<ExtraMaterial> extraMaterials) {
+        StringBuilder result = new StringBuilder();
+
+        for (ExtraMaterial extraMaterial : extraMaterials) {
+            String materialString = convertExtraMaterialToString(extraMaterial);
+
+            // Add this string to the result
+            result.append(materialString).append("\n"); // Separate entries by a newline or any other delimiter
+        }
+
+        return result.toString();
+    }
+
+    private String convertExtraMaterialToString(ExtraMaterial extraMaterial) {
+        String material = extraMaterial.getMaterial();
+        String qty = extraMaterial.getQty();
+        String qtyuom = extraMaterial.getQtyuom();
+
+        // Concatenate fields into a single string
+        return (material + "," + qty + "," + qtyuom);
+    }
+
+    private void setSpinnerValue(Spinner spinner, String value) {
+        SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (adapter.getItem(i).toString().equals(value)) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        } else {
+            Log.e("Spinner Error", "Spinner adapter is null");
+        }
     }
 
     public void WeighViewclick(View view){

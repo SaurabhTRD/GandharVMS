@@ -108,7 +108,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
     RadioButton lrcopyYes, lrcopyNo, deliveryYes, deliveryNo, taxinvoiceYes, taxinvoiceNo, ewaybillYes, ewaybillNo;
     ActivityResultLauncher<String> launcher;
     EditText etintime, etserialnumber, etvehicalnumber, etsinvocieno, etsdate, etssupplier,
-            etsmaterial, etsqty, etsuom, etsnetwt, etsuom2, etregister, repremark, etmobile, etoapo, etremark;
+             etsqty, etsuom, etsnetwt, etsuom2, etregister, repremark, etmobile, etoapo, etremark;
     Button wesubmit;
     Button view;
     FirebaseFirestore intrsdbroot;
@@ -269,7 +269,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
         etsinvocieno = findViewById(R.id.etsinvocieno);
         etsdate = findViewById(R.id.etsdate);
         etssupplier = findViewById(R.id.etssupplier);
-        etsmaterial = findViewById(R.id.etsmaterial);
+        //etsmaterial = findViewById(R.id.etsmaterial);
 //        etsqty = findViewById(R.id.etsqty);
 //        etsuom = findViewById(R.id.etsuom);
         etsnetwt = findViewById(R.id.etsnetwt);
@@ -287,11 +287,15 @@ public class Inward_Truck_Security extends AppCompatActivity {
         updbtnclick = findViewById(R.id.irinsecupdateclick);
         button1.setOnClickListener(this::onClick);
 
+        teamList.add("NA");
         teamList.add("Ton");
         teamList.add("Litre");
         teamList.add("KL");
         teamList.add("Kgs");
         teamList.add("Pcs");
+        teamList.add("M3");
+        teamList.add("Meter");
+        teamList.add("Feet");
 
 //        repremark = findViewById(R.id.edtreportingremark);
 //        cbox = findViewById(R.id.isreporting);
@@ -868,8 +872,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
                         etmobile.setEnabled(true);
                         etssupplier.setText(obj.getPartyName());
                         etssupplier.setEnabled(true);
-                        etsmaterial.setText(obj.getMaterial());
-                        etsmaterial.setEnabled(true);
+                        //etsmaterial.setText(obj.getMaterial());
+                        //etsmaterial.setEnabled(true);
                         etoapo.setText(obj.getOA_PO_number());
                         etoapo.setEnabled(true);
                         etsqty.setText(String.valueOf(obj.getQty()));
@@ -939,7 +943,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
         String invoice = etsinvocieno.getText().toString().trim();
         String drivermobile = etmobile.getText().toString().trim();
         String party = etssupplier.getText().toString().trim();
-        String material = etsmaterial.getText().toString().trim();
+        //String material = etsmaterial.getText().toString().trim();
         String oapo = etoapo.getText().toString().trim();
         String remark = etremark.getText().toString().trim();
         if (!etsnetwt.getText().toString().isEmpty()) {
@@ -977,7 +981,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
         String selectregister = etregister.getText().toString().trim();
 
-        if (intime.isEmpty() || drivermobile.isEmpty() || invoice.isEmpty() || party.isEmpty() || material.isEmpty() ||
+        if (intime.isEmpty() || drivermobile.isEmpty() || invoice.isEmpty() || party.isEmpty() ||
                 oapo.isEmpty() || remark.isEmpty() ||
                 insertqty < 0 || insertnetweight < 0 || insertqtyUom < 0 || insertnetweightUom < 0) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
@@ -1007,7 +1011,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                     }
                 }
             }
-            Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId, serialnumber, invoice, vehiclenumber, Date, party, material, oapo, drivermobile, 'W', 'I', Date,
+            Update_Request_Model_Insequrity requestModelInTankerSecurityupdate = new Update_Request_Model_Insequrity(InwardId, serialnumber, invoice, vehiclenumber, Date, party, "material", oapo, drivermobile, 'W', 'I', Date,
                     "", vehicltype, intime, outTime, insertqtyUom, insertnetweightUom, insertnetweight, insertqty, materialList.toString().replace("[]", ""), remark, selectregister, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection, EmployeId, "");
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
@@ -1057,7 +1061,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
         String invoice = etsinvocieno.getText().toString().trim();
         String drivermobile = etmobile.getText().toString().trim();
         String party = etssupplier.getText().toString().trim();
-        String material = etsmaterial.getText().toString().trim();
+        //String material = etsmaterial.getText().toString().trim();
         String oapo = etoapo.getText().toString().trim();
         String remark = etremark.getText().toString().trim();
         if (!etsnetwt.getText().toString().isEmpty()) {

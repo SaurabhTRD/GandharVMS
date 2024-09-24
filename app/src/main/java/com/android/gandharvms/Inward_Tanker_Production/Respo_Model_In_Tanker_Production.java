@@ -23,6 +23,15 @@ public class Respo_Model_In_Tanker_Production {
     private String PartyName;
     private String Material;
     private int Qty;
+    public String Extramaterials;
+
+    public String getExtramaterials() {
+        return Extramaterials;
+    }
+
+    public void setExtramaterials(String extramaterials) {
+        Extramaterials = extramaterials;
+    }
 
     public int getId() {
         return Id;
