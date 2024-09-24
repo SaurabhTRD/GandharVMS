@@ -340,6 +340,16 @@ public class Outward_Tanker_Security extends AppCompatActivity {
             }
         });
     }
+    public void Notificationforall(String vehicleNumber) {
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                "/topics/all",
+                "Vehicle Entry in Factory for Outward Tanker Process",
+                "This Vehicle:-" + vehicleNumber + " Entry in Factory for Outward Tanker Process",
+                getApplicationContext(),
+                Outward_Tanker_Security.this
+        );
+        notificationsSender.triggerSendNotification();
+    }
     public void productionnotification(String vehicleNumber, String outTime){
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
@@ -593,6 +603,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true) {
+                        Notificationforall(etvehiclnum);
                         makeNotification(etvehiclnum, outTime);
                         productionnotification(etvehiclnum, outTime );
                         Toasty.success(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();

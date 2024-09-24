@@ -580,6 +580,16 @@ public class Inward_Truck_Security extends AppCompatActivity {
             }
         });
     }
+    public void Notificationforall(String vehicleNumber) {
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                "/topics/all",
+                "Vehicle Entry in Factory for Inward Truck Process",
+                "This Vehicle:-" + vehicleNumber + " Entry in Factory for Inward Truck Process",
+                getApplicationContext(),
+                Inward_Truck_Security.this
+        );
+        notificationsSender.triggerSendNotification();
+    }
 
     public void trsedata() {
         String serialnumber = etserialnumber.getText().toString().trim();
@@ -682,6 +692,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body()) {
+                        Notificationforall(vehicalnumber);
                         makeNotification(vehicalnumber, outTime);
                         Toasty.success(Inward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Truck_Security.this, Inward_Truck.class));

@@ -563,6 +563,17 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         });
     }
 
+    public void Notificationforall(String vehicleNumber) {
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                "/topics/all",
+                "Vehicle Entry in Factory for Inward Tanker Process",
+                "This Vehicle:-" + vehicleNumber + " Entry in Factory for Inward Tanker Process",
+                getApplicationContext(),
+                Inward_Tanker_Security.this
+        );
+        notificationsSender.triggerSendNotification();
+    }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -1168,6 +1179,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
+                        Notificationforall(vehiclenumber);
                         makeNotification(vehiclenumber, outTime);
                         Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully..!", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
