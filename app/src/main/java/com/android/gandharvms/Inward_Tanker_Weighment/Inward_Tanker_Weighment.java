@@ -567,7 +567,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
                         etdate.setEnabled(false);
                         etsuppliername.setText(data.getPartyName());
                         etsuppliername.setEnabled(false);
-                        etweighqty.setText(data.getSecNetWeight());
+                        etweighqty.setText(String.valueOf(data.getSecNetWeight()));
                         etweighqty.setEnabled(false);
                         qtyuom.setText(data.getUnitOfNetWeight());
                         qtyuom.setEnabled(false);

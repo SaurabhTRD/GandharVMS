@@ -26,6 +26,7 @@ import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.R;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -68,6 +69,9 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
+
         newlseralnum = findViewById(R.id.etnewlserialnumber);
         newlvehiclenum = findViewById(R.id.etnewlvehicleno);
         newloanum = findViewById(R.id.etnewloanumer);

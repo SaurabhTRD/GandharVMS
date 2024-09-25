@@ -89,7 +89,7 @@
         android:autoLink="web"
         android:linksClickable="true"
         android:text="View Material"
-        android:textAlignment="textEnd"
+        android:gravity="center|start"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="17dp" />
 

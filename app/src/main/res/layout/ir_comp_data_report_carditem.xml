@@ -60,13 +60,15 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="120dp"
         android:id="@+id/textcoirreportMaterial"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="View Material"
         android:gravity="center|start"
-        android:layout_marginStart="5dp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
 
     <TextView
         android:layout_width="120dp"
@@ -131,14 +133,14 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <!--<TextView
         android:layout_width="120dp"
         android:id="@+id/textcoirreportextramaterials"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <TextView
         android:layout_width="120dp"
@@ -308,7 +310,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <!--<TextView
         android:layout_width="130dp"
         android:id="@+id/textcoirreportReceiveQTY"
         android:textStyle="bold"
@@ -324,16 +326,18 @@
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <TextView
-        android:layout_width="140dp"
         android:id="@+id/textcoirreportStoreExtramaterials"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="View Material"
         android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
 
     <TextView
         android:layout_width="130dp"

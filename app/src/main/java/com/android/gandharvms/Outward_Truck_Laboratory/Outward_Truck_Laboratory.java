@@ -34,6 +34,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -94,6 +95,7 @@ public class Outward_Truck_Laboratory extends AppCompatActivity {
             }
         });
 
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         intime.setOnClickListener(new View.OnClickListener() {
             @Override

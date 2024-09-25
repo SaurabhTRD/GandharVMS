@@ -40,6 +40,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -93,6 +94,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
         outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
         userDetails = RetroApiClient.getLoginApi();
 
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 //        autoCompleteTextView = findViewById(R.id.typepacking);
 
 //        adapterItems = new ArrayAdapter<String>(this,R.layout.dropdown_outward_truck_dispatch,items);

@@ -105,7 +105,8 @@ public class it_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_in_s
         holder.oapo.setText(club.getOA_PO_number());
         holder.mob.setText(club.getDriver_MobileNo());
 
-        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+        holder.vehiclenum.setText(club.getVehicleNo());
+        /*new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CommonResponseModelForAllDepartment club = filteredGridList.get(position);
@@ -115,7 +116,7 @@ public class it_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_in_s
                 intent.putExtra("Action","Up");
                 view.getContext().startActivity(intent);
             }
-        });
+        });*/
     }
     public int getItemCount() {
         return Gridmodel.size();

@@ -201,7 +201,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
 //        });
 
         //Send Notification to all
-        FirebaseMessaging.getInstance().subscribeToTopic(token);
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         regAutoCompleteTextView = findViewById(R.id.etregister);
         registeritem = new ArrayAdapter<String>(this, R.layout.security_registerlist, regitems);

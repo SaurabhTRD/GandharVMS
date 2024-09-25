@@ -25,576 +25,577 @@
         android:layout_height="40dp">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:background="@color/navyblue"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/navyblue"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportSecInTime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="SecInTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportSecOuttime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="SecOuttime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportdate"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Date"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportSerialNumber"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Serial No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportVehicleNumber"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Vehicle No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportInvoiceNo"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="InvoiceNo"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportMaterial"
-                android:gravity="center|start"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
-                android:textStyle="bold"
+                android:gravity="center|start"
                 android:text="Material"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportpartyname"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Supplier"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportmob"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Driver Mob"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportoapo"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="OA/PO No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportqty"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="QTY"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportqtyuom"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="QTYUOM"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportnetweight"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="NetWeight"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportnetweightuom"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="NetWeightUOM"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="120dp"
+            <!--<TextView
                 android:id="@+id/textcoirreportextramaterials"
-                android:textStyle="bold"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="ExtraMaterials"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />-->
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportsecremark"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="SecRemark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportIrCopy"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="LrCopy"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportDeliveryBill"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="DeliveryBill"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportTaxInvoice"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="TaxInvoice"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportEwayBill"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="EwayBill"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportselectRegister"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="SelectRegister"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportWeiIntime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="WeiInTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportWeiOuttime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="WeiOutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportgrossweight"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="GrossWeight"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportcontainerno"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="ContainerNo"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textColor="@android:color/white" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportweiremark"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="WeiRemark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportsighby"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="SignBy"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textcoirreportInVehicleImage"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
+                android:gravity="center|start"
                 android:text="InVehicleImage"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:gravity="center|start"/>
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/textcoirreportInDriverImage"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
+                android:gravity="center|start"
                 android:text="InDriverImage"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:gravity="center|start"/>
+                android:textColor="@android:color/white" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportstoreIntime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="storeIntime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportstoreOuttime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="storeOuttime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportMaRedate"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="MaterialReceiveDate"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportOAPOdate"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="OAPODate"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportinvdate"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="InvoiceDate"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="130dp"
+            <!--<TextView
                 android:id="@+id/textcoirreportReceiveQTY"
-                android:textStyle="bold"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="ReceiveQTY"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="140dp"
                 android:id="@+id/textcoirreportReceiveQTYUOM"
-                android:textStyle="bold"
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="ReceiveQTYUOM"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />-->
 
             <TextView
-                android:layout_width="140dp"
                 android:id="@+id/textcoirreportStoreExtramaterials"
-                android:textStyle="bold"
+                android:layout_width="140dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="StoreExtramaterials"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="130dp"
                 android:id="@+id/textcoirreportstoreremark"
-                android:textStyle="bold"
+                android:layout_width="130dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="StoreRemark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportOutWeiInTime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="OutWeiInTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportOutWeiOutTime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="OutWeiOutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreporttareweight"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="TareWeight"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportweinetWeight"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="NetWeight"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportshortagedip"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="ShortageDip"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
+
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportshortageweight"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="ShortageWeight"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/textcoirreportOutVehicleImage"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
+                android:gravity="center|start"
                 android:text="OutVehicleImage"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:gravity="center|start"/>
+                android:textColor="@android:color/white" />
 
             <TextView
                 android:id="@+id/textcoirreportOutDriverImage"
                 android:layout_width="120dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
+                android:gravity="center|start"
                 android:text="OutDriverImage"
                 android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:gravity="center|start"/>
+                android:textColor="@android:color/white" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportOutSecInTime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="OutSecInTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportOutSecOutTime"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="OutSecOutTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportverIrCopy"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Verified-LRCopy"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportverDeliveryBill"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Verified-DeliveryBill"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportverTaxInvoice"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Verified-TaxInvoice"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="120dp"
                 android:id="@+id/textcoirreportverEwayBill"
-                android:textStyle="bold"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Verified-EwayBill"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 

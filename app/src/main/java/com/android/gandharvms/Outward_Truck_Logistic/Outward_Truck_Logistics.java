@@ -43,6 +43,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -107,6 +108,8 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
 
         customername = findViewById(R.id.etcustomername);
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         submit = findViewById(R.id.etssubmit);
         btnlogisticcompletd = findViewById(R.id.outwardtruckcompletedlogistic);

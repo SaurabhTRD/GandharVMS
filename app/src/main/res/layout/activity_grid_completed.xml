@@ -151,7 +151,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-            <TextView
+            <!--<TextView
                 android:layout_width="120dp"
                 android:id="@+id/textcoitreportextramaterials"
                 android:textStyle="bold"
@@ -160,7 +160,7 @@
                 android:text="ExtraMaterials"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
                 android:layout_width="120dp"

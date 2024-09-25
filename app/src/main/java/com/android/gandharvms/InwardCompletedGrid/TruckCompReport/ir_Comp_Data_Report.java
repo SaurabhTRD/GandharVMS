@@ -69,7 +69,7 @@ public class ir_Comp_Data_Report extends AppCompatActivity {
         setContentView(R.layout.activity_ir_comp_data_report);
 
         totrec = findViewById(R.id.totrecdepartmentwise);
-        fromdate = "2024-01-01";
+        fromdate = getCurrentDateTime();
         todate = getCurrentDateTime();
 
         initViews();

@@ -35,6 +35,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -79,7 +80,7 @@ public class Outward_Truck_Billing extends AppCompatActivity {
         userDetails = RetroApiClient.getLoginApi();
 
         outwardTruckProductionInterface = Outward_RetroApiclient.outwardTruckProductionInterface();
-
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
         vehiclenumber = findViewById(R.id.etvehicleno);

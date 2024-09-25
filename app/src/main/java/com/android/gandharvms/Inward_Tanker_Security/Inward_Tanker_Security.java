@@ -204,7 +204,8 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 //        });
 
         //Send Notification to all
-        FirebaseMessaging.getInstance().subscribeToTopic(token);
+        //FirebaseMessaging.getInstance().subscribeToTopic(token);
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         //uom and netwe dropdown
         //autoCompleteTextView1 = findViewById(R.id.qtyuomtanker);
@@ -283,11 +284,15 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
         //dbbutton = findViewById(R.id.dbview);
 
 
-        teamList.add(0, "Ton");
-        teamList.add(1, "Litre");
-        teamList.add(2, "KL");
-        teamList.add(3, "Kgs");
-        teamList.add(4, "Pcs");
+        teamList.add("NA");
+        teamList.add("Ton");
+        teamList.add("Litre");
+        teamList.add("KL");
+        teamList.add("Kgs");
+        teamList.add("Pcs");
+        teamList.add("M3");
+        teamList.add("Meter");
+        teamList.add("Feet");
 
 //        listdata button
         /*dbbutton.setOnClickListener(new View.OnClickListener() {

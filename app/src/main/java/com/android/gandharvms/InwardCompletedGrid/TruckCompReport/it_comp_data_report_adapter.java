@@ -1,7 +1,9 @@
 package com.android.gandharvms.InwardCompletedGrid.TruckCompReport;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +14,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.InwardCompletedGrid.gridadaptercompleted;
+import com.android.gandharvms.Inward_Truck_Security.Material_Adapter;
+import com.android.gandharvms.Inward_Truck_Security.matriallist;
+import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
+import com.android.gandharvms.Inward_Truck_store.ExtraMaterial_Adapter;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -77,7 +88,13 @@ public class it_comp_data_report_adapter extends RecyclerView.Adapter<it_comp_da
         holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.invoiceno.setText(club.getInvoiceNo());
-        holder.material.setText(club.getMaterial());
+        //holder.material.setText(club.getMaterial());
+        holder.material.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMaterialDialog_InwardTanker(view, club.getExtramaterials());
+            }
+        });
         holder.partyname.setText(club.getPartyName());
         holder.mob.setText(club.getDriver_MobileNo());
         holder.oapo.setText(club.getOA_PO_number());
@@ -85,7 +102,7 @@ public class it_comp_data_report_adapter extends RecyclerView.Adapter<it_comp_da
         holder.qtyuom.setText(club.getUnitOfQTY());
         holder.netweight.setText(String.valueOf(club.getNetWeight()));
         holder.netweightuom.setText(club.getUnitOfNetWeight());
-        holder.extramaterials.setText(club.getExtramaterials());
+        //holder.extramaterials.setText(club.getExtramaterials());
         holder.secremark.setText(club.getSecRemark());
         holder.IrCopy.setText(club.getIrCopy());
         holder.DeliveryBill.setText(club.getDeliveryBill());
@@ -122,9 +139,15 @@ public class it_comp_data_report_adapter extends RecyclerView.Adapter<it_comp_da
         holder.oapodate.setText(formattedDate);
         holder.invoicedate.setText(formattedDate);
         String recqty=String.format("%.4f", club.getReceiveQTY() / 100.0);
-        holder.ReceiveQTY.setText(recqty);
-        holder.ReQTYUom.setText(club.getReQTYUom());
-        holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
+        //holder.ReceiveQTY.setText(recqty);
+        //holder.ReQTYUom.setText(club.getReQTYUom());
+        //holder.StoreExtramaterials.setText(club.getStoreExtramaterials());
+        holder.StoreExtramaterials.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMaterialDialog(view, club.getStoreExtramaterials());
+            }
+        });
         holder.storeremark.setText(club.getStorRemark());
 
         String outweiIntime = club.getOutWeiInTime()!=null ? club.getOutWeiInTime() : "";
@@ -198,11 +221,11 @@ public class it_comp_data_report_adapter extends RecyclerView.Adapter<it_comp_da
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
         TextView secIntime,secOuttime,date,sernum, vehiclenum, invoiceno,material,partyname,mob,oapo,qty,qtyuom,
-                netweight,netweightuom,extramaterials,secremark,IrCopy,DeliveryBill,TaxInvoice,EwayBill,selectregister,
+                netweight,netweightuom,secremark,IrCopy,DeliveryBill,TaxInvoice,EwayBill,selectregister,
                 weiIntime,weiOuttime,grossweight,containerno,weiremark, sighby;
         ImageView invehicleimage,indriverimage;
 
-        TextView storeintime,storeouttime,matreialdate,oapodate,invoicedate,ReceiveQTY,ReQTYUom,StoreExtramaterials,
+        TextView storeintime,storeouttime,matreialdate,oapodate,invoicedate,StoreExtramaterials,
                 storeremark,
                 outWeiInTime,outWeiOutTime,tareweight,weinetWeight,shortagedip,shortageweight;
         ImageView outvehicleimage,outdriverimage;
@@ -217,6 +240,7 @@ public class it_comp_data_report_adapter extends RecyclerView.Adapter<it_comp_da
             vehiclenum = view.findViewById(R.id.textcoirreportVehicleNumber);
             invoiceno=view.findViewById(R.id.textcoirreportInvoiceNo);
             material = view.findViewById(R.id.textcoirreportMaterial);
+            material.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             partyname=view.findViewById(R.id.textcoirreportpartyname);
             mob=view.findViewById(R.id.textcoirreportmob);
             oapo=view.findViewById(R.id.textcoirreportoapo);
@@ -224,7 +248,7 @@ public class it_comp_data_report_adapter extends RecyclerView.Adapter<it_comp_da
             qtyuom=view.findViewById(R.id.textcoirreportqtyuom);
             netweight=view.findViewById(R.id.textcoirreportnetweight);
             netweightuom=view.findViewById(R.id.textcoirreportnetweightuom);
-            extramaterials=view.findViewById(R.id.textcoirreportextramaterials);
+            //extramaterials=view.findViewById(R.id.textcoirreportextramaterials);
             secremark=view.findViewById(R.id.textcoirreportsecremark);
             IrCopy=view.findViewById(R.id.textcoirreportIrCopy);
             DeliveryBill=view.findViewById(R.id.textcoirreportDeliveryBill);
@@ -246,9 +270,10 @@ public class it_comp_data_report_adapter extends RecyclerView.Adapter<it_comp_da
             matreialdate=view.findViewById(R.id.textcoirreportMaRedate);
             oapodate=view.findViewById(R.id.textcoirreportOAPOdate);
             invoicedate=view.findViewById(R.id.textcoirreportinvdate);
-            ReceiveQTY=view.findViewById(R.id.textcoirreportReceiveQTY);
-            ReQTYUom=view.findViewById(R.id.textcoirreportReceiveQTYUOM);
+            //ReceiveQTY=view.findViewById(R.id.textcoirreportReceiveQTY);
+            //ReQTYUom=view.findViewById(R.id.textcoirreportReceiveQTYUOM);
             StoreExtramaterials=view.findViewById(R.id.textcoirreportStoreExtramaterials);
+            StoreExtramaterials.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             storeremark=view.findViewById(R.id.textcoirreportstoreremark);
 
             outWeiInTime=view.findViewById(R.id.textcoirreportOutWeiInTime);
@@ -267,6 +292,80 @@ public class it_comp_data_report_adapter extends RecyclerView.Adapter<it_comp_da
             verTaxInvoice=view.findViewById(R.id.textcoirreportverTaxInvoice);
             verEwayBill=view.findViewById(R.id.textcoirreportverEwayBill);
         }
+    }
+
+    private void showMaterialDialog_InwardTanker(View view, String jsonMaterials) {
+        // Parse the JSON list of extra materials
+        List<matriallist> materialList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonMaterials);
+            for (int i = 0; i < jsonArray.length(); i++) {
+//                materialList.add(jsonArray.getString(i));
+                JSONObject materialObject = jsonArray.getJSONObject(i);
+                String Material = materialObject.getString("Material");
+                int Qty = materialObject.getInt("Qty");
+                String Qtyuom = materialObject.getString("Qtyuom");
+                materialList.add(new matriallist(Material, Qty, Qtyuom));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Create a dialog to show the list of materials
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Extra Materials");
+
+        // Inflate the layout with a RecyclerView
+        View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.material_dialog, null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewDialog);
+
+        // Set up the RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        Material_Adapter adapter = new Material_Adapter(materialList); // Pass the material list
+        recyclerView.setAdapter(adapter);
+
+        // Set the view and show the dialog
+        builder.setView(dialogView);
+        builder.setPositiveButton("Close", null);
+        builder.show();
+    }
+
+    private void showMaterialDialog(View view, String jsonMaterials) {
+        // Parse the JSON list of extra materials
+        List<ExtraMaterial> extramaterialList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonMaterials);
+            for (int i = 0; i < jsonArray.length(); i++) {
+//                materialList.add(jsonArray.getString(i));
+                JSONObject materialObject = jsonArray.getJSONObject(i);
+                String Material = materialObject.getString("Material");
+                String Qty = materialObject.getString("Qty");
+                String Qtyuom = materialObject.getString("Qtyuom");
+                String Receivingqty= materialObject.getString("recivingqty");
+                String recqtyUOM = materialObject.getString("recQtyUOM");
+                extramaterialList.add(new ExtraMaterial(Material, Qty, Qtyuom,Receivingqty,recqtyUOM));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Create a dialog to show the list of materials
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(view.getContext());
+        builder.setTitle("Extra Materials");
+
+        // Inflate the layout with a RecyclerView
+        View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.material_dialog, null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewDialog);
+
+        // Set up the RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        ExtraMaterial_Adapter adapter = new ExtraMaterial_Adapter(extramaterialList); // Pass the material list
+        recyclerView.setAdapter(adapter);
+
+        // Set the view and show the dialog
+        builder.setView(dialogView);
+        builder.setPositiveButton("Close", null);
+        builder.show();
     }
 
     private String formatDate(String inputDate) {

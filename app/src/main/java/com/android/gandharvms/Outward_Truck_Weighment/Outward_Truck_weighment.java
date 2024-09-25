@@ -45,6 +45,7 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -118,6 +119,8 @@ public class Outward_Truck_weighment extends AppCompatActivity {
 
 
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
+
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);

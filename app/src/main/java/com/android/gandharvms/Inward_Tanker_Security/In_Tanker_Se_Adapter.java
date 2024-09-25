@@ -44,37 +44,6 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
     @Override
     public void onBindViewHolder(@NonNull  In_Tanker_Se_Adapter.myviewHolder holder, int position) {
         CommonResponseModelForAllDepartment data = listingResponseInTankerSec.get(position);
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
-
-//        holder.serialnumber.setText(inTankerSecurityListArrayList.get(position).getSerialNumber());
-//        holder.vehiclenumber.setText(inTankerSecurityListArrayList.get(position).getVehicalnumber());
-//        holder.invoiceno.setText(inTankerSecurityListArrayList.get(position).getInvoiceno());
-//        if (data.getDate() != null){
-//            holder.date.setText(data.getdate());
-//        }
-////        holder.date.setText(dateFormat.format(inTankerSecurityListArrayList.get(position).getDate().toDate()));
-//        holder.partyname.setText(inTankerSecurityListArrayList.get(position).getPartyname());
-//        holder.material.setText(inTankerSecurityListArrayList.get(position).getMaterial());
-//        holder.qty.setText(inTankerSecurityListArrayList.get(position).getQty());
-//        holder.uom.setText(inTankerSecurityListArrayList.get(position).getUom());
-//        holder.netweight.setText(inTankerSecurityListArrayList.get(position).getNetweight());
-//        if (data.getInTime() != null){
-//            holder.intime.setText(data.getInTime());
-//        }
-//        holder.intime.setText(inTankerSecurityListArrayList.get(position).getIntime());
-//        if (data.getOutTime()!= null){
-//            holder.outTime.setText(data.getOutTime());
-//        }
-////        holder.outTime.setText(inTankerSecurityListArrayList.get(position).getOuttime());
-//        holder.qtyuom.setText(inTankerSecurityListArrayList.get(position).getQtyuom());
-//        holder.netweightuom.setText(inTankerSecurityListArrayList.get(position).getNetweightuom());
-//        holder.extramaterials.setText(inTankerSecurityListArrayList.get(position).getExtramaterials());
-//
-//        holder.remark.setText(inTankerSecurityListArrayList.get(position).getRemark());
-//        holder.oapo.setText(inTankerSecurityListArrayList.get(position).getOA_PO_Number());
-//        holder.mob.setText(inTankerSecurityListArrayList.get(position).getDriver_Mobile_No());
-//        holder.reoprtingre.setText(inTankerSecurityListArrayList.get(position).getReporting_Remark());
-
         holder.serialnumber.setText(data.getSerialNo());
         holder.vehiclenumber.setText(data.getVehicleNo());
         holder.invoiceno.setText(data.getInvoiceNo());
@@ -83,10 +52,6 @@ public class In_Tanker_Se_Adapter extends RecyclerView.Adapter<In_Tanker_Se_Adap
         }
         holder.partyname.setText(data.getPartyName());
         holder.material.setText(data.getMaterial());
-//        holder.qty.setText(data.getQty());
-//        holder.qtyuom.setText(data.getQtyUOM());
-//        holder.netweight.setText(data.getNetWeight());
-//        holder.netweightuom.setText(data.getNetWeightUOM());
         if (data.getInTime() != null){
             holder.intime.setText(data.getInTime());
         }

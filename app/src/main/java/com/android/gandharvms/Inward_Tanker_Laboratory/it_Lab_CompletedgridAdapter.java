@@ -1,8 +1,10 @@
 package com.android.gandharvms.Inward_Tanker_Laboratory;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,12 +14,19 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.Inward_Truck_Security.Material_Adapter;
+import com.android.gandharvms.Inward_Truck_Security.matriallist;
 import com.android.gandharvms.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -74,7 +83,13 @@ public class it_Lab_CompletedgridAdapter extends RecyclerView.Adapter<it_Lab_Com
         int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
         holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
-        holder.material.setText(club.getMaterial());
+        //holder.material.setText(club.getMaterial());
+        holder.material.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMaterialDialog_InwardTanker(view, club.getExtramaterials());
+            }
+        });
         holder.partyname.setText(club.getPartyName());
         if (intimelength > 0) {
             holder.intime.setText(club.getInTime().substring(12, intimelength));
@@ -104,7 +119,8 @@ public class it_Lab_CompletedgridAdapter extends RecyclerView.Adapter<it_Lab_Com
         holder.DateAndTime.setText(club.getDateAndTime());
         holder.RemarkDescription.setText(club.getRemarkDescription());
         holder.ViscosityIndex.setText(String.valueOf(club.getViscosityIndex()));
-        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+        holder.vehiclenum.setText(club.getVehicleNo());
+        /*holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CommonResponseModelForAllDepartment club = filteredGridList.get(position);
@@ -114,7 +130,7 @@ public class it_Lab_CompletedgridAdapter extends RecyclerView.Adapter<it_Lab_Com
                 intent.putExtra("Action","Up");
                 view.getContext().startActivity(intent);
             }
-        });
+        });*/
     }
     public int getItemCount() {
         return Gridmodel.size();
@@ -163,6 +179,7 @@ public class it_Lab_CompletedgridAdapter extends RecyclerView.Adapter<it_Lab_Com
             vehiclenum = view.findViewById(R.id.itLabtextcoVehicleNumber);
             sernum = view.findViewById(R.id.itLabtextcoSerialNumber);
             material = view.findViewById(R.id.itLabtextcoMaterial);
+            material.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             partyname=view.findViewById(R.id.itLabtextcopartyname);
             intime =view.findViewById(R.id.itLabtextcoInTime);
             outtime=view.findViewById(R.id.itLabtextcoOutTime);
@@ -184,6 +201,42 @@ public class it_Lab_CompletedgridAdapter extends RecyclerView.Adapter<it_Lab_Com
             RemarkDescription=view.findViewById(R.id.itLabtextcoRemarkDescription);
             ViscosityIndex=view.findViewById(R.id.itLabtextcoViscosityIndex);
         }
+    }
+
+    private void showMaterialDialog_InwardTanker(View view, String jsonMaterials) {
+        // Parse the JSON list of extra materials
+        List<matriallist> materialList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonMaterials);
+            for (int i = 0; i < jsonArray.length(); i++) {
+//                materialList.add(jsonArray.getString(i));
+                JSONObject materialObject = jsonArray.getJSONObject(i);
+                String Material = materialObject.getString("Material");
+                int Qty = materialObject.getInt("Qty");
+                String Qtyuom = materialObject.getString("Qtyuom");
+                materialList.add(new matriallist(Material, Qty, Qtyuom));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Create a dialog to show the list of materials
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Extra Materials");
+
+        // Inflate the layout with a RecyclerView
+        View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.material_dialog, null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewDialog);
+
+        // Set up the RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        Material_Adapter adapter = new Material_Adapter(materialList); // Pass the material list
+        recyclerView.setAdapter(adapter);
+
+        // Set the view and show the dialog
+        builder.setView(dialogView);
+        builder.setPositiveButton("Close", null);
+        builder.show();
     }
 
     private String formatDate(String inputDate) {

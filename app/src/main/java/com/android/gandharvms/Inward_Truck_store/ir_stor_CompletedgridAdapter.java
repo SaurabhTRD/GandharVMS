@@ -109,7 +109,8 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
             }
         });
         holder.remark.setText(club.getRemark());
-        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+        holder.vehiclenum.setText(club.getVehicleNo());
+        /*holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CommonResponseModelForAllDepartment club = filteredGridList.get(position);
@@ -119,7 +120,7 @@ public class ir_stor_CompletedgridAdapter extends RecyclerView.Adapter<ir_stor_C
                 intent.putExtra("Action","Up");
                 view.getContext().startActivity(intent);
             }
-        });
+        });*/
     }
     public int getItemCount() {
         return Gridmodel.size();

@@ -93,7 +93,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
         userDetails = RetroApiClient.getLoginApi();
 
-        FirebaseMessaging.getInstance().subscribeToTopic(token);
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
 
 //        isReportingCheckBox = findViewById(R.id.isreporting);
 //        reportingRemarkLayout = findViewById(R.id.edtreportingremark);
@@ -340,6 +340,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
             }
         });
     }
+
     public void Notificationforall(String vehicleNumber) {
         FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                 "/topics/all",
@@ -350,6 +351,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         );
         notificationsSender.triggerSendNotification();
     }
+
     public void productionnotification(String vehicleNumber, String outTime){
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {

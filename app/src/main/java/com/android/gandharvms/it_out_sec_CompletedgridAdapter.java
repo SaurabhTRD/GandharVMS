@@ -1,7 +1,9 @@
 package com.android.gandharvms;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +13,16 @@ import android.widget.Filterable;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Truck_Security.Material_Adapter;
+import com.android.gandharvms.Inward_Truck_Security.matriallist;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -69,7 +78,13 @@ public class it_out_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_out
             holder.outintime.setText(club.getOutInTime().substring(12, intimelength));
         }
         holder.invoiceno.setText(club.getInvoiceNo());
-        holder.material.setText(club.getMaterial());
+        //holder.material.setText(club.getMaterial());
+        holder.material.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMaterialDialog_InwardTanker(view, club.getExtramaterials());
+            }
+        });
         holder.partyname.setText(club.getPartyName());
         holder.translatelrcopy.setText(club.getIrCopy());
         holder.deliverybill.setText(club.getDeliveryBill());
@@ -122,12 +137,49 @@ public class it_out_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_out
             invoiceno =view.findViewById(R.id.itoutsectextcoInvoiceNo);
             outintime =view.findViewById(R.id.itoutsectextcoOutInTime);
             material =view.findViewById(R.id.itoutsectextcoMaterial);
+            material.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             partyname =view.findViewById(R.id.itoutsectextcopartyname);
             translatelrcopy =view.findViewById(R.id.itoutsectextcoIrCopy);
             deliverybill =view.findViewById(R.id.itoutsectextcoDeliveryBill);
             taxinvoice =view.findViewById(R.id.itoutsectextcoTaxInvoice);
             ewaybill =view.findViewById(R.id.itoutsectextcoEwayBill);
         }
+    }
+
+    private void showMaterialDialog_InwardTanker(View view, String jsonMaterials) {
+        // Parse the JSON list of extra materials
+        List<matriallist> materialList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonMaterials);
+            for (int i = 0; i < jsonArray.length(); i++) {
+//                materialList.add(jsonArray.getString(i));
+                JSONObject materialObject = jsonArray.getJSONObject(i);
+                String Material = materialObject.getString("Material");
+                int Qty = materialObject.getInt("Qty");
+                String Qtyuom = materialObject.getString("Qtyuom");
+                materialList.add(new matriallist(Material, Qty, Qtyuom));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Create a dialog to show the list of materials
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Extra Materials");
+
+        // Inflate the layout with a RecyclerView
+        View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.material_dialog, null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewDialog);
+
+        // Set up the RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        Material_Adapter adapter = new Material_Adapter(materialList); // Pass the material list
+        recyclerView.setAdapter(adapter);
+
+        // Set the view and show the dialog
+        builder.setView(dialogView);
+        builder.setPositiveButton("Close", null);
+        builder.show();
     }
 
     private String formatDate(String inputDate) {

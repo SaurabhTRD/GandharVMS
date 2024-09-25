@@ -41,6 +41,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.R;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -96,7 +97,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
         userDetails = RetroApiClient.getLoginApi();
 
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
-
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
 
 //        isReportingCheckBox = findViewById(R.id.trsisreporting);
 //        reportingRemarkLayout = findViewById(R.id.edtrsreportingremark);

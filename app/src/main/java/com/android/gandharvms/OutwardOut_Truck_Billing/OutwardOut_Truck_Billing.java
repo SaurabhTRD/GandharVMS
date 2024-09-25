@@ -33,6 +33,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck_Billing.Model_OutwardOut_Truck_Billing;
 import com.android.gandharvms.R;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -83,6 +84,8 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_out_truck_billing);
+
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
         userDetails = RetroApiClient.getLoginApi();

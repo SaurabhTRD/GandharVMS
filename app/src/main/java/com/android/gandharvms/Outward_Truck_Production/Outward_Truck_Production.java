@@ -34,6 +34,7 @@ import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -80,6 +81,8 @@ public class Outward_Truck_Production extends AppCompatActivity {
         userDetails = RetroApiClient.getLoginApi();
 
         outwardTruckProductionInterface = Outward_RetroApiclient.outwardTruckProductionInterface();
+
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);

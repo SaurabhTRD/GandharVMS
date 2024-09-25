@@ -23,14 +23,26 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <!--<TextView
         android:layout_width="110dp"
         android:id="@+id/itinweitextcoMaterial"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
+
+    <TextView
+        android:id="@+id/itinweitextcoMaterial"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="View Material"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
+
 
     <TextView
         android:layout_width="140dp"

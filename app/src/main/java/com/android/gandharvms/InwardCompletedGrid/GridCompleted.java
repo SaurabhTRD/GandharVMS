@@ -84,7 +84,7 @@ public class GridCompleted extends AppCompatActivity {
         /*fromDate = findViewById(R.id.btnfromDate);
         toDate = findViewById(R.id.btntoDate);*/
         totrec = findViewById(R.id.totrecdepartmentwise);
-        fromdate = "2024-01-01";
+        fromdate = getCurrentDateTime();
         todate = getCurrentDateTime();
 
         /*fromDate.setOnClickListener(new View.OnClickListener() {
