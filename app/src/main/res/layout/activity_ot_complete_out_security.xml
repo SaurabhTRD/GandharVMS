@@ -55,7 +55,7 @@
 
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutsecserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -77,7 +77,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutsecparty"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -88,7 +88,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutsecinvoicenum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -100,7 +100,7 @@
 
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutsectotalqty"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -109,8 +109,20 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
+                android:id="@+id/otoutsectotalqtyuom"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Total Qty UOM"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
                 android:id="@+id/otoutsecnetwt"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -119,6 +131,7 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
                 android:layout_width="120dp"
                 android:id="@+id/otoutsecintime"
@@ -129,6 +142,7 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
                 android:layout_width="120dp"
                 android:id="@+id/otoutsecouttime"
@@ -139,18 +153,9 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:layout_width="110dp"
-                android:id="@+id/otoutgoodsdisc"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Good Description"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutsecsign"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -159,8 +164,64 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
+                android:id="@+id/otoutsectransportlrcopy"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="TranslateLRCopy"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otoutsectremcard"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Trem Card"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otoutsecewaybill"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="E-Way Bill"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otoutsectestreport"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Test Report"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otoutsecinvoice"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Invoice"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
                 android:id="@+id/otoutsecremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

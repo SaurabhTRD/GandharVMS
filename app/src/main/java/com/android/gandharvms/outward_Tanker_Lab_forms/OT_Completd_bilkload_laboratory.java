@@ -85,7 +85,7 @@ public class OT_Completd_bilkload_laboratory extends AppCompatActivity {
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromDate=findViewById(R.id.orbtnfromDate);
         toDate=findViewById(R.id.orbtntoDate);
-        fromdate="2024-01-01";
+        fromdate=getCurrentDateTime();
         todate = getCurrentDateTime();
         imgBtnExportToExcel = findViewById(R.id.btn_bulkloadlabExportToExcel);
         hssfWorkBook = new HSSFWorkbook();
@@ -312,7 +312,7 @@ public class OT_Completd_bilkload_laboratory extends AppCompatActivity {
     }
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
 
-        Call<List<Common_Outward_model>> call = outwardTanker.get_tanker_bulkload_production_completed(FromDate,Todate,vehicleType,nextprocess,inOut);
+        Call<List<Common_Outward_model>> call = outwardTanker.get_tanker_production_inprocesscompleted(FromDate,Todate,vehicleType,nextprocess,inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {
             @Override
             public void onResponse(Call<List<Common_Outward_model>> call, Response<List<Common_Outward_model>> response) {

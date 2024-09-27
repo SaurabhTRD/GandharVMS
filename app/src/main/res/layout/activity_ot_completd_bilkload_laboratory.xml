@@ -63,7 +63,29 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
+                android:id="@+id/otinbulklabintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="In Time"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/otinbulklabouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Out Time"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
                 android:id="@+id/otbulklabserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -85,7 +107,84 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
+                android:id="@+id/otbulkprocoanum"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="OAnumber"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabctransporter"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Transpoter"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabcprodcut"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Product"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabchowqty"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="QTY"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabccustomer"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Customer"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlablocation"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Location"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkviscosityindex"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="ViscosityIndex"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
                 android:id="@+id/otbilklabdensity"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -96,28 +195,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/otinbulklabintime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="In Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/otinbulklabouttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Out Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otinbulklabbatchno"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -128,16 +206,48 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/otinbulklabremark"
+                android:layout_width="120dp"
+                android:id="@+id/otbulklabqcsign"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Remark"
+                android:text="Q.C Officer"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/otbulkproremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ProRemark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/otbulkbillremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="BillRemark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/otinbulklabremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LabRemark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
         </LinearLayout>
 
     </HorizontalScrollView>

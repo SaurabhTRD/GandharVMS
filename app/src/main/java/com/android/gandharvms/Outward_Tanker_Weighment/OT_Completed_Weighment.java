@@ -87,7 +87,7 @@ public class OT_Completed_Weighment extends AppCompatActivity {
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromDate=findViewById(R.id.orbtnfromDate);
         toDate=findViewById(R.id.orbtntoDate);
-        fromdate="2024-01-01";
+        fromdate=getCurrentDateTime();
         todate = getCurrentDateTime();
         imgBtnExportToExcel = findViewById(R.id.btn_tankerweighExportToExcel);
         hssfWorkBook = new HSSFWorkbook();

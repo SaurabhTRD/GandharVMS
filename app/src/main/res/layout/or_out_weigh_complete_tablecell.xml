@@ -33,7 +33,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:id="@+id/orweoutvehicle"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
@@ -42,7 +42,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="120dp"
         android:id="@+id/orweouttare"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -60,7 +60,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:id="@+id/orweoutgrswt"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -68,7 +68,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
     <TextView
-        android:layout_width="130dp"
+        android:layout_width="120dp"
         android:id="@+id/orweoutnopck"
         android:textStyle="bold"
         android:layout_marginStart="5dp"

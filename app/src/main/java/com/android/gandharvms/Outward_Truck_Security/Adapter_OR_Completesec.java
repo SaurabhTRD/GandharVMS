@@ -75,13 +75,17 @@ public class Adapter_OR_Completesec extends RecyclerView.Adapter<Adapter_OR_Comp
         holder.date.setText(club.getDate());
         holder.serialnumber.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
-        //holder.intime.setText(club.getIntime());
         holder.transporter.setText(club.getTransportName());
         holder.place.setText(club.getPlace());
         holder.mobilenum.setText(club.getMobileNumber());
+        holder.vehiclepermit.setText(club.getVehiclePermit());
+        holder.transportlrcopy.setText(club.getTransportLRcopy());
+        holder.puc.setText(club.getPuc());
+        holder.insurance.setText(club.getInsurance());
+        holder.vehfitnessculture.setText(club.getVehicleFitnessCertificate());
+        holder.driverlicenses.setText(club.getDriverLicenses());
+        holder.rcbook.setText(club.getRcBook());
         holder.remark.setText(club.getRemark());
-
-
     }
 
     @Override
@@ -122,7 +126,8 @@ public class Adapter_OR_Completesec extends RecyclerView.Adapter<Adapter_OR_Comp
         };
     }
     public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView date,serialnumber,vehiclenum,intime,outtime,transporter,place,mobilenum,remark;
+        public TextView date,serialnumber,vehiclenum,intime,outtime,transporter,place,mobilenum,vehiclepermit,transportlrcopy,
+                puc,insurance,vehfitnessculture,driverlicenses,rcbook,remark;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.orsinsecuritydate);
@@ -133,6 +138,13 @@ public class Adapter_OR_Completesec extends RecyclerView.Adapter<Adapter_OR_Comp
             transporter = itemView.findViewById(R.id.orsintransporter);
             place = itemView.findViewById(R.id.orsinplace);
             mobilenum = itemView.findViewById(R.id.orsinmob);
+            vehiclepermit = itemView.findViewById(R.id.orsinvehiclepermit);
+            transportlrcopy = itemView.findViewById(R.id.orsintransportlrcopy);
+            puc = itemView.findViewById(R.id.orsinpuc);
+            insurance = itemView.findViewById(R.id.orsininsurance);
+            vehfitnessculture = itemView.findViewById(R.id.orsinvehfitnessculture);
+            driverlicenses = itemView.findViewById(R.id.orsindriverlicenses);
+            rcbook = itemView.findViewById(R.id.orsinrcbook);
             remark = itemView.findViewById(R.id.orsinremark);
         }
     }

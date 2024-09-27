@@ -347,4 +347,9 @@ public class Outward_Truck_Production extends AppCompatActivity {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }
+
+    public void Viewclick(View view)
+    {
+
+    }
 }

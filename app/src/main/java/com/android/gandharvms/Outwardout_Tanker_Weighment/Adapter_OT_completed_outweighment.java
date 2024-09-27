@@ -65,13 +65,13 @@ public class Adapter_OT_completed_outweighment extends RecyclerView.Adapter<Adap
     @Override
     public void onBindViewHolder(@NonNull Adapter_OT_completed_outweighment.myviewHolder holder, int position) {
         Common_Outward_model club = filteredGridList.get(position);
-        int intimelength = club.getIntime()!= null ? club.getIntime().length() :0;
-        int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
+        int intimelength = club.getOutInTime()!= null ? club.getOutInTime().length() :0;
+        int outtimelength = club.getUpdatedDate()!=null ? club.getUpdatedDate().length() : 0;
         if (intimelength > 0) {
-            holder.intime.setText(club.getIntime().substring(12, intimelength));
+            holder.intime.setText(club.getOutInTime().substring(12, intimelength));
         }
         if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+            holder.outtime.setText(club.getUpdatedDate().substring(12, outtimelength));
         }
         holder.serial.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());

@@ -6,34 +6,7 @@
     android:layout_height="40dp">
 
     <TextView
-        android:layout_width="110dp"
-        android:id="@+id/otbulklabserial"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="140dp"
-        android:id="@+id/otbilklabvehivle"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="110dp"
-        android:id="@+id/otbilklabdensity"
-        android:gravity="center|start"
-        android:layout_marginStart="5dp"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="140dp"
+        android:layout_width="100dp"
         android:id="@+id/otinbulklabintime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -42,7 +15,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:id="@+id/otinbulklabouttime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -52,7 +25,124 @@
 
     <TextView
         android:layout_width="120dp"
+        android:id="@+id/otbulklabserial"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbilklabvehivle"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkprocoanum"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabctransporter"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabcprodcut"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabchowqty"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabccustomer"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlablocation"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkviscosityindex"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/otbilklabdensity"
+        android:gravity="center|start"
+        android:layout_marginStart="5dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
         android:id="@+id/otinbulklabbatchno"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulklabqcsign"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="150dp"
+        android:id="@+id/otbulkproremark"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="150dp"
+        android:id="@+id/otbulkbillremark"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -67,6 +157,5 @@
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
-
 
 </LinearLayout>

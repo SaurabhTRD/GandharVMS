@@ -73,7 +73,7 @@ public class OT_Completed_outdataentry extends AppCompatActivity {
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromDate=findViewById(R.id.orbtnfromDate);
         toDate=findViewById(R.id.orbtntoDate);
-        fromdate="2024-01-01";
+        fromdate=getCurrentDateTime();
         todate = getCurrentDateTime();
         fromDate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,8 +201,6 @@ public class OT_Completed_outdataentry extends AppCompatActivity {
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char I, char inOut) {
-
-
         //get_tanker_production_inprocesscompleted
         Call<List<Common_Outward_model>> call = outwardTanker.get_tanker_production_inprocesscompleted(FromDate,Todate,vehicleType,I,inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {

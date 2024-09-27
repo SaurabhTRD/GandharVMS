@@ -66,23 +66,28 @@ public class Adapter_OT_complete_OutSecurity extends RecyclerView.Adapter<Adapte
     public void onBindViewHolder(@NonNull Adapter_OT_complete_OutSecurity.myviewHolder holder, int position) {
 
         Common_Outward_model club = filteredGridList.get(position);
-        int intimelength = club.getInTime()!= null ? club.getInTime().length() :0;
-        int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
+        int intimelength = club.getOutInTime()!= null ? club.getOutInTime().length() :0;
+        int outtimelength = club.getUpdatedDate()!=null ? club.getUpdatedDate().length() : 0;
         if (intimelength > 0) {
-            holder.initime.setText(club.getInTime().substring(12, intimelength));
+            holder.initime.setText(club.getOutInTime().substring(12, intimelength));
         }
         if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+            holder.outtime.setText(club.getUpdatedDate().substring(12, outtimelength));
         }
         holder.serial.setText(club.getSerialNumber());
         holder.vehicle.setText(club.getVehicleNumber());
-        holder.partyname.setText(club.getNameofParty());
-        holder.invoicenum.setText(club.getInvoiceNumber());
+        holder.partyname.setText(club.getCustomerName());
+        holder.invoicenum.setText(club.getOutInvoiceNumber());
         holder.totalqty.setText(String.valueOf(club.getOutTotalQty()));
+        holder.totalqtyuom.setText(club.getUnitofmeasurementname());
         holder.netwt.setText(String.valueOf(club.getNetWeight()));
-        holder.goodsdisc.setText(club.getDescriptionofGoods());
         holder.sign.setText(club.getSignature());
-        holder.remark.setText(club.getRemark());
+        holder.remark.setText(club.getOutSRemark());
+        holder.transportlrcopy.setText(club.getTransportLRcopy());
+        holder.tremcard.setText(club.getTremcard());
+        holder.ewaybill.setText(club.getEwaybill());
+        holder.testreport.setText(club.getTest_Report());
+        holder.invoice.setText(club.getInvoice());
     }
 
     @Override
@@ -123,7 +128,8 @@ public class Adapter_OT_complete_OutSecurity extends RecyclerView.Adapter<Adapte
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder{
-        public TextView serial,vehicle,partyname,invoicenum,totalqty,netwt,initime,outtime,goodsdisc,sign,remark;
+        public TextView serial,vehicle,partyname,invoicenum,totalqty,totalqtyuom,netwt,transportlrcopy,tremcard,ewaybill,
+                testreport,invoice,initime,outtime,goodsdisc,sign,remark;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             serial = itemView.findViewById(R.id.otoutsecserial);
@@ -131,10 +137,15 @@ public class Adapter_OT_complete_OutSecurity extends RecyclerView.Adapter<Adapte
             partyname = itemView.findViewById(R.id.otoutsecparty);
             invoicenum = itemView.findViewById(R.id.otoutsecinvoicenum);
             totalqty = itemView.findViewById(R.id.otoutsectotalqty);
+            totalqtyuom=itemView.findViewById(R.id.otoutsectotalqtyuom);
             netwt = itemView.findViewById(R.id.otoutsecnetwt);
             initime = itemView.findViewById(R.id.otoutsecintime);
             outtime = itemView.findViewById(R.id.otoutsecouttime);
-            goodsdisc = itemView.findViewById(R.id.otoutgoodsdisc);
+            transportlrcopy = itemView.findViewById(R.id.otoutsectransportlrcopy);
+            tremcard = itemView.findViewById(R.id.otoutsectremcard);
+            ewaybill = itemView.findViewById(R.id.otoutsecewaybill);
+            testreport = itemView.findViewById(R.id.otoutsectestreport);
+            invoice = itemView.findViewById(R.id.otoutsecinvoice);
             sign = itemView.findViewById(R.id.otoutsecsign);
             remark = itemView.findViewById(R.id.otoutsecremark);
         }

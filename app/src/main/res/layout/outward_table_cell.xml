@@ -17,7 +17,7 @@
         android:layout_height="match_parent"/>
     <TextView
         android:id="@+id/textoutwardgridTransporter"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_marginStart="5dp"
         android:clickable="true"
         android:textStyle="bold"
@@ -42,7 +42,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridSecInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -50,7 +50,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridWeiInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -58,7 +58,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridBilInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -66,7 +66,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridIPFLabInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -74,7 +74,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridIPFProInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -82,7 +82,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridBLFLabInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -90,7 +90,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridBLFProInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -98,7 +98,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridDesInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -106,7 +106,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="95dp"
+        android:layout_width="100dp"
         android:id="@+id/textoutwardgridLogInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"

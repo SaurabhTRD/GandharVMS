@@ -328,9 +328,7 @@ public class OR_Completesec extends AppCompatActivity {
     }
 
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
-
-
-        Call<List<Common_Outward_model>> call = outwardTanker.getintrucksecuritycompleted(FromDate,Todate,vehicleType,nextprocess,inOut);
+        Call<List<Common_Outward_model>> call = outwardTanker.getinoutwardtrucksecuritycompleted(FromDate,Todate,vehicleType,nextprocess,inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {
             @Override
             public void onResponse(Call<List<Common_Outward_model>> call, Response<List<Common_Outward_model>> response) {

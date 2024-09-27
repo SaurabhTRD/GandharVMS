@@ -64,7 +64,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweighoutserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -86,7 +86,29 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
+                android:id="@+id/otweighoutintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Intime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otweighoutouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
                 android:id="@+id/otweighoutdensity"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -97,7 +119,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweightarewt"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -106,29 +128,6 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/otweighoutintime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Customer"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
-                android:id="@+id/otweighoutouttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Out Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
 
             <TextView
                 android:layout_width="120dp"
@@ -152,7 +151,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="140dp"
                 android:id="@+id/otweighoutseal"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -162,7 +161,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="100dp"
                 android:id="@+id/otweighoutnumberpack"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -172,7 +171,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweighoutshdip"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -182,7 +181,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweighoutshwt"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -194,7 +193,7 @@
 
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweighoutInVehicleImage"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -205,7 +204,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweighoutInDriverImage"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -216,7 +215,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="140dp"
                 android:id="@+id/otweighouremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

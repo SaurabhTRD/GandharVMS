@@ -59,7 +59,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="140dp"
+                android:layout_width="120dp"
                 android:id="@+id/textoutwardgridTransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -93,7 +93,7 @@
 
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridSecInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -104,7 +104,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridWeiInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -115,7 +115,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridBilInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -126,7 +126,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridIPFLabInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -137,7 +137,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridIPFProInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -148,7 +148,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridBLFLabInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -159,7 +159,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridBLFProInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -170,7 +170,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridDesInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -182,7 +182,7 @@
 
 
             <TextView
-                android:layout_width="95dp"
+                android:layout_width="100dp"
                 android:id="@+id/textoutwardgridLogInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

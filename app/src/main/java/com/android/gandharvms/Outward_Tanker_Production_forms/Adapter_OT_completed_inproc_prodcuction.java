@@ -63,18 +63,25 @@ public class Adapter_OT_completed_inproc_prodcuction extends RecyclerView.Adapte
     @Override
     public void onBindViewHolder(@NonNull Adapter_OT_completed_inproc_prodcuction.myviewHolder holder, int position) {
         Common_Outward_model club = filteredGridList.get(position);
+        int intimelength = club.getProInTime()!=null ? club.getProInTime().length() : 0;
+        int outtimelength = club.getProOutTime()!=null ? club.getProOutTime().length() : 0;
+        if (intimelength > 0) {
+            holder.intime.setText(club.getProInTime().substring(12, intimelength));
+        }
+        if (outtimelength > 0) {
+            holder.outtime.setText(club.getProOutTime().substring(12, outtimelength));
+        }
         holder.serialnum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
-        holder.flushingno.setText(String.valueOf(club.getFlushing_No()));
         holder.oanum.setText(club.getOAnumber());
         holder.transporter.setText(club.getTransportName());
         holder.product.setText(club.getProductName());
         holder.howqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
         holder.customer.setText(club.getCustomerName());
         holder.location.setText(club.getLocation());
-        holder.packingstatus.setText(club.getPackingStatus());
-        holder.blendingsts.setText(club.getBlendingMaterialStatus());
-        holder.prosign.setText(club.getSignatureofOfficer());
+        holder.tankerorblenderno.setText(club.getTankOrBlenderNo());
+        holder.psign.setText(club.getPsign());
+        holder.operatorsign.setText(club.getOperatorSign());
         holder.remark.setText(club.getProRemark());
 
     }
@@ -117,21 +124,23 @@ public class Adapter_OT_completed_inproc_prodcuction extends RecyclerView.Adapte
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView serialnum,vehiclenum,flushingno,oanum,transporter,product,howqty,customer,location,packingstatus,blendingsts,prosign,remark;
+        public TextView intime, outtime,serialnum,vehiclenum,oanum,transporter,product,howqty,customer,location,tankerorblenderno,psign,operatorsign,remark;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
+            intime =itemView.findViewById(R.id.otinprointime);
+            outtime=itemView.findViewById(R.id.otinprocouttime);
             serialnum = itemView.findViewById(R.id.otinprocserial);
             vehiclenum = itemView.findViewById(R.id.otinprocvehicle);
-            flushingno = itemView.findViewById(R.id.otinprocflushing);
+            //flushingno = itemView.findViewById(R.id.otinprocflushing);
             oanum = itemView.findViewById(R.id.otinprocoanum);
             transporter = itemView.findViewById(R.id.otinproctransporter);
             product = itemView.findViewById(R.id.otinprocprodcut);
             howqty = itemView.findViewById(R.id.otinprochowqty);
             customer = itemView.findViewById(R.id.otinproccustomer);
             location = itemView.findViewById(R.id.otinproclocation);
-            packingstatus = itemView.findViewById(R.id.otinprocpackingstatus);
-            blendingsts = itemView.findViewById(R.id.otinprocblendingstatus);
-            prosign = itemView.findViewById(R.id.otinprocsigh);
+            tankerorblenderno = itemView.findViewById(R.id.otinprocpackingstatus);
+            psign = itemView.findViewById(R.id.otinprocblendingstatus);
+            operatorsign = itemView.findViewById(R.id.otinprocsigh);
             remark = itemView.findViewById(R.id.otinprocremark);
 
         }

@@ -65,6 +65,7 @@ public class Lab_Model__Outward_Tanker {
     public String VehicleType;
     public boolean IsBlendingReq;
     public boolean IsFlushingReq;
+    public String Batch_No;
 
     public char FlushingStatus;
     public char BlendingStatus;
@@ -79,6 +80,14 @@ public class Lab_Model__Outward_Tanker {
 
     public int obplOutwardId;
 
+    public String getBatch_No() {
+        return Batch_No;
+    }
+
+    public void setBatch_No(String batch_No) {
+        Batch_No = batch_No;
+    }
+
     public String getBatchNo() {
         return BatchNo;
     }
@@ -86,6 +95,7 @@ public class Lab_Model__Outward_Tanker {
     public String TankerProRemark;
     public String TankerBillingRemark;
     public String TankerLabRemark;
+
 
     public String getTankerProRemark() {
         return TankerProRemark;

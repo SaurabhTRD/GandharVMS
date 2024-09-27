@@ -74,7 +74,7 @@ public class OT_out_Billing_Completed extends AppCompatActivity {
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromDate=findViewById(R.id.orbtnfromDate);
         toDate=findViewById(R.id.orbtntoDate);
-        fromdate="2024-01-01";
+        fromdate="2024-09-26";
         todate = getCurrentDateTime();
         fromDate.setOnClickListener(new View.OnClickListener() {
             @Override

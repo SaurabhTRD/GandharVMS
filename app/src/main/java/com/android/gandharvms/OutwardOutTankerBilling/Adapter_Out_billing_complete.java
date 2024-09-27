@@ -76,7 +76,7 @@ public class Adapter_Out_billing_complete extends RecyclerView.Adapter<Adapter_O
         holder.tramnsporter.setText(obj.getTransportName());
         holder.oapo.setText(obj.getOAnumber());
         holder.drivernum.setText(obj.getMobileNumber());
-        holder.batchnum.setText(obj.getBatchNo());
+        holder.batchnum.setText(obj.getBatch_No());
         holder.density.setText(String.valueOf(obj.getDensity_29_5C()));
         holder.tarewt.setText(String.valueOf(obj.getTareWeight()));
         holder.netwt.setText(String.valueOf(obj.getNetWeight()));

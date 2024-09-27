@@ -43,6 +43,13 @@ public interface Outward_Tanker {
                                                                  @Query("nextprocess") char nextprocess,
                                                                  @Query("inout") char inout);
 
+    @GET("api/OutwardSecurity/GetOutwardTruckSecurityList")
+    Call<List<Common_Outward_model>> getinoutwardtrucksecuritycompleted(@Query("FromDate")String FromDate,
+                                                                 @Query("Todate") String Todate,
+                                                                 @Query("vehicletype") String vehicletype,
+                                                                 @Query("nextprocess") char nextprocess,
+                                                                 @Query("inout") char inout);
+
 
     //OR_Logi
     @GET("api/OutwardLogistic/GetOutwardLogisticList")

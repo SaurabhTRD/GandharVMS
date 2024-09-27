@@ -60,19 +60,24 @@ public class Adapter_OT_Completed_outdataentry extends RecyclerView.Adapter<Adap
     @Override
     public void onBindViewHolder(@NonNull Adapter_OT_Completed_outdataentry.myviewHolder holder, int position) {
         Common_Outward_model club = filteredGridList.get(position);
-        int intimelength = club.getIntime()!= null ? club.getIntime().length() :0;
-        int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
+        int intimelength = club.getDataEntryInTime()!= null ? club.getDataEntryInTime().length() :0;
+        int outtimelength = club.getDataEntryOutTime()!=null ? club.getDataEntryOutTime().length() : 0;
         if (intimelength > 0) {
-            holder.intime.setText(club.getIntime().substring(12, intimelength));
+            holder.intime.setText(club.getDataEntryInTime().substring(12, intimelength));
         }
         if (outtimelength > 0) {
-            holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
+            holder.outtime.setText(club.getDataEntryOutTime().substring(12, outtimelength));
         }
         holder.serialnum.setText(club.getSerialNumber());
         holder.vehicelnum.setText(club.getVehicleNumber());
+        holder.oanum.setText(club.getOAnumber());
+        holder.product.setText(club.getProductName());
+        holder.customer.setText(club.getCustomerName());
+        holder.location.setText(club.getLocation());
         holder.density.setText(club.getDensity_29_5C());
+        holder.batchno.setText(club.getBatchNo());
         holder.seal.setText(club.getSealNumber());
-        holder.remark.setText(club.getRemark());
+        holder.remark.setText(club.getDataEntryRemark());
 
     }
     @Override
@@ -113,11 +118,16 @@ public class Adapter_OT_Completed_outdataentry extends RecyclerView.Adapter<Adap
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder{
-        public TextView serialnum,vehicelnum,density,seal,intime,outtime,remark;
+        public TextView serialnum,vehicelnum,oanum,product,customer,location,batchno,density,seal,intime,outtime,remark;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             serialnum = itemView.findViewById(R.id.otoutdeserial);
             vehicelnum = itemView.findViewById(R.id.otoutdtvehiclenum);
+            oanum = itemView.findViewById(R.id.otoutdtprocoanum);
+            product = itemView.findViewById(R.id.otoutdtprodcut);
+            customer = itemView.findViewById(R.id.otoutdtcustomer);
+            location = itemView.findViewById(R.id.otoutdtlocation);
+            batchno = itemView.findViewById(R.id.otoutdtbatchno);
             density = itemView.findViewById(R.id.otoutdedensity);
             seal = itemView.findViewById(R.id.otoutdtsealnum);
             intime = itemView.findViewById(R.id.otoutdeintime);

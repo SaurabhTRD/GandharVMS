@@ -146,7 +146,7 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
                         newltransporter.setEnabled(false);
                         billremark.setText(data.getTankerBillingRemark());
                         billremark.setEnabled(false);
-                        proremark.setText(data.getTankerProRemark());
+                        proremark.setText(data.getProRemark());
                         proremark.setEnabled(false);
 
                     }else {

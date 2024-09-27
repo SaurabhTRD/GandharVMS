@@ -80,10 +80,11 @@ public class Adapter_Logi_complete extends RecyclerView.Adapter<Adapter_Logi_com
         holder.serialnum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
         holder.transporter.setText(club.getTransportName());
-        holder.place.setText(club.getLocation());
+        holder.place.setText(club.getPlace());
         holder.oanumber.setText(club.getOAnumber());
         holder.custname.setText(club.getCustomerName());
         holder.loadedqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
+        holder.loadedqtyuom.setText(club.getHowMuchQTYUOM());
         holder.remark.setText(club.getRemark());
 
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +139,7 @@ public class Adapter_Logi_complete extends RecyclerView.Adapter<Adapter_Logi_com
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder{
-        public TextView intime,serialnum,vehiclenum,transporter,place,oanumber,custname,loadedqty,remark,outtime;
+        public TextView intime,serialnum,vehiclenum,transporter,place,oanumber,custname,loadedqty,loadedqtyuom,remark,outtime;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             intime = itemView.findViewById(R.id.orlintime);
@@ -149,6 +150,7 @@ public class Adapter_Logi_complete extends RecyclerView.Adapter<Adapter_Logi_com
             oanumber = itemView.findViewById(R.id.orloanum);
             custname = itemView.findViewById(R.id.orlcustname);
             loadedqty = itemView.findViewById(R.id.orlloadedqty);
+            loadedqtyuom=itemView.findViewById(R.id.orlladedqtyuom);
             remark = itemView.findViewById(R.id.orlremark);
             outtime = itemView.findViewById(R.id.orlouttime);
         }

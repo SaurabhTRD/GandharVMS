@@ -173,7 +173,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
                         oanum.setEnabled(false);
                         product.setText(data.getProductName());
                         product.setEnabled(false);
-                        batch.setText(data.getBatchNo());
+                        batch.setText(data.getBatch_No());
                         batch.setEnabled(false);
 
 

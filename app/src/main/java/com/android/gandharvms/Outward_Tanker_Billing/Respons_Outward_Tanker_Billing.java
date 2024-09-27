@@ -44,6 +44,24 @@ public class Respons_Outward_Tanker_Billing {
     public String iltotqty;
     public  String ilweight;
 
+    public String Batch_No;
+
+    public String getBatch_No() {
+        return Batch_No;
+    }
+
+    public void setBatch_No(String batch_No) {
+        Batch_No = batch_No;
+    }
+
+    public String getHowMuchQTYUOM() {
+        return HowMuchQTYUOM;
+    }
+
+    public void setHowMuchQTYUOM(String howMuchQTYUOM) {
+        HowMuchQTYUOM = howMuchQTYUOM;
+    }
+
     public String getSpltotqty() {
         return spltotqty;
     }

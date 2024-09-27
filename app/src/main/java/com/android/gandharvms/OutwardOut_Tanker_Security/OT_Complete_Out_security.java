@@ -73,7 +73,7 @@ public class OT_Complete_Out_security extends AppCompatActivity {
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromDate=findViewById(R.id.orbtnfromDate);
         toDate=findViewById(R.id.orbtntoDate);
-        fromdate= getCurrentDateTime();
+        fromdate= "2024-09-26";
         todate = getCurrentDateTime();
 
         fromDate.setOnClickListener(new View.OnClickListener() {

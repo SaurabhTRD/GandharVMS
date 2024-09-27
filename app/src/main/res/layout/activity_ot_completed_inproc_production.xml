@@ -63,7 +63,29 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
+                android:id="@+id/otinprointime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/otinprocouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
                 android:id="@+id/otinprocserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -74,7 +96,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="140dp"
                 android:id="@+id/otinprocvehicle"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
@@ -85,18 +107,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="110dp"
-                android:id="@+id/otinprocflushing"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="Flushing no"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="130dp"
+                android:layout_width="140dp"
                 android:id="@+id/otinprocoanum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -107,7 +118,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otinproctransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -117,7 +128,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otinprocprodcut"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -128,7 +139,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otinprochowqty"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -161,28 +172,18 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="150dp"
                 android:id="@+id/otinprocpackingstatus"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Packing Status"
+                android:text="Blender/Tanker/Vessel No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otinprocblendingstatus"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Blending Status"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="110dp"
-                android:id="@+id/otinprocsigh"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -191,7 +192,17 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
+                android:id="@+id/otinprocsigh"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Operator Sign"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <TextView
+                android:layout_width="120dp"
                 android:id="@+id/otinprocremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

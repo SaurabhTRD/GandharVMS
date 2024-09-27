@@ -86,7 +86,7 @@
 
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="140dp"
                 android:id="@+id/orweoutserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -108,7 +108,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/orweouttare"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -119,7 +119,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/orweoutnetwe"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -130,7 +130,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/orweoutgrswt"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

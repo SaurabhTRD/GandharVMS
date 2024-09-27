@@ -338,7 +338,7 @@
                     android:id="@+id/elnewblremark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Blender/Tanker/Vessel Number"
+                    android:hint="Remark"
                     android:inputType="text"
                     android:textSize="17dp"
                     android:textStyle="bold" />

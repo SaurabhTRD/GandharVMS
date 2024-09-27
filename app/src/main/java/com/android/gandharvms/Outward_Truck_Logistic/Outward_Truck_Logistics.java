@@ -261,6 +261,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
             }
         });
     }
+
     public void FetchVehicleDetailsforUpdate(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<InTrLogisticResponseModel> call = logisticdetails.getLogisticbyfetchVehData(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<InTrLogisticResponseModel>() {
@@ -317,9 +318,8 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 Toasty.error(Outward_Truck_Logistics.this, "failed", Toast.LENGTH_SHORT).show();
             }
         });
-
-
     }
+
     public void makeNotificationLogistic(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
@@ -337,6 +337,57 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                                         token,
                                         "Outward Truck Logistic Process Done..!",
                                         "Vehicle Number:-" + vehicleNumber + " has completed Logistic process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Truck_Logistics.this
+                                );
+                                notificationsSender.triggerSendNotification();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Truck_Logistics.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void makeNotificationSecurity(String vehicleNumber, String OANumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Security";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Truck Logistic Process Done And Has Send OA Number",
+                                        "This OA Number:-" + OANumber + " is For This Vehicle Number:- " + vehicleNumber,
                                         getApplicationContext(),
                                         Outward_Truck_Logistics.this
                                 );
@@ -447,6 +498,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         makeNotificationLogistic(etvehiclenumber, outTime);
+                        makeNotificationSecurity(etvehiclenumber,etoanumber);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Outward_Truck_Logistics.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Outward_Truck_Logistics.this, Outward_Truck.class));

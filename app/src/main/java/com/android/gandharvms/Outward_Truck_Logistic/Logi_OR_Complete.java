@@ -86,7 +86,7 @@ public class Logi_OR_Complete extends AppCompatActivity {
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromDate=findViewById(R.id.orbtnfromDate);
         toDate=findViewById(R.id.orbtntoDate);
-        fromdate="2024-01-01";
+        fromdate=getCurrentDateTime();
         todate = getCurrentDateTime();
         imgBtnExportToExcel = findViewById(R.id.btn_Logi_orExportToExcel);
         hssfWorkBook = new HSSFWorkbook();

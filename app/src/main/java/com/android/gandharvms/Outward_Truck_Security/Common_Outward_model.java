@@ -57,7 +57,7 @@ public class Common_Outward_model {
     public String OutNetWeight ;
     public int OutQtyUOMId ;
     public int OutNetWeightUOMId ;
-
+    public String Batch_No;
     //2
     public String outTime;
     public String TankerPlanning;
@@ -133,6 +133,7 @@ public class Common_Outward_model {
     public String SecurityCreatedDate ;
     public String WeighmentCreatedBy ;
     public String WeighmentCreatedDate ;
+    public String TankerBillingRemark;
 
     public String WeighmentGrossWeight ;
     public String InTime;
@@ -154,7 +155,7 @@ public class Common_Outward_model {
     public String Color;
     public int _40KV;
     public int _100KV;
-    public int Viscosity_Index;
+    public String Viscosity_Index;
     public String TBN_TAN;
     public int Anline_Point;
     public int Breakdownvoltage_BDV;
@@ -173,7 +174,7 @@ public class Common_Outward_model {
     public int StatusCount;
     public String IPFLabInTime;
     public String DataEntryInTime;
-    public String DataEntryOutTim;
+    public String DataEntryOutTime;
     public String DataEntryRemark;
     public String Restivity;
     public String Infra_Red;
@@ -224,6 +225,22 @@ public class Common_Outward_model {
     public String SecOutRemark;
     public String BillingOutRemark;
     public String WeighmentOutRemark;
+
+    public String getBatch_No() {
+        return Batch_No;
+    }
+
+    public void setBatch_No(String batch_No) {
+        Batch_No = batch_No;
+    }
+
+    public String getTankerBillingRemark() {
+        return TankerBillingRemark;
+    }
+
+    public void setTankerBillingRemark(String tankerBillingRemark) {
+        TankerBillingRemark = tankerBillingRemark;
+    }
 
     public String getSecInTime() {
         return SecInTime;
@@ -737,11 +754,11 @@ public class Common_Outward_model {
         this._100KV = _100KV;
     }
 
-    public int getViscosity_Index() {
+    public String getViscosity_Index() {
         return Viscosity_Index;
     }
 
-    public void setViscosity_Index(int viscosity_Index) {
+    public void setViscosity_Index(String viscosity_Index) {
         Viscosity_Index = viscosity_Index;
     }
 
@@ -889,12 +906,12 @@ public class Common_Outward_model {
         DataEntryInTime = dataEntryInTime;
     }
 
-    public String getDataEntryOutTim() {
-        return DataEntryOutTim;
+    public String getDataEntryOutTime() {
+        return DataEntryOutTime;
     }
 
-    public void setDataEntryOutTim(String dataEntryOutTim) {
-        DataEntryOutTim = dataEntryOutTim;
+    public void setDataEntryOutTime(String dataEntryOutTime) {
+        DataEntryOutTime = dataEntryOutTime;
     }
 
     public String getDataEntryRemark() {

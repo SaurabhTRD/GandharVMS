@@ -70,8 +70,18 @@ public class Adapter_OT_completed_bulkload_laboratory extends RecyclerView.Adapt
         }
         holder.serialnum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
+        holder.oanum.setText(club.getOAnumber());
+        holder.transporter.setText(club.getTransportName());
+        holder.product.setText(club.getProductName());
+        holder.howqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
+        holder.customer.setText(club.getCustomerName());
+        holder.location.setText(club.getLocation());
+        holder.viscosityindex.setText(String.valueOf(club.getViscosity_Index()));
         holder.density29.setText(String.valueOf(club.getDensity_29_5C()));
         holder.batchno.setText(club.getBatchNo());
+        holder.qcsign.setText(club.getSignatureofOfficer());
+        holder.proremark.setText(club.getProRemark());
+        holder.billremark.setText(club.getTankerBillingRemark());
         holder.remark.setText(club.getLabRemark());
     }
     @Override
@@ -112,15 +122,26 @@ public class Adapter_OT_completed_bulkload_laboratory extends RecyclerView.Adapt
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView serialnum,vehiclenum,density29,intime,outtime,batchno,remark;
+        public TextView serialnum,vehiclenum,density29,oanum,transporter,product,qcsign,
+                howqty,customer,location,viscosityindex,intime,outtime,batchno,remark,proremark,billremark;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
-            serialnum = itemView.findViewById(R.id.otbulklabserial);
-            vehiclenum= itemView.findViewById(R.id.otbilklabvehivle);
-            density29 = itemView.findViewById(R.id.otbilklabdensity);
             intime = itemView.findViewById(R.id.otinbulklabintime);
             outtime = itemView.findViewById(R.id.otinbulklabouttime);
+            serialnum = itemView.findViewById(R.id.otbulklabserial);
+            vehiclenum= itemView.findViewById(R.id.otbilklabvehivle);
+            oanum = itemView.findViewById(R.id.otbulkprocoanum);
+            transporter = itemView.findViewById(R.id.otbulkinlabctransporter);
+            product = itemView.findViewById(R.id.otbulkinlabcprodcut);
+            howqty = itemView.findViewById(R.id.otbulkinlabchowqty);
+            customer = itemView.findViewById(R.id.otbulkinlabccustomer);
+            location = itemView.findViewById(R.id.otbulkinlablocation);
+            viscosityindex=itemView.findViewById(R.id.otbulkviscosityindex);
+            density29 = itemView.findViewById(R.id.otbilklabdensity);
             batchno = itemView.findViewById(R.id.otinbulklabbatchno);
+            qcsign=itemView.findViewById(R.id.otbulklabqcsign);
+            proremark=itemView.findViewById(R.id.otbulkproremark);
+            billremark=itemView.findViewById(R.id.otbulkbillremark);
             remark = itemView.findViewById(R.id.otinbulklabremark);
         }
     }

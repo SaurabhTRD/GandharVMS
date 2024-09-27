@@ -107,7 +107,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/orsouttime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -117,16 +117,6 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-<!--            <TextView-->
-<!--                android:layout_width="120dp"-->
-<!--                android:id="@+id/itinweitextcodate"-->
-<!--                android:textStyle="bold"-->
-<!--                android:layout_marginStart="5dp"-->
-<!--                android:gravity="center|start"-->
-<!--                android:text="Date"-->
-<!--                android:textAllCaps="true"-->
-<!--                android:textColor="@android:color/white"-->
-<!--                android:layout_height="match_parent"/>-->
             <TextView
                 android:layout_width="130dp"
                 android:id="@+id/orsintransporter"
@@ -138,7 +128,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="130dp"
                 android:id="@+id/orsinplace"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -147,18 +137,97 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="130dp"
                 android:id="@+id/orsinmob"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Mobile No"
+                android:text="Place"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
+                android:id="@+id/orsinvehiclepermit"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Vehicle Permit"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsintransportlrcopy"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LR Copy"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsinpuc"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="PUC"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsininsurance"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Insurance"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsinvehfitnessculture"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Vehicle Fit Certificate"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsindriverlicenses"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Driver Licenses"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orsinrcbook"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Rc Book"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
                 android:id="@+id/orsinremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

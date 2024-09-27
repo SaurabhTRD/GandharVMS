@@ -15,7 +15,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="130dp"
         android:id="@+id/orsinserialnum"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:id="@+id/orsvehiclenum"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
@@ -33,7 +33,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="130dp"
         android:id="@+id/orsintime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -51,7 +51,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="130dp"
         android:id="@+id/orsintransporter"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -75,15 +75,77 @@
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orsinremark"
+        android:id="@+id/orsinvehiclepermit"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/orsintransportlrcopy"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
 
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/orsinpuc"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/orsininsurance"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/orsinvehfitnessculture"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/orsindriverlicenses"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/orsinrcbook"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="140dp"
+        android:id="@+id/orsinremark"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

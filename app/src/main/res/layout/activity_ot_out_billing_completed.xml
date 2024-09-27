@@ -54,22 +54,22 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutbillserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:text="Serial Number"
+                android:text="Serial No"
                 android:textAllCaps="true"
                 android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutbillvehicle"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:text="Vehicle Number"
+                android:text="Vehicle No"
                 android:textAllCaps="true"
                 android:gravity="center|start"
                 android:textColor="@android:color/white"
@@ -77,12 +77,12 @@
 
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutbilltrans"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Transporter"
+                android:text="Transpoter"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
@@ -93,13 +93,13 @@
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
-                android:text="OA/PO Num"
+                android:text="OA/PO Number"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/orbilloutdrivernum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -110,18 +110,18 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutbillbatch"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Batch Num"
+                android:text="Batch No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otoutbilldensity"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -130,6 +130,7 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
                 android:layout_width="120dp"
                 android:id="@+id/otoutbilltarewt"
@@ -140,13 +141,14 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
+
             <TextView
                 android:layout_width="120dp"
                 android:id="@+id/otoutbillnetwt"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Net wt"
+                android:text="Net Wt"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
@@ -212,7 +214,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="140dp"
                 android:id="@+id/otoutbillremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

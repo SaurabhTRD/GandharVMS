@@ -213,7 +213,7 @@ public class ot_outBilling extends AppCompatActivity {
                         oobOANumber.setEnabled(false);
                         oobdriverno.setText(data.getMobileNumber());
                         oobdriverno.setEnabled(false);
-                        oobbatchno.setText(data.getBatchNo());
+                        oobbatchno.setText(data.getBatch_No());
                         oobbatchno.setEnabled(false);
                         oobfetchdensity.setText(String.valueOf(data.getDensity_29_5C()));
                         oobfetchdensity.setEnabled(false);
