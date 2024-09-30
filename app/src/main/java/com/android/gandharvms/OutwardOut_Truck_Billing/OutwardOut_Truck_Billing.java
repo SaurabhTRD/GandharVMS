@@ -381,7 +381,8 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }
-    public void btn_clicktoViewWeighmentSlip(View view){
+
+    /*public void btn_clicktoViewWeighmentSlip(View view){
         //Intent intent = new Intent(this, Grid_Outward.class);
         //startActivity(intent);
     }
@@ -392,5 +393,5 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
     public void btn_clicktoViewTestReport(View view){
         //Intent intent = new Intent(this, Grid_Outward.class);
         //startActivity(intent);
-    }
+    }*/
 }

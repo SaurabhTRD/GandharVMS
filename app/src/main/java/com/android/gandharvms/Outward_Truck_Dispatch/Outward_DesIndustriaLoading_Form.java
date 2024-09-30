@@ -262,13 +262,10 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     }
 
     public void btndesindusloadViewclick(View view) {
-        //Intent intent = new Intent(this, it_Lab_Completedgrid.class);
-        //startActivity(intent);
+        Intent intent = new Intent(this, OR_DespatchIndustrial_Completed_Listing.class);
+        startActivity(intent);
     }
-//    public void  pendingindustrial(View view ){
-//        Intent  intent = new Intent(this, Grid_Outward.class);
-//        startActivity(intent);
-//    }
+
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut){
         Call<Model_industrial> call = outwardTruckInterface.fetchindusrtial(vehicleNo,vehicleType,NextProcess,inOut);
@@ -311,13 +308,13 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     public void indusinsert(){
         String uintime = etdesilintime.getText().toString().trim();
         String uouttime = getCurrentTime();
-        int u10 = Integer.parseInt(tenltr.getText().toString().trim());
-        int u18 = Integer.parseInt(eighteenltr.getText().toString().trim());
-        int u20 = Integer.parseInt(twentyltr.getText().toString().trim());
-        int u26 = Integer.parseInt(twentysixltr.getText().toString().trim());
-        int u50 = Integer.parseInt(fiftyltr.getText().toString().trim());
-        int u210 = Integer.parseInt(twotenltr.getText().toString().trim());
-        int uboxbucet = Integer.parseInt(boxbucket.getText().toString().trim());
+        int u10 = !tenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(tenltr.getText().toString().trim()) : 0;
+        int u18 = !eighteenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(eighteenltr.getText().toString().trim()) : 0;
+        int u20 = !twentyltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twentyltr.getText().toString().trim()) : 0;
+        int u26 = !twentysixltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twentysixltr.getText().toString().trim()) : 0;
+        int u50 = !fiftyltr.getText().toString().trim().isEmpty() ? Integer.parseInt(fiftyltr.getText().toString().trim()) : 0;
+        int u210 = !twotenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twotenltr.getText().toString().trim()) : 0;
+        int uboxbucet = !boxbucket.getText().toString().trim().isEmpty() ? Integer.parseInt(boxbucket.getText().toString().trim()) : 0;
         String totalqty = etdesiltotqty.getText().toString().trim();
         String uweight = weight.getText().toString().trim();
         String uindussign = indussign.getText().toString().trim();
@@ -379,13 +376,13 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
 
         String uintime = etdesilintime.getText().toString().trim();
         String uouttime = getCurrentTime();
-        int u10 = Integer.parseInt(tenltr.getText().toString().trim());
-        int u18 = Integer.parseInt(eighteenltr.getText().toString().trim());
-        int u20 = Integer.parseInt(twentyltr.getText().toString().trim());
-        int u26 = Integer.parseInt(twentysixltr.getText().toString().trim());
-        int u50 = Integer.parseInt(fiftyltr.getText().toString().trim());
-        int u210 = Integer.parseInt(twotenltr.getText().toString().trim());
-        int uboxbucet = Integer.parseInt(boxbucket.getText().toString().trim());
+        int u10 = !tenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(tenltr.getText().toString().trim()) : 0;
+        int u18 = !eighteenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(eighteenltr.getText().toString().trim()) : 0;
+        int u20 = !twentyltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twentyltr.getText().toString().trim()) : 0;
+        int u26 = !twentysixltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twentysixltr.getText().toString().trim()) : 0;
+        int u50 = !fiftyltr.getText().toString().trim().isEmpty() ? Integer.parseInt(fiftyltr.getText().toString().trim()) : 0;
+        int u210 = !twotenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twotenltr.getText().toString().trim()) : 0;
+        int uboxbucet = !boxbucket.getText().toString().trim().isEmpty() ? Integer.parseInt(boxbucket.getText().toString().trim()) : 0;
         String totalqty = etdesiltotqty.getText().toString().trim();
         String uweight = weight.getText().toString().trim();
         String uindussign = indussign.getText().toString().trim();

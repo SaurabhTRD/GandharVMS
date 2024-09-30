@@ -879,7 +879,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Weight"
-                    android:inputType="text"
+                    android:inputType="numberDecimal"
                     android:textSize="17dp"
                     android:textStyle="bold"
                     />
@@ -966,7 +966,7 @@
                         android:text="Completed"
                         android:textSize="17dp"
                         android:textStyle="bold"
-                        android:onClick="btndesindusloadViewclick">
+                        android:onClick="btndessmallpackloadViewclick">
 
                     </androidx.appcompat.widget.AppCompatButton>
 

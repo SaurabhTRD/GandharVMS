@@ -1,22 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:background="@android:color/darker_gray"
+    android:background="@color/lightgray"
     android:layout_width="wrap_content"
     android:layout_height="40dp">
-
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/orbillintime"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/orbillouttime"
+        android:layout_width="120dp"
+        android:id="@+id/orindusserialno"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -25,16 +15,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbillserial"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillvehicle"
+        android:id="@+id/orindusvehicleno"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
         android:textStyle="bold"
@@ -43,7 +24,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbilloanum"
+        android:id="@+id/orindusoano"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -52,7 +33,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbilltrans"
+        android:id="@+id/orinduscustomer"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -61,15 +42,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbilldriver"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillgrswt"
+        android:id="@+id/orindustransporter"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -78,23 +51,16 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbilltarewt"
+        android:id="@+id/orindusintime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillnetwt"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillseal"
+        android:layout_width="110dp"
+        android:id="@+id/orindusouttime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -103,7 +69,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orinvoiceno"
+        android:id="@+id/orindus10ltr"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -112,6 +78,60 @@
 
     <TextView
         android:layout_width="120dp"
+        android:id="@+id/orindus18ltr"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="110dp"
+        android:id="@+id/orindus20ltr"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="110dp"
+        android:id="@+id/orindus26ltr"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="110dp"
+        android:id="@+id/orindus50ltr"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="110dp"
+        android:id="@+id/orindus210ltr"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="110dp"
+        android:id="@+id/orindusBoxbucket"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="110dp"
         android:id="@+id/orindustotqty"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -120,8 +140,17 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orsmalltotqty"
+        android:layout_width="110dp"
+        android:id="@+id/orindusweight"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="110dp"
+        android:id="@+id/orindusindustrialsign"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -130,18 +159,20 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbillbatch"
+        android:id="@+id/orindusnextdepartmentr"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="140dp"
-        android:id="@+id/orbillremark"
+        android:layout_width="120dp"
+        android:id="@+id/orindusremark"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
 </LinearLayout>

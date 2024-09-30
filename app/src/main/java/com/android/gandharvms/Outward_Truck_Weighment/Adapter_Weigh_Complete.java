@@ -81,6 +81,7 @@ public class Adapter_Weigh_Complete extends RecyclerView.Adapter<Adapter_Weigh_C
         holder.customer.setText(obj.getCustomerName());
         holder.oanum.setText(obj.getOAnumber());
         holder.loadedqty.setText(String.valueOf(obj.getHowMuchQuantityFilled()) );
+        holder.loadedqtyuom.setText(obj.getHowMuchQTYUOM());
         holder.tarewe.setText(obj.getTareWeight());
         Picasso.get()
                 .load(RetroApiClient.BASE_URL  + obj.getInVehicleImage() + "?alt=media")
@@ -136,7 +137,7 @@ public class Adapter_Weigh_Complete extends RecyclerView.Adapter<Adapter_Weigh_C
         };
     }
     public class myviewHolder extends RecyclerView.ViewHolder{
-        public TextView intime,serialnum,vehicle,customer,oanum,loadedqty,tarewe,remark,outtime;
+        public TextView intime,serialnum,vehicle,customer,oanum,loadedqty,loadedqtyuom,tarewe,remark,outtime;
 
         ImageView invehicleimage,indriverimage;
         public myviewHolder(@NonNull View itemView) {
@@ -147,6 +148,7 @@ public class Adapter_Weigh_Complete extends RecyclerView.Adapter<Adapter_Weigh_C
             customer = itemView.findViewById(R.id.orweincust);
             oanum = itemView.findViewById(R.id.orweinoa);
             loadedqty = itemView.findViewById(R.id.orweinloaded);
+            loadedqtyuom=itemView.findViewById(R.id.orweiloadedqtyuom);
             tarewe = itemView.findViewById(R.id.orweintare);
             invehicleimage=itemView.findViewById(R.id.orweinInVehicleImage);
             indriverimage=itemView.findViewById(R.id.orweinInDriverImage);

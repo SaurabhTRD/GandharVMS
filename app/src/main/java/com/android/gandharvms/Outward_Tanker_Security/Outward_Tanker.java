@@ -119,4 +119,9 @@ public interface Outward_Tanker {
                                                                               @Query("vehicletype") String vehicletype,
                                                                               @Query("nextprocess") char nextprocess,
                                                                               @Query("inout") char inout);
+
+    @GET("api/OutwardIndusSmallDispatch/GetOutwardIndusSmallDispatchList")
+    Call<List<Common_Outward_model>> getdespatchIndustrial(@Query("FromDate")String FromDate,
+                                                        @Query("Todate") String Todate,
+                                                        @Query("vehicletype") String vehicletype);
 }

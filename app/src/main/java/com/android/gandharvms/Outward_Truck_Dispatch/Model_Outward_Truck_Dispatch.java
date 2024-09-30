@@ -54,6 +54,24 @@ public class Model_Outward_Truck_Dispatch {
     public String DespatchExtraMaterial;
     public String DespatchOther;
     public int TotalCalCulatedWeight;
+    public String ilsign;
+    public String splsign;
+
+    public String getIlsign() {
+        return ilsign;
+    }
+
+    public void setIlsign(String ilsign) {
+        this.ilsign = ilsign;
+    }
+
+    public String getSplsign() {
+        return splsign;
+    }
+
+    public void setSplsign(String splsign) {
+        this.splsign = splsign;
+    }
 
     public int getId() {
         return Id;

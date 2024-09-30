@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Outward_Truck_Weighment.Weigh_OR_Complete">
+    tools:context=".Outward_Tanker_Weighment.OT_Completed_Weighment">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -41,7 +41,7 @@
         android:layout_marginLeft="235dp"
         android:padding="8dp"/>
     <ImageButton
-        android:id="@+id/btn_orinweighExportToExcel"
+        android:id="@+id/btn_tankerweighExportToExcel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/iconsexportcsv"
@@ -52,7 +52,7 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/itin_Weigh_coheaderscroll_truckwe"
+        android:id="@+id/irin_indusdespatchhorizontallscroll"
         android:layout_marginTop="8dp"
         android:layout_height="40dp">
 
@@ -63,31 +63,8 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="100dp"
-                android:id="@+id/orweintime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="In Time"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/orweouttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:text="Out Time"
-                android:textAllCaps="true"
-                android:gravity="center|start"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-
-            <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinserial"
+                android:id="@+id/orindusserialno"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -98,7 +75,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinvehicle"
+                android:id="@+id/orindusvehicleno"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
@@ -109,7 +86,18 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweincust"
+                android:id="@+id/orindusoano"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="OA Num"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orinduscustomer"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -120,73 +108,161 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinoa"
+                android:id="@+id/orindustransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OA Number"
+                android:text="Transporter"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinloaded"
+                android:id="@+id/orindusintime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Loaded Qty"
+                android:text="In Time"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindusouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Out Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweiloadedqtyuom"
+                android:id="@+id/orindus10ltr"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Loaded Qty UOM"
+                android:text="Packing 10Ltr"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweintare"
+                android:id="@+id/orindus18ltr"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Tare Weight"
+                android:text="Packing 18Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindus20ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Packing 20Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindus26ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Packing 26Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindus50ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Packing 50Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindus210ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Packing 210Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindusBoxbucket"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Packing of Box/Bucket"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindustotqty"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Total QTY"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindusweight"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Weight"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="110dp"
+                android:id="@+id/orindusindustrialsign"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Industrial Sign"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinInDriverImage"
+                android:id="@+id/orindusnextdepartmentr"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="InDriverImage"
+                android:text="NextDepartment"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinInVehicleImage"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="InVehicleImage"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="140dp"
-                android:id="@+id/orweinremark"
+                android:id="@+id/orindusremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -201,8 +277,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitin_weigh_hcogrid_truckin"
+        android:id="@+id/recyclerviewirin_indusdespatch"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
-
 </LinearLayout>

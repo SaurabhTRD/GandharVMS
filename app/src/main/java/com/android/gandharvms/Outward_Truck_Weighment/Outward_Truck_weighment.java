@@ -64,7 +64,7 @@ import retrofit2.Response;
 
 public class Outward_Truck_weighment extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,material,customer,oanumber,tareweight,etremark,etloaded,desweight,destotalqty,etvariremark,spweight,spqty;
+    EditText intime,serialnumber,vehiclenumber,material,customer,oanumber,tareweight,etremark,etloaded,etloadedtyuom,desweight,destotalqty,etvariremark,spweight,spqty;
     Button submit,btnweighmenttruck,varified;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -131,6 +131,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         tareweight = findViewById(R.id.ettareweight);
         etremark = findViewById(R.id.etremark);
         etloaded = findViewById(R.id.etloadmaterialqty);
+        etloadedtyuom=findViewById(R.id.etloadmaterialqtyuom);
 
         submit = findViewById(R.id.etssubmit);
         btnweighmenttruck = findViewById(R.id.outwardtruckweighmentcompleted);
@@ -197,12 +198,21 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         varified.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int splweightint = Integer.parseInt(splweight);
-                int desaweightInt = Integer.parseInt(desaweight);
-                if (desaweightInt > 0) {
-                    indusverify();
-                } else if (splweightint > 0) {
-                    smallverify();
+                try {
+                    // Check if desaweight is a decimal or an integer
+                    float desaweightFloat = desaweight.contains(".") ? Float.parseFloat(desaweight) : Integer.parseInt(desaweight);
+                    float splweightFloat = splweight.contains(".") ? Float.parseFloat(splweight) : Integer.parseInt(splweight);
+
+                    // Compare the parsed values
+                    if (desaweightFloat > 0) {
+                        indusverify();
+                    } else if (splweightFloat > 0) {
+                        smallverify();
+                    }
+                } catch (NumberFormatException e) {
+                    // Handle invalid number format if parsing fails
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(), "Invalid weight format", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -309,6 +319,8 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                         wvehiclenumber = data.getVehicleNumber();
                         etloaded.setText(String.valueOf(data.getHowMuchQuantityFilled()));
                         etloaded.setEnabled(false);
+                        etloadedtyuom.setText(data.getHowMuchQTYUOM());
+                        etloadedtyuom.setEnabled(false);
                         customer.setText(data.getCustomerName());
                         customer.setEnabled(false);
                         despatchnext = data.getPurposeProcess();
@@ -369,7 +381,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
 //                        destotalqty.setEnabled(false);
 
                     }else {
-                        Toasty.error(Outward_Truck_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                        //Toasty.error(Outward_Truck_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 }else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -453,6 +465,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
             });
         }
     }
+
     public void indusverify(){
 
         String uvarifuremark = etvariremark.getText().toString().trim();
@@ -460,7 +473,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
             despatchNextChar = despatchnext.charAt(0);
         }
         if (uvarifuremark.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
         }else {
 //            Varified_Model varifiedModel = new Varified_Model(OutwardId,"Yes",'J',inOut,vehicleType,EmployeId,uvarifuremark);
 
@@ -491,7 +504,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
             despatchNextChar = despatchnext.charAt(0);
         }
         if (uvarifuremark.isEmpty()){
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            Toasty.warning(this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
         }else {
             Verified_Small_pack verifiedSmallPack = new Verified_Small_pack(OutwardId,"Yes",uvarifuremark,despatchNextChar,inOut,
                     vehicleType,EmployeId);

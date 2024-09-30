@@ -64,13 +64,13 @@ public class Adater_Weigh_Out_Complete extends RecyclerView.Adapter<Adater_Weigh
     public void onBindViewHolder(@NonNull Adater_Weigh_Out_Complete.myviewHolder holder, int position) {
 
         Common_Outward_model obj = filteredGridList.get(position);
-        int intimelength = obj.getIntime() != null ? obj.getIntime().length() :0;
-        int outtimelength = obj.getOutTime()!= null ? obj.getOutTime().length() :0;
+        int intimelength = obj.getOutInTime() != null ? obj.getOutInTime().length() :0;
+        int outtimelength = obj.getUpdatedDate()!= null ? obj.getUpdatedDate().length() :0;
         if (intimelength > 0){
-            holder.intime.setText(obj.getIntime().substring(12,intimelength));
+            holder.intime.setText(obj.getOutInTime().substring(12,intimelength));
         }
         if (outtimelength > 0){
-            holder.outtime.setText(obj.getOutTime().substring(12,outtimelength));
+            holder.outtime.setText(obj.getUpdatedDate().substring(12,outtimelength));
         }
         holder.serialnum.setText(obj.getSerialNumber());
         holder.vehiclenum.setText(obj.getVehicleNumber());

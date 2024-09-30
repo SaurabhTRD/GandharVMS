@@ -49,25 +49,24 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class SecOut_OR_Complete extends AppCompatActivity {
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
     int scrollX = 0;
     List<Common_Outward_model> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
     Adapter_Security_Out adapterSecurityOut;
-    private Outward_Tanker outwardTanker;
-
-    private final String vehicleType = Global_Var.getInstance().MenuType;
-    private final char nextProcess = Global_Var.getInstance().DeptType;
-    private final char inOut = Global_Var.getInstance().InOutType;
-    private final String EmployeId = Global_Var.getInstance().EmpId;
-    Button fromDate,toDate;
+    Button fromDate, toDate;
     TextView totrec;
     String fromdate;
     String todate;
     String strvehiclenumber;
     ImageButton imgBtnExportToExcel;
-    private HSSFWorkbook hssfWorkBook;
     String formattedDate;
+    private Outward_Tanker outwardTanker;
+    private HSSFWorkbook hssfWorkBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +79,10 @@ public class SecOut_OR_Complete extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        totrec=findViewById(R.id.totrecdepartmentwise);
-        fromDate=findViewById(R.id.orbtnfromDate);
-        toDate=findViewById(R.id.orbtntoDate);
-        fromdate= getCurrentDateTime();
+        totrec = findViewById(R.id.totrecdepartmentwise);
+        fromDate = findViewById(R.id.orbtnfromDate);
+        toDate = findViewById(R.id.orbtntoDate);
+        fromdate = getCurrentDateTime();
         todate = getCurrentDateTime();
         imgBtnExportToExcel = findViewById(R.id.btn_oroutsecExportToExcel);
         hssfWorkBook = new HSSFWorkbook();
@@ -91,7 +90,7 @@ public class SecOut_OR_Complete extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Handle the onClick for fromDate button
-                showDatePickerDialog(fromDate,true);
+                showDatePickerDialog(fromDate, true);
             }
         });
 
@@ -99,7 +98,7 @@ public class SecOut_OR_Complete extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Handle the onClick for fromDate button
-                showDatePickerDialog(toDate,false);
+                showDatePickerDialog(toDate, false);
             }
         });
         imgBtnExportToExcel.setOnClickListener(new View.OnClickListener() {
@@ -115,36 +114,31 @@ public class SecOut_OR_Complete extends AppCompatActivity {
             }
         });
         initViews();
-        if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
-        {
-            if(getIntent().hasExtra("vehiclenumber")==true)
-            {
-                strvehiclenumber= getIntent().getExtras().get("vehiclenumber").toString();
+        if (Global_Var.getInstance().DeptType != 0 && Integer.valueOf(Global_Var.getInstance().DeptType) != 120) {
+            if (getIntent().hasExtra("vehiclenumber")) {
+                strvehiclenumber = getIntent().getExtras().get("vehiclenumber").toString();
+            } else {
+                strvehiclenumber = "x";
             }
-            else{
-                strvehiclenumber="x";
-            }
-            fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
+            fetchDataFromApiforweigh(fromdate, todate, vehicleType, nextProcess, inOut);
+        } else {
         }
-        else{
-        }
-        rvClub.addOnScrollListener(new RecyclerView.OnScrollListener()
-        {
+        rvClub.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy)
-            {
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 scrollX += dx;
                 headerscroll.scrollTo(scrollX, 0);
             }
+
             @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState)
-            {
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
     }
-    private void showDatePickerDialog(final TextView dateTextView,final boolean isFromDate) {
+
+    private void showDatePickerDialog(final TextView dateTextView, final boolean isFromDate) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH);
@@ -164,18 +158,14 @@ public class SecOut_OR_Complete extends AppCompatActivity {
                             } else {
                                 todate = selectedDate;
                             }
-                            if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
-                            {
-                                if(getIntent().hasExtra("vehiclenumber")==true)
-                                {
-                                    strvehiclenumber= getIntent().getExtras().get("vehiclenumber").toString();
+                            if (Global_Var.getInstance().DeptType != 0 && Integer.valueOf(Global_Var.getInstance().DeptType) != 120) {
+                                if (getIntent().hasExtra("vehiclenumber")) {
+                                    strvehiclenumber = getIntent().getExtras().get("vehiclenumber").toString();
+                                } else {
+                                    strvehiclenumber = "x";
                                 }
-                                else{
-                                    strvehiclenumber="x";
-                                }
-                                fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
-                            }
-                            else{
+                                fetchDataFromApiforweigh(fromdate, todate, vehicleType, nextProcess, inOut);
+                            } else {
                             }
                         } else {
                             // Show an error message or take appropriate action
@@ -200,6 +190,7 @@ public class SecOut_OR_Complete extends AppCompatActivity {
         // Show the date picker dialog
         datePickerDialog.show();
     }
+
     private void exportToExcel(List<Common_Outward_model> datalist) {
         try {
             Sheet sheet = hssfWorkBook.createSheet("OutwardTruckOutsecurity");
@@ -220,18 +211,16 @@ public class SecOut_OR_Complete extends AppCompatActivity {
             for (int i = 0; i < datalist.size(); i++) {
                 Row dataRow = sheet.createRow(i + 1); // Start from the second row (index 1) for data
                 Common_Outward_model dataItem = datalist.get(i);
-                int intimelength = dataItem.getInTime()!=null ? dataItem.getInTime().length() : 0;
-                int outtimelength = dataItem.getOutTime()!=null ? dataItem.getOutTime().length() : 0;
+                int intimelength = dataItem.getInTime() != null ? dataItem.getInTime().length() : 0;
+                int outtimelength = dataItem.getOutTime() != null ? dataItem.getOutTime().length() : 0;
                 dataRow.createCell(0).setCellValue(formattedDate = formatDate(dataItem.getDate()));
                 dataRow.createCell(1).setCellValue(dataItem.getSerialNumber());
                 dataRow.createCell(2).setCellValue(dataItem.getVehicleNumber());
-                if(intimelength>0)
-                {
-                    dataRow.createCell(3).setCellValue(dataItem.getInTime().substring(12,intimelength));
+                if (intimelength > 0) {
+                    dataRow.createCell(3).setCellValue(dataItem.getInTime().substring(12, intimelength));
                 }
-                if(intimelength>0)
-                {
-                    dataRow.createCell(4).setCellValue(dataItem.getOutTime().substring(12,intimelength));
+                if (intimelength > 0) {
+                    dataRow.createCell(4).setCellValue(dataItem.getOutTime().substring(12, intimelength));
                 }
                 dataRow.createCell(5).setCellValue(dataItem.getNameofParty());
                 dataRow.createCell(6).setCellValue(dataItem.getNetWeight());
@@ -242,10 +231,11 @@ public class SecOut_OR_Complete extends AppCompatActivity {
             // Save the workbook
             //saveWorkBook(hssfWorkBook);
             saveWorkbookToFile(hssfWorkBook);
-        }catch(Exception ex){
+        } catch (Exception ex) {
             throw new RuntimeException(ex);
         }
     }
+
     private void saveWorkbookToFile(HSSFWorkbook hssfWorkBook) {
         try {
             StorageManager storageManager = (StorageManager) getSystemService(STORAGE_SERVICE);
@@ -275,6 +265,7 @@ public class SecOut_OR_Complete extends AppCompatActivity {
             throw new RuntimeException(ex);
         }
     }
+
     private String formatDate(String inputDate) {
         try {
             SimpleDateFormat inputFormat = new SimpleDateFormat("MMM dd yyyy hh:mma", Locale.getDefault());
@@ -287,7 +278,7 @@ public class SecOut_OR_Complete extends AppCompatActivity {
         }
     }
 
-    private String getCurrentDateTime()     {
+    private String getCurrentDateTime() {
         // Get current date and time
         Calendar calendar = Calendar.getInstance();
         Date now = calendar.getTime();
@@ -296,33 +287,31 @@ public class SecOut_OR_Complete extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(now);
     }
-    private void initViews()
-    {
+
+    private void initViews() {
         rvClub = findViewById(R.id.recyclerviewitinsecurity_truckout);
         headerscroll = findViewById(R.id.itinsecuritycoheaderscroll_truckout);
     }
 
-    private void setUpRecyclerView()
-    {
-        adapterSecurityOut  = new Adapter_Security_Out(clubList);
+    private void setUpRecyclerView() {
+        adapterSecurityOut = new Adapter_Security_Out(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
         rvClub.setAdapter(adapterSecurityOut);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
-    public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
 
-
-        Call<List<Common_Outward_model>> call = outwardTanker.getintrucksecuritycompleted(FromDate,Todate,vehicleType,nextprocess,inOut);
+    public void fetchDataFromApiforweigh(String FromDate, String Todate, String vehicleType, char nextprocess, char inOut) {
+        Call<List<Common_Outward_model>> call = outwardTanker.getintrucksecuritycompleted(FromDate, Todate, vehicleType, nextprocess, inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {
             @Override
             public void onResponse(Call<List<Common_Outward_model>> call, Response<List<Common_Outward_model>> response) {
-                if (response.isSuccessful()){
-                    if (response.body().size()>0){
+                if (response.isSuccessful()) {
+                    if (response.body().size() > 0) {
                         List<Common_Outward_model> data = response.body();
                         int totalcount = data.size();
-                        totrec.setText("Tot-Rec: "+ totalcount);
+                        totrec.setText("Tot-Rec: " + totalcount);
                         clubList = data;
                         setUpRecyclerView();
 
@@ -346,9 +335,9 @@ public class SecOut_OR_Complete extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(SecOut_OR_Complete.this,"failed..!", Toast.LENGTH_SHORT).show();
+                Toasty.error(SecOut_OR_Complete.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
-     }
-
     }
+
+}

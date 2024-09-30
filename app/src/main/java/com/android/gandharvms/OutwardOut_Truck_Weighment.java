@@ -332,7 +332,6 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
 
     public void insert(){
 
-//        intime,serialnumber,vehiclenum,grosswright,noofpack;
         String etintime = intime.getText().toString().trim();
         String unetwt = netwt.getText().toString().trim();
         String etgrossweight = grosswright.getText().toString().trim();

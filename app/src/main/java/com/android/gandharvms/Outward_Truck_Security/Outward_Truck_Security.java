@@ -327,6 +327,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
             }
         });
     }
+
     public void Notificationforall(String vehicleNumber) {
         FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                 "/topics/all",

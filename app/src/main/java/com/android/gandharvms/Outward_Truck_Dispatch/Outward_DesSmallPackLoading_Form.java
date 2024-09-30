@@ -287,20 +287,20 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
         String iserial = serial.getText().toString().trim();
         String uintime = intime.getText().toString().trim();
         String uouttime = getCurrentTime();
-        int u7 = Integer.parseInt(sevenltr.getText().toString().trim());
-        int u7_5 = Integer.parseInt(sevenandhalfltr.getText().toString().trim());
-        int u8_5 = Integer.parseInt(eighthalfltr.getText().toString().trim());
-        int u10 = Integer.parseInt(tenltr.getText().toString().trim());
-        int u11 = Integer.parseInt(elevenltr.getText().toString().trim());
-        int u12 = Integer.parseInt(twelltr.getText().toString().trim());
-        int u13 = Integer.parseInt(threteenltr.getText().toString().trim());
-        int u15 = Integer.parseInt(fifteenltr.getText().toString().trim());
-        int u18 = Integer.parseInt(eighteenltr.getText().toString().trim());
-        int u20 = Integer.parseInt(twentyltr.getText().toString().trim());
-        int u26 = Integer.parseInt(twentysixltr.getText().toString().trim());
-        int u50 = Integer.parseInt(fiftyltr.getText().toString().trim());
-        int u210 = Integer.parseInt(twotenltr.getText().toString().trim());
-        int boxbucet = Integer.parseInt(boxbucket.getText().toString().trim());
+        int u7 = !sevenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(sevenltr.getText().toString().trim()) : 0;
+        int u7_5 = !sevenandhalfltr.getText().toString().trim().isEmpty() ? Integer.parseInt(sevenandhalfltr.getText().toString().trim()) : 0;
+        int u8_5 = !eighthalfltr.getText().toString().trim().isEmpty() ? Integer.parseInt(eighthalfltr.getText().toString().trim()) : 0;
+        int u10 = !tenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(tenltr.getText().toString().trim()) : 0;
+        int u11 = !elevenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(elevenltr.getText().toString().trim()) : 0;
+        int u12 = !twelltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twelltr.getText().toString().trim()) : 0;
+        int u13 = !threteenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(threteenltr.getText().toString().trim()) : 0;
+        int u15 = !fifteenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(fifteenltr.getText().toString().trim()) : 0;
+        int u18 = !eighteenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(eighteenltr.getText().toString().trim()) : 0;
+        int u20 = !twentyltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twentyltr.getText().toString().trim()) : 0;
+        int u26 = !twentysixltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twentysixltr.getText().toString().trim()) : 0;
+        int u50 = !fiftyltr.getText().toString().trim().isEmpty() ? Integer.parseInt(fiftyltr.getText().toString().trim()) : 0;
+        int u210 = !twotenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twotenltr.getText().toString().trim()) : 0;
+        int boxbucet = !boxbucket.getText().toString().trim().isEmpty() ? Integer.parseInt(boxbucket.getText().toString().trim()) : 0;
         String utotalqty = totalqty.getText().toString().trim();
         String uweight = etweight.getText().toString().trim();
         String usign = smallsign.getText().toString().trim();
@@ -357,20 +357,20 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
 
         String uintime = intime.getText().toString().trim();
         String uouttime = getCurrentTime();
-        int u7 = Integer.parseInt(sevenltr.getText().toString().trim());
-        int u7_5 = Integer.parseInt(sevenandhalfltr.getText().toString().trim());
-        int u8_5 = Integer.parseInt(eighthalfltr.getText().toString().trim());
-        int u10 = Integer.parseInt(tenltr.getText().toString().trim());
-        int u11 = Integer.parseInt(elevenltr.getText().toString().trim());
-        int u12 = Integer.parseInt(twelltr.getText().toString().trim());
-        int u13 = Integer.parseInt(threteenltr.getText().toString().trim());
-        int u15 = Integer.parseInt(fifteenltr.getText().toString().trim());
-        int u18 = Integer.parseInt(eighteenltr.getText().toString().trim());
-        int u20 = Integer.parseInt(twentyltr.getText().toString().trim());
-        int u26 = Integer.parseInt(twentysixltr.getText().toString().trim());
-        int u50 = Integer.parseInt(fiftyltr.getText().toString().trim());
-        int u210 = Integer.parseInt(twotenltr.getText().toString().trim());
-        int boxbucet = Integer.parseInt(boxbucket.getText().toString().trim());
+        int u7 = !sevenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(sevenltr.getText().toString().trim()) : 0;
+        int u7_5 = !sevenandhalfltr.getText().toString().trim().isEmpty() ? Integer.parseInt(sevenandhalfltr.getText().toString().trim()) : 0;
+        int u8_5 = !eighthalfltr.getText().toString().trim().isEmpty() ? Integer.parseInt(eighthalfltr.getText().toString().trim()) : 0;
+        int u10 = !tenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(tenltr.getText().toString().trim()) : 0;
+        int u11 = !elevenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(elevenltr.getText().toString().trim()) : 0;
+        int u12 = !twelltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twelltr.getText().toString().trim()) : 0;
+        int u13 = !threteenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(threteenltr.getText().toString().trim()) : 0;
+        int u15 = !fifteenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(fifteenltr.getText().toString().trim()) : 0;
+        int u18 = !eighteenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(eighteenltr.getText().toString().trim()) : 0;
+        int u20 = !twentyltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twentyltr.getText().toString().trim()) : 0;
+        int u26 = !twentysixltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twentysixltr.getText().toString().trim()) : 0;
+        int u50 = !fiftyltr.getText().toString().trim().isEmpty() ? Integer.parseInt(fiftyltr.getText().toString().trim()) : 0;
+        int u210 = !twotenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(twotenltr.getText().toString().trim()) : 0;
+        int boxbucet = !boxbucket.getText().toString().trim().isEmpty() ? Integer.parseInt(boxbucket.getText().toString().trim()) : 0;
         String utotalqty = totalqty.getText().toString().trim();
         String uweight = etweight.getText().toString().trim();
         String usign = smallsign.getText().toString().trim();
@@ -430,5 +430,9 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    public void btndessmallpackloadViewclick(View view)
+    {
+        Intent intent = new Intent(this, OR_DespatchSmallPack_Completed_Listing.class);
+        startActivity(intent);
+    }
 }

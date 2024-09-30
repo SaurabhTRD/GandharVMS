@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".Outward_Truck_Weighment.Weigh_OR_Complete">
+    tools:context=".Outward_Truck_Production.OR_DataEntry_Completed_Listing">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -41,7 +41,7 @@
         android:layout_marginLeft="235dp"
         android:padding="8dp"/>
     <ImageButton
-        android:id="@+id/btn_orinweighExportToExcel"
+        android:id="@+id/btn_Logi_orExportToExcel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/iconsexportcsv"
@@ -52,7 +52,7 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/itin_Weigh_coheaderscroll_truckwe"
+        android:id="@+id/or_out_HRSdataentrylisting"
         android:layout_marginTop="8dp"
         android:layout_height="40dp">
 
@@ -64,7 +64,7 @@
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/orweintime"
+                android:id="@+id/oroutdeprolintime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:text="In Time"
@@ -75,7 +75,7 @@
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/orweouttime"
+                android:id="@+id/oroutdeproouttime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:text="Out Time"
@@ -87,7 +87,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinserial"
+                android:id="@+id/oroutdeproserialnum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -98,7 +98,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinvehicle"
+                android:id="@+id/oroutdeprovehiclenum"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
                 android:textStyle="bold"
@@ -109,84 +109,73 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweincust"
+                android:id="@+id/oroutdeprosignofil"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Customer"
+                android:text="Sign Of Industrial"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinoa"
+                android:id="@+id/oroutdeprosignofsmallpack"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OA Number"
+                android:text="Sign Of SmallPack"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinloaded"
+                android:id="@+id/oroutdeprosignbysecurity"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Loaded Qty"
+                android:text="Sign Of Security"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweiloadedqtyuom"
+                android:id="@+id/oroutdeprosecdatetime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Loaded Qty UOM"
+                android:text="Sec DateTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweintare"
+                android:id="@+id/oroutdeprosignofweighment"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Tare Weight"
+                android:text="Sign Of Weighment"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/orweinInDriverImage"
+                android:id="@+id/oroutdeproweighmentdatetime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="InDriverImage"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/orweinInVehicleImage"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="InVehicleImage"
+                android:text="Weighment DateTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="140dp"
-                android:id="@+id/orweinremark"
+                android:id="@+id/oroutdeproremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -201,8 +190,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitin_weigh_hcogrid_truckin"
+        android:id="@+id/or_out_RCLdataentrylisting"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
-
 </LinearLayout>

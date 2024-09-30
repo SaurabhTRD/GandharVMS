@@ -81,6 +81,24 @@ public class Response_Outward_Security_Fetching {
     private String VehicleType;
     private String SealNumber;
     public String PurposeProcess;
+    public String spltotqty;
+    public String iltotqty;
+
+    public String getSpltotqty() {
+        return spltotqty;
+    }
+
+    public void setSpltotqty(String spltotqty) {
+        this.spltotqty = spltotqty;
+    }
+
+    public String getIltotqty() {
+        return iltotqty;
+    }
+
+    public void setIltotqty(String iltotqty) {
+        this.iltotqty = iltotqty;
+    }
 
     public String getPurposeProcess() {
         return PurposeProcess;

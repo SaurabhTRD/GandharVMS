@@ -58,7 +58,7 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Security extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,invoice,party,gooddis,qty,uom1,netweight,qtyuom,outtime,sign,remark,etproduct,erqty,erinvoice;
+    EditText intime,serialnumber,vehiclenumber,invoice,party,gooddis,qty,uom1,netweight,qtyuom,outtime,sign,remark,etproduct,erqty,etqtyspl,erinvoice;
     Button submit,complete;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -104,10 +104,11 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
 //        qty=findViewById(R.id.etqty);
 //        uom1=findViewById(R.id.qtyuom);
         netweight=findViewById(R.id.etnetweight);
-        qtyuom=findViewById(R.id.netweuom);
+        //qtyuom=findViewById(R.id.netweuom);
         sign=findViewById(R.id.etsign);
         remark=findViewById(R.id.etremark);
         erqty = findViewById(R.id.etqty);
+        etqtyspl=findViewById(R.id.etqtyspl);
         erinvoice = findViewById(R.id.etinvoicenum);
 
         submit = findViewById(R.id.submit);
@@ -325,21 +326,17 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                         serialnumber.setEnabled(false);
                         vehiclenumber.setEnabled(false);
                         party.setEnabled(false);
-//                        qty.setText(String.valueOf(obj.getOutTotalQty()));
-//                        qty.setEnabled(false);
-//                        uom1.setText(String.valueOf(obj.getOutTotalQtyUOM()));
                         netweight.setText(obj.getNetWeight());
                         netweight.setEnabled(false);
                         svehicleno = obj.getVehicleNumber();
-//                        etproduct.setText(obj.getProductName());
-//                        etproduct.setEnabled(false);
-//                        invoice.setText(obj.getInvoiceNumber());
                         erinvoice.setText(obj.getOutInvoiceNumber());
                         erinvoice.setEnabled(false);
-                        erqty.setText(obj.getOutTotalQty());
+                        erqty.setText(obj.getIltotqty());
                         erqty.setEnabled(false);
-                        qtyuom.setText(getWeightUnit(obj.getOutTotalQtyUOM()));
-                        qtyuom.setEnabled(false);
+                        etqtyspl.setText(obj.getSpltotqty());
+                        etqtyspl.setEnabled(false);
+                        /*qtyuom.setText(getWeightUnit(obj.getOutTotalQtyUOM()));
+                        qtyuom.setEnabled(false);*/
                     }else {
                         Toasty.error(OutwardOut_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

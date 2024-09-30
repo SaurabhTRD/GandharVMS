@@ -51,7 +51,7 @@ import retrofit2.Response;
 
 public class Outward_Truck_Production extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenumber,etqty,typepack,signdis,dtdis,signsec,dtsec,signweigh,dtweigh,tare,etremark;
+    EditText intime,serialnumber,vehiclenumber,typepack,signdis,dtdis,signsec,dtsec,signweigh,dtweigh,tare,etremark;
     Button submit;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -112,7 +112,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
         vehiclenumber = findViewById(R.id.etvehicleno);
-        etqty = findViewById(R.id.etqty2);
+        //etqty = findViewById(R.id.etqty2);
         typepack = findViewById(R.id.typeofpackproduction);
         signdis = findViewById(R.id.etdispatchofficer);
 //        dtdis = findViewById(R.id.etdtdispatch);
@@ -220,18 +220,18 @@ public class Outward_Truck_Production extends AppCompatActivity {
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenumber.setText(data.getVehicleNumber());
-                        etqty.setText(String.valueOf(data.getTotalCalCulatedWeight()));//set qty as totalcalculated wt
-                        typepack.setText(String.valueOf(data.getTypeOfPackagingId()));
-                        signdis.setText(data.getDespatch_Sign());
+                        //etqty.setText(String.valueOf(data.getTotalCalCulatedWeight()));//set qty as totalcalculated wt
+                        //typepack.setText(data.getIlsign());
+                        signdis.setText(data.getSplsign());
 //                        dtdis.setText(data.getDespatchInTime());
-                        typepack.setText(data.getTypeOfPackaging());
+                        typepack.setText(data.getIlsign());
                         signsec.setText(data.getSecurityCreatedBy());
                         dtsec.setText(data.getSecurityCreatedDate());
                         signweigh.setText(data.getWeighmentCreatedBy());
                         dtweigh.setText(data.getWeighmentCreatedDate());
                         serialnumber.setEnabled(false);
                         vehiclenumber.setEnabled(false);
-                        etqty.setEnabled(false);
+                        //etqty.setEnabled(false);
                         typepack.setEnabled(false);
                         signdis.setEnabled(false);
                         signsec.setEnabled(false);
@@ -305,7 +305,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
 //                    });
 
             Outward_Truck_Production_Model outwardTruckProductionModel = new Outward_Truck_Production_Model(OutwardId,etintime,outTime,
-                    uremark,'P',EmployeId,'W','O',vehicleType);
+                    uremark,'P',EmployeId,'B','O',vehicleType);
             Call<Boolean> call = outwardTruckProductionInterface.updateouttruckproduction(outwardTruckProductionModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -350,6 +350,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
 
     public void Viewclick(View view)
     {
-
+        Intent intent = new Intent(this, OR_DataEntry_Completed_Listing.class);
+        startActivity(intent);
     }
 }

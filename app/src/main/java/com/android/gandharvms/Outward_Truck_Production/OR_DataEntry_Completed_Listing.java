@@ -1,4 +1,4 @@
-package com.android.gandharvms.Outward_Truck_Weighment;
+package com.android.gandharvms.Outward_Truck_Production;
 
 import android.app.DatePickerDialog;
 import android.icu.text.SimpleDateFormat;
@@ -25,6 +25,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
+import com.android.gandharvms.Outward_Truck_Logistic.Adapter_Logi_complete;
+import com.android.gandharvms.Outward_Truck_Logistic.Logi_OR_Complete;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
@@ -49,19 +51,17 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Weigh_Out_OR_Complete extends AppCompatActivity {
-
+public class OR_DataEntry_Completed_Listing extends AppCompatActivity {
     int scrollX = 0;
     List<Common_Outward_model> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
-    Adater_Weigh_Out_Complete adaterWeighOutComplete;
+    Adapter_OR_OUT_Dataentrycompleted adapteroutdataentryComplete;
     private Outward_Tanker outwardTanker;
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
-    private final String EmployeId = Global_Var.getInstance().EmpId;
     Button fromDate,toDate;
     TextView totrec;
     String fromdate;
@@ -70,12 +70,13 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
     ImageButton imgBtnExportToExcel;
     private HSSFWorkbook hssfWorkBook;
     String formattedDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_weigh_out_or_complete);
+        setContentView(R.layout.activity_or_data_entry_completed_listing);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
@@ -86,8 +87,9 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
         toDate=findViewById(R.id.orbtntoDate);
         fromdate=getCurrentDateTime();
         todate = getCurrentDateTime();
-        imgBtnExportToExcel = findViewById(R.id.btn_oroutweighExportToExcel);
+        imgBtnExportToExcel = findViewById(R.id.btn_Logi_orExportToExcel);
         hssfWorkBook = new HSSFWorkbook();
+
         fromDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,13 +119,6 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
         initViews();
         if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
         {
-            if(getIntent().hasExtra("vehiclenumber")==true)
-            {
-                strvehiclenumber= getIntent().getExtras().get("vehiclenumber").toString();
-            }
-            else{
-                strvehiclenumber="x";
-            }
             fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
         }
         else{
@@ -144,6 +139,7 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
             }
         });
     }
+
     private void showDatePickerDialog(final TextView dateTextView,final boolean isFromDate) {
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -166,20 +162,13 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
                             }
                             if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
                             {
-                                if(getIntent().hasExtra("vehiclenumber")==true)
-                                {
-                                    strvehiclenumber= getIntent().getExtras().get("vehiclenumber").toString();
-                                }
-                                else{
-                                    strvehiclenumber="x";
-                                }
                                 fetchDataFromApiforweigh(fromdate,todate,vehicleType,nextProcess,inOut);
                             }
                             else{
                             }
                         } else {
                             // Show an error message or take appropriate action
-                            Toasty.warning(Weigh_Out_OR_Complete.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(OR_DataEntry_Completed_Listing.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -202,48 +191,44 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
     }
     private void exportToExcel(List<Common_Outward_model> datalist) {
         try {
-            Sheet sheet = hssfWorkBook.createSheet("OutwardOutWeighment");
+            Sheet sheet = hssfWorkBook.createSheet("OutwardTruckLogistic");
             // Create header row
             Row headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("DATE");
-            headerRow.createCell(1).setCellValue("SERIALNUMBER");
-            headerRow.createCell(2).setCellValue("VEHICLE_No");
+            headerRow.createCell(0).setCellValue("SERIALNUMBER");
+            headerRow.createCell(1).setCellValue("VEHICLE_No");
             headerRow.createCell(3).setCellValue("INTIME");
             headerRow.createCell(4).setCellValue("OUTTIME");
-            headerRow.createCell(5).setCellValue("TARE WEIGHT");
-            headerRow.createCell(6).setCellValue("NET WEIGHT");
-            headerRow.createCell(7).setCellValue("GROSS WEIGHT");
-            headerRow.createCell(8).setCellValue("NUM PACK");
-            headerRow.createCell(9).setCellValue("SEAL NUMBER");
-            headerRow.createCell(10).setCellValue("SHORTAGE DIP");
-            headerRow.createCell(11).setCellValue("SHORTAGE WEIGHT");
-            headerRow.createCell(12).setCellValue("REMARK");
+            headerRow.createCell(5).setCellValue("TRANSPORTER");
+            headerRow.createCell(6).setCellValue("PLACE");
+            headerRow.createCell(7).setCellValue("OA NUMBER");
+            headerRow.createCell(8).setCellValue("CUSTOMER NAME");
+            headerRow.createCell(9).setCellValue("LOADED QTY");
+            headerRow.createCell(10).setCellValue("REMARK");
 
             // Populate data rows
             for (int i = 0; i < datalist.size(); i++) {
                 Row dataRow = sheet.createRow(i + 1); // Start from the second row (index 1) for data
                 Common_Outward_model dataItem = datalist.get(i);
-                int intimelength = dataItem.getIntime()!=null ? dataItem.getIntime().length() : 0;
+                int intimelength = dataItem.getInTime()!=null ? dataItem.getInTime().length() : 0;
                 int outtimelength = dataItem.getOutTime()!=null ? dataItem.getOutTime().length() : 0;
                 dataRow.createCell(0).setCellValue(formattedDate = formatDate(dataItem.getDate()));
                 dataRow.createCell(1).setCellValue(dataItem.getSerialNumber());
                 dataRow.createCell(2).setCellValue(dataItem.getVehicleNumber());
                 if(intimelength>0)
                 {
-                    dataRow.createCell(3).setCellValue(dataItem.getIntime().substring(12,intimelength));
+                    dataRow.createCell(3).setCellValue(dataItem.getInTime().substring(12,intimelength));
                 }
                 if(intimelength>0)
                 {
                     dataRow.createCell(4).setCellValue(dataItem.getOutTime().substring(12,intimelength));
                 }
-                dataRow.createCell(5).setCellValue(dataItem.getTareWeight());
-                dataRow.createCell(6).setCellValue(dataItem.getNetWeight());
-                dataRow.createCell(7).setCellValue(dataItem.getGrossWeight());
-                dataRow.createCell(8).setCellValue(dataItem.getNumberofPack());
-                dataRow.createCell(9).setCellValue(dataItem.getSealNumber());
-                dataRow.createCell(10).setCellValue(dataItem.getShortageDip());
-                dataRow.createCell(11).setCellValue(dataItem.getShortageWeight());
-                dataRow.createCell(12).setCellValue(dataItem.getRemark());
+                dataRow.createCell(5).setCellValue(dataItem.getTransportName());
+                dataRow.createCell(6).setCellValue(dataItem.getPlace());
+                dataRow.createCell(7).setCellValue(dataItem.getOAnumber());
+                dataRow.createCell(8).setCellValue(dataItem.getCustomerName());
+                dataRow.createCell(9).setCellValue(dataItem.getHowMuchQuantityFilled());
+                dataRow.createCell(10).setCellValue(dataItem.getRemark());
             }
             // Save the workbook
             //saveWorkBook(hssfWorkBook);
@@ -259,11 +244,11 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
                 String dateTimeSuffix = new SimpleDateFormat("ddMMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
                 int counter = 1;
-                String fileName = "Outward Truck Out Weighment Data_" + dateTimeSuffix + ".xls";
+                String fileName = "Outward Truck Logistic Data_" + dateTimeSuffix + ".xls";
                 File outputfile = new File(storageVolume.getDirectory().getPath() + "/Download/" + fileName);
                 while (outputfile.exists()) {
                     counter++;
-                    fileName = "Outward Truck Out Weighment Data_" + dateTimeSuffix + "_" + counter + ".xls";
+                    fileName = "Outward Truck Logistic Data_" + dateTimeSuffix + "_" + counter + ".xls";
                     outputfile = new File(storageVolume.getDirectory().getPath() + "/Download/" + fileName);
                 }
                 try {
@@ -303,37 +288,38 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
     }
     private void initViews()
     {
-        rvClub = findViewById(R.id.recyclerviewitin_weigh_out_hcogrid_truckin);
-        headerscroll = findViewById(R.id.itin_Weigh_out_coheaderscroll_truckwe);
+        rvClub = findViewById(R.id.or_out_RCLdataentrylisting);
+        headerscroll = findViewById(R.id.or_out_HRSdataentrylisting);
     }
+
     private void setUpRecyclerView()
     {
-        adaterWeighOutComplete  = new Adater_Weigh_Out_Complete(clubList);
+        adapteroutdataentryComplete  = new Adapter_OR_OUT_Dataentrycompleted(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
-        rvClub.setAdapter(adaterWeighOutComplete);
+        rvClub.setAdapter(adapteroutdataentryComplete);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
-
-        Call<List<Common_Outward_model>> call = outwardTanker.gettruckweighcomplete(FromDate,Todate,vehicleType,nextprocess,inOut);
+        Call<List<Common_Outward_model>> call = outwardTanker.getintrucklogicomplete(FromDate,Todate,vehicleType,nextprocess,inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {
             @Override
             public void onResponse(Call<List<Common_Outward_model>> call, Response<List<Common_Outward_model>> response) {
                 if (response.isSuccessful()){
-                   if (response.body().size()>0){
-                       List<Common_Outward_model> data = response.body();
-                       int totalcount = data.size();
-                       totrec.setText("Tot-Rec: "+ totalcount);
-                       clubList = data;
-                       setUpRecyclerView();
+                    if (response.body().size()>0){
+                        List<Common_Outward_model> data = response.body();
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: "+ totalcount);
+                        clubList = data;
+                        setUpRecyclerView();
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<List<Common_Outward_model>> call, Throwable t) {
+
                 Log.e("Retrofit", "Failure: " + t.getMessage());
                 // Check if there's a response body in case of an HTTP error
                 if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
@@ -347,7 +333,7 @@ public class Weigh_Out_OR_Complete extends AppCompatActivity {
                         }
                     }
                 }
-                Toasty.error(Weigh_Out_OR_Complete.this,"failed..!", Toast.LENGTH_SHORT).show();
+                Toasty.error(OR_DataEntry_Completed_Listing.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }

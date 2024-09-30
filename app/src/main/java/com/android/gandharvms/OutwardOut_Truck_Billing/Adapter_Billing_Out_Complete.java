@@ -62,27 +62,29 @@ public class Adapter_Billing_Out_Complete extends RecyclerView.Adapter<Adapter_B
 
     @Override
     public void onBindViewHolder(@NonNull Adapter_Billing_Out_Complete.myviewHolder holder, int position) {
-
         Common_Outward_model obj = filteredGridList.get(position);
-        int intimelength = obj.getBillingInTime() != null ? obj.getBillingInTime().length() :0;
-        int outtimelength = obj.getBillingOutTime()!= null ? obj.getBillingOutTime().length() :0;
+        int intimelength = obj.getOutInTime() != null ? obj.getOutInTime().length() :0;
+        int outtimelength = obj.getOutOutTime()!= null ? obj.getOutOutTime().length() :0;
         if (intimelength > 0){
-            holder.intime.setText(obj.getBillingInTime().substring(12,intimelength));
+            holder.intime.setText(obj.getOutInTime().substring(12,intimelength));
         }
         if (outtimelength > 0){
-            holder.outtime.setText(obj.getBillingOutTime().substring(12,outtimelength));
+            holder.outtime.setText(obj.getOutOutTime().substring(12,outtimelength));
         }
         holder.serialnum.setText(obj.getSerialNumber());
         holder.vehicle.setText(obj.getVehicleNumber());
         holder.oanum.setText(obj.getOAnumber());
         holder.transport.setText(obj.getTransportName());
         holder.driverno.setText(obj.getMobileNumber());
-        holder.grswt.setText(obj.getWeighmentGrossWeight());
+        holder.grswt.setText(obj.getGrossWeight());
         holder.tarewt.setText(obj.getTareWeight());
         holder.netwt.setText(obj.getNetWeight());
         holder.sealnum.setText(obj.getSealNumber());
-        holder.batch.setText(obj.getBillingOutBatchNo());
-        holder.remark.setText(obj.getBillingRemark());
+        holder.invoiceno.setText(obj.getOutInvoiceNumber());
+        holder.iltotqty.setText(obj.getIltotqty());
+        holder.spltotqty.setText(obj.getSpltotqty());
+        holder.batch.setText(obj.getBatch_No());
+        holder.remark.setText(obj.getOutRemark());
     }
 
     @Override
@@ -124,7 +126,8 @@ public class Adapter_Billing_Out_Complete extends RecyclerView.Adapter<Adapter_B
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView intime,outtime,serialnum,vehicle,oanum,transport,driverno,grswt,netwt,tarewt,sealnum,batch,remark;
+        public TextView intime,outtime,serialnum,vehicle,oanum,transport,driverno,grswt,netwt,tarewt,sealnum,
+                invoiceno,iltotqty,spltotqty,batch,remark;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             intime = itemView.findViewById(R.id.orbillintime);
@@ -138,6 +141,9 @@ public class Adapter_Billing_Out_Complete extends RecyclerView.Adapter<Adapter_B
             tarewt = itemView.findViewById(R.id.orbilltarewt);
             netwt = itemView.findViewById(R.id.orbillnetwt);
             sealnum = itemView.findViewById(R.id.orbillseal);
+            invoiceno = itemView.findViewById(R.id.orinvoiceno);
+            iltotqty = itemView.findViewById(R.id.orindustotqty);
+            spltotqty = itemView.findViewById(R.id.orsmalltotqty);
             batch = itemView.findViewById(R.id.orbillbatch);
             remark = itemView.findViewById(R.id.orbillremark);
         }

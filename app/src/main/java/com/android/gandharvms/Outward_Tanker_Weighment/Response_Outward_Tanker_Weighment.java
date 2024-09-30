@@ -36,6 +36,7 @@ public class Response_Outward_Tanker_Weighment {
     public int TankerNumber;
     public String ProductName;
     public int HowMuchQuantityFilled;
+    public String HowMuchQTYUOM;
     public String Location;
     public char NextProcess;
     public char I_O;
@@ -49,6 +50,13 @@ public class Response_Outward_Tanker_Weighment {
     public  String ilweight;
     public String PurposeProcess;
 
+    public String getHowMuchQTYUOM() {
+        return HowMuchQTYUOM;
+    }
+
+    public void setHowMuchQTYUOM(String howMuchQTYUOM) {
+        HowMuchQTYUOM = howMuchQTYUOM;
+    }
 
     public String getDensity_29_5C() {
         return Density_29_5C;

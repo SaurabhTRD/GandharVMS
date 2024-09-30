@@ -92,8 +92,7 @@
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
+        <!--<com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -113,7 +112,7 @@
                 android:textSize="17dp"
                 android:textStyle="bold"
                 />
-        </com.google.android.material.textfield.TextInputLayout>
+        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -122,7 +121,6 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="2dp"
-
             android:layout_below="@id/Date"
 
             >
@@ -130,7 +128,7 @@
                 android:id="@+id/typeofpackproduction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Type of Packaging"
+                android:hint="Sign of Industrial Officer"
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -144,15 +142,13 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="2dp"
-
             android:layout_below="@id/Date"
-
             >
             <EditText
                 android:id="@+id/etdispatchofficer"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Signed By Dispatch Officer"
+                android:hint="Sign of SmallPack Officer"
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"

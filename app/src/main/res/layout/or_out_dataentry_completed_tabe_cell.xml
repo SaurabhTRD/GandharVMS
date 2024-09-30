@@ -7,7 +7,7 @@
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/orbillintime"
+        android:id="@+id/oroutdeprolintime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -16,7 +16,17 @@
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/orbillouttime"
+        android:id="@+id/oroutdeproouttime"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/oroutdeproserialnum"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -25,16 +35,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbillserial"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillvehicle"
+        android:id="@+id/oroutdeprovehiclenum"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
         android:textStyle="bold"
@@ -43,7 +44,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbilloanum"
+        android:id="@+id/oroutdeprosignofil"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -52,7 +53,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbilltrans"
+        android:id="@+id/oroutdeprosignofsmallpack"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -61,15 +62,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbilldriver"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillgrswt"
+        android:id="@+id/oroutdeprosignbysecurity"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -78,23 +71,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orbilltarewt"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillnetwt"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillseal"
+        android:id="@+id/oroutdeprosecdatetime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -103,7 +80,7 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orinvoiceno"
+        android:id="@+id/oroutdeprosignofweighment"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -112,36 +89,20 @@
 
     <TextView
         android:layout_width="120dp"
-        android:id="@+id/orindustotqty"
+        android:id="@+id/oroutdeproweighmentdatetime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orsmalltotqty"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="120dp"
-        android:id="@+id/orbillbatch"
-        android:textStyle="bold"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
     <TextView
         android:layout_width="140dp"
-        android:id="@+id/orbillremark"
+        android:id="@+id/oroutdeproremark"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
 </LinearLayout>

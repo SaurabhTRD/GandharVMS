@@ -6,7 +6,7 @@
     android:layout_height="40dp">
 
     <TextView
-        android:layout_width="110dp"
+        android:layout_width="100dp"
         android:id="@+id/oroutsecintime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="100dp"
         android:id="@+id/oroutsecouttime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:id="@+id/oroutsecserial"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
@@ -33,7 +33,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="120dp"
         android:id="@+id/oroutsecvehicle"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -51,16 +51,35 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="150dp"
-        android:id="@+id/oroutsecsign"
+        android:layout_width="120dp"
+        android:id="@+id/oroutsecinvoice"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
-        android:layout_width="130dp"
-        android:id="@+id/oroutsecinvoice"
+        android:layout_width="120dp"
+        android:id="@+id/oroutsecnetweight"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/oroutseciltotqty"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/oroutsecspltotqty"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -75,8 +94,63 @@
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
+
     <TextView
         android:layout_width="120dp"
+        android:id="@+id/oroutsectransportlrcopy"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/oroutsectremcard"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/oroutsecewaybill"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/oroutsectestreport"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/oroutsecinvoice1"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/oroutsecsign"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="140dp"
         android:id="@+id/oroutsecremark"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
