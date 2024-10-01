@@ -2,13 +2,14 @@ package com.android.gandharvms.Inward_Tanker_Production;
 
 public class It_Pro_UpdateByInwardid_req_model {
 
-    private  int InwardId;
+    public String UpdatedBy;
+    private final int InwardId;
     private String InTime;
     private String OutTime;
-    private int UnloadAboveMaterialInTK;
-    private  String ProductName;
-    private int AboveMaterialIsUnloadInTK;
-    private String OperatorName;
+    private final String UnloadAboveMaterialInTK;
+    private final String ProductName;
+    private final String AboveMaterialIsUnloadInTK;
+    private final String OperatorName;
     private String CreatedBy;
     private String VehicleNo;
     private String SerialNo;
@@ -18,9 +19,7 @@ public class It_Pro_UpdateByInwardid_req_model {
     private String Date;
     private String Material;
 
-    public String UpdatedBy;
-
-    public It_Pro_UpdateByInwardid_req_model(int inwardId, int unloadAboveMaterialInTK, String productName, int aboveMaterialIsUnloadInTK, String operatorName, String updatedBy) {
+    public It_Pro_UpdateByInwardid_req_model(int inwardId, String unloadAboveMaterialInTK, String productName, String aboveMaterialIsUnloadInTK, String operatorName, String updatedBy) {
         InwardId = inwardId;
         UnloadAboveMaterialInTK = unloadAboveMaterialInTK;
         ProductName = productName;

@@ -166,14 +166,14 @@ public class Outward_Truck_Production extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Weighment";
+                            String specificRole = "Billing";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Outward Truck Production(Data Entry) Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Production(Data Entry) process at " + outTime,
                                         getApplicationContext(),
                                         Outward_Truck_Production.this
                                 );

@@ -235,7 +235,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Billing";
+                            String specificRole = "DataEntry";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 

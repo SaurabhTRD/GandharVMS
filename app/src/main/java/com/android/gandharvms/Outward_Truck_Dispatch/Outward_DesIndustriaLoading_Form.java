@@ -18,13 +18,19 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.LoginWithAPI.LoginMethod;
+import com.android.gandharvms.LoginWithAPI.ResponseModel;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck;
+import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.R;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -32,6 +38,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -58,25 +65,28 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int OutwardId;
     private Outward_Truck_interface outwardTruckInterface;
+    private LoginMethod userDetails;
     AutoCompleteTextView dept;
     ArrayAdapter<String> nextdeptdrop;
     Map<String, String> nextdeptmapping = new HashMap<>();
     String nextdeptvalue = "W";
     String deptNumericValue = "W";
     private int Id;
+    public String vehnumber="";
 
     ImageView btnlogout,btnhome;
     TextView username,empid;
 
     public static String Tanker;
     public static String Truck;
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_des_industria_loading_form);
         outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
-
+        userDetails = RetroApiClient.getLoginApi();
 //        typeofpackingautoCompleteTextView1 = findViewById(R.id.autodesindusloadTypeOfPacking);
 //        typeofpackingMapping = new HashMap<>();
 //        typeofpackingMapping.put("Packing of 210 Ltr", 1);
@@ -138,7 +148,7 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
         boxbucket.addTextChangedListener(textWatcher);
 
 
-
+        FirebaseMessaging.getInstance().subscribeToTopic(token);
         submit = findViewById(R.id.etdesindusloadsubmit);
 
         btnhome = findViewById(R.id.btn_homeButton);
@@ -281,6 +291,7 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
                         etdesilserialnumber.setEnabled(false);
                         etdesilvehiclenumber.setText(data.getVehicleNumber());
                         etdesilvehiclenumber.setEnabled(false);
+                        vehnumber=data.getVehicleNumber();
                         etdesiltransport.setText(data.getTransportName());
                         etdesiltransport.setEnabled(false);
                         oa.setText(data.getOAnumber());
@@ -344,6 +355,7 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        makeNotification(vehnumber,uintime);
                         startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Outward_Truck.class));
                         finish();
                     }
@@ -414,6 +426,7 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        makeNotification(vehnumber,uintime);
                         startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Outward_Truck.class));
                         finish();
                     }
@@ -440,6 +453,57 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
             });
 
         }
+    }
+
+    public void makeNotification(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "Weighment";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Truck Industrail Pack Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Industrail Pack process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_DesIndustriaLoading_Form.this
+                                );
+                                notificationsSender.triggerSendNotification();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
     public void pendingindustrial(View view){
         Intent intent = new Intent(this, Grid_Outward.class);

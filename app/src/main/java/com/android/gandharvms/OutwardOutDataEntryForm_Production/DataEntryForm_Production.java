@@ -160,7 +160,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
                         odevehiclenumber.setText(data.getVehicleNumber());
                         odevehiclenumber.setEnabled(false);
                         odvehiclenum=data.getVehicleNumber();
-                        odedensity.setText(String.valueOf(data.getDensity_29_5C()));
+                        odedensity.setText(data.getDensity_29_5C());
                         odedensity.setEnabled(false);
                         odesealnumber.setText(String.valueOf(data.getSealNumber()));
                         odesealnumber.setEnabled(false);

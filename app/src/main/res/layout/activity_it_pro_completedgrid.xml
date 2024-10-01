@@ -63,7 +63,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/itprotextcoSerialNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/itprotextcoVehicleNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -107,7 +107,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/itprotextcoInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -118,7 +118,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/itprotextcoOutTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -129,7 +129,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/itprotextcoUnloadAboveMaterialInTK"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -140,7 +140,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/itprotextcoProductName"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -151,7 +151,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="140dp"
+                android:layout_width="120dp"
                 android:id="@+id/itprotextcoAboveMaterialIsUnloadInTK"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -162,12 +162,23 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="140dp"
+                android:layout_width="120dp"
                 android:id="@+id/itprotextcoOperatorName"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="OperatorName"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/itprotextcoremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Remark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>

@@ -102,6 +102,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
     char despatchNextChar = ' ';
     char smallNextChar = ' ';
 
+    public String vehnumber="";
     ImageView btnlogout,btnhome;
     TextView username,empid;
 
@@ -246,6 +247,57 @@ public class Outward_Truck_weighment extends AppCompatActivity {
 
     }
 
+    public void makeNotificationforindus(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "IndustrialPack";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "OOutward Truck Weighment Has Verified..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has Verified Industrial QTY and Weight",
+                                        getApplicationContext(),
+                                        Outward_Truck_weighment.this
+                                );
+                                notificationsSender.triggerSendNotification();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Truck_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
@@ -255,7 +307,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Despatch";
+                            String specificRole = "IndustrialPack";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 
@@ -299,6 +351,57 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         if (getIntent().hasExtra("vehiclenum")) {
             FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
+    }
+
+    public void makeNotificationforsmall(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "SmallPack";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Truck Weighment Has Verified",
+                                        "Vehicle Number:-" + vehicleNumber + " has Verified SmallPack QTY and Weight",
+                                        getApplicationContext(),
+                                        Outward_Truck_weighment.this
+                                );
+                                notificationsSender.triggerSendNotification();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Truck_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
@@ -485,6 +588,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(Outward_Truck_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        makeNotificationforsmall(wvehiclenumber);
                         startActivity(new Intent(Outward_Truck_weighment.this, Outward_Truck.class));
                         finish();
                     }
@@ -514,6 +618,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(Outward_Truck_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        makeNotificationforindus(wvehiclenumber);
                         startActivity(new Intent(Outward_Truck_weighment.this, Outward_Truck.class));
                         finish();
                     }

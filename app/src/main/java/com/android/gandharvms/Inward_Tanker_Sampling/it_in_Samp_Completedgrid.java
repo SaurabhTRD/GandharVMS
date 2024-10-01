@@ -87,7 +87,7 @@ public class it_in_Samp_Completedgrid extends AppCompatActivity {
         fromDate=findViewById(R.id.btnfromDate);
         toDate=findViewById(R.id.btntoDate);
         totrec=findViewById(R.id.totrecdepartmentwise);
-        fromdate="2024-01-01";
+        fromdate=getCurrentDateTime();
         todate = getCurrentDateTime();
         imgBtnExportToExcel=findViewById(R.id.btn_itsamExportToExcel);
         hssfWorkBook = new HSSFWorkbook();

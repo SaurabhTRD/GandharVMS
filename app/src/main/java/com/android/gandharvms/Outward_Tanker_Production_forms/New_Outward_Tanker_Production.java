@@ -233,13 +233,13 @@ public class New_Outward_Tanker_Production extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null) {
                         for (ResponseModel responseModel : userList) {
-                            String specificrole = "Production";
+                            String specificrole = "Laboratory";
                             if (specificrole.equals(responseModel.getDepartment())) {
                                 token = responseModel.getToken();
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Outward Tanker Production Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Store process at " + outTime,
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
                                         getApplicationContext(),
                                         New_Outward_Tanker_Production.this
                                 );

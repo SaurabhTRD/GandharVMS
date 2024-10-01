@@ -97,10 +97,11 @@ public class it_pro_CompletedgridAdapter extends RecyclerView.Adapter<it_pro_Com
         if (outtimelength > 0) {
             holder.outtime.setText(club.getOutTime().substring(12, outtimelength));
         }
-        holder.UnloadAboveMaterialInTK.setText(String.valueOf(club.getUnloadAboveMaterialInTK()));
+        holder.UnloadAboveMaterialInTK.setText(club.getUnloadAboveMaterialInTK());
         holder.ProductName.setText(club.getProductName());
-        holder.AboveMaterialIsUnloadInTK.setText(String.valueOf(club.getAboveMaterialIsUnloadInTK()));
+        holder.AboveMaterialIsUnloadInTK.setText(club.getAboveMaterialIsUnloadInTK());
         holder.OperatorName.setText(club.getOperatorName());
+        holder.remark.setText(club.getProRemark());
         holder.vehiclenum.setText(club.getVehicleNo());
         /*holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -152,7 +153,8 @@ public class it_pro_CompletedgridAdapter extends RecyclerView.Adapter<it_pro_Com
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
-        TextView date,vehiclenum,sernum,material,intime, outtime,UnloadAboveMaterialInTK,ProductName,AboveMaterialIsUnloadInTK,OperatorName;
+        TextView date,vehiclenum,sernum,material,intime, outtime,UnloadAboveMaterialInTK,ProductName,
+                AboveMaterialIsUnloadInTK,OperatorName,remark;
 
         public myviewHolder(View view) {
             super(view);
@@ -166,6 +168,7 @@ public class it_pro_CompletedgridAdapter extends RecyclerView.Adapter<it_pro_Com
             ProductName=view.findViewById(R.id.itprotextcoProductName);
             AboveMaterialIsUnloadInTK=view.findViewById(R.id.itprotextcoAboveMaterialIsUnloadInTK);
             OperatorName=view.findViewById(R.id.itprotextcoOperatorName);
+            remark=view.findViewById(R.id.itprotextcoremark);
         }
     }
 

@@ -174,8 +174,8 @@
                     android:id="@+id/etreq"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Unload Above Material in TankNumber"
-                    android:inputType="number"
+                    android:hint="UnloadMaterial in TankNumber Ex:BL-01"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -214,8 +214,8 @@
                     android:id="@+id/ettankno"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Above Materail is Unloaded in TankNumber"
-                    android:inputType="number"
+                    android:hint="MaterialUnloaded in TankNumber Ex:-TK-02"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -235,6 +235,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Operator Name"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/party_name"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp">
+
+                <EditText
+                    android:id="@+id/irinproremark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Remark"
                     android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />

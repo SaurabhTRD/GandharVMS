@@ -146,7 +146,7 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
                         newltransporter.setEnabled(false);
                         billremark.setText(data.getTankerBillingRemark());
                         billremark.setEnabled(false);
-                        proremark.setText(data.getProRemark());
+                        proremark.setText(data.getTankerProRemark());
                         proremark.setEnabled(false);
 
                     }else {
@@ -240,13 +240,13 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null) {
                         for (ResponseModel responseModel : userList) {
-                            String specificrole = "Laboratory";
+                            String specificrole = "Weighment";
                             if (specificrole.equals(responseModel.getDepartment())) {
                                 token = responseModel.getToken();
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Outward Tanker Laboratory Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Store process at " + outTime,
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Laboratory process at " + outTime,
                                         getApplicationContext(),
                                         New_Outward_tanker_Lab.this
                                 );

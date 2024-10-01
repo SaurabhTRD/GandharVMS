@@ -215,7 +215,7 @@ public class ot_outBilling extends AppCompatActivity {
                         oobdriverno.setEnabled(false);
                         oobbatchno.setText(data.getBatch_No());
                         oobbatchno.setEnabled(false);
-                        oobfetchdensity.setText(String.valueOf(data.getDensity_29_5C()));
+                        oobfetchdensity.setText(data.getDensity_29_5C());
                         oobfetchdensity.setEnabled(false);
                         oobtareweight.setText(data.getTareWeight());
                         oobtareweight.setEnabled(false);
@@ -292,7 +292,7 @@ public class ot_outBilling extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Billing";
+                            String specificRole = "Security";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 

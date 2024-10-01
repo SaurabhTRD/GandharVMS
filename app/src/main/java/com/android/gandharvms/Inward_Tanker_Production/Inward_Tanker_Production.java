@@ -83,7 +83,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeName = Global_Var.getInstance().Name;
     private final String EmployeId = Global_Var.getInstance().EmpId;
-    EditText etint, etserno, edunloadabovematerial, abovematerialunload, etconbyop, opratorname, etconunloadDateTime, etVehicleNumber;
+    EditText etint, etserno, edunloadabovematerial, abovematerialunload, etconbyop, opratorname, etconunloadDateTime, etVehicleNumber,etremark;
     /*  Button viewdata;*/
     Button prosubmit, viewlabreport, updateproclick;
     FirebaseFirestore prodbroot;
@@ -124,6 +124,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         etconbyop = findViewById(R.id.etconbyop);
         abovematerialunload = findViewById(R.id.ettankno);
         opratorname = findViewById(R.id.tanknoun);
+        etremark=findViewById(R.id.irinproremark);
         viewlabreport = findViewById(R.id.btn_ViewlabReport);
 
         prosubmit = findViewById(R.id.prosubmit);
@@ -327,22 +328,26 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         String intime = etint.getText().toString().trim();
         String etser = etserno.getText().toString().trim();
         String eddate = etconunloadDateTime.getText().toString().trim();
+        String unloadmaterialmaterialtk=edunloadabovematerial.getText().toString().trim();
+        String abovematerialunloadtk=abovematerialunload.getText().toString().trim();
         //int reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
-        if (!edunloadabovematerial.getText().toString().isEmpty()) {
+        /*if (!edunloadabovematerial.getText().toString().isEmpty()) {
             try {
                 reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
         }
-        //int abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
+        int abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
+
         if (!abovematerialunload.getText().toString().isEmpty()) {
             try {
                 abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
+        String remark=!etremark.getText().toString().trim().isEmpty()?etremark.getText().toString().trim():"";
         String confirmunload = etconbyop.getText().toString().trim();
         String oprator = opratorname.getText().toString().trim();
         String conunload = etconunloadDateTime.getText().toString().trim();
@@ -350,11 +355,11 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         //String material = etMaterial.getText().toString().trim();
         String vehicleNumber = etVehicleNumber.getText().toString().trim();
 
-        if (intime.isEmpty() || reqtounload < 0 || abovematerialtank < 0 || confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || vehicleNumber.isEmpty()) {
+        if (intime.isEmpty() || unloadmaterialmaterialtk.isEmpty()  || abovematerialunloadtk.isEmpty() || confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || vehicleNumber.isEmpty()) {
             Toasty.warning(this, "All Fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid, intime,
-                    outTime, reqtounload, confirmunload, abovematerialtank, oprator,
+                    outTime, unloadmaterialmaterialtk, confirmunload, abovematerialunloadtk, oprator,remark,
                     EmployeId, vehicleNumber, etser, 'W', 'O', vehicleType, eddate, "material", EmployeName);
 
             Call<Boolean> call = apiInTankerProduction.insertproductionData(requestInTankerProduction);
@@ -560,11 +565,11 @@ public class Inward_Tanker_Production extends AppCompatActivity {
                         //etMaterial.setEnabled(false);
                         etconunloadDateTime.setText(data.getDate());
                         etconunloadDateTime.setEnabled(false);
-                        edunloadabovematerial.setText(String.valueOf(data.getUnloadAboveMaterialInTK()));
+                        edunloadabovematerial.setText(data.getUnloadAboveMaterialInTK());
                         edunloadabovematerial.setEnabled(true);
                         etconbyop.setText(data.getProductName());
                         etconbyop.setEnabled(true);
-                        abovematerialunload.setText(String.valueOf(data.getAboveMaterialIsUnloadInTK()));
+                        abovematerialunload.setText(data.getAboveMaterialIsUnloadInTK());
                         abovematerialunload.setEnabled(true);
                         opratorname.setText(data.getOperatorName());
                         opratorname.setEnabled(true);
@@ -601,7 +606,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     }
 
     public void proupdatebyinwardid() {
-        if (!edunloadabovematerial.getText().toString().isEmpty()) {
+        /*if (!edunloadabovematerial.getText().toString().isEmpty()) {
             try {
                 reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
             } catch (NumberFormatException e) {
@@ -614,12 +619,15 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-        }
+        }*/
+
+        String unloadmaterialmaterialtk=edunloadabovematerial.getText().toString().trim();
+        String abovematerialunloadtk=abovematerialunload.getText().toString().trim();
         String confirmunload = etconbyop.getText().toString().trim();
         String oprator = opratorname.getText().toString().trim();
 
         It_Pro_UpdateByInwardid_req_model updproreqmodel = new It_Pro_UpdateByInwardid_req_model(inwardid,
-                reqtounload, confirmunload, abovematerialtank, oprator,
+                unloadmaterialmaterialtk, confirmunload, abovematerialunloadtk, oprator,
                 EmployeId);
 
         Call<Boolean> call = apiInTankerProduction.updprobyinwardid(updproreqmodel);

@@ -6,10 +6,11 @@ public class Respo_Model_In_Tanker_Production {
     private  int InwardId;
     private String InTime;
     private String OutTime;
-    private int UnloadAboveMaterialInTK;
+    private String UnloadAboveMaterialInTK;
     private  String ProductName;
-    private int AboveMaterialIsUnloadInTK;
+    private String AboveMaterialIsUnloadInTK;
     private String OperatorName;
+    public String ProRemark;
     private boolean IsActive;
     private String CreatedBy;
     private String UpdatedBy;
@@ -31,6 +32,14 @@ public class Respo_Model_In_Tanker_Production {
 
     public void setExtramaterials(String extramaterials) {
         Extramaterials = extramaterials;
+    }
+
+    public String getProRemark() {
+        return ProRemark;
+    }
+
+    public void setProRemark(String proRemark) {
+        ProRemark = proRemark;
     }
 
     public int getId() {
@@ -65,11 +74,11 @@ public class Respo_Model_In_Tanker_Production {
         OutTime = outTime;
     }
 
-    public int getUnloadAboveMaterialInTK() {
+    public String getUnloadAboveMaterialInTK() {
         return UnloadAboveMaterialInTK;
     }
 
-    public void setUnloadAboveMaterialInTK(int unloadAboveMaterialInTK) {
+    public void setUnloadAboveMaterialInTK(String unloadAboveMaterialInTK) {
         UnloadAboveMaterialInTK = unloadAboveMaterialInTK;
     }
 
@@ -81,11 +90,11 @@ public class Respo_Model_In_Tanker_Production {
         ProductName = productName;
     }
 
-    public int getAboveMaterialIsUnloadInTK() {
+    public String getAboveMaterialIsUnloadInTK() {
         return AboveMaterialIsUnloadInTK;
     }
 
-    public void setAboveMaterialIsUnloadInTK(int aboveMaterialIsUnloadInTK) {
+    public void setAboveMaterialIsUnloadInTK(String aboveMaterialIsUnloadInTK) {
         AboveMaterialIsUnloadInTK = aboveMaterialIsUnloadInTK;
     }
 

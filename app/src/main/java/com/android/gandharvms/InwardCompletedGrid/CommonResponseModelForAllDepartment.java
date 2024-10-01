@@ -60,9 +60,9 @@ public class CommonResponseModelForAllDepartment {
     public String DateAndTime;
     public String RemarkDescription;
     public int ViscosityIndex;
-    public int UnloadAboveMaterialInTK;
+    public String UnloadAboveMaterialInTK;
     public String ProductName;
-    public int AboveMaterialIsUnloadInTK;
+    public String AboveMaterialIsUnloadInTK;
     public String OperatorName;
     public int ReceiveQTY;
     public int ReceiveQTYUOM;
@@ -100,6 +100,15 @@ public class CommonResponseModelForAllDepartment {
     public String OutSecOutTime;
     public String OutWeiInTime;
     public String OutWeiOutTime ;
+    public String ProRemark;
+
+    public String getProRemark() {
+        return ProRemark;
+    }
+
+    public void setProRemark(String proRemark) {
+        ProRemark = proRemark;
+    }
 
     public int getWeighQty() {
         return WeighQty;
@@ -789,11 +798,11 @@ public class CommonResponseModelForAllDepartment {
         ViscosityIndex = viscosityIndex;
     }
 
-    public int getUnloadAboveMaterialInTK() {
+    public String getUnloadAboveMaterialInTK() {
         return UnloadAboveMaterialInTK;
     }
 
-    public void setUnloadAboveMaterialInTK(int unloadAboveMaterialInTK) {
+    public void setUnloadAboveMaterialInTK(String unloadAboveMaterialInTK) {
         UnloadAboveMaterialInTK = unloadAboveMaterialInTK;
     }
 
@@ -805,11 +814,11 @@ public class CommonResponseModelForAllDepartment {
         ProductName = productName;
     }
 
-    public int getAboveMaterialIsUnloadInTK() {
+    public String getAboveMaterialIsUnloadInTK() {
         return AboveMaterialIsUnloadInTK;
     }
 
-    public void setAboveMaterialIsUnloadInTK(int aboveMaterialIsUnloadInTK) {
+    public void setAboveMaterialIsUnloadInTK(String aboveMaterialIsUnloadInTK) {
         AboveMaterialIsUnloadInTK = aboveMaterialIsUnloadInTK;
     }
 

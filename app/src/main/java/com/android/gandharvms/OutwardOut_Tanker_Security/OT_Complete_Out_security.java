@@ -26,6 +26,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -73,7 +74,7 @@ public class OT_Complete_Out_security extends AppCompatActivity {
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromDate=findViewById(R.id.orbtnfromDate);
         toDate=findViewById(R.id.orbtntoDate);
-        fromdate= "2024-09-26";
+        fromdate= getCurrentDateTime();
         todate = getCurrentDateTime();
 
         fromDate.setOnClickListener(new View.OnClickListener() {

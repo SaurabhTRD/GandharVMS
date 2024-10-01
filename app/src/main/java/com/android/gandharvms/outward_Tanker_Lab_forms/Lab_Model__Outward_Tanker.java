@@ -23,7 +23,7 @@ public class Lab_Model__Outward_Tanker {
     public String Apperance;
     public String Odour;
     public String Color;
-    public int Density_29_5C;
+    public String Density_29_5C;
     public int _40KV;
     public int _100KV;
     public int Viscosity_Index;
@@ -349,11 +349,11 @@ public class Lab_Model__Outward_Tanker {
         Color = color;
     }
 
-    public int getDensity_29_5C() {
+    public String getDensity_29_5C() {
         return Density_29_5C;
     }
 
-    public void setDensity_29_5C(int density_29_5C) {
+    public void setDensity_29_5C(String density_29_5C) {
         Density_29_5C = density_29_5C;
     }
 
@@ -697,7 +697,7 @@ public class Lab_Model__Outward_Tanker {
         VehicleType = vehicleType;
     }
 
-    public Lab_Model__Outward_Tanker(int outwardId, String labInTime, String labOutTime, String labRemark, String sampleCondition, String sample_receiving, String sample_Release_Date, String apperance, String odour, String color, int density_29_5C, int _40KV, int _100KV, int viscosity_Index, String TBN_TAN, int anline_Point, int breakdownvoltage_BDV, String DDF_90C, String waterContent, String interfacialTension, String flash_Point, String pourPoint, String rcs_Test, String correctionRequired, String updatedBy, char nextProcess, char i_O, char barrelLaboratoryProcess, String vehicleType) {
+    public Lab_Model__Outward_Tanker(int outwardId, String labInTime, String labOutTime, String labRemark, String sampleCondition, String sample_receiving, String sample_Release_Date, String apperance, String odour, String color, String density_29_5C, int _40KV, int _100KV, int viscosity_Index, String TBN_TAN, int anline_Point, int breakdownvoltage_BDV, String DDF_90C, String waterContent, String interfacialTension, String flash_Point, String pourPoint, String rcs_Test, String correctionRequired, String updatedBy, char nextProcess, char i_O, char barrelLaboratoryProcess, String vehicleType) {
         OutwardId = outwardId;
         LabInTime = labInTime;
         LabOutTime = labOutTime;

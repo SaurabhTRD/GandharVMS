@@ -39,6 +39,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -94,7 +95,7 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         setContentView(R.layout.activity_outward_out_truck_security);
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
         userDetails = RetroApiClient.getLoginApi();
-
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
         intime=findViewById(R.id.etintime);
         serialnumber=findViewById(R.id.etserialnumber);
         vehiclenumber=findViewById(R.id.etvehical);
@@ -274,8 +275,8 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
 
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
-                                        "OutwardOut Truck Billing Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
+                                        "OutwardOut Truck Security Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Security Out process at " + outTime,
                                         getApplicationContext(),
                                         OutwardOut_Truck_Security.this
                                 );
@@ -394,6 +395,7 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
+                        makeNotification(svehicleno);
                         makeNotification(svehicleno, outTime);
                         Toasty.success(OutwardOut_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(OutwardOut_Truck_Security.this, Menu.class));
@@ -422,6 +424,18 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
             });
         }
     }
+
+    public void makeNotification(String vehicleNumber) {
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                "/topics/all",
+                "Outward Truck Out Security Process Done..!",
+                "This Vehicle:-" + vehicleNumber + " has Completed The Inward Tanker Process",
+                getApplicationContext(),
+                OutwardOut_Truck_Security.this
+        );
+        notificationsSender.triggerSendNotification();
+    }
+
     public void outwardoutsecpending(View view){
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);

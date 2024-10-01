@@ -286,7 +286,7 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
                     List<ResponseModel> userList = response.body();
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
-                            String specificRole = "Production";
+                            String specificRole = "DataEntry";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 

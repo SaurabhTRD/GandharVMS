@@ -105,7 +105,7 @@ public class Login extends AppCompatActivity {
                 passwordTxt = password.getText().toString();
 
                 if (emplidTxt.isEmpty() || passwordTxt.isEmpty()) {
-                    Toast.makeText(Login.this, "Please Enter Your UserID or Password", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(Login.this, "Please Enter Your UserID or Password", Toast.LENGTH_SHORT).show();
                 } else {
                     RequestModel restmodel = new RequestModel();
                     restmodel.setEmpId(emplidTxt);
@@ -289,11 +289,11 @@ public class Login extends AppCompatActivity {
         if (requestCode == NOTIFICATION_PERMISSION_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 // Permission granted
-                Toast.makeText(this, "Notification Permission Granted", Toast.LENGTH_SHORT).show();
+                Toasty.success(this, "Notification Permission Granted", Toast.LENGTH_SHORT).show();
                 showNotification();
             } else {
                 // Permission denied
-                Toast.makeText(this, "Notification Permission Denied", Toast.LENGTH_SHORT).show();
+                Toasty.warning(this, "Notification Permission Denied", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -301,6 +301,6 @@ public class Login extends AppCompatActivity {
     // Example function that triggers a notification (you can implement your notification here)
     private void showNotification() {
         // Your code to show notification (e.g., using NotificationManager or Firebase)
-        Toast.makeText(this, "Notifications are enabled", Toast.LENGTH_SHORT).show();
+        Toasty.success(this, "Notifications are enabled", Toast.LENGTH_SHORT).show();
     }
 }
