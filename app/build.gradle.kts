@@ -61,6 +61,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.9.0")
     implementation ("androidx.core:core-ktx:1.12.0")
     implementation("androidx.activity:activity:1.8.0")
+    implementation("androidx.core:core:1.13.1")
 
 
 //    implementation("androidx.activity:activity:1.8.0")

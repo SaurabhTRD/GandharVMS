@@ -2,6 +2,8 @@ package com.android.gandharvms;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
@@ -182,6 +184,7 @@ public class InwardOut_Truck_Security extends AppCompatActivity {
                         List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
                         Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
                         createExtraMaterialViews(extraMaterials);
+
                         etsupplier.setText(obj.getPartyName());
                         etsupplier.setEnabled(false);
                     }

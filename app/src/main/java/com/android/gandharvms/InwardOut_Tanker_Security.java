@@ -2,9 +2,12 @@ package com.android.gandharvms;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -224,14 +227,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
             return new ArrayList<>(); // Return an empty list in case of parsing error
         }
     }
-    private void validateJson(String jsonString) {
-        try {
-            new JsonParser().parse(jsonString);
-            Log.d("JSON Validator", "Valid JSON: " + jsonString);
-        } catch (JsonSyntaxException e) {
-            Log.e("JSON Validator", "Invalid JSON: " + jsonString, e);
-        }
-    }
+
     public void createExtraMaterialViews(List<ExtraMaterial> extraMaterials) {
         LinearLayout linearLayout = findViewById(R.id.layout_outsecuritylistmaterial); // Ensure this is the correct ID
 
