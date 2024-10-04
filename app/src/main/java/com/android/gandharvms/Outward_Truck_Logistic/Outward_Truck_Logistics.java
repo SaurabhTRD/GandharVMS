@@ -497,8 +497,8 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
-                        makeNotificationLogistic(etvehiclenumber, outTime);
                         makeNotificationSecurity(etvehiclenumber,etoanumber);
+                        makeNotificationLogistic(etvehiclenumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Outward_Truck_Logistics.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Outward_Truck_Logistics.this, Outward_Truck.class));

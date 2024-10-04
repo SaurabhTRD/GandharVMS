@@ -219,7 +219,7 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "OutwardOut Truck Billing Process Done..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Billing process at " + outTime,
                                         getApplicationContext(),
                                         OutwardOut_Truck_Billing.this
                                 );

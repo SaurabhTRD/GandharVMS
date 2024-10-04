@@ -263,7 +263,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "OOutward Truck Weighment Has Verified..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has Verified Industrial QTY and Weight",
+                                        "Vehicle Number:-" + vehicleNumber + " has Verified Small QTY and Weight",
                                         getApplicationContext(),
                                         Outward_Truck_weighment.this
                                 );
@@ -369,7 +369,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Outward Truck Weighment Has Verified",
-                                        "Vehicle Number:-" + vehicleNumber + " has Verified SmallPack QTY and Weight",
+                                        "Vehicle Number:-" + vehicleNumber + " has Verified Industrial QTY and Weight",
                                         getApplicationContext(),
                                         Outward_Truck_weighment.this
                                 );
