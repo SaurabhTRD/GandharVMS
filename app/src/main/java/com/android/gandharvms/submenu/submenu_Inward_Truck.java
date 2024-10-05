@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.IR_VehicleStatus_Grid.ir_statusgrid_livedata;
 import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.InwardCompletedGrid.TruckCompReport.ir_Comp_Data_Report;
 import com.android.gandharvms.Inward_Tanker_Out;
@@ -70,7 +71,7 @@ public class submenu_Inward_Truck extends AppCompatActivity {
     public void intankerstatusclick(View view){
         Global_Var.getInstance().InOutType='x';
         Global_Var.getInstance().DeptType='x';
-        Intent intent = new Intent(this, grid.class);
+        Intent intent = new Intent(this, ir_statusgrid_livedata.class);
         startActivity(intent);
     }
 

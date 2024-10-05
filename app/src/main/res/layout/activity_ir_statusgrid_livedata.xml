@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true"
+    tools:context=".IR_VehicleStatus_Grid.ir_statusgrid_livedata">
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/headerscroll"
+        android:id="@+id/irstatusgridheaderscroll"
         android:layout_height="40dp">
 
         <LinearLayout
@@ -20,7 +23,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textStatus"
+                android:id="@+id/txtirstatusgridStatus"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -30,8 +33,8 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="150dp"
-                android:id="@+id/textVehicleNumber"
+                android:layout_width="120dp"
+                android:id="@+id/txtirstatusgridVehicleNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -41,8 +44,30 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="120dp"
+                android:id="@+id/txtirstatusgridSerialNumber"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Serial No"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/txtirstatusgridDate"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Date"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textSecurityInTime"
+                android:id="@+id/txtirstatusgridSecurityInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -53,7 +78,7 @@
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textWeighmentInTime"
+                android:id="@+id/txtirstatusgridWeighmentInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -63,41 +88,7 @@
                 android:layout_height="match_parent"/>
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textSamplingInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Sam-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textLoboratoryInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Lab-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textProductionInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Pro-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textStoreInTime"
+                android:id="@+id/txtirstatusgridStoreInTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -108,7 +99,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textOutWeiTime"
+                android:id="@+id/txtirstatusgridOutWeiTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -119,7 +110,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textOutSecTime"
+                android:id="@+id/txtirstatusgridOutSecTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -134,7 +125,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewgrid"
+        android:id="@+id/irstatusgridrecyclerview"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -110,6 +110,16 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
         {
             holder.storeintime.setText(club.getStoreIntime());
         }
+        int outweitime = club.getOutWeiTime()!= null?club.getOutWeiTime().length():0;
+        if(outweitime>0)
+        {
+            holder.outweitime.setText(club.getOutWeiTime());
+        }
+        int outsectime = club.getOutSecTime()!= null?club.getOutSecTime().length():0;
+        if(outsectime>0)
+        {
+            holder.outsectime.setText(club.getOutSecTime());
+        }
 
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -166,8 +176,8 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
     }
     public class myviewHolder extends RecyclerView.ViewHolder
     {
-        public TextView Status,sernum, vehiclenum, material,secintime,secouttime,
-                wegintime,wegouttime,samintime,samouttime,labintime,labouttime,prointime,proouttime,storeintime;
+        public TextView Status,sernum, vehiclenum, material,secintime,
+                wegintime,samintime,labintime,prointime,storeintime,outweitime,outsectime;
         public myviewHolder(View view)
         {
             super(view);
@@ -179,6 +189,8 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
             labintime =view.findViewById(R.id.textLoboratoryInTime);
             prointime =view.findViewById(R.id.textProductionInTime);
             storeintime=view.findViewById(R.id.textStoreInTime);
+            outweitime=view.findViewById(R.id.textOutWeiTime);
+            outsectime=view.findViewById(R.id.textOutSecTime);
         }
     }
     @Override

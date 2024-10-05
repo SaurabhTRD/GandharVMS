@@ -74,6 +74,14 @@
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:id="@+id/layout_productlistitinweighment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="5dp">
+        </LinearLayout>
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -81,7 +89,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
-
+            android:visibility="gone"
 
             >
             <EditText
@@ -102,6 +110,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             >
             <EditText
                 android:id="@+id/etmaterialname"
@@ -178,6 +187,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             >
             <EditText
                 android:id="@+id/ethowmuchqtyfill"
@@ -271,7 +281,7 @@
             android:layout_height="20dp"
             android:orientation="horizontal"
             android:layout_marginTop="10dp"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="30dp"
             >
             <TextView
                 android:layout_width="wrap_content"
@@ -306,7 +316,7 @@
             android:layout_height="115dp"
             android:weightSum="2"
             android:orientation="horizontal"
-            android:layout_marginLeft="60dp">
+            android:layout_marginLeft="30dp">
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/imgtr"

@@ -9,11 +9,10 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        tools:ignore="MissingConstraints">
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="650dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
         <include layout="@layout/header_layout"></include>
 
@@ -68,6 +67,14 @@
                 android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_productlistitinproduction"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp">
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -75,6 +82,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 >
                 <EditText
                     android:id="@+id/etnewoanumer"
@@ -93,8 +101,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-
-
+                android:visibility="gone"
                 >
                 <EditText
                     android:id="@+id/etnewproductname"
@@ -152,9 +159,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-
-
-                >
+                android:visibility="gone">
                 <EditText
                     android:id="@+id/etnewhowmuch"
                     android:layout_width="match_parent"

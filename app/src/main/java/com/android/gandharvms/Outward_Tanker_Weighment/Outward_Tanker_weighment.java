@@ -17,9 +17,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,6 +32,7 @@ import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
@@ -40,19 +45,27 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Truck;
+import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -72,12 +85,14 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int CAMERA_REQUEST_CODE1 = 103;
+    public static String Tanker;
+    public static String Truck;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     EditText intime, serialnumber, vehiclenumber, materialname, custname, oanum, tareweight, tankernumber, etremark, transportername, howmuchqty, elocation;
-    Button submit,complted;
+    Button submit, complted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -86,30 +101,27 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
     byte[] ImgDriver, ImgVehicle;
     byte[][] arrayOfByteArrays = new byte[2][];
     Uri[] LocalImgPath = new Uri[2];
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
     private int OutwardId;
     private Outward_weighment outwardWeighment;
     private String token;
     private LoginMethod userDetails;
     private String serialNo;
     private String imgPath1, imgPath2;
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
-
-    public static String Tanker;
-    public static String Truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_tanker_weighment);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        btnlogout = findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
+        username = findViewById(R.id.tv_username);
+        empid = findViewById(R.id.tv_employeeId);
 
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
+        String userName = Global_Var.getInstance().Name;
+        String empId = Global_Var.getInstance().EmpId;
 
         username.setText(userName);
         empid.setText(empId);
@@ -165,7 +177,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         complted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(Outward_Tanker_weighment.this,OT_Completed_Weighment.class));
+                startActivity(new Intent(Outward_Tanker_weighment.this, OT_Completed_Weighment.class));
             }
         });
         intime.setOnClickListener(new View.OnClickListener() {
@@ -173,7 +185,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 intime.setText(time);
             }
         });
@@ -268,6 +280,11 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
                         transportername.setEnabled(false);
                         elocation.setText(data.getLocation());
                         elocation.setEnabled(false);
+                        String extraMaterialsJson = data.getProductQTYUOMOA();
+                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+                        List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+                        createExtraMaterialViews(extraMaterials);
                         /*intime.requestFocus();
                         intime.callOnClick();*/
                     } else {
@@ -298,6 +315,88 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         });
     }
 
+    private List<ProductListData> parseExtraMaterials(String jsonString) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            Log.e("JSON Parser", "JSON string is null or empty");
+            return new ArrayList<>(); // Return an empty list if JSON is invalid
+        }
+        try {
+            Log.d("JSON Parser", "JSON String: " + jsonString);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<ProductListData>>() {
+            }.getType();
+            return gson.fromJson(jsonString, listType);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
+            return new ArrayList<>(); // Return an empty list in case of parsing error
+        }
+    }
+
+    public void createExtraMaterialViews(List<ProductListData> extraMaterials) {
+        LinearLayout linearLayout = findViewById(R.id.layout_productlistitinweighment); // Ensure this is the correct ID
+
+        // Clear previous views if any
+        linearLayout.removeAllViews();
+
+        for (ProductListData extraMaterial : extraMaterials) {
+            View materialView = getLayoutInflater().inflate(R.layout.allproductdetaisllist, null);
+
+            EditText etoanumber = materialView.findViewById(R.id.etitinweioano);
+            EditText etproductname = materialView.findViewById(R.id.etitinweiproductname);
+            EditText etproductqty = materialView.findViewById(R.id.etitinweiproductqty);
+            Spinner productuom = materialView.findViewById(R.id.etitinweiprospinner_team);
+
+            etoanumber.setText(extraMaterial.getOANumber());
+            etoanumber.setEnabled(false);
+            etproductname.setText(extraMaterial.getProductName());
+            etproductname.setEnabled(false);
+            etproductqty.setText(extraMaterial.getProductQty());
+            etproductqty.setEnabled(false);
+
+            List<String> teamList = Arrays.asList("Ton", "KL"); // or fetch it dynamically
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
+            productuom.setAdapter(arrayAdapter);
+            productuom.setEnabled(false);
+            setSpinnerValue(productuom, extraMaterial.getProductQtyuom());
+            // Add the material view to the linear layout
+            linearLayout.addView(materialView);
+        }
+        String extraMaterialsString = convertExtraMaterialsListToString(extraMaterials);
+    }
+
+    private String convertExtraMaterialsListToString(List<ProductListData> extraMaterials) {
+        StringBuilder result = new StringBuilder();
+        for (ProductListData extraMaterial : extraMaterials) {
+            String materialString = convertExtraMaterialToString(extraMaterial);
+            // Add this string to the result
+            result.append(materialString).append("\n"); // Separate entries by a newline or any other delimiter
+        }
+        return result.toString();
+    }
+
+    private String convertExtraMaterialToString(ProductListData extraMaterial) {
+        String OANumber = extraMaterial.getOANumber();
+        String productname = extraMaterial.getProductName();
+        String productqty = extraMaterial.getProductQty();
+        String productqtyuom = extraMaterial.getProductQtyuom();
+        // Concatenate fields into a single string
+        return (OANumber + "," + productname + "," + productqty + "," + productqtyuom);
+    }
+
+    private void setSpinnerValue(Spinner spinner, String value) {
+        SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (adapter.getItem(i).toString().equals(value)) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        } else {
+            Log.e("Spinner Error", "Spinner adapter is null");
+        }
+    }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -323,7 +422,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body()==true) {
+                    if (response.isSuccessful() && response.body() && response.body()) {
                         Log.d("Registration", "Response Body: " + response.body());
                         deleteLocalImage(etvehiclenumber, outTime);
                     } else {
@@ -447,11 +546,11 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         }
     }
 
-    private void deleteLocalImage(String vehicalnumber,String outTime) {
+    private void deleteLocalImage(String vehicalnumber, String outTime) {
         File imageFile;
         try {
             for (Uri imgpath : LocalImgPath) {
-                ImageUtils.deleteImage(this,imgpath);
+                ImageUtils.deleteImage(this, imgpath);
             }
             makeNotification(vehicalnumber, outTime);
             Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();

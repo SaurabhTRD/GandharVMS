@@ -12,7 +12,7 @@
         android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="650dp"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <include layout="@layout/header_layout"></include>
 
@@ -67,6 +67,14 @@
                     android:textStyle="bold"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/layout_productlistitinlaboratory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="5dp">
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -74,6 +82,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
+                android:visibility="gone"
                 >
                 <EditText
                     android:id="@+id/etnewloanumer"
@@ -92,8 +101,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-
-
+                android:visibility="gone"
                 >
                 <EditText
                     android:id="@+id/etnewlproductname"
@@ -124,16 +132,14 @@
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/etnewllocation"
                     android:layout_width="match_parent"
@@ -151,9 +157,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-
-
-                >
+                android:visibility="gone">
                 <EditText
                     android:id="@+id/etnewlhowmuch"
                     android:layout_width="match_parent"
@@ -170,10 +174,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/etnewltransportername"
                     android:layout_width="match_parent"
@@ -190,16 +191,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/etbillingremark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Billing Remark"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -210,10 +208,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/etproductionremark"
                     android:layout_width="match_parent"
@@ -230,9 +225,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/etinewlntime"
                     android:layout_width="match_parent"
@@ -250,16 +243,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/elnewlviscosity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Viscosity@40°C"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -270,10 +260,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/elnewldensity"
                     android:layout_width="match_parent"
@@ -290,16 +277,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/elnewlbatchnumber"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Batch Number"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -310,16 +294,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/elnewlqcofficer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Q.C Officer"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -330,16 +311,13 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp"
-
-
-                >
+                android:layout_marginTop="10dp">
                 <EditText
                     android:id="@+id/elnewblremark"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Remark"
-                    android:inputType="text"
+                    android:inputType="textCapCharacters"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -348,23 +326,11 @@
                 android:layout_width="405dp"
                 android:layout_height="55dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="25dp"
-
-                >
+                android:layout_marginLeft="25dp">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:orientation="horizontal">
-                    <!--<androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="110dp"
-                        android:layout_height="match_parent"
-                        android:layout_below="@id/OUM."
-                        android:layout_marginLeft="25dp"
-                        android:text="Cancel"
-                        android:textSize="22dp"
-                        android:textStyle="bold">
-
-                    </androidx.appcompat.widget.AppCompatButton>-->
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:layout_width="130dp"

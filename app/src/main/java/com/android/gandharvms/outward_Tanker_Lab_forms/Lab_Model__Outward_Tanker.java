@@ -95,7 +95,15 @@ public class Lab_Model__Outward_Tanker {
     public String TankerProRemark;
     public String TankerBillingRemark;
     public String TankerLabRemark;
+    public String ProductQTYUOMOA;
 
+    public String getProductQTYUOMOA() {
+        return ProductQTYUOMOA;
+    }
+
+    public void setProductQTYUOMOA(String productQTYUOMOA) {
+        ProductQTYUOMOA = productQTYUOMOA;
+    }
 
     public String getTankerProRemark() {
         return TankerProRemark;

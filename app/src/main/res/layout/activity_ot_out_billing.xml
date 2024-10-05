@@ -73,6 +73,14 @@
                         android:textStyle="bold"/>
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:id="@+id/layout_productlistitoutbilling"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="5dp">
+                </LinearLayout>
+
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -98,6 +106,7 @@
                     android:layout_marginLeft="30dp"
                     android:layout_marginRight="30dp"
                     android:layout_marginTop="10dp"
+                    android:visibility="gone"
                     >
                     <EditText
                         android:id="@+id/etotoutbilOANumber"
@@ -256,23 +265,24 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <androidx.cardview.widget.CardView
-                    android:layout_width="360dp"
-                    android:layout_height="70dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginTop="10dp"
                     android:layout_weight="2"
                     android:background="@color/gray"
                     >
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="165dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
                         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_marginLeft="30dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="15dp"
                         >
                         <EditText
                             android:id="@+id/etotoutbiltotalQuantity"
-                            android:layout_width="165dp"
-                            android:layout_height="match_parent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
                             android:hint="Total-Quantity"
                             android:inputType="numberDecimal"
                             android:clickable="false"
@@ -282,17 +292,15 @@
                     </com.google.android.material.textfield.TextInputLayout>
 
                     <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="135dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
                         android:layout_marginLeft="200dp"
-                        android:layout_marginRight="20dp"
-                        android:layout_marginTop="10dp"
-
+                        android:layout_marginTop="5dp"
                         >
                         <AutoCompleteTextView
                             android:id="@+id/etotoutbiltotalQuantityUOM"
-                            android:layout_width="135dp"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="UOM"
                             android:text="Litre"

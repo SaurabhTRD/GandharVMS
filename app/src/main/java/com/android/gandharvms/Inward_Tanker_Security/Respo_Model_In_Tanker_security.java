@@ -55,6 +55,24 @@ public class   Respo_Model_In_Tanker_security {
     public String UnitOfNetWeight;
     public String UnitOfMeasurement;
     public String SecRemark;
+    public String OutWeiTime;
+    public String OutSecTime;
+
+    public String getOutWeiTime() {
+        return OutWeiTime;
+    }
+
+    public void setOutWeiTime(String outWeiTime) {
+        OutWeiTime = outWeiTime;
+    }
+
+    public String getOutSecTime() {
+        return OutSecTime;
+    }
+
+    public void setOutSecTime(String outSecTime) {
+        OutSecTime = outSecTime;
+    }
 
     public String getSecRemark() {
         return SecRemark;

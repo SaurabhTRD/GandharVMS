@@ -30,6 +30,7 @@ public class Respons_Outward_Tanker_Billing {
     public char I_O;
     public String VehicleType;
     public String HowMuchQTYUOM;
+    public String ProductQTYUOMOA;
 
     String Density_29_5C;
     String SealNumber;
@@ -45,6 +46,14 @@ public class Respons_Outward_Tanker_Billing {
     public  String ilweight;
 
     public String Batch_No;
+
+    public String getProductQTYUOMOA() {
+        return ProductQTYUOMOA;
+    }
+
+    public void setProductQTYUOMOA(String productQTYUOMOA) {
+        ProductQTYUOMOA = productQTYUOMOA;
+    }
 
     public String getBatch_No() {
         return Batch_No;
@@ -150,7 +159,7 @@ public class Respons_Outward_Tanker_Billing {
         Kl = kl;
     }
 
-    public Respons_Outward_Tanker_Billing(int outwardId, String intime, String outTime, String tankerPlanning, String createdBy, String updatedBy, char currentProcess, String remark, String serialNumber, String vehicleNumber, String OAnumber, String customerName, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType, String howMuchQTYUOM) {
+    public Respons_Outward_Tanker_Billing(int outwardId, String intime, String outTime, String tankerPlanning, String createdBy, String updatedBy, char currentProcess, String remark, String serialNumber, String vehicleNumber, String OAnumber, String customerName, String productName, int howMuchQuantityFilled, String location, char nextProcess, char i_O, String vehicleType, String howMuchQTYUOM, String productqtyuomoa) {
         OutwardId = outwardId;
         this.intime = intime;
         this.outTime = outTime;
@@ -170,7 +179,7 @@ public class Respons_Outward_Tanker_Billing {
         I_O = i_O;
         VehicleType = vehicleType;
         HowMuchQTYUOM = howMuchQTYUOM;
-
+        ProductQTYUOMOA=productqtyuomoa;
     }
 
     public int getId() {

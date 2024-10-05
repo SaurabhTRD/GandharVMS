@@ -161,8 +161,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-
-
+                android:visibility="gone"
                 >
                 <EditText
                     android:id="@+id/etoanumber"
@@ -194,6 +193,24 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <Button
+                android:id="@+id/button_addproduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:drawableRight="@drawable/baseline_add_24"
+                android:text="Add Product" />
+
+            <LinearLayout
+                android:id="@+id/productlayout_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -201,8 +218,7 @@
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-
-
+                android:visibility="gone"
                 >
                 <EditText
                     android:id="@+id/etproduct"
@@ -223,6 +239,7 @@
                 android:layout_weight="2"
                 android:layout_marginLeft="25dp"
                 android:layout_marginRight="20dp"
+                android:visibility="gone"
                 >
 
                 <LinearLayout

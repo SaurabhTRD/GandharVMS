@@ -4,8 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -25,12 +29,19 @@ import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -148,7 +159,11 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
                         billremark.setEnabled(false);
                         proremark.setText(data.getTankerProRemark());
                         proremark.setEnabled(false);
-
+                        String extraMaterialsJson = data.getProductQTYUOMOA();
+                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+                        List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+                        createExtraMaterialViews(extraMaterials);
                     }else {
                         Toasty.error(New_Outward_tanker_Lab.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
@@ -176,6 +191,89 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
             }
         });
     }
+
+    private List<ProductListData> parseExtraMaterials(String jsonString) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
+            Log.e("JSON Parser", "JSON string is null or empty");
+            return new ArrayList<>(); // Return an empty list if JSON is invalid
+        }
+        try {
+            Log.d("JSON Parser", "JSON String: " + jsonString);
+            Gson gson = new Gson();
+            Type listType = new TypeToken<List<ProductListData>>() {
+            }.getType();
+            return gson.fromJson(jsonString, listType);
+        } catch (JsonSyntaxException e) {
+            Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
+            return new ArrayList<>(); // Return an empty list in case of parsing error
+        }
+    }
+
+    public void createExtraMaterialViews(List<ProductListData> extraMaterials) {
+        LinearLayout linearLayout = findViewById(R.id.layout_productlistitinlaboratory); // Ensure this is the correct ID
+
+        // Clear previous views if any
+        linearLayout.removeAllViews();
+
+        for (ProductListData extraMaterial : extraMaterials) {
+            View materialView = getLayoutInflater().inflate(R.layout.allproductdetaisllist, null);
+
+            EditText etoanumber = materialView.findViewById(R.id.etitinweioano);
+            EditText etproductname = materialView.findViewById(R.id.etitinweiproductname);
+            EditText etproductqty = materialView.findViewById(R.id.etitinweiproductqty);
+            Spinner productuom = materialView.findViewById(R.id.etitinweiprospinner_team);
+
+            etoanumber.setText(extraMaterial.getOANumber());
+            etoanumber.setEnabled(false);
+            etproductname.setText(extraMaterial.getProductName());
+            etproductname.setEnabled(false);
+            etproductqty.setText(extraMaterial.getProductQty());
+            etproductqty.setEnabled(false);
+
+            List<String> teamList = Arrays.asList("Ton", "KL"); // or fetch it dynamically
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
+            productuom.setAdapter(arrayAdapter);
+            productuom.setEnabled(false);
+            setSpinnerValue(productuom, extraMaterial.getProductQtyuom());
+            // Add the material view to the linear layout
+            linearLayout.addView(materialView);
+        }
+        String extraMaterialsString = convertExtraMaterialsListToString(extraMaterials);
+    }
+
+    private String convertExtraMaterialsListToString(List<ProductListData> extraMaterials) {
+        StringBuilder result = new StringBuilder();
+        for (ProductListData extraMaterial : extraMaterials) {
+            String materialString = convertExtraMaterialToString(extraMaterial);
+            // Add this string to the result
+            result.append(materialString).append("\n"); // Separate entries by a newline or any other delimiter
+        }
+        return result.toString();
+    }
+
+    private String convertExtraMaterialToString(ProductListData extraMaterial) {
+        String OANumber = extraMaterial.getOANumber();
+        String productname = extraMaterial.getProductName();
+        String productqty = extraMaterial.getProductQty();
+        String productqtyuom = extraMaterial.getProductQtyuom();
+        // Concatenate fields into a single string
+        return (OANumber + "," + productname + "," + productqty + "," + productqtyuom);
+    }
+
+    private void setSpinnerValue(Spinner spinner, String value) {
+        SpinnerAdapter adapter = spinner.getAdapter();
+        if (adapter != null) {
+            for (int i = 0; i < adapter.getCount(); i++) {
+                if (adapter.getItem(i).toString().equals(value)) {
+                    spinner.setSelection(i);
+                    break;
+                }
+            }
+        } else {
+            Log.e("Spinner Error", "Spinner adapter is null");
+        }
+    }
+
     public void insert()
     {
         String outTime = getCurrentTime();

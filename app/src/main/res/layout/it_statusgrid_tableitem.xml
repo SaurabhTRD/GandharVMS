@@ -6,74 +6,24 @@
     android:layout_height="40dp">
 
     <TextView
-        android:id="@+id/textStatus"
         android:layout_width="120dp"
+        android:id="@+id/txtitstatusgridStatus"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textVehicleNumber"
-        android:layout_width="150dp"
+        android:layout_width="120dp"
+        android:id="@+id/txtitstatusgridVehicleNumber"
         android:layout_marginStart="5dp"
-        android:clickable="true"
         android:textStyle="bold"
         android:gravity="center|start"
-        android:textColor="@color/blue"
-        android:backgroundTint="@android:color/darker_gray"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textSecurityInTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
         android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textWeighmentInTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textSamplingInTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textLoboratoryInTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textProductionInTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textStoreInTime"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textOutWeiTime"
+        android:id="@+id/txtitstatusgridSerialNumber"
         android:layout_width="120dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -81,7 +31,63 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textOutSecTime"
+        android:id="@+id/txtitstatusgridDate"
+        android:layout_width="120dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/txtitstatusgridSecurityInTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/txtitstatusgridWeighmentInTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/txtitstatusgridSamplingInTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/txtitstatusgridLoboratoryInTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/txtitstatusgridProductionInTime"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/txtitstatusgridOutWeiTime"
+        android:layout_width="120dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:id="@+id/txtitstatusgridOutSecTime"
         android:layout_width="120dp"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -89,4 +95,3 @@
         android:layout_height="match_parent"/>
 
 </LinearLayout>
-
