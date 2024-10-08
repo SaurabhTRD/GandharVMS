@@ -648,6 +648,35 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
         String remark = etremark.getText().toString().trim();
         String pooa = etoapo.getText().toString().trim();
+        JSONArray extraMaterialsArray = new JSONArray();
+        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+            View childView = linearLayout.getChildAt(i);
+            if (childView != null) {
+                EditText materialEditText = childView.findViewById(R.id.editmaterial);
+                EditText qtyEditText = childView.findViewById(R.id.editqty);
+                AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+
+                String dynamaterial = materialEditText.getText().toString().trim();
+                String dynaqty = qtyEditText.getText().toString().trim();
+                String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+
+                // Check if both material and quantity fields are not empty
+                if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+                    try {
+                        // Create a new JSONObject for each material
+                        JSONObject materialObject = new JSONObject();
+                        materialObject.put("Material", dynamaterial);
+                        materialObject.put("Qty", Double.parseDouble(dynaqty));
+                        materialObject.put("Qtyuom", dynaqtyuom);
+
+                        // Add the material JSON object to the array
+                        extraMaterialsArray.put(materialObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
         String mobnumber = etmobile.getText().toString().trim();
 //        String edremark = repremark.getText().toString().trim();
         String selectregister = etregister.getText().toString().trim();
@@ -655,37 +684,11 @@ public class Inward_Truck_Security extends AppCompatActivity {
                 intime.isEmpty() || remark.isEmpty() || pooa.isEmpty() || mobnumber.isEmpty() || selectregister.isEmpty()
                  || insertnetweight < 0 ||  insertnetweightUom < 0) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        } else {
-            JSONArray extraMaterialsArray = new JSONArray();
-            for (int i = 0; i < linearLayout.getChildCount(); i++) {
-                View childView = linearLayout.getChildAt(i);
-                if (childView != null) {
-                    EditText materialEditText = childView.findViewById(R.id.editmaterial);
-                    EditText qtyEditText = childView.findViewById(R.id.editqty);
-                    AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
-
-                    String dynamaterial = materialEditText.getText().toString().trim();
-                    String dynaqty = qtyEditText.getText().toString().trim();
-                    String dynaqtyuom = uomSpinner.getSelectedItem().toString();
-
-                    // Check if both material and quantity fields are not empty
-                    if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-                        try {
-                            // Create a new JSONObject for each material
-                            JSONObject materialObject = new JSONObject();
-                            materialObject.put("Material", dynamaterial);
-                            materialObject.put("Qty", Double.parseDouble(dynaqty));
-                            materialObject.put("Qtyuom", dynaqtyuom);
-
-                            // Add the material JSON object to the array
-                            extraMaterialsArray.put(materialObject);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
-
+        } else if (extraMaterialsArray.length() == 0) {
+            // Check if no materials are added
+            Toasty.warning(this, "Please add at least one material before submitting.", Toast.LENGTH_SHORT, true).show();
+        }
+        else {
 // Convert JSONArray to string
             String extraMaterialsString = extraMaterialsArray.toString();
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, "material", pooa, mobnumber, 'W', 'I', Date,

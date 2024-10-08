@@ -73,9 +73,13 @@ public class it_out_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_out
     public void onBindViewHolder(it_out_sec_CompletedgridAdapter.myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         CommonResponseModelForAllDepartment club = filteredGridList.get(position);
         int intimelength = club.getOutInTime()!=null ? club.getOutInTime().length() : 0;
+        int outtimelength = club.getUpdatedDate()!=null ? club.getUpdatedDate().length() : 0;
         holder.vehiclenum.setText(club.getVehicleNo());
         if (intimelength > 0) {
             holder.outintime.setText(club.getOutInTime().substring(12, intimelength));
+        }
+        if (outtimelength > 0) {
+            holder.outouttime.setText(club.getUpdatedDate().substring(12, outtimelength));
         }
         holder.invoiceno.setText(club.getInvoiceNo());
         //holder.material.setText(club.getMaterial());
@@ -129,13 +133,14 @@ public class it_out_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_out
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
-        TextView vehiclenum,invoiceno,outintime,material,partyname,translatelrcopy,deliverybill,taxinvoice,ewaybill;
+        TextView vehiclenum,invoiceno,outintime,outouttime,material,partyname,translatelrcopy,deliverybill,taxinvoice,ewaybill;
 
         public myviewHolder(View view) {
             super(view);
             vehiclenum = view.findViewById(R.id.itoutsectextcoVehicleNumber);
             invoiceno =view.findViewById(R.id.itoutsectextcoInvoiceNo);
             outintime =view.findViewById(R.id.itoutsectextcoOutInTime);
+            outouttime=view.findViewById(R.id.itoutsectextcoOutOutTime);
             material =view.findViewById(R.id.itoutsectextcoMaterial);
             material.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
             partyname =view.findViewById(R.id.itoutsectextcopartyname);

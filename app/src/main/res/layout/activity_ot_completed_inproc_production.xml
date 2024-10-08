@@ -108,6 +108,17 @@
 
             <TextView
                 android:layout_width="140dp"
+                android:id="@+id/otinprocProOANo"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Product OANo"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <!--<TextView
+                android:layout_width="140dp"
                 android:id="@+id/otinprocoanum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -115,7 +126,7 @@
                 android:text="OA Number"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
                 android:layout_width="120dp"
@@ -127,7 +138,7 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
-            <TextView
+           <!-- <TextView
                 android:layout_width="120dp"
                 android:id="@+id/otinprocprodcut"
                 android:textStyle="bold"
@@ -147,7 +158,7 @@
                 android:text="How Qty"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
 
             <TextView

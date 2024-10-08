@@ -1,6 +1,8 @@
 package com.android.gandharvms.Outward_Tanker_Weighment;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +13,21 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.Outward_Truck_Weighment.Adapter_Weigh_Complete;
+import com.android.gandharvms.ProductOA_Adapter;
 import com.android.gandharvms.R;
+import com.android.gandharvms.productlistwithoanumber;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,11 +85,19 @@ public class Adapter_OT_completed_Weighment extends RecyclerView.Adapter<Adapter
         }
         holder.serial.setText(club.getSerialNumber());
         holder.vehicle.setText(club.getVehicleNumber());
-        holder.oanum.setText(club.getOAnumber());
-        holder.product.setText(club.getProductName());
+
+        holder.productoano.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
+        holder.productoano.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showMaterialDialog_OutwardTanker(view, club.getProductQTYUOMOA());
+            }
+        });
+        //holder.oanum.setText(club.getOAnumber());
+        //holder.product.setText(club.getProductName());
         holder.customer.setText(club.getCustomerName());
         holder.transname.setText(club.getTransportName());
-        holder.howqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
+        //holder.howqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
         holder.location.setText(club.getLocation());
         holder.tarewt.setText(club.getTareWeight());
         Picasso.get()
@@ -136,17 +153,18 @@ public class Adapter_OT_completed_Weighment extends RecyclerView.Adapter<Adapter
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder{
-        public TextView serial,vehicle,oanum,product,customer,transname,howqty,location,intime,outtime,tarewt,remark;
+        public TextView serial,vehicle,customer,transname,location,intime,outtime,tarewt,remark,productoano;
         ImageView invehicleimage,indriverimage;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             serial = itemView.findViewById(R.id.otweighserial);
             vehicle = itemView.findViewById(R.id.otweighvehicle);
-            oanum = itemView.findViewById(R.id.otweighoanum);
-            product = itemView.findViewById(R.id.otweighproduct);
+            productoano=itemView.findViewById(R.id.otweighProductoanumber);
+            //oanum = itemView.findViewById(R.id.otweighoanum);
+            //product = itemView.findViewById(R.id.otweighproduct);
             customer = itemView.findViewById(R.id.otweighcustomer);
             transname = itemView.findViewById(R.id.otweightransporter);
-            howqty = itemView.findViewById(R.id.otweighhowqty);
+            //howqty = itemView.findViewById(R.id.otweighhowqty);
             location = itemView.findViewById(R.id.otweighloaction);
             intime = itemView.findViewById(R.id.otweighintime);
             outtime = itemView.findViewById(R.id.otweighouttime);
@@ -155,5 +173,42 @@ public class Adapter_OT_completed_Weighment extends RecyclerView.Adapter<Adapter
             indriverimage=itemView.findViewById(R.id.otweighInDriverImage);
             remark = itemView.findViewById(R.id.otweighremark);
         }
+    }
+
+    private void showMaterialDialog_OutwardTanker(View view, String jsonMaterials) {
+        // Parse the JSON list of extra materials
+        List<productlistwithoanumber> materialList = new ArrayList<>();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonMaterials);
+            for (int i = 0; i < jsonArray.length(); i++) {
+//                materialList.add(jsonArray.getString(i));
+                JSONObject materialObject = jsonArray.getJSONObject(i);
+                String OANumber = materialObject.getString("OANumber");
+                String Product = materialObject.getString("ProductName");
+                String Qty = materialObject.getString("ProductQty");
+                String Qtyuom = materialObject.getString("ProductQtyuom");
+                materialList.add(new productlistwithoanumber(OANumber,Product, Qty, Qtyuom));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // Create a dialog to show the list of materials
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Product With OANo");
+
+        // Inflate the layout with a RecyclerView
+        View dialogView = LayoutInflater.from(view.getContext()).inflate(R.layout.material_dialog, null);
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerViewDialog);
+
+        // Set up the RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(view.getContext()));
+        ProductOA_Adapter adapter = new ProductOA_Adapter(materialList); // Pass the material list
+        recyclerView.setAdapter(adapter);
+
+        // Set the view and show the dialog
+        builder.setView(dialogView);
+        builder.setPositiveButton("Close", null);
+        builder.show();
     }
 }

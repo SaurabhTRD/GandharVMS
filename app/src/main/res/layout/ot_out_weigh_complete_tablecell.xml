@@ -24,6 +24,17 @@
         android:layout_height="match_parent"/>
 
     <TextView
+        android:id="@+id/otweighoutprodOaNo"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="Product OANo"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
+
+    <TextView
         android:layout_width="120dp"
         android:id="@+id/otweighoutintime"
         android:textStyle="bold"
@@ -42,7 +53,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:id="@+id/otweighoutdensity"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
@@ -77,7 +88,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="120dp"
         android:id="@+id/otweighoutseal"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -86,7 +97,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:id="@+id/otweighoutnumberpack"
         android:textStyle="bold"
         android:layout_marginStart="5dp"

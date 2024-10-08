@@ -83,7 +83,7 @@ public class Adapter_Billing_Out_Complete extends RecyclerView.Adapter<Adapter_B
         holder.invoiceno.setText(obj.getOutInvoiceNumber());
         holder.iltotqty.setText(obj.getIltotqty());
         holder.spltotqty.setText(obj.getSpltotqty());
-        holder.batch.setText(obj.getBatch_No());
+        holder.batch.setText(obj.getBatchNo());
         holder.remark.setText(obj.getOutRemark());
     }
 

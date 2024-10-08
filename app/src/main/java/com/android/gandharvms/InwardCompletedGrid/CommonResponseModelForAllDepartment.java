@@ -101,6 +101,15 @@ public class CommonResponseModelForAllDepartment {
     public String OutWeiInTime;
     public String OutWeiOutTime ;
     public String ProRemark;
+    public String UpdatedDate;
+
+    public String getUpdatedDate() {
+        return UpdatedDate;
+    }
+
+    public void setUpdatedDate(String updatedDate) {
+        UpdatedDate = updatedDate;
+    }
 
     public String getProRemark() {
         return ProRemark;

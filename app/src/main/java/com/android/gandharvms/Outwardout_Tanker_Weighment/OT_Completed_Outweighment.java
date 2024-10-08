@@ -76,14 +76,13 @@ public class OT_Completed_Outweighment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
-        EdgeToEdge.enable(this);
+        //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_ot_completed_outweighment);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        /*ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
-        });
-
+        });*/
         totrec=findViewById(R.id.totrecdepartmentwise);
         fromDate=findViewById(R.id.orbtnfromDate);
         toDate=findViewById(R.id.orbtntoDate);
@@ -305,6 +304,7 @@ public class OT_Completed_Outweighment extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         return dateFormat.format(now);
     }
+
     private void initViews()
     {
         rvClub = findViewById(R.id.recyclerviewitin_outweighment_cogrid_tankerkin);
@@ -320,6 +320,7 @@ public class OT_Completed_Outweighment extends AppCompatActivity {
         rvClub.setAdapter(adapterOtCompletedOutweighment);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
+
     public void fetchDataFromApiforweigh(String FromDate,String Todate,String vehicleType,char nextprocess, char inOut) {
         Call<List<Common_Outward_model>> call = outwardTanker.gettruckweighcomplete(FromDate,Todate,vehicleType,nextprocess,inOut);
         call.enqueue(new Callback<List<Common_Outward_model>>() {

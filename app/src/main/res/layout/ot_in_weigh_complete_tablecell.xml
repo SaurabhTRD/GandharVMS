@@ -6,7 +6,7 @@
     android:layout_height="40dp">
 
     <TextView
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:id="@+id/otweighserial"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -15,7 +15,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="140dp"
+        android:layout_width="120dp"
         android:id="@+id/otweighvehicle"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -24,6 +24,17 @@
         android:layout_height="match_parent"/>
 
     <TextView
+        android:id="@+id/otweighProductoanumber"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="Product OANo"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
+
+    <!--<TextView
         android:layout_width="110dp"
         android:id="@+id/otweighoanum"
         android:gravity="center|start"
@@ -39,7 +50,7 @@
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <TextView
         android:layout_width="120dp"
@@ -51,24 +62,25 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:id="@+id/otweightransporter"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
-    <TextView
+
+    <!--<TextView
         android:layout_width="150dp"
         android:id="@+id/otweighhowqty"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:id="@+id/otweighloaction"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -76,7 +88,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
     <TextView
-        android:layout_width="130dp"
+        android:layout_width="100dp"
         android:id="@+id/otweighintime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -85,7 +97,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:id="@+id/otweighouttime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -116,7 +128,7 @@
         android:gravity="center|start"/>
 
     <TextView
-        android:layout_width="120dp"
+        android:layout_width="140dp"
         android:id="@+id/otweighremark"
         android:textStyle="bold"
         android:layout_marginStart="5dp"

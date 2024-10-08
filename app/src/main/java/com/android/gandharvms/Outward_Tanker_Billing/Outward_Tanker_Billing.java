@@ -440,57 +440,48 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         String etremark = remark.getText().toString().trim();
         String outTime = getCurrentTime();
         String ucustname = etcust.getText().toString().trim();
-        //String uproduct = etprod.getText().toString().trim();
-        //String eduom = euom.getText().toString().trim();
-        /*if(!ethowmuch.getText().toString().isEmpty())
-        {
-            try {
-                uhowmuch=Integer.parseInt(ethowmuch.getText().toString().trim());
-            }catch (NumberFormatException e){
-                e.printStackTrace();
+        JSONArray ProductArray = new JSONArray();
+        for (int i = 0; i < productlinearlayout.getChildCount(); i++) {
+            View childView = productlinearlayout.getChildAt(i);
+            if (childView != null) {
+                EditText etoano = childView.findViewById(R.id.etotbilOANo);
+                EditText etproduct = childView.findViewById(R.id.etotbilProduct);
+                EditText etproductqty = childView.findViewById(R.id.etotbilqty);
+                AppCompatSpinner spnproductqtyuom = childView.findViewById(R.id.etotbilspinner_team);
+
+                dyprooano = etoano.getText().toString().trim();
+                String dyproductname = etproduct.getText().toString().trim();
+                String dyproductqty = etproductqty.getText().toString().trim();
+                String dyproductqtyuom = spnproductqtyuom.getSelectedItem().toString();
+
+                // Check if both material and quantity fields are not empty
+                if (!dyprooano.isEmpty() && !dyproductname.isEmpty() && !dyproductqty.isEmpty() && !dyproductqtyuom.isEmpty()) {
+                    try {
+                        // Create a new JSONObject for each material
+                        JSONObject materialObject = new JSONObject();
+                        materialObject.put("OANumber", dyprooano);
+                        materialObject.put("ProductName", dyproductname);
+                        materialObject.put("ProductQty", Double.parseDouble(dyproductqty));
+                        materialObject.put("ProductQtyuom", dyproductqtyuom);
+
+                        // Add the material JSON object to the array
+                        ProductArray.put(materialObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         }
-        else{
-            Toasty.warning(this, "How Much Quantity Is Empty", Toast.LENGTH_SHORT).show();
-        }*/
         String ulocation = location.getText().toString().trim();
         if (etintime.isEmpty() || etserilnumber.isEmpty() || etvehiclenumber.isEmpty() ||
                 etdate.isEmpty() || etremark.isEmpty() || ucustname.isEmpty() ||
                 ulocation.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        } else {
-            JSONArray ProductArray = new JSONArray();
-            for (int i = 0; i < productlinearlayout.getChildCount(); i++) {
-                View childView = productlinearlayout.getChildAt(i);
-                if (childView != null) {
-                    EditText etoano = childView.findViewById(R.id.etotbilOANo);
-                    EditText etproduct = childView.findViewById(R.id.etotbilProduct);
-                    EditText etproductqty = childView.findViewById(R.id.etotbilqty);
-                    AppCompatSpinner spnproductqtyuom = childView.findViewById(R.id.etotbilspinner_team);
-
-                    dyprooano = etoano.getText().toString().trim();
-                    String dyproductname = etproduct.getText().toString().trim();
-                    String dyproductqty = etproductqty.getText().toString().trim();
-                    String dyproductqtyuom = spnproductqtyuom.getSelectedItem().toString();
-
-                    // Check if both material and quantity fields are not empty
-                    if (!dyprooano.isEmpty() && !dyproductname.isEmpty() && !dyproductqty.isEmpty() && !dyproductqtyuom.isEmpty()) {
-                        try {
-                            // Create a new JSONObject for each material
-                            JSONObject materialObject = new JSONObject();
-                            materialObject.put("OANumber", dyprooano);
-                            materialObject.put("ProductName", dyproductname);
-                            materialObject.put("ProductQty", Double.parseDouble(dyproductqty));
-                            materialObject.put("ProductQtyuom", dyproductqtyuom);
-
-                            // Add the material JSON object to the array
-                            ProductArray.put(materialObject);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }
+        }else if (ProductArray.length() == 0) {
+            // Check if no materials are added
+            Toasty.warning(this, "Please add at least one product with OANumber before submitting.", Toast.LENGTH_SHORT, true).show();
+        }
+        else {
             String allproductString = ProductArray.toString();
             Respons_Outward_Tanker_Billing responsOutwardTankerBilling = new Respons_Outward_Tanker_Billing(OutwardId, etintime, outTime,
                     "", EmployeId, EmployeId, 'B', etremark, etserilnumber, etvehiclenumber, "", ucustname,

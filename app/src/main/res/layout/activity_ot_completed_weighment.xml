@@ -63,7 +63,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweighserial"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -85,6 +85,17 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="140dp"
+                android:id="@+id/otweighProductoanumber"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Product OANo"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <!--<TextView
                 android:layout_width="110dp"
                 android:id="@+id/otweighoanum"
                 android:textStyle="bold"
@@ -104,10 +115,10 @@
                 android:text="Product"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweighcustomer"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -118,7 +129,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweightransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -129,7 +140,7 @@
                 android:layout_height="match_parent"/>
 
 
-            <TextView
+            <!--<TextView
                 android:layout_width="120dp"
                 android:id="@+id/otweighhowqty"
                 android:textStyle="bold"
@@ -138,7 +149,7 @@
                 android:text="QTY Filled"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
                 android:layout_width="120dp"
@@ -151,7 +162,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="100dp"
                 android:id="@+id/otweighintime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -161,7 +172,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="100dp"
                 android:id="@+id/otweighouttime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -171,7 +182,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweightarewt"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -193,7 +204,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otweighInDriverImage"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -204,7 +215,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
+                android:layout_width="140dp"
                 android:id="@+id/otweighremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

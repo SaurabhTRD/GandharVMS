@@ -71,6 +71,10 @@ public class it_out_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_o
         if (intimelength > 0) {
             holder.outintime.setText(club.getOutInTime().substring(12, intimelength));
         }
+        int outtimelength = club.getUpdatedDate()!=null ? club.getUpdatedDate().length() : 0;
+        if (outtimelength > 0) {
+            holder.outouttime.setText(club.getUpdatedDate().substring(12, outtimelength));
+        }
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.grossweight.setText(String.valueOf(club.getGrossWeight()));
         holder.netweight.setText(String.valueOf(club.getWeiNetWeight()));
@@ -128,13 +132,14 @@ public class it_out_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_o
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
-        TextView  vehiclenum, outintime, grossweight,tareweight,netweight,shortagedip,shortageweight;
+        TextView  vehiclenum, outintime,outouttime, grossweight,tareweight,netweight,shortagedip,shortageweight;
         ImageView outvehicleimage,outdriverimage;
 
         public myviewHolder(View view) {
             super(view);
             vehiclenum = view.findViewById(R.id.itoutweitextcoVehicleNumber);
             outintime =view.findViewById(R.id.itoutweitextcoOutInTime);
+            outouttime=view.findViewById(R.id.itoutweitextcoOutOutTime);
             grossweight=view.findViewById(R.id.itoutweitextcogrossweight);
             tareweight=view.findViewById(R.id.itoutweitextcotareweight);
             netweight=view.findViewById(R.id.itoutweitextconetweight);

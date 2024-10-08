@@ -23,7 +23,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <!--<TextView
         android:layout_width="120dp"
         android:id="@+id/otoutdtprocoanum"
         android:textStyle="bold"
@@ -39,7 +39,18 @@
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
+
+    <TextView
+        android:id="@+id/otoutdtprodOaNo"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="Product OANo"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
 
     <TextView
         android:layout_width="120dp"

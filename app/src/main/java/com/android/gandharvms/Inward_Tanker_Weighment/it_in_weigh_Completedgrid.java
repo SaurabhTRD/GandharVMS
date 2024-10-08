@@ -93,7 +93,7 @@ public class it_in_weigh_Completedgrid extends AppCompatActivity implements it_i
         toDate=findViewById(R.id.btntoDate);
         totrec=findViewById(R.id.totrecdepartmentwise);
         imgBtnExportToExcel=findViewById(R.id.btn_itinweighExportToExcel);
-        fromdate="2024-01-01";
+        fromdate=getCurrentDateTime();
         todate = getCurrentDateTime();
         hssfWorkBook = new HSSFWorkbook();
 

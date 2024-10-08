@@ -88,6 +88,17 @@
                 android:layout_height="match_parent"/>
 
             <TextView
+                android:layout_width="140dp"
+                android:id="@+id/otoutbillprodOaNo"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Product OANo"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <!--<TextView
                 android:layout_width="120dp"
                 android:id="@+id/orbilloutoapo"
                 android:gravity="center|start"
@@ -96,7 +107,7 @@
                 android:text="OA/PO Number"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
                 android:layout_width="120dp"

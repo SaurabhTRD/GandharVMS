@@ -263,6 +263,16 @@ public class Common_Outward_model {
     public String splRemark;
     public String PurposeProcess;
 
+    public String ProductQTYUOMOA;
+
+    public String getProductQTYUOMOA() {
+        return ProductQTYUOMOA;
+    }
+
+    public void setProductQTYUOMOA(String productQTYUOMOA) {
+        ProductQTYUOMOA = productQTYUOMOA;
+    }
+
     public String getOutRemark() {
         return OutRemark;
     }
@@ -566,6 +576,8 @@ public class Common_Outward_model {
     public void setWeighmentInRemark(String weighmentInRemark) {
         WeighmentInRemark = weighmentInRemark;
     }
+
+
 
     public String getInProLabRemark() {
         return InProLabRemark;

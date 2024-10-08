@@ -42,13 +42,24 @@
         android:layout_height="match_parent"/>
 
     <TextView
+        android:id="@+id/otinprocProOANo"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="Product OANo"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
+
+    <!--<TextView
         android:layout_width="140dp"
         android:id="@+id/otinprocoanum"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <TextView
         android:layout_width="120dp"
@@ -59,7 +70,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <!--<TextView
         android:layout_width="120dp"
         android:id="@+id/otinprocprodcut"
         android:textStyle="bold"
@@ -75,7 +86,7 @@
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
     <TextView
         android:layout_width="120dp"
         android:id="@+id/otinproccustomer"

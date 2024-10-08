@@ -285,7 +285,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Inward Tanker Out Weighment Process Done..!",
-                                        "This Vehicle:-" + vehicleNumber + "is Ready for Security",
+                                        "This Vehicle:-" + vehicleNumber + " is Ready for Security",
                                         getApplicationContext(),
                                         InwardOut_Tanker_Weighment.this
                                 );

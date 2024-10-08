@@ -33,13 +33,24 @@
         android:layout_height="match_parent"/>
 
     <TextView
+        android:id="@+id/otoutbillprodOaNo"
+        android:layout_width="140dp"
+        android:layout_height="match_parent"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="Product OANo"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
+
+    <!--<TextView
         android:layout_width="120dp"
         android:id="@+id/orbilloutoapo"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
         android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"/>-->
 
     <TextView
         android:layout_width="120dp"

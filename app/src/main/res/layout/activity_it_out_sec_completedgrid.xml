@@ -116,7 +116,18 @@
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
-            
+
+            <TextView
+                android:layout_width="130dp"
+                android:id="@+id/itoutsectextcoOutOutTime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
             <TextView
                 android:layout_width="130dp"
                 android:id="@+id/itoutsectextcoIrCopy"
