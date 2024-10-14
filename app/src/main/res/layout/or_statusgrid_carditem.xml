@@ -3,140 +3,123 @@
     android:orientation="horizontal"
     android:background="@color/lightgray"
     android:layout_width="wrap_content"
-    android:layout_height="40dp">
+    android:layout_height="50dp">
 
     <TextView
-        android:id="@+id/textoutwardgridVehicleNumber"
-        android:layout_width="100dp"
-        android:layout_marginStart="5dp"
-        android:clickable="true"
-        android:textStyle="bold"
-        android:gravity="center|start"
-        android:textColor="@color/blue"
-        android:backgroundTint="@android:color/darker_gray"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:id="@+id/textoutwardgridTransporter"
         android:layout_width="120dp"
-        android:layout_marginStart="5dp"
-        android:clickable="true"
+        android:id="@+id/orstatusgridVehicleNumber"
         android:textStyle="bold"
+        android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/blue"
-        android:backgroundTint="@android:color/darker_gray"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textoutwardgridStatus"
-        android:layout_width="130dp"
+        android:layout_width="120dp"
+        android:id="@+id/orstatusgridTransporter"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:id="@+id/textoutwardgriddate"
-        android:layout_width="130dp"
+        android:layout_width="120dp"
+        android:id="@+id/orstatusgridStatus"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textoutwardgridSecInTime"
+        android:layout_width="120dp"
+        android:id="@+id/orstatusgriddate"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textoutwardgridBilInTime"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridLogInTime"
+        android:id="@+id/orstatusgridSecTime"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridWeiInTime"
+        android:id="@+id/orstatusgridLogTime"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridprotime"
+        android:id="@+id/orstatusgridWeiTime"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridlabtime"
+        android:id="@+id/orstatusgridindustrialpack"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridinduspacktime"
+        android:id="@+id/orstatusgridsmallpack"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridsmallpacktime"
+        android:id="@+id/orstatusgridoutweitime"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridoutweitime"
+        android:id="@+id/orstatusgridoutdataentrytime"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridoutdataentrytime"
+        android:id="@+id/orstatusgridoutbilltime"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridoutbilltime"
+        android:id="@+id/orstatusgridoutsectime"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textoutwardgridoutsectime"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
+        android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
 </LinearLayout>

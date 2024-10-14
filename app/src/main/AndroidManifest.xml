@@ -30,6 +30,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".OR_VehicleStatus_Grid.or_statusgrid_livedata"
+            android:exported="false" />
+        <activity
+            android:name=".OT_VehicleStatus_Grid.ot_statusgrid_livedata"
+            android:exported="false" />
+        <activity
             android:name=".IR_VehicleStatus_Grid.ir_statusgrid_livedata"
             android:exported="false" />
         <activity

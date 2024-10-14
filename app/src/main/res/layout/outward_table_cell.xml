@@ -51,14 +51,6 @@
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridWeiInTime"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
         android:id="@+id/textoutwardgridBilInTime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
@@ -67,47 +59,79 @@
 
     <TextView
         android:layout_width="100dp"
-        android:id="@+id/textoutwardgridIPFLabInTime"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textoutwardgridIPFProInTime"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textoutwardgridBLFLabInTime"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textoutwardgridBLFProInTime"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
-        android:id="@+id/textoutwardgridDesInTime"
-        android:layout_marginStart="5dp"
-        android:gravity="center|start"
-        android:textColor="@color/black"
-        android:layout_height="match_parent"/>
-
-    <TextView
-        android:layout_width="100dp"
         android:id="@+id/textoutwardgridLogInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridWeiInTime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridprotime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridlabtime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridinduspacktime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridsmallpacktime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridoutweitime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridoutdataentrytime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridoutbilltime"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
+        android:id="@+id/textoutwardgridoutsectime"
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@color/black"

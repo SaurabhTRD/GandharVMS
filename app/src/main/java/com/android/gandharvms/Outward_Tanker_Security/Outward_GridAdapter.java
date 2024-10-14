@@ -46,7 +46,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
 
     private static final int TYPE_ROW = 0;
     private static final int TYPE_ROW_COLORFUL = 1;
-    private List<Response_Outward_Security_Fetching> outwardGridmodel;
+    private final List<Response_Outward_Security_Fetching> outwardGridmodel;
     private List<Response_Outward_Security_Fetching> outwardfilteredGridList;
     private Context context;
 
@@ -82,48 +82,72 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
         holder.trans.setText(club.getTransportName());
         holder.Status.setText(club.getCurrStatus());
         holder.date.setText(club.getDate());
-        int secintimelength = club.getSecInTime()!=null ? club.getSecInTime().length() : 0;
+        int secintimelength = club.getSecInTime() != null ? club.getSecInTime().length() : 0;
         if (secintimelength > 0) {
             holder.secInTime.setText(club.getSecInTime());
         }
 
-        int weiInTimelength = club.getWeiInTime()!=null ? club.getWeiInTime().length() : 0;
-        if (weiInTimelength > 0) {
-            holder.weiInTime.setText(club.getWeiInTime());
+        int logintime = club.getLogInTime() != null ? club.getLogInTime().length() : 0;
+        if (logintime > 0) {
+            holder.logintime.setText(club.getLogInTime());
         }
 
-        int bilInTimelength = club.getBilInTime()!=null ? club.getBilInTime().length() : 0;
+        int bilInTimelength = club.getBilInTime() != null ? club.getBilInTime().length() : 0;
         if (bilInTimelength > 0) {
             holder.bilInTime.setText(club.getBilInTime());
         }
 
-        int ipfLabInTimelength = club.getIPFLabInTime()!=null ? club.getIPFLabInTime().length() : 0;
-        if (ipfLabInTimelength > 0) {
-            holder.ipfLabInTime.setText(club.getIPFLabInTime());
+        int weiInTimelength = club.getWeiInTime() != null ? club.getWeiInTime().length() : 0;
+        if (weiInTimelength > 0) {
+            holder.weiInTime.setText(club.getWeiInTime());
         }
 
-        int ipfProInTimelength = club.getIPFProInTime()!=null ? club.getIPFProInTime().length() : 0;
-        if (ipfProInTimelength > 0) {
-            holder.ipfProInTime.setText(club.getIPFProInTime());
+        int proTimelength = club.getBLFProInTime() != null ? club.getBLFProInTime().length() : 0;
+        if (proTimelength > 0) {
+            holder.proInTime.setText(club.getBLFProInTime());
         }
 
-        int blfLabInTimelength = club.getBLFLabInTime()!=null ? club.getBLFLabInTime().length() : 0;
-        if (blfLabInTimelength > 0) {
-            holder.blfLabInTime.setText(club.getBLFLabInTime());
+        int labTimelength = club.getIPFLabInTime() != null ? club.getIPFLabInTime().length() : 0;
+        if (labTimelength > 0) {
+            holder.labInTime.setText(club.getIPFLabInTime());
         }
 
-        int blfProInTimelength = club.getBLFProInTime()!=null ? club.getBLFProInTime().length() : 0;
-        if (blfProInTimelength > 0) {
-            holder.blfProInTime.setText(club.getBLFProInTime());
+        int induspackTimelength = club.getIndusTime() != null ? club.getIndusTime().length() : 0;
+        if (induspackTimelength > 0) {
+            holder.induspacktime.setText(club.getIndusTime());
         }
-        int desInTimeInTimelength = club.getDesInTime()!=null ? club.getDesInTime().length() : 0;
-        if (desInTimeInTimelength > 0) {
-            holder.desInTime.setText(club.getDesInTime());
+
+        int smallpacklength = club.getSamllPackTime() != null ? club.getSamllPackTime().length() : 0;
+        if (smallpacklength > 0) {
+            holder.smallpacktime.setText(club.getSamllPackTime());
         }
-        int logintime=club.getLogInTime()!=null?club.getLogInTime().length():0;
-        if(logintime>0)
+
+        int outweiTimelength = club.getOutWeiTime() != null ? club.getOutWeiTime().length() : 0;
+        if (outweiTimelength > 0) {
+            holder.outweitime.setText(club.getOutWeiTime());
+        }
+
+        int outtruckdataentrytimelength = club.getIRDataEntryTime() != null ? club.getIRDataEntryTime().length() : 0;
+        int outdataentryTimelength = club.getOutDataEntryTime() != null ? club.getOutDataEntryTime().length() : 0;
+        if(!club.getVehicleType().equals("OR"))
         {
-            holder.logintime.setText(club.getLogInTime());
+            if (outdataentryTimelength > 0) {
+                holder.outdataentrytime.setText(club.getOutDataEntryTime());
+            }
+        }
+        else{
+            if (outtruckdataentrytimelength > 0) {
+                holder.outdataentrytime.setText(club.getIRDataEntryTime());
+            }
+        }
+
+        int outbillTimelength = club.getOutBillTime() != null ? club.getOutBillTime().length() : 0;
+        if (outbillTimelength > 0) {
+            holder.outbilltime.setText(club.getOutBillTime());
+        }
+        int outsecTimelength = club.getOutSecTime() != null ? club.getOutSecTime().length() : 0;
+        if (outsecTimelength > 0) {
+            holder.outsectime.setText(club.getOutSecTime());
         }
 
         holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
@@ -137,9 +161,9 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                 if (vehicletype.equals("OT") && io == 'I') {
                     if (currentst.equals("SECURITY REPORTED")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_Security.class);
-                    }else if (currentst.equals("BILLING")) {
+                    } else if (currentst.equals("BILLING")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_Billing.class);
-                    }else if (currentst.equals("WEIGHMENT")) {
+                    } else if (currentst.equals("WEIGHMENT")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_weighment.class);
                     } else if (currentst.equals("PRODUCTION")) {
                         intent = new Intent(view.getContext(), New_Outward_Tanker_Production.class);
@@ -158,21 +182,21 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                 } else if (vehicletype.equals("OT") && io == 'O') {
                     if (currentst.equals("OUTWEIGHMENT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Tanker_Weighment.class);
-                    }else if (currentst.equals("OUTDATAENTRY")) {
+                    } else if (currentst.equals("OUTDATAENTRY")) {
                         intent = new Intent(view.getContext(), DataEntryForm_Production.class);
-                    }else if (currentst.equals("OUTBILLING")) {
+                    } else if (currentst.equals("OUTBILLING")) {
                         intent = new Intent(view.getContext(), ot_outBilling.class);
-                    }else if (currentst.equals("SECURITYVEHICLEOUT")) {
+                    } else if (currentst.equals("SECURITYVEHICLEOUT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Tanker_Security.class);
                     }
-                }else if (vehicletype.equals("OR") && io == 'I') {
+                } else if (vehicletype.equals("OR") && io == 'I') {
                     if (currentst.equals("SECURITY REPORTED")) {
                         intent = new Intent(view.getContext(), Outward_Truck_Security.class);
-                    }  else if (currentst.equals("LOGISTIC")) {
+                    } else if (currentst.equals("LOGISTIC")) {
                         intent = new Intent(view.getContext(), Outward_Truck_Logistics.class);
                     } else if (currentst.equals("WEIGHMENT")) {
                         intent = new Intent(view.getContext(), Outward_Truck_weighment.class);
-                    }else if (currentst.equals("DISPATCH")) {
+                    } else if (currentst.equals("DISPATCH")) {
                         intent = new Intent(view.getContext(), Outward_Truck_Dispatch.class);
                     }
 //                    else if (currentst.equals("DATAENTRY")) {
@@ -184,8 +208,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                         intent = new Intent(view.getContext(), Outward_DesIndustriaLoading_Form.class);
                     }
 
-                }
-                else if (vehicletype.equals("OR") && io == 'O') {
+                } else if (vehicletype.equals("OR") && io == 'O') {
                     if (currentst.equals("OUTWEIGHMENT")) {
                         intent = new Intent(view.getContext(), OutwardOut_Truck_Weighment.class);
                     } else if (currentst.equals("DATAENTRY")) {
@@ -208,29 +231,6 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
     @Override
     public int getItemCount() {
         return outwardGridmodel.size();
-    }
-
-    public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView vehiclenum, material, Status,date, secInTime,weiInTime,
-                bilInTime,ipfLabInTime,ipfProInTime,blfLabInTime,
-                blfProInTime,desInTime,logintime,trans;
-
-        public myviewHolder(View view) {
-            super(view);
-            vehiclenum = view.findViewById(R.id.textoutwardgridVehicleNumber);
-            Status = view.findViewById(R.id.textoutwardgridStatus);
-            date = view.findViewById(R.id.textoutwardgriddate);
-            secInTime = view.findViewById(R.id.textoutwardgridSecInTime);
-            weiInTime = view.findViewById(R.id.textoutwardgridWeiInTime);
-            bilInTime = view.findViewById(R.id.textoutwardgridBilInTime);
-            ipfLabInTime = view.findViewById(R.id.textoutwardgridIPFLabInTime);
-            ipfProInTime = view.findViewById(R.id.textoutwardgridIPFProInTime);
-            blfLabInTime = view.findViewById(R.id.textoutwardgridBLFLabInTime);
-            blfProInTime = view.findViewById(R.id.textoutwardgridBLFProInTime);
-            desInTime = view.findViewById(R.id.textoutwardgridDesInTime);
-            logintime=view.findViewById(R.id.textoutwardgridLogInTime);
-            trans = view.findViewById(R.id.textoutwardgridTransporter);
-        }
     }
 
     public Filter getFilter() {
@@ -261,5 +261,32 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                 notifyDataSetChanged();
             }
         };
+    }
+
+    public class myviewHolder extends RecyclerView.ViewHolder {
+        public TextView vehiclenum, trans, Status, date, secInTime,
+                bilInTime, logintime, weiInTime, proInTime, labInTime, induspacktime, smallpacktime, outweitime,
+                outdataentrytime, outbilltime, outsectime;
+
+        public myviewHolder(View view) {
+            super(view);
+            vehiclenum = view.findViewById(R.id.textoutwardgridVehicleNumber);
+            trans = view.findViewById(R.id.textoutwardgridTransporter);
+            Status = view.findViewById(R.id.textoutwardgridStatus);
+            date = view.findViewById(R.id.textoutwardgriddate);
+            secInTime = view.findViewById(R.id.textoutwardgridSecInTime);
+            bilInTime = view.findViewById(R.id.textoutwardgridBilInTime);
+            logintime = view.findViewById(R.id.textoutwardgridLogInTime);
+            weiInTime = view.findViewById(R.id.textoutwardgridWeiInTime);
+            proInTime = view.findViewById(R.id.textoutwardgridprotime);
+            labInTime = view.findViewById(R.id.textoutwardgridlabtime);
+            induspacktime = view.findViewById(R.id.textoutwardgridinduspacktime);
+            smallpacktime = view.findViewById(R.id.textoutwardgridsmallpacktime);
+            outweitime = view.findViewById(R.id.textoutwardgridoutweitime);
+            outdataentrytime = view.findViewById(R.id.textoutwardgridoutdataentrytime);
+            outbilltime = view.findViewById(R.id.textoutwardgridoutbilltime);
+            outsectime = view.findViewById(R.id.textoutwardgridoutsectime);
+
+        }
     }
 }

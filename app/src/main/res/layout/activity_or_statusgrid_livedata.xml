@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Outward_Tanker_Security.Grid_Outward">
+    tools:context=".OR_VehicleStatus_Grid.or_statusgrid_livedata">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -38,7 +39,7 @@
 
     <HorizontalScrollView
         android:layout_width="match_parent"
-        android:id="@+id/outwardgridheaderscroll"
+        android:id="@+id/orstatusgridheaderscroll"
         android:layout_height="40dp">
 
         <LinearLayout
@@ -48,8 +49,8 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textoutwardgridVehicleNumber"
+                android:layout_width="120dp"
+                android:id="@+id/orstatusgridVehicleNumber"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -60,7 +61,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textoutwardgridTransporter"
+                android:id="@+id/orstatusgridTransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -70,8 +71,8 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/textoutwardgridStatus"
+                android:layout_width="120dp"
+                android:id="@+id/orstatusgridStatus"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -81,8 +82,8 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/textoutwardgriddate"
+                android:layout_width="120dp"
+                android:id="@+id/orstatusgriddate"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -91,75 +92,43 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridSecInTime"
+                android:id="@+id/orstatusgridSecTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Sec-Time"
+                android:text="SecTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridBilInTime"
+                android:id="@+id/orstatusgridLogTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Bil-Time"
+                android:text="LogisticTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridLogInTime"
+                android:id="@+id/orstatusgridWeiTime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Log-Time"
+                android:text="WeiTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridWeiInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Wei-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textoutwardgridprotime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Pro-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textoutwardgridlabtime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Lab-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textoutwardgridinduspacktime"
+                android:id="@+id/orstatusgridindustrialpack"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -170,7 +139,7 @@
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridsmallpacktime"
+                android:id="@+id/orstatusgridsmallpack"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -181,44 +150,44 @@
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridoutweitime"
+                android:id="@+id/orstatusgridoutweitime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OutWei-Time"
+                android:text="OutWeiTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridoutdataentrytime"
+                android:id="@+id/orstatusgridoutdataentrytime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OutDataEntry-Time"
+                android:text="OutDataEntryTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridoutbilltime"
+                android:id="@+id/orstatusgridoutbilltime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OutBil-Time"
+                android:text="OutBillTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridoutsectime"
+                android:id="@+id/orstatusgridoutsectime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OutSec-Time"
+                android:text="OutSecTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
@@ -229,7 +198,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:id="@+id/outwardrecyclerviewgrid"
+        android:id="@+id/orstatusgridrecyclerview"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 

@@ -10,14 +10,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
-import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.OT_VehicleStatus_Grid.ot_statusgrid_livedata;
 import com.android.gandharvms.OT_CompletedReport.Outward_Tanker_CompletedReport;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker;
-import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.R;
 
 import es.dmoral.toasty.Toasty;
@@ -79,7 +77,7 @@ public class Submenu_outward_tanker extends AppCompatActivity {
     public void outwardtankerstatusclick(View view){
         Global_Var.getInstance().InOutType='x';
         Global_Var.getInstance().DeptType='x';
-        Intent intent = new Intent(this, Grid_Outward.class);
+        Intent intent = new Intent(this, ot_statusgrid_livedata.class);
         startActivity(intent);
 
     }

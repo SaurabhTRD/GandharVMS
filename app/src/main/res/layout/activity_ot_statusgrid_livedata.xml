@@ -2,30 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Outward_Tanker_Security.Grid_Outward">
+    android:orientation="vertical"
+    tools:context=".OT_VehicleStatus_Grid.ot_statusgrid_livedata">
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left">
+        android:gravity="left"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="6dp"
             android:text="Vehicle Status From Currrent Date:- "
             android:textColor="@color/green"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:padding="6dp"
-            />
+            android:textStyle="bold" />
 
         <Space
             android:layout_width="1dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <TextView
             android:id="@+id/otgridcurrrentdate"
@@ -37,199 +36,167 @@
     </LinearLayout>
 
     <HorizontalScrollView
+        android:id="@+id/otstatusgridheaderscroll"
         android:layout_width="match_parent"
-        android:id="@+id/outwardgridheaderscroll"
         android:layout_height="40dp">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:background="@color/navyblue"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/navyblue"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textoutwardgridVehicleNumber"
-                android:textStyle="bold"
+                android:id="@+id/otstatusgridVehicleNumber"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Vehicle No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridTransporter"
                 android:layout_width="120dp"
-                android:id="@+id/textoutwardgridTransporter"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Transporter"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/textoutwardgridStatus"
-                android:textStyle="bold"
+                android:id="@+id/otstatusgridStatus"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Curr Status"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
-                android:layout_width="130dp"
-                android:id="@+id/textoutwardgriddate"
-                android:textStyle="bold"
+                android:id="@+id/otstatusgriddate"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Date"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
+
 
             <TextView
+                android:id="@+id/otstatusgridSecInTime"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridSecInTime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Sec-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridBilInTime"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridBilInTime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Bil-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridWeiInTime"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridLogInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Log-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textoutwardgridWeiInTime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
                 android:text="Wei-Time"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridproduction"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridprotime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Pro-Time"
+                android:text="ProductionTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridLaboratory"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridlabtime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Lab-Time"
+                android:text="LaboratoryTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridoutweitime"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridinduspacktime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="IndusPackTime"
+                android:text="OutWeiTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridoutdatanentrytime"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridsmallpacktime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="SmallPackTime"
+                android:text="OutDataEntryTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridoutbilltime"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridoutweitime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OutWei-Time"
+                android:text="OutBillTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/otstatusgridoutsectime"
                 android:layout_width="100dp"
-                android:id="@+id/textoutwardgridoutdataentrytime"
-                android:textStyle="bold"
+                android:layout_height="match_parent"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="OutDataEntry-Time"
+                android:text="OutSecTime"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textoutwardgridoutbilltime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OutBil-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="100dp"
-                android:id="@+id/textoutwardgridoutsectime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OutSec-Time"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:textStyle="bold" />
 
         </LinearLayout>
 
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/otstatusgridrecyclerview"
         android:layout_width="match_parent"
-        android:id="@+id/outwardrecyclerviewgrid"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
 

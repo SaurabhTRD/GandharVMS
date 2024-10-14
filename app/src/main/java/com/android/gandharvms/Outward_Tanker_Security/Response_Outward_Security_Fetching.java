@@ -84,6 +84,71 @@ public class Response_Outward_Security_Fetching {
     public String spltotqty;
     public String iltotqty;
 
+    public String OutWeiTime;
+    public String OutDataEntryTime;
+    public String OutBillTime;
+    public String OutSecTime;
+    public String IndusTime;
+    public String SamllPackTime;
+
+    public String IRDataEntryTime;
+
+    public String getIRDataEntryTime() {
+        return IRDataEntryTime;
+    }
+
+    public void setIRDataEntryTime(String IRDataEntryTime) {
+        this.IRDataEntryTime = IRDataEntryTime;
+    }
+
+    public String getOutWeiTime() {
+        return OutWeiTime;
+    }
+
+    public void setOutWeiTime(String outWeiTime) {
+        OutWeiTime = outWeiTime;
+    }
+
+    public String getOutDataEntryTime() {
+        return OutDataEntryTime;
+    }
+
+    public void setOutDataEntryTime(String outDataEntryTime) {
+        OutDataEntryTime = outDataEntryTime;
+    }
+
+    public String getOutBillTime() {
+        return OutBillTime;
+    }
+
+    public void setOutBillTime(String outBillTime) {
+        OutBillTime = outBillTime;
+    }
+
+    public String getOutSecTime() {
+        return OutSecTime;
+    }
+
+    public void setOutSecTime(String outSecTime) {
+        OutSecTime = outSecTime;
+    }
+
+    public String getIndusTime() {
+        return IndusTime;
+    }
+
+    public void setIndusTime(String indusTime) {
+        IndusTime = indusTime;
+    }
+
+    public String getSamllPackTime() {
+        return SamllPackTime;
+    }
+
+    public void setSamllPackTime(String samllPackTime) {
+        SamllPackTime = samllPackTime;
+    }
+
     public String getSpltotqty() {
         return spltotqty;
     }

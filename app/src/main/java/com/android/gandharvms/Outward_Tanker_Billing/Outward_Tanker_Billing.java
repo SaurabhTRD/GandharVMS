@@ -477,10 +477,10 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
                 etdate.isEmpty() || etremark.isEmpty() || ucustname.isEmpty() ||
                 ulocation.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else if (ProductArray.length() == 0) {
+        }/*else if (ProductArray.length() == 0) {
             // Check if no materials are added
             Toasty.warning(this, "Please add at least one product with OANumber before submitting.", Toast.LENGTH_SHORT, true).show();
-        }
+        }*/
         else {
             String allproductString = ProductArray.toString();
             Respons_Outward_Tanker_Billing responsOutwardTankerBilling = new Respons_Outward_Tanker_Billing(OutwardId, etintime, outTime,

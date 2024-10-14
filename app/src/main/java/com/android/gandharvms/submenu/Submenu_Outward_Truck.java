@@ -12,6 +12,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.OR_VehicleStatus_Grid.or_statusgrid_livedata;
 import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Truck;
@@ -66,7 +67,7 @@ public class Submenu_Outward_Truck extends AppCompatActivity {
     public void outwardtankerstatusclick(View view){
         Global_Var.getInstance().InOutType='x';
         Global_Var.getInstance().DeptType='x';
-        Intent intent = new Intent(this, Grid_Outward.class);
+        Intent intent = new Intent(this, or_statusgrid_livedata.class);
         startActivity(intent);
     }
 
