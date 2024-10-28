@@ -68,7 +68,8 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Weighment extends AppCompatActivity {
 
-    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare,etshdip,etshwe;
+    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare,etshdip,etshwe,
+             industotqty,industotwight,smalltotqty,smalltotweight;
 
     Button submit,etcompleted;
     FirebaseFirestore dbroot;
@@ -121,6 +122,10 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         etremark = findViewById(R.id.etOTW_remark);
         seal = findViewById(R.id.etseal);
         ettare = findViewById(R.id.ettarewt);
+        industotqty=findViewById(R.id.etinudustotqty);
+        industotwight=findViewById(R.id.etinudustotweight);
+        smalltotqty=findViewById(R.id.etsmalltotqty);
+        smalltotweight=findViewById(R.id.etsmalltotweight);
 
         submit = findViewById(R.id.submit);
         etcompleted = findViewById(R.id.orweoutcomple);
@@ -296,7 +301,38 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
                         ettare.setText(data.getTareWeight());
                         ettare.setEnabled(false);
                         wserialNo= data.getSerialNumber();
+                        if(data.iltotqty.isEmpty() || data.ilweight=="0")
+                        {
+                            smalltotqty.setVisibility(View.VISIBLE);
+                            smalltotweight.setVisibility(View.VISIBLE);
+                            smalltotqty.setText(data.getSpltotqty());
+                            smalltotqty.setEnabled(false);
+                            smalltotweight.setText(data.getSplweight());
+                            smalltotweight.setEnabled(false);
+                            industotqty.setVisibility(View.GONE);
+                            industotwight.setVisibility(View.GONE);
+                        }
+                        else if(data.spltotqty.isEmpty() || data.splweight=="0") {
+                            industotqty.setVisibility(View.VISIBLE);
+                            industotwight.setVisibility(View.VISIBLE);
+                            industotqty.setText(data.getIltotqty());
+                            industotqty.setEnabled(false);
+                            industotwight.setText(data.getIlweight());
+                            industotwight.setEnabled(false);
+                            smalltotqty.setVisibility(View.GONE);
+                            smalltotweight.setVisibility(View.GONE);
+                        }
+                        else{
+                            industotqty.setText(data.getIltotqty());
+                            industotqty.setEnabled(false);
+                            industotwight.setText(data.getIlweight());
+                            industotwight.setEnabled(false);
+                            smalltotqty.setText(data.getSpltotqty());
+                            smalltotqty.setEnabled(false);
+                            smalltotweight.setText(data.getSplweight());
+                            smalltotweight.setEnabled(false);
 
+                        }
                     }else {
                         Toasty.error(OutwardOut_Truck_Weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

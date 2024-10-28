@@ -356,6 +356,7 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         makeNotification(vehnumber,uintime);
+                        makeNotificationforsmallpack(vehnumber,uintime);
                         startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Outward_Truck.class));
                         finish();
                     }
@@ -465,6 +466,57 @@ public class Outward_DesIndustriaLoading_Form extends AppCompatActivity {
                     if (userList != null){
                         for (ResponseModel resmodel : userList){
                             String specificRole = "Weighment";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Truck Industrail Pack Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Industrail Pack process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_DesIndustriaLoading_Form.this
+                                );
+                                notificationsSender.triggerSendNotification();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void makeNotificationforsmallpack(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "SmallPack";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
 

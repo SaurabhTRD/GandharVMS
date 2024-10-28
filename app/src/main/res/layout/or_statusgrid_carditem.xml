@@ -25,6 +25,15 @@
 
     <TextView
         android:layout_width="120dp"
+        android:id="@+id/orstatusgridOANumber"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
         android:id="@+id/orstatusgridStatus"
         android:textStyle="bold"
         android:layout_marginStart="5dp"

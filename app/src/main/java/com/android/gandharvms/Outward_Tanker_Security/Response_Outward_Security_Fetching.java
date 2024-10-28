@@ -83,7 +83,7 @@ public class Response_Outward_Security_Fetching {
     public String PurposeProcess;
     public String spltotqty;
     public String iltotqty;
-
+    public String ProductQTYUOMOA;
     public String OutWeiTime;
     public String OutDataEntryTime;
     public String OutBillTime;
@@ -803,5 +803,13 @@ public class Response_Outward_Security_Fetching {
 
     public void setSealNumber(String sealNumber) {
         SealNumber = sealNumber;
+    }
+
+    public String getProductQTYUOMOA() {
+        return ProductQTYUOMOA;
+    }
+
+    public void setProductQTYUOMOA(String productQTYUOMOA) {
+        ProductQTYUOMOA = productQTYUOMOA;
     }
 }

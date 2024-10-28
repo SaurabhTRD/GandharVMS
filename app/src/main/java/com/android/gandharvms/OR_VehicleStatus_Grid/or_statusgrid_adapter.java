@@ -48,6 +48,7 @@ public class or_statusgrid_adapter extends RecyclerView.Adapter<or_statusgrid_ad
         Response_Outward_Security_Fetching club = outwardfilteredGridList.get(position);
         holder.vehiclenum.setText(club.getVehicleNumber());
         holder.transporter.setText(club.getTransportName());
+        holder.oanumber.setText(club.getOAnumber());
         holder.Status.setText(club.getCurrStatus());
         holder.date.setText(club.getDate().substring(0,10));
         int sectimelength = club.getSecInTime()!=null ? club.getSecInTime().length() : 0;
@@ -110,13 +111,14 @@ public class or_statusgrid_adapter extends RecyclerView.Adapter<or_statusgrid_ad
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView vehiclenum,transporter,Status,date,secTime,logtime,weiTime,induspacktime,smallpacktime,
+        public TextView vehiclenum,transporter,oanumber,Status,date,secTime,logtime,weiTime,induspacktime,smallpacktime,
                 outweitime,outdataentrytime,outbilltime,outsectime;
 
         public myviewHolder(View view) {
             super(view);
             vehiclenum = view.findViewById(R.id.orstatusgridVehicleNumber);
             transporter = view.findViewById(R.id.orstatusgridTransporter);
+            oanumber=view.findViewById(R.id.orstatusgridOANumber);
             Status = view.findViewById(R.id.orstatusgridStatus);
             date = view.findViewById(R.id.orstatusgriddate);
             secTime = view.findViewById(R.id.orstatusgridSecTime);

@@ -15,6 +15,17 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/otstatusgridproductwithoa"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:autoLink="web"
+        android:linksClickable="true"
+        android:text="Product OANo"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="17dp" />
+
+    <TextView
         android:id="@+id/otstatusgridTransporter"
         android:layout_width="120dp"
         android:layout_height="match_parent"
