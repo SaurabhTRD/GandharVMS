@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".NotificationAlerts.NotificationListActivity"
+            android:exported="false" />
+        <activity
             android:name=".OR_VehicleStatus_Grid.or_statusgrid_livedata"
             android:exported="false" />
         <activity
@@ -399,6 +402,15 @@
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <service
+            android:name=".NotificationAlerts.NotificationReceiverService"
+            android:exported="true"
+            android:permission="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE">
+            <intent-filter>
+                <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
     </application>

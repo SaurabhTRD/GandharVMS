@@ -151,7 +151,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="OA Number"
-                android:inputType="textCapCharacters"
+                android:inputType="textMultiLine"
 
                 android:textSize="17dp"
                 android:textStyle="bold"
@@ -177,7 +177,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Transporter"
-                android:inputType="textCapCharacters"
+                android:inputType="textMultiLine"
                 android:textSize="17dp"
                 android:textStyle="bold"
                 />

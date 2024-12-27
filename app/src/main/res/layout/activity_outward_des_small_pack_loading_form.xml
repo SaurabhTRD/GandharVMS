@@ -105,7 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="OA Number"
-                    android:inputType="textCapCharacters"
+                    android:inputType="textMultiLine"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -123,7 +123,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Party Name"
-                    android:inputType="textCapCharacters"
+                    android:inputType="textMultiLine"
                     android:textSize="17dp"
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
