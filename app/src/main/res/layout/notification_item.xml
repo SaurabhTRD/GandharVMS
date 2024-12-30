@@ -5,34 +5,32 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:padding="12dp"
-    android:background="@android:color/white">
+    android:background="@drawable/notification_background">
 
     <TextView
         android:id="@+id/tvNotificationTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Title"
-        android:textColor="#000"
         android:textStyle="bold"
+        android:text="Title"
         android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tvNotificationContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
         android:text="Content"
-        android:textColor="#888"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:layout_marginTop="4dp" />
 
     <TextView
         android:id="@+id/tvNotificationTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:text="Timestamp"
+        android:textSize="12sp"
+        android:textStyle="bold"
         android:layout_marginTop="4dp"
-        android:layout_gravity="end"
-        android:text="Time ago"
-        android:textAlignment="textEnd"
-        android:textColor="#888"
-        android:textSize="12sp" />
+        android:textColor="@android:color/darker_gray" />
 </LinearLayout>

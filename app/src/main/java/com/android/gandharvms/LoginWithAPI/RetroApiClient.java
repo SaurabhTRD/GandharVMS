@@ -3,6 +3,7 @@ package com.android.gandharvms.LoginWithAPI;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_SamplingMethod;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_SamplingRequestModel;
 import com.android.gandharvms.Inward_Tanker_Security.API_In_Tanker_Security;
+import com.android.gandharvms.NotificationAlerts.NotificationAlertsInterface;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -47,5 +48,6 @@ public class RetroApiClient {
     }
 
     public static Logistic getLogisticDetails() {return getClient().create(Logistic.class);}
+    public static NotificationAlertsInterface NotificationInterface(){return  getClient().create(NotificationAlertsInterface.class);}
 
 }

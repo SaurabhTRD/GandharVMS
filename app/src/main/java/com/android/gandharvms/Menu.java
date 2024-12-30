@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,16 +13,25 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.CalendarNotificationDatabaseHelper;
 import com.android.gandharvms.NotificationAlerts.NotificationAccessHelper;
+import com.android.gandharvms.NotificationAlerts.NotificationAlertsInterface;
 import com.android.gandharvms.NotificationAlerts.NotificationListActivity;
+import com.android.gandharvms.NotificationAlerts.NotificationReceiverService;
 import com.android.gandharvms.submenu.Submenu_Outward_Truck;
 import com.android.gandharvms.submenu.Submenu_outward_tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.firebase.BuildConfig;
 
+import java.io.IOException;
+
 import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class Menu extends AppCompatActivity {
 
@@ -34,8 +44,8 @@ public class Menu extends AppCompatActivity {
     public static final String pass = "password";
 
     private NotificationAccessHelper notificationAccessHelper;
-    private CalendarNotificationDatabaseHelper dbHelper;
-
+    //private CalendarNotificationDatabaseHelper dbHelper;
+    private NotificationAlertsInterface notificationalerts = RetroApiClient.NotificationInterface();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +59,7 @@ public class Menu extends AppCompatActivity {
         notifybadge=findViewById(R.id.notificationBadge);
 
         notificationAccessHelper = new NotificationAccessHelper();
-        dbHelper = new CalendarNotificationDatabaseHelper(this);
+        //dbHelper = new CalendarNotificationDatabaseHelper(this);
 
         String userName=Global_Var.getInstance().Name;
         String empId=Global_Var.getInstance().EmpId;
@@ -150,12 +160,39 @@ public class Menu extends AppCompatActivity {
     }
 
     private void updateNotificationBadge() {
-        int unreadCount = dbHelper.getUnreadNotificationCount();
-        if (unreadCount > 0) {
-            notifybadge.setVisibility(View.VISIBLE);
-            notifybadge.setText(String.valueOf(unreadCount));
-        } else {
-            notifybadge.setVisibility(View.GONE); // Hide badge if no unread notifications
-        }
+        Call<Integer> call = notificationalerts.GetTotalNotification();
+        call.enqueue(new Callback<Integer>() {
+            @Override
+            public void onResponse(Call<Integer> call, Response<Integer> response) {
+                if (response.isSuccessful()) {
+                    int unreadCount = response.body();
+                    if (unreadCount > 0) {
+                        notifybadge.setText(String.valueOf(unreadCount));
+                        notifybadge.setVisibility(View.VISIBLE);
+                    } else {
+                        notifybadge.setVisibility(View.GONE);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Integer> call, Throwable t) {
+                notifybadge.setVisibility(View.GONE);
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Menu.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
