@@ -29,7 +29,10 @@ public interface API_In_Tanker_Security {
             @Query("NextProcess") char NextProcess,
             @Query("inOut") char inOut);
 
-    Call<List<CommonResponseModelForAllDepartment>> GetInTankerSecurityByFetchVehicle(
+    @GET("api/InwardCommon/GetInwardDataByDate")
+    Call<List<Respo_Model_In_Tanker_security>> GetInwarddatebyfilterdatewise(
+            @Query("FromDate") String fromdate,
+            @Query("ToDate") String todate,
             @Query("vehicleNo") String VehicleNo,
             @Query("vehicleType") String vehicleType,
             @Query("NextProcess") char NextProcess,

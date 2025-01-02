@@ -81,7 +81,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
         holder.vehiclenum.setText(club.getVehicleNumber());
         holder.trans.setText(club.getTransportName());
         holder.Status.setText(club.getCurrStatus());
-        holder.date.setText(club.getDate());
+        holder.date.setText(club.getDate().substring(0,12));
         int secintimelength = club.getSecInTime() != null ? club.getSecInTime().length() : 0;
         if (secintimelength > 0) {
             holder.secInTime.setText(club.getSecInTime());

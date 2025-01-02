@@ -76,6 +76,7 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
         Respo_Model_In_Tanker_security club = filteredGridList.get(position);
         holder.vehiclenum.setText(club.getVehicleNo());
         holder.Status.setText(club.getCurrStatus());
+        holder.date.setText(club.getDate().substring(0,12));
         int secintimelength = club.getSecIntime()!= null? club.getSecIntime().length():0;
         if(secintimelength>0)
         {
@@ -176,12 +177,13 @@ public class gridAdapter extends RecyclerView.Adapter<gridAdapter.myviewHolder> 
     }
     public class myviewHolder extends RecyclerView.ViewHolder
     {
-        public TextView Status,sernum, vehiclenum, material,secintime,
+        public TextView Status,sernum, vehiclenum,date, material,secintime,
                 wegintime,samintime,labintime,prointime,storeintime,outweitime,outsectime;
         public myviewHolder(View view)
         {
             super(view);
             vehiclenum = view.findViewById(R.id.textVehicleNumber);
+            date=view.findViewById(R.id.textDate);
             Status = view.findViewById(R.id.textStatus);
             secintime =view.findViewById(R.id.textSecurityInTime);
             wegintime =view.findViewById(R.id.textWeighmentInTime);

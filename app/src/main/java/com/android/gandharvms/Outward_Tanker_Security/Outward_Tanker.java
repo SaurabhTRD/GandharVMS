@@ -1,5 +1,6 @@
 package com.android.gandharvms.Outward_Tanker_Security;
 
+import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
 
@@ -124,4 +125,14 @@ public interface Outward_Tanker {
     Call<List<Common_Outward_model>> getdespatchIndustrial(@Query("FromDate")String FromDate,
                                                         @Query("Todate") String Todate,
                                                         @Query("vehicletype") String vehicletype);
+
+    @GET("api/OutwardCommon/GetOutwardDatabyDateFilter")
+    Call<List<Response_Outward_Security_Fetching>> getOutwardDatabyDateFilter(
+            @Query("FromDate") String fromdate,
+            @Query("ToDate") String todate,
+            @Query("vehicleNo") String VehicleNo,
+            @Query("vehicleType") String vehicleType,
+            @Query("NextProcess") char NextProcess,
+            @Query("inOut") char inOut);
+
 }

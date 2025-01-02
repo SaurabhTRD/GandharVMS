@@ -56,7 +56,7 @@ public class Inward_Tanker_Production_Viewdata extends AppCompatActivity {
         startDatePicker = findViewById(R.id.startdate);
         endDatePicker = findViewById(R.id.enddate);
 
-        btnlogout = findViewById(R.id.btn_logoutButton);
+        //btnlogout = findViewById(R.id.btn_logoutButton);
         txtTotalCount = findViewById(R.id.tv_TotalCount);
         btnclearSelectedDates = findViewById(R.id.btn_clearDateSelectionfields);
         btntanknumclear = findViewById(R.id.btn_sTnnumberbutton_clear);

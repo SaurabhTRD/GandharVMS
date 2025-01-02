@@ -28,12 +28,42 @@
             android:layout_height="match_parent"/>
 
         <TextView
-            android:id="@+id/otgridcurrrentdate"
+            android:id="@+id/outwardgridcurrrentdate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tot-Rec: "
+            android:text="00/00/0000"
             android:textSize="15sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/outwardsyncbt"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="50dp"
+            app:srcCompat="@drawable/sync"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="left">
+        <Button
+            android:id="@+id/gridoutwrdbtnfromDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From-Date"/>
+
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/gridoutwrdbtntoDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To-Date"/>
     </LinearLayout>
 
     <HorizontalScrollView

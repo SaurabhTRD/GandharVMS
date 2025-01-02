@@ -13,7 +13,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:id="@+id/textVehicleNumber"
         android:layout_marginStart="5dp"
         android:clickable="true"
@@ -21,6 +21,14 @@
         android:gravity="center|start"
         android:textColor="@color/blue"
         android:backgroundTint="@color/lightgray"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/textDate"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
         android:layout_height="match_parent"/>
 
     <TextView
