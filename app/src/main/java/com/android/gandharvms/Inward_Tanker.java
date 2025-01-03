@@ -19,12 +19,13 @@ import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_Sampling;
 import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 
 import es.dmoral.toasty.Toasty;
 
 
-public class Inward_Tanker extends AppCompatActivity {
+public class Inward_Tanker extends NotificationCommonfunctioncls {
     //DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
     private String userRole="default";
     ImageView btnlogout,btnhome;
@@ -35,7 +36,7 @@ public class Inward_Tanker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker);
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -59,7 +60,8 @@ public class Inward_Tanker extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Tanker.this, Menu.class));
             }
-        });
+        });*/
+        setupHeader();
     }
 
     public void sequirityinwardT(View view) {

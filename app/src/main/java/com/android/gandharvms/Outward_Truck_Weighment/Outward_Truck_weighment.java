@@ -32,6 +32,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Truck_Dispatch.Update_SmallPack_Model;
 import com.android.gandharvms.Outward_Truck_Dispatch.Varified_Model;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
@@ -62,7 +63,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_Truck_weighment extends AppCompatActivity {
+public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
 
     EditText intime,serialnumber,vehiclenumber,material,customer,oanumber,tareweight,etremark,etloaded,etloadedtyuom,desweight,destotalqty,etvariremark,spweight,spqty;
     Button submit,btnweighmenttruck,varified;
@@ -161,8 +162,8 @@ public class Outward_Truck_weighment extends AppCompatActivity {
         spweight.setVisibility(View.GONE);
         spqty= findViewById(R.id.etsmallpackqty);
         spqty.setVisibility(View.GONE);
-
-        btnhome = findViewById(R.id.btn_homeButton);
+        setupHeader();
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -183,7 +184,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_Truck_weighment.this, Menu.class));
             }
-        });
+        });*/
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -448,6 +449,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                         if (!desaweight.equals("0") || desatotalqty.equals("0") ){
                             layout.setVisibility(View.VISIBLE);
                             varified.setVisibility(View.VISIBLE);
+                            submit.setVisibility(View.GONE);
                             etvariremark.setVisibility(View.VISIBLE);
                             desweight.setVisibility(View.VISIBLE);
                             destotalqty.setVisibility(View.VISIBLE);
@@ -460,6 +462,7 @@ public class Outward_Truck_weighment extends AppCompatActivity {
                         }else if (!splweight.equals("0") ||spltotalqty.equals("0")){
                             layout.setVisibility(View.VISIBLE);
                             varified.setVisibility(View.VISIBLE);
+                            submit.setVisibility(View.GONE);
                             spweight.setVisibility(View.VISIBLE);
                             spqty.setVisibility(View.VISIBLE);
                             etvariremark.setVisibility(View.VISIBLE);

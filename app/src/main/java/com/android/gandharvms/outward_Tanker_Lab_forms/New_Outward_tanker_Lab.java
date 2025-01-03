@@ -25,6 +25,7 @@ import com.android.gandharvms.Inward_Truck_store.Inward_Truck_Store;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
@@ -53,7 +54,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class New_Outward_tanker_Lab extends AppCompatActivity {
+public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
@@ -72,7 +73,7 @@ public class New_Outward_tanker_Lab extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_new_outward_tanker_lab);
-
+        setupHeader();
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

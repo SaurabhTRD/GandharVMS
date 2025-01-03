@@ -41,6 +41,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -75,7 +76,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Inward_Tanker_Production extends AppCompatActivity {
+public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
 
     final Calendar calendar = Calendar.getInstance();
     private final String vehicleType = Global_Var.getInstance().MenuType;
@@ -109,7 +110,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_production);
-
+        setupHeader();
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
@@ -133,7 +134,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
         //datetimepickertesting
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -154,7 +155,7 @@ public class Inward_Tanker_Production extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Tanker_Production.this, Menu.class));
             }
-        });
+        });*/
 
         if (getIntent().hasExtra("VehicleNumber")) {
             String action = getIntent().getStringExtra("Action");

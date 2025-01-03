@@ -46,6 +46,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Store;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -83,7 +84,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Inward_Truck_Store extends AppCompatActivity {
+public class Inward_Truck_Store extends NotificationCommonfunctioncls {
 
     final Calendar calendar = Calendar.getInstance();
     private final int MAX_LENGTH = 10;
@@ -206,8 +207,8 @@ public class Inward_Truck_Store extends AppCompatActivity {
 //        teamList.add("Pcs");
 //        teamList.add("NA");
 
-
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        setupHeader();
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -229,7 +230,7 @@ public class Inward_Truck_Store extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Truck_Store.this, Menu.class));
             }
-        });
+        });*/
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -17,6 +17,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.CalendarNotificationDatabaseHelper;
 import com.android.gandharvms.NotificationAlerts.NotificationAccessHelper;
 import com.android.gandharvms.NotificationAlerts.NotificationAlertsInterface;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.NotificationAlerts.NotificationListActivity;
 import com.android.gandharvms.NotificationAlerts.NotificationReceiverService;
 import com.android.gandharvms.submenu.Submenu_Outward_Truck;
@@ -33,88 +34,12 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Menu extends AppCompatActivity {
-
-    //DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://gandharvms-default-rtdb.firebaseio.com/");
-    private String userRole = "default";
-    TextView username,empid,notifybadge;
-    ImageView btnlogout,btnnotifications;
-    private static final String PREFS_NAME = "MyPrefs";
-    public static final String KEY_USERNAME = "username";
-    public static final String pass = "password";
-
-    private NotificationAccessHelper notificationAccessHelper;
-    //private CalendarNotificationDatabaseHelper dbHelper;
-    private NotificationAlertsInterface notificationalerts = RetroApiClient.NotificationInterface();
-
+public class Menu extends NotificationCommonfunctioncls {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
-
-        btnlogout = findViewById(R.id.btn_logoutButton);
-        btnnotifications=findViewById(R.id.btn_notificationButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-        notifybadge=findViewById(R.id.notificationBadge);
-
-        notificationAccessHelper = new NotificationAccessHelper();
-        //dbHelper = new CalendarNotificationDatabaseHelper(this);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        // Set the version number
-        TextView tvVersion = findViewById(R.id.tv_version);
-//        String versionName = BuildConfig.VERSION_NAME;
-        String versionName = "1.0.5";
-        tvVersion.setText("Version " + versionName);
-
-        if (!notificationAccessHelper.isNotificationAccessEnabled(this)) {
-            showNotificationAccessDialog();
-        } else {
-            //Toast.makeText(this, "Notification Access already enabled", Toast.LENGTH_SHORT).show();
-        }
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Menu.this, Login.class));
-            }
-        });
-
-        btnnotifications.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Menu.this, NotificationListActivity.class));
-            }
-        });
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Clear stored username and encrypted password
-                SharedPreferences sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.remove(KEY_USERNAME);
-                editor.remove(pass);
-                editor.apply();
-
-                // Clear Global_Var instance data if necessary
-                Global_Var.getInstance().clear();
-
-                // Redirect to login activity
-                Intent intent = new Intent(Menu.this, Login.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-                Toasty.success(Menu.this, "Logged out successfully", Toast.LENGTH_SHORT).show();
-                finish();
-            }
-        });
-
-        updateNotificationBadge();
+        setupHeader();
     }
 
     public void Inward_Tanker(View view) {
@@ -139,60 +64,5 @@ public class Menu extends AppCompatActivity {
         Global_Var.getInstance().MenuType="OR";
         Intent intent = new Intent(this, Submenu_Outward_Truck.class);
         startActivity(intent);
-    }
-
-    // Show a dialog to request notification access
-    private void showNotificationAccessDialog() {
-        new AlertDialog.Builder(this)
-                .setTitle("Notification Access Required")
-                .setMessage("This app requires notification access to process notification Alerts.")
-                .setPositiveButton("Enable", (dialog, which) -> notificationAccessHelper.requestNotificationAccess(this))
-                .setNegativeButton("Cancel", (dialog, which) -> {
-                    Toasty.info(this, "Feature will not work without Notification Access", Toast.LENGTH_LONG).show();
-                })
-                .show();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        updateNotificationBadge();
-    }
-
-    private void updateNotificationBadge() {
-        Call<Integer> call = notificationalerts.GetTotalNotification();
-        call.enqueue(new Callback<Integer>() {
-            @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                if (response.isSuccessful()) {
-                    int unreadCount = response.body();
-                    if (unreadCount > 0) {
-                        notifybadge.setText(String.valueOf(unreadCount));
-                        notifybadge.setVisibility(View.VISIBLE);
-                    } else {
-                        notifybadge.setVisibility(View.GONE);
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Integer> call, Throwable t) {
-                notifybadge.setVisibility(View.GONE);
-                Log.e("Retrofit", "Failure: " + t.getMessage());
-                // Check if there's a response body in case of an HTTP error
-                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                    Response<?> response = ((HttpException) t).response();
-                    if (response != null) {
-                        Log.e("Retrofit", "Error Response Code: " + response.code());
-                        try {
-                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                Toasty.error(Menu.this, "failed..!", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 }

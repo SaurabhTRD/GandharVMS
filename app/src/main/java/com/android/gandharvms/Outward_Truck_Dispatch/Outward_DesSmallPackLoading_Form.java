@@ -25,6 +25,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck;
@@ -48,7 +49,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
+public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunctioncls {
 
     EditText serial,vehicle,transporter,intime,sevenltr,sevenandhalfltr,eighthalfltr,elevenltr,twelltr,threteenltr,fifteenltr,tenltr,eighteenltr,twentyltr,twentysixltr,fiftyltr,twotenltr,boxbucket,totalqty
             ,etweight,smallsign,remark,party,oa;
@@ -124,8 +125,8 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
         boxbucket.addTextChangedListener(textWatcher);
 
         submit = findViewById(R.id.etdesindusloadsubmit);
-
-        btnhome = findViewById(R.id.btn_homeButton);
+        setupHeader();
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -146,7 +147,7 @@ public class Outward_DesSmallPackLoading_Form extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_DesSmallPackLoading_Form.this, Menu.class));
             }
-        });
+        });*/
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

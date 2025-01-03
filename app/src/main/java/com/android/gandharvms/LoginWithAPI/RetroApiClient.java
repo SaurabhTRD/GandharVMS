@@ -5,6 +5,9 @@ import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_SamplingReque
 import com.android.gandharvms.Inward_Tanker_Security.API_In_Tanker_Security;
 import com.android.gandharvms.NotificationAlerts.NotificationAlertsInterface;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -14,10 +17,17 @@ public class RetroApiClient {
 //    private static String BASE_URL = "http://52.183.160.211:8097/";
     //public static String UploadImage_URL="https://gandhardevapi.azurewebsites.net/api/Common/Upload";
 
+    static OkHttpClient okHttpClient = new OkHttpClient.Builder()
+            .connectTimeout(60, TimeUnit.SECONDS)  // Set the connect timeout
+            .readTimeout(60, TimeUnit.SECONDS)     // Set the read timeout
+            .writeTimeout(60, TimeUnit.SECONDS)    // Set the write timeout
+            .build();
+
     public static Retrofit getClient() {
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

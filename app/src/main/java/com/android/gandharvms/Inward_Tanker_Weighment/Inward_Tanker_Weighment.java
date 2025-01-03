@@ -57,6 +57,7 @@ import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.Register;
@@ -106,7 +107,7 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 
 
-public class Inward_Tanker_Weighment extends AppCompatActivity {
+public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
 
     private static final int REQUEST_IMAGE_CAPTURE = 1;
     private static final int CAMERA_PERM_CODE1 = 100;
@@ -184,8 +185,8 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
         qtyuom = findViewById(R.id.itweighqtyuomtanker);
         //Call Api method
         weighmentdetails = RetroApiClient.getWeighmentDetails();
-
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        setupHeader();
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -206,7 +207,7 @@ public class Inward_Tanker_Weighment extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Tanker_Weighment.this, Menu.class));
             }
-        });
+        });*/
 
         sharedPreferences = getSharedPreferences("TankerWeighment", MODE_PRIVATE);
         if (sharedPreferences != null) {

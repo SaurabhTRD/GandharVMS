@@ -37,6 +37,7 @@ import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.RegRequestModel;
 import com.android.gandharvms.RegisterwithAPI.Register;
@@ -63,7 +64,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Inward_Tanker_Sampling extends AppCompatActivity {
+public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
     private Inward_Tanker_SamplingMethod inward_Tanker_SamplingMethod;
     private final int MAX_LENGTH = 10;
     EditText etssignofproduction, etinvoiceno, etsdate, etvehicleno;
@@ -87,6 +88,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     private int inwardid;
     private LoginMethod userDetails;
 
+
     ImageView btnlogout,btnhome;
     TextView username,empid;
 
@@ -98,7 +100,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_sampling);
-
+        setupHeader();
         inward_Tanker_SamplingMethod= RetroApiClient.getInward_Tanker_Sampling();
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -110,7 +112,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
         etsdate = findViewById(R.id.etsdate);
         etvehicleno = findViewById(R.id.etvehicleno);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -131,7 +133,7 @@ public class Inward_Tanker_Sampling extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Tanker_Sampling.this, Menu.class));
             }
-        });
+        });*/
 
         /*view = findViewById(R.id.samplingview);*/
 

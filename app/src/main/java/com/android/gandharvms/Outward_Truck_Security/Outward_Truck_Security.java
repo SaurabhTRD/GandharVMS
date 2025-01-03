@@ -31,6 +31,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Isreportingupdate_Security_model;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -56,7 +57,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_Truck_Security extends AppCompatActivity {
+public class Outward_Truck_Security extends NotificationCommonfunctioncls {
 
     EditText date,intime,serialnumber,vehiclenumber,lr,transporter,place,mobilenumber,remark, reportingremark;
     RadioButton rbvehpermityes, rbLrCopyyes, rbpucyes, rbinsuranceyes, rbvehfitnessyes, rbdriverlicyes, rbrcbookyes,
@@ -152,7 +153,7 @@ public class Outward_Truck_Security extends AppCompatActivity {
         rbdriverlicno=findViewById(R.id.rb_trsdriverlicNo);
         rbrcbookno=findViewById(R.id.rb_trsrcbookNo);
 
-        btnhome = findViewById(R.id.btn_homeButton);
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -173,7 +174,9 @@ public class Outward_Truck_Security extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_Truck_Security.this, Menu.class));
             }
-        });
+        });*/
+
+        setupHeader();
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();

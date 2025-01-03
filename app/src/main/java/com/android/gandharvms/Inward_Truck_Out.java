@@ -9,9 +9,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 
-public class Inward_Truck_Out extends AppCompatActivity {
+public class Inward_Truck_Out extends NotificationCommonfunctioncls {
 
     ImageView btnlogout,btnhome;
     TextView username,empid;
@@ -20,8 +21,8 @@ public class Inward_Truck_Out extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_truck_out);
-
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        setupHeader();
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -43,7 +44,7 @@ public class Inward_Truck_Out extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Truck_Out.this, Menu.class));
             }
-        });
+        });*/
 
     }
 //    public void Inwardoutweighmentclick(View view){

@@ -38,6 +38,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Truck_Weighment;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
@@ -79,7 +80,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_Tanker_weighment extends AppCompatActivity {
+public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
 
     private static final int CAMERA_PERM_CODE1 = 100;
     private static final int CAMERA_PERM_CODE = 101;
@@ -115,7 +116,7 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_tanker_weighment);
 
-        btnlogout = findViewById(R.id.btn_logoutButton);
+        /*btnlogout = findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username = findViewById(R.id.tv_username);
         empid = findViewById(R.id.tv_employeeId);
@@ -136,8 +137,8 @@ public class Outward_Tanker_weighment extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_Tanker_weighment.this, Menu.class));
             }
-        });
-
+        });*/
+        setupHeader();
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);

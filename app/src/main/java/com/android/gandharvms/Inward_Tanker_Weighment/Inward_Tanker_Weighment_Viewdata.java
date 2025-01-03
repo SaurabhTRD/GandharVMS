@@ -63,7 +63,7 @@ public class Inward_Tanker_Weighment_Viewdata extends AppCompatActivity {
 
         btnExportExcel = findViewById(R.id.btn_ExportToExcel);
 
-        btnlogout = findViewById(R.id.btn_logoutButton);
+        //btnlogout = findViewById(R.id.btn_logoutButton);
         startDatePicker = findViewById(R.id.startdate);
         endDatePicker = findViewById(R.id.enddate);
         btnsrnumclear = findViewById(R.id.btn_srnumberbutton_clear);

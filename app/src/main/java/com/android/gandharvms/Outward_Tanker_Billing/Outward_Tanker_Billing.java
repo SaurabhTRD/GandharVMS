@@ -29,6 +29,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -62,7 +63,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_Tanker_Billing extends AppCompatActivity {
+public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
 
     public static String Tanker;
     public static String Truck;
@@ -119,18 +120,18 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
         productaddbtn = findViewById(R.id.button_addproduct);
         completed = findViewById(R.id.otbillincompleted);
 
-        btnlogout = findViewById(R.id.btn_logoutButton);
+        /*btnlogout = findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username = findViewById(R.id.tv_username);
         empid = findViewById(R.id.tv_employeeId);
 
         String userName = Global_Var.getInstance().Name;
-        String empId = Global_Var.getInstance().EmpId;
+        String empId = Global_Var.getInstance().EmpId;*/
 
         uomList.add("Ton");
         uomList.add("KL");
-
-        username.setText(userName);
+        setupHeader();
+        /*username.setText(userName);
         empid.setText(empId);
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,7 +144,7 @@ public class Outward_Tanker_Billing extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_Tanker_Billing.this, Menu.class));
             }
-        });
+        });*/
 
         uom = findViewById(R.id.etuombilling);
         uomitem = new ArrayAdapter<String>(this, R.layout.outward_billing_uom, uomi);

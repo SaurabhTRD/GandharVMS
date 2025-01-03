@@ -22,6 +22,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -49,7 +50,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_Truck_Production extends AppCompatActivity {
+public class Outward_Truck_Production extends NotificationCommonfunctioncls {
 
     EditText intime,serialnumber,vehiclenumber,typepack,signdis,dtdis,signsec,dtsec,signweigh,dtweigh,tare,etremark;
     Button submit;
@@ -84,7 +85,8 @@ public class Outward_Truck_Production extends AppCompatActivity {
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
-        btnhome = findViewById(R.id.btn_homeButton);
+        setupHeader();
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -105,7 +107,7 @@ public class Outward_Truck_Production extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_Truck_Production.this, Menu.class));
             }
-        });
+        });*/
 
 
 //        ,,,,,,,;

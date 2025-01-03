@@ -20,11 +20,12 @@ import com.android.gandharvms.Inward_Truck;
 import com.android.gandharvms.Inward_Truck_Out;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
 
 import es.dmoral.toasty.Toasty;
 
-public class submenu_Inward_Truck extends AppCompatActivity {
+public class submenu_Inward_Truck extends NotificationCommonfunctioncls {
     ImageView btnlogout,btnhome;
     TextView username,empid;
 
@@ -33,7 +34,7 @@ public class submenu_Inward_Truck extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submenu_inward_truck);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -55,7 +56,8 @@ public class submenu_Inward_Truck extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(submenu_Inward_Truck.this, Menu.class));
             }
-        });
+        });*/
+        setupHeader();
     }
 
     public void inward_truck_in(View view){

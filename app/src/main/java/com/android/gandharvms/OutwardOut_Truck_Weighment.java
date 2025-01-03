@@ -32,6 +32,7 @@ import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Model_OutwardOut_Truck_Weighment;
@@ -66,7 +67,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class OutwardOut_Truck_Weighment extends AppCompatActivity {
+public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
 
     EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare,etshdip,etshwe,
              industotqty,industotwight,smalltotqty,smalltotweight;
@@ -136,7 +137,8 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
         etshdip = findViewById(R.id.etshortdip);
         etshwe = findViewById(R.id.etshortageweight);
 
-        btnhome = findViewById(R.id.btn_homeButton);
+        setupHeader();
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -157,7 +159,7 @@ public class OutwardOut_Truck_Weighment extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(OutwardOut_Truck_Weighment.this, Menu.class));
             }
-        });
+        });*/
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

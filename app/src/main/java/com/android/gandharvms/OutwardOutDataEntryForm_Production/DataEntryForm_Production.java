@@ -25,6 +25,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -53,7 +54,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class DataEntryForm_Production extends AppCompatActivity {
+public class DataEntryForm_Production extends NotificationCommonfunctioncls {
     EditText odeintime,odeserialnumber,odevehiclenumber,odedensity,odesealnumber,odeetremark,party,location,oanum,batch,product;
     Button odesubmit,completd;
     TimePickerDialog tpicker;
@@ -76,7 +77,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_entry_form_production);
-
+        setupHeader();
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
 
         odeintime=findViewById(R.id.etoutdataentryintime);
@@ -98,7 +99,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -120,7 +121,7 @@ public class DataEntryForm_Production extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(DataEntryForm_Production.this, Menu.class));
             }
-        });
+        });*/
         odesubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

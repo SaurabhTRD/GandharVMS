@@ -51,6 +51,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -90,7 +91,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Inward_Truck_Security extends AppCompatActivity {
+public class Inward_Truck_Security extends NotificationCommonfunctioncls {
 
     final Calendar calendar = Calendar.getInstance();
     private final int MAX_LENGTH = 10;
@@ -163,8 +164,8 @@ public class Inward_Truck_Security extends AppCompatActivity {
 
 //        reportingRemarkLayout.setVisibility(View.GONE);
 //        saveButton.setVisibility(View.GONE);
-
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        setupHeader();
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -186,7 +187,7 @@ public class Inward_Truck_Security extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Truck_Security.this, Menu.class));
             }
-        });
+        });*/
 
 //        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 //            if (isChecked) {

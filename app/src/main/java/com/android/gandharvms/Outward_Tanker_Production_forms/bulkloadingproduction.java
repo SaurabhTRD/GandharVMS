@@ -23,6 +23,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -49,7 +50,7 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 
 
-public class bulkloadingproduction extends AppCompatActivity {
+public class bulkloadingproduction extends NotificationCommonfunctioncls {
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
@@ -76,6 +77,7 @@ public class bulkloadingproduction extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bulkloadingproduction);
+        setupHeader();
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -107,7 +109,7 @@ public class bulkloadingproduction extends AppCompatActivity {
         submit = findViewById(R.id.etssubmit);
         completd = findViewById(R.id.bulkloadproductioncompleted);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -128,7 +130,7 @@ public class bulkloadingproduction extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(bulkloadingproduction.this, Menu.class));
             }
-        });
+        });*/
 
         etvehicle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {

@@ -33,6 +33,7 @@ import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -56,7 +57,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class InwardOut_Tanker_Security extends AppCompatActivity {
+public class InwardOut_Tanker_Security extends NotificationCommonfunctioncls {
 
     EditText edintime, etvehicle, etinvoice, etsupplier;
     Button submit;
@@ -79,6 +80,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_out_tanker_security);
+        setupHeader();
         apiInTankerSecurity = RetroApiClient.getserccrityveh();
 
         //Send Notification to all
@@ -100,7 +102,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
         ewayyes = findViewById(R.id.rb_EwaybillYes);
         ewayno = findViewById(R.id.rb_EwaybillNo);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -121,7 +123,7 @@ public class InwardOut_Tanker_Security extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(InwardOut_Tanker_Security.this, Menu.class));
             }
-        });
+        });*/
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -27,6 +27,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Billing;
@@ -57,7 +58,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class ot_outBilling extends AppCompatActivity {
+public class ot_outBilling extends NotificationCommonfunctioncls {
 
     String[] items1 = {"Ton", "Litre", "KL", "Kgs", "pcs"};
     AutoCompleteTextView totqtyautoCompleteTextView2;
@@ -118,7 +119,8 @@ public class ot_outBilling extends AppCompatActivity {
 
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        setupHeader();
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -140,7 +142,7 @@ public class ot_outBilling extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(ot_outBilling.this, Menu.class));
             }
-        });
+        });*/
         oobsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

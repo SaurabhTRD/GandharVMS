@@ -21,6 +21,7 @@ import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Model_OutwardOut_Security;
@@ -44,7 +45,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class OutwardOut_Tanker_Security extends AppCompatActivity {
+public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
 
     EditText intime,serialnumber,date,vehiclenumber,invoiceno,partyname,goodsdiscription,qty,otoutsecqtyuom,netweight,sign,remark,etsealn;
     Button submit,complted;
@@ -105,7 +106,7 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
         invoiceyes = findViewById(R.id.invoiceyes);
         invoicenono = findViewById(R.id.invoiceno);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -127,8 +128,8 @@ public class OutwardOut_Tanker_Security extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(OutwardOut_Tanker_Security.this, Menu.class));
             }
-        });
-
+        });*/
+        setupHeader();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

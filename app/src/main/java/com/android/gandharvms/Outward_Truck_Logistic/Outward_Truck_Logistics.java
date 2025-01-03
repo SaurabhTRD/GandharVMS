@@ -34,6 +34,7 @@ import com.android.gandharvms.LoginWithAPI.Logistic;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
@@ -60,7 +61,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_Truck_Logistics extends AppCompatActivity {
+public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
 
     EditText intime, serialnumber, vehiclenumber, transporter, place, oanumber, remark,customername,howqty,uomet;
     Button submit,btnlogisticcompletd,updatebtn;
@@ -118,13 +119,13 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
 
         logisticdetails = RetroApiClient.getLogisticDetails();
 
-        btnhome = findViewById(R.id.btn_homeButton);
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
 
         String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
+        String empId=Global_Var.getInstance().EmpId;*/
 
         autoCompleteTextView = findViewById(R.id.etuom);
         uomdrop = new ArrayAdapter<String>(this,R.layout.in_rcs_test,uom);
@@ -136,8 +137,8 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
                 Toasty.success(getApplicationContext(), "UOM : " + selectedUom + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
-
-        username.setText(userName);
+        setupHeader();
+        /*username.setText(userName);
         empid.setText(empId);
         btnlogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -150,7 +151,7 @@ public class Outward_Truck_Logistics extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_Truck_Logistics.this, Menu.class));
             }
-        });
+        });*/
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

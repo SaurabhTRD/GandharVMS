@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Dispatch_IndusSmallPack;
 import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
@@ -21,7 +22,7 @@ import com.android.gandharvms.submenu.Submenu_Outward_Truck;
 
 import es.dmoral.toasty.Toasty;
 
-public class Outward_Truck extends AppCompatActivity {
+public class Outward_Truck extends NotificationCommonfunctioncls {
 
     ImageView btnlogout,btnhome;
     TextView username,empid;
@@ -33,8 +34,8 @@ public class Outward_Truck extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck);
-
-        btnhome = findViewById(R.id.btn_homeButton);
+        setupHeader();
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -55,7 +56,7 @@ public class Outward_Truck extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_Truck.this, Menu.class));
             }
-        });
+        });*/
 
     }
     public void sequirityoutwardTruck(View view){

@@ -26,6 +26,7 @@ import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
@@ -57,7 +58,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class OutwardOut_Truck_Security extends AppCompatActivity {
+public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
 
     EditText intime,serialnumber,vehiclenumber,invoice,party,gooddis,qty,uom1,netweight,qtyuom,outtime,sign,remark,etproduct,erqty,etqtyspl,erinvoice;
     Button submit,complete;
@@ -126,9 +127,11 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
         testno = findViewById(R.id.testreportno);
         invoiceyes = findViewById(R.id.invoiceyes);
         invoicenono = findViewById(R.id.invoiceno);
+
+        setupHeader();
 //        etproduct = findViewById(R.id.etproductnameoutsecurity);
 
-        btnhome = findViewById(R.id.btn_homeButton);
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -149,11 +152,7 @@ public class OutwardOut_Truck_Security extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(OutwardOut_Truck_Security.this, Menu.class));
             }
-        });
-
-
-
-
+        });*/
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

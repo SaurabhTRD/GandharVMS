@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OT_VehicleStatus_Grid.ot_statusgrid_livedata;
 import com.android.gandharvms.OT_CompletedReport.Outward_Tanker_CompletedReport;
 import com.android.gandharvms.OutwardOut_Tanker;
@@ -20,7 +21,7 @@ import com.android.gandharvms.R;
 
 import es.dmoral.toasty.Toasty;
 
-public class Submenu_outward_tanker extends AppCompatActivity {
+public class Submenu_outward_tanker extends NotificationCommonfunctioncls {
 
     ImageView btnlogout,btnhome;
     TextView username,empid;
@@ -32,7 +33,7 @@ public class Submenu_outward_tanker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submenu_outward_tanker);
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -53,9 +54,9 @@ public class Submenu_outward_tanker extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Submenu_outward_tanker.this, Menu.class));
             }
-        });
+        });*/
 
-
+        setupHeader();
 
 //        public void Outward_process_Tankerclick(View view){
 //            Intent intent = new Intent(this, Submenu_outward_tanker.class);

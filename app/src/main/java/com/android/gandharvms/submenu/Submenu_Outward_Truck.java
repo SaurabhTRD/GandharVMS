@@ -12,13 +12,14 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OR_VehicleStatus_Grid.or_statusgrid_livedata;
 import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.R;
 
-public class Submenu_Outward_Truck extends AppCompatActivity {
+public class Submenu_Outward_Truck extends NotificationCommonfunctioncls {
     ImageView btnlogout,btnhome;
     TextView username,empid;
 
@@ -29,7 +30,7 @@ public class Submenu_Outward_Truck extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submenu_outward_truck);
-        btnhome = findViewById(R.id.btn_homeButton);
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -50,8 +51,8 @@ public class Submenu_Outward_Truck extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Submenu_Outward_Truck.this, Menu.class));
             }
-        });
-
+        });*/
+        setupHeader();
     }
     public void intruckclick(View view){
         Global_Var.getInstance().InOutType='I';

@@ -42,6 +42,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
@@ -69,7 +70,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class InwardOut_Tanker_Weighment extends AppCompatActivity {
+public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
 
     EditText etintime,ettareweight,grswt,etvehicle,etnetwt,shdip,shwe;
     Button view;
@@ -106,6 +107,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_out_tanker_weighment);
+        setupHeader();
 
         userDetails = RetroApiClient.getLoginApi();
         weighmentdetails = RetroApiClient.getWeighmentDetails();
@@ -140,7 +142,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
         etsubmit = (Button) findViewById(R.id.prosubmit);
         dbroot = FirebaseFirestore.getInstance();
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -161,7 +163,7 @@ public class InwardOut_Tanker_Weighment extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(InwardOut_Tanker_Weighment.this, Menu.class));
             }
-        });
+        });*/
 
         etsubmit.setOnClickListener(new View.OnClickListener() {
             @Override

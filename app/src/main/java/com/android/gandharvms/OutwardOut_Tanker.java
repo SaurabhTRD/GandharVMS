@@ -10,6 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_Production;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Tanker_Security.OutwardOut_Tanker_Security;
@@ -18,7 +19,7 @@ import com.android.gandharvms.submenu.Submenu_outward_tanker;
 
 import es.dmoral.toasty.Toasty;
 
-public class OutwardOut_Tanker extends AppCompatActivity {
+public class OutwardOut_Tanker extends NotificationCommonfunctioncls {
     ImageView btnlogout,btnhome;
     TextView username,empid;
 
@@ -29,7 +30,7 @@ public class OutwardOut_Tanker extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_out_tanker);
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -51,7 +52,8 @@ public class OutwardOut_Tanker extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(OutwardOut_Tanker.this, Menu.class));
             }
-        });
+        });*/
+        setupHeader();
     }
     public void outwardouttankerwighment(View view){
         if(Global_Var.getInstance().Department.contains("Weighment")){

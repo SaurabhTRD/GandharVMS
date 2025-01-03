@@ -36,6 +36,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
@@ -72,7 +73,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
+public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
 
     EditText intime,serialnumber,vehiclenumber,sealnumber,tareweight,netweight,grossw,etnumberpack,etremark,fetchdensity,etotdip,etotwt,batch,product;
     Button submit,completed;
@@ -137,8 +138,8 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
         completed = findViewById(R.id.otoutweighcompleted);
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);
-
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        setupHeader();
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -160,7 +161,7 @@ public class OutwardOut_Tanker_Weighment extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(OutwardOut_Tanker_Weighment.this, Menu.class));
             }
-        });
+        });*/
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -24,6 +24,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
@@ -51,7 +52,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class OutwardOut_Truck_Billing extends AppCompatActivity {
+public class OutwardOut_Truck_Billing extends NotificationCommonfunctioncls {
 
     EditText intime,serialnumber,vehiclenumber,etoanumber,ettramsname,etdrivermob,etgrs,ettare,etnet,etseal,etbatch,etdensity,etremark,invoicenum,totalqty,industotalqty;
     Button submit,billcomp;
@@ -113,7 +114,8 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
         billcomp = findViewById(R.id.truckotoutbillingcompleted);
         dbroot= FirebaseFirestore.getInstance();
 
-        btnhome = findViewById(R.id.btn_homeButton);
+        setupHeader();
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -134,7 +136,7 @@ public class OutwardOut_Truck_Billing extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(OutwardOut_Truck_Billing.this, Menu.class));
             }
-        });
+        });*/
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

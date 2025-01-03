@@ -31,6 +31,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -49,7 +50,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_Tanker_Security extends AppCompatActivity {
+public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 
 
     EditText intime, serialnumber, kl, vehiclenum, transname, place, mobilenum, edremark, eddate, capacityvehicle, reportingremark;
@@ -159,7 +160,7 @@ public class Outward_Tanker_Security extends AppCompatActivity {
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -180,8 +181,8 @@ public class Outward_Tanker_Security extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Outward_Tanker_Security.this, Menu.class));
             }
-        });
-
+        });*/
+        setupHeader();
         String dateFormatPattern = "ddMMyyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
         String formattedDate = dateFormat.format(currentDate);

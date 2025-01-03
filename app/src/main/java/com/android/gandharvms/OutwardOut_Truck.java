@@ -10,13 +10,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Truck_Billing.OutwardOut_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production;
 import com.android.gandharvms.submenu.Submenu_Outward_Truck;
 
 import es.dmoral.toasty.Toasty;
 
-public class OutwardOut_Truck extends AppCompatActivity {
+public class OutwardOut_Truck extends NotificationCommonfunctioncls {
 
     ImageView btnlogout,btnhome;
     TextView username,empid;
@@ -27,7 +28,7 @@ public class OutwardOut_Truck extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_out_truck);
-        btnhome = findViewById(R.id.btn_homeButton);
+        /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -48,7 +49,8 @@ public class OutwardOut_Truck extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(OutwardOut_Truck.this, Menu.class));
             }
-        });
+        });*/
+        setupHeader();
     }
     public void sequirtyoutwardouttruck(View view){
         if(Global_Var.getInstance().Department.contains("Security")){

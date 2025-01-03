@@ -27,6 +27,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
 import com.android.gandharvms.Outward_Tanker_Production_forms.bulkloadingproduction;
@@ -48,7 +49,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class bulkloadinglaboratory extends AppCompatActivity {
+public class bulkloadinglaboratory extends NotificationCommonfunctioncls {
 
     String[] remark = {"OK", "NOT OK"};
     AutoCompleteTextView OKNOTOK;
@@ -79,6 +80,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bulkloadinglaboratory);
+        setupHeader();
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -103,7 +105,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
             }
         });*/
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -124,7 +126,7 @@ public class bulkloadinglaboratory extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(bulkloadinglaboratory.this, Menu.class));
             }
-        });
+        });*/
         etvehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {

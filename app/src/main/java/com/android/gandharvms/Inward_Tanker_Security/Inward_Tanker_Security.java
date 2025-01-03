@@ -44,6 +44,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.R;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
@@ -89,7 +90,7 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 
-public class Inward_Tanker_Security extends AppCompatActivity implements View.OnClickListener {
+public class Inward_Tanker_Security extends NotificationCommonfunctioncls implements View.OnClickListener {
 
     final Calendar calendar = Calendar.getInstance();
     final int maxLength = 8;
@@ -152,7 +153,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_security);
-
+        setupHeader();
         getmaxserialno = RetroApiClient.getLoginApi();
         userDetails = RetroApiClient.getLoginApi();
         apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
@@ -164,7 +165,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
 //        reportingRemarkLayout.setVisibility(View.GONE);
 //        saveButton.setVisibility(View.GONE);
 
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -185,7 +186,7 @@ public class Inward_Tanker_Security extends AppCompatActivity implements View.On
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Tanker_Security.this, Menu.class));
             }
-        });
+        });*/
 
 //
 //        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {

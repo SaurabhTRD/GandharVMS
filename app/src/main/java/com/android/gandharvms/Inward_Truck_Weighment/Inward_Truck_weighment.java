@@ -48,6 +48,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
@@ -98,7 +99,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Inward_Truck_weighment extends AppCompatActivity {
+public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
 
     //prince
     private SharedPreferences sharedPreferences;
@@ -167,8 +168,8 @@ public class Inward_Truck_weighment extends AppCompatActivity {
         etsignby =(EditText) findViewById(R.id.ettrsignby);
         etcontainer=(EditText)findViewById(R.id.ettrwcontainer);
         etremark=(EditText)findViewById(R.id.ettwremark);
-
-        btnlogout=findViewById(R.id.btn_logoutButton);
+        setupHeader();
+        /*btnlogout=findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
@@ -190,7 +191,7 @@ public class Inward_Truck_weighment extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Truck_weighment.this, Menu.class));
             }
-        });
+        });*/
 
         // listing Data button
         img1 = findViewById(R.id.ettrimageView1);

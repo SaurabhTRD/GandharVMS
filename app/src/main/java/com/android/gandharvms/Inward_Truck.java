@@ -17,11 +17,12 @@ import com.android.gandharvms.Inward_Truck_Security.Inward_Truck_Security;
 import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.Inward_Truck_store.Inward_Truck_Store;
 import com.android.gandharvms.LoginWithAPI.Login;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 
 import es.dmoral.toasty.Toasty;
 
-public class Inward_Truck extends AppCompatActivity {
+public class Inward_Truck extends NotificationCommonfunctioncls {
     ImageView btnlogout,btnhome;
     TextView username,empid;
     @Override
@@ -37,7 +38,7 @@ public class Inward_Truck extends AppCompatActivity {
         username=findViewById(R.id.tv_username);
         empid=findViewById(R.id.tv_employeeId);
 
-        String userName=Global_Var.getInstance().Name;
+        /*String userName=Global_Var.getInstance().Name;
         String empId=Global_Var.getInstance().EmpId;
 
         username.setText(userName);
@@ -54,7 +55,8 @@ public class Inward_Truck extends AppCompatActivity {
             public void onClick(View view) {
                 startActivity(new Intent(Inward_Truck.this, Menu.class));
             }
-        });
+        });*/
+        setupHeader();
     }
 
     public void sequirtyinwardtruck(View view) {
