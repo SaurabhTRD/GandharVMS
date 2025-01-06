@@ -4,12 +4,14 @@ import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_SamplingMetho
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_SamplingRequestModel;
 import com.android.gandharvms.Inward_Tanker_Security.API_In_Tanker_Security;
 import com.android.gandharvms.NotificationAlerts.NotificationAlertsInterface;
+import com.google.api.Http;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 public class RetroApiClient {
     public static Retrofit retrofit = null;
@@ -17,13 +19,17 @@ public class RetroApiClient {
 //    private static String BASE_URL = "http://52.183.160.211:8097/";
     //public static String UploadImage_URL="https://gandhardevapi.azurewebsites.net/api/Common/Upload";
 
-    static OkHttpClient okHttpClient = new OkHttpClient.Builder()
-            .connectTimeout(60, TimeUnit.SECONDS)  // Set the connect timeout
-            .readTimeout(60, TimeUnit.SECONDS)     // Set the read timeout
-            .writeTimeout(60, TimeUnit.SECONDS)    // Set the write timeout
-            .build();
-
     public static Retrofit getClient() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .connectTimeout(60, TimeUnit.SECONDS)
+                .readTimeout(60, TimeUnit.SECONDS)
+                .writeTimeout(60, TimeUnit.SECONDS)
+                .build();
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)

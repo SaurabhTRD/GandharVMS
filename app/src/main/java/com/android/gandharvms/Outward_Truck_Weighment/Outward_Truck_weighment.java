@@ -162,6 +162,9 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
         spweight.setVisibility(View.GONE);
         spqty= findViewById(R.id.etsmallpackqty);
         spqty.setVisibility(View.GONE);
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
         setupHeader();
         /*btnhome = findViewById(R.id.btn_homeButton);
         btnlogout=findViewById(R.id.btn_logoutButton);
@@ -225,10 +228,6 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
             }
         });
 
-        if (getIntent().hasExtra("vehiclenum")) {
-            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
-        }
-
         intime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -248,58 +247,9 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
 
     }
 
-    public void makeNotificationforindus(String vehicleNumber) {
-        Call<List<ResponseModel>> call = userDetails.getUsersListData();
-        call.enqueue(new Callback<List<ResponseModel>>() {
-            @Override
-            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
-                    List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
-                            String specificRole = "IndustrialPack";
-                            if (specificRole.equals(resmodel.getDepartment())) {
-                                token = resmodel.getToken();
 
-                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
-                                        token,
-                                        "OOutward Truck Weighment Has Verified..!",
-                                        "Vehicle Number:-" + vehicleNumber + " has Verified Small QTY and Weight",
-                                        getApplicationContext(),
-                                        Outward_Truck_weighment.this
-                                );
-                                notificationsSender.triggerSendNotification();
-                            }
-                        }
-                    }
-                }
-                else {
-                    Log.d("API", "Unsuccessful API response");
-                }
-            }
 
-            @Override
-            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
-
-                Log.e("Retrofit", "Failure: " + t.getMessage());
-                // Check if there's a response body in case of an HTTP error
-                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                    Response<?> response = ((HttpException) t).response();
-                    if (response != null) {
-                        Log.e("Retrofit", "Error Response Code: " + response.code());
-                        try {
-                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                Toasty.error(Outward_Truck_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    public void makeNotification(String vehicleNumber, String outTime) {
+    public void makeNotificationforinduscomplted(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -354,7 +304,63 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
         }
     }
 
-    public void makeNotificationforsmall(String vehicleNumber) {
+    public void makeNotificationforsmallcomplted(String vehicleNumber, String outTime) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "SmallPack";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Truck Weighment Process Done..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has completed Weighment process at " + outTime,
+                                        getApplicationContext(),
+                                        Outward_Truck_weighment.this
+                                );
+                                notificationsSender.triggerSendNotification();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Truck_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        if (getIntent().hasExtra("vehiclenum")) {
+            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
+    }
+
+
+    public void makeNotificationforsmallverified(String vehicleNumber) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
@@ -371,6 +377,57 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
                                         token,
                                         "Outward Truck Weighment Has Verified",
                                         "Vehicle Number:-" + vehicleNumber + " has Verified Industrial QTY and Weight",
+                                        getApplicationContext(),
+                                        Outward_Truck_weighment.this
+                                );
+                                notificationsSender.triggerSendNotification();
+                            }
+                        }
+                    }
+                }
+                else {
+                    Log.d("API", "Unsuccessful API response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_Truck_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void makeNotificationforindusverified(String vehicleNumber) {
+        Call<List<ResponseModel>> call = userDetails.getUsersListData();
+        call.enqueue(new Callback<List<ResponseModel>>() {
+            @Override
+            public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
+                if (response.isSuccessful()){
+                    List<ResponseModel> userList = response.body();
+                    if (userList != null){
+                        for (ResponseModel resmodel : userList){
+                            String specificRole = "IndustrialPack";
+                            if (specificRole.equals(resmodel.getDepartment())) {
+                                token = resmodel.getToken();
+
+                                FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                                        token,
+                                        "Outward Truck Weighment Has Verified..!",
+                                        "Vehicle Number:-" + vehicleNumber + " has Verified Small QTY and Weight",
                                         getApplicationContext(),
                                         Outward_Truck_weighment.this
                                 );
@@ -591,7 +648,7 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(Outward_Truck_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        makeNotificationforsmall(wvehiclenumber);
+                        makeNotificationforsmallverified(wvehiclenumber);
                         startActivity(new Intent(Outward_Truck_weighment.this, Outward_Truck.class));
                         finish();
                     }
@@ -621,7 +678,7 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(Outward_Truck_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        makeNotificationforindus(wvehiclenumber);
+                        makeNotificationforindusverified(wvehiclenumber);
                         startActivity(new Intent(Outward_Truck_weighment.this, Outward_Truck.class));
                         finish();
                     }
@@ -735,7 +792,8 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
             for (Uri imgpath : LocalImgPath) {
                 ImageUtils.deleteImage(this,imgpath);
             }
-            makeNotification(wvehiclenumber, outTime);
+            makeNotificationforinduscomplted(wvehiclenumber, outTime);
+            makeNotificationforsmallcomplted(wvehiclenumber, outTime);
             Toasty.success(Outward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
             startActivity(new Intent(Outward_Truck_weighment.this, Outward_Truck.class));
             finish();

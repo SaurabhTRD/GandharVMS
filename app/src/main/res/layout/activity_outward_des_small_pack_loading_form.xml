@@ -128,6 +128,176 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout
+                android:id="@+id/lnlindustrialbarrel"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/ilpack10Liter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPack10LitQty"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/ilpack18Liter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPack18LitQty"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/ilpack20Liter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPack20LitQty"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/ilpack26Liter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPack26LitQty"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/ilpack50Liter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPack50LitQty"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/ilpack210Liter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPack210LitQty"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/ilpackboxbucket"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPackBoxBucket"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/iltotqtyLiter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPack Total QTY"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="30dp">
+
+                    <EditText
+                        android:id="@+id/iltotalweight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="IndustrialPack Weight"
+                        android:inputType="textMultiLine"
+                        android:textSize="17dp"
+                        android:textStyle="bold" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </LinearLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

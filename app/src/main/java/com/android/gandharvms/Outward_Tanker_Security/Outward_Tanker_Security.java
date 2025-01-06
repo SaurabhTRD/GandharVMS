@@ -609,7 +609,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
                         Notificationforall(etvehiclnum);
                         makeNotification(etvehiclnum, outTime);
                         productionnotification(etvehiclnum, outTime );
-                        Toasty.success(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(Outward_Tanker_Security.this, com.android.gandharvms.Outward_Tanker.class));
                         finish();
                     }

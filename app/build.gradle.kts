@@ -97,4 +97,5 @@ dependencies {
     implementation("commons-io:commons-io:2.11.0")
     implementation("com.google.auth:google-auth-library-credentials:1.13.0")
     implementation("com.google.auth:google-auth-library-oauth2-http:1.13.0")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
 }

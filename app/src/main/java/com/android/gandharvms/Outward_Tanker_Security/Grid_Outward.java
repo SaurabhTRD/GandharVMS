@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
@@ -184,7 +185,7 @@ public class Grid_Outward extends AppCompatActivity {
                     outwardclublist = response.body();
                     setUpRecyclerView();
                 } else {
-                    Toast.makeText(getApplicationContext(), "No data available", Toast.LENGTH_SHORT).show();
+                    Toasty.warning(getApplicationContext(), "No data available", Toast.LENGTH_SHORT).show();
                     // Clear the RecyclerView if no data
                     outwardclublist.clear();
                     setUpRecyclerView();
@@ -199,7 +200,19 @@ public class Grid_Outward extends AppCompatActivity {
                 }
 
                 Log.e("Retrofit", "Failure: " + t.getMessage());
-                Toast.makeText(getApplicationContext(), "Failed to fetch data. Please try again.", Toast.LENGTH_SHORT).show();
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Grid_Outward.this, "Failed to Fetch Data.Server Issues..!", Toast.LENGTH_SHORT).show();
             }
         });
     }

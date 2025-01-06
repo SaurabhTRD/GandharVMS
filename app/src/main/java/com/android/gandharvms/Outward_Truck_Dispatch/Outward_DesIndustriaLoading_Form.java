@@ -15,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,6 +76,11 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
     private int Id;
     public String vehnumber="";
 
+    LinearLayout lnlsmallpackqty;
+    EditText splpack7literqty,splpack7_5literqty,splpack8_5literqty,splpack10literqty,splpack11literqty,
+             splpack12literqty,splpack13literqty,splpack15literqty,splpack18literqty,splpack20literqty,
+             splpack26literqty, splpack50literqty,splpack210literqty,splpackboxbucketqty,
+             spltotqty,spltotweight;
     ImageView btnlogout,btnhome;
     TextView username,empid;
 
@@ -139,6 +145,24 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         weight = findViewById(R.id.industrialweight);
         indussign = findViewById(R.id.industrialsign);
         indusremark = findViewById(R.id.eddesindusloadremark);
+
+        lnlsmallpackqty=findViewById(R.id.lnlsmallpackbarrel);
+        splpack7literqty=findViewById(R.id.splpack7Liter);
+        splpack7_5literqty=findViewById(R.id.splpack7_5Liter);
+        splpack8_5literqty=findViewById(R.id.splpack8_5Liter);
+        splpack10literqty=findViewById(R.id.splpack10Liter);
+        splpack11literqty=findViewById(R.id.splpack11Liter);
+        splpack12literqty=findViewById(R.id.splpack12Liter);
+        splpack13literqty=findViewById(R.id.splpack13Liter);
+        splpack15literqty=findViewById(R.id.splpack15Liter);
+        splpack18literqty=findViewById(R.id.splpack18Liter);
+        splpack20literqty=findViewById(R.id.splpack20Liter);
+        splpack26literqty=findViewById(R.id.splpack26Liter);
+        splpack50literqty=findViewById(R.id.splpack50Liter);
+        splpack210literqty=findViewById(R.id.splpack210Liter);
+        splpackboxbucketqty=findViewById(R.id.splpackboxbucket);
+        spltotqty=findViewById(R.id.spltotqtyLiter);
+        spltotweight=findViewById(R.id.spltotalweight);
 
         tenltr.addTextChangedListener(textWatcher);
         eighteenltr.addTextChangedListener(textWatcher);
@@ -299,15 +323,62 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
                         oa.setEnabled(false);
                         party.setText(data.getCustomerName());
                         party.setEnabled(false);
-
-
+                        if(!data.splweight.contains("0"))
+                        {
+                            lnlsmallpackqty.setVisibility(View.VISIBLE);
+                            splpack7literqty.setText(String.valueOf("SmallPack 7 Liter Qty :- "+ data.getSplpackof7ltrqty()));
+                            splpack7literqty.setEnabled(false);
+                            splpack7_5literqty.setText(String.valueOf("SmallPack 7.5 Liter Qty :- "+ data.getSplpackof7_5ltrqty()));
+                            splpack7_5literqty.setEnabled(false);
+                            splpack8_5literqty.setText(String.valueOf("SmallPack 8.5 Liter Qty :- "+ data.getSplpackof8_5ltrqty()));
+                            splpack8_5literqty.setEnabled(false);
+                            splpack10literqty.setText(String.valueOf("SmallPack 10 Liter Qty :- "+ data.getSplpackof10ltrqty()));
+                            splpack10literqty.setEnabled(false);
+                            splpack11literqty.setText(String.valueOf("SmallPack 11 Liter Qty :- "+ data.getSplpackof11ltrqty()));
+                            splpack11literqty.setEnabled(false);
+                            splpack12literqty.setText(String.valueOf("SmallPack 12 Liter Qty :- "+ data.getSplpackof12ltrqty()));
+                            splpack12literqty.setEnabled(false);
+                            splpack13literqty.setText(String.valueOf("SmallPack 13 Liter Qty :- "+ data.getSplpackof13ltrqty()));
+                            splpack13literqty.setEnabled(false);
+                            splpack15literqty.setText(String.valueOf("SmallPack 15 Liter Qty :- "+ data.getSplpackof15ltrqty()));
+                            splpack15literqty.setEnabled(false);
+                            splpack18literqty.setText(String.valueOf("SmallPack 18 Liter Qty :- "+ data.getSplpackof18ltrqty()));
+                            splpack18literqty.setEnabled(false);
+                            splpack20literqty.setText(String.valueOf("SmallPack 20 Liter Qty :- "+ data.getSplpackof20ltrqty()));
+                            splpack20literqty.setEnabled(false);
+                            splpack26literqty.setText(String.valueOf("SmallPack 26 Liter Qty :- "+ data.getSplpackof26ltrqty()));
+                            splpack26literqty.setEnabled(false);
+                            splpack50literqty.setText(String.valueOf("SmallPack 50 Liter Qty :- "+ data.getSplpackof50ltrqty()));
+                            splpack50literqty.setEnabled(false);
+                            splpack210literqty.setText(String.valueOf("SmallPack 210 Liter Qty :- "+ data.getSplpackof210ltrqty()));
+                            splpack210literqty.setEnabled(false);
+                            splpackboxbucketqty.setText(String.valueOf("SmallPack BoxBucket Qty :- "+ data.getSplpackofboxbuxketltrqty()));
+                            splpackboxbucketqty.setEnabled(false);
+                            spltotqty.setText("SmallPack Total Qty :- "+ data.getSpltotqty());
+                            spltotqty.setEnabled(false);
+                            spltotweight.setText("SmallPack Total Weight :- "+ data.getSplweight());
+                            spltotweight.setEnabled(false);
+                        }
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Model_industrial> call, Throwable t) {
-
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -384,8 +455,8 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
             });
 
         }
-
     }
+
     public void  indusupdate(){
 
         String uintime = etdesilintime.getText().toString().trim();

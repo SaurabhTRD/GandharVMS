@@ -15,6 +15,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -68,6 +69,10 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
     private LoginMethod userDetails;
     private int Id;
 
+    LinearLayout lnlindustrialbarrel;
+    EditText ilpack10literqty,ilpack18literqty,ilpack20literqty,
+             ilpack26literqty, ilpack50literqty,ilpack210literqty,ilpackboxbucketqty,
+             iltotqty,iltotweight;
     ImageView btnlogout,btnhome;
     TextView username,empid;
 
@@ -91,6 +96,16 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
         party = findViewById(R.id.etsmallparty);
         oa = findViewById(R.id.etsmalloa);
 
+        lnlindustrialbarrel=findViewById(R.id.lnlindustrialbarrel);
+        ilpack10literqty=findViewById(R.id.ilpack10Liter);
+        ilpack18literqty=findViewById(R.id.ilpack18Liter);
+        ilpack20literqty=findViewById(R.id.ilpack20Liter);
+        ilpack26literqty=findViewById(R.id.ilpack26Liter);
+        ilpack50literqty=findViewById(R.id.ilpack50Liter);
+        ilpack210literqty=findViewById(R.id.ilpack210Liter);
+        ilpackboxbucketqty=findViewById(R.id.ilpackboxbucket);
+        iltotqty=findViewById(R.id.iltotqtyLiter);
+        iltotweight=findViewById(R.id.iltotalweight);
 
         sevenltr = findViewById(R.id.etdesindusloadpacking7ltrqty);
         sevenandhalfltr = findViewById(R.id.etdesindusloadpacking7halfltrqty);
@@ -156,8 +171,6 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
                 }else {
                     smallupdate();
                 }
-
-
             }
         });
         intime.setOnClickListener(new View.OnClickListener() {
@@ -255,7 +268,6 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
     }
 
     public void  FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut){
-
         Call<Model_industrial> call = outwardTruckInterface.fetchindusrtial(vehicleNo,vehicleType,NextProcess,inOut);
         call.enqueue(new Callback<Model_industrial>() {
             @Override
@@ -276,13 +288,48 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
                         party.setEnabled(false);
                         oa.setText(data.getOAnumber());
                         oa.setEnabled(false);
+                        if(!data.ilweight.equals("0"))
+                        {
+                            lnlindustrialbarrel.setVisibility(View.VISIBLE);
+                            ilpack10literqty.setText(String.valueOf("IndusPack 10 Liter Qty :- " + data.getIlpackof10ltrqty()));
+                            ilpack10literqty.setEnabled(false);
+                            ilpack18literqty.setText(String.valueOf("IndusPack 18 Liter Qty :- " + data.getIlpackof18ltrqty()));
+                            ilpack18literqty.setEnabled(false);
+                            ilpack20literqty.setText(String.valueOf("IndusPack 20 Liter Qty :- " + data.getIlpackof20ltrqty()));
+                            ilpack20literqty.setEnabled(false);
+                            ilpack26literqty.setText(String.valueOf("IndusPack 26 Liter Qty :- " + data.getIlpackof26ltrqty()));
+                            ilpack26literqty.setEnabled(false);
+                            ilpack50literqty.setText(String.valueOf("IndusPack 50 Liter Qty :- " + data.getIlpackof50ltrqty()));
+                            ilpack50literqty.setEnabled(false);
+                            ilpack210literqty.setText(String.valueOf("IndusPack 210 Liter Qty :- " + data.getIlpackof50ltrqty()));
+                            ilpack210literqty.setEnabled(false);
+                            ilpackboxbucketqty.setText(String.valueOf("IndusPack BoxBucket Qty :- " + data.getIlpackofboxbuxketltrqty()));
+                            ilpackboxbucketqty.setEnabled(false);
+                            iltotqty.setText("IndusPack Total Qty :- " + data.getIltotqty());
+                            iltotqty.setEnabled(false);
+                            iltotweight.setText("IndusPack Total Weight :- " + data.getIlweight());
+                            iltotweight.setEnabled(false);
+                        }
                     }
                 }
             }
 
             @Override
             public void onFailure(Call<Model_industrial> call, Throwable t) {
-
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_DesSmallPackLoading_Form.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
