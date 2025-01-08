@@ -71,6 +71,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    public String dyprooano = "";
     EditText intime, serialnumber, vehiclenumber, transporter, oanumber, date, location,
             remark, etcust, etprod, ethowmuch, euom, kl;
     FirebaseFirestore dbroot;
@@ -85,7 +86,9 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
     LinearLayout productlinearlayout;
     Button productaddbtn;
     List<String> uomList = new ArrayList<>();
+    String holdremark = "";
     private Outward_Tanker_Billinginterface outwardTankerBillinginterface;
+    private com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker outwardTanker;
     private int OutwardId;
     private String token;
     private LoginMethod userDetails;
@@ -94,7 +97,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
         outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -350,7 +353,6 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
         });
     }
 
-
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<Respons_Outward_Tanker_Billing> call = outwardTankerBillinginterface.outwardbillingfetching(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<Respons_Outward_Tanker_Billing>() {
@@ -370,6 +372,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
                         transporter.setEnabled(false);
                         kl.setText(String.valueOf(data.getKl()));
                         kl.setEnabled(false);
+                        holdremark = data.getHoldRemark();
                         /*intime.callOnClick();
                         intime.requestFocus();*/
                     } else {
@@ -431,7 +434,6 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
         productlinearlayout.removeView(view);
     }
 
-    public String dyprooano="";
     public void insert() {
         String etintime = intime.getText().toString().trim();
         String etserilnumber = serialnumber.getText().toString().trim();
@@ -481,8 +483,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
         }/*else if (ProductArray.length() == 0) {
             // Check if no materials are added
             Toasty.warning(this, "Please add at least one product with OANumber before submitting.", Toast.LENGTH_SHORT, true).show();
-        }*/
-        else {
+        }*/ else {
             String allproductString = ProductArray.toString();
             Respons_Outward_Tanker_Billing responsOutwardTankerBilling = new Respons_Outward_Tanker_Billing(OutwardId, etintime, outTime,
                     "", EmployeId, EmployeId, 'B', etremark, etserilnumber, etvehiclenumber, "", ucustname,
@@ -492,11 +493,39 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-
                     if (response.isSuccessful() && response.body() != null && response.body()) {
                         makeNotificationSecurity(etvehiclenumber, dyprooano);
                         makeNotificationforweighment(etvehiclenumber, outTime);
                         makeNotificationforproduction(etvehiclenumber, outTime);
+                        if (!holdremark.isEmpty()) {
+                            Call<Boolean> call1 = outwardTanker.updateBillingActivestatus(etvehiclenumber, Global_Var.getInstance().Name);
+                            call1.enqueue(new Callback<Boolean>() {
+                                @Override
+                                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                    if (response.isSuccessful() && response.body() != null && response.body()) {
+                                        Toasty.success(Outward_Tanker_Billing.this, "Vehicle Active", Toast.LENGTH_SHORT, true).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Boolean> call, Throwable t) {
+                                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                                    // Check if there's a response body in case of an HTTP error
+                                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                                        Response<?> response = ((HttpException) t).response();
+                                        if (response != null) {
+                                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                                            try {
+                                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                    Toasty.error(Outward_Tanker_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
                         Toasty.success(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
                         startActivity(new Intent(Outward_Tanker_Billing.this, Outward_Tanker.class));
                         finish();

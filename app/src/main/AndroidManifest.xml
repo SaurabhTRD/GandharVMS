@@ -30,6 +30,9 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".BillingHoldListingGrid.gridbillingholdvehiclelisting"
+            android:exported="false" />
+        <activity
             android:name=".NotificationAlerts.NotificationListActivity"
             android:exported="false" />
         <activity
@@ -404,7 +407,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
         <service
             android:name=".NotificationAlerts.NotificationReceiverService"
             android:exported="true"

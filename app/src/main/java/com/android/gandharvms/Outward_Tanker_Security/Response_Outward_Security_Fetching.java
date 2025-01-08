@@ -90,6 +90,7 @@ public class Response_Outward_Security_Fetching {
     public String OutSecTime;
     public String IndusTime;
     public String SamllPackTime;
+    public String HoldRemark;
 
     public String IRDataEntryTime;
 
@@ -99,6 +100,14 @@ public class Response_Outward_Security_Fetching {
 
     public void setIRDataEntryTime(String IRDataEntryTime) {
         this.IRDataEntryTime = IRDataEntryTime;
+    }
+
+    public String getHoldRemark() {
+        return HoldRemark;
+    }
+
+    public void setHoldRemark(String holdRemark) {
+        HoldRemark = holdRemark;
     }
 
     public String getOutWeiTime() {

@@ -47,6 +47,16 @@ public class Respons_Outward_Tanker_Billing {
 
     public String Batch_No;
 
+    public String HoldRemark;
+
+    public String getHoldRemark() {
+        return HoldRemark;
+    }
+
+    public void setHoldRemark(String holdRemark) {
+        HoldRemark = holdRemark;
+    }
+
     public String getProductQTYUOMOA() {
         return ProductQTYUOMOA;
     }

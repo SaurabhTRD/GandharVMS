@@ -6,7 +6,7 @@
     android:layout_height="40dp">
 
     <TextView
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:id="@+id/otsecuritydate"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -24,7 +24,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="110dp"
+        android:layout_width="120dp"
         android:id="@+id/otsvehiclenum"
         android:gravity="center|start"
         android:layout_marginStart="5dp"
@@ -34,6 +34,15 @@
 
     <TextView
         android:layout_width="140dp"
+        android:id="@+id/otsbillingholdremark"
+        android:gravity="center|start"
+        android:layout_marginStart="5dp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="100dp"
         android:id="@+id/otsintime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -42,7 +51,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="120dp"
+        android:layout_width="100dp"
         android:id="@+id/otsouttime"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -51,7 +60,7 @@
         android:layout_height="match_parent"/>
 
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="100dp"
         android:id="@+id/otsecuritykl"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -59,7 +68,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
     <TextView
-        android:layout_width="150dp"
+        android:layout_width="120dp"
         android:id="@+id/otsintransporter"
         android:textStyle="bold"
         android:layout_marginStart="5dp"
@@ -67,7 +76,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
     <TextView
-        android:layout_width="130dp"
+        android:layout_width="120dp"
         android:id="@+id/otsinplace"
         android:textStyle="bold"
         android:layout_marginStart="5dp"

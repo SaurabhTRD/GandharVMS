@@ -63,7 +63,7 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otsecuritydate"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -74,7 +74,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="140dp"
                 android:id="@+id/otsinserialnum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -96,7 +96,18 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="140dp"
+                android:id="@+id/otsbillingholdremark"
+                android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
+                android:text="Bil Hold Remark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
                 android:id="@+id/otsintime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -107,7 +118,7 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/otsouttime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -119,7 +130,7 @@
 
 
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="100dp"
                 android:id="@+id/otsecuritykl"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -129,7 +140,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="130dp"
+                android:layout_width="120dp"
                 android:id="@+id/otsintransporter"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
@@ -159,7 +170,7 @@
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
             <TextView
-                android:layout_width="110dp"
+                android:layout_width="120dp"
                 android:id="@+id/otsinremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"

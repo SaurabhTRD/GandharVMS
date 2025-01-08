@@ -83,6 +83,11 @@ public class Adapter_OT__Complete_sec extends RecyclerView.Adapter<Adapter_OT__C
         holder.date.setText(formattedDate);
         holder.serialnum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
+        holder.billholdremark.setText(
+                (club.getHoldRemark() != null && !club.getHoldRemark().isEmpty())
+                        ? club.getHoldRemark()
+                        : "NA"
+        );
         holder.kl.setText(String.valueOf(club.getKl()));
         holder.transporter.setText(club.getTransportName());
         holder.place.setText(club.getPlace());
@@ -141,12 +146,13 @@ public class Adapter_OT__Complete_sec extends RecyclerView.Adapter<Adapter_OT__C
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView date,serialnum,vehiclenum,intime,outtime,kl,transporter,place,mobile,remark;
+        public TextView date,serialnum,vehiclenum,billholdremark,intime,outtime,kl,transporter,place,mobile,remark;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             date = itemView.findViewById(R.id.otsecuritydate);
             serialnum = itemView.findViewById(R.id.otsinserialnum);
             vehiclenum = itemView.findViewById(R.id.otsvehiclenum);
+            billholdremark=itemView.findViewById(R.id.otsbillingholdremark);
             intime = itemView.findViewById(R.id.otsintime);
             outtime = itemView.findViewById(R.id.otsouttime);
             kl = itemView.findViewById(R.id.otsecuritykl);

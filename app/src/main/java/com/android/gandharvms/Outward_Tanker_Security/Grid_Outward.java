@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.gandharvms.BillingHoldListingGrid.gridbillingholdvehiclelisting;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
@@ -52,7 +54,7 @@ public class Grid_Outward extends AppCompatActivity {
     List<Response_Outward_Security_Fetching> outwardclublist = new ArrayList<>();
     Outward_GridAdapter outwardGridAdapter;
 
-    Button fromDate, toDate;
+    Button fromDate, toDate,holdbtn;
     String fromdate;
     String todate;
     String strvehiclenumber = "x";
@@ -65,6 +67,7 @@ public class Grid_Outward extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid_outward);
 
+        holdbtn=findViewById(R.id.gridoutwrdbtnhold);
         fromDate = findViewById(R.id.gridoutwrdbtnfromDate);
         toDate = findViewById(R.id.gridoutwrdbtntoDate);
         imgsync = findViewById(R.id.outwardsyncbt);
@@ -132,6 +135,15 @@ public class Grid_Outward extends AppCompatActivity {
                 showDatePickerDialog(toDate, false);
             }
         });
+
+        holdbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Grid_Outward.this, gridbillingholdvehiclelisting.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     private void initViews()
@@ -141,7 +153,7 @@ public class Grid_Outward extends AppCompatActivity {
     }
     private void setUpRecyclerView()
     {
-        outwardGridAdapter = new Outward_GridAdapter(outwardclublist);
+        outwardGridAdapter = new Outward_GridAdapter(outwardclublist,Grid_Outward.this);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);

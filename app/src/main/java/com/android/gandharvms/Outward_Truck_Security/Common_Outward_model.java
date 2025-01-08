@@ -61,7 +61,7 @@ public class Common_Outward_model {
     //2
     public String outTime;
     public String TankerPlanning;
-
+    public String HoldRemark;
     //3
     public String InDriverImage;
     public String InVehicleImage;
@@ -295,6 +295,14 @@ public class Common_Outward_model {
 
     public void setTankerBillingRemark(String tankerBillingRemark) {
         TankerBillingRemark = tankerBillingRemark;
+    }
+
+    public String getHoldRemark() {
+        return HoldRemark;
+    }
+
+    public void setHoldRemark(String holdRemark) {
+        HoldRemark = holdRemark;
     }
 
     public String getSecInTime() {

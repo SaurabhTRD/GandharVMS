@@ -3,18 +3,28 @@ package com.android.gandharvms.Outward_Tanker_Security;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.FcmNotificationsSender;
+import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.Inward_Tanker_Production.Inward_Tanker_Production;
+import com.android.gandharvms.Menu;
 import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_Production;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Tanker_Security.OutwardOut_Tanker_Security;
@@ -38,9 +48,21 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.New_Outward_tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.android.gandharvms.outward_Tanker_Lab_forms.bulkloadinglaboratory;
+import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+
+import es.dmoral.toasty.Toasty;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.HttpException;
+import retrofit2.Response;
 
 public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapter.myviewHolder> implements Filterable {
 
@@ -49,10 +71,14 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
     private final List<Response_Outward_Security_Fetching> outwardGridmodel;
     private List<Response_Outward_Security_Fetching> outwardfilteredGridList;
     private Context context;
+    private Outward_Tanker outwardTanker;
+    Outward_Tanker_Security ots= new Outward_Tanker_Security();
 
-    public Outward_GridAdapter(List<Response_Outward_Security_Fetching> responseoutwardgrid) {
+    public Outward_GridAdapter(List<Response_Outward_Security_Fetching> responseoutwardgrid,Context context1) {
         this.outwardGridmodel = responseoutwardgrid;
         this.outwardfilteredGridList = responseoutwardgrid;
+        context=context1;
+        FirebaseMessaging.getInstance().subscribeToTopic("all");
     }
 
     public int getItemViewType(int position) {
@@ -78,9 +104,104 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
     @Override
     public void onBindViewHolder(myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         Response_Outward_Security_Fetching club = outwardfilteredGridList.get(position);
+
         holder.vehiclenum.setText(club.getVehicleNumber());
         holder.trans.setText(club.getTransportName());
         holder.Status.setText(club.getCurrStatus());
+        if(club.getCurrStatus().equals("BILLING") && club.getVehicleType().equals("OT"))
+        {
+            holder.btnhold.setVisibility(View.VISIBLE);
+            holder.btnhold.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LayoutInflater inflater = LayoutInflater.from(view.getContext());
+                    View dialogView = inflater.inflate(R.layout.btnholdpopup, null);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setView(dialogView);
+                    AlertDialog dialog = builder.create();
+
+                    // Get references to dialog fields
+                    EditText etRemark = dialogView.findViewById(R.id.holdetremark);
+                    Button btnSubmit = dialogView.findViewById(R.id.btn_submit);
+                    Button btnCancel = dialogView.findViewById(R.id.btn_cancel);
+                    // Set onClickListener for Submit button
+                    btnSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            // Get data from fields
+                            String remark = etRemark.getText().toString().trim();
+
+                            if (remark.isEmpty()) {
+                                Toasty.warning(view.getContext(), "Please fill all fields", Toasty.LENGTH_SHORT).show();
+                                return;
+                            }
+                            BillingHoldStatusModel billstatusmodel = new BillingHoldStatusModel();
+                            billstatusmodel.OutwardId=club.getOutwardId();
+                            billstatusmodel.VehicleNo=club.getVehicleNumber();
+                            billstatusmodel.InTime=getCurrentTime();
+                            billstatusmodel.OutTime=getCurrentTime();
+                            billstatusmodel.HoldRemark=remark;
+                            billstatusmodel.CreatedBy= Global_Var.getInstance().Name;
+                            billstatusmodel.UpdatedBy=Global_Var.getInstance().Name;
+                            outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+                            Call<Boolean> call=outwardTanker.AddBillingHoldStatus(billstatusmodel);
+                            call.enqueue(new Callback<Boolean>() {
+                                @Override
+                                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                    if (response.isSuccessful() && response.body() && response.body() == true){
+                                        Toasty.success(context,"Data Inserted Successfully..!",Toast.LENGTH_SHORT).show();
+                                        Notificationforall(club.getVehicleNumber(),remark.toString());
+                                        ((Activity) context).recreate();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Boolean> call, Throwable t) {
+                                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                                    // Check if there's a response body in case of an HTTP error
+                                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                                        Response<?> response = ((HttpException) t).response();
+                                        if (response != null) {
+                                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                                            try {
+                                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                    Toasty.error(context, "failed..!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            // Close the dialog
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss(); // Close the dialog
+                        }
+                    });
+                    // Show the dialog
+                    dialog.show();
+                }
+            });
+        }
+        /*else{
+            holder.txtholdremark.setVisibility(View.VISIBLE);
+            if(club.HoldRemark.isEmpty())
+            {
+                holder.txtholdremark.setText("NA");
+            }
+            else
+            {
+                holder.txtholdremark.setText(club.getHoldRemark());
+            }
+        }*/
         holder.date.setText(club.getDate().substring(0,12));
         int secintimelength = club.getSecInTime() != null ? club.getSecInTime().length() : 0;
         if (secintimelength > 0) {
@@ -263,15 +384,36 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
         };
     }
 
+    private String getCurrentTime() {
+        // Get the current time
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
+        return sdf.format(new Date());
+    }
+
+    public void Notificationforall(String vehicleNumber,String holdremark) {
+        FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
+                "/topics/all",
+                "Vehicle Hold In Security",
+                "This Vehicle:-" + vehicleNumber + " is Hold at Security,Due To " + holdremark+".",
+                context,
+                (Activity) context
+        );
+        notificationsSender.triggerSendNotification();
+    }
+
+
     public class myviewHolder extends RecyclerView.ViewHolder {
         public TextView vehiclenum, trans, Status, date, secInTime,
                 bilInTime, logintime, weiInTime, proInTime, labInTime, induspacktime, smallpacktime, outweitime,
-                outdataentrytime, outbilltime, outsectime;
+                outdataentrytime, outbilltime, outsectime,txtholdremark;
+        Button btnhold;
 
         public myviewHolder(View view) {
             super(view);
             vehiclenum = view.findViewById(R.id.textoutwardgridVehicleNumber);
             trans = view.findViewById(R.id.textoutwardgridTransporter);
+            //txtholdremark=view.findViewById(R.id.holdremark);
+            btnhold=view.findViewById(R.id.holdButton);
             Status = view.findViewById(R.id.textoutwardgridStatus);
             date = view.findViewById(R.id.textoutwardgriddate);
             secInTime = view.findViewById(R.id.textoutwardgridSecInTime);

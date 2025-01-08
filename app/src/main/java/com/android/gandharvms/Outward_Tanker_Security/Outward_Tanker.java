@@ -135,4 +135,13 @@ public interface Outward_Tanker {
             @Query("NextProcess") char NextProcess,
             @Query("inOut") char inOut);
 
+    @POST("api/BillingHoldStatus/AddBillingholdstatus")
+    Call<Boolean> AddBillingHoldStatus(@Body BillingHoldStatusModel billingHoldStatusModel);
+
+    @POST("api/BillingHoldStatus/UpdateBillingHoldActiveStatus")
+    Call<Boolean> updateBillingActivestatus(@Query("vehicleno") String vehicleno,
+                                            @Query("updatedby") String updatedby);
+
+    @GET("api/BillingHoldStatus/GetListofBillingStatusModel")
+    Call<List<BillingHoldStatusModel>> getListofBillingHoldStatus();
 }

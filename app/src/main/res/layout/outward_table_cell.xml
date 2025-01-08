@@ -15,6 +15,29 @@
         android:textColor="@color/blue"
         android:backgroundTint="@android:color/darker_gray"
         android:layout_height="match_parent"/>
+
+    <Button
+        android:id="@+id/holdButton"
+        android:layout_width="80dp"
+        android:layout_marginStart="5dp"
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:text="Hold"
+        android:visibility="gone" /> <!-- Initially hidden -->
+
+    <!--TextView
+        android:id="@+id/holdremark"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:clickable="true"
+        android:textStyle="bold"
+        android:gravity="center|start"
+        android:textColor="@color/blue"
+        android:visibility="gone"
+        android:backgroundTint="@android:color/darker_gray"
+        android:layout_height="match_parent"/>-->
+
     <TextView
         android:id="@+id/textoutwardgridTransporter"
         android:layout_width="120dp"
