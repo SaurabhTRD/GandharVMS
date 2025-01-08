@@ -42,6 +42,7 @@ import com.google.gson.JsonSyntaxException;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -370,7 +371,12 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         } else {
             grossweig = 0.0;
         }
-        oobtotalQuantity.setText(String.valueOf(grossweig));
+        grossweig = grossweig * 10000; // Example scaling
+        // Format grossweig to 6 decimal places
+        String formattedGrossWeight = String.format("%.6f", grossweig);
+        // Display the formatted value
+        oobtotalQuantity.setText(formattedGrossWeight);
+
     }
 
     private String getCurrentTime() {

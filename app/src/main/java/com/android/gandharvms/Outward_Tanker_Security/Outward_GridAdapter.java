@@ -8,6 +8,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -111,6 +113,21 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
         if(club.getCurrStatus().equals("BILLING") && club.getVehicleType().equals("OT"))
         {
             holder.btnhold.setVisibility(View.VISIBLE);
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.trans.getLayoutParams();
+
+            // Convert 5dp to pixels
+            int marginInDp = 5;
+            int marginInPx = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    marginInDp,
+                    holder.trans.getContext().getResources().getDisplayMetrics()
+            );
+            // Set the new marginStart value
+            params.setMarginStart(marginInPx);
+            // Apply the updated layout parameters back to the TextView
+            holder.trans.setLayoutParams(params);
+            // Refresh the layout
+            holder.trans.requestLayout();
             holder.btnhold.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
