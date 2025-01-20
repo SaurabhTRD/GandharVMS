@@ -55,7 +55,7 @@ public class Login extends AppCompatActivity {
     private SecretKey aesKey;
     String username,encryptedPassword,password1;
 
-    private static final String ALLOWED_VERSION = "1.0.6";
+    private static final String ALLOWED_VERSION = Global_Var.getInstance().APKversion;
     String versionName = "1.0.0";
 
 
@@ -70,7 +70,7 @@ public class Login extends AppCompatActivity {
         final TextView NotRegister = findViewById(R.id.registerlink);
 
         // version vise login
-        String versionName = "1.0.6";
+        String versionName =Global_Var.getInstance().APKversion;
         if (!ALLOWED_VERSION.equals(versionName)) {
             Toasty.error(this, "This version is not allowed for login.", Toast.LENGTH_LONG, true).show();
             login.setEnabled(false);

@@ -6,6 +6,10 @@ import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
 import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production_interface;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -15,9 +19,20 @@ public class Outward_RetroApiclient {
     private static String BASE_URL = "https://gandhardevapi.azurewebsites.net/";
 
     public static Retrofit getClient() {
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+        logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+
+        OkHttpClient okHttpClient = new OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .connectTimeout(0, TimeUnit.SECONDS)
+                .readTimeout(0, TimeUnit.SECONDS)
+                .writeTimeout(0, TimeUnit.SECONDS)
+                .build();
+
         if (retrofit == null) {
             retrofit = new Retrofit.Builder()
                     .baseUrl(BASE_URL)
+                    .client(okHttpClient)
                     .addConverterFactory(GsonConverterFactory.create())
                     .build();
         }

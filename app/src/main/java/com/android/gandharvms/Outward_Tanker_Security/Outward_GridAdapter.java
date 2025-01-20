@@ -208,6 +208,9 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                 }
             });
         }
+        else{
+            holder.btnhold.setVisibility(View.GONE);
+        }
         /*else{
             holder.txtholdremark.setVisibility(View.VISIBLE);
             if(club.HoldRemark.isEmpty())

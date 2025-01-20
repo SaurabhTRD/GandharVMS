@@ -428,7 +428,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                 "/topics/all",
                 "Outward Truck Out Security Process Done..!",
-                "This Vehicle:-" + vehicleNumber + " has Completed The Inward Tanker Process",
+                "This Vehicle:-" + vehicleNumber + " has Completed The Outward Truck Process",
                 getApplicationContext(),
                 OutwardOut_Truck_Security.this
         );

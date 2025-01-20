@@ -16,6 +16,7 @@ public class Global_Var {
     public String ProposeProcess;
     public String Token;
     public int InwardId;
+    public String APKversion="1.0.7";
     // Getter/setter
     private static Global_Var instance;
     public static Global_Var getInstance() {

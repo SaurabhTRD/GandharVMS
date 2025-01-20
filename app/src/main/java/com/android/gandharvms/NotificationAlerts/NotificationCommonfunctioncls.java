@@ -60,7 +60,7 @@ public class NotificationCommonfunctioncls extends AppCompatActivity {
 
         TextView tvVersion = findViewById(R.id.tv_version);
 //        String versionName = BuildConfig.VERSION_NAME;
-        String versionName = "1.0.6";
+        String versionName = Global_Var.getInstance().APKversion;
         tvVersion.setText("Version " + versionName);
 
         if (!notificationAccessHelper.isNotificationAccessEnabled(this)) {
