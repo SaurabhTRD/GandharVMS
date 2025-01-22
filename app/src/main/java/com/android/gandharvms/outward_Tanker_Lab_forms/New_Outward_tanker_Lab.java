@@ -154,7 +154,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                         newldestination.setEnabled(false);
                         newlquantity.setText(String.valueOf(data.getHowMuchQuantityFilled()));
                         newlquantity.setEnabled(false);
-                        newltransporter.setText(data.getCustomerName());
+                        newltransporter.setText(data.getTransportName());
                         newltransporter.setEnabled(false);
                         billremark.setText(data.getTankerBillingRemark());
                         billremark.setEnabled(false);

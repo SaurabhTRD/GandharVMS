@@ -110,7 +110,8 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
         holder.vehiclenum.setText(club.getVehicleNumber());
         holder.trans.setText(club.getTransportName());
         holder.Status.setText(club.getCurrStatus());
-        if(club.getCurrStatus().equals("BILLING") && club.getVehicleType().equals("OT"))
+        char inout = club.getI_O();
+        if(club.getCurrStatus().equals("BILLING") && club.getVehicleType().equals("OT") && inout=='I')
         {
             holder.btnhold.setVisibility(View.VISIBLE);
             ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.trans.getLayoutParams();
@@ -211,17 +212,6 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
         else{
             holder.btnhold.setVisibility(View.GONE);
         }
-        /*else{
-            holder.txtholdremark.setVisibility(View.VISIBLE);
-            if(club.HoldRemark.isEmpty())
-            {
-                holder.txtholdremark.setText("NA");
-            }
-            else
-            {
-                holder.txtholdremark.setText(club.getHoldRemark());
-            }
-        }*/
         holder.date.setText(club.getDate().substring(0,12));
         int secintimelength = club.getSecInTime() != null ? club.getSecInTime().length() : 0;
         if (secintimelength > 0) {

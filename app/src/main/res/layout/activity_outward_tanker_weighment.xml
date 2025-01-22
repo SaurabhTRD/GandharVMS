@@ -6,9 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Outward_Tanker_Weighment.Outward_Tanker_weighment">
 
-
-
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -214,6 +211,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+            <EditText
+                android:id="@+id/etBillingRemark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Billing Remark"
                 android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold" />

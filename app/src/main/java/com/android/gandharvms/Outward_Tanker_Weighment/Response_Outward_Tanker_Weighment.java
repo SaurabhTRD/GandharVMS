@@ -50,7 +50,7 @@ public class Response_Outward_Tanker_Weighment {
     public String iltotqty;
     public  String ilweight;
     public String PurposeProcess;
-
+    public String TankerBillingRemark;
     public String getProductQTYUOMOA() {
         return ProductQTYUOMOA;
     }
@@ -433,6 +433,14 @@ public class Response_Outward_Tanker_Weighment {
 
     public void setPurposeProcess(String purposeProcess) {
         PurposeProcess = purposeProcess;
+    }
+
+    public String getTankerBillingRemark() {
+        return TankerBillingRemark;
+    }
+
+    public void setTankerBillingRemark(String tankerBillingRemark) {
+        TankerBillingRemark = tankerBillingRemark;
     }
 
     public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage,

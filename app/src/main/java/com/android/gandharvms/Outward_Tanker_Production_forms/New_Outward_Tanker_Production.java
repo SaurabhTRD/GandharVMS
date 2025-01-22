@@ -65,7 +65,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
     private LoginMethod userDetails;
     private int oploutwardid = 0;
     private int OutwardId;
-    EditText serialnumber,vehiclenumber,oanumber,product,customer,location,howqty,transporter,intime,blendernumber,signproduction,oprator,remark;
+    EditText serialnumber,vehiclenumber,oanumber,product,customer,location,howqty,transporter,intime,blendernumber,signproduction,oprator,remark,etbillremark;
     Button btnsubmit,btncompletd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +94,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         signproduction = findViewById(R.id.etnewsignofproduction);
         oprator = findViewById(R.id.etnewsignofoprator);
         remark = findViewById(R.id.etnewremark);
-
+        etbillremark=findViewById(R.id.etprducBillingRemark);
         btnsubmit = findViewById(R.id.etnewssubmit);
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,6 +155,8 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                         howqty.setEnabled(false);
                         transporter.setText(data.getTransportName());
                         transporter.setEnabled(false);
+                        etbillremark.setText(data.getTankerBillingRemark());
+                        etbillremark.setEnabled(false);
                         String extraMaterialsJson = data.getProductQTYUOMOA();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);

@@ -92,7 +92,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
-    EditText intime, serialnumber, vehiclenumber, materialname, custname, oanum, tareweight, tankernumber, etremark, transportername, howmuchqty, elocation;
+    EditText intime, serialnumber, vehiclenumber, materialname, custname, oanum, tareweight, tankernumber,
+            etremark, transportername, howmuchqty, elocation,etbillremark;
     Button submit, complted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -115,29 +116,6 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_tanker_weighment);
-
-        /*btnlogout = findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username = findViewById(R.id.tv_username);
-        empid = findViewById(R.id.tv_employeeId);
-
-        String userName = Global_Var.getInstance().Name;
-        String empId = Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_Tanker_weighment.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_Tanker_weighment.this, Menu.class));
-            }
-        });*/
         setupHeader();
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
         userDetails = RetroApiClient.getLoginApi();
@@ -156,6 +134,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         transportername = findViewById(R.id.ettransportname);
         howmuchqty = findViewById(R.id.ethowmuchqtyfill);
         elocation = findViewById(R.id.etlocation);
+        etbillremark=findViewById(R.id.etBillingRemark);
 
         img1 = findViewById(R.id.etoutwardotinweighvehicleimg);
         img2 = findViewById(R.id.etoutwardotinweighDriverimg);
@@ -281,6 +260,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         transportername.setEnabled(false);
                         elocation.setText(data.getLocation());
                         elocation.setEnabled(false);
+                        etbillremark.setText(data.getTankerBillingRemark());
+                        etbillremark.setEnabled(false);
                         String extraMaterialsJson = data.getProductQTYUOMOA();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
