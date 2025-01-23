@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,13 +27,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Production.Inward_Tanker_Production;
+import com.android.gandharvms.LoginWithAPI.Logistic;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
+import com.android.gandharvms.OR_VehicleStatus_Grid.or_statusgrid_livedata;
 import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_Production;
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Tanker_Security.OutwardOut_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesSmallPackLoading_Form;
+import com.android.gandharvms.Outward_Truck_Logistic.InTrLogisticResponseModel;
 import com.android.gandharvms.Outwardout_Tanker_Weighment.OutwardOut_Tanker_Weighment;
 import com.android.gandharvms.OutwardOut_Truck_Billing.OutwardOut_Truck_Billing;
 import com.android.gandharvms.OutwardOut_Truck_Security;
@@ -75,6 +81,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
     private Context context;
     private Outward_Tanker outwardTanker;
     Outward_Tanker_Security ots= new Outward_Tanker_Security();
+    private Logistic logisticdetails;
 
     public Outward_GridAdapter(List<Response_Outward_Security_Fetching> responseoutwardgrid,Context context1) {
         this.outwardGridmodel = responseoutwardgrid;
@@ -208,10 +215,108 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                     dialog.show();
                 }
             });
-        }
-        else{
+        } else if (club.getCurrStatus().equals("LOGISTIC") && club.getVehicleType().equals("OR") && inout=='I') {
+            holder.btnhold.setVisibility(View.VISIBLE);
+            holder.btnhold.setText("UPDATE");
+            ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) holder.trans.getLayoutParams();
+
+            // Convert 5dp to pixels
+            int marginInDp = 5;
+            int marginInPx = (int) TypedValue.applyDimension(
+                    TypedValue.COMPLEX_UNIT_DIP,
+                    marginInDp,
+                    holder.trans.getContext().getResources().getDisplayMetrics()
+            );
+            // Set the new marginStart value
+            params.setMarginStart(marginInPx);
+            // Apply the updated layout parameters back to the TextView
+            holder.trans.setLayoutParams(params);
+            // Refresh the layout
+            holder.trans.requestLayout();
+            holder.btnhold.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    LayoutInflater inflater = LayoutInflater.from(view.getContext());
+                    View dialogView = inflater.inflate(R.layout.btnupdatepopuplogistic, null);
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                    builder.setView(dialogView);
+                    AlertDialog dialog = builder.create();
+
+                    // Get references to dialog fields
+                    EditText etvehnumber = dialogView.findViewById(R.id.etupdlogvehiclenumber);
+                    EditText ettransportname = dialogView.findViewById(R.id.etupdlogtransportname);
+                    EditText etplace = dialogView.findViewById(R.id.etupdlogplace);
+                    Button btnSubmit = dialogView.findViewById(R.id.btnlogupd_submit);
+                    Button btnCancel = dialogView.findViewById(R.id.btnlogupd_cancel);
+
+                    etvehnumber.setText(club.getVehicleNumber());
+                    ettransportname.setText(club.getTransportName());
+                    etplace.setText(club.getPlace());
+                    // Set onClickListener for Submit button
+                    btnSubmit.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            // Get data from fields
+                            if (etvehnumber.getText().toString().isEmpty() || ettransportname.getText().toString().isEmpty() || etplace.getText().toString().isEmpty()) {
+                                Toasty.warning(view.getContext(), "Please fill all fields", Toasty.LENGTH_SHORT).show();
+                                return;
+                            }
+                            InTrLogisticResponseModel updatelogisticdetails = new InTrLogisticResponseModel();
+                            updatelogisticdetails.OutwardId = club.getOutwardId();
+                            updatelogisticdetails.VehicleNumber = etvehnumber.getText().toString().trim();
+                            updatelogisticdetails.TransportName = ettransportname.getText().toString().trim();
+                            updatelogisticdetails.Place = etplace.getText().toString().trim();
+                            updatelogisticdetails.UpdatedBy = Global_Var.getInstance().Name;
+                            logisticdetails = RetroApiClient.getLogisticDetails();
+                            Call<Boolean> call = logisticdetails.updateoutwardtrnsvehplacedata(updatelogisticdetails);
+                            call.enqueue(new Callback<Boolean>() {
+                                @Override
+                                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                    if (response.isSuccessful() && response.body() && response.body() == true) {
+                                        Toasty.success(context, "Data Updated Succesfully !", Toast.LENGTH_SHORT).show();
+                                        context.startActivity(new Intent(context, Grid_Outward.class));
+                                    } else {
+                                        Toasty.error(context, "Data Insertion Failed..!", Toasty.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Boolean> call, Throwable t) {
+                                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                                    // Check if there's a response body in case of an HTTP error
+                                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                                        Response<?> response = ((HttpException) t).response();
+                                        if (response != null) {
+                                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                                            try {
+                                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                    }
+                                    Toasty.error(context, "failed..!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                            dialog.dismiss();
+                        }
+                    });
+
+                    btnCancel.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            dialog.dismiss(); // Close the dialog
+                        }
+                    });
+                    // Show the dialog
+                    dialog.show();
+                }
+            });
+        } else{
             holder.btnhold.setVisibility(View.GONE);
         }
+        holder.place.setText(club.getPlace());
         holder.date.setText(club.getDate().substring(0,12));
         int secintimelength = club.getSecInTime() != null ? club.getSecInTime().length() : 0;
         if (secintimelength > 0) {
@@ -413,7 +518,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
 
 
     public class myviewHolder extends RecyclerView.ViewHolder {
-        public TextView vehiclenum, trans, Status, date, secInTime,
+        public TextView vehiclenum, trans,place, Status, date, secInTime,
                 bilInTime, logintime, weiInTime, proInTime, labInTime, induspacktime, smallpacktime, outweitime,
                 outdataentrytime, outbilltime, outsectime,txtholdremark;
         Button btnhold;
@@ -422,6 +527,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
             super(view);
             vehiclenum = view.findViewById(R.id.textoutwardgridVehicleNumber);
             trans = view.findViewById(R.id.textoutwardgridTransporter);
+            place=view.findViewById(R.id.textoutwardgridPlace);
             //txtholdremark=view.findViewById(R.id.holdremark);
             btnhold=view.findViewById(R.id.holdButton);
             Status = view.findViewById(R.id.textoutwardgridStatus);
@@ -438,7 +544,6 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
             outdataentrytime = view.findViewById(R.id.textoutwardgridoutdataentrytime);
             outbilltime = view.findViewById(R.id.textoutwardgridoutbilltime);
             outsectime = view.findViewById(R.id.textoutwardgridoutsectime);
-
         }
     }
 }

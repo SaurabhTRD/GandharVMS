@@ -1,0 +1,93 @@
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/tv_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Details"
+        android:textStyle="bold"
+        android:textSize="18sp"
+        android:gravity="center"
+        android:paddingBottom="8dp"/>
+
+     <com.google.android.material.textfield.TextInputLayout
+         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:layout_marginLeft="30dp"
+         android:layout_marginTop="10dp"
+         android:layout_marginRight="30dp">
+
+         <EditText
+             android:id="@+id/etupdlogvehiclenumber"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:hint="Vehicle No"
+             android:inputType="textCapCharacters"
+             android:textSize="17dp"
+             android:textStyle="bold" />
+     </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp">
+
+        <EditText
+            android:id="@+id/etupdlogtransportname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Transporter"
+            android:inputType="text"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="30dp">
+
+        <EditText
+            android:id="@+id/etupdlogplace"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Place"
+            android:inputType="text"
+            android:textSize="17dp"
+            android:textStyle="bold" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="16dp">
+
+        <Button
+            android:id="@+id/btnlogupd_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:layout_marginEnd="8dp"/>
+
+        <Button
+            android:id="@+id/btnlogupd_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"/>
+    </LinearLayout>
+</LinearLayout>

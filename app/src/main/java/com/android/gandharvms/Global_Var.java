@@ -7,9 +7,9 @@ package com.android.gandharvms;
 }*/
 
 public class Global_Var {
-    public String MenuType;
-    public char InOutType;
-    public char DeptType;
+    public String MenuType;//vehicletype
+    public char InOutType;//Inward/Outward In out
+    public char DeptType;//NextProcess
     public String EmpId;
     public String Department;
     public String Name;

@@ -24,6 +24,7 @@ import com.android.gandharvms.BillingHoldListingGrid.gridbillingholdvehiclelisti
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
+import com.android.gandharvms.OR_VehicleStatus_Grid.or_statusgrid_livedata;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
@@ -59,7 +60,7 @@ public class Grid_Outward extends AppCompatActivity {
     String todate;
     String strvehiclenumber = "x";
 
-    public ImageView imgsync;
+    public ImageView imgsync,vehstatus;
     TextView currdate;
 
     @Override
@@ -72,6 +73,7 @@ public class Grid_Outward extends AppCompatActivity {
         toDate = findViewById(R.id.gridoutwrdbtntoDate);
         imgsync = findViewById(R.id.outwardsyncbt);
         currdate=findViewById(R.id.outwardgridcurrrentdate);
+        vehstatus=findViewById(R.id.gridoutwrdimgvehstatus);
 
         currdate.setText(getCurrentDateTime().toString().trim());
 
@@ -144,6 +146,19 @@ public class Grid_Outward extends AppCompatActivity {
                 finish();
             }
         });
+        if (nextProcess=='G')
+        {
+            vehstatus.setVisibility(View.VISIBLE);
+            vehstatus.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Global_Var.getInstance().InOutType='x';
+                    Global_Var.getInstance().DeptType='x';
+                    Intent intent = new Intent(Grid_Outward.this, or_statusgrid_livedata.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 
     private void initViews()

@@ -50,6 +50,14 @@
         android:layout_height="match_parent"/>
 
     <TextView
+        android:id="@+id/textoutwardgridPlace"
+        android:layout_width="100dp"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/black"
+        android:layout_height="match_parent"/>
+
+    <TextView
         android:id="@+id/textoutwardgridStatus"
         android:layout_width="130dp"
         android:layout_marginStart="5dp"

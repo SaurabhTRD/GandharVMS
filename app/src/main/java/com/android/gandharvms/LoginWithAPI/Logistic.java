@@ -28,4 +28,7 @@ public interface Logistic {
     //update outward logistic
     @POST("api/OutwardLogistic/UpdateLogisticOACustTransOutwardId")
     Call<Boolean> updateoutwardlogistic(@Body Update_Request_Model_Outward_Logistic updateRequestModelOutwardLogistic);
+
+    @POST("api/OutwardLogistic/UpdateOutwardTrsnvehplacedetails")
+    Call<Boolean> updateoutwardtrnsvehplacedata(@Body InTrLogisticResponseModel updatetrnsvehplacedetails);
 }

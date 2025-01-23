@@ -119,14 +119,6 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
 
         logisticdetails = RetroApiClient.getLogisticDetails();
 
-        /*btnhome = findViewById(R.id.btn_homeButton);
-        btnlogout=findViewById(R.id.btn_logoutButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;*/
-
         autoCompleteTextView = findViewById(R.id.etuom);
         uomdrop = new ArrayAdapter<String>(this,R.layout.in_rcs_test,uom);
         autoCompleteTextView.setAdapter(uomdrop);
@@ -138,20 +130,6 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
             }
         });
         setupHeader();
-        /*username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_Truck_Logistics.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_Truck_Logistics.this, Menu.class));
-            }
-        });*/
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -424,21 +402,9 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
     }
 
     public void upditinsecbyinwardid (){
-//        String upserialnum = serialnumber.getText().toString().trim();
-//        String upvehiclenum = vehiclenumber.getText().toString().trim();
         String uptransporter = transporter.getText().toString().trim();
-//        String upplace = place.getText().toString().trim();
         String upoanumber = oanumber.getText().toString().trim();
         String upcustname = customername.getText().toString().trim();
-//        if (!howqty.getText().toString().isEmpty()){
-//            try {
-//                uhowqty = Integer.parseInt(howqty.getText().toString().trim());
-//            }catch (NumberFormatException e){
-//                e.printStackTrace();
-//            }
-//        }
-//        String upremark = remark.getText().toString().trim();
-
         Update_Request_Model_Outward_Logistic updateRequestModelOutwardLogistic = new Update_Request_Model_Outward_Logistic(
                 inwardid,uptransporter,upoanumber,upcustname,EmployeId
         );
@@ -460,8 +426,6 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
 
             }
         });
-
-
     }
 
 
