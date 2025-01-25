@@ -91,8 +91,32 @@ public class Response_Outward_Security_Fetching {
     public String IndusTime;
     public String SamllPackTime;
     public String HoldRemark;
-
     public String IRDataEntryTime;
+
+    public String splweight;
+    public  String ilweight;
+    public int ilpackof10ltrqty;
+    public int ilpackof18ltrqty;
+    public int ilpackof20ltrqty;
+    public int ilpackof26ltrqty;
+    public int ilpackof50ltrqty;
+    public int ilpackof210ltrqty;
+    public int ilpackofboxbuxketltrqty;
+
+    public int splpackof7ltrqty;
+    public int splpackof7_5ltrqty;
+    public int splpackof8_5ltrqty;
+    public int splpackof10ltrqty;
+    public int splpackof11ltrqty;
+    public int splpackof12ltrqty;
+    public int splpackof13ltrqty;
+    public int splpackof15ltrqty;
+    public int splpackof18ltrqty;
+    public int splpackof20ltrqty;
+    public int splpackof26ltrqty;
+    public int splpackof50ltrqty;
+    public int splpackof210ltrqty;
+    public int splpackofboxbuxketltrqty;
 
     public String getIRDataEntryTime() {
         return IRDataEntryTime;
@@ -820,5 +844,189 @@ public class Response_Outward_Security_Fetching {
 
     public void setProductQTYUOMOA(String productQTYUOMOA) {
         ProductQTYUOMOA = productQTYUOMOA;
+    }
+
+    public String getSplweight() {
+        return splweight;
+    }
+
+    public void setSplweight(String splweight) {
+        this.splweight = splweight;
+    }
+
+    public String getIlweight() {
+        return ilweight;
+    }
+
+    public void setIlweight(String ilweight) {
+        this.ilweight = ilweight;
+    }
+
+    public int getIlpackof10ltrqty() {
+        return ilpackof10ltrqty;
+    }
+
+    public void setIlpackof10ltrqty(int ilpackof10ltrqty) {
+        this.ilpackof10ltrqty = ilpackof10ltrqty;
+    }
+
+    public int getIlpackof18ltrqty() {
+        return ilpackof18ltrqty;
+    }
+
+    public void setIlpackof18ltrqty(int ilpackof18ltrqty) {
+        this.ilpackof18ltrqty = ilpackof18ltrqty;
+    }
+
+    public int getIlpackof20ltrqty() {
+        return ilpackof20ltrqty;
+    }
+
+    public void setIlpackof20ltrqty(int ilpackof20ltrqty) {
+        this.ilpackof20ltrqty = ilpackof20ltrqty;
+    }
+
+    public int getIlpackof26ltrqty() {
+        return ilpackof26ltrqty;
+    }
+
+    public void setIlpackof26ltrqty(int ilpackof26ltrqty) {
+        this.ilpackof26ltrqty = ilpackof26ltrqty;
+    }
+
+    public int getIlpackof50ltrqty() {
+        return ilpackof50ltrqty;
+    }
+
+    public void setIlpackof50ltrqty(int ilpackof50ltrqty) {
+        this.ilpackof50ltrqty = ilpackof50ltrqty;
+    }
+
+    public int getIlpackof210ltrqty() {
+        return ilpackof210ltrqty;
+    }
+
+    public void setIlpackof210ltrqty(int ilpackof210ltrqty) {
+        this.ilpackof210ltrqty = ilpackof210ltrqty;
+    }
+
+    public int getIlpackofboxbuxketltrqty() {
+        return ilpackofboxbuxketltrqty;
+    }
+
+    public void setIlpackofboxbuxketltrqty(int ilpackofboxbuxketltrqty) {
+        this.ilpackofboxbuxketltrqty = ilpackofboxbuxketltrqty;
+    }
+
+    public int getSplpackof7ltrqty() {
+        return splpackof7ltrqty;
+    }
+
+    public void setSplpackof7ltrqty(int splpackof7ltrqty) {
+        this.splpackof7ltrqty = splpackof7ltrqty;
+    }
+
+    public int getSplpackof7_5ltrqty() {
+        return splpackof7_5ltrqty;
+    }
+
+    public void setSplpackof7_5ltrqty(int splpackof7_5ltrqty) {
+        this.splpackof7_5ltrqty = splpackof7_5ltrqty;
+    }
+
+    public int getSplpackof8_5ltrqty() {
+        return splpackof8_5ltrqty;
+    }
+
+    public void setSplpackof8_5ltrqty(int splpackof8_5ltrqty) {
+        this.splpackof8_5ltrqty = splpackof8_5ltrqty;
+    }
+
+    public int getSplpackof10ltrqty() {
+        return splpackof10ltrqty;
+    }
+
+    public void setSplpackof10ltrqty(int splpackof10ltrqty) {
+        this.splpackof10ltrqty = splpackof10ltrqty;
+    }
+
+    public int getSplpackof11ltrqty() {
+        return splpackof11ltrqty;
+    }
+
+    public void setSplpackof11ltrqty(int splpackof11ltrqty) {
+        this.splpackof11ltrqty = splpackof11ltrqty;
+    }
+
+    public int getSplpackof12ltrqty() {
+        return splpackof12ltrqty;
+    }
+
+    public void setSplpackof12ltrqty(int splpackof12ltrqty) {
+        this.splpackof12ltrqty = splpackof12ltrqty;
+    }
+
+    public int getSplpackof13ltrqty() {
+        return splpackof13ltrqty;
+    }
+
+    public void setSplpackof13ltrqty(int splpackof13ltrqty) {
+        this.splpackof13ltrqty = splpackof13ltrqty;
+    }
+
+    public int getSplpackof15ltrqty() {
+        return splpackof15ltrqty;
+    }
+
+    public void setSplpackof15ltrqty(int splpackof15ltrqty) {
+        this.splpackof15ltrqty = splpackof15ltrqty;
+    }
+
+    public int getSplpackof18ltrqty() {
+        return splpackof18ltrqty;
+    }
+
+    public void setSplpackof18ltrqty(int splpackof18ltrqty) {
+        this.splpackof18ltrqty = splpackof18ltrqty;
+    }
+
+    public int getSplpackof20ltrqty() {
+        return splpackof20ltrqty;
+    }
+
+    public void setSplpackof20ltrqty(int splpackof20ltrqty) {
+        this.splpackof20ltrqty = splpackof20ltrqty;
+    }
+
+    public int getSplpackof26ltrqty() {
+        return splpackof26ltrqty;
+    }
+
+    public void setSplpackof26ltrqty(int splpackof26ltrqty) {
+        this.splpackof26ltrqty = splpackof26ltrqty;
+    }
+
+    public int getSplpackof50ltrqty() {
+        return splpackof50ltrqty;
+    }
+
+    public void setSplpackof50ltrqty(int splpackof50ltrqty) {
+        this.splpackof50ltrqty = splpackof50ltrqty;
+    }
+
+    public int getSplpackof210ltrqty() {
+        return splpackof210ltrqty;
+    }
+
+    public void setSplpackof210ltrqty(int splpackof210ltrqty) {
+        this.splpackof210ltrqty = splpackof210ltrqty;
+    }
+
+    public int getSplpackofboxbuxketltrqty() {
+        return splpackofboxbuxketltrqty;
+    }
+
+    public void setSplpackofboxbuxketltrqty(int splpackofboxbuxketltrqty) {
+        this.splpackofboxbuxketltrqty = splpackofboxbuxketltrqty;
     }
 }

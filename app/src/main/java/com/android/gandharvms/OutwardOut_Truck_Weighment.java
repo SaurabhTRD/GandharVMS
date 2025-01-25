@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -69,8 +70,18 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
 
-    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare,etshdip,etshwe,
-             industotqty,industotwight,smalltotqty,smalltotweight;
+    TextView smallpacktitle,indutialpacktitle;
+    EditText intime,serialnumber,vehiclenum,grosswright,noofpack,netwt,etremark,seal,ettare,etshdip,etshwe;
+    LinearLayout lnlsmallpackqty;
+    EditText splpack7literqty,splpack7_5literqty,splpack8_5literqty,splpack10literqty,splpack11literqty,
+            splpack12literqty,splpack13literqty,splpack15literqty,splpack18literqty,splpack20literqty,
+            splpack26literqty, splpack50literqty,splpack210literqty,splpackboxbucketqty,
+            smalltotqty,smalltotweight;
+    LinearLayout lnlindustrialbarrel;
+    EditText ilpack10literqty,ilpack18literqty,ilpack20literqty,
+            ilpack26literqty, ilpack50literqty,ilpack210literqty,ilpackboxbucketqty,
+            iltotqty,iltotweight,industotqty,industotwight;
+    //EditText industotqty,industotwight,smalltotqty,smalltotweight;
 
     Button submit,etcompleted;
     FirebaseFirestore dbroot;
@@ -123,10 +134,42 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
         etremark = findViewById(R.id.etOTW_remark);
         seal = findViewById(R.id.etseal);
         ettare = findViewById(R.id.ettarewt);
-        industotqty=findViewById(R.id.etinudustotqty);
+        /*industotqty=findViewById(R.id.etinudustotqty);
         industotwight=findViewById(R.id.etinudustotweight);
         smalltotqty=findViewById(R.id.etsmalltotqty);
+        smalltotweight=findViewById(R.id.etsmalltotweight);*/
+
+        indutialpacktitle=findViewById(R.id.txtotowindustrailtitle);
+        lnlindustrialbarrel=findViewById(R.id.lnlotoutwindustrialbarrel);
+        ilpack10literqty=findViewById(R.id.otoutwilpack10Liter);
+        ilpack18literqty=findViewById(R.id.otoutwilpack18Liter);
+        ilpack20literqty=findViewById(R.id.otoutwilpack20Liter);
+        ilpack26literqty=findViewById(R.id.otoutwilpack26Liter);
+        ilpack50literqty=findViewById(R.id.otoutwilpack50Liter);
+        ilpack210literqty=findViewById(R.id.otoutwilpack210Liter);
+        ilpackboxbucketqty=findViewById(R.id.otoutwilpackboxbucket);
+        industotqty=findViewById(R.id.etinudustotqty);
+        industotwight=findViewById(R.id.etinudustotweight);
+
+        smallpacktitle=findViewById(R.id.txtotowsmalltitle);
+        lnlsmallpackqty=findViewById(R.id.lnlotoutwsmallpackbarrel);
+        splpack7literqty=findViewById(R.id.otoutwsplpack7Liter);
+        splpack7_5literqty=findViewById(R.id.otoutwsplpack7_5Liter);
+        splpack8_5literqty=findViewById(R.id.otoutwsplpack8_5Liter);
+        splpack10literqty=findViewById(R.id.otoutwsplpack10Liter);
+        splpack11literqty=findViewById(R.id.otoutwsplpack11Liter);
+        splpack12literqty=findViewById(R.id.otoutwsplpack12Liter);
+        splpack13literqty=findViewById(R.id.otoutwsplpack13Liter);
+        splpack15literqty=findViewById(R.id.otoutwsplpack15Liter);
+        splpack18literqty=findViewById(R.id.otoutwsplpack18Liter);
+        splpack20literqty=findViewById(R.id.otoutwsplpack20Liter);
+        splpack26literqty=findViewById(R.id.otoutwsplpack26Liter);
+        splpack50literqty=findViewById(R.id.otoutwsplpack50Liter);
+        splpack210literqty=findViewById(R.id.otoutwsplpack210Liter);
+        splpackboxbucketqty=findViewById(R.id.otoutwsplpackboxbucket);
+        smalltotqty=findViewById(R.id.etsmalltotqty);
         smalltotweight=findViewById(R.id.etsmalltotweight);
+
 
         submit = findViewById(R.id.submit);
         etcompleted = findViewById(R.id.orweoutcomple);
@@ -136,30 +179,7 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
         img2 = findViewById(R.id.outwardouttruckdriver);
         etshdip = findViewById(R.id.etshortdip);
         etshwe = findViewById(R.id.etshortageweight);
-
         setupHeader();
-        /*btnhome = findViewById(R.id.btn_homeButton);
-        btnlogout=findViewById(R.id.btn_logoutButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OutwardOut_Truck_Weighment.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OutwardOut_Truck_Weighment.this, Menu.class));
-            }
-        });*/
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -303,36 +323,150 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
                         ettare.setText(data.getTareWeight());
                         ettare.setEnabled(false);
                         wserialNo= data.getSerialNumber();
+                        seal.setText("0");
+                        noofpack.setText("0");
+                        etshdip.setText("0");
+                        etshwe.setText("0");
+                        etremark.setText("OK");
                         if(data.iltotqty.isEmpty() || data.ilweight=="0")
                         {
-                            smalltotqty.setVisibility(View.VISIBLE);
+                            smallpacktitle.setVisibility(View.VISIBLE);
+                            lnlsmallpackqty.setVisibility(View.VISIBLE);
+                            splpack7literqty.setText(String.valueOf("SmallPack 7 Liter Qty :- "+ data.getSplpackof7ltrqty()));
+                            splpack7literqty.setEnabled(false);
+                            splpack7_5literqty.setText(String.valueOf("SmallPack 7.5 Liter Qty :- "+ data.getSplpackof7_5ltrqty()));
+                            splpack7_5literqty.setEnabled(false);
+                            splpack8_5literqty.setText(String.valueOf("SmallPack 8.5 Liter Qty :- "+ data.getSplpackof8_5ltrqty()));
+                            splpack8_5literqty.setEnabled(false);
+                            splpack10literqty.setText(String.valueOf("SmallPack 10 Liter Qty :- "+ data.getSplpackof10ltrqty()));
+                            splpack10literqty.setEnabled(false);
+                            splpack11literqty.setText(String.valueOf("SmallPack 11 Liter Qty :- "+ data.getSplpackof11ltrqty()));
+                            splpack11literqty.setEnabled(false);
+                            splpack12literqty.setText(String.valueOf("SmallPack 12 Liter Qty :- "+ data.getSplpackof12ltrqty()));
+                            splpack12literqty.setEnabled(false);
+                            splpack13literqty.setText(String.valueOf("SmallPack 13 Liter Qty :- "+ data.getSplpackof13ltrqty()));
+                            splpack13literqty.setEnabled(false);
+                            splpack15literqty.setText(String.valueOf("SmallPack 15 Liter Qty :- "+ data.getSplpackof15ltrqty()));
+                            splpack15literqty.setEnabled(false);
+                            splpack18literqty.setText(String.valueOf("SmallPack 18 Liter Qty :- "+ data.getSplpackof18ltrqty()));
+                            splpack18literqty.setEnabled(false);
+                            splpack20literqty.setText(String.valueOf("SmallPack 20 Liter Qty :- "+ data.getSplpackof20ltrqty()));
+                            splpack20literqty.setEnabled(false);
+                            splpack26literqty.setText(String.valueOf("SmallPack 26 Liter Qty :- "+ data.getSplpackof26ltrqty()));
+                            splpack26literqty.setEnabled(false);
+                            splpack50literqty.setText(String.valueOf("SmallPack 50 Liter Qty :- "+ data.getSplpackof50ltrqty()));
+                            splpack50literqty.setEnabled(false);
+                            splpack210literqty.setText(String.valueOf("SmallPack 210 Liter Qty :- "+ data.getSplpackof210ltrqty()));
+                            splpack210literqty.setEnabled(false);
+                            splpackboxbucketqty.setText(String.valueOf("SmallPack BoxBucket Qty :- "+ data.getSplpackofboxbuxketltrqty()));
+                            splpackboxbucketqty.setEnabled(false);
+                            smalltotqty.setText("SmallPack Total Qty :- " + data.getSpltotqty());
+                            smalltotqty.setEnabled(false);
+                            smalltotweight.setText("SmallPack Weight :- " + data.getSplweight());
+                            smalltotweight.setEnabled(false);
+                            /*smalltotqty.setVisibility(View.VISIBLE);
                             smalltotweight.setVisibility(View.VISIBLE);
                             smalltotqty.setText(data.getSpltotqty());
                             smalltotqty.setEnabled(false);
                             smalltotweight.setText(data.getSplweight());
                             smalltotweight.setEnabled(false);
                             industotqty.setVisibility(View.GONE);
-                            industotwight.setVisibility(View.GONE);
+                            industotwight.setVisibility(View.GONE);*/
                         }
                         else if(data.spltotqty.isEmpty() || data.splweight=="0") {
-                            industotqty.setVisibility(View.VISIBLE);
+                            indutialpacktitle.setVisibility(View.VISIBLE);
+                            lnlindustrialbarrel.setVisibility(View.VISIBLE);
+                            ilpack10literqty.setText(String.valueOf("IndusPack 10 Liter Qty :- " + data.getIlpackof10ltrqty()));
+                            ilpack10literqty.setEnabled(false);
+                            ilpack18literqty.setText(String.valueOf("IndusPack 18 Liter Qty :- " + data.getIlpackof18ltrqty()));
+                            ilpack18literqty.setEnabled(false);
+                            ilpack20literqty.setText(String.valueOf("IndusPack 20 Liter Qty :- " + data.getIlpackof20ltrqty()));
+                            ilpack20literqty.setEnabled(false);
+                            ilpack26literqty.setText(String.valueOf("IndusPack 26 Liter Qty :- " + data.getIlpackof26ltrqty()));
+                            ilpack26literqty.setEnabled(false);
+                            ilpack50literqty.setText(String.valueOf("IndusPack 50 Liter Qty :- " + data.getIlpackof50ltrqty()));
+                            ilpack50literqty.setEnabled(false);
+                            ilpack210literqty.setText(String.valueOf("IndusPack 210 Liter Qty :- " + data.getIlpackof50ltrqty()));
+                            ilpack210literqty.setEnabled(false);
+                            ilpackboxbucketqty.setText(String.valueOf("IndusPack BoxBucket Qty :- " + data.getIlpackofboxbuxketltrqty()));
+                            ilpackboxbucketqty.setEnabled(false);
+                            industotqty.setText("IndusPack Total Qty :- " + data.getIltotqty());
+                            industotqty.setEnabled(false);
+                            industotwight.setText("IndusPack Total Weight :- " + data.getIlweight());
+                            industotwight.setEnabled(false);
+                            /*industotqty.setVisibility(View.VISIBLE);
                             industotwight.setVisibility(View.VISIBLE);
                             industotqty.setText(data.getIltotqty());
                             industotqty.setEnabled(false);
                             industotwight.setText(data.getIlweight());
                             industotwight.setEnabled(false);
                             smalltotqty.setVisibility(View.GONE);
-                            smalltotweight.setVisibility(View.GONE);
+                            smalltotweight.setVisibility(View.GONE);*/
                         }
                         else{
-                            industotqty.setText(data.getIltotqty());
+                            indutialpacktitle.setVisibility(View.VISIBLE);
+                            lnlindustrialbarrel.setVisibility(View.VISIBLE);
+                            ilpack10literqty.setText(String.valueOf("IndusPack 10 Liter Qty :- " + data.getIlpackof10ltrqty()));
+                            ilpack10literqty.setEnabled(false);
+                            ilpack18literqty.setText(String.valueOf("IndusPack 18 Liter Qty :- " + data.getIlpackof18ltrqty()));
+                            ilpack18literqty.setEnabled(false);
+                            ilpack20literqty.setText(String.valueOf("IndusPack 20 Liter Qty :- " + data.getIlpackof20ltrqty()));
+                            ilpack20literqty.setEnabled(false);
+                            ilpack26literqty.setText(String.valueOf("IndusPack 26 Liter Qty :- " + data.getIlpackof26ltrqty()));
+                            ilpack26literqty.setEnabled(false);
+                            ilpack50literqty.setText(String.valueOf("IndusPack 50 Liter Qty :- " + data.getIlpackof50ltrqty()));
+                            ilpack50literqty.setEnabled(false);
+                            ilpack210literqty.setText(String.valueOf("IndusPack 210 Liter Qty :- " + data.getIlpackof50ltrqty()));
+                            ilpack210literqty.setEnabled(false);
+                            ilpackboxbucketqty.setText(String.valueOf("IndusPack BoxBucket Qty :- " + data.getIlpackofboxbuxketltrqty()));
+                            ilpackboxbucketqty.setEnabled(false);
+                            industotqty.setText("IndusPack Total Qty :- " + data.getIltotqty());
+                            industotqty.setEnabled(false);
+                            industotwight.setText("IndusPack Total Weight :- " + data.getIlweight());
+                            industotwight.setEnabled(false);
+
+                            smallpacktitle.setVisibility(View.VISIBLE);
+                            lnlsmallpackqty.setVisibility(View.VISIBLE);
+                            splpack7literqty.setText(String.valueOf("SmallPack 7 Liter Qty :- "+ data.getSplpackof7ltrqty()));
+                            splpack7literqty.setEnabled(false);
+                            splpack7_5literqty.setText(String.valueOf("SmallPack 7.5 Liter Qty :- "+ data.getSplpackof7_5ltrqty()));
+                            splpack7_5literqty.setEnabled(false);
+                            splpack8_5literqty.setText(String.valueOf("SmallPack 8.5 Liter Qty :- "+ data.getSplpackof8_5ltrqty()));
+                            splpack8_5literqty.setEnabled(false);
+                            splpack10literqty.setText(String.valueOf("SmallPack 10 Liter Qty :- "+ data.getSplpackof10ltrqty()));
+                            splpack10literqty.setEnabled(false);
+                            splpack11literqty.setText(String.valueOf("SmallPack 11 Liter Qty :- "+ data.getSplpackof11ltrqty()));
+                            splpack11literqty.setEnabled(false);
+                            splpack12literqty.setText(String.valueOf("SmallPack 12 Liter Qty :- "+ data.getSplpackof12ltrqty()));
+                            splpack12literqty.setEnabled(false);
+                            splpack13literqty.setText(String.valueOf("SmallPack 13 Liter Qty :- "+ data.getSplpackof13ltrqty()));
+                            splpack13literqty.setEnabled(false);
+                            splpack15literqty.setText(String.valueOf("SmallPack 15 Liter Qty :- "+ data.getSplpackof15ltrqty()));
+                            splpack15literqty.setEnabled(false);
+                            splpack18literqty.setText(String.valueOf("SmallPack 18 Liter Qty :- "+ data.getSplpackof18ltrqty()));
+                            splpack18literqty.setEnabled(false);
+                            splpack20literqty.setText(String.valueOf("SmallPack 20 Liter Qty :- "+ data.getSplpackof20ltrqty()));
+                            splpack20literqty.setEnabled(false);
+                            splpack26literqty.setText(String.valueOf("SmallPack 26 Liter Qty :- "+ data.getSplpackof26ltrqty()));
+                            splpack26literqty.setEnabled(false);
+                            splpack50literqty.setText(String.valueOf("SmallPack 50 Liter Qty :- "+ data.getSplpackof50ltrqty()));
+                            splpack50literqty.setEnabled(false);
+                            splpack210literqty.setText(String.valueOf("SmallPack 210 Liter Qty :- "+ data.getSplpackof210ltrqty()));
+                            splpack210literqty.setEnabled(false);
+                            splpackboxbucketqty.setText(String.valueOf("SmallPack BoxBucket Qty :- "+ data.getSplpackofboxbuxketltrqty()));
+                            splpackboxbucketqty.setEnabled(false);
+                            smalltotqty.setText("SmallPack Total Qty :- " + data.getSpltotqty());
+                            smalltotqty.setEnabled(false);
+                            smalltotweight.setText("SmallPack Weight :- " + data.getSplweight());
+                            smalltotweight.setEnabled(false);
+                            /*industotqty.setText(data.getIltotqty());
                             industotqty.setEnabled(false);
                             industotwight.setText(data.getIlweight());
                             industotwight.setEnabled(false);
                             smalltotqty.setText(data.getSpltotqty());
                             smalltotqty.setEnabled(false);
                             smalltotweight.setText(data.getSplweight());
-                            smalltotweight.setEnabled(false);
+                            smalltotweight.setEnabled(false);*/
 
                         }
                     }else {

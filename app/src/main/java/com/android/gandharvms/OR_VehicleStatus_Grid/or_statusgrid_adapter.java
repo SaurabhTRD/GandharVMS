@@ -162,5 +162,4 @@ public class or_statusgrid_adapter extends RecyclerView.Adapter<or_statusgrid_ad
             }
         };
     }
-
 }

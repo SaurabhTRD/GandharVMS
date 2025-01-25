@@ -86,47 +86,16 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         setupHeader();
-        /*btnhome = findViewById(R.id.btn_homeButton);
-        btnlogout=findViewById(R.id.btn_logoutButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_Truck_Production.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_Truck_Production.this, Menu.class));
-            }
-        });*/
-
-
-//        ,,,,,,,;
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
         vehiclenumber = findViewById(R.id.etvehicleno);
-        //etqty = findViewById(R.id.etqty2);
         typepack = findViewById(R.id.typeofpackproduction);
         signdis = findViewById(R.id.etdispatchofficer);
-//        dtdis = findViewById(R.id.etdtdispatch);
         signsec = findViewById(R.id.etsecurityofficer);
         dtsec = findViewById(R.id.etdtsecurity);
         signweigh = findViewById(R.id.etweighmentofficer);
         dtweigh = findViewById(R.id.etdtweighment);
-//        tare = findViewById(R.id.ettare);
         etremark = findViewById(R.id.etremark);
-
-
-
 
         submit = findViewById(R.id.etssubmit);
         dbroot= FirebaseFirestore.getInstance();
@@ -222,18 +191,29 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenumber.setText(data.getVehicleNumber());
-                        //etqty.setText(String.valueOf(data.getTotalCalCulatedWeight()));//set qty as totalcalculated wt
-                        //typepack.setText(data.getIlsign());
                         signdis.setText(data.getSplsign());
-//                        dtdis.setText(data.getDespatchInTime());
                         typepack.setText(data.getIlsign());
+                        /*if(data.ilsign=="" && data.getIlsign()== null)
+                        {
+                            typepack.setVisibility(View.GONE);
+                            signdis.setVisibility(View.VISIBLE);
+                            signdis.setText(data.getSplsign());
+                        } else if (data.splsign=="" && data.getSplsign()== null) {
+                            signdis.setVisibility(View.GONE);
+                            typepack.setVisibility(View.VISIBLE);
+                            typepack.setText(data.getIlsign());
+                        }else {
+                            signdis.setVisibility(View.VISIBLE);
+                            signdis.setText(data.getSplsign());
+                            typepack.setVisibility(View.VISIBLE);
+                            typepack.setText(data.getIlsign());
+                        }*/
                         signsec.setText(data.getSecurityCreatedBy());
                         dtsec.setText(data.getSecurityCreatedDate());
                         signweigh.setText(data.getWeighmentCreatedBy());
                         dtweigh.setText(data.getWeighmentCreatedDate());
                         serialnumber.setEnabled(false);
                         vehiclenumber.setEnabled(false);
-                        //etqty.setEnabled(false);
                         typepack.setEnabled(false);
                         signdis.setEnabled(false);
                         signsec.setEnabled(false);
@@ -241,9 +221,6 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
                         signsec.setEnabled(false);
                         dtweigh.setEnabled(false);
                         signweigh.setEnabled(false);
-
-
-//                      pending  signsec.setText(data.s);
                     } else {
                         Toasty.success(Outward_Truck_Production.this, "Vehicle Is Not Available", Toast.LENGTH_SHORT).show();
                     }

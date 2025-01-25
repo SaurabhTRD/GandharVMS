@@ -26,6 +26,7 @@ import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
 import com.android.gandharvms.OR_VehicleStatus_Grid.or_statusgrid_livedata;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
+import com.android.gandharvms.Outward_Truck_Logistic.livevehdatafor_logistic;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
@@ -152,9 +153,7 @@ public class Grid_Outward extends AppCompatActivity {
             vehstatus.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Global_Var.getInstance().InOutType='x';
-                    Global_Var.getInstance().DeptType='x';
-                    Intent intent = new Intent(Grid_Outward.this, or_statusgrid_livedata.class);
+                    Intent intent = new Intent(Grid_Outward.this, livevehdatafor_logistic.class);
                     startActivity(intent);
                 }
             });
