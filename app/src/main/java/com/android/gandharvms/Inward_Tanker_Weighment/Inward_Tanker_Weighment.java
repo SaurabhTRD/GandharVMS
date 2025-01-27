@@ -186,28 +186,6 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
         //Call Api method
         weighmentdetails = RetroApiClient.getWeighmentDetails();
         setupHeader();
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Tanker_Weighment.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Tanker_Weighment.this, Menu.class));
-            }
-        });*/
 
         sharedPreferences = getSharedPreferences("TankerWeighment", MODE_PRIVATE);
         if (sharedPreferences != null) {
@@ -728,8 +706,8 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
             }
             Toasty.success(Inward_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
             makeNotification(vehicalnumber, outTime);
-            startActivity(new Intent(Inward_Tanker_Weighment.this, Inward_Tanker.class));
-            finish();
+            Intent intent = new Intent(Inward_Tanker_Weighment.this, grid.class);
+            startActivity(intent);
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -169,29 +169,6 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
         etcontainer=(EditText)findViewById(R.id.ettrwcontainer);
         etremark=(EditText)findViewById(R.id.ettwremark);
         setupHeader();
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Truck_weighment.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Truck_weighment.this, Menu.class));
-            }
-        });*/
 
         // listing Data button
         img1 = findViewById(R.id.ettrimageView1);
@@ -423,44 +400,6 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
         }
     }
 
-    /*protected void onActivityResult1(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            if (requestCode == CAMERA_REQUEST_CODE && data != null) {
-                Bitmap bimage1 = (Bitmap) data.getExtras().get("data");
-                if (bimage1 != null) {
-                    img1.setImageBitmap(bimage1);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bimage1.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage1, "title1", null);
-                    LocalImgPath[0] = path;
-                    image1 = Uri.parse(path);
-                    ImgVehicle = baos.toByteArray();
-                } else {
-                    // Handle case when no image is captured
-                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
-                }
-            } else if (requestCode == CAMERA_REQUEST_CODE1 && data != null) {
-                Bitmap bimage2 = (Bitmap) data.getExtras().get("data");
-                if (bimage2 != null) {
-                    img2.setImageBitmap(bimage2);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    bimage2.compress(Bitmap.CompressFormat.JPEG, 90, baos);
-                    String path = MediaStore.Images.Media.insertImage(getContentResolver(), bimage2, "title2", null);
-                    LocalImgPath[1] = path;
-                    image2 = Uri.parse(path);
-                    ImgDriver = baos.toByteArray();
-                } else {
-                    // Handle case when no image is captured
-                    Toasty.error(this, "No image captured", Toast.LENGTH_SHORT).show();
-                }
-            }
-        } else {
-            // Handle case when camera activity is canceled
-            Toasty.warning(this, "Camera operation canceled", Toast.LENGTH_SHORT).show();
-        }
-    }*/
-
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         ContentResolver contentResolver = getContentResolver();
@@ -514,7 +453,7 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
             }
             Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
             makeNotification(vehicalnumber, outTime);
-            startActivity(new Intent(Inward_Truck_weighment.this, Inward_Truck.class));
+            startActivity(new Intent(Inward_Truck_weighment.this, grid.class));
             finish();
         } catch (Exception e) {
             e.printStackTrace();

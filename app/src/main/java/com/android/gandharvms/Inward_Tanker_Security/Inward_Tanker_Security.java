@@ -670,13 +670,6 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
             // Check if no materials are added
             Toasty.warning(this, "Please add at least one material before submitting.", Toast.LENGTH_SHORT, true).show();
         }else {
-
-            //Extra material dynamic view
-            //List<Map<String, String>> materialList = new ArrayList<>();
-
-// Create a JSON array to hold the extra materials
-
-
 // Convert JSONArray to string
             String extraMaterialsString = extraMaterialsArray.toString();
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, "material", "", "", 'W', 'I', Date,

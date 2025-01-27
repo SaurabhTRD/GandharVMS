@@ -324,7 +324,7 @@ public class InwardOut_Tanker_Security extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() != null && response.body()==true) {
                         Toasty.success(InwardOut_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         makeNotification(vehiclenumber);
-                        startActivity(new Intent(InwardOut_Tanker_Security.this, submenu_Inward_Tanker.class));
+                        startActivity(new Intent(InwardOut_Tanker_Security.this, grid.class));
                         finish();
                     }else{
                         Toasty.error(InwardOut_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();

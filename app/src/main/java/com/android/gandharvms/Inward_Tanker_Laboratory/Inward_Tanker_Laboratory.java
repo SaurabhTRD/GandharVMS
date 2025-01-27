@@ -144,34 +144,6 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
         labdetails = RetroApiClient.getLabDetails();//Call retrofit api
         userDetails = RetroApiClient.getLoginApi();
 
-//        autoCompleteTextView1 = findViewById(R.id.fetchlabqtyuomtanker);
-//        qtyUomMapping = new HashMap<>();
-//        qtyUomMapping.put("NA", 1);
-//        qtyUomMapping.put("Ton", 2);
-//        qtyUomMapping.put("Litre", 3);
-//        qtyUomMapping.put("KL", 4);
-//        qtyUomMapping.put("Kgs", 5);
-//        qtyUomMapping.put("pcs", 6);
-//        qtyUomMapping.put("M3", 7);
-//
-//        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
-//        autoCompleteTextView1.setAdapter(qtyuomdrop);
-//        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
-//                // Retrieve the corresponding numerical value from the mapping
-//                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
-//                if (qtyUomNumericValue != null) {
-//                    // Now, you can use qtyUomNumericValue when inserting into the database
-//                    Toasty.success(Inward_Tanker_Laboratory.this, "QTYUnitofMeasurement : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    // Handle the case where the mapping doesn't contain the display value
-//                    Toasty.error(Inward_Tanker_Laboratory.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
         autoCompleteTextView2 = findViewById(R.id.etPrcstest);
         rcstest = new ArrayAdapter<String>(this,R.layout.in_rcs_test,rcsTest);
         autoCompleteTextView2.setAdapter(rcstest);
@@ -237,39 +209,6 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
         updateclick = (Button) findViewById(R.id.itlabupdateclick);
 
         viewsamplereporting = (Button) findViewById(R.id.btn_viewsampleReport);
-/*
-        viewweighmentreporting=(Button)findViewById(R.id.btn_clicktoViewWEIGHMENTREPORT);
-*/
-        /*view = findViewById(R.id.viewclick);*/
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker_Lab_Viewdata.class));
-            }
-        });*/
-
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Tanker_Laboratory.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Tanker_Laboratory.this, Menu.class));
-            }
-        });*/
 
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -459,36 +398,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
         String apperance = etpapperance.getText().toString().trim();
         String odor = etpodor.getText().toString().trim();
         String color = etpcolour.getText().toString().trim();
-        //int qty = Integer.parseInt(etqty.getText().toString().trim());
-//        if (!etqty.getText().toString().isEmpty()) {
-//            try {
-//                String input = etqty.getText().toString().trim();
-//                int integerValue;
-//
-//                if (input.contains(".")) {
-//                    // Input contains a decimal point
-//                    String[] parts = input.split("\\.");
-//                    int wholeNumberPart = Integer.parseInt(parts[0]);
-//                    int decimalPart = Integer.parseInt(parts[1]);
-//                    // Adjust decimal part to two digits
-//                    if (parts[1].length() > 2) {
-//                        // Take only first two digits after decimal point
-//                        decimalPart = Integer.parseInt(parts[1].substring(0, 2));
-//                    }
-//                    // Combine integer and decimal parts
-//                    integerValue = wholeNumberPart * 100 + decimalPart;
-//                } else {
-//                    // Input is a whole number
-//                    integerValue = Integer.parseInt(input) * 100;
-//                }
-//                qty = integerValue;
-//            } catch (NumberFormatException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
         String rcsTest = etPrcstest.getText().toString().trim();
-        //int kv = Integer.parseInt(etpkv.getText().toString().trim());
         if (!etpkv.getText().toString().isEmpty()) {
             try {
                 String input = etpkv.getText().toString().trim();
@@ -630,7 +540,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
                         makeNotification(vehicle, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Tanker_Laboratory.this, Inward_Tanker.class));
+                        startActivity(new Intent(Inward_Tanker_Laboratory.this, grid.class));
                         finish();
                     } else {
                         Toasty.error(Inward_Tanker_Laboratory.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();

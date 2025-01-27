@@ -293,7 +293,6 @@ public class InwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
     }
 
     private void update() {
-
         String intime = etintime.getText().toString().trim();
         String vehicleno = etvehicel.getText().toString().trim();
         String gross = etgrosswt.getText().toString().trim();
@@ -306,7 +305,7 @@ public class InwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,gross,net,tare,imgPath1,imgPath2,
-                    'S','O',vehicleType,intime,EmployeId,udip,uwet);
+                    'S','O',vehicleType,intime,EmployeId,udip,uwet,"","");
 
             Call<Boolean> call = weighmentdetails.inwardoutweighment(modelInwardOutweighment);
             call.enqueue(new Callback<Boolean>() {
@@ -459,7 +458,7 @@ public class InwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
             }
             Toasty.success(InwardOut_Truck_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
             makeNotification(vehicalnumber);
-            startActivity(new Intent(InwardOut_Truck_Weighment.this, Inward_Truck_Out.class));
+            startActivity(new Intent(InwardOut_Truck_Weighment.this, grid.class));
             finish();
         } catch (Exception e) {
             e.printStackTrace();

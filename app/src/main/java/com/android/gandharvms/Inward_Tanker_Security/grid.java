@@ -30,6 +30,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_Sampling;
 import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
@@ -51,7 +52,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class grid extends AppCompatActivity {
+public class grid extends NotificationCommonfunctioncls {
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
@@ -79,7 +80,7 @@ public class grid extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_grid);
-
+        setupHeader();
         fromDate = findViewById(R.id.gridbtnfromDate);
         toDate = findViewById(R.id.gridbtntoDate);
         imgsync = findViewById(R.id.inwardsyncbt);

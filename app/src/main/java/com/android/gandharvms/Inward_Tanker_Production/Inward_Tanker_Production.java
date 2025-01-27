@@ -134,29 +134,6 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
         //datetimepickertesting
         etconunloadDateTime = findViewById(R.id.etconunloadDateTime);
 
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Tanker_Production.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Tanker_Production.this, Menu.class));
-            }
-        });*/
-
         if (getIntent().hasExtra("VehicleNumber")) {
             String action = getIntent().getStringExtra("Action");
             if (action != null && action.equals("Up")) {
@@ -331,23 +308,6 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
         String eddate = etconunloadDateTime.getText().toString().trim();
         String unloadmaterialmaterialtk=edunloadabovematerial.getText().toString().trim();
         String abovematerialunloadtk=abovematerialunload.getText().toString().trim();
-        //int reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
-        /*if (!edunloadabovematerial.getText().toString().isEmpty()) {
-            try {
-                reqtounload = Integer.parseInt(edunloadabovematerial.getText().toString().trim());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-        int abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
-
-        if (!abovematerialunload.getText().toString().isEmpty()) {
-            try {
-                abovematerialtank = Integer.parseInt(abovematerialunload.getText().toString().trim());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }*/
         String remark=!etremark.getText().toString().trim().isEmpty()?etremark.getText().toString().trim():"";
         String confirmunload = etconbyop.getText().toString().trim();
         String oprator = opratorname.getText().toString().trim();
@@ -371,7 +331,7 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
                         makeNotification(vehicleNumber, outTime);
                         Log.d("Production", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Tanker_Production.this, Inward_Tanker.class));
+                        startActivity(new Intent(Inward_Tanker_Production.this, grid.class));
                         finish();
                     } else {
                         Toasty.error(Inward_Tanker_Production.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();

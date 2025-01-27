@@ -158,49 +158,7 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         getmaxserialno = RetroApiClient.getLoginApi();
         userDetails = RetroApiClient.getLoginApi();
 
-//        isReportingCheckBox = findViewById(R.id.isreporting);
-//        reportingRemarkLayout = findViewById(R.id.edtreportingremark);
-//        saveButton = findViewById(R.id.saveButton);
-
-//        reportingRemarkLayout.setVisibility(View.GONE);
-//        saveButton.setVisibility(View.GONE);
         setupHeader();
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Truck_Security.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Truck_Security.this, Menu.class));
-            }
-        });*/
-
-//        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            if (isChecked) {
-//                // Show the TextInputLayout and Button
-//                reportingRemarkLayout.setVisibility(View.VISIBLE);
-//                saveButton.setVisibility(View.VISIBLE);
-//            } else {
-//                // Hide the TextInputLayout and Button
-//                reportingRemarkLayout.setVisibility(View.GONE);
-//                saveButton.setVisibility(View.GONE);
-//            }
-//        });
-
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
@@ -231,21 +189,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         qtyUomMapping.put("Feet",10);
 
         qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
-//        autoCompleteTextView1.setAdapter(qtyuomdrop);
-//        autoCompleteTextView1.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
-//                // Retrieve the corresponding numerical value from the mapping
-//                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
-//                if (qtyUomNumericValue != null) {
-//                    Toasty.success(Inward_Truck_Security.this, "QtyUomNumericValue : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    // Handle the case where the mapping doesn't contain the display value
-//                    Toasty.warning(Inward_Truck_Security.this, "Default QTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
 
         autoCompleteTextView2 = findViewById(R.id.etsuom2);
         netweuomdrop = new ArrayAdapter<String>(this, R.layout.in_tr_se_nwe_list, new ArrayList<>(qtyUomMapping.keySet()));
@@ -270,9 +213,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         etsinvocieno = findViewById(R.id.etsinvocieno);
         etsdate = findViewById(R.id.etsdate);
         etssupplier = findViewById(R.id.etssupplier);
-        //etsmaterial = findViewById(R.id.etsmaterial);
-//        etsqty = findViewById(R.id.etsqty);
-//        etsuom = findViewById(R.id.etsuom);
         etsnetwt = findViewById(R.id.etsnetwt);
         etsuom2 = findViewById(R.id.etsuom2);
         etregister = findViewById(R.id.etregister);
@@ -298,9 +238,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         teamList.add("Meter");
         teamList.add("Feet");
 
-//        repremark = findViewById(R.id.edtreportingremark);
-//        cbox = findViewById(R.id.isreporting);
-
         lrcopyYes = findViewById(R.id.rb_LRCopyYes);
         lrcopyNo = findViewById(R.id.rb_LRCopyNo);
         deliveryYes = findViewById(R.id.rb_DeliveryYes);
@@ -309,18 +246,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         taxinvoiceNo = findViewById(R.id.rb_TaxInvoiceNo);
         ewaybillYes = findViewById(R.id.rb_EwaybillYes);
         ewaybillNo = findViewById(R.id.rb_EwaybillNo);
-//      for imgpicker
-
-        // listing button
-/*
-        view = findViewById(R.id.viewdb);
-*/
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Inward_Truck_Security.this, Inward_Truck_Security_viewdata.class));
-            }
-        });*/
         etsdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -399,34 +324,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
             }
         });
 
-//        etsqty.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                // Not needed for this implementation
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                // Not needed for this implementation
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable editable) {
-//                String currentText = etsqty.getText().toString();
-//                if (editable.length() > 0 && editable.length() <= 8) {
-//                    // Clear any previous error message when valid
-//                    etsqty.setError(null);
-//                } else {
-//                    String trimmedText = editable.toString().substring(0, Math.min(editable.length(), 8));
-//                    if (!currentText.equals(trimmedText)) {
-//                        // Only set text and move cursor if the modification is not the desired text
-//                        etsqty.setText(trimmedText);
-//                        etsqty.setSelection(trimmedText.length()); // Move cursor to the end
-//                    }
-//                }
-//            }
-//        });
-
         String dateFormatPattern = "ddMMyyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
         String formattedDate = dateFormat.format(currentDate);
@@ -459,12 +356,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
             public void onClick(View v) {
 
                 trsedata();
-//                isReportingCheckBox = findViewById(R.id.isreporting);
-//                if (isReportingCheckBox.isChecked()) {
-//                    updateData();
-//                } else {
-//                    trsedata();
-//                }
             }
         });
 
@@ -474,18 +365,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                 irinsecupdbyinwardid();
             }
         });
-
-//        saveButton = findViewById(R.id.saveButton);
-//        saveButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (DocId == "") {
-//                    insertreporting();
-//                } else {
-//                    Toasty.warning(Inward_Truck_Security.this, "Record Already exist", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
 
         etvehicalnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -520,8 +399,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         EditText editqty = materialview.findViewById(R.id.editqty);
         AppCompatSpinner spinner = materialview.findViewById(R.id.spinner_team);
         ImageView img = materialview.findViewById(R.id.editcancel);
-//        EditText etrecivingqty = materialview.findViewById(R.id.recivingqty);
-//        etrecivingqty.setVisibility(View.GONE);
 
         linearLayout.addView(materialview);
 
@@ -603,15 +480,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         String invoicenumber = etsinvocieno.getText().toString().trim();
         String Date = etsdate.getText().toString().trim();
         String partyname = etssupplier.getText().toString().trim();
-//        String material = etsmaterial.getText().toString().trim();
-        //int qty = Integer.parseInt(etsqty.getText().toString().trim());
-//        if (!etsqty.getText().toString().isEmpty()) {
-//            try {
-//                insertqty = Integer.parseInt(etsqty.getText().toString().trim());
-//            } catch (NumberFormatException e) {
-//                e.printStackTrace();
-//            }
-//        }
         //int netweight = Integer.parseInt(etsnetwt.getText().toString().trim());
         if (!etsnetwt.getText().toString().isEmpty()) {
             try {
@@ -629,15 +497,7 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
             }
         }
         String intime = etintime.getText().toString().trim();
-        String outTime = getCurrentTime();//Insert out Time Directly to the Database
-        //int qtyuom = Integer.parseInt( qtyUomNumericValue.toString().trim());
-//        if (!qtyUomNumericValue.toString().isEmpty()) {
-//            try {
-//                insertqtyUom = Integer.parseInt(qtyUomNumericValue.toString().trim());
-//            } catch (NumberFormatException e) {
-//                e.printStackTrace();
-//            }
-//        }
+        String outTime = getCurrentTime();
         String vehicltype = Global_Var.getInstance().MenuType;
         char InOutType = Global_Var.getInstance().InOutType;
         char DeptType = Global_Var.getInstance().DeptType;
@@ -704,7 +564,7 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                         Notificationforall(vehicalnumber);
                         makeNotification(vehicalnumber, outTime);
                         Toasty.success(Inward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Truck_Security.this, Inward_Truck.class));
+                        startActivity(new Intent(Inward_Truck_Security.this, grid.class));
                         finish();
                     } else {
                         Toasty.error(Inward_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
@@ -732,73 +592,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         }
     }
 
-//    public void insertreporting() {
-//        String serialnumber = etserialnumber.getText().toString().trim();
-//        String vehicalnumber = etvehicalnumber.getText().toString().trim();
-//        String invoicenumber = "";
-//        String Date = etsdate.getText().toString().trim();
-//        String partyname = "";
-//        String material = "";
-//        int qty = 0;
-//        int netweight = 0;
-//        String intime = "";
-//        String outTime = "";//Insert out Time Directly to the Database
-//        int qtyuom = 1;
-//
-//        String vehicltype = Global_Var.getInstance().MenuType;
-//        char InOutType = Global_Var.getInstance().InOutType;
-//        char DeptType = Global_Var.getInstance().DeptType;
-//        int netweuom = 1;
-//        String remark = "";
-//        String pooa = "";
-//        String mobnumber = "";
-//        String edremark = "";
-//        Boolean isreporting = false;
-//        if (cbox.isChecked()) {
-//            edremark = repremark.getText().toString().trim();
-//            isreporting = true;
-//        }
-//        if (vehicalnumber.isEmpty() || Date.isEmpty()) {
-//            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-//        } else {
-//            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'S', InOutType, "",
-//                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId, "", InwardId);
-//
-//            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
-//            Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
-//            call.enqueue(new Callback<Boolean>() {
-//                @Override
-//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                    if (response.isSuccessful() && response.body() != null && response.body()) {
-//                        Toasty.success(Inward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(Inward_Truck_Security.this, Inward_Truck.class));
-//                        finish();
-//                    } else {
-//                        Toasty.error(Inward_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Boolean> call, Throwable t) {
-//                    Log.e("Retrofit", "Failure: " + t.getMessage());
-//// Check if there's a response body in case of an HTTP error
-//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-//                        Response<?> response = ((HttpException) t).response();
-//                        if (response != null) {
-//                            Log.e("Retrofit", "Error Response Code: " + response.code());
-//                            try {
-//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                    Toasty.error(Inward_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    }
-
     public void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
         Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(VehicleNo, vehicltype, DeptType, InOutType);
         call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
@@ -816,19 +609,8 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                         etserialnumber.setEnabled(false);
                         etvehicalnumber.setText(obj.getVehicleNo());
                         etvehicalnumber.setEnabled(false);
-//                        repremark.setText(obj.getReportingRemark());
-//                        repremark.setEnabled(false);
                         etsdate.setText(obj.getDate());
                         etsdate.setEnabled(false);
-                        //etsnetwt.setText(String.valueOf(obj.getNetWeight()));
-//                        cbox.setChecked(true);
-//                        cbox.setEnabled(false);
-//                        saveButton.setVisibility(View.GONE);
-
-
-//                            DocId = document.getId();
-                       /* etintime.requestFocus();
-                        etintime.callOnClick();*/
                     }
                 } else {
                     Log.e("Retrofit", "Error" + response.code());
@@ -1176,54 +958,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         finish();
     }
 
-    /*public void GetMaxSerialNo(String formattedDate) {
-        Call<String> call = getmaxserialno.getMaxSerialNumber(formattedDate);
-        call.enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                if (response.isSuccessful()) {
-                    String maxSerialNumber = response.body();
-                    String newSerialNumber;
-
-                    // Check if the fetched serial number belongs to the specified vehicle type
-                    if (maxSerialNumber.startsWith(vehicleType)) {
-                        int autoGeneratedNumber = Integer.parseInt(maxSerialNumber.substring(10, 13)) + 1;
-                        @SuppressLint("DefaultLocale") String autoGeneratedNumberString = String.format("%03d", autoGeneratedNumber);
-                        newSerialNumber = vehicleType + formattedDate + autoGeneratedNumberString;
-                    } else {
-                        // Start with a new serial number for that vehicle type
-                        newSerialNumber = vehicleType + formattedDate + "001";
-                    }
-
-                    etserialnumber.setText(newSerialNumber);
-                    etserialnumber.setEnabled(true);
-                } else {
-                    // Handle the error
-                    String serialNumber = vehicleType + formattedDate + "001";
-                    etserialnumber.setText(serialNumber);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<String> call, Throwable t) {
-                String serialNumber = vehicleType + formattedDate + "001";
-                etserialnumber.setText(serialNumber);
-                Log.e("Retrofit", "Failure: " + t.getMessage());
-                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                    Response<?> response = ((HttpException) t).response();
-                    if (response != null) {
-                        Log.e("Retrofit", "Error Response Code: " + response.code());
-                        try {
-                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-                Toasty.error(Inward_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }*/
     public void GetMaxSerialNo(String formattedDate) {
         /*String serialNoPreFix = "GA" + formattedDate;*/
         Call<String> call = getmaxserialno.getMaxSerialNumber(formattedDate);

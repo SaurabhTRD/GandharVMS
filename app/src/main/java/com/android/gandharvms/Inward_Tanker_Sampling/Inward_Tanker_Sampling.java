@@ -38,6 +38,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
+import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.RegRequestModel;
 import com.android.gandharvms.RegisterwithAPI.Register;
@@ -111,38 +112,6 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
         etinvoiceno = findViewById(R.id.etsubmitted);
         etsdate = findViewById(R.id.etsdate);
         etvehicleno = findViewById(R.id.etvehicleno);
-
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Tanker_Sampling.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Inward_Tanker_Sampling.this, Menu.class));
-            }
-        });*/
-
-        /*view = findViewById(R.id.samplingview);*/
-
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Inward_Tanker_Sampling.this, Inward_Tanker_saampling_View_data.class));
-            }
-        });*/
 
         if (getIntent().hasExtra("VehicleNumber")) {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, DeptType, InOutType);
@@ -258,7 +227,7 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
                             makeNotification(vehiclenumber, etsubmitted);
                             Log.d("Registration", "Response Body: " + response.body());
                             Toasty.success(Inward_Tanker_Sampling.this, "Data Inserted succesfully", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Inward_Tanker_Sampling.this, Inward_Tanker.class);
+                            Intent intent = new Intent(Inward_Tanker_Sampling.this,grid.class);
                             startActivity(intent);
                         }
                         else {

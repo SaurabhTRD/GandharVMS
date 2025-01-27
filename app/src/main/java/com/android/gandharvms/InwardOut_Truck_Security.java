@@ -98,30 +98,6 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
         ewayyes = findViewById(R.id.rb_EwaybillYes);
         ewayno = findViewById(R.id.rb_EwaybillNo);
 
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(InwardOut_Truck_Security.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(InwardOut_Truck_Security.this, Menu.class));
-            }
-        });*/
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,13 +110,6 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, DeptType, InOutType);
         }
 
-        //view = findViewById(R.id.btn_Viewweigmentslip);
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               startActivity(new Intent(InwardOut_Truck_Security.this, Inward_Tanker_Security_Viewdata.class));
-            }
-        });*/
         edintime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -325,7 +294,7 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         Toasty.success(InwardOut_Truck_Security.this, "Data Inserted Succesfully", Toast.LENGTH_SHORT).show();
                         makeNotification(vehiclenumber);
-                        startActivity(new Intent(InwardOut_Truck_Security.this, submenu_Inward_Tanker.class));
+                        startActivity(new Intent(InwardOut_Truck_Security.this, grid.class));
                         finish();
                     }
                     else{

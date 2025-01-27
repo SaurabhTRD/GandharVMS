@@ -12,12 +12,13 @@ public class Model_InwardOutweighment {
     private String VehicleType;
     private String OutInTime;
     public String UpdatedBy;
-   public String ShortageDip;
-   public String ShortageWeight ;
-
+    public String ShortageDip;
+    public String ShortageWeight ;
+    public String shortagedipinliter;
+    public String shortageweightinkg;
     public Model_InwardOutweighment(int inwardId, String grossWeight, String netWeight, String tareWeight,
                 String outVehicleImage, String outDriverImage, char nextprocess, char i_O, String vehicleType,
-                String outInTime,String updatedBy,String shortageDip,String shortageWeight) {
+                String outInTime,String updatedBy,String shortageDip,String shortageWeight,String dipinliter,String weightinkg) {
         InwardId = inwardId;
         GrossWeight = grossWeight;
         NetWeight = netWeight;
@@ -31,5 +32,7 @@ public class Model_InwardOutweighment {
         UpdatedBy=updatedBy;
         ShortageDip =shortageDip;
         ShortageWeight = shortageWeight;
+        shortagedipinliter=dipinliter;
+        shortageweightinkg=weightinkg;
     }
 }

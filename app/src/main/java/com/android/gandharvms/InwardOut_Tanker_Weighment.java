@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.TimePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -20,6 +21,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -96,10 +98,10 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
     byte[][] arrayOfByteArrays = new byte[2][];
     Uri[] LocalImgPath = new Uri[2];
     private String imgPath1, imgPath2;
-
     private String token;
     ImageView btnlogout,btnhome;
     TextView username,empid;
+    AutoCompleteTextView autoshortagedipinltr,autoshortageweightinkg;
 
     public static String Tanker;
     public static String Truck;
@@ -112,8 +114,6 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         userDetails = RetroApiClient.getLoginApi();
         weighmentdetails = RetroApiClient.getWeighmentDetails();
 
-        /*view = findViewById(R.id.btn_Viewweigmentslip);*/
-
         etintime = findViewById(R.id.etintime);
         ettareweight = findViewById(R.id.ettareweight);
         grswt = findViewById(R.id.etgrosswt);
@@ -124,7 +124,8 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
 
         img1=findViewById(R.id.intaweioutvehicleimage);
         img2=findViewById(R.id.intaweioutdriverimage);
-
+        autoshortagedipinltr=findViewById(R.id.shortagedipinltr);
+        autoshortageweightinkg=findViewById(R.id.shortageweightinkg);
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
         etvehicle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -138,32 +139,10 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         if (getIntent().hasExtra("VehicleNumber")) {
             FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
-
+        autoshortagedipinltr.setText("Ltr", false);
+        autoshortageweightinkg.setText("Kgs", false);
         etsubmit = (Button) findViewById(R.id.prosubmit);
         dbroot = FirebaseFirestore.getInstance();
-
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(InwardOut_Tanker_Weighment.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(InwardOut_Tanker_Weighment.this, Menu.class));
-            }
-        });*/
 
         etsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -176,12 +155,6 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                 }
             }
         });
-        /*view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(InwardOut_Tanker_Weighment.this, Inward_Tanker_Weighment_Viewdata.class));
-            }
-        });*/
 
         etnetwt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -210,6 +183,7 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
             }
         });
     }
+    @SuppressLint("MissingSuperCall")
     public void onBackPressed(){
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
@@ -326,12 +300,14 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         String tare = ettareweight.getText().toString().trim();
         String udip = shdip.getText().toString()!=null?shdip.getText().toString().trim():"";
         String uwet = shwe.getText().toString()!=null?shwe.getText().toString().trim():"";
+        String shortagedipinliter = shdip.getText().toString()!=null?autoshortagedipinltr.getText().toString().trim():"";
+        String shortageweightinkgs= shwe.getText().toString()!=null?autoshortageweightinkg.getText().toString().trim():"";
 
         if (intime.isEmpty()|| vehiclnmo.isEmpty()||grosswt.isEmpty()||netwt.isEmpty()||tare.isEmpty()){
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         }else {
             Model_InwardOutweighment modelInwardOutweighment = new Model_InwardOutweighment(inwardid,grosswt,netwt,tare,imgPath1,imgPath2,
-                    'S','O',vehicleType,intime,EmployeId,udip,uwet);
+                    'S','O',vehicleType,intime,EmployeId,udip,uwet,shortagedipinliter,shortageweightinkgs);
             Call<Boolean> call = weighmentdetails.inwardoutweighment(modelInwardOutweighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -467,7 +443,7 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
             }
             Toasty.success(InwardOut_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
             makeNotification(vehicalnumber);
-            startActivity(new Intent(InwardOut_Tanker_Weighment.this, Inward_Tanker_Out.class));
+            startActivity(new Intent(InwardOut_Tanker_Weighment.this, grid.class));
             finish();
         } catch (Exception e) {
             e.printStackTrace();
