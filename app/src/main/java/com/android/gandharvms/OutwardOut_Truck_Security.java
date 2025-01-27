@@ -489,7 +489,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
                         makeNotification(svehicleno);
                         makeNotification(svehicleno, outTime);
                         Toasty.success(OutwardOut_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(OutwardOut_Truck_Security.this, Menu.class));
+                        startActivity(new Intent(OutwardOut_Truck_Security.this, Grid_Outward.class));
                         finish();
                     }
                 }

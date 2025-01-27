@@ -466,7 +466,7 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
                         makeNotificationLogistic(etvehiclenumber, outTime);
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Outward_Truck_Logistics.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Outward_Truck_Logistics.this, Outward_Truck.class));
+                        startActivity(new Intent(Outward_Truck_Logistics.this, Grid_Outward.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

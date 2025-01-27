@@ -594,7 +594,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
             }
             makeNotification(vehicleNum);
             Toasty.success(OutwardOut_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-            startActivity(new Intent(OutwardOut_Tanker_Weighment.this, OutwardOut_Tanker.class));
+            startActivity(new Intent(OutwardOut_Tanker_Weighment.this, Grid_Outward.class));
             finish();
         } catch (Exception e) {
             e.printStackTrace();

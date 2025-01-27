@@ -429,7 +429,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
                         Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         makeNotification(vehnumber,uintime);
                         makeNotificationforsmallpack(vehnumber,uintime);
-                        startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Outward_Truck.class));
+                        startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Grid_Outward.class));
                         finish();
                     }
                 }
@@ -500,7 +500,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         makeNotification(vehnumber,uintime);
-                        startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Outward_Truck.class));
+                        startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Grid_Outward.class));
                         finish();
                     }
                 }

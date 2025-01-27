@@ -296,7 +296,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                     if (response.isSuccessful() && response.body() != null && response.body() == true) {
                         Toasty.success(New_Outward_Tanker_Production.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
                         makeNotification(ivehicle, outTime);
-                        startActivity(new Intent(New_Outward_Tanker_Production.this, Outward_Tanker.class));
+                        startActivity(new Intent(New_Outward_Tanker_Production.this, Grid_Outward.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

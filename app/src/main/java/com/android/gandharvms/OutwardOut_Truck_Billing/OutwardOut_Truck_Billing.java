@@ -450,7 +450,7 @@ public class OutwardOut_Truck_Billing extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() != null && response.body()==true){
                         makeNotification(bvehicleno, obOutTime);
                         Toasty.success(OutwardOut_Truck_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        startActivity(new Intent(OutwardOut_Truck_Billing.this, OutwardOut_Truck.class));
+                        startActivity(new Intent(OutwardOut_Truck_Billing.this, Grid_Outward.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

@@ -365,7 +365,7 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() != null && response.body() == true){
                         makeNotification(outsecvehiclenum);
                         Toasty.success(OutwardOut_Tanker_Security.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        startActivity(new Intent(OutwardOut_Tanker_Security.this, OutwardOut_Tanker.class));
+                        startActivity(new Intent(OutwardOut_Tanker_Security.this, Grid_Outward.class));
                         finish();
                     }
                 }

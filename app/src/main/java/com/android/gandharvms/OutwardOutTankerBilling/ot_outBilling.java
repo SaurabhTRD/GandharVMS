@@ -465,7 +465,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() != null && response.body()==true){
                         makeNotification(obvehiclenum);
                         Toasty.success(ot_outBilling.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        startActivity(new Intent(ot_outBilling.this, OutwardOut_Tanker.class));
+                        startActivity(new Intent(ot_outBilling.this, Grid_Outward.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

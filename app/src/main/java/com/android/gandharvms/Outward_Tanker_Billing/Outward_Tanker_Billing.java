@@ -527,7 +527,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
                             });
                         }
                         Toasty.success(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                        startActivity(new Intent(Outward_Tanker_Billing.this, Outward_Tanker.class));
+                        startActivity(new Intent(Outward_Tanker_Billing.this, Grid_Outward.class));
                         finish();
                     } else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

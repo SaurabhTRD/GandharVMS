@@ -378,7 +378,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() && response.body() == true) {
                         makeNotification(odvehiclenum);
                         Toasty.success(DataEntryForm_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                        startActivity(new Intent(DataEntryForm_Production.this, OutwardOut_Tanker.class));
+                        startActivity(new Intent(DataEntryForm_Production.this, Grid_Outward.class));
                         finish();
                     } else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

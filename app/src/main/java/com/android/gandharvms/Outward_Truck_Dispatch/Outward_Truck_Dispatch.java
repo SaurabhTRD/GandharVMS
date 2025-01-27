@@ -416,7 +416,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         makeNotification(etvehiclenumber, outTime);
                         Toasty.success(Outward_Truck_Dispatch.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        startActivity(new Intent(Outward_Truck_Dispatch.this, Outward_Truck.class));
+                        startActivity(new Intent(Outward_Truck_Dispatch.this, Grid_Outward.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());

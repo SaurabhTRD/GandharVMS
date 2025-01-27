@@ -24,6 +24,7 @@ import com.android.gandharvms.BillingHoldListingGrid.gridbillingholdvehiclelisti
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OR_VehicleStatus_Grid.or_statusgrid_livedata;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.Outward_Truck_Logistic.livevehdatafor_logistic;
@@ -44,7 +45,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Grid_Outward extends AppCompatActivity {
+public class Grid_Outward extends NotificationCommonfunctioncls {
 
     RecyclerView rvClub;
     int scrollX = 0;
@@ -75,7 +76,7 @@ public class Grid_Outward extends AppCompatActivity {
         imgsync = findViewById(R.id.outwardsyncbt);
         currdate=findViewById(R.id.outwardgridcurrrentdate);
         vehstatus=findViewById(R.id.gridoutwrdimgvehstatus);
-
+        setupHeader();
         currdate.setText(getCurrentDateTime().toString().trim());
 
         initViews();
