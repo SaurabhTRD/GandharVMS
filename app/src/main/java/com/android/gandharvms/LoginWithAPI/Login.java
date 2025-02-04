@@ -56,7 +56,7 @@ public class Login extends AppCompatActivity {
     String username,encryptedPassword,password1;
 
     private static final String ALLOWED_VERSION = Global_Var.getInstance().APKversion;
-    String versionName = "1.0.0";
+    String versionName = Global_Var.getInstance().APKversion;
 
 
     @Override
@@ -68,7 +68,9 @@ public class Login extends AppCompatActivity {
         final EditText password = findViewById(R.id.etpassword);
         final Button login = findViewById(R.id.btnlogin);
         final TextView NotRegister = findViewById(R.id.registerlink);
+        final TextView versionname=findViewById(R.id.txtversionname);
 
+        versionname.setText(versionName);
         // version vise login
         String versionName =Global_Var.getInstance().APKversion;
         if (!ALLOWED_VERSION.equals(versionName)) {
