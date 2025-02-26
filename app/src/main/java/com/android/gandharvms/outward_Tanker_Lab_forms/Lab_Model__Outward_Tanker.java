@@ -80,6 +80,13 @@ public class Lab_Model__Outward_Tanker {
 
     public int obplOutwardId;
 
+    public String procompartment1;
+    public String procompartment2;
+    public String procompartment3;
+    public String procompartment4;
+    public String procompartment5;
+    public String procompartment6;
+
     public String getBatch_No() {
         return Batch_No;
     }
@@ -691,6 +698,54 @@ public class Lab_Model__Outward_Tanker {
 
     public void setFlushingNo(String flushingNo) {
         Flushing_No = flushingNo;
+    }
+
+    public String getProcompartment1() {
+        return procompartment1;
+    }
+
+    public void setProcompartment1(String procompartment1) {
+        this.procompartment1 = procompartment1;
+    }
+
+    public String getProcompartment2() {
+        return procompartment2;
+    }
+
+    public void setProcompartment2(String procompartment2) {
+        this.procompartment2 = procompartment2;
+    }
+
+    public String getProcompartment3() {
+        return procompartment3;
+    }
+
+    public void setProcompartment3(String procompartment3) {
+        this.procompartment3 = procompartment3;
+    }
+
+    public String getProcompartment4() {
+        return procompartment4;
+    }
+
+    public void setProcompartment4(String procompartment4) {
+        this.procompartment4 = procompartment4;
+    }
+
+    public String getProcompartment5() {
+        return procompartment5;
+    }
+
+    public void setProcompartment5(String procompartment5) {
+        this.procompartment5 = procompartment5;
+    }
+
+    public String getProcompartment6() {
+        return procompartment6;
+    }
+
+    public void setProcompartment6(String procompartment6) {
+        this.procompartment6 = procompartment6;
     }
 
     public Lab_Model__Outward_Tanker(int outwardId, String createdBy, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String blending_Ratio, String vehicleType) {

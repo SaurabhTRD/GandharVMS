@@ -74,6 +74,13 @@ public class Response_Outward_Tanker_Weighment {
     public int splpackof210ltrqty;
     public int splpackofboxbuxketltrqty;
 
+    public int compartment1;
+    public int compartment2;
+    public int compartment3;
+    public int compartment4;
+    public int compartment5;
+    public int compartment6;
+
     public String getProductQTYUOMOA() {
         return ProductQTYUOMOA;
     }
@@ -632,6 +639,54 @@ public class Response_Outward_Tanker_Weighment {
 
     public void setSplpackofboxbuxketltrqty(int splpackofboxbuxketltrqty) {
         this.splpackofboxbuxketltrqty = splpackofboxbuxketltrqty;
+    }
+
+    public int getCompartment1() {
+        return compartment1;
+    }
+
+    public void setCompartment1(int compartment1) {
+        this.compartment1 = compartment1;
+    }
+
+    public int getCompartment2() {
+        return compartment2;
+    }
+
+    public void setCompartment2(int compartment2) {
+        this.compartment2 = compartment2;
+    }
+
+    public int getCompartment3() {
+        return compartment3;
+    }
+
+    public void setCompartment3(int compartment3) {
+        this.compartment3 = compartment3;
+    }
+
+    public int getCompartment4() {
+        return compartment4;
+    }
+
+    public void setCompartment4(int compartment4) {
+        this.compartment4 = compartment4;
+    }
+
+    public int getCompartment5() {
+        return compartment5;
+    }
+
+    public void setCompartment5(int compartment5) {
+        this.compartment5 = compartment5;
+    }
+
+    public int getCompartment6() {
+        return compartment6;
+    }
+
+    public void setCompartment6(int compartment6) {
+        this.compartment6 = compartment6;
     }
 
     public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage,

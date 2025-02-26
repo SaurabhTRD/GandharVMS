@@ -3,6 +3,7 @@ package com.android.gandharvms.Outward_Tanker_Weighment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -15,6 +16,8 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -46,6 +49,9 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Truck;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
+import com.android.gandharvms.Outward_Truck_Dispatch.Varified_Model;
+import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
@@ -93,7 +99,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     EditText intime, serialnumber, vehiclenumber, materialname, custname, oanum, tareweight, tankernumber,
-            etremark, transportername, howmuchqty, elocation,etbillremark;
+            etremark, transportername, howmuchqty, elocation,etbillremark,verifyremark,compartment1,compartment2,compartment3,compartment4,compartment5,compartment6,
+             grossweight1,grossweight2,grossweight3,grossweight4,grossweight5,grossweight6;
     Button submit, complted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -111,6 +118,13 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private LoginMethod userDetails;
     private String serialNo;
     private String imgPath1, imgPath2;
+    public LinearLayout layoutname,layoutimg;
+    public String Netxtdept = "";
+    char despatchNextChar = ' ';
+    public String despatchnext = "";
+    Button verifybtn;
+    private Outward_Truck_interface outwardTruckInterface;
+    CardView cardone,cardtwo,cardthree,cardfour,cardfive,cardsix;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,6 +134,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
+        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
 
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
@@ -135,6 +150,39 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         howmuchqty = findViewById(R.id.ethowmuchqtyfill);
         elocation = findViewById(R.id.etlocation);
         etbillremark=findViewById(R.id.etBillingRemark);
+        layoutname = findViewById(R.id.imglayoutouttanername);
+        layoutimg = findViewById(R.id.imglayoutouttanerimg);
+        verifybtn = findViewById(R.id.outwardtankerbtnvarified);
+        verifybtn.setVisibility(View.GONE);
+        verifyremark = findViewById(R.id.etoutwardtankerweightvarifyremark);
+        verifyremark.setVisibility(View.GONE);
+        cardone  = findViewById(R.id.compaone);
+        cardone.setVisibility(View.GONE);
+        cardtwo = findViewById(R.id.compatwo);
+        cardtwo.setVisibility(View.GONE);
+        cardthree = findViewById(R.id.compathree);
+        cardthree.setVisibility(View.GONE);
+        cardfour = findViewById(R.id.compafour);
+        cardfour.setVisibility(View.GONE);
+        cardfive = findViewById(R.id.compafive);
+        cardfive.setVisibility(View.GONE);
+        cardsix = findViewById(R.id.compasix);
+        cardsix.setVisibility(View.GONE);
+
+        compartment1 = findViewById(R.id.netweight1);
+        compartment2 = findViewById(R.id.netweight2);
+        compartment3 = findViewById(R.id.netweight3);
+        compartment4 = findViewById(R.id.netweight4);
+        compartment5 = findViewById(R.id.netweight5);
+        compartment6 = findViewById(R.id.netweight6);
+
+        grossweight1 = findViewById(R.id.gross1);
+        grossweight2 = findViewById(R.id.gross2);
+        grossweight3 = findViewById(R.id.gross3);
+        grossweight4 = findViewById(R.id.gross4);
+        grossweight5 = findViewById(R.id.gross5);
+        grossweight6 = findViewById(R.id.gross6);
+
 
         img1 = findViewById(R.id.etoutwardotinweighvehicleimg);
         img2 = findViewById(R.id.etoutwardotinweighDriverimg);
@@ -180,6 +228,13 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         if (getIntent().hasExtra("vehiclenum")) {
             FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
+        verifybtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                verification();
+            }
+        });
+
 
     }
 
@@ -262,6 +317,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         elocation.setEnabled(false);
                         etbillremark.setText(data.getTankerBillingRemark());
                         etbillremark.setEnabled(false);
+//                        tareweight.setEnabled(false);
                         String extraMaterialsJson = data.getProductQTYUOMOA();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
@@ -269,6 +325,41 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         createExtraMaterialViews(extraMaterials);
                         /*intime.requestFocus();
                         intime.callOnClick();*/
+                        Netxtdept = data.getPurposeProcess();
+                        if(data.getPurposeProcess() == null || data.getPurposeProcess().trim().isEmpty()){
+                            intime.setVisibility(View.VISIBLE);
+                            tareweight.setVisibility(View.VISIBLE);
+                            etremark.setVisibility(View.VISIBLE);
+                        }else {
+                            // Hide fields when purposeProcess contains any value
+                            intime.setVisibility(View.GONE);
+//                            tareweight.setVisibility(View.GONE);
+                            etremark.setVisibility(View.GONE);
+                            layoutname.setVisibility(View.GONE);
+                            layoutimg.setVisibility(View.GONE);
+                            submit.setVisibility(View.GONE);
+                            verifybtn.setVisibility(View.VISIBLE);
+                            verifyremark.setVisibility(View.VISIBLE);
+                            cardone.setVisibility(View.VISIBLE);
+                            cardtwo.setVisibility(View.VISIBLE);
+                            cardthree.setVisibility(View.VISIBLE);
+                            cardfour.setVisibility(View.VISIBLE);
+                            cardfive.setVisibility(View.VISIBLE);
+                            cardsix.setVisibility(View.VISIBLE);
+//                            compartment1.setText(data.get);
+                            tareweight.setText(data.getTareWeight());
+                            tareweight.setEnabled(false);
+                            handleCompartmentFields(data);
+                            // Handle gross weight and net weight logic
+                            setupGrossWeightLogic();
+                            compartment1.setText(String.valueOf(data.getCompartment1()));
+                            compartment2.setText(String.valueOf(data.getCompartment2()));
+                            compartment3.setText(String.valueOf(data.getCompartment3()));
+                            compartment4.setText(String.valueOf(data.getCompartment4()));
+                            compartment5.setText(String.valueOf(data.getCompartment5()));
+                            compartment6.setText(String.valueOf(data.getCompartment6()));
+
+                        }
                     } else {
                         Toasty.error(Outward_Tanker_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
@@ -552,4 +643,180 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         /*Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);*/
     }
+    private void verification() {
+        String verification_remark = verifyremark.getText().toString().trim();
+        // Handle empty fields safely
+//        int netw1 = getSafeInt(compartment1);
+//        int netw2 = getSafeInt(compartment2);
+//        int netw3 = getSafeInt(compartment3);
+//        int netw4 = getSafeInt(compartment4);
+//        int netw5 = getSafeInt(compartment5);
+//        int netw6 = getSafeInt(compartment6);
+
+        // Fetch existing net weight values (if available)
+        double existingNet1 = getSafeDouble(compartment1);
+        double existingNet2 = getSafeDouble(compartment2);
+        double existingNet3 = getSafeDouble(compartment3);
+        double existingNet4 = getSafeDouble(compartment4);
+        double existingNet5 = getSafeDouble(compartment5);
+        double existingNet6 = getSafeDouble(compartment6);
+        // Handle empty fields safely
+        double tareWeight = getSafeDouble(tareweight);
+        double gross1 = getSafeDouble(grossweight1);
+        Log.d("Debug", "Gross1 value: " + gross1);
+        double gross2 = getSafeDouble(grossweight2);
+        double gross3 = getSafeDouble(grossweight3);
+        double gross4 = getSafeDouble(grossweight3);
+        double gross5 = getSafeDouble(grossweight3);
+        double gross6 = getSafeDouble(grossweight6);
+
+//        // Calculate net weight for each compartment (ensuring no negative values)
+//        int netw1 = (int) Math.max(gross1 - tareWeight, 0);
+//        int netw2 = (int) Math.max(gross2 - tareWeight, 0);
+//        int netw3 = (int) Math.max(gross3 - tareWeight, 0);
+//        int netw4 = (int) Math.max(gross4 - tareWeight, 0);
+//        int netw5 = (int) Math.max(gross5 - tareWeight, 0);
+//        int netw6 = (int) Math.max(gross6 - tareWeight, 0);
+
+        // Calculate net weight for each compartment (use existing value if available)
+        int netw1 = (int) ((existingNet1 > 0) ? existingNet1 : Math.max(gross1 - tareWeight, 0));
+        int netw2 = (int) ((existingNet2 > 0) ? existingNet2 : Math.max(gross2 - tareWeight, 0));
+        int netw3 = (int) ((existingNet3 > 0) ? existingNet3 : Math.max(gross3 - tareWeight, 0));
+        int netw4 = (int) ((existingNet4 > 0) ? existingNet4 : Math.max(gross4 - tareWeight, 0));
+        int netw5 = (int) ((existingNet5 > 0) ? existingNet5 : Math.max(gross5 - tareWeight, 0));
+        int netw6 = (int) ((existingNet6 > 0) ? existingNet6 : Math.max(gross6 - tareWeight, 0));
+
+//        // Set calculated net weight values in respective fields
+//        compartment1.setText(String.valueOf(netw1));
+//        compartment2.setText(String.valueOf(netw2));
+//        compartment3.setText(String.valueOf(netw3));
+//        compartment4.setText(String.valueOf(netw4));
+//        compartment5.setText(String.valueOf(netw5));
+//        compartment6.setText(String.valueOf(netw6));
+
+        // Set net weight values in respective fields
+        setCompartmentValue(compartment1, netw1);
+        setCompartmentValue(compartment2, netw2);
+        setCompartmentValue(compartment3, netw3);
+        setCompartmentValue(compartment4, netw4);
+        setCompartmentValue(compartment5, netw5);
+        setCompartmentValue(compartment6, netw6);
+
+        if (Netxtdept.length()>0){
+            despatchNextChar = Netxtdept.charAt(0);
+        }
+        if (verification_remark.isEmpty()){
+            Toasty.warning(this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
+        }else {
+            Tanker_verification_model tankerVerificationModel = new Tanker_verification_model(OutwardId,"Yes",despatchNextChar,inOut,vehicleType,EmployeId,
+                    verification_remark,netw1,netw2,netw3,netw4,netw5,netw6);
+            Log.d("API_REQUEST", "Sending: " + new Gson().toJson(tankerVerificationModel));
+            Call<Boolean> call = outwardTruckInterface.Tanker_weighmentvarified(tankerVerificationModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body() == true){
+                        Log.d("API_RESPONSE", "Response: " + response.body());
+                        Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        //makeNotificationforsmallverified(wvehiclenumber);
+                        startActivity(new Intent(Outward_Tanker_weighment.this, Outward_Tanker.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Outward_Tanker_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+    // Helper method to safely parse integer values
+    private int getSafeInt(EditText editText) {
+        String text = editText.getText().toString().trim();
+        if (text.isEmpty()) {
+            return 0; // Return default value (e.g., 0) if the field is empty
+        }
+        try {
+            return Integer.parseInt(text);
+        } catch (NumberFormatException e) {
+            return 0; // Handle parsing error by returning a default value
+        }
+    }
+    private void handleCompartmentFields(Response_Outward_Tanker_Weighment data) {
+        setCompartmentField(compartment1, data.getCompartment1());
+        setCompartmentField(compartment2, data.getCompartment2());
+        setCompartmentField(compartment3, data.getCompartment3());
+        setCompartmentField(compartment4, data.getCompartment4());
+        setCompartmentField(compartment5, data.getCompartment5());
+        setCompartmentField(compartment6, data.getCompartment6());
+    }
+
+    private void setCompartmentField(EditText compartmentField, Integer value) {
+        if (value != null && value > 0) {
+            compartmentField.setText(String.valueOf(value));
+            compartmentField.setEnabled(false);
+        } else {
+            compartmentField.setText("");
+            compartmentField.setEnabled(true);
+        }
+    }
+    private void setupGrossWeightLogic() {
+        setupNetWeightCalculation(grossweight1, compartment1);
+        setupNetWeightCalculation(grossweight2, compartment2);
+        setupNetWeightCalculation(grossweight3, compartment3);
+        setupNetWeightCalculation(grossweight4, compartment4);
+        setupNetWeightCalculation(grossweight5, compartment5);
+        setupNetWeightCalculation(grossweight6, compartment6);
+    }
+
+    private void setupNetWeightCalculation(EditText grossWeightField, EditText netWeightField) {
+        grossWeightField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    double tare = Double.parseDouble(tareweight.getText().toString().trim());
+                    double gross = Double.parseDouble(s.toString().trim());
+//                    double net = gross - tare;
+                    double net = Math.max(gross - tare, 0);  // Ensure no negative values
+                    netWeightField.setText(String.valueOf(net));
+                } catch (NumberFormatException e) {
+                    netWeightField.setText(""); // Reset if input is invalid
+                }
+            }
+        });
+    }
+
+    // Utility function to safely parse double values
+    private double getSafeDouble(EditText editText) {
+        try {
+            return Double.parseDouble(editText.getText().toString().trim());
+        } catch (NumberFormatException e) {
+            return 0; // Return 0 if the value is empty or invalid
+        }
+    }
+    private void setCompartmentValue(EditText editText, int value) {
+        editText.setText(String.valueOf(value));
+        editText.setEnabled(value == 0);  // Disable field if value exists, enable if empty
+    }
+
 }

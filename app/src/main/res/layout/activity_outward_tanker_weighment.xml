@@ -292,6 +292,10 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
+            android:id="@+id/imglayoutouttanername"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:orientation="horizontal"
@@ -323,9 +327,13 @@
                 android:textStyle="bold"
                 android:textSize="19dp"
                 />
-
+             </LinearLayout>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/imglayoutouttanerimg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="115dp"
@@ -369,7 +377,840 @@
                     />
 
             </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
         </LinearLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
+            >
+            <EditText
+                android:id="@+id/etoutwardtankerweightvarifyremark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Verification Remark"
+                android:inputType="textCapCharacters"
+                android:textSize="17dp"
+                android:textStyle="bold" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--            xmlns:tools="http://schemas.android.com/tools"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            tools:context=".Outward_Tanker_Weighment.Outward_Tanker_weighment">-->
+
+<!--            <ScrollView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="match_parent">-->
+
+<!--                <LinearLayout-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:orientation="vertical"-->
+<!--                    android:padding="16dp">-->
+
+<!--                    <GridLayout-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:columnCount="2"-->
+<!--                        android:rowCount="3"-->
+<!--                        android:layout_gravity="center_horizontal">-->
+
+<!--                        &lt;!&ndash; Compartment Card &ndash;&gt;-->
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="8dp"-->
+<!--                            app:cardCornerRadius="8dp"-->
+<!--                            app:cardElevation="4dp">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="16dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Compartment 1"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textSize="18sp"/>-->
+
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:layout_marginTop="8dp">-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:hint="Gross Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:layout_marginStart="8dp"-->
+<!--                                        android:hint="Net Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                </LinearLayout>-->
+
+<!--                            </LinearLayout>-->
+<!--                        </androidx.cardview.widget.CardView>-->
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="8dp"-->
+<!--                            app:cardCornerRadius="8dp"-->
+<!--                            app:cardElevation="4dp">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="16dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Compartment 2"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textSize="18sp"/>-->
+
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:layout_marginTop="8dp">-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:hint="Gross Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:layout_marginStart="8dp"-->
+<!--                                        android:hint="Net Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                </LinearLayout>-->
+
+<!--                            </LinearLayout>-->
+<!--                        </androidx.cardview.widget.CardView>-->
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="8dp"-->
+<!--                            app:cardCornerRadius="8dp"-->
+<!--                            app:cardElevation="4dp">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="16dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Compartment 3"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textSize="18sp"/>-->
+
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:layout_marginTop="8dp">-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:hint="Gross Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:layout_marginStart="8dp"-->
+<!--                                        android:hint="Net Weight ">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                </LinearLayout>-->
+
+<!--                            </LinearLayout>-->
+<!--                        </androidx.cardview.widget.CardView>-->
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="8dp"-->
+<!--                            app:cardCornerRadius="8dp"-->
+<!--                            app:cardElevation="4dp">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="16dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Compartment 4"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textSize="18sp"/>-->
+
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:layout_marginTop="8dp">-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:hint="Gross Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:layout_marginStart="8dp"-->
+<!--                                        android:hint="Net Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                </LinearLayout>-->
+
+<!--                            </LinearLayout>-->
+<!--                        </androidx.cardview.widget.CardView>-->
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="8dp"-->
+<!--                            app:cardCornerRadius="8dp"-->
+<!--                            app:cardElevation="4dp">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="16dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Compartment 5"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textSize="18sp"/>-->
+
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:layout_marginTop="8dp">-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:hint="Gross Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:layout_marginStart="8dp"-->
+<!--                                        android:hint="Net Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                </LinearLayout>-->
+
+<!--                            </LinearLayout>-->
+<!--                        </androidx.cardview.widget.CardView>-->
+
+<!--                        <androidx.cardview.widget.CardView-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_margin="8dp"-->
+<!--                            app:cardCornerRadius="8dp"-->
+<!--                            app:cardElevation="4dp">-->
+
+<!--                            <LinearLayout-->
+<!--                                android:layout_width="match_parent"-->
+<!--                                android:layout_height="wrap_content"-->
+<!--                                android:orientation="vertical"-->
+<!--                                android:padding="16dp">-->
+
+<!--                                <TextView-->
+<!--                                    android:layout_width="wrap_content"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:text="Compartment 6"-->
+<!--                                    android:textStyle="bold"-->
+<!--                                    android:textSize="18sp"/>-->
+
+
+<!--                                <LinearLayout-->
+<!--                                    android:layout_width="match_parent"-->
+<!--                                    android:layout_height="wrap_content"-->
+<!--                                    android:orientation="horizontal"-->
+<!--                                    android:layout_marginTop="8dp">-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:hint="Gross Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                    <com.google.android.material.textfield.TextInputLayout-->
+<!--                                        android:layout_width="0dp"-->
+<!--                                        android:layout_weight="1"-->
+<!--                                        android:layout_height="wrap_content"-->
+<!--                                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                                        android:layout_marginStart="8dp"-->
+<!--                                        android:hint="Net Weight">-->
+
+<!--                                        <com.google.android.material.textfield.TextInputEditText-->
+<!--                                            android:layout_width="match_parent"-->
+<!--                                            android:layout_height="wrap_content"-->
+<!--                                            android:inputType="numberDecimal"-->
+<!--                                            android:padding="8dp"/>-->
+<!--                                    </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--                                </LinearLayout>-->
+
+<!--                            </LinearLayout>-->
+<!--                        </androidx.cardview.widget.CardView>-->
+
+
+<!--                        &lt;!&ndash; Repeat this card structure for compartments 2 to 6 &ndash;&gt;-->
+<!--                    </GridLayout>-->
+<!--                </LinearLayout>-->
+<!--            </ScrollView>-->
+
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="1"
+                    android:rowCount="6"
+                    android:layout_gravity="center_horizontal">
+
+                    <!-- Repeating Compartment Cards -->
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:id="@+id/compaone">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Compartment 1"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:gravity="center_horizontal"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:hint="Gross Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/gross1"
+                                        />
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_marginStart="8dp"
+                                    android:hint="Net Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/netweight1"
+                                        />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:id="@+id/compatwo">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Compartment 2"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:gravity="center_horizontal"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:hint="Gross Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/gross2"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_marginStart="8dp"
+                                    android:hint="Net Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/netweight2"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:id="@+id/compathree">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Compartment 3"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:gravity="center_horizontal"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:hint="Gross Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/gross3"
+                                        />
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_marginStart="8dp"
+                                    android:hint="Net Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/netweight3"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:id="@+id/compafour">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Compartment 4"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:gravity="center_horizontal"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:hint="Gross Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/gross4"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_marginStart="8dp"
+                                    android:hint="Net Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/netweight4"
+                                        />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:id="@+id/compafive">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Compartment 5"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:gravity="center_horizontal"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:hint="Gross Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/gross5"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_marginStart="8dp"
+                                    android:hint="Net Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/netweight5"
+                                        />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="8dp"
+                        android:layout_columnWeight="1"
+                        app:cardCornerRadius="12dp"
+                        app:cardElevation="6dp"
+                        android:id="@+id/compasix">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Compartment 6"
+                                android:textStyle="bold"
+                                android:textSize="18sp"
+                                android:textColor="@color/black"
+                                android:gravity="center_horizontal"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:layout_marginTop="8dp">
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:hint="Gross Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/gross6"/>
+                                </com.google.android.material.textfield.TextInputLayout>
+
+                                <com.google.android.material.textfield.TextInputLayout
+                                    android:layout_width="0dp"
+                                    android:layout_weight="1"
+                                    android:layout_height="wrap_content"
+                                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                    android:layout_marginStart="8dp"
+                                    android:hint="Net Weight">
+
+                                    <com.google.android.material.textfield.TextInputEditText
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:inputType="numberDecimal"
+                                        android:padding="12dp"
+                                        android:id="@+id/netweight6"
+                                        />
+                                </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
+
+
+
+                    <!-- Repeat this CardView block 6 times -->
+                </GridLayout>
+            </LinearLayout>
+        </ScrollView>
+
+
 
         <androidx.cardview.widget.CardView
             android:layout_width="405dp"
@@ -392,6 +1233,17 @@
                     android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>-->
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/outwardtankerbtnvarified"
+                    android:layout_width="90dp"
+                    android:layout_height="match_parent"
+                    android:layout_below="@id/OUM."
+                    android:layout_marginLeft="10dp"
+                    android:text="Verify"
+                    android:textSize="17dp"
+                    android:textStyle="bold">
+
+                </androidx.appcompat.widget.AppCompatButton>
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:layout_width="130dp"

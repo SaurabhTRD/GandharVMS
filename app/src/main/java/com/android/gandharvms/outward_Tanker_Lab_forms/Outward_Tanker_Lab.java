@@ -6,6 +6,7 @@ import com.android.gandharvms.Outward_Tanker_Production_forms.New_Production_Mod
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Outward;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_Update;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_bulkloading_model;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Repet_update_Model;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Request_Model_blendflush;
 
 import retrofit2.Call;
@@ -67,6 +68,10 @@ public interface Outward_Tanker_Lab {
     //new outward tanker production data insert
     @POST("api/OutwardBulkProductionAndLaboratory/InsertOutwardOTProduction")
     Call<Boolean> newOutwardTankerProduction(@Body New_Production_Model_Outward request);
+
+    //update for multiple vehicle
+    @POST("api/OutwardBulkProductionAndLaboratory/RepeatUpdateTankerByOutwardId")
+    Call<Boolean> UpdateOutwardTankerProduction(@Body Repet_update_Model request);
 
     //new outward tanker Laboratory data insert
     @POST("api/OutwardProductionAndLaboratory/InsertOutwardOTLaboratory")

@@ -1,5 +1,7 @@
 package com.android.gandharvms.Outward_Truck_Dispatch;
 
+import com.android.gandharvms.Outward_Tanker_Weighment.Tanker_verification_model;
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -55,4 +57,8 @@ public interface Outward_Truck_interface {
                                            @Query("vehicleType")String vehicleType,
                                            @Query("NextProcess")char NextProcess,
                                            @Query("inOut")char inOut);
+
+
+    @POST("api/OutwardWeighment/UpdateOutwardWeighmnetVerifiedTanker")
+    Call<Boolean> Tanker_weighmentvarified(@Body Tanker_verification_model request);
 }
