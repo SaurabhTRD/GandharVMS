@@ -1,23 +1,31 @@
 package com.android.gandharvms.outward_Tanker_Lab_forms;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
@@ -27,7 +35,10 @@ import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Compartment;
+import com.android.gandharvms.Outward_Tanker_Production_forms.CompartmentAdapter;
 import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Repet_update_Model;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.ProductListData;
@@ -36,6 +47,9 @@ import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -67,7 +81,15 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     private int OutwardId;
     EditText newlseralnum,newlvehiclenum,newloanum,newlprodcut,newlcustomername,newldestination,newlquantity,newltransporter,
     newlintime,newlviscosity,newldentinity,newlbatchnum,newlqcofficer,newlremarks,billremark,proremark;
-    Button btnsubmit;
+    Button btnsubmit,btnupdate;
+    public boolean isCheck = false;
+    public int compartmentArraycount,copartmentcount;
+    public String procompartment1,procompartment2,procompartment3,procompartment4,procompartment5,procompartment6;
+    public String compartment1,compartment2,compartment3,compartment4,compartment5,compartment6;
+    private List<Lab_compartment_model> compartmentList;
+    private RecyclerView recyclerView;
+    private LabCompartmentAdapter adapter;
+    public First_LabCompartmentAdapter firstLabCompartmentAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -103,10 +125,18 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 
 
         btnsubmit = findViewById(R.id.etouttankerlabsubmit);
+        btnupdate = findViewById(R.id.updatetankerlab);
+        btnupdate.setVisibility(View.GONE);
         btnsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 insert();
+            }
+        });
+        btnupdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update();
             }
         });
         newlintime.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +158,18 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                 }
             }
         });
+        recyclerView = findViewById(R.id.recyclerView_labitem);
+        compartmentList = new ArrayList<>();
+        //List<Compartment> compartmentList = new ArrayList<>();
+        // ✅ Pass `this` (Context) to Adapter
+        adapter = new LabCompartmentAdapter(this, compartmentList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
+//        adapter = new LabCompartmentAdapter(compartmentList);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(adapter);
+//        recyclerView.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
     }
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
@@ -160,11 +202,88 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                         billremark.setEnabled(false);
                         proremark.setText(data.getTankerProRemark());
                         proremark.setEnabled(false);
+//                        procompartment1 = data.getProcompartment1();
+//                        procompartment2 = data.getProcompartment2();
+//                        procompartment3 = data.getProcompartment3();
+//                        procompartment4 = data.getProcompartment4();
+//                        procompartment5 = data.getProcompartment5();
+//                        procompartment6 = data.getProcompartment6();
                         String extraMaterialsJson = data.getProductQTYUOMOA();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
                         Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
                         createExtraMaterialViews(extraMaterials);
+                        isCheck = data.getisCheck();
+                        copartmentcount = data.getCompartmentCount();
+                        // ✅ Compartment Count Logic
+                        List<String> compartments = new ArrayList<>();
+
+                        if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty())
+                            compartments.add(data.getProcompartment1());
+                        if (data.getProcompartment2() != null && !data.getProcompartment2().isEmpty())
+                            compartments.add(data.getProcompartment2());
+                        if (data.getProcompartment3() != null && !data.getProcompartment3().isEmpty())
+                            compartments.add(data.getProcompartment3());
+                        if (data.getProcompartment4() != null && !data.getProcompartment4().isEmpty())
+                            compartments.add(data.getProcompartment4());
+                        if (data.getProcompartment5() != null && !data.getProcompartment5().isEmpty())
+                            compartments.add(data.getProcompartment5());
+                        if (data.getProcompartment6() != null && !data.getProcompartment6().isEmpty())
+                            compartments.add(data.getProcompartment6());
+
+                        compartmentArraycount = compartments.size(); // ✅ Store count dynamically
+                        Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
+
+                        // ✅ Show First Compartment (procompartment1)
+                        if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty()) {
+                            Lab_compartment_model labfirstCompartment = parseCompartment(data.getProcompartment1());
+                            if (labfirstCompartment != null) {
+                                showSingleCompartmentCard(labfirstCompartment);
+                            }
+                        } else {
+                            Log.e("COMPARTMENT", "No Compartment 1 Data Available");
+                        }
+                        List<String> compartmentsJson = Arrays.asList(
+//                                data.getProcompartment1(),
+                                data.getProcompartment2(),
+                                data.getProcompartment3(),
+                                data.getProcompartment4(),
+                                data.getProcompartment5(),
+                                data.getProcompartment6()
+                        );
+                        for (String json : compartmentsJson) {
+                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
+                            if (labCompartmentModel != null) {
+                                compartmentList.add(labCompartmentModel);
+                                adapter.notifyDataSetChanged();
+                                // 🔹 Show Update or Submit button based on compartment data
+                            }
+                        }
+
+                        // ✅ Show "Update" Button If More Than One Compartment Exists
+                        if (compartmentArraycount > 1) {
+                            btnupdate.setVisibility(View.VISIBLE);
+                            btnsubmit.setVisibility(View.GONE);
+                            newlintime.setVisibility(View.GONE);
+                            newlviscosity.setVisibility(View.GONE);
+                            newldentinity.setVisibility(View.GONE);
+                            newlbatchnum.setVisibility(View.GONE);
+                            newlqcofficer.setVisibility(View.GONE);
+                            newlremarks.setVisibility(View.GONE);
+                            //newlintime,newlviscosity,newldentinity,newlbatchnum,newlqcofficer,newlremarks
+                            Log.d("BUTTON_DEBUG", "Showing UPDATE button");
+                        } else {
+                            btnupdate.setVisibility(View.GONE);
+                            btnsubmit.setVisibility(View.VISIBLE);
+                            newlintime.setVisibility(View.VISIBLE);
+                            newlviscosity.setVisibility(View.VISIBLE);
+                            newldentinity.setVisibility(View.VISIBLE);
+                            newlbatchnum.setVisibility(View.VISIBLE);
+                            newlqcofficer.setVisibility(View.VISIBLE);
+                            newlremarks.setVisibility(View.VISIBLE);
+                            Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
+                        }
+
                     }else {
                         Toasty.error(New_Outward_tanker_Lab.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
@@ -191,6 +310,12 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                 }
             }
         });
+    }
+    // ✅ Helper Function to Add Non-Empty Compartments
+    private void addCompartmentIfNotEmpty(String compartmentJson) {
+        if (compartmentJson != null && !compartmentJson.isEmpty()) {
+            compartmentList.add(parseCompartment(compartmentJson));
+        }
     }
 
     private List<ProductListData> parseExtraMaterials(String jsonString) {
@@ -275,6 +400,8 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         }
     }
 
+
+
     public void insert()
     {
         String outTime = getCurrentTime();
@@ -288,11 +415,19 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         String iqcofficer = newlqcofficer.getText().toString();
         String iremarks = newlremarks.getText().toString();
 
+        // ✅ Determine I_O based on compartmentcount
+        char I_O_Value;
+        if (isCheck == true && compartmentArraycount < copartmentcount) {
+            I_O_Value = 'I';  // If exactly 1 compartment and copartmentcount is 0, pass 'O'
+        } else {
+            I_O_Value = 'O';  // Default case (fallback)
+        }
+
         if (iviscosity.isEmpty() || idensity.isEmpty()|| ibatchnum.isEmpty()){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             New_Lab_Model_OutwardTanker newLabModelOutwardTanker = new New_Lab_Model_OutwardTanker(OutwardId,inTime,outTime,iviscosity,objdensity,
-                    ibatchnum,iqcofficer,iremarks,EmployeId,"L",iserialnum,ivehicle,'W','O',vehicleType,EmployeId);
+                    ibatchnum,iqcofficer,iremarks,EmployeId,"P",iserialnum,ivehicle,'W',I_O_Value,vehicleType,EmployeId);
             Call<Boolean> call = outwardTankerLab.newOutwardTankerLaboratory(newLabModelOutwardTanker);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -329,6 +464,155 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         }
 
     }
+
+    public void update1(){
+        String iserialnum = newlseralnum.getText().toString();
+        String ivehicle = newlvehiclenum.getText().toString();
+
+        // ✅ Ensure data in `compartmentList` is up-to-date before sending to API
+        for (int i = 0; i < compartmentList.size(); i++) {
+            View view = recyclerView.getLayoutManager().findViewByPosition(i);
+            if (view != null) {
+                EditText edtViscosity = view.findViewById(R.id.edtViscosity);
+                EditText edtDensity = view.findViewById(R.id.edtDensity);
+                EditText edtBatchNumber = view.findViewById(R.id.edtBatchNumber);
+                EditText edtQCOfficer = view.findViewById(R.id.edtQCOfficer);
+                EditText edtRemark = view.findViewById(R.id.edtRemark);
+
+                Lab_compartment_model compartment = compartmentList.get(i);
+                compartment.setViscosity(edtViscosity.getText().toString());
+                compartment.setDensity(edtDensity.getText().toString());
+                compartment.setBatchNumber(edtBatchNumber.getText().toString());
+                compartment.setQcOfficer(edtQCOfficer.getText().toString());
+                compartment.setRemark(edtRemark.getText().toString());
+            }
+        }
+
+        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
+        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
+        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
+        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
+        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
+        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
+
+        // Log the compartment strings to check their format
+        Log.d("Compartment JSON", compartment1String);
+        Log.d("Compartment JSON", compartment2String);
+        Log.d("Compartment JSON", compartment3String);
+        Log.d("Compartment JSON", compartment4String);
+        Log.d("Compartment JSON", compartment5String);
+        Log.d("Compartment JSON", compartment6String);
+
+        Repet_update_Model repetUpdateModel = new Repet_update_Model(oploutwardid,"",
+                compartment1String,compartment2String,compartment3String,compartment4String,compartment5String,compartment6String,
+                iserialnum,ivehicle,'W',inOut,vehicleType,EmployeId);
+        //Convert the object to JSON for logging
+        Gson gson = new Gson();
+        String jsonRequest = gson.toJson(repetUpdateModel);
+        Log.d("API_REQUEST", jsonRequest);
+
+
+        Call<Boolean> call = outwardTankerLab.UpdateOutwardLabTestProduction(repetUpdateModel);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null && response.body() == true){
+                    Toasty.success(New_Outward_tanker_Lab.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
+                    startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
+                    finish();
+                }else {
+                    Log.e("Retrofit", "Error Response Code: " + response.code());
+                    try {
+                        Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    Toasty.error(New_Outward_tanker_Lab.this, "Update Failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                Toasty.error(New_Outward_tanker_Lab.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
+    public void update(){
+        String iserialnum = newlseralnum.getText().toString();
+        String ivehicle = newlvehiclenum.getText().toString();
+        char I_O_Value;
+        if (isCheck == true && compartmentArraycount < copartmentcount) {
+            I_O_Value = 'I';  // If exactly 1 compartment and copartmentcount is 0, pass 'O'
+        } else {
+            I_O_Value = 'O';  // Default case (fallback)
+        }
+
+        // ✅ Now compartmentList already has the latest values, so just convert to JSON
+//        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
+        String compartment2String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
+        String compartment3String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
+        String compartment4String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
+        String compartment5String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
+        String compartment6String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
+
+        // ✅ Log the updated compartment values
+//        Log.d("Compartment JSON", compartment1String);
+        Log.d("Compartment JSON", compartment2String);
+        Log.d("Compartment JSON", compartment3String);
+        Log.d("Compartment JSON", compartment4String);
+        Log.d("Compartment JSON", compartment5String);
+        Log.d("Compartment JSON", compartment6String);
+
+        // ✅ Create API Model
+        Repet_update_Model repetUpdateModel = new Repet_update_Model(oploutwardid, "P",
+                "", compartment2String, compartment3String, compartment4String, compartment5String, compartment6String,
+                iserialnum, ivehicle, 'W', I_O_Value, vehicleType, EmployeId);
+
+        // ✅ Convert to JSON and log for debugging
+        Gson gson = new Gson();
+        String jsonRequest = gson.toJson(repetUpdateModel);
+        Log.d("API_REQUEST", jsonRequest);
+
+        // ✅ Make API Call
+        Call<Boolean> call = outwardTankerLab.UpdateOutwardLabTestProduction(repetUpdateModel);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null && response.body()) {
+                    Toasty.success(New_Outward_tanker_Lab.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
+                    startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
+                    finish();
+                } else {
+                    if (response.errorBody() != null) {
+                        try {
+                            String errorResponse = response.errorBody().string();
+                            Log.e("API_ERROR", "Error Body: " + errorResponse);
+                        } catch (IOException e) {
+                            Log.e("API_ERROR", "Error reading errorBody()", e);
+                        }
+                    } else {
+                        Log.e("API_ERROR", "Error Body is NULL");
+                    }
+
+                    Toasty.error(New_Outward_tanker_Lab.this, "Update Failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                Toasty.error(New_Outward_tanker_Lab.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+
+
 
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
@@ -378,4 +662,120 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }
+//    private void showAddCompartmentDialog() {
+//        if (compartmentList.size() >= 6) {
+//            Toast.makeText(this, "Maximum 6 compartments allowed!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        Dialog dialog = new Dialog(this);
+//        dialog.setContentView(R.layout.dialog_add_compartment);
+//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//
+//        // Set width and height for a medium-size dialog
+//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+//        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+//        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
+//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        dialog.getWindow().setAttributes(layoutParams);
+//
+//        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
+//        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
+//        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
+//        Button btnSave = dialog.findViewById(R.id.btnSave);
+//
+//
+//        btnSave.setOnClickListener(v -> {
+//            String blender = edtBlender.getText().toString().trim();
+//            String productionSign = edtProductionSign.getText().toString().trim();
+//            String operatorSign = edtOperatorSign.getText().toString().trim();
+//
+//
+//            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
+//                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+//            } else {
+//                // ✅ Add new compartment and update the adapter
+//                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
+//                adapter.notifyDataSetChanged();
+//                dialog.dismiss();
+//
+//                // ✅ Automatically open next compartment if less than 6
+////                if (compartmentList.size() < 6) {
+////                    showAddCompartmentDialog(); // Open next compartment
+////                }
+//            }
+//        });
+//
+//        dialog.show();
+//    }
+
+    private Lab_compartment_model parseCompartment(String jsonString) {
+        if (jsonString == null || jsonString.isEmpty()) {
+            Log.e("JSON_ERROR", "Empty JSON string");
+            return null; // Handle empty data safely
+        }
+        try {
+            Gson gson = new Gson();
+            return gson.fromJson(jsonString.replace("/",""), Lab_compartment_model.class);
+        } catch (Exception e) {
+            Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage());
+            return null;
+        }
+    }
+    private void showSingleCompartmentCard(Lab_compartment_model compartment) {
+        CardView compartmentCard = findViewById(R.id.compartmentCard);
+        TextView txtBlender = findViewById(R.id.txtBlender);
+        TextView txtProductionSign = findViewById(R.id.txtProductionSign);
+        TextView txtOperatorSign = findViewById(R.id.txtOperatorSign);
+
+        // ✅ Set Text Values
+        txtBlender.setText("Blender: " + compartment.getBlenderNumber());
+        txtProductionSign.setText("Production Sign: " + compartment.getProductionSign());
+        txtOperatorSign.setText("Operator Sign: " + compartment.getOperatorSign());
+
+        // ✅ Make Card Visible
+        compartmentCard.setVisibility(View.VISIBLE);
+    }
+
+    private void showCompartmentDialog(List<Lab_compartment_model> compartmentList) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.activity_new_outward_tanker_lab, null);
+        builder.setView(dialogView);
+
+        RecyclerView recyclerView = dialogView.findViewById(R.id.recyclerView_labitem);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // ✅ Set up Adapter with Compartment Data
+        LabCompartmentAdapter adapter = new LabCompartmentAdapter(this, compartmentList);
+        recyclerView.setAdapter(adapter);
+
+        // ✅ Save Button to Capture Inputs
+//        Button btnSave = dialogView.findViewById(R.id.btnSaveCompartment);
+//        btnSave.setOnClickListener(v -> {
+//            // Logic to handle save button (e.g., collect entered data)
+//            Toast.makeText(this, "Compartment Data Saved!", Toast.LENGTH_SHORT).show();
+//        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private String convertCompartmentToJson(Lab_compartment_model compartment) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Blender", compartment.getBlenderNumber()); // Using only Blender
+            jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
+            jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
+            jsonObject.put("Viscosity", compartment.getViscosity());
+            jsonObject.put("Density", compartment.getDensity());
+            jsonObject.put("BatchNumber", compartment.getBatchNumber());
+            jsonObject.put("QcOfficer", compartment.getQcOfficer());
+            jsonObject.put("Remark", compartment.getRemark());
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{}"; // Return empty JSON if an error occurs
+        }
+    }
+
 }

@@ -219,6 +219,72 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <androidx.cardview.widget.CardView
+                android:id="@+id/compartmentCard"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="12dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp"
+                android:background="@android:color/white"
+                android:visibility="gone">  <!-- Initially Hidden -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:orientation="vertical">
+
+                    <!-- Compartment Header -->
+                    <TextView
+                        android:id="@+id/txtCompartmentNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Compartment #1"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:background="@color/gray"
+                        android:layout_marginTop="6dp"
+                        android:layout_marginBottom="6dp"/>
+
+                    <!-- Blender -->
+                    <TextView
+                        android:id="@+id/txtBlender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Blender: -"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"/>
+
+                    <!-- Production Sign -->
+                    <TextView
+                        android:id="@+id/txtProductionSign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Production Sign: -"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="4dp"/>
+
+                    <!-- Operator Sign -->
+                    <TextView
+                        android:id="@+id/txtOperatorSign"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Operator: -"
+                        android:textSize="14sp"
+                        android:textColor="@color/black"
+                        android:layout_marginTop="4dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -322,40 +388,80 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:background="#F5F5F5"
+                android:padding="16dp">
+
+<!--                <Button-->
+<!--                    android:id="@+id/btnAddCompartment"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Add Compartment" />-->
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_labitem"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="10dp" />
+            </LinearLayout>
+
             <androidx.cardview.widget.CardView
-                android:layout_width="405dp"
-                android:layout_height="55dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginLeft="25dp">
+                android:layout_marginStart="35dp"
+                android:layout_marginEnd="35dp"
+                app:cardCornerRadius="10dp"
+                app:cardElevation="5dp">
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="55dp"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:gravity="center"
                     android:orientation="horizontal">
 
                     <androidx.appcompat.widget.AppCompatButton
-                        android:layout_width="130dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginLeft="55dp"
-                        android:text="COMPLETED"
-                        android:textSize="17dp"
-                        android:textStyle="bold"
                         android:id="@+id/outtankerlabcompleted"
-                        android:onClick="inprocesprocompletedclick">
-
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="COMPLETED"
+                        android:onClick="inprocesprocompletedclick"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black">
                     </androidx.appcompat.widget.AppCompatButton>
 
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/etouttankerlabsubmit"
-                        android:layout_width="130dp"
-                        android:layout_height="match_parent"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
                         android:layout_below="@id/OUM."
                         android:layout_marginLeft="10dp"
                         android:text="SUBMIT"
-                        android:textSize="17dp"
-                        android:textStyle="bold">
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:textColor="@android:color/black"
+                        android:layout_marginStart="10dp">
 
                     </androidx.appcompat.widget.AppCompatButton>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/updatetankerlab"
+                        android:layout_width="0dp"
+                        android:layout_height="50dp"
+                        android:layout_weight="1"
+                        android:text="UPDATE"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:backgroundTint="@color/blue"
+                        android:textColor="@android:color/white"
+                        android:layout_marginStart="10dp"/>
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

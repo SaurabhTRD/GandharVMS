@@ -29,10 +29,12 @@ public class New_Production_Model_Outward {
     private String compartment4;
     private String compartment5;
     private String compartment6;
+    public int CompartmentCount;
+    public boolean IsCheck;
 
     public New_Production_Model_Outward(int outwardId, String proInTime, String proOutTime, String tankOrBlenderNo, String psign, String operatorSign, String productionProcess, String proRemark, String createdBy, String vehicleType, String serialNumber, String vehicleNumber, char nextprocess, char i_O, String updatedBy, String purposeProcess,
                                         String compartment1,String compartment2,String compartment3,String compartment4,
-                                        String compartment5,String compartment6) {
+                                        String compartment5,String compartment6,int compartmentCount,boolean isCheck) {
         OutwardId = outwardId;
         ProInTime = proInTime;
         ProOutTime = proOutTime;
@@ -56,5 +58,7 @@ public class New_Production_Model_Outward {
         this.compartment4 = compartment4;
         this.compartment5 = compartment5;
         this.compartment6 = compartment6;
+        this.CompartmentCount = compartmentCount;
+        this.IsCheck = isCheck;
     }
 }

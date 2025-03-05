@@ -1,8 +1,8 @@
-package com.android.gandharvms.Outward_Tanker_Production_forms;
+package com.android.gandharvms.outward_Tanker_Lab_forms;
 
 import com.google.gson.annotations.SerializedName;
 
-public class Compartment {
+public class Lab_compartment_model {
     @SerializedName("Blender")
     private String blenderNumber;
     @SerializedName("ProductionSign")
@@ -10,17 +10,38 @@ public class Compartment {
     @SerializedName("OperatorSign")
     private String operatorSign;
 
+    @SerializedName("viscosity")
     private String viscosity;
+    @SerializedName("density")
     private String density;
+    @SerializedName("batchNumber")
     private String batchNumber;
+    @SerializedName("qcOfficer")
     private String qcOfficer;
+    @SerializedName("remark")
     private String remark;
 
-    public Compartment(String blenderNumber, String productionSign, String operatorSign) {
-        this.blenderNumber = blenderNumber;
-        this.productionSign = productionSign;
-        this.operatorSign = operatorSign;
+    @SerializedName("wehintime")
+    private String wehintime;
+    @SerializedName("tareweight")
+    private String tareweight;
+    @SerializedName("weighremark")
+    private String weighremark;
+
+//    public Lab_compartment_model(String blenderNumber, String productionSign, String operatorSign) {
+//        this.blenderNumber = blenderNumber;
+//        this.productionSign = productionSign;
+//        this.operatorSign = operatorSign;
+//    }
+
+    public Lab_compartment_model(String viscosity, String density, String batchNumber, String qcOfficer, String remark) {
+        this.viscosity = viscosity;
+        this.density = density;
+        this.batchNumber = batchNumber;
+        this.qcOfficer = qcOfficer;
+        this.remark = remark;
     }
+
     public String getBlenderNumber() { return blenderNumber; }
     public String getProductionSign() { return productionSign; }
     public String getOperatorSign() { return operatorSign; }
@@ -75,5 +96,29 @@ public class Compartment {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getWehintime() {
+        return wehintime;
+    }
+
+    public void setWehintime(String wehintime) {
+        this.wehintime = wehintime;
+    }
+
+    public String getTareweight() {
+        return tareweight;
+    }
+
+    public void setTareweight(String tareweight) {
+        this.tareweight = tareweight;
+    }
+
+    public String getWeighremark() {
+        return weighremark;
+    }
+
+    public void setWeighremark(String weighremark) {
+        this.weighremark = weighremark;
     }
 }

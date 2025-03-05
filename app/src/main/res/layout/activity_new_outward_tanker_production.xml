@@ -208,6 +208,16 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <CheckBox
+                android:id="@+id/checkBoxMultipleVehicle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="10dp"
+                android:text="Is Multiple Compartment ?"
+                android:textSize="16dp"/>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -295,13 +305,36 @@
                 android:layout_below="@id/Date"
                 android:layout_marginLeft="30dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginRight="30dp">
+                android:layout_marginRight="30dp"
+                android:id="@+id/layout_next_dept"
+                android:visibility="gone">
 
                 <AutoCompleteTextView
                     android:id="@+id/nextdept_outproduction"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Next Department"
+                    android:inputType="none"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/Date"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="30dp"
+                android:id="@+id/layout_vehicle_movement"
+                android:visibility="gone">
+
+                <AutoCompleteTextView
+                    android:id="@+id/vehicelmovement"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Vehicle Movement"
                     android:inputType="none"
                     android:textSize="17dp"
                     android:textStyle="bold" />
@@ -432,7 +465,7 @@
                         android:text="COMPLETED"
                         android:textSize="17sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/white"/>
+                        android:textColor="@android:color/black"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/etnewssubmit"
@@ -442,7 +475,7 @@
                         android:text="SUBMIT"
                         android:textSize="17sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:layout_marginStart="10dp"/>
 
                     <androidx.appcompat.widget.AppCompatButton
@@ -453,8 +486,7 @@
                         android:text="UPDATE"
                         android:textSize="17sp"
                         android:textStyle="bold"
-                        android:backgroundTint="@color/blue"
-                        android:textColor="@android:color/white"
+                        android:textColor="@android:color/black"
                         android:layout_marginStart="10dp"/>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

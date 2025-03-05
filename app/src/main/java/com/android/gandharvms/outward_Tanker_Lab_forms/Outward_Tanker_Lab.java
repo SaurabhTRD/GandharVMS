@@ -76,4 +76,8 @@ public interface Outward_Tanker_Lab {
     //new outward tanker Laboratory data insert
     @POST("api/OutwardProductionAndLaboratory/InsertOutwardOTLaboratory")
     Call<Boolean> newOutwardTankerLaboratory(@Body New_Lab_Model_OutwardTanker request);
+
+    //Outward tanker lab update
+    @POST("api/OutwardProductionAndLaboratory/RepeatUpdateLabTestingByOutwardId")
+    Call<Boolean> UpdateOutwardLabTestProduction(@Body Repet_update_Model request);
 }

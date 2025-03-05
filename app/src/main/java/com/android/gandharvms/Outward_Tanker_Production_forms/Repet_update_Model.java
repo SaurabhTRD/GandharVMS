@@ -17,6 +17,8 @@ public class Repet_update_Model {
     public char I_O;
     public String VehicleType;
     public String UpdatedBy;
+//    public int CompartmentCount;
+//    public boolean IsCheck;
 
 
     public Repet_update_Model(int outwardId, String purposeProcess, String compartment1, String compartment2, String compartment3, String compartment4, String compartment5, String compartment6, String serialNumber, String vehicleNumber, char nextprocess, char i_O, String vehicleType, String updatedBy) {

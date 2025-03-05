@@ -86,6 +86,24 @@ public class Lab_Model__Outward_Tanker {
     public String procompartment4;
     public String procompartment5;
     public String procompartment6;
+    public int CompartmentCount;
+    public boolean IsCheck;
+
+    public int getCompartmentCount() {
+        return CompartmentCount;
+    }
+
+    public void setCompartmentCount(int compartmentCount) {
+        CompartmentCount = compartmentCount;
+    }
+
+    public boolean getisCheck() {
+        return IsCheck;
+    }
+
+    public void setCheck(boolean check) {
+        IsCheck = check;
+    }
 
     public String getBatch_No() {
         return Batch_No;

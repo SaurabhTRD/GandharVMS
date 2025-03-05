@@ -11,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -44,6 +45,7 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
 import com.android.gandharvms.outward_Tanker_Lab_forms.New_Outward_tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
@@ -87,7 +89,10 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
     ArrayAdapter<String> nextdeptdrop;
     Map<String, String> nextdeptmapping = new HashMap<>();
     String nextdeptvalue = "W";
-    AutoCompleteTextView dept;
+    String movementvalue = "";
+    AutoCompleteTextView dept,vehmovement;
+    Map<String, Integer> Movement = new HashMap<>();
+    ArrayAdapter<String> Movementdrop;
     String deptNumericValue = "W";
     private List<Compartment> compartmentList;
     private CompartmentAdapter adapter;
@@ -95,6 +100,14 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
     private RecyclerView recyclerView;
     public String procompart;
     public String compartme,updateserialnumber,updatevehiclenumber;
+    public CheckBox checkBoxMultipleVehicle;
+    // ✅ Declare Global Variable
+    private int movementValueInt = 0; // Default value
+    // ✅ Declare Global Variable
+    private boolean isMultipleVehicle = false; // Default is false
+    public int compartmentArraycount;
+    public int compartmentcount;
+    public  int currentCompartment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,6 +166,27 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         });
 
 
+        checkBoxMultipleVehicle = findViewById(R.id.checkBoxMultipleVehicle);
+        TextInputLayout nextDeptLayout = findViewById(R.id.layout_next_dept); // TextInputLayout of AutoCompleteTextView
+        TextInputLayout vehicleMovementLayout = findViewById(R.id.layout_vehicle_movement); // TextInputLayout of AutoCompleteTextView
+
+        // ✅ Hide both dropdown fields initially
+        nextDeptLayout.setVisibility(View.GONE);
+        vehicleMovementLayout.setVisibility(View.GONE);
+
+        // ✅ Listen for CheckBox changes
+        checkBoxMultipleVehicle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            isMultipleVehicle = isChecked;  // ✅ Update Boolean Value
+            if (isChecked) {
+//                nextDeptLayout.setVisibility(View.VISIBLE);  // ✅ Show if checked
+                vehicleMovementLayout.setVisibility(View.VISIBLE);
+
+            } else {
+//                nextDeptLayout.setVisibility(View.GONE);  // ✅ Hide if unchecked
+                vehicleMovementLayout.setVisibility(View.GONE);
+            }
+        });
+
 
         if (getIntent().hasExtra("vehiclenum")) {
             FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
@@ -184,6 +218,29 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                 }
             }
         });
+        //Movement.put("Compartment1", 1);
+        Movement.put("Compartment2", 2);
+        Movement.put("Compartment3", 3);
+        Movement.put("Compartment4", 4);
+        Movement.put("Compartment5", 5);
+        Movement.put("Compartment6", 6);
+
+        vehmovement = findViewById(R.id.vehicelmovement);
+        ArrayAdapter<String> Movementdrop = new ArrayAdapter<>(this, R.layout.indus_nextdept, new ArrayList<>(Movement.keySet()));
+        vehmovement.setAdapter(Movementdrop);
+
+// ✅ Handle Selection Correctly
+        vehmovement.setOnItemClickListener((parent, view, position, id) -> {
+            String movement = parent.getItemAtPosition(position).toString();
+
+            // ✅ Get Integer Value Directly Without Conversion
+            if (Movement.containsKey(movement)) {
+                movementValueInt = Movement.get(movement);  // ✅ Now it's already an integer
+                Log.d("MOVEMENT_SELECTED", "Selected Value: " + movementValueInt);
+            } else {
+                Log.e("MOVEMENT_ERROR", "Invalid selection: " + movement);
+            }
+        });
 
         btnAddCompartment = findViewById(R.id.btnAddCompartment);
         recyclerView = findViewById(R.id.recyclerView);
@@ -196,11 +253,14 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
 
         btnAddCompartment.setOnClickListener(v -> {
             if (compartmentList.size() < 6) {
-                showAddCompartmentDialog();
+                showAddCompartmentDialogs(compartmentcount);
             } else {
                 Toast.makeText(this, "Maximum 6 compartments allowed", Toast.LENGTH_SHORT).show();
             }
         });
+
+
+
 
     }
 
@@ -234,6 +294,26 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                         transporter.setEnabled(false);
                         etbillremark.setText(data.getTankerBillingRemark());
                         etbillremark.setEnabled(false);
+                        compartmentcount = data.getCompartmentCount();
+
+                        // ✅ Compartment Count Logic
+                        List<String> compartments = new ArrayList<>();
+
+                        if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty())
+                            compartments.add(data.getProcompartment1());
+                        if (data.getProcompartment2() != null && !data.getProcompartment2().isEmpty())
+                            compartments.add(data.getProcompartment2());
+                        if (data.getProcompartment3() != null && !data.getProcompartment3().isEmpty())
+                            compartments.add(data.getProcompartment3());
+                        if (data.getProcompartment4() != null && !data.getProcompartment4().isEmpty())
+                            compartments.add(data.getProcompartment4());
+                        if (data.getProcompartment5() != null && !data.getProcompartment5().isEmpty())
+                            compartments.add(data.getProcompartment5());
+                        if (data.getProcompartment6() != null && !data.getProcompartment6().isEmpty())
+                            compartments.add(data.getProcompartment6());
+
+                        compartmentArraycount = compartments.size(); // ✅ Store count dynamically
+                        Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
 
                         // 🔹 Fetch and parse compartments, then show dialog
                         List<String> compartmentsJson = Arrays.asList(
@@ -253,22 +333,40 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                                 hasCompartmentData = true; // Set flag to true when a compartment is found
                                 adapter.notifyDataSetChanged();
                                 // 🔹 Show Update or Submit button based on compartment data
-                                if (hasCompartmentData) {
+                                if (compartmentcount >= compartmentArraycount) {
                                     btnsubmit.setVisibility(View.GONE);
                                     btnupdate.setVisibility(View.VISIBLE);
-                                    intime.setVisibility(View.GONE);
-                                    blendernumber.setVisibility(View.GONE);
-                                    signproduction.setVisibility(View.GONE);
-                                    oprator.setVisibility(View.GONE);
-                                    remark.setVisibility(View.GONE);
-                                    etbillremark.setVisibility(View.GONE);
-
+//                                    intime.setVisibility(View.GONE);
+//                                    blendernumber.setVisibility(View.GONE);
+//                                    signproduction.setVisibility(View.GONE);
+//                                    oprator.setVisibility(View.GONE);
+//                                    remark.setVisibility(View.GONE);
+//                                    etbillremark.setVisibility(View.GONE);
 
                                 } else {
                                     btnsubmit.setVisibility(View.VISIBLE);
                                     btnupdate.setVisibility(View.GONE);
                                 }
                             }
+                        }
+                        // ✅ Hide fields if more than 1 compartment
+                        if (compartmentArraycount >= 1) {
+                            intime.setVisibility(View.GONE);
+                            blendernumber.setVisibility(View.GONE);
+                            signproduction.setVisibility(View.GONE);
+                            oprator.setVisibility(View.GONE);
+                            remark.setVisibility(View.GONE);
+                            checkBoxMultipleVehicle.setVisibility(View.GONE);
+                            Log.d("VISIBILITY_UPDATE", "Hiding fields because compartment count is: " + compartmentArraycount);
+                        } else {
+                            // ✅ Show fields if only one compartment
+                            intime.setVisibility(View.VISIBLE);
+                            blendernumber.setVisibility(View.VISIBLE);
+                            signproduction.setVisibility(View.VISIBLE);
+                            oprator.setVisibility(View.VISIBLE);
+                            remark.setVisibility(View.VISIBLE);
+                            checkBoxMultipleVehicle.setVisibility(View.VISIBLE);
+                            Log.d("VISIBILITY_UPDATE", "Showing fields because compartment count is: " + compartmentArraycount);
                         }
 
                     } else {
@@ -381,7 +479,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         }
     }
 
-    private void showAddCompartmentDialog() {
+    private void showAddCompartmentDialog1() {
         if (compartmentList.size() >= 6) {
             Toast.makeText(this, "Maximum 6 compartments allowed!", Toast.LENGTH_SHORT).show();
             return;
@@ -389,8 +487,6 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
 
         Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog_add_compartment);
-
-        // Set dialog background to rounded corners
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
 
         // Set width and height for a medium-size dialog
@@ -406,8 +502,14 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         Button btnSave = dialog.findViewById(R.id.btnSave);
         TextView txtCompartmentNumber = dialog.findViewById(R.id.txtCompartmentNumber);
 
-        // Display which compartment is being added
-      //  txtCompartmentNumber.setText("Adding Compartment " + (compartmentList.size() + 1));
+        // ✅ Check if TextView exists before using it
+        int currentCompartment = compartmentList.size() + 2; // Start from 1
+        if (txtCompartmentNumber != null) {
+            txtCompartmentNumber.setText("Adding Compartment " + currentCompartment);
+        } else {
+            Log.e("DIALOG_ERROR", "txtCompartmentNumber is NULL. Check dialog_add_compartment.xml!");
+        }
+
 
         btnSave.setOnClickListener(v -> {
             String blender = edtBlender.getText().toString().trim();
@@ -430,6 +532,102 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
 
         dialog.show();
     }
+//    private void showAddCompartmentDialog() {
+//        if (compartmentList.size() >= 6) {
+//            Toast.makeText(this, "Maximum 6 compartments allowed!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        Dialog dialog = new Dialog(this);
+//        dialog.setContentView(R.layout.dialog_add_compartment);
+//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//
+//        // Set width and height for a medium-size dialog
+//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+//        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+//        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
+//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        dialog.getWindow().setAttributes(layoutParams);
+//
+//        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
+//        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
+//        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
+//        Button btnSave = dialog.findViewById(R.id.btnSave);
+//
+//
+//        btnSave.setOnClickListener(v -> {
+//            String blender = edtBlender.getText().toString().trim();
+//            String productionSign = edtProductionSign.getText().toString().trim();
+//            String operatorSign = edtOperatorSign.getText().toString().trim();
+//
+//
+//            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
+//                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+//            } else {
+//                // ✅ Add new compartment and update the adapter
+//                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
+//                adapter.notifyDataSetChanged();
+//                dialog.dismiss();
+//
+//                // ✅ Automatically open next compartment if less than 6
+////                if (compartmentList.size() < 6) {
+////                    showAddCompartmentDialog(); // Open next compartment
+////                }
+//            }
+//        });
+//
+//        dialog.show();
+//    }
+private void showAddCompartmentDialogs(int count) {
+    if (compartmentList.size() >= count) {
+        Toast.makeText(this, "Maximum " + count + " compartments allowed!", Toast.LENGTH_SHORT).show();
+        return;
+    }
+
+    showCompartmentDialog(0, count); // Start showing dialogs from index 0
+}
+
+    private void showCompartmentDialog(int index, int maxCount) {
+        if (index >= maxCount) return; // Stop when required number of dialogs are opened
+
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.dialog_add_compartment);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
+        // Set width and height for a medium-size dialog
+        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
+        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+        dialog.getWindow().setAttributes(layoutParams);
+
+        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
+        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
+        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
+        Button btnSave = dialog.findViewById(R.id.btnSave);
+
+        btnSave.setOnClickListener(v -> {
+            String blender = edtBlender.getText().toString().trim();
+            String productionSign = edtProductionSign.getText().toString().trim();
+            String operatorSign = edtOperatorSign.getText().toString().trim();
+
+            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
+                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+            } else {
+                // ✅ Add new compartment and update adapter
+                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
+                adapter.notifyDataSetChanged();
+                dialog.dismiss();
+
+                // ✅ Open the next dialog until reaching the required count
+                //showCompartmentDialog(index + 1, maxCount);
+            }
+        });
+
+        dialog.show();
+    }
+
+
 
     public void insert() {
         String outTime = getCurrentTime();
@@ -440,12 +638,15 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         String isignofproduction = signproduction.getText().toString();
         String isignofoprator = oprator.getText().toString();
         String iremark = this.remark.getText().toString();
-        String nextu = nextdeptvalue.toString().trim();
+        //String nextu = nextdeptvalue.toString().trim();
 
         // Assign each compartment to a separate JSON string
+        // ✅ Create Compartment 1 Object
+        Compartment compartment1 = new Compartment(iblender, isignofproduction, isignofoprator);
+        String compartment1String = convertCompartmentToJson(compartment1);
 
         // Convert each compartment to a JSON string (up to 6 compartments)
-        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
+        //String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
         String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
         String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
         String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
@@ -453,19 +654,19 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
 
         // Only proceed if at least 1 compartment is filled
-        if (compartmentList.isEmpty()) {
-            Toast.makeText(this, "Please add at least one compartment!", Toast.LENGTH_SHORT).show();
-            return;
-        }
+//        if (compartmentList.isEmpty()) {
+//            Toast.makeText(this, "Please add at least one compartment!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
         if (iblender.isEmpty()||isignofproduction.isEmpty()||isignofoprator.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             New_Production_Model_Outward newproductionoutwardmodel = new New_Production_Model_Outward(OutwardId,inTime,
-                    outTime,iblender,isignofproduction,isignofoprator,"P",iremark,EmployeId,vehicleType,
-                    iserialnum,ivehicle,'W',inOut,EmployeId,nextu,
+                    outTime,"","","","P",iremark,EmployeId,vehicleType,
+                    iserialnum,ivehicle,'L',inOut,EmployeId,"P",
                     compartment1String, compartment2String, compartment3String,
-                    compartment4String, compartment5String, compartment6String);
+                    compartment4String, compartment5String, compartment6String,movementValueInt,isMultipleVehicle);
             Gson gson = new Gson();
             String jsonRequest = gson.toJson(newproductionoutwardmodel);
             Log.d("API_REQUEST", jsonRequest);
@@ -509,7 +710,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
     }
 
     public void update() {
-        String nextu = nextdeptvalue.toString().trim();
+        //String nextu = nextdeptvalue.toString().trim();
         String ivehicle = vehiclenumber.getText().toString();
         String iserialnumber = serialnumber.getText().toString();
 
@@ -532,7 +733,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         // Creating the update model object
         Repet_update_Model updateModel = new Repet_update_Model(
                 OutwardId,
-                nextu,
+                "",
                 compartment1String,
                 compartment2String,
                 compartment3String,
@@ -541,10 +742,11 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                 compartment6String,
                 iserialnumber,
                 ivehicle,
-                'W',
+                'L',
                 inOut,
                 vehicleType,
                 EmployeId
+
         );
 
          //Convert the object to JSON for logging
@@ -579,8 +781,6 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
             }
         });
     }
-
-
 
 
     public void makeNotification(String vehicleNumber, String outTime) {

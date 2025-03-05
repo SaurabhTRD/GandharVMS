@@ -291,95 +291,188 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <LinearLayout
-            android:id="@+id/imglayoutouttanername"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="30dp"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="In Vehicle"
-                android:gravity="start"
-                android:layout_gravity="start"
-                android:paddingStart="18dp"
-                android:paddingEnd="8dp"
-                android:textStyle="bold"
-                android:layout_marginLeft="20dp"
-                android:textSize="19dp"
-                />
+<!--        <LinearLayout-->
+<!--            android:id="@+id/imglayoutouttanername"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+<!--         <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="20dp"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginLeft="30dp"-->
+<!--            >-->
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="In Vehicle"-->
+<!--                android:gravity="start"-->
+<!--                android:layout_gravity="start"-->
+<!--                android:paddingStart="18dp"-->
+<!--                android:paddingEnd="8dp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginLeft="20dp"-->
+<!--                android:textSize="19dp"-->
+<!--                />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="In Driver"
-                android:gravity="end"
-                android:layout_gravity="end"
-                android:paddingStart="8dp"
-                android:paddingEnd="8dp"
-                android:layout_marginLeft="120dp"
-                android:textStyle="bold"
-                android:textSize="19dp"
-                />
-             </LinearLayout>
-        </LinearLayout>
+<!--            <TextView-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="match_parent"-->
+<!--                android:text="In Driver"-->
+<!--                android:gravity="end"-->
+<!--                android:layout_gravity="end"-->
+<!--                android:paddingStart="8dp"-->
+<!--                android:paddingEnd="8dp"-->
+<!--                android:layout_marginLeft="120dp"-->
+<!--                android:textStyle="bold"-->
+<!--                android:textSize="19dp"-->
+<!--                />-->
+<!--             </LinearLayout>-->
+<!--        </LinearLayout>-->
 
+<!--        <LinearLayout-->
+<!--            android:id="@+id/imglayoutouttanerimg"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+<!--         <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="115dp"-->
+<!--            android:weightSum="2"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_marginLeft="30dp">-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:id="@+id/imgtr"-->
+<!--                android:layout_width="175dp"-->
+<!--                android:layout_height="105dp"-->
+<!--                android:layout_marginLeft="5dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                >-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/etoutwardotinweighvehicleimg"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:src="@drawable/camera"-->
+<!--                    android:clickable="true"-->
+<!--                    android:onClick="captureImageFromCamera1"-->
+
+<!--                    />-->
+<!--            </androidx.cardview.widget.CardView>-->
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="175dp"-->
+<!--                android:layout_height="105dp"-->
+<!--                android:layout_marginTop="5dp"-->
+<!--                android:layout_marginLeft="29dp"-->
+<!--                >-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/etoutwardotinweighDriverimg"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:src="@drawable/camera"-->
+<!--                    android:clickable="true"-->
+<!--                    android:onClick="captureImageFromCamera2"-->
+<!--                    />-->
+
+<!--            </androidx.cardview.widget.CardView>-->
+<!--            </LinearLayout>-->
+
+<!--        </LinearLayout>-->
         <LinearLayout
-            android:id="@+id/imglayoutouttanerimg"
+            android:id="@+id/mainContainer"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="115dp"
-            android:weightSum="2"
-            android:orientation="horizontal"
-            android:layout_marginLeft="30dp">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >  <!-- Initially Hidden -->
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/imgtr"
-                android:layout_width="175dp"
-                android:layout_height="105dp"
-                android:layout_marginLeft="5dp"
-                android:layout_marginTop="5dp"
-                >
+            <!-- First Layout -->
+            <LinearLayout
+                android:id="@+id/imglayoutouttanername"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
-                <ImageView
-                    android:id="@+id/etoutwardotinweighvehicleimg"
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/camera"
-                    android:clickable="true"
-                    android:onClick="captureImageFromCamera1"
+                    android:layout_height="20dp"
+                    android:orientation="horizontal"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginLeft="30dp">
 
-                    />
-            </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="In Vehicle"
+                        android:gravity="start"
+                        android:layout_gravity="start"
+                        android:paddingStart="18dp"
+                        android:paddingEnd="8dp"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:textSize="19dp" />
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="175dp"
-                android:layout_height="105dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="29dp"
-                >
-
-                <ImageView
-                    android:id="@+id/etoutwardotinweighDriverimg"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/camera"
-                    android:clickable="true"
-                    android:onClick="captureImageFromCamera2"
-                    />
-
-            </androidx.cardview.widget.CardView>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="In Driver"
+                        android:gravity="end"
+                        android:layout_gravity="end"
+                        android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
+                        android:layout_marginLeft="120dp"
+                        android:textStyle="bold"
+                        android:textSize="19dp" />
+                </LinearLayout>
             </LinearLayout>
 
+            <!-- Second Layout -->
+            <LinearLayout
+                android:id="@+id/imglayoutouttanerimg"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="115dp"
+                    android:weightSum="2"
+                    android:orientation="horizontal"
+                    android:layout_marginLeft="30dp">
+
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/imgtr"
+                        android:layout_width="175dp"
+                        android:layout_height="105dp"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginTop="5dp">
+
+                        <ImageView
+                            android:id="@+id/etoutwardotinweighvehicleimg"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/camera"
+                            android:clickable="true"
+                            android:onClick="captureImageFromCamera1" />
+                    </androidx.cardview.widget.CardView>
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_width="175dp"
+                        android:layout_height="105dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="29dp">
+
+                        <ImageView
+                            android:id="@+id/etoutwardotinweighDriverimg"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/camera"
+                            android:clickable="true"
+                            android:onClick="captureImageFromCamera2" />
+                    </androidx.cardview.widget.CardView>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -1210,6 +1303,26 @@
             </LinearLayout>
         </ScrollView>
 
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#F5F5F5"
+            android:padding="16dp">
+
+<!--            <Button-->
+<!--                android:id="@+id/btnAddCompartment"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Add Compartment" />-->
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerView_labitem_weighment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp" />
+        </LinearLayout>
+
 
 
         <androidx.cardview.widget.CardView
@@ -1259,7 +1372,7 @@
 
 
                 <androidx.appcompat.widget.AppCompatButton
-                    android:id="@+id/etssubmit"
+                    android:id="@+id/etssubmit_outwardtanker"
                     android:layout_width="110dp"
                     android:layout_height="match_parent"
                     android:layout_below="@id/OUM."

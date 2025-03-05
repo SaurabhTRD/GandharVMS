@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.TimePickerDialog;
@@ -45,6 +48,7 @@ import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Truck_Weighment;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Compartment;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
@@ -56,6 +60,8 @@ import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.outward_Tanker_Lab_forms.LabCompartmentAdapter;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_compartment_model;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.common.reflect.TypeToken;
@@ -65,6 +71,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -100,8 +109,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     EditText intime, serialnumber, vehiclenumber, materialname, custname, oanum, tareweight, tankernumber,
             etremark, transportername, howmuchqty, elocation,etbillremark,verifyremark,compartment1,compartment2,compartment3,compartment4,compartment5,compartment6,
-             grossweight1,grossweight2,grossweight3,grossweight4,grossweight5,grossweight6;
-    Button submit, complted;
+             grossweight1,grossweight2,grossweight3,grossweight4,grossweight5,grossweight6,edgrosswt,edoneremark;
+    Button submit, complted,verifybtn;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -122,9 +131,13 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     public String Netxtdept = "";
     char despatchNextChar = ' ';
     public String despatchnext = "";
-    Button verifybtn;
     private Outward_Truck_interface outwardTruckInterface;
     CardView cardone,cardtwo,cardthree,cardfour,cardfive,cardsix;
+    private List<Lab_compartment_model> compartmentList;
+    private Weighment_compartment_Adapter adapter;
+    private RecyclerView recyclerView;
+    public int compartmentArraycount,copartmentcount;
+    LinearLayout mainContainer ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -187,9 +200,10 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         img1 = findViewById(R.id.etoutwardotinweighvehicleimg);
         img2 = findViewById(R.id.etoutwardotinweighDriverimg);
 
-        submit = findViewById(R.id.etssubmit);
+        submit = findViewById(R.id.etssubmit_outwardtanker);
         dbroot = FirebaseFirestore.getInstance();
         complted = findViewById(R.id.otinweighcompleted);
+        mainContainer  = findViewById(R.id.mainContainer);
 
         tankernumber.setVisibility(View.GONE);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -234,6 +248,15 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                 verification();
             }
         });
+
+        recyclerView = findViewById(R.id.recyclerView_labitem_weighment);
+        compartmentList = new ArrayList<>();
+        //List<Compartment> compartmentList = new ArrayList<>();
+        // ✅ Pass `this` (Context) to Adapter
+        adapter = new Weighment_compartment_Adapter(this, compartmentList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
 
 
     }
@@ -326,40 +349,108 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         /*intime.requestFocus();
                         intime.callOnClick();*/
                         Netxtdept = data.getPurposeProcess();
-                        if(data.getPurposeProcess() == null || data.getPurposeProcess().trim().isEmpty()){
+                        String procompartment1 = data.getProcompartment1();
+
+
+//                        if(data.getPurposeProcess() == null || data.getPurposeProcess().trim().isEmpty()){
+//                            intime.setVisibility(View.VISIBLE);
+//                            tareweight.setVisibility(View.VISIBLE);
+//                            etremark.setVisibility(View.VISIBLE);
+//                        }else {
+//                            // Hide fields when purposeProcess contains any value
+//                            intime.setVisibility(View.GONE);
+////                            tareweight.setVisibility(View.GONE);
+//                            etremark.setVisibility(View.GONE);
+//                            layoutname.setVisibility(View.GONE);
+//                            layoutimg.setVisibility(View.GONE);
+//                            submit.setVisibility(View.GONE);
+//                            verifybtn.setVisibility(View.VISIBLE);
+//                            verifyremark.setVisibility(View.VISIBLE);
+//                            cardone.setVisibility(View.VISIBLE);
+//                            cardtwo.setVisibility(View.VISIBLE);
+//                            cardthree.setVisibility(View.VISIBLE);
+//                            cardfour.setVisibility(View.VISIBLE);
+//                            cardfive.setVisibility(View.VISIBLE);
+//                            cardsix.setVisibility(View.VISIBLE);
+////                            compartment1.setText(data.get);
+//                            tareweight.setText(data.getTareWeight());
+//                            tareweight.setEnabled(false);
+//                            handleCompartmentFields(data);
+//                            // Handle gross weight and net weight logic
+//                            setupGrossWeightLogic();
+//                            compartment1.setText(String.valueOf(data.getCompartment1()));
+//                            compartment2.setText(String.valueOf(data.getCompartment2()));
+//                            compartment3.setText(String.valueOf(data.getCompartment3()));
+//                            compartment4.setText(String.valueOf(data.getCompartment4()));
+//                            compartment5.setText(String.valueOf(data.getCompartment5()));
+//                            compartment6.setText(String.valueOf(data.getCompartment6()));
+//
+//                        }
+                        List<String> compartments = new ArrayList<>();
+
+                        if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty())
+                            compartments.add(data.getProcompartment1());
+                        if (data.getProcompartment2() != null && !data.getProcompartment2().isEmpty())
+                            compartments.add(data.getProcompartment2());
+                        if (data.getProcompartment3() != null && !data.getProcompartment3().isEmpty())
+                            compartments.add(data.getProcompartment3());
+                        if (data.getProcompartment4() != null && !data.getProcompartment4().isEmpty())
+                            compartments.add(data.getProcompartment4());
+                        if (data.getProcompartment5() != null && !data.getProcompartment5().isEmpty())
+                            compartments.add(data.getProcompartment5());
+                        if (data.getProcompartment6() != null && !data.getProcompartment6().isEmpty())
+                            compartments.add(data.getProcompartment6());
+
+                        compartmentArraycount = compartments.size(); // ✅ Store count dynamically
+                        Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
+
+
+                        List<String> compartmentsJson = Arrays.asList(
+                                data.getProcompartment1(),
+                                data.getProcompartment2(),
+                                data.getProcompartment3(),
+                                data.getProcompartment4(),
+                                data.getProcompartment5(),
+                                data.getProcompartment6()
+                        );
+                        for (String json : compartmentsJson) {
+                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
+                            if (labCompartmentModel != null) {
+                                compartmentList.add(labCompartmentModel);
+                                adapter.notifyDataSetChanged();
+                                // 🔹 Show Update or Submit button based on compartment data
+                            }
+                        }
+                        if (compartmentArraycount > 0) {
+                            verifybtn.setVisibility(View.VISIBLE);
+                            tareweight.setVisibility(View.GONE);
+                            etremark.setVisibility(View.GONE);
+                            submit.setVisibility(View.GONE);
+                            intime.setVisibility(View.GONE);
+                            mainContainer.setVisibility(View.GONE);
+                            Log.d("BUTTON_DEBUG", "Showing UPDATE button");
+                        } else {
                             intime.setVisibility(View.VISIBLE);
                             tareweight.setVisibility(View.VISIBLE);
                             etremark.setVisibility(View.VISIBLE);
-                        }else {
-                            // Hide fields when purposeProcess contains any value
-                            intime.setVisibility(View.GONE);
-//                            tareweight.setVisibility(View.GONE);
-                            etremark.setVisibility(View.GONE);
-                            layoutname.setVisibility(View.GONE);
-                            layoutimg.setVisibility(View.GONE);
-                            submit.setVisibility(View.GONE);
-                            verifybtn.setVisibility(View.VISIBLE);
-                            verifyremark.setVisibility(View.VISIBLE);
-                            cardone.setVisibility(View.VISIBLE);
-                            cardtwo.setVisibility(View.VISIBLE);
-                            cardthree.setVisibility(View.VISIBLE);
-                            cardfour.setVisibility(View.VISIBLE);
-                            cardfive.setVisibility(View.VISIBLE);
-                            cardsix.setVisibility(View.VISIBLE);
-//                            compartment1.setText(data.get);
-                            tareweight.setText(data.getTareWeight());
-                            tareweight.setEnabled(false);
-                            handleCompartmentFields(data);
-                            // Handle gross weight and net weight logic
-                            setupGrossWeightLogic();
-                            compartment1.setText(String.valueOf(data.getCompartment1()));
-                            compartment2.setText(String.valueOf(data.getCompartment2()));
-                            compartment3.setText(String.valueOf(data.getCompartment3()));
-                            compartment4.setText(String.valueOf(data.getCompartment4()));
-                            compartment5.setText(String.valueOf(data.getCompartment5()));
-                            compartment6.setText(String.valueOf(data.getCompartment6()));
-
+                            verifybtn.setVisibility(View.GONE);
+                            submit.setVisibility(View.VISIBLE);
+                           // mainContainer.setVisibility(View.GONE);
+                            Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
                         }
+
+//                        if (procompartment1 != null && !procompartment1.isEmpty()){
+//                            edgrosswt.setVisibility(View.VISIBLE);
+//                            tareweight.setVisibility(View.GONE);
+//                            verifybtn.setVisibility(View.VISIBLE);
+//                            submit.setVisibility(View.GONE);
+//                        }else {
+//                            edgrosswt.setVisibility(View.GONE);
+//                            tareweight.setVisibility(View.VISIBLE);
+//                            verifybtn.setVisibility(View.GONE);
+//                            submit.setVisibility(View.VISIBLE);
+//                            Log.d("DEBUG", "procompartment1 missing. Showing submit, hiding verifybtn.");
+//                        }
                     } else {
                         Toasty.error(Outward_Tanker_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
@@ -644,73 +735,71 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         startActivity(intent);*/
     }
     private void verification() {
-        String verification_remark = verifyremark.getText().toString().trim();
-        // Handle empty fields safely
-//        int netw1 = getSafeInt(compartment1);
-//        int netw2 = getSafeInt(compartment2);
-//        int netw3 = getSafeInt(compartment3);
-//        int netw4 = getSafeInt(compartment4);
-//        int netw5 = getSafeInt(compartment5);
-//        int netw6 = getSafeInt(compartment6);
+        //String verification_remark = verifyremark.getText().toString().trim();
+        String verification_remark = "ok";
 
-        // Fetch existing net weight values (if available)
-        double existingNet1 = getSafeDouble(compartment1);
-        double existingNet2 = getSafeDouble(compartment2);
-        double existingNet3 = getSafeDouble(compartment3);
-        double existingNet4 = getSafeDouble(compartment4);
-        double existingNet5 = getSafeDouble(compartment5);
-        double existingNet6 = getSafeDouble(compartment6);
-        // Handle empty fields safely
-        double tareWeight = getSafeDouble(tareweight);
-        double gross1 = getSafeDouble(grossweight1);
-        Log.d("Debug", "Gross1 value: " + gross1);
-        double gross2 = getSafeDouble(grossweight2);
-        double gross3 = getSafeDouble(grossweight3);
-        double gross4 = getSafeDouble(grossweight3);
-        double gross5 = getSafeDouble(grossweight3);
-        double gross6 = getSafeDouble(grossweight6);
+//        // Fetch existing net weight values (if available)
+//        double existingNet1 = getSafeDouble(compartment1);
+//        double existingNet2 = getSafeDouble(compartment2);
+//        double existingNet3 = getSafeDouble(compartment3);
+//        double existingNet4 = getSafeDouble(compartment4);
+//        double existingNet5 = getSafeDouble(compartment5);
+//        double existingNet6 = getSafeDouble(compartment6);
+//        // Handle empty fields safely
+//        double tareWeight = getSafeDouble(tareweight);
+//        double gross1 = getSafeDouble(grossweight1);
+//        Log.d("Debug", "Gross1 value: " + gross1);
+//        double gross2 = getSafeDouble(grossweight2);
+//        double gross3 = getSafeDouble(grossweight3);
+//        double gross4 = getSafeDouble(grossweight3);
+//        double gross5 = getSafeDouble(grossweight3);
+//        double gross6 = getSafeDouble(grossweight6);
+//
+//
+//        // Calculate net weight for each compartment (use existing value if available)
+//        int netw1 = (int) ((existingNet1 > 0) ? existingNet1 : Math.max(gross1 - tareWeight, 0));
+//        int netw2 = (int) ((existingNet2 > 0) ? existingNet2 : Math.max(gross2 - tareWeight, 0));
+//        int netw3 = (int) ((existingNet3 > 0) ? existingNet3 : Math.max(gross3 - tareWeight, 0));
+//        int netw4 = (int) ((existingNet4 > 0) ? existingNet4 : Math.max(gross4 - tareWeight, 0));
+//        int netw5 = (int) ((existingNet5 > 0) ? existingNet5 : Math.max(gross5 - tareWeight, 0));
+//        int netw6 = (int) ((existingNet6 > 0) ? existingNet6 : Math.max(gross6 - tareWeight, 0));
+//
+//        // Set net weight values in respective fields
+//        setCompartmentValue(compartment1, netw1);
+//        setCompartmentValue(compartment2, netw2);
+//        setCompartmentValue(compartment3, netw3);
+//        setCompartmentValue(compartment4, netw4);
+//        setCompartmentValue(compartment5, netw5);
+//        setCompartmentValue(compartment6, netw6);
 
-//        // Calculate net weight for each compartment (ensuring no negative values)
-//        int netw1 = (int) Math.max(gross1 - tareWeight, 0);
-//        int netw2 = (int) Math.max(gross2 - tareWeight, 0);
-//        int netw3 = (int) Math.max(gross3 - tareWeight, 0);
-//        int netw4 = (int) Math.max(gross4 - tareWeight, 0);
-//        int netw5 = (int) Math.max(gross5 - tareWeight, 0);
-//        int netw6 = (int) Math.max(gross6 - tareWeight, 0);
+        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
+        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
+        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
+        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
+        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
+        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
 
-        // Calculate net weight for each compartment (use existing value if available)
-        int netw1 = (int) ((existingNet1 > 0) ? existingNet1 : Math.max(gross1 - tareWeight, 0));
-        int netw2 = (int) ((existingNet2 > 0) ? existingNet2 : Math.max(gross2 - tareWeight, 0));
-        int netw3 = (int) ((existingNet3 > 0) ? existingNet3 : Math.max(gross3 - tareWeight, 0));
-        int netw4 = (int) ((existingNet4 > 0) ? existingNet4 : Math.max(gross4 - tareWeight, 0));
-        int netw5 = (int) ((existingNet5 > 0) ? existingNet5 : Math.max(gross5 - tareWeight, 0));
-        int netw6 = (int) ((existingNet6 > 0) ? existingNet6 : Math.max(gross6 - tareWeight, 0));
+        // Log the compartment strings to check their format
+        Log.d("Compartment JSON", compartment1String);
+        Log.d("Compartment JSON", compartment2String);
+        Log.d("Compartment JSON", compartment3String);
+        Log.d("Compartment JSON", compartment4String);
+        Log.d("Compartment JSON", compartment5String);
+        Log.d("Compartment JSON", compartment6String);
 
-//        // Set calculated net weight values in respective fields
-//        compartment1.setText(String.valueOf(netw1));
-//        compartment2.setText(String.valueOf(netw2));
-//        compartment3.setText(String.valueOf(netw3));
-//        compartment4.setText(String.valueOf(netw4));
-//        compartment5.setText(String.valueOf(netw5));
-//        compartment6.setText(String.valueOf(netw6));
-
-        // Set net weight values in respective fields
-        setCompartmentValue(compartment1, netw1);
-        setCompartmentValue(compartment2, netw2);
-        setCompartmentValue(compartment3, netw3);
-        setCompartmentValue(compartment4, netw4);
-        setCompartmentValue(compartment5, netw5);
-        setCompartmentValue(compartment6, netw6);
-
-        if (Netxtdept.length()>0){
-            despatchNextChar = Netxtdept.charAt(0);
-        }
+//        if (Netxtdept.length()>0){
+//            despatchNextChar = Netxtdept.charAt(0);
+//        }
         if (verification_remark.isEmpty()){
             Toasty.warning(this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
         }else {
-            Tanker_verification_model tankerVerificationModel = new Tanker_verification_model(OutwardId,"Yes",despatchNextChar,inOut,vehicleType,EmployeId,
-                    verification_remark,netw1,netw2,netw3,netw4,netw5,netw6);
-            Log.d("API_REQUEST", "Sending: " + new Gson().toJson(tankerVerificationModel));
+            Tanker_verification_model tankerVerificationModel = new Tanker_verification_model(OutwardId,"Yes",'P',inOut,vehicleType,EmployeId,
+                    verification_remark,compartment1String,compartment2String,compartment3String,compartment4String,compartment5String,compartment6String);
+            //Log.d("API_REQUEST", "Sending: " + new Gson().toJson(tankerVerificationModel));
+            // ✅ Convert to JSON and log for debugging
+            Gson gson = new Gson();
+            String jsonRequest = gson.toJson(tankerVerificationModel);
+            Log.d("API_REQUEST", jsonRequest);
             Call<Boolean> call = outwardTruckInterface.Tanker_weighmentvarified(tankerVerificationModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
@@ -817,6 +906,45 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private void setCompartmentValue(EditText editText, int value) {
         editText.setText(String.valueOf(value));
         editText.setEnabled(value == 0);  // Disable field if value exists, enable if empty
+    }
+    private Lab_compartment_model parseCompartment(String jsonString) {
+        if (jsonString == null || jsonString.isEmpty()) {
+            Log.e("JSON_ERROR", "Empty JSON string");
+            return null; // Handle empty data safely
+        }
+        try {
+            Gson gson = new Gson();
+            return gson.fromJson(jsonString.replace("/",""), Lab_compartment_model.class);
+        } catch (Exception e) {
+            Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage());
+            return null;
+        }
+    }
+
+    private String convertCompartmentToJson(Lab_compartment_model compartment) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Blender", compartment.getBlenderNumber()); // Using only Blender
+            jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
+            jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
+            jsonObject.put("TareWeight", compartment.getTareweight()); // Tare Weight")
+            jsonObject.put("WeightRemark", compartment.getWeighremark()); // Weight Remark")
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{}"; // Return empty JSON if an error occurs
+        }
+    }
+    private String convertCompartmentToJsonfirst(First_compartment_model firstCompartmentModel) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("TareWeight", firstCompartmentModel.getTareweight()); // Tare Weight")
+            jsonObject.put("WeightRemark", firstCompartmentModel.getWeighremark()); // Weight Remark")
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{}"; // Return empty JSON if an error occurs
+        }
     }
 
 }
