@@ -9,17 +9,93 @@ public class Lab_compartment_model {
     private String productionSign;
     @SerializedName("OperatorSign")
     private String operatorSign;
+    private String TareWeight;
 
-    @SerializedName("viscosity")
+    @SerializedName("VerificationRemark")
+    private String VerificationRemark;
+//    public String VerificationRemark() {
+//        return VerificationRemark;
+//    }
+//
+//    public String getVerificationRemark() {
+//        return VerificationRemark;
+//    }
+
+//    public void setVerificationRemark(String verificationRemark) {
+//        VerificationRemark = verificationRemark;
+//    }
+
+    @SerializedName("Viscosity")  // ❌ Fix (capital "V")
     private String viscosity;
-    @SerializedName("density")
+
+    @SerializedName("Density")  // ❌ Fix (capital "D")
     private String density;
-    @SerializedName("batchNumber")
+
+    @SerializedName("BatchNumber")  // ❌ Fix (capital "B")
     private String batchNumber;
-    @SerializedName("qcOfficer")
+
+    @SerializedName("QcOfficer")  // ❌ Fix (capital "Q")
     private String qcOfficer;
-    @SerializedName("remark")
+
+    @SerializedName("Remark")  // ❌ Fix (capital "R")
     private String remark;
+
+
+
+    public String inTime;
+    public String iviscosity;
+    public String identinity;
+    public String ibatchnum;
+    public String iqcofficer;
+    public String iremarks;
+
+    public String getInTime() {
+        return inTime;
+    }
+
+    public void setInTime(String inTime) {
+        this.inTime = inTime;
+    }
+
+    public String getIviscosity() {
+        return iviscosity;
+    }
+
+    public void setIviscosity(String iviscosity) {
+        this.iviscosity = iviscosity;
+    }
+
+    public String getIdentinity() {
+        return identinity;
+    }
+
+    public void setIdentinity(String identinity) {
+        this.identinity = identinity;
+    }
+
+    public String getIbatchnum() {
+        return ibatchnum;
+    }
+
+    public void setIbatchnum(String ibatchnum) {
+        this.ibatchnum = ibatchnum;
+    }
+
+    public String getIqcofficer() {
+        return iqcofficer;
+    }
+
+    public void setIqcofficer(String iqcofficer) {
+        this.iqcofficer = iqcofficer;
+    }
+
+    public String getIremarks() {
+        return iremarks;
+    }
+
+    public void setIremarks(String iremarks) {
+        this.iremarks = iremarks;
+    }
 
     @SerializedName("wehintime")
     private String wehintime;
@@ -27,6 +103,9 @@ public class Lab_compartment_model {
     private String tareweight;
     @SerializedName("weighremark")
     private String weighremark;
+
+    @SerializedName("Productname")
+    public String Productname;
 
 //    public Lab_compartment_model(String blenderNumber, String productionSign, String operatorSign) {
 //        this.blenderNumber = blenderNumber;
@@ -42,9 +121,23 @@ public class Lab_compartment_model {
         this.remark = remark;
     }
 
+    public String getProductname(){return Productname;}
+    public String setProductname(){return Productname;}
     public String getBlenderNumber() { return blenderNumber; }
     public String getProductionSign() { return productionSign; }
     public String getOperatorSign() { return operatorSign; }
+
+    public String getTareweight() { return TareWeight; } // ✅ Correct getter method
+    public void setTareweight(String tareWeight) { this.TareWeight = tareWeight; } // ✅ Correct setter method
+//    public String getVerificationRemark() { return remark; }
+//    public void setVerificationRemark(String remark) { this.remark = remark; }
+    public String getVerificationRemark() {
+        return VerificationRemark;
+    }
+
+    public void setVerificationRemark(String verificationRemark) {
+        VerificationRemark = verificationRemark;
+    }
 
     public void setBlenderNumber(String blenderNumber) {
         this.blenderNumber = blenderNumber;
@@ -106,13 +199,13 @@ public class Lab_compartment_model {
         this.wehintime = wehintime;
     }
 
-    public String getTareweight() {
-        return tareweight;
-    }
-
-    public void setTareweight(String tareweight) {
-        this.tareweight = tareweight;
-    }
+//    public String getTareweight() {
+//        return tareweight;
+//    }
+//
+//    public void setTareweight(String tareweight) {
+//        this.tareweight = tareweight;
+//    }
 
     public String getWeighremark() {
         return weighremark;

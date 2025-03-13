@@ -21,8 +21,9 @@ public class New_Lab_Model_OutwardTanker {
     public char I_O;
     public String VehicleType;
     public String UpdatedBy;
+    public String compartment1;
 
-    public New_Lab_Model_OutwardTanker(int outwardId, String labInTime, String labOutTime, String viscosity_Index, BigDecimal density_29_5C, String batch_No, String signatureofOfficer, String labRemark, String createdBy, String barrelLaboratoryProcess, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String vehicleType, String updatedBy) {
+    public New_Lab_Model_OutwardTanker(int outwardId, String labInTime, String labOutTime, String viscosity_Index, BigDecimal density_29_5C, String batch_No, String signatureofOfficer, String labRemark, String createdBy, String barrelLaboratoryProcess, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String vehicleType, String updatedBy, String compartment1) {
         OutwardId = outwardId;
         LabInTime = labInTime;
         LabOutTime = labOutTime;
@@ -39,5 +40,6 @@ public class New_Lab_Model_OutwardTanker {
         I_O = i_O;
         VehicleType = vehicleType;
         UpdatedBy = updatedBy;
+        this.compartment1 = compartment1;
     }
 }

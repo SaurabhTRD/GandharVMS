@@ -340,6 +340,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         elocation.setEnabled(false);
                         etbillremark.setText(data.getTankerBillingRemark());
                         etbillremark.setEnabled(false);
+                        boolean ismultiple = data.isCheck();
 //                        tareweight.setEnabled(false);
                         String extraMaterialsJson = data.getProductQTYUOMOA();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
@@ -405,7 +406,32 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
 
 
+//                        List<String> compartmentsJson = Arrays.asList(
+//                                data.getProcompartment1(),
+//                                data.getProcompartment2(),
+//                                data.getProcompartment3(),
+//                                data.getProcompartment4(),
+//                                data.getProcompartment5(),
+//                                data.getProcompartment6()
+//                        );
+//                        for (String json : compartmentsJson) {
+//                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
+//                            if (labCompartmentModel != null) {
+//                                compartmentList.add(labCompartmentModel);
+//                                adapter.notifyDataSetChanged();
+//                                // 🔹 Show Update or Submit button based on compartment data
+//                            }
+//                        }
+
                         List<String> compartmentsJson = Arrays.asList(
+                                data.getCompartment1(),
+                                data.getCompartment2(),
+                                data.getCompartment3(),
+                                data.getCompartment4(),
+                                data.getCompartment5(),
+                                data.getCompartment6()
+                        );
+                        List<String> procompartmentsJson = Arrays.asList(
                                 data.getProcompartment1(),
                                 data.getProcompartment2(),
                                 data.getProcompartment3(),
@@ -420,6 +446,12 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                                 adapter.notifyDataSetChanged();
                                 // 🔹 Show Update or Submit button based on compartment data
                             }
+                        }
+                        // If Cluase to get Latest Compartment Data for Weight Verification
+                        if( ismultiple && compartmentList.size() < procompartmentsJson.size() ) {
+                            Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
+                            compartmentList.add(labCompartmentModel1);
+                            adapter.notifyDataSetChanged();
                         }
                         if (compartmentArraycount > 0) {
                             verifybtn.setVisibility(View.VISIBLE);
@@ -438,19 +470,6 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                            // mainContainer.setVisibility(View.GONE);
                             Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
                         }
-
-//                        if (procompartment1 != null && !procompartment1.isEmpty()){
-//                            edgrosswt.setVisibility(View.VISIBLE);
-//                            tareweight.setVisibility(View.GONE);
-//                            verifybtn.setVisibility(View.VISIBLE);
-//                            submit.setVisibility(View.GONE);
-//                        }else {
-//                            edgrosswt.setVisibility(View.GONE);
-//                            tareweight.setVisibility(View.VISIBLE);
-//                            verifybtn.setVisibility(View.GONE);
-//                            submit.setVisibility(View.VISIBLE);
-//                            Log.d("DEBUG", "procompartment1 missing. Showing submit, hiding verifybtn.");
-//                        }
                     } else {
                         Toasty.error(Outward_Tanker_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
@@ -478,6 +497,158 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             }
         });
     }
+
+
+    private void FetchVehicleDetails1(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
+        Call<Response_Outward_Tanker_Weighment> call = outwardWeighment.fetchweighment(vehicleNo, vehicleType, NextProcess, inOut);
+        call.enqueue(new Callback<Response_Outward_Tanker_Weighment>() {
+            @Override
+            public void onResponse(Call<Response_Outward_Tanker_Weighment> call, Response<Response_Outward_Tanker_Weighment> response) {
+                if (response.isSuccessful()) {
+                    Response_Outward_Tanker_Weighment data = response.body();
+                    if (data != null && data.getVehicleNumber() != null && !data.getVehicleNumber().isEmpty()) {
+
+                        // ✅ Set Vehicle Details (Always)
+                        OutwardId = data.getOutwardId();
+                        serialNo = data.getSerialNumber();
+                        serialnumber.setText(data.getSerialNumber());
+                        serialnumber.setEnabled(false);
+                        vehiclenumber.setText(data.getVehicleNumber());
+                        vehiclenumber.setEnabled(false);
+                        materialname.setText(data.getProductName());
+                        materialname.setEnabled(false);
+                        custname.setText(data.getCustomerName());
+                        custname.setEnabled(false);
+                        howmuchqty.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+                        howmuchqty.setEnabled(false);
+                        transportername.setText(data.getTransportName());
+                        transportername.setEnabled(false);
+                        elocation.setText(data.getLocation());
+                        elocation.setEnabled(false);
+                        etbillremark.setText(data.getTankerBillingRemark());
+                        etbillremark.setEnabled(false);
+
+                        // ✅ Check if JSON Data is Available for Extra Materials
+                        if (data.getProductQTYUOMOA() != null) {
+                            String extraMaterialsJson = data.getProductQTYUOMOA();
+                            List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                            createExtraMaterialViews(extraMaterials);
+                        }
+
+                        // ✅ Initialize Compartment Lists (with NULL CHECKS)
+                        List<String> weighmentCompartments = Arrays.asList(
+                                data.getCompartment1(), data.getCompartment2(), data.getCompartment3(),
+                                data.getCompartment4(), data.getCompartment5(), data.getCompartment6()
+                        );
+
+                        List<String> productionCompartments = Arrays.asList(
+                                data.getProcompartment1(), data.getProcompartment2(), data.getProcompartment3(),
+                                data.getProcompartment4(), data.getProcompartment5(), data.getProcompartment6()
+                        );
+
+                        // ✅ Check if at least one valid compartment exists
+                        boolean hasCompartmentData = false;
+                        for (String comp : weighmentCompartments) {
+                            if (comp != null && !comp.isEmpty()) {
+                                hasCompartmentData = true;
+                                break;
+                            }
+                        }
+
+                        for (String proComp : productionCompartments) {
+                            if (proComp != null && !proComp.isEmpty()) {
+                                hasCompartmentData = true;
+                                break;
+                            }
+                        }
+
+                        // ✅ If there is valid compartment data, update the RecyclerView
+                        if (hasCompartmentData) {
+                            Log.d("DEBUG", "Compartment data found. Updating adapter...");
+                            compartmentList.clear();
+
+                            for (int i = 0; i < weighmentCompartments.size(); i++) {
+                                String weighmentJson = weighmentCompartments.get(i);
+                                String productionJson = productionCompartments.get(i);
+
+                                if (weighmentJson != null && !weighmentJson.isEmpty()) {
+                                    Lab_compartment_model labCompartmentModel = parseCompartment(weighmentJson);
+                                    if (labCompartmentModel != null) {
+                                        labCompartmentModel.setTareweight(weighmentJson);
+                                        compartmentList.add(labCompartmentModel);
+                                    }
+                                }
+
+                                if (productionJson != null && !productionJson.isEmpty() && compartmentList.size() < productionCompartments.size()) {
+                                    Lab_compartment_model labCompartmentModel = parseCompartment(productionJson);
+                                    if (labCompartmentModel != null) {
+                                        compartmentList.add(labCompartmentModel);
+                                    }
+                                }
+                            }
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            Log.d("DEBUG", "No compartment data found. Skipping adapter update.");
+                        }
+                        if (compartmentArraycount > 0) {
+                            verifybtn.setVisibility(View.VISIBLE);
+                            tareweight.setVisibility(View.GONE);
+                            etremark.setVisibility(View.GONE);
+                            submit.setVisibility(View.GONE);
+                            intime.setVisibility(View.GONE);
+                            mainContainer.setVisibility(View.GONE);
+                            Log.d("BUTTON_DEBUG", "Showing UPDATE button");
+                        } else {
+                            intime.setVisibility(View.VISIBLE);
+                            tareweight.setVisibility(View.VISIBLE);
+                            etremark.setVisibility(View.VISIBLE);
+                            verifybtn.setVisibility(View.GONE);
+                            submit.setVisibility(View.VISIBLE);
+                             mainContainer.setVisibility(View.GONE);
+                            Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
+                        }
+
+//                        if (productionCompartments != null && !productionCompartments.isEmpty()){
+//                            edgrosswt.setVisibility(View.VISIBLE);
+//                            tareweight.setVisibility(View.GONE);
+//                            verifybtn.setVisibility(View.VISIBLE);
+//                            submit.setVisibility(View.GONE);
+//                        }else {
+//                            edgrosswt.setVisibility(View.GONE);
+//                            tareweight.setVisibility(View.VISIBLE);
+//                            verifybtn.setVisibility(View.GONE);
+//                            submit.setVisibility(View.VISIBLE);
+//                            Log.d("DEBUG", "procompartment1 missing. Showing submit, hiding verifybtn.");
+//                        }
+
+                    } else {
+                        Toasty.error(Outward_Tanker_weighment.this, "This Vehicle Number Is Not Available!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response_Outward_Tanker_Weighment> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+
+
 
     private List<ProductListData> parseExtraMaterials(String jsonString) {
         if (jsonString == null || jsonString.trim().isEmpty()) {
@@ -736,6 +907,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     }
     private void verification() {
         //String verification_remark = verifyremark.getText().toString().trim();
+        String outTime = getCurrentTime();
+        String etvehiclenumber = vehiclenumber.getText().toString().trim();
         String verification_remark = "ok";
 
 //        // Fetch existing net weight values (if available)
@@ -807,7 +980,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() && response.body() == true){
                         Log.d("API_RESPONSE", "Response: " + response.body());
                         Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        //makeNotificationforsmallverified(wvehiclenumber);
+                        makeNotification(etvehiclenumber, outTime);
                         startActivity(new Intent(Outward_Tanker_weighment.this, Outward_Tanker.class));
                         finish();
                     }
@@ -845,14 +1018,14 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             return 0; // Handle parsing error by returning a default value
         }
     }
-    private void handleCompartmentFields(Response_Outward_Tanker_Weighment data) {
-        setCompartmentField(compartment1, data.getCompartment1());
-        setCompartmentField(compartment2, data.getCompartment2());
-        setCompartmentField(compartment3, data.getCompartment3());
-        setCompartmentField(compartment4, data.getCompartment4());
-        setCompartmentField(compartment5, data.getCompartment5());
-        setCompartmentField(compartment6, data.getCompartment6());
-    }
+//    private void handleCompartmentFields(Response_Outward_Tanker_Weighment data) {
+//        setCompartmentField(compartment1, data.getCompartment1());
+//        setCompartmentField(compartment2, data.getCompartment2());
+//        setCompartmentField(compartment3, data.getCompartment3());
+//        setCompartmentField(compartment4, data.getCompartment4());
+//        setCompartmentField(compartment5, data.getCompartment5());
+//        setCompartmentField(compartment6, data.getCompartment6());
+//    }
 
     private void setCompartmentField(EditText compartmentField, Integer value) {
         if (value != null && value > 0) {
@@ -928,7 +1101,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
             jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
             jsonObject.put("TareWeight", compartment.getTareweight()); // Tare Weight")
-            jsonObject.put("WeightRemark", compartment.getWeighremark()); // Weight Remark")
+            jsonObject.put("VerificationRemark",compartment.getVerificationRemark());
+//            jsonObject.put("VerificationRemark", compartment.getremark()); // Weight Remark")
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();

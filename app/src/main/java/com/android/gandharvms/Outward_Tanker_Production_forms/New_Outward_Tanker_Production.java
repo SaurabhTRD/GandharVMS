@@ -84,7 +84,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
     private LoginMethod userDetails;
     private int oploutwardid = 0;
     private int OutwardId;
-    EditText serialnumber,vehiclenumber,oanumber,product,customer,location,howqty,transporter,intime,blendernumber,signproduction,oprator,remark,etbillremark;
+    EditText serialnumber,vehiclenumber,oanumber,product,customer,location,howqty,transporter,intime,blendernumber,signproduction,oprator,remark,etbillremark,etproduct;
     Button btnsubmit,btncompletd,btnupdate;
     ArrayAdapter<String> nextdeptdrop;
     Map<String, String> nextdeptmapping = new HashMap<>();
@@ -138,6 +138,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         signproduction = findViewById(R.id.etnewsignofproduction);
         oprator = findViewById(R.id.etnewsignofoprator);
         remark = findViewById(R.id.etnewremark);
+        etproduct = findViewById(R.id.etproductottankerprodcut);
         etbillremark=findViewById(R.id.etprducBillingRemark);
         btnupdate = findViewById(R.id.etnewsupdate);
         btnupdate.setVisibility(View.GONE);
@@ -479,59 +480,59 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         }
     }
 
-    private void showAddCompartmentDialog1() {
-        if (compartmentList.size() >= 6) {
-            Toast.makeText(this, "Maximum 6 compartments allowed!", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_add_compartment);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-        // Set width and height for a medium-size dialog
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
-        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.getWindow().setAttributes(layoutParams);
-
-        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
-        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
-        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
-        Button btnSave = dialog.findViewById(R.id.btnSave);
-        TextView txtCompartmentNumber = dialog.findViewById(R.id.txtCompartmentNumber);
-
-        // ✅ Check if TextView exists before using it
-        int currentCompartment = compartmentList.size() + 2; // Start from 1
-        if (txtCompartmentNumber != null) {
-            txtCompartmentNumber.setText("Adding Compartment " + currentCompartment);
-        } else {
-            Log.e("DIALOG_ERROR", "txtCompartmentNumber is NULL. Check dialog_add_compartment.xml!");
-        }
-
-
-        btnSave.setOnClickListener(v -> {
-            String blender = edtBlender.getText().toString().trim();
-            String productionSign = edtProductionSign.getText().toString().trim();
-            String operatorSign = edtOperatorSign.getText().toString().trim();
-
-            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
-                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-            } else {
-                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
-                adapter.notifyDataSetChanged();
-                dialog.dismiss();
-
-//                // Automatically insert when 6 compartments are added
-//                if (compartmentList.size() == 6) {
-//                    insert();
-//                }
-            }
-        });
-
-        dialog.show();
-    }
+//    private void showAddCompartmentDialog1() {
+//        if (compartmentList.size() >= 6) {
+//            Toast.makeText(this, "Maximum 6 compartments allowed!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        Dialog dialog = new Dialog(this);
+//        dialog.setContentView(R.layout.dialog_add_compartment);
+//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//
+//        // Set width and height for a medium-size dialog
+//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+//        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+//        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
+//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        dialog.getWindow().setAttributes(layoutParams);
+//
+//        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
+//        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
+//        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
+//        Button btnSave = dialog.findViewById(R.id.btnSave);
+//        TextView txtCompartmentNumber = dialog.findViewById(R.id.txtCompartmentNumber);
+//
+//        // ✅ Check if TextView exists before using it
+//        int currentCompartment = compartmentList.size() + 2; // Start from 1
+//        if (txtCompartmentNumber != null) {
+//            txtCompartmentNumber.setText("Adding Compartment " + currentCompartment);
+//        } else {
+//            Log.e("DIALOG_ERROR", "txtCompartmentNumber is NULL. Check dialog_add_compartment.xml!");
+//        }
+//
+//
+//        btnSave.setOnClickListener(v -> {
+//            String blender = edtBlender.getText().toString().trim();
+//            String productionSign = edtProductionSign.getText().toString().trim();
+//            String operatorSign = edtOperatorSign.getText().toString().trim();
+//
+//            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
+//                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+//            } else {
+//                compartmentList.add(new Compartment(blender, productionSign, operatorSign,));
+//                adapter.notifyDataSetChanged();
+//                dialog.dismiss();
+//
+////                // Automatically insert when 6 compartments are added
+////                if (compartmentList.size() == 6) {
+////                    insert();
+////                }
+//            }
+//        });
+//
+//        dialog.show();
+//    }
 //    private void showAddCompartmentDialog() {
 //        if (compartmentList.size() >= 6) {
 //            Toast.makeText(this, "Maximum 6 compartments allowed!", Toast.LENGTH_SHORT).show();
@@ -604,18 +605,21 @@ private void showAddCompartmentDialogs(int count) {
         EditText edtBlender = dialog.findViewById(R.id.edtBlender);
         EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
         EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
+        EditText edproductname = dialog.findViewById(R.id.edtProductname);
         Button btnSave = dialog.findViewById(R.id.btnSave);
 
         btnSave.setOnClickListener(v -> {
             String blender = edtBlender.getText().toString().trim();
             String productionSign = edtProductionSign.getText().toString().trim();
             String operatorSign = edtOperatorSign.getText().toString().trim();
+            String productname = edproductname.getText().toString().trim();
 
-            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
+
+            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()||productname.isEmpty()) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             } else {
                 // ✅ Add new compartment and update adapter
-                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
+                compartmentList.add(new Compartment(blender, productionSign, operatorSign,productname));
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
 
@@ -639,10 +643,11 @@ private void showAddCompartmentDialogs(int count) {
         String isignofoprator = oprator.getText().toString();
         String iremark = this.remark.getText().toString();
         //String nextu = nextdeptvalue.toString().trim();
+        String product = this.remark.getText().toString();
 
         // Assign each compartment to a separate JSON string
         // ✅ Create Compartment 1 Object
-        Compartment compartment1 = new Compartment(iblender, isignofproduction, isignofoprator);
+        Compartment compartment1 = new Compartment(iblender, isignofproduction, isignofoprator,product);
         String compartment1String = convertCompartmentToJson(compartment1);
 
         // Convert each compartment to a JSON string (up to 6 compartments)
@@ -710,6 +715,7 @@ private void showAddCompartmentDialogs(int count) {
     }
 
     public void update() {
+        String outTime = getCurrentTime();
         //String nextu = nextdeptvalue.toString().trim();
         String ivehicle = vehiclenumber.getText().toString();
         String iserialnumber = serialnumber.getText().toString();
@@ -761,6 +767,7 @@ private void showAddCompartmentDialogs(int count) {
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful() && response.body() != null && response.body()) {
                     Toasty.success(New_Outward_Tanker_Production.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
+                    makeNotification(ivehicle, outTime);
                     startActivity(new Intent(New_Outward_Tanker_Production.this, Grid_Outward.class));
                     finish();
                 } else {
@@ -839,6 +846,7 @@ private void showAddCompartmentDialogs(int count) {
     private String convertCompartmentToJson(Compartment compartment) {
         try {
             JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Productname", compartment.getProductname()); // Productname")
             jsonObject.put("Blender", compartment.getBlenderNumber()); // Using only Blender
             jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
             jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
@@ -877,57 +885,57 @@ private void showAddCompartmentDialogs(int count) {
         }
     }
 
-    private void showAddCompartmentDialog(Compartment compartment) {
-        Dialog dialog = new Dialog(this);
-        dialog.setContentView(R.layout.dialog_add_compartment);
-        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-
-        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
-        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-        dialog.getWindow().setAttributes(layoutParams);
-
-        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
-        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
-        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
-        Button btnSave = dialog.findViewById(R.id.btnSave);
-
-        // Pre-fill the data if available
-        if (compartment != null) {
-            Log.d("DEBUG", "Setting Blender: " + compartment.getBlenderNumber());
-            Log.d("DEBUG", "Setting ProductionSign: " + compartment.getProductionSign());
-            Log.d("DEBUG", "Setting OperatorSign: " + compartment.getOperatorSign());
-
-
-            edtBlender.setText(compartment.getBlenderNumber());
-            edtProductionSign.setText(compartment.getProductionSign());
-            edtOperatorSign.setText(compartment.getOperatorSign());
-
-            // Disable editing if data exists
-            edtBlender.setEnabled(compartment.getBlenderNumber().isEmpty());
-            edtProductionSign.setEnabled(compartment.getProductionSign().isEmpty());
-            edtOperatorSign.setEnabled(compartment.getOperatorSign().isEmpty());
-        } else {
-            Log.e("DEBUG", "Compartment object is NULL in dialog!");
-        }
-
-        btnSave.setOnClickListener(v -> {
-            String blender = edtBlender.getText().toString().trim();
-            String productionSign = edtProductionSign.getText().toString().trim();
-            String operatorSign = edtOperatorSign.getText().toString().trim();
-
-            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
-                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-            } else {
-                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
-                adapter.notifyDataSetChanged();
-                dialog.dismiss();
-            }
-        });
-
-        dialog.show();
-    }
+//    private void showAddCompartmentDialog(Compartment compartment) {
+//        Dialog dialog = new Dialog(this);
+//        dialog.setContentView(R.layout.dialog_add_compartment);
+//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+//
+//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+//        layoutParams.copyFrom(dialog.getWindow().getAttributes());
+//        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
+//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
+//        dialog.getWindow().setAttributes(layoutParams);
+//
+//        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
+//        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
+//        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
+//        Button btnSave = dialog.findViewById(R.id.btnSave);
+//
+//        // Pre-fill the data if available
+//        if (compartment != null) {
+//            Log.d("DEBUG", "Setting Blender: " + compartment.getBlenderNumber());
+//            Log.d("DEBUG", "Setting ProductionSign: " + compartment.getProductionSign());
+//            Log.d("DEBUG", "Setting OperatorSign: " + compartment.getOperatorSign());
+//
+//
+//            edtBlender.setText(compartment.getBlenderNumber());
+//            edtProductionSign.setText(compartment.getProductionSign());
+//            edtOperatorSign.setText(compartment.getOperatorSign());
+//
+//            // Disable editing if data exists
+//            edtBlender.setEnabled(compartment.getBlenderNumber().isEmpty());
+//            edtProductionSign.setEnabled(compartment.getProductionSign().isEmpty());
+//            edtOperatorSign.setEnabled(compartment.getOperatorSign().isEmpty());
+//        } else {
+//            Log.e("DEBUG", "Compartment object is NULL in dialog!");
+//        }
+//
+//        btnSave.setOnClickListener(v -> {
+//            String blender = edtBlender.getText().toString().trim();
+//            String productionSign = edtProductionSign.getText().toString().trim();
+//            String operatorSign = edtOperatorSign.getText().toString().trim();
+//
+//            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
+//                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
+//            } else {
+//                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
+//                adapter.notifyDataSetChanged();
+//                dialog.dismiss();
+//            }
+//        });
+//
+//        dialog.show();
+//    }
 
 
 }

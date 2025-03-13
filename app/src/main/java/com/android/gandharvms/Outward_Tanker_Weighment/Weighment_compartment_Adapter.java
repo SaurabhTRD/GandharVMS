@@ -41,13 +41,14 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
 
         // ✅ View-Only Production Data (Read-Only)
         holder.txtCompartmentNumber.setText("Compartment " + (position + 1));
-        holder.txtBlender.setText("Blender: " + compartment.getBlenderNumber());
+        holder.txtBlender.setText("Blender: " + String.valueOf(compartment.getBlenderNumber()));
         holder.txtProductionSign.setText("Production Sign: " + compartment.getProductionSign());
         holder.txtOperatorSign.setText("Operator Sign: " + compartment.getOperatorSign());
+        holder.tareweight.setText(" " + compartment.getTareweight());
+        //holder.remark.setText("" + compartment.getRemark());
+        holder.remark.setText("" + compartment.getVerificationRemark());
 
-        //holder.intime.setText(compartment.getWehintime());
-        holder.tareweight.setText(String.valueOf(compartment.getTareweight()));
-        holder.remark.setText(compartment.getWeighremark());
+
 
 //        holder.intime.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -59,7 +60,7 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
 //        });
         holder.tareweight.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) { compartment.setViscosity(s.toString()); }
+            public void afterTextChanged(Editable s) { compartment.setTareweight(s.toString()); }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
@@ -67,7 +68,7 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
         });
         holder.remark.addTextChangedListener(new TextWatcher() {
             @Override
-            public void afterTextChanged(Editable s) { compartment.setViscosity(s.toString()); }
+            public void afterTextChanged(Editable s) { compartment.setVerificationRemark(s.toString()); }
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override

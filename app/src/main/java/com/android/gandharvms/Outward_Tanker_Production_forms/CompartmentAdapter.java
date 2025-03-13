@@ -38,11 +38,13 @@ public class CompartmentAdapter extends RecyclerView.Adapter<CompartmentAdapter.
         holder.txtBlender.setText("Blender: " + compartment.getBlenderNumber());
         holder.txtProduction.setText("Production Sign: " + compartment.getProductionSign());
         holder.txtOperator.setText("Operator: " + compartment.getOperatorSign());
+        holder.txtproduct.setText("ProductName: " + compartment.getProductname() + "");
 
         // Set text color and size for better visibility
         holder.txtBlender.setTextColor(Color.BLACK);
         holder.txtProduction.setTextColor(Color.DKGRAY);
         holder.txtOperator.setTextColor(Color.DKGRAY);
+        holder.txtproduct.setTextColor(Color.DKGRAY);
     }
 
     @Override
@@ -51,13 +53,14 @@ public class CompartmentAdapter extends RecyclerView.Adapter<CompartmentAdapter.
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtBlender, txtProduction, txtOperator,txtCompartmentNumber;
+        TextView txtBlender, txtProduction, txtOperator,txtCompartmentNumber,txtproduct;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             txtCompartmentNumber = itemView.findViewById(R.id.txtCompartmentNumber);
             txtBlender = itemView.findViewById(R.id.txtBlender);
             txtProduction = itemView.findViewById(R.id.txtProduction);
             txtOperator = itemView.findViewById(R.id.txtOperator);
+            txtproduct = itemView.findViewById(R.id.txtproduct);
         }
     }
 }

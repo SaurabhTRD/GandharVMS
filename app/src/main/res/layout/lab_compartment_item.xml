@@ -31,6 +31,16 @@
             android:layout_marginTop="6dp"
             android:layout_marginBottom="6dp"/>
 
+        <!-- Product -->
+        <TextView
+            android:id="@+id/txtProduct"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Product Name: X"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
         <!-- Blender -->
         <TextView
             android:id="@+id/txtBlender"

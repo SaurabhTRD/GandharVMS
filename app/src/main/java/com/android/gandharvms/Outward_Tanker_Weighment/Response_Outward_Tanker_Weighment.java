@@ -74,18 +74,27 @@ public class Response_Outward_Tanker_Weighment {
     public int splpackof210ltrqty;
     public int splpackofboxbuxketltrqty;
 
-    public int compartment1;
-    public int compartment2;
-    public int compartment3;
-    public int compartment4;
-    public int compartment5;
-    public int compartment6;
+    public String compartment1;
+    public String compartment2;
+    public String compartment3;
+    public String compartment4;
+    public String compartment5;
+    public String compartment6;
     public String procompartment1;
     public String procompartment2;
     public String procompartment3;
     public String procompartment4;
     public String procompartment5;
     public String procompartment6;
+    public boolean IsCheck;
+
+    public boolean isCheck() {
+        return IsCheck;
+    }
+
+    public void setCheck(boolean check) {
+        IsCheck = check;
+    }
 
     public String getProductQTYUOMOA() {
         return ProductQTYUOMOA;
@@ -647,51 +656,51 @@ public class Response_Outward_Tanker_Weighment {
         this.splpackofboxbuxketltrqty = splpackofboxbuxketltrqty;
     }
 
-    public int getCompartment1() {
+    public String getCompartment1() {
         return compartment1;
     }
 
-    public void setCompartment1(int compartment1) {
+    public void setCompartment1(String compartment1) {
         this.compartment1 = compartment1;
     }
 
-    public int getCompartment2() {
+    public String getCompartment2() {
         return compartment2;
     }
 
-    public void setCompartment2(int compartment2) {
+    public void setCompartment2(String compartment2) {
         this.compartment2 = compartment2;
     }
 
-    public int getCompartment3() {
+    public String getCompartment3() {
         return compartment3;
     }
 
-    public void setCompartment3(int compartment3) {
+    public void setCompartment3(String compartment3) {
         this.compartment3 = compartment3;
     }
 
-    public int getCompartment4() {
+    public String getCompartment4() {
         return compartment4;
     }
 
-    public void setCompartment4(int compartment4) {
+    public void setCompartment4(String compartment4) {
         this.compartment4 = compartment4;
     }
 
-    public int getCompartment5() {
+    public String getCompartment5() {
         return compartment5;
     }
 
-    public void setCompartment5(int compartment5) {
+    public void setCompartment5(String compartment5) {
         this.compartment5 = compartment5;
     }
 
-    public int getCompartment6() {
+    public String getCompartment6() {
         return compartment6;
     }
 
-    public void setCompartment6(int compartment6) {
+    public void setCompartment6(String compartment6) {
         this.compartment6 = compartment6;
     }
 

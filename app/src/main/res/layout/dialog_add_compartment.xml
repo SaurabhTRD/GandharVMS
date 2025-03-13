@@ -16,6 +16,14 @@
         android:paddingBottom="12dp"/>
 
     <EditText
+        android:id="@+id/edtProductname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Product Name"
+        android:padding="10dp"
+        android:background="@drawable/rounded_edittext"/>
+
+    <EditText
         android:id="@+id/edtBlender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

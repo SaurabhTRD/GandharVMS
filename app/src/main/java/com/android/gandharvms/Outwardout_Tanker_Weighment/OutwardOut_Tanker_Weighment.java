@@ -5,6 +5,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.recyclerview.widget.DefaultItemAnimator;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
 import android.app.TimePickerDialog;
@@ -39,21 +42,27 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Compartment;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Model_OutwardOut_Weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Response_Outward_Tanker_Weighment;
+import com.android.gandharvms.Outward_Tanker_Weighment.Weighment_compartment_Adapter;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_compartment_model;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -105,9 +114,12 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
     private int iseushwt;
     ImageView btnlogout,btnhome;
     TextView username,empid;
+    private List<Lab_compartment_model> compartmentList;
+    private Weighment_compartment_Adapter adapter;
 
     public static String Tanker;
     public static String Truck;
+    private RecyclerView recyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -216,6 +228,14 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                 intime.setText(time);
             }
         });
+        recyclerView = findViewById(R.id.recyclerView_labitem_weighment);
+        compartmentList = new ArrayList<>();
+        //List<Compartment> compartmentList = new ArrayList<>();
+        // ✅ Pass `this` (Context) to Adapter
+        adapter = new Weighment_compartment_Adapter(this, compartmentList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+        recyclerView.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
     }
 
     public void calculateNetWeight() {
@@ -260,6 +280,79 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         createExtraMaterialViews(extraMaterials);
                        /* intime.requestFocus();
                         intime.callOnClick();*/
+                    //  List<Lab_compartment_model> lstlabcompmodel = new ArrayList<>() ;
+//                        Lab_compartment_model labCompartmentModel1 =  parseCompartment(data.getProcompartment1());
+//                        if (labCompartmentModel1 != null) {
+//                            labCompartmentModel1.setTareweight(String.valueOf(data.getCompartment1()));
+//                            compartmentList.add(labCompartmentModel1);
+//                        }
+//
+//                        Lab_compartment_model labCompartmentModel2 =  parseCompartment(data.getProcompartment2());
+//                        if (labCompartmentModel2 != null) {
+//                            labCompartmentModel2.setTareweight(String.valueOf(data.getCompartment2()));
+//                            compartmentList.add(labCompartmentModel2);
+//                        }
+//
+//                        Lab_compartment_model labCompartmentModel3 =  parseCompartment(data.getProcompartment3());
+//                        if (labCompartmentModel3 != null) {
+//                            labCompartmentModel3.setTareweight(String.valueOf(data.getCompartment3()));
+//                            compartmentList.add(labCompartmentModel3);
+//                        }
+//
+//                        Lab_compartment_model labCompartmentModel4 =  parseCompartment(data.getProcompartment4());
+//                        if (labCompartmentModel4 != null) {
+//                            labCompartmentModel4.setTareweight(String.valueOf(data.getCompartment4()));
+//                            compartmentList.add(labCompartmentModel4);
+//                        }
+//
+//                        Lab_compartment_model labCompartmentModel5 =  parseCompartment(data.getProcompartment5());
+//                        if (labCompartmentModel5 != null) {
+//                            labCompartmentModel5.setTareweight(String.valueOf(data.getCompartment5()));
+//                            compartmentList.add(labCompartmentModel5);
+//                        }
+//
+//                        Lab_compartment_model labCompartmentModel6 =  parseCompartment(data.getProcompartment6());
+//                        if (labCompartmentModel6 != null) {
+//                            labCompartmentModel6.setTareweight(String.valueOf(data.getCompartment6()));
+//                            compartmentList.add(labCompartmentModel6);
+//                        }
+//                        //Weighment_compartment_Adapter adapter = new Weighment_compartment_Adapter(this, lstlabcompmodel);
+//                        //recyclerView.setAdapter(adapter);
+//                        adapter = new Weighment_compartment_Adapter(OutwardOut_Tanker_Weighment.this, compartmentList);
+//                        recyclerView.setAdapter(adapter);
+//                        recyclerView.setLayoutManager(new LinearLayoutManager(OutwardOut_Tanker_Weighment.this));
+//                        adapter.notifyDataSetChanged();
+
+                        List<String> compartmentsJson = Arrays.asList(
+                                data.getCompartment1(),
+                                data.getCompartment2(),
+                                data.getCompartment3(),
+                                data.getCompartment4(),
+                                data.getCompartment5(),
+                                data.getCompartment6()
+                        );
+                        List<String> procompartmentsJson = Arrays.asList(
+                                data.getProcompartment1(),
+                                data.getProcompartment2(),
+                                data.getProcompartment3(),
+                                data.getProcompartment4(),
+                                data.getProcompartment5(),
+                                data.getProcompartment6()
+                        );
+                        for (String json : compartmentsJson) {
+                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
+                            if (labCompartmentModel != null) {
+                                compartmentList.add(labCompartmentModel);
+                                adapter.notifyDataSetChanged();
+                                // 🔹 Show Update or Submit button based on compartment data
+                            }
+                        }
+                        // If Cluase to get Latest Compartment Data for Weight Verification
+                        if(compartmentList.size() < procompartmentsJson.size()) {
+                            Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
+                            compartmentList.add(labCompartmentModel1);
+                            adapter.notifyDataSetChanged();
+                        }
                     }
                     else{
                         Toasty.error(OutwardOut_Tanker_Weighment.this, "This Vehicle Number is Not Availabe", Toast.LENGTH_SHORT).show();
@@ -435,32 +528,32 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         String ugrosswt = grossw.getText().toString().trim();
         String unumberpack = etnumberpack.getText().toString().trim()!=null?etnumberpack.getText().toString():"";
         String uremark = etremark.getText().toString().trim()!=null?etremark.getText().toString():"";
-//        int ushdip = Integer.parseInt(etotdip.getText().toString().trim());
-//        int ushwt = Integer.parseInt(etotwt.getText().toString().trim());
-//        if (!etotdip.toString().isEmpty())
-//        {
-//            try {
-//                isemushdip = Integer.parseInt(etotdip.getText().toString().trim());
-//            }catch (NumberFormatException e){
-//                e.printStackTrace();
-//            }
-//
-//        }
-//        if (!etotwt.toString().isEmpty())
-//        {
-//            try {
-//                iseushwt = Integer.parseInt(etotwt.getText().toString().trim());
-//            }catch (NumberFormatException e){
-//                e.printStackTrace();
-//            }
-//        }
+
+        // Convert Compartment objects to JSON strings
+        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
+        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
+        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
+        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
+        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
+        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
+
+        // Log the compartment strings to check their format
+        Log.d("Compartment JSON", compartment1String);
+        Log.d("Compartment JSON", compartment2String);
+        Log.d("Compartment JSON", compartment3String);
+        Log.d("Compartment JSON", compartment4String);
+        Log.d("Compartment JSON", compartment5String);
+        Log.d("Compartment JSON", compartment6String);
+
+
         if (etintime.isEmpty()||etsealnumber.isEmpty()||etnetweight.isEmpty()||ugrosswt.isEmpty()
                 ||uremark.isEmpty()||unumberpack.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
-            Model_OutwardOut_Weighment modelOutwardOutWeighment = new Model_OutwardOut_Weighment(OutwardId,imgPath2,imgPath1,
-                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType,0,0);
-            Call<Boolean> call = outwardWeighment.updateoutwardoutweighment(modelOutwardOutWeighment);
+            out_weighment_model modelOutwardOutWeighment = new out_weighment_model(OutwardId,imgPath2,imgPath1,
+                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType,0,0,
+                    compartment1String,compartment2String,compartment3String,compartment4String,compartment5String,compartment6String);
+            Call<Boolean> call = outwardWeighment.updateoutwardoutweighment_outTanker(modelOutwardOutWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
@@ -609,5 +702,32 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
     public void otoutweighcompletedclick(View view) {
         /*Intent intent = new Intent(this, it_in_weigh_Completedgrid.class);
         startActivity(intent);*/
+    }
+    private Lab_compartment_model parseCompartment(String jsonString) {
+        if (jsonString == null || jsonString.isEmpty()) {
+            Log.e("JSON_ERROR", "Empty JSON string");
+            return null; // Handle empty data safely
+        }
+        try {
+            Gson gson = new Gson();
+            return gson.fromJson(jsonString.replace("/",""), Lab_compartment_model.class);
+        } catch (Exception e) {
+            Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage());
+            return null;
+        }
+    }
+    private String convertCompartmentToJson(Lab_compartment_model compartment) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("Blender", compartment.getBlenderNumber()); // Using only Blender
+            jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
+            jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
+            jsonObject.put("TareWeight", compartment.getTareweight()); // Tare Weight")
+            jsonObject.put("",compartment.getVerificationRemark());
+            return jsonObject.toString();
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{}"; // Return empty JSON if an error occurs
+        }
     }
 }

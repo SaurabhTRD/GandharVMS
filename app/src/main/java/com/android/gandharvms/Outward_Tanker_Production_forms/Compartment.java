@@ -16,14 +16,20 @@ public class Compartment {
     private String qcOfficer;
     private String remark;
 
-    public Compartment(String blenderNumber, String productionSign, String operatorSign) {
+    public String productname;
+
+    public Compartment(String blenderNumber, String productionSign, String operatorSign, String productname) {
         this.blenderNumber = blenderNumber;
         this.productionSign = productionSign;
         this.operatorSign = operatorSign;
+        this.productname = productname;
     }
     public String getBlenderNumber() { return blenderNumber; }
     public String getProductionSign() { return productionSign; }
     public String getOperatorSign() { return operatorSign; }
+    public String getProductname() { return operatorSign; }
+    public String setProductname() { return operatorSign; }
+
 
     public void setBlenderNumber(String blenderNumber) {
         this.blenderNumber = blenderNumber;
