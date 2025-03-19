@@ -485,7 +485,8 @@
                         android:text="COMPLETED"
                         android:textSize="17sp"
                         android:textStyle="bold"
-                        android:textColor="@android:color/black"/>
+                        android:textColor="@android:color/black"
+                        android:onClick="inprocesprocompletedclick"/>
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/etnewssubmit"
