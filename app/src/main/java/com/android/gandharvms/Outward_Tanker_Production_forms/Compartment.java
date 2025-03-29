@@ -14,15 +14,18 @@ public class Compartment {
     private String density;
     private String batchNumber;
     private String qcOfficer;
-    private String remark;
+    private String Remark;
 
     public String productname;
+    private boolean isSelected; // ✅ New field to track selection
+    public String InTime;
 
     public Compartment(String blenderNumber, String productionSign, String operatorSign, String productname) {
         this.blenderNumber = blenderNumber;
         this.productionSign = productionSign;
         this.operatorSign = operatorSign;
         this.productname = productname;
+        this.isSelected = false; // Default: Not selected
     }
     public String getBlenderNumber() { return blenderNumber; }
     public String getProductionSign() { return productionSign; }
@@ -30,6 +33,15 @@ public class Compartment {
     public String getProductname() { return operatorSign; }
     public String setProductname() { return operatorSign; }
 
+
+    // ✅ Add Getter and Setter for `isSelected`
+    public boolean isSelected() {
+        return isSelected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.isSelected = selected;
+    }
 
     public void setBlenderNumber(String blenderNumber) {
         this.blenderNumber = blenderNumber;
@@ -76,10 +88,18 @@ public class Compartment {
     }
 
     public String getRemark() {
-        return remark;
+        return Remark;
     }
 
     public void setRemark(String remark) {
-        this.remark = remark;
+        this.Remark = remark;
+    }
+
+    public String getIntime() {
+        return InTime;
+    }
+
+    public void setIntime(String intime) {
+        this.InTime = intime;
     }
 }

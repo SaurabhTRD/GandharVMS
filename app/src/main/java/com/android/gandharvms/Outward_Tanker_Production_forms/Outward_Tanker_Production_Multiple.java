@@ -3,8 +3,11 @@ package com.android.gandharvms.Outward_Tanker_Production_forms;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
@@ -13,6 +16,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -36,14 +40,11 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
-import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
-import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
-import com.android.gandharvms.outward_Tanker_Lab_forms.New_Outward_tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.common.reflect.TypeToken;
@@ -54,6 +55,7 @@ import com.google.gson.JsonSyntaxException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.json.JSONTokener;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -63,9 +65,11 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -73,8 +77,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls {
-
+public class Outward_Tanker_Production_Multiple extends NotificationCommonfunctioncls {
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
@@ -108,12 +111,16 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
     public int compartmentArraycount;
     public int compartmentcount;
     public  int currentCompartment;
+    LinearLayout productDetailsLayout;
+    EditText etProductName;
+    private ProductAdapter productAdapter; // ✅ Declare globally
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_new_outward_tanker_production);
+        setContentView(R.layout.activity_outward_tanker_production_multiple);
         setupHeader();
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
@@ -176,17 +183,16 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         vehicleMovementLayout.setVisibility(View.GONE);
 
         // ✅ Listen for CheckBox changes
-        checkBoxMultipleVehicle.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            isMultipleVehicle = isChecked;  // ✅ Update Boolean Value
-            if (isChecked) {
-//                nextDeptLayout.setVisibility(View.VISIBLE);  // ✅ Show if checked
-                vehicleMovementLayout.setVisibility(View.VISIBLE);
+//        checkBoxMultipleVehicle.setOnCheckedChangeListener((buttonView, isChecked) -> {
+//            // ✅ Ensure `isMultipleVehicle` is true if movementValueInt > 1
+//            isMultipleVehicle = (movementValueInt > 1) || isChecked;
+//
+//            vehicleMovementLayout.setVisibility(isMultipleVehicle ? View.VISIBLE : View.GONE); // ✅ Update visibility
+//            Log.d("MULTIPLE_VEHICLE", "isMultipleVehicle: " + isMultipleVehicle);
+//        });
 
-            } else {
-//                nextDeptLayout.setVisibility(View.GONE);  // ✅ Hide if unchecked
-                vehicleMovementLayout.setVisibility(View.GONE);
-            }
-        });
+
+
 
 
         if (getIntent().hasExtra("vehiclenum")) {
@@ -213,35 +219,38 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                 String indusdept = parent.getItemAtPosition(position).toString();
                 nextdeptvalue = nextdeptmapping.get(indusdept);
                 if (deptNumericValue != null) {
-                    Toasty.success(New_Outward_Tanker_Production.this, "NetWeighUnitofMeasurement : " + indusdept + " Selected", Toast.LENGTH_SHORT).show();
+                    Toasty.success(Outward_Tanker_Production_Multiple.this, "NetWeighUnitofMeasurement : " + indusdept + " Selected", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toasty.error(New_Outward_Tanker_Production.this, "Default NetWeighUnitofMeasurement : " + "NA", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Outward_Tanker_Production_Multiple.this, "Default NetWeighUnitofMeasurement : " + "NA", Toast.LENGTH_SHORT).show();
                 }
             }
         });
         //Movement.put("Compartment1", 1);
-        Movement.put("Compartment2", 2);
-        Movement.put("Compartment3", 3);
-        Movement.put("Compartment4", 4);
-        Movement.put("Compartment5", 5);
-        Movement.put("Compartment6", 6);
+//        Movement.put("Compartment2", 2);
+//        Movement.put("Compartment3", 3);
+//        Movement.put("Compartment4", 4);
+//        Movement.put("Compartment5", 5);
+//        Movement.put("Compartment6", 6);
 
-        vehmovement = findViewById(R.id.vehicelmovement);
-        ArrayAdapter<String> Movementdrop = new ArrayAdapter<>(this, R.layout.indus_nextdept, new ArrayList<>(Movement.keySet()));
-        vehmovement.setAdapter(Movementdrop);
+//        vehmovement = findViewById(R.id.vehicelmovement);
+//        ArrayAdapter<String> Movementdrop = new ArrayAdapter<>(this, R.layout.indus_nextdept, new ArrayList<>(Movement.keySet()));
+//        vehmovement.setAdapter(Movementdrop);
+//
+//// ✅ Handle Selection Correctly
+//        vehmovement.setOnItemClickListener((parent, view, position, id) -> {
+//            String movement = parent.getItemAtPosition(position).toString();
+//
+//            // ✅ Get Integer Value Directly Without Conversion
+//            if (Movement.containsKey(movement)) {
+//                movementValueInt = Movement.get(movement);  // ✅ Now it's already an integer
+//                Log.d("MOVEMENT_SELECTED", "Selected Value: " + movementValueInt);
+//            } else {
+//                Log.e("MOVEMENT_ERROR", "Invalid selection: " + movement);
+//            }
+//        });
 
-// ✅ Handle Selection Correctly
-        vehmovement.setOnItemClickListener((parent, view, position, id) -> {
-            String movement = parent.getItemAtPosition(position).toString();
 
-            // ✅ Get Integer Value Directly Without Conversion
-            if (Movement.containsKey(movement)) {
-                movementValueInt = Movement.get(movement);  // ✅ Now it's already an integer
-                Log.d("MOVEMENT_SELECTED", "Selected Value: " + movementValueInt);
-            } else {
-                Log.e("MOVEMENT_ERROR", "Invalid selection: " + movement);
-            }
-        });
+
 
         btnAddCompartment = findViewById(R.id.btnAddCompartment);
         recyclerView = findViewById(R.id.recyclerView);
@@ -259,11 +268,25 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                 Toast.makeText(this, "Maximum 6 compartments allowed", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
+         productDetailsLayout = findViewById(R.id.productDetailsLayout);
+         etProductName = findViewById(R.id.etproductottankerprodcut);
+        EditText etBlenderNumber = findViewById(R.id.elnewblendingno);
+        EditText etRemark = findViewById(R.id.etnewremark);
     }
+    public void onProductClick(String productName) {
+        // Show the hidden layout
+
+        productDetailsLayout.setVisibility(View.VISIBLE);
+        productDetailsLayout.setEnabled(true);
+
+        // Set product name in EditText
+        etProductName.setText(productName);
+
+        // Clear previous values (if needed)
+//        etBlenderNumber.setText("");
+//        etRemark.setText("");
+    }
+
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
         Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo, vehicleType, nextProcess, inOut);
@@ -285,6 +308,128 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                         oanumber.setEnabled(false);
                         product.setText(data.getProductQTYUOMOA());
                         product.setEnabled(false);
+                        // Dynamically create product links
+//                        GridLayout productGrid = findViewById(R.id.productGridLayout);
+//                        productGrid.removeAllViews();
+//                        try {
+//                            JSONArray jsonArray = new JSONArray(data.getProductQTYUOMOA());
+//
+//                            for (int i = 0; i < jsonArray.length(); i++) {
+//                                JSONObject obj = jsonArray.getJSONObject(i);
+//                                if (obj.has("ProductName")) {
+//                                    String productName = obj.getString("ProductName");
+//
+//                                    TextView textView = new TextView(Outward_Tanker_Production_Multiple.this);
+//                                    textView.setText(productName);
+//                                    textView.setTextColor(Color.BLUE);
+//                                    textView.setTextSize(16);
+//                                    textView.setPadding(20, 10, 20, 10);
+//                                    textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+//                                    textView.setClickable(true);
+//                                    textView.setGravity(Gravity.CENTER);
+//
+//                                    // Click event to show form
+//                                    textView.setOnClickListener(view -> onProductClick(productName));
+//
+//                                    // Set Grid Layout params (3 products per row)
+//                                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
+//                                    params.width = 0;
+//                                    params.height = GridLayout.LayoutParams.WRAP_CONTENT;
+//                                    params.columnSpec = GridLayout.spec(i % 3, 1f);
+//                                    params.rowSpec = GridLayout.spec(i / 3);
+//
+//                                    textView.setLayoutParams(params);
+//                                    productGrid.addView(textView);
+//                                }
+//                            }
+//                        } catch (JSONException e) {
+//                            e.printStackTrace();
+//                        }
+
+                        Set<String> insertedProducts = new HashSet<>();
+                        for (Compartment compartment : compartmentList) {
+                            insertedProducts.add(compartment.getProductname().trim().toLowerCase());
+                        }
+
+
+                        List<Product> productList = new ArrayList<>(); // ✅ Always initialize the list
+
+// 🔹 Log the JSON before parsing
+                        Log.d("JSON_DEBUG", "Raw JSON Data: " + data.getProductQTYUOMOA());
+
+                        try {
+                            String jsonString = data.getProductQTYUOMOA();
+
+                            if (jsonString == null || jsonString.isEmpty()) {
+                                Log.e("JSON_DEBUG", "JSON data is null or empty");
+                            } else {
+                                // ✅ Fix: Handle cases where JSON is inside a string
+                                if (!jsonString.startsWith("[")) {
+                                    jsonString = new JSONTokener(jsonString).nextValue().toString();
+                                }
+
+                                JSONArray jsonArray = new JSONArray(jsonString);
+                                int productCount = jsonArray.length(); // ✅ Get product count
+                                movementValueInt = productCount; // ✅ Set movementValueInt dynamically
+                                isMultipleVehicle = productCount > 1; // ✅ Set isMultipleVehicle dynamically
+                                Log.d("JSON_DEBUG", "Total Products Found: " + jsonArray.length()); // ✅ Log the number of items
+
+                                for (int i = 0; i < jsonArray.length(); i++) {
+                                    JSONObject obj = jsonArray.getJSONObject(i);
+                                    if (obj.has("ProductName")) {
+                                        String productName = obj.getString("ProductName");
+                                        //productList.add(new Product(productName));
+
+                                        // ✅ Step 2: Only add products that are NOT in `compartmentList`
+                                        if (!insertedProducts.contains(productName)) {
+                                            productList.add(new Product(obj.getString("ProductName"))); // Keep original case
+                                            Log.d("JSON_DEBUG", "Added Product: " + obj.getString("ProductName"));
+                                        } else {
+                                            Log.d("JSON_DEBUG", "Skipping Inserted Product: " + obj.getString("ProductName"));
+                                        }
+
+                                        // 🔹 Log each product
+                                        Log.d("JSON_DEBUG", "Added Product: " + productName);
+                                    } else {
+                                        Log.e("JSON_DEBUG", "ProductName key not found in object at index " + i);
+                                    }
+                                }
+                            }
+                        } catch (JSONException e) {
+                            Log.e("JSON_ERROR", "JSON Parsing Error: " + e.getMessage());
+                            e.printStackTrace();
+                        }
+
+                        // ✅ 2. Fetch and parse Procompartment Data
+                        List<Compartment> compartmentDataList = new ArrayList<>();
+                        List<String> compartmentsJson = Arrays.asList(
+                                data.getProcompartment1(), data.getProcompartment2(), data.getProcompartment3(),
+                                data.getProcompartment4(), data.getProcompartment5(), data.getProcompartment6()
+                        );
+
+                        for (String json : compartmentsJson) {
+                            if (json != null && !json.trim().isEmpty()) {
+                                Compartment compartment = parseCompartment(json);
+                                if (compartment != null) {
+                                    compartmentDataList.add(compartment);
+                                    Log.d("DEBUG", "Added Procompartment: " + compartment.getProductname());
+                                }
+                            }
+                        }
+
+//                          ✅ Check if productList is empty before setting the adapter
+                        if (productList.isEmpty()) {
+                            Log.e("RecyclerView", "No products found after parsing.");
+                        } else {
+                            RecyclerView productRecyclerView = findViewById(R.id.productRecyclerView);
+                            productRecyclerView.setLayoutManager(new LinearLayoutManager(Outward_Tanker_Production_Multiple.this));
+
+                            ProductAdapter adapter = new ProductAdapter(productList, compartmentDataList);
+                            productRecyclerView.setAdapter(adapter);
+                            Log.d("RecyclerView", "Adapter set with " + productList.size() + " products.");
+                        }
+
+
                         customer.setText(data.getCustomerName());
                         customer.setEnabled(false);
                         location.setText(data.getLocation());
@@ -317,14 +462,14 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                         Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
 
                         // 🔹 Fetch and parse compartments, then show dialog
-                        List<String> compartmentsJson = Arrays.asList(
-                                data.getProcompartment1(),
-                                data.getProcompartment2(),
-                                data.getProcompartment3(),
-                                data.getProcompartment4(),
-                                data.getProcompartment5(),
-                                data.getProcompartment6()
-                        );
+//                        List<String> compartmentsJson = Arrays.asList(
+//                                data.getProcompartment1(),
+//                                data.getProcompartment2(),
+//                                data.getProcompartment3(),
+//                                data.getProcompartment4(),
+//                                data.getProcompartment5(),
+//                                data.getProcompartment6()
+//                        );
                         boolean hasCompartmentData = false; // Flag to check if at least one compartment has data
 
                         for (String json : compartmentsJson) {
@@ -333,6 +478,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                                 compartmentList.add(compartment);
                                 hasCompartmentData = true; // Set flag to true when a compartment is found
                                 adapter.notifyDataSetChanged();
+
                                 // 🔹 Show Update or Submit button based on compartment data
                                 if (compartmentcount >= compartmentArraycount) {
                                     btnsubmit.setVisibility(View.GONE);
@@ -371,7 +517,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                         }
 
                     } else {
-                        Toasty.error(New_Outward_Tanker_Production.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                        Toasty.error(Outward_Tanker_Production_Multiple.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
                 } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -480,113 +626,14 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         }
     }
 
-//    private void showAddCompartmentDialog1() {
-//        if (compartmentList.size() >= 6) {
-//            Toast.makeText(this, "Maximum 6 compartments allowed!", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        Dialog dialog = new Dialog(this);
-//        dialog.setContentView(R.layout.dialog_add_compartment);
-//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//
-//        // Set width and height for a medium-size dialog
-//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-//        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-//        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
-//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        dialog.getWindow().setAttributes(layoutParams);
-//
-//        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
-//        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
-//        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
-//        Button btnSave = dialog.findViewById(R.id.btnSave);
-//        TextView txtCompartmentNumber = dialog.findViewById(R.id.txtCompartmentNumber);
-//
-//        // ✅ Check if TextView exists before using it
-//        int currentCompartment = compartmentList.size() + 2; // Start from 1
-//        if (txtCompartmentNumber != null) {
-//            txtCompartmentNumber.setText("Adding Compartment " + currentCompartment);
-//        } else {
-//            Log.e("DIALOG_ERROR", "txtCompartmentNumber is NULL. Check dialog_add_compartment.xml!");
-//        }
-//
-//
-//        btnSave.setOnClickListener(v -> {
-//            String blender = edtBlender.getText().toString().trim();
-//            String productionSign = edtProductionSign.getText().toString().trim();
-//            String operatorSign = edtOperatorSign.getText().toString().trim();
-//
-//            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
-//                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-//            } else {
-//                compartmentList.add(new Compartment(blender, productionSign, operatorSign,));
-//                adapter.notifyDataSetChanged();
-//                dialog.dismiss();
-//
-////                // Automatically insert when 6 compartments are added
-////                if (compartmentList.size() == 6) {
-////                    insert();
-////                }
-//            }
-//        });
-//
-//        dialog.show();
-//    }
-//    private void showAddCompartmentDialog() {
-//        if (compartmentList.size() >= 6) {
-//            Toast.makeText(this, "Maximum 6 compartments allowed!", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        Dialog dialog = new Dialog(this);
-//        dialog.setContentView(R.layout.dialog_add_compartment);
-//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//
-//        // Set width and height for a medium-size dialog
-//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-//        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-//        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
-//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        dialog.getWindow().setAttributes(layoutParams);
-//
-//        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
-//        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
-//        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
-//        Button btnSave = dialog.findViewById(R.id.btnSave);
-//
-//
-//        btnSave.setOnClickListener(v -> {
-//            String blender = edtBlender.getText().toString().trim();
-//            String productionSign = edtProductionSign.getText().toString().trim();
-//            String operatorSign = edtOperatorSign.getText().toString().trim();
-//
-//
-//            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
-//                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-//            } else {
-//                // ✅ Add new compartment and update the adapter
-//                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
-//                adapter.notifyDataSetChanged();
-//                dialog.dismiss();
-//
-//                // ✅ Automatically open next compartment if less than 6
-////                if (compartmentList.size() < 6) {
-////                    showAddCompartmentDialog(); // Open next compartment
-////                }
-//            }
-//        });
-//
-//        dialog.show();
-//    }
-private void showAddCompartmentDialogs(int count) {
-    if (compartmentList.size() >= count) {
-        Toast.makeText(this, "Maximum " + count + " compartments allowed!", Toast.LENGTH_SHORT).show();
-        return;
-    }
+    private void showAddCompartmentDialogs(int count) {
+        if (compartmentList.size() >= count) {
+            Toast.makeText(this, "Maximum " + count + " compartments allowed!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-    showCompartmentDialog(0, count); // Start showing dialogs from index 0
-}
+        showCompartmentDialog(0, count); // Start showing dialogs from index 0
+    }
 
     private void showCompartmentDialog(int index, int maxCount) {
         if (index >= maxCount) return; // Stop when required number of dialogs are opened
@@ -645,26 +692,67 @@ private void showAddCompartmentDialogs(int count) {
         //String nextu = nextdeptvalue.toString().trim();
         String product = this.remark.getText().toString();
 
-        // Assign each compartment to a separate JSON string
-        // ✅ Create Compartment 1 Object
-        Compartment compartment1 = new Compartment(iblender, isignofproduction, isignofoprator,product);
-        String compartment1String = convertCompartmentToJson(compartment1);
 
-        // Convert each compartment to a JSON string (up to 6 compartments)
-        //String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
-        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
-        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
-        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
-        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
-        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
+        int selectedCompartmentIndex = getSelectedCompartmentIndex(); // ✅ Get selected compartment index
 
-        // Only proceed if at least 1 compartment is filled
-//        if (compartmentList.isEmpty()) {
-//            Toast.makeText(this, "Please add at least one compartment!", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
+        if (selectedCompartmentIndex == -1) {
+            Toast.makeText(this, "Please select a compartment before submitting!", Toast.LENGTH_SHORT).show();
+            return; // ❌ Stop execution if no compartment is selected
+        }
 
-        if (iblender.isEmpty()||isignofproduction.isEmpty()||isignofoprator.isEmpty()) {
+        List<Product> productList = ProductAdapter.getProductList(); // ✅ Get product list
+
+        if (selectedCompartmentIndex >= productList.size()) {
+            Toast.makeText(this, "Invalid selection!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        Product selectedProduct = productList.get(selectedCompartmentIndex); // ✅ Now safe to access
+
+        if (selectedProduct.getBlenderNumber().isEmpty() || selectedProduct.getOperatorSign().isEmpty() || selectedProduct.getInTime().isEmpty()) {
+            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // ✅ Convert to JSON
+//        Compartment selectedCompartment = new Compartment(
+//                selectedProduct.getBlenderNumber(),
+//                selectedProduct.getOperatorSign(),
+//                selectedProduct.getOperatorSign(),
+//                selectedProduct.getProductName()
+//        );
+        // ✅ Check if all fields are filled
+        if (selectedProduct.getProductName().isEmpty() ||
+                selectedProduct.getInTime().isEmpty() ||
+                selectedProduct.getBlenderNumber().isEmpty() ||
+                selectedProduct.getOperatorSign().isEmpty() ||
+                selectedProduct.getSignOfProduction().isEmpty() ||
+                selectedProduct.getRemark().isEmpty()
+                ) {
+            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String selectedCompartmentJson = convertCompartmentToJson(selectedProduct);
+        Log.d("JSON_DEBUG", "Generated JSON: " + selectedCompartmentJson);
+
+        // ✅ Initialize all compartments as empty
+        String compartment1String = "", compartment2String = "", compartment3String = "";
+        String compartment4String = "", compartment5String = "", compartment6String = "";
+
+        // ✅ Assign data to the selected compartment
+        switch (selectedCompartmentIndex) {
+            case 0: compartment1String = selectedCompartmentJson; break;
+            case 1: compartment2String = selectedCompartmentJson; break;
+            case 2: compartment3String = selectedCompartmentJson; break;
+            case 3: compartment4String = selectedCompartmentJson; break;
+            case 4: compartment5String = selectedCompartmentJson; break;
+            case 5: compartment6String = selectedCompartmentJson; break;
+        }
+
+
+
+        if (selectedCompartmentJson.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             New_Production_Model_Outward newproductionoutwardmodel = new New_Production_Model_Outward(OutwardId,inTime,
@@ -681,9 +769,9 @@ private void showAddCompartmentDialogs(int count) {
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful() && response.body() != null && response.body() == true) {
                         //Log.e("API_ERROR", "Error Body: " + response.errorBody().toString());
-                        Toasty.success(New_Outward_Tanker_Production.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
+                        Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
                         makeNotification(ivehicle, outTime);
-                        startActivity(new Intent(New_Outward_Tanker_Production.this, Grid_Outward.class));
+                        startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
                         finish();
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
@@ -707,68 +795,263 @@ private void showAddCompartmentDialogs(int count) {
                             }
                         }
                     }
-                    Toasty.error(New_Outward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Outward_Tanker_Production_Multiple.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
 
     }
 
+//    public void update1() {
+//        String outTime = getCurrentTime();
+//        //String nextu = nextdeptvalue.toString().trim();
+//        String ivehicle = vehiclenumber.getText().toString();
+//        String iserialnumber = serialnumber.getText().toString();
+//
+//        // Convert Compartment objects to JSON strings
+//        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
+//        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
+//        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
+//        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
+//        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
+//        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
+//
+//        // Log the compartment strings to check their format
+//        Log.d("Compartment JSON", compartment1String);
+//        Log.d("Compartment JSON", compartment2String);
+//        Log.d("Compartment JSON", compartment3String);
+//        Log.d("Compartment JSON", compartment4String);
+//        Log.d("Compartment JSON", compartment5String);
+//        Log.d("Compartment JSON", compartment6String);
+//
+//        // Creating the update model object
+//        Repet_update_Model updateModel = new Repet_update_Model(
+//                OutwardId,
+//                "",
+//                compartment1String,
+//                compartment2String,
+//                compartment3String,
+//                compartment4String,
+//                compartment5String,
+//                compartment6String,
+//                iserialnumber,
+//                ivehicle,
+//                'L',
+//                inOut,
+//                vehicleType,
+//                EmployeId
+//
+//        );
+//
+//        //Convert the object to JSON for logging
+//        Gson gson = new Gson();
+//        String jsonRequest = gson.toJson(updateModel);
+//        Log.d("API_REQUEST", jsonRequest);
+//
+//        // API call for update
+//        Call<Boolean> call = outwardTankerLab.UpdateOutwardTankerProduction(updateModel);
+//        call.enqueue(new Callback<Boolean>() {
+//            @Override
+//            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                if (response.isSuccessful() && response.body() != null && response.body()) {
+//                    Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
+//                    makeNotification(ivehicle, outTime);
+//                    startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
+//                    finish();
+//                } else {
+//                    Log.e("Retrofit", "Error Response Code: " + response.code());
+//                    try {
+//                        Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
+//                    } catch (IOException e) {
+//                        e.printStackTrace();
+//                    }
+//                    Toasty.error(Outward_Tanker_Production_Multiple.this, "Update Failed!", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Boolean> call, Throwable t) {
+//                Log.e("Retrofit", "Failure: " + t.getMessage());
+//                Toasty.error(Outward_Tanker_Production_Multiple.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+
+//    public void update() {
+//        String outTime = getCurrentTime();
+//        String ivehicle = vehiclenumber.getText().toString();
+//        String iserialnumber = serialnumber.getText().toString();
+//
+//        int selectedCompartmentIndex = getSelectedCompartmentIndex(); // ✅ Get selected compartment index
+//        if (selectedCompartmentIndex == -1) {
+//            Toast.makeText(this, "Please select a compartment before updating!", Toast.LENGTH_SHORT).show();
+//            return; // ❌ Stop execution if no compartment is selected
+//        }
+//
+//        List<Product> productList = ProductAdapter.getProductList(); // ✅ Get product list
+//        if (selectedCompartmentIndex >= productList.size()) {
+//            Toast.makeText(this, "Invalid selection!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        Product selectedProduct = productList.get(selectedCompartmentIndex); // ✅ Now safe to access
+//        // ✅ Check if all fields are filled
+//        if (selectedProduct.getBlenderNumber().isEmpty() ||
+//                selectedProduct.getOperatorSign().isEmpty() ||
+//                selectedProduct.getSignOfProduction().isEmpty() ||
+//                selectedProduct.getInTime().isEmpty()) {
+//            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        // ✅ Convert `Product` to JSON
+//        String selectedProductJson = convertCompartmentToJson(selectedProduct);
+//        Log.d("JSON_DEBUG", "Generated JSON: " + selectedProductJson);
+//
+//        // ✅ Fetch existing compartment data
+//        List<String> existingCompartmentData = getExistingCompartmentData();
+//
+//        // ✅ Preserve old data and update only the selected compartment
+//        existingCompartmentData.set(selectedCompartmentIndex, selectedProductJson);
+//        // ✅ Assign updated values
+//        String compartment1String = existingCompartmentData.get(0);
+//        String compartment2String = existingCompartmentData.get(1);
+//        String compartment3String = existingCompartmentData.get(2);
+//        String compartment4String = existingCompartmentData.get(3);
+//        String compartment5String = existingCompartmentData.get(4);
+//        String compartment6String = existingCompartmentData.get(5);
+//
+//
+////        // ✅ Initialize all compartments as empty
+////        String compartment1String = "", compartment2String = "", compartment3String = "";
+////        String compartment4String = "", compartment5String = "", compartment6String = "";
+//
+////        // ✅ Assign data to the selected compartment
+////        switch (selectedCompartmentIndex) {
+////            case 0: compartment1String = selectedProductJson; break;
+////            case 1: compartment2String = selectedProductJson; break;
+////            case 2: compartment3String = selectedProductJson; break;
+////            case 3: compartment4String = selectedProductJson; break;
+////            case 4: compartment5String = selectedProductJson; break;
+////            case 5: compartment6String = selectedProductJson; break;
+////        }
+//
+//        if (selectedProductJson.isEmpty()) {
+//            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+//        } else {
+//            Repet_update_Model updateModel = new Repet_update_Model(
+//                    OutwardId,
+//                    "",
+//                    compartment1String, compartment2String, compartment3String,
+//                    compartment4String, compartment5String, compartment6String,
+//                    iserialnumber,
+//                    ivehicle,
+//                    'L',
+//                    inOut,
+//                    vehicleType,
+//                    EmployeId
+//            );
+//
+//            Gson gson = new Gson();
+//            String jsonRequest = gson.toJson(updateModel);
+//            Log.d("API_REQUEST", jsonRequest);
+//
+//            Call<Boolean> call = outwardTankerLab.UpdateOutwardTankerProduction(updateModel);
+//            call.enqueue(new Callback<Boolean>() {
+//                @Override
+//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                    if (response.isSuccessful() && response.body() != null && response.body()) {
+//                        Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
+//                        makeNotification(ivehicle, outTime);
+//                        startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
+//                        finish();
+//                    } else {
+//                        Log.e("Retrofit", "Error Response Code: " + response.code());
+//                        try {
+//                            Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        Toasty.error(Outward_Tanker_Production_Multiple.this, "Update Failed!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Boolean> call, Throwable t) {
+//                    Log.e("Retrofit", "Failure: " + t.getMessage());
+//                    Toasty.error(Outward_Tanker_Production_Multiple.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
+//    }
+
     public void update() {
         String outTime = getCurrentTime();
-        //String nextu = nextdeptvalue.toString().trim();
         String ivehicle = vehiclenumber.getText().toString();
         String iserialnumber = serialnumber.getText().toString();
 
-        // Convert Compartment objects to JSON strings
-        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
-        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
-        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
-        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
-        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
-        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
+        int selectedCompartmentIndex = getSelectedCompartmentIndex();
+        if (selectedCompartmentIndex == -1) {
+            Toast.makeText(this, "Please select a compartment before updating!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Log the compartment strings to check their format
-        Log.d("Compartment JSON", compartment1String);
-        Log.d("Compartment JSON", compartment2String);
-        Log.d("Compartment JSON", compartment3String);
-        Log.d("Compartment JSON", compartment4String);
-        Log.d("Compartment JSON", compartment5String);
-        Log.d("Compartment JSON", compartment6String);
+        List<Product> productList = ProductAdapter.getProductList(); // ✅ Get all compartments data
+        if (selectedCompartmentIndex >= productList.size()) {
+            Toast.makeText(this, "Invalid selection!", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-        // Creating the update model object
+        Product selectedProduct = productList.get(selectedCompartmentIndex);
+
+        // ✅ Check if required fields are filled
+        if (selectedProduct.getBlenderNumber().isEmpty() ||
+                selectedProduct.getOperatorSign().isEmpty() ||
+                selectedProduct.getSignOfProduction().isEmpty() ||
+                selectedProduct.getInTime().isEmpty()) {
+            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String selectedProductJson = convertCompartmentToJson(selectedProduct);
+        Log.d("JSON_DEBUG", "Generated JSON: " + selectedProductJson);
+
+        // ✅ Convert entire `productList` to JSON compartment-wise (Instead of setting empty compartments)
+        List<String> compartmentDataList = new ArrayList<>();
+        for (Product product : productList) {
+            compartmentDataList.add(convertCompartmentToJson(product)); // Convert each product (compartment) to JSON
+        }
+
+        // ✅ Create updated model with compartment-wise data
         Repet_update_Model updateModel = new Repet_update_Model(
                 OutwardId,
                 "",
-                compartment1String,
-                compartment2String,
-                compartment3String,
-                compartment4String,
-                compartment5String,
-                compartment6String,
+                compartmentDataList.get(0), // Compartment 1
+                compartmentDataList.size() > 1 ? compartmentDataList.get(1) : "",
+                compartmentDataList.size() > 2 ? compartmentDataList.get(2) : "",
+                compartmentDataList.size() > 3 ? compartmentDataList.get(3) : "",
+                compartmentDataList.size() > 4 ? compartmentDataList.get(4) : "",
+                compartmentDataList.size() > 5 ? compartmentDataList.get(5) : "",
                 iserialnumber,
                 ivehicle,
                 'L',
                 inOut,
                 vehicleType,
                 EmployeId
-
         );
 
-         //Convert the object to JSON for logging
         Gson gson = new Gson();
         String jsonRequest = gson.toJson(updateModel);
         Log.d("API_REQUEST", jsonRequest);
 
-        // API call for update
         Call<Boolean> call = outwardTankerLab.UpdateOutwardTankerProduction(updateModel);
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                 if (response.isSuccessful() && response.body() != null && response.body()) {
-                    Toasty.success(New_Outward_Tanker_Production.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
+                    Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
                     makeNotification(ivehicle, outTime);
-                    startActivity(new Intent(New_Outward_Tanker_Production.this, Grid_Outward.class));
+                    startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
                     finish();
                 } else {
                     Log.e("Retrofit", "Error Response Code: " + response.code());
@@ -777,17 +1060,20 @@ private void showAddCompartmentDialogs(int count) {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    Toasty.error(New_Outward_Tanker_Production.this, "Update Failed!", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Outward_Tanker_Production_Multiple.this, "Update Failed!", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.e("Retrofit", "Failure: " + t.getMessage());
-                Toasty.error(New_Outward_Tanker_Production.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
+                Toasty.error(Outward_Tanker_Production_Multiple.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
+
 
 
     public void makeNotification(String vehicleNumber, String outTime) {
@@ -807,7 +1093,7 @@ private void showAddCompartmentDialogs(int count) {
                                         "Outward Tanker Production Process Done..!",
                                         "Vehicle Number:-" + vehicleNumber + " has completed Production process at " + outTime,
                                         getApplicationContext(),
-                                        New_Outward_Tanker_Production.this
+                                        Outward_Tanker_Production_Multiple.this
                                 );
                                 notificationsSender.triggerSendNotification();
                             }
@@ -843,10 +1129,11 @@ private void showAddCompartmentDialogs(int count) {
     /**
      * Converts a single compartment to a JSON string with only required fields.
      */
-    private String convertCompartmentToJson(Compartment compartment) {
+    private String convertCompartmentToJson1(Compartment compartment) {
         try {
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("Productname", compartment.getProductname()); // Productname")
+            jsonObject.put("intime", compartment.getIntime()); // Productname")
             jsonObject.put("Blender", compartment.getBlenderNumber()); // Using only Blender
             jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
             jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
@@ -856,6 +1143,23 @@ private void showAddCompartmentDialogs(int count) {
             return "{}"; // Return empty JSON if an error occurs
         }
     }
+    private String convertCompartmentToJson(Product product) {
+        try {
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.put("ProductName", product.getProductName()); // ✅ Product Name
+            jsonObject.put("InTime", product.getInTime()); // ✅ In-Time
+            jsonObject.put("Blender", product.getBlenderNumber()); // ✅ Blender Number
+            jsonObject.put("ProductionSign", product.getSignOfProduction()); // ✅ Production Sign
+            jsonObject.put("OperatorSign", product.getOperatorSign()); // ✅ Operator Sign
+            jsonObject.put("Remark", product.getRemark()); // ✅ Remark
+
+            return jsonObject.toString(); // ✅ Return JSON string
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return "{}"; // Return empty JSON if an error occurs
+        }
+    }
+
     private String convertCompartmentToJson2(Compartment compartment) {
         if (compartment == null) return "";
 
@@ -884,58 +1188,37 @@ private void showAddCompartmentDialogs(int count) {
             return null;
         }
     }
+    private int getSelectedCompartmentIndex() {
+        List<Product> productList = ProductAdapter.getProductList(); // ✅ Get updated product list
 
-//    private void showAddCompartmentDialog(Compartment compartment) {
-//        Dialog dialog = new Dialog(this);
-//        dialog.setContentView(R.layout.dialog_add_compartment);
-//        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-//
-//        WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
-//        layoutParams.copyFrom(dialog.getWindow().getAttributes());
-//        layoutParams.width = (int) (getResources().getDisplayMetrics().widthPixels * 0.85);
-//        layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
-//        dialog.getWindow().setAttributes(layoutParams);
-//
-//        EditText edtBlender = dialog.findViewById(R.id.edtBlender);
-//        EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
-//        EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
-//        Button btnSave = dialog.findViewById(R.id.btnSave);
-//
-//        // Pre-fill the data if available
-//        if (compartment != null) {
-//            Log.d("DEBUG", "Setting Blender: " + compartment.getBlenderNumber());
-//            Log.d("DEBUG", "Setting ProductionSign: " + compartment.getProductionSign());
-//            Log.d("DEBUG", "Setting OperatorSign: " + compartment.getOperatorSign());
-//
-//
-//            edtBlender.setText(compartment.getBlenderNumber());
-//            edtProductionSign.setText(compartment.getProductionSign());
-//            edtOperatorSign.setText(compartment.getOperatorSign());
-//
-//            // Disable editing if data exists
-//            edtBlender.setEnabled(compartment.getBlenderNumber().isEmpty());
-//            edtProductionSign.setEnabled(compartment.getProductionSign().isEmpty());
-//            edtOperatorSign.setEnabled(compartment.getOperatorSign().isEmpty());
-//        } else {
-//            Log.e("DEBUG", "Compartment object is NULL in dialog!");
-//        }
-//
-//        btnSave.setOnClickListener(v -> {
-//            String blender = edtBlender.getText().toString().trim();
-//            String productionSign = edtProductionSign.getText().toString().trim();
-//            String operatorSign = edtOperatorSign.getText().toString().trim();
-//
-//            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()) {
-//                Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-//            } else {
-//                compartmentList.add(new Compartment(blender, productionSign, operatorSign));
-//                adapter.notifyDataSetChanged();
-//                dialog.dismiss();
-//            }
-//        });
-//
-//        dialog.show();
-//    }
+        for (int i = 0; i < productList.size(); i++) {
+            Log.d("SELECTION_DEBUG", "Product: " + productList.get(i).getProductName() +
+                    " | isSelected: " + productList.get(i).isSelected());
+
+            if (productList.get(i).isSelected()) { // ✅ Check if a product is selected
+                return i; // ✅ Return selected compartment index (0-5)
+            }
+        }
+
+        Log.e("SELECTION_DEBUG", "No product selected!");
+        return -1; // ❌ No compartment selected
+    }
+
+    private List<String> getExistingCompartmentData(Repet_update_Model existingModel) {
+        List<String> existingData = new ArrayList<>();
+
+        // ✅ Use the existing model data instead of calling the API again
+        existingData.add(existingModel.getCompartment1() != null ? existingModel.getCompartment1() : "");
+        existingData.add(existingModel.getCompartment2() != null ? existingModel.getCompartment2() : "");
+        existingData.add(existingModel.getCompartment3() != null ? existingModel.getCompartment3() : "");
+        existingData.add(existingModel.getCompartment4() != null ? existingModel.getCompartment4() : "");
+        existingData.add(existingModel.getCompartment5() != null ? existingModel.getCompartment5() : "");
+        existingData.add(existingModel.getCompartment6() != null ? existingModel.getCompartment6() : "");
+
+        Log.d("EXISTING_DATA", "Fetched compartments: " + existingData);
+        return existingData;
+    }
+
 
 
 }

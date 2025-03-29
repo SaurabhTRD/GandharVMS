@@ -114,7 +114,8 @@ public class LabCompartmentAdapter extends RecyclerView.Adapter<LabCompartmentAd
         Lab_compartment_model compartment = compartmentList.get(position);
         Log.d("AdapterBinding", "Binding compartment at position: " + position);
 
-        holder.txtproduct.setText(compartment.getProductname() != null ? "productname: " + compartment.getProductname() : "product: N/A");
+
+        holder.txtproduct.setText(compartment.getProductName() != null ? "productname: " + compartment.getProductName() : "productName: N/A");
         holder.txtBlender.setText(compartment.getBlenderNumber() != null ? "Blender: " + compartment.getBlenderNumber() : "Blender: N/A");
         holder.txtProductionSign.setText(compartment.getProductionSign() != null ? "Production Sign: " + compartment.getProductionSign() : "Production Sign: N/A");
         holder.txtOperatorSign.setText(compartment.getOperatorSign() != null ? "Operator Sign: " + compartment.getOperatorSign() : "Operator Sign: N/A");
@@ -123,7 +124,7 @@ public class LabCompartmentAdapter extends RecyclerView.Adapter<LabCompartmentAd
         holder.edtDensity.setText(compartment.getDensity() != null ? "Density: " + compartment.getDensity() : "");
         holder.edtBatchNumber.setText(compartment.getBatchNumber() != null ? "Batch Number: " + compartment.getBatchNumber() : "");
         holder.edtQCOfficer.setText(compartment.getQcOfficer() != null ? "Q.C Officer: " + compartment.getQcOfficer() : "");
-        holder.edtRemark.setText(compartment.getRemark() != null ? "Remarks: " + compartment.getRemark() : "");
+        holder.edtRemark.setText(compartment.getLabremark() != null ? "Remarks: " + compartment.getLabremark() : "");
 
 
         // ✅ Prevent Overwriting Data with TextWatcher
@@ -152,7 +153,7 @@ public class LabCompartmentAdapter extends RecyclerView.Adapter<LabCompartmentAd
         });
 
         holder.edtRemark.addTextChangedListener(new TextWatcher() {
-            @Override public void afterTextChanged(Editable s) { compartment.setRemark(s.toString()); }
+            @Override public void afterTextChanged(Editable s) { compartment.setLabremark(s.toString()); }
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });

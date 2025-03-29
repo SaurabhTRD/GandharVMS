@@ -3,6 +3,8 @@ package com.android.gandharvms.outward_Tanker_Lab_forms;
 import com.google.gson.annotations.SerializedName;
 
 public class Lab_compartment_model {
+    @SerializedName("ProductName")
+    public String ProductName;
     @SerializedName("Blender")
     private String blenderNumber;
     @SerializedName("ProductionSign")
@@ -39,6 +41,11 @@ public class Lab_compartment_model {
 
     @SerializedName("Remark")  // ❌ Fix (capital "R")
     private String remark;
+
+    @SerializedName("LabRemark")  // ❌ Fix (capital "R")
+    private String Labremark;
+
+
 
 
 
@@ -104,8 +111,6 @@ public class Lab_compartment_model {
     @SerializedName("weighremark")
     private String weighremark;
 
-    @SerializedName("Productname")
-    public String Productname;
 
 //    public Lab_compartment_model(String blenderNumber, String productionSign, String operatorSign) {
 //        this.blenderNumber = blenderNumber;
@@ -121,8 +126,14 @@ public class Lab_compartment_model {
         this.remark = remark;
     }
 
-    public String getProductname(){return Productname;}
-    public String setProductname(){return Productname;}
+    public String getProductName() {
+        return ProductName;
+    }
+
+    public void setProductName(String productName) {
+        this.ProductName = productName;
+    }
+
     public String getBlenderNumber() { return blenderNumber; }
     public String getProductionSign() { return productionSign; }
     public String getOperatorSign() { return operatorSign; }
@@ -213,5 +224,13 @@ public class Lab_compartment_model {
 
     public void setWeighremark(String weighremark) {
         this.weighremark = weighremark;
+    }
+
+    public String getLabremark() {
+        return Labremark;
+    }
+
+    public void setLabremark(String labremark) {
+        Labremark = labremark;
     }
 }

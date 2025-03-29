@@ -16,6 +16,7 @@ import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production_Multiple;
 import com.android.gandharvms.Outward_Tanker_Production_forms.inprocessrequestform;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
@@ -94,7 +95,7 @@ public class Outward_Tanker extends NotificationCommonfunctioncls {
     public void productionouttanker(View view){
         if(Global_Var.getInstance().Department.contains("Production")){
             Global_Var.getInstance().DeptType='P';
-            startActivity(new Intent(this, New_Outward_Tanker_Production.class));
+            startActivity(new Intent(this, Outward_Tanker_Production_Multiple.class));
         } else {
             Toasty.warning(Outward_Tanker.this, "You are not in Production Department", Toast.LENGTH_SHORT).show();
         }

@@ -35,6 +35,7 @@ import com.android.gandharvms.OutwardOutDataEntryForm_Production.DataEntryForm_P
 import com.android.gandharvms.OutwardOutTankerBilling.ot_outBilling;
 import com.android.gandharvms.OutwardOut_Tanker_Security.OutwardOut_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
+import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production_Multiple;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesSmallPackLoading_Form;
@@ -402,7 +403,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                     } else if (currentst.equals("WEIGHMENT")) {
                         intent = new Intent(view.getContext(), Outward_Tanker_weighment.class);
                     } else if (currentst.equals("PRODUCTION")) {
-                        intent = new Intent(view.getContext(), New_Outward_Tanker_Production.class);
+                        intent = new Intent(view.getContext(), Outward_Tanker_Production_Multiple.class);
                     } else if (currentst.equals("LABORATORY")) {
                         intent = new Intent(view.getContext(), New_Outward_tanker_Lab.class);
                     }
