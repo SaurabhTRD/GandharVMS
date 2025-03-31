@@ -6,7 +6,7 @@ public class Product {
     private String signOfProduction;
     private String operatorSign;
     private String remark;
-    private String inTime;
+    private String InTime;
     private boolean isExpanded; // To track visibility of details
     private boolean isSelected; // ✅ New field to track selection
 
@@ -17,7 +17,7 @@ public class Product {
         this.operatorSign = "";
         this.signOfProduction = "";
         this.remark = "";
-        this.inTime = "";
+        this.InTime = "";
         this.isSelected = false; // Default: Not selected
     }
 
@@ -34,8 +34,8 @@ public class Product {
     public String getRemark() { return remark; }
     public void setRemark(String remark) { this.remark = remark; }
 
-    public String getInTime() { return inTime; }
-    public void setInTime(String inTime) { this.inTime = inTime; }
+    public String getInTime() { return InTime; }
+    public void setInTime(String inTime) { this.InTime = inTime; }
     // ✅ Getter and Setter for `isSelected`
     public boolean isSelected() { return isSelected; }
     public void setSelected(boolean selected) { this.isSelected = selected; }

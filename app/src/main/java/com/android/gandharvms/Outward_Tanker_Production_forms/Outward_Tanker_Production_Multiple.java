@@ -1018,9 +1018,11 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 
         // ✅ Convert entire `productList` to JSON compartment-wise (Instead of setting empty compartments)
         List<String> compartmentDataList = new ArrayList<>();
-        for (Product product : productList) {
-            compartmentDataList.add(convertCompartmentToJson(product)); // Convert each product (compartment) to JSON
+        for (int i = 0; i <= selectedCompartmentIndex; i++) { // Only convert compartments up to the selected index
+            compartmentDataList.add(convertCompartmentToJson(productList.get(i)));
         }
+        Log.d("FINAL_JSON", "Compartment List: " + new Gson().toJson(compartmentDataList));
+
 
         // ✅ Create updated model with compartment-wise data
         Repet_update_Model updateModel = new Repet_update_Model(
