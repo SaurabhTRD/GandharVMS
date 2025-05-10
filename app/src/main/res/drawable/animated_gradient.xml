@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<transition xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp"/>
+            <gradient
+                android:startColor="#64B5F6"
+            android:endColor="#1E88E5"
+            android:angle="90"/>
+        </shape>
+    </item>
+    <item>
+        <shape android:shape="rectangle">
+            <corners android:radius="16dp"/>
+            <gradient
+                android:startColor="#42E695"
+            android:endColor="#3BB2B8"
+            android:angle="90"/>
+        </shape>
+    </item>
+</transition>

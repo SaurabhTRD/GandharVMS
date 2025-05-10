@@ -416,7 +416,7 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
                             ilpack26literqty.setEnabled(false);
                             ilpack50literqty.setText(String.valueOf("IndusPack 50 Liter Qty :- " + data.getIlpackof50ltrqty()));
                             ilpack50literqty.setEnabled(false);
-                            ilpack210literqty.setText(String.valueOf("IndusPack 210 Liter Qty :- " + data.getIlpackof50ltrqty()));
+                            ilpack210literqty.setText(String.valueOf("IndusPack 210 Liter Qty :- " + data.getIlpackof210ltrqty()));
                             ilpack210literqty.setEnabled(false);
                             ilpackboxbucketqty.setText(String.valueOf("IndusPack BoxBucket Qty :- " + data.getIlpackofboxbuxketltrqty()));
                             ilpackboxbucketqty.setEnabled(false);
