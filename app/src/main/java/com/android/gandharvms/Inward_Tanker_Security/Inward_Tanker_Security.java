@@ -47,6 +47,7 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -148,7 +149,7 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
 
     public static String Tanker;
     public static String Truck;
-
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -593,14 +594,6 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
         String Date = etdate.getText().toString().trim();
         String partyname = etsupplier.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
-        /*if (!etqty.getText().toString().isEmpty()) {
-            try {
-                insertqty = Integer.parseInt(etqty.getText().toString().trim());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }*/
-        //int netweight = Integer.parseInt(etnetweight.getText().toString().trim());
         if (!etnetweight.getText().toString().isEmpty()) {
             try {
                 insertnetweight = Integer.parseInt(etnetweight.getText().toString().trim());
@@ -610,14 +603,6 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
         }
         String intime = etintime.getText().toString().trim();
         String outTime = getCurrentTime();//Insert out Time Directly to the Database
-        //int qtyuom = Integer.parseInt(qtyUomNumericValue.toString().trim());
-        /*if (!qtyUomNumericValue.toString().isEmpty()) {
-            try {
-                insertqtyUom = Integer.parseInt(qtyUomNumericValue.toString().trim());
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }*/
         String vehicltype = Global_Var.getInstance().MenuType;
         char InOutType = Global_Var.getInstance().InOutType;
         char DeptType = Global_Var.getInstance().DeptType;
@@ -659,53 +644,53 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
             }
         }
         String remark = etremark.getText().toString().trim();
-        //String pooa = edpooa.getText().toString().trim();
-        //String mobnumber = etmobilenum.getText().toString().trim();
-//        String edremark = repremark.getText().toString().trim();
         if (vehicalnumber.isEmpty() || invoicenumber.isEmpty() || Date.isEmpty() ||
                 intime.isEmpty() || remark.isEmpty()
                 || insertnetweight < 0 || insertnetweightUom < 0) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else if (extraMaterialsArray.length() == 0) {
-            // Check if no materials are added
             Toasty.warning(this, "Please add at least one material before submitting.", Toast.LENGTH_SHORT, true).show();
         }else {
 // Convert JSONArray to string
             String extraMaterialsString = extraMaterialsArray.toString();
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, "material", "", "", 'W', 'I', Date,
                     "", vehicltype, intime, outTime, 1, insertnetweightUom, insertnetweight, 1, extraMaterialsString.toString(), remark, false, "No", "", "", "", "", "", EmployeId, "", InwardId);
-
-            Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
-                        makeNotification(vehicalnumber, outTime);
-                        Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
-                        finish();
-                    } else {
-                        Toasty.error(Inward_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                // Proceed with API call
+                Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
+                            Toasty.success(Inward_Tanker_Security.this, "Data Inserted Successfully!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
+                            finish();
+                        } else {
+                            Toasty.error(Inward_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    Toasty.error(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after failure
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }

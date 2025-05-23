@@ -42,6 +42,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.RegRequestModel;
 import com.android.gandharvms.RegisterwithAPI.Register;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -66,10 +67,11 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
-    private Inward_Tanker_SamplingMethod inward_Tanker_SamplingMethod;
+    public static String Tanker;
+    public static String Truck;
     private final int MAX_LENGTH = 10;
     EditText etssignofproduction, etinvoiceno, etsdate, etvehicleno;
-    EditText etint,etvehicalnumber,etsupplier,etmaterial,etdriver,etoanumber,etdate;
+    EditText etint, etvehicalnumber, etsupplier, etmaterial, etdriver, etoanumber, etdate;
     Button etssubmit;
     Button view;
     FirebaseFirestore sadbroot;
@@ -77,32 +79,27 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
     Calendar currentTime = Calendar.getInstance();
     int currentHour = currentTime.get(Calendar.HOUR_OF_DAY);
     int currentMinute = currentTime.get(Calendar.MINUTE);
-
     Date currentDate = Calendar.getInstance().getTime();
     String dateFormatPattern = "dd-MM-yyyy";
     SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
-    private String token,serialnumber;
-    private String vehicletype= Global_Var.getInstance().MenuType;
-    private char DeptType=Global_Var.getInstance().DeptType;
-    private char InOutType=Global_Var.getInstance().InOutType;
-    private String empId = Global_Var.getInstance().EmpId;
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
+    private Inward_Tanker_SamplingMethod inward_Tanker_SamplingMethod;
+    private String token, serialnumber;
+    private final String vehicletype = Global_Var.getInstance().MenuType;
+    private final char DeptType = Global_Var.getInstance().DeptType;
+    private final char InOutType = Global_Var.getInstance().InOutType;
+    private final String empId = Global_Var.getInstance().EmpId;
     private int inwardid;
     private LoginMethod userDetails;
-
-
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
-
-    public static String Tanker;
-    public static String Truck;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_tanker_sampling);
         setupHeader();
-        inward_Tanker_SamplingMethod= RetroApiClient.getInward_Tanker_Sampling();
+        inward_Tanker_SamplingMethod = RetroApiClient.getInward_Tanker_Sampling();
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
@@ -151,8 +148,8 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
 
         etvehicleno.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus) {
-                    FetchVehicleDetails(etvehicleno.getText().toString().trim(),vehicletype,DeptType,InOutType);
+                if (!hasFocus) {
+                    FetchVehicleDetails(etvehicleno.getText().toString().trim(), vehicletype, DeptType, InOutType);
                 }
             }
         });
@@ -163,13 +160,13 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel responseModel :userList){
+                    if (userList != null) {
+                        for (ResponseModel responseModel : userList) {
                             String specificrole = "Laboratory";
-                            if (specificrole.equals(responseModel.getDepartment())){
-                                token =responseModel.getToken();
+                            if (specificrole.equals(responseModel.getDepartment())) {
+                                token = responseModel.getToken();
                                 FcmNotificationsSender notificationsSender = new FcmNotificationsSender(
                                         token,
                                         "Inward Tanker Sampling Process Done..!",
@@ -181,7 +178,7 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
                             }
                         }
                     }
-                }else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -201,7 +198,7 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
                         }
                     }
                 }
-                Toasty.error(Inward_Tanker_Sampling.this,"Inward Tanker Sampling failed..!",Toast.LENGTH_SHORT).show();
+                Toasty.error(Inward_Tanker_Sampling.this, "Inward Tanker Sampling failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -211,81 +208,83 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
         String etsubmitted = etinvoiceno.getText().toString().trim();
         String vehiclenumber = etvehicleno.getText().toString().trim();
         if (vehiclenumber.isEmpty() || etreciving.isEmpty() || etsubmitted.isEmpty()) {
-            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT,true).show();
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-            Inward_Tanker_SamplingRequestModel itSamplingRequestModel= new
-                    Inward_Tanker_SamplingRequestModel(inwardid,etreciving,etsubmitted,empId,
-                    vehiclenumber,serialnumber,vehicletype,'L',InOutType,empId);
-            Call<Boolean> call = inward_Tanker_SamplingMethod.insertSamplingData(itSamplingRequestModel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if(response.isSuccessful() && response.body() != null)
-                    {
-                        if(response.body().booleanValue()==true)
-                        {
-                            makeNotification(vehiclenumber, etsubmitted);
-                            Log.d("Registration", "Response Body: " + response.body());
-                            Toasty.success(Inward_Tanker_Sampling.this, "Data Inserted succesfully", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(Inward_Tanker_Sampling.this,grid.class);
-                            startActivity(intent);
-                        }
-                        else {
+            Inward_Tanker_SamplingRequestModel itSamplingRequestModel = new
+                    Inward_Tanker_SamplingRequestModel(inwardid, etreciving, etsubmitted, empId,
+                    vehiclenumber, serialnumber, vehicletype, 'L', InOutType, empId);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = inward_Tanker_SamplingMethod.insertSamplingData(itSamplingRequestModel);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null) {
+                            if (response.body().booleanValue()) {
+                                dialogHelper.hideProgressDialog(); // Hide after response
+                                makeNotification(vehiclenumber, etsubmitted);
+                                Log.d("Registration", "Response Body: " + response.body());
+                                Toasty.success(Inward_Tanker_Sampling.this, "Data Inserted succesfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(Inward_Tanker_Sampling.this, grid.class);
+                                startActivity(intent);
+                            } else {
+                                dialogHelper.hideProgressDialog(); // Hide after failure
+                                // Registration failed
+                                Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
+                                Toasty.error(Inward_Tanker_Sampling.this, "Data Insertion failed..!", Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
                             // Registration failed
+                            dialogHelper.hideProgressDialog(); // Hide after failure
                             Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
-                            Toasty.error(Inward_Tanker_Sampling.this, "Data Insertion failed..!", Toast.LENGTH_SHORT).show();
+                            Toasty.error(Inward_Tanker_Sampling.this, "Response Failed", Toast.LENGTH_SHORT).show();
                         }
-                    }else {
-                        // Registration failed
-                        Log.e("Registration", "Inward Tanker Sampling failed. Response: " + response.body());
-                        Toasty.error(Inward_Tanker_Sampling.this, "Response Failed", Toast.LENGTH_SHORT).show();
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after failure
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
+                        Toasty.error(Inward_Tanker_Sampling.this, "Did not Getting Response", Toast.LENGTH_SHORT).show();
                     }
-                    Toasty.error(Inward_Tanker_Sampling.this,"Did not Getting Response",Toast.LENGTH_SHORT).show();
-                }
+                });
             });
         }
     }
 
-    public void FetchVehicleDetails(@NonNull String vehicleNo,String vehicleType,char departmentType,char inOut) {
-        Call<InTanSamplingResponseModel> call=inward_Tanker_SamplingMethod.GetSamplingByFetchVehicleDetails(vehicleNo,vehicleType,departmentType,inOut);
+    public void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char departmentType, char inOut) {
+        Call<InTanSamplingResponseModel> call = inward_Tanker_SamplingMethod.GetSamplingByFetchVehicleDetails(vehicleNo, vehicleType, departmentType, inOut);
         call.enqueue(new Callback<InTanSamplingResponseModel>() {
             @Override
             public void onResponse(Call<InTanSamplingResponseModel> call, Response<InTanSamplingResponseModel> response) {
-                if(response.isSuccessful())
-                {
-                    InTanSamplingResponseModel data=response.body();
-                    if(data.getVehicleNo()!="" && data.getVehicleNo()!=null)
-                    {
+                if (response.isSuccessful()) {
+                    InTanSamplingResponseModel data = response.body();
+                    if (data.getVehicleNo() != "" && data.getVehicleNo() != null) {
                         inwardid = data.getInwardId();
                         serialnumber = data.getSerialNo();
                         etvehicleno.setText(data.getVehicleNo());
                         etvehicleno.setEnabled(false);
-                    }else{
+                    } else {
                         Toasty.error(Inward_Tanker_Sampling.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
 
-                }else
-                {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
+
             @Override
             public void onFailure(Call<InTanSamplingResponseModel> call, Throwable t) {
                 Log.e("Retrofit", "Failure: " + t.getMessage());
@@ -301,21 +300,23 @@ public class Inward_Tanker_Sampling extends NotificationCommonfunctioncls {
                         }
                     }
                 }
-                Toasty.error(Inward_Tanker_Sampling.this,"failed..!",Toast.LENGTH_SHORT).show();
+                Toasty.error(Inward_Tanker_Sampling.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
     public void onBackPressed() {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
     }
 
-    public void samplegrid(View view){
+    public void samplegrid(View view) {
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }
-    public void SamplingViewclick(View view){
+
+    public void SamplingViewclick(View view) {
         Intent intent = new Intent(this, it_in_Samp_Completedgrid.class);
         startActivity(intent);
     }

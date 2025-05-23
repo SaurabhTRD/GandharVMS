@@ -49,6 +49,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -84,18 +85,25 @@ import retrofit2.Response;
 
 public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
 
+    public static String Tanker;
+    public static String Truck;
     final Calendar calendar = Calendar.getInstance();
     private final int MAX_LENGTH = 10;
+    private final String dateTimeString = "";
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
     String[] remark = {"Accepted", "Rejected"};
     AutoCompleteTextView regAutoCompleteTextView;
     ArrayAdapter<String> remarkarray;
-    String[] rcsTest = {"PASS","FAIL","NA"};
+    String[] rcsTest = {"PASS", "FAIL", "NA"};
     ArrayAdapter<String> rcstest;
-    String[] odor = {"ODORLESS","ODOR PASSOUT","NA"};
+    String[] odor = {"ODORLESS", "ODOR PASSOUT", "NA"};
     ArrayAdapter<String> odorarray;
     EditText etintime, etserialnumber, etpsample, etvehiclenumber, etpapperance, etpodor, etpcolour, etpdensity,
             etqty, etPrcstest, etpkv, ethundred, etanline, etflash, etpaddtest, etpsamplere, etpremark, etpsignQc,
-            etpdatesignofsign, etsupplier, remarkdisc, etviscosity,etfetchSecQty,etfetchlabqtyoum;
+            etpdatesignofsign, etsupplier, remarkdisc, etviscosity, etfetchSecQty, etfetchlabqtyoum;
     Button etlabsub, updateclick;
     Button view, viewsamplereporting;
     TimePickerDialog tpicker;
@@ -103,35 +111,27 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
     DatePickerDialog picker, picker1, picker2;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     Date currentDate = Calendar.getInstance().getTime();
-    private final String dateTimeString = "";
+    String[] qtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
+    Integer qtyUomNumericValue = 1;
+    AutoCompleteTextView autoCompleteTextView1, autoCompleteTextView2, autocompletTextView3;
+    Map<String, Integer> qtyUomMapping = new HashMap<>();
+    ArrayAdapter<String> qtyuomdrop;
+    Map<String, Integer> RcsMapping = new HashMap<>(); // Create a mapping for RcsTest
+    ArrayAdapter<String> RcsDrop;
+    List<String> teamList = new ArrayList<>();
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private String token;
-
     //Call Interface Method of Laboratory
     private Laboratory labdetails;
     private LoginMethod userDetails;
     private int inwardid;
-    private final String vehicleType = Global_Var.getInstance().MenuType;
-    private final char nextProcess = Global_Var.getInstance().DeptType;
-    private final char inOut = Global_Var.getInstance().InOutType;
-    private final String EmployeId = Global_Var.getInstance().EmpId;
-    String[] qtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
-    Integer qtyUomNumericValue = 1;
-    AutoCompleteTextView  autoCompleteTextView1,autoCompleteTextView2,autocompletTextView3;
-    Map<String, Integer> qtyUomMapping = new HashMap<>();
-    ArrayAdapter<String> qtyuomdrop;
-    Map<String , Integer> RcsMapping = new HashMap<>(); // Create a mapping for RcsTest
-    ArrayAdapter<String> RcsDrop;
-    List<String> teamList = new ArrayList<>();
     private int qty;
     private int kv;
     private int hundred;
     private int anline;
     private int flash;
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
-
-    public static String Tanker;
-    public static String Truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,7 +145,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
         userDetails = RetroApiClient.getLoginApi();
 
         autoCompleteTextView2 = findViewById(R.id.etPrcstest);
-        rcstest = new ArrayAdapter<String>(this,R.layout.in_rcs_test,rcsTest);
+        rcstest = new ArrayAdapter<String>(this, R.layout.in_rcs_test, rcsTest);
         autoCompleteTextView2.setAdapter(rcstest);
         autoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -156,7 +156,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
         });
 
         autocompletTextView3 = findViewById(R.id.etpodor);
-        odorarray = new ArrayAdapter<String>(this,R.layout.odor_drop,odor);
+        odorarray = new ArrayAdapter<String>(this, R.layout.odor_drop, odor);
         autocompletTextView3.setAdapter(odorarray);
         autocompletTextView3.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -165,7 +165,6 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
                 Toasty.success(getApplicationContext(), "Odor : " + items + " Selected", Toast.LENGTH_SHORT).show();
             }
         });
-
 
 
         regAutoCompleteTextView = findViewById(R.id.etpremark);
@@ -179,36 +178,36 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
             }
         });
 
-        etintime = (EditText) findViewById(R.id.etintime);
-        etpsample = (EditText) findViewById(R.id.etpsample);
-        etserialnumber = (EditText) findViewById(R.id.etlabserialnumber);
-        etvehiclenumber = (EditText) findViewById(R.id.vehiclenumber);
-        etpapperance = (EditText) findViewById(R.id.etpapperance);
-        etpodor = (EditText) findViewById(R.id.etpodor);
-        etpcolour = (EditText) findViewById(R.id.etpcolour);
+        etintime = findViewById(R.id.etintime);
+        etpsample = findViewById(R.id.etpsample);
+        etserialnumber = findViewById(R.id.etlabserialnumber);
+        etvehiclenumber = findViewById(R.id.vehiclenumber);
+        etpapperance = findViewById(R.id.etpapperance);
+        etpodor = findViewById(R.id.etpodor);
+        etpcolour = findViewById(R.id.etpcolour);
 //        etqty = (EditText) findViewById(R.id.qtycolor);
-        etpdensity = (EditText) findViewById(R.id.etpdensity);
-        etPrcstest = (EditText) findViewById(R.id.etPrcstest);
-        etpkv = (EditText) findViewById(R.id.etpkv);
-        ethundred = (EditText) findViewById(R.id.hundered);
-        etanline = (EditText) findViewById(R.id.anline);
-        etflash = (EditText) findViewById(R.id.flash);
-        etpaddtest = (EditText) findViewById(R.id.etpaddtest);
-        etpsamplere = (EditText) findViewById(R.id.etpsamplere);
-        etpremark = (EditText) findViewById(R.id.etpremark);
-        etpsignQc = (EditText) findViewById(R.id.etpsignQc);
-        etpdatesignofsign = (EditText) findViewById(R.id.etpdatesignofsign);
+        etpdensity = findViewById(R.id.etpdensity);
+        etPrcstest = findViewById(R.id.etPrcstest);
+        etpkv = findViewById(R.id.etpkv);
+        ethundred = findViewById(R.id.hundered);
+        etanline = findViewById(R.id.anline);
+        etflash = findViewById(R.id.flash);
+        etpaddtest = findViewById(R.id.etpaddtest);
+        etpsamplere = findViewById(R.id.etpsamplere);
+        etpremark = findViewById(R.id.etpremark);
+        etpsignQc = findViewById(R.id.etpsignQc);
+        etpdatesignofsign = findViewById(R.id.etpdatesignofsign);
         //etMaterial = (EditText) findViewById(R.id.et_materialname);
-        etfetchSecQty=(EditText)findViewById(R.id.etfetchlabqty);
+        etfetchSecQty = findViewById(R.id.etfetchlabqty);
         etfetchlabqtyoum = findViewById(R.id.fetchlabqtyuomtanker);
 
-        etsupplier = (EditText) findViewById(R.id.supplier);
-        remarkdisc = (EditText) findViewById(R.id.remarkdisc);
-        etviscosity = (EditText) findViewById(R.id.etviscosityindex);
-        etlabsub = (Button) findViewById(R.id.etlabsub);
-        updateclick = (Button) findViewById(R.id.itlabupdateclick);
+        etsupplier = findViewById(R.id.supplier);
+        remarkdisc = findViewById(R.id.remarkdisc);
+        etviscosity = findViewById(R.id.etviscosityindex);
+        etlabsub = findViewById(R.id.etlabsub);
+        updateclick = findViewById(R.id.itlabupdateclick);
 
-        viewsamplereporting = (Button) findViewById(R.id.btn_viewsampleReport);
+        viewsamplereporting = findViewById(R.id.btn_viewsampleReport);
 
         etintime.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -527,43 +526,48 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
         } else {
             BigDecimal density = new BigDecimal(densityinput);
             InTanLabRequestModel labRequestModel = new InTanLabRequestModel(inwardid, intime, outTime, date,
-                    samplereceivingdate, apperance, odor, color, 0,  density,
+                    samplereceivingdate, apperance, odor, color, 0, density,
                     rcsTest, kv, hundred, anline,
                     flash, addTest, samplereceivingdate, remark, signQc, dateSignOfSign,
                     disc, Integer.parseInt(viscosity), EmployeId, EmployeId, vehicle, "material",
                     serialNumber, 'P', inOut, vehicleType, edsupplier);
-            Call<Boolean> call = labdetails.insertLabData(labRequestModel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
-                        makeNotification(vehicle, outTime);
-                        Log.d("Registration", "Response Body: " + response.body());
-                        Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Tanker_Laboratory.this, grid.class));
-                        finish();
-                    } else {
-                        Toasty.error(Inward_Tanker_Laboratory.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = labdetails.insertLabData(labRequestModel);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            makeNotification(vehicle, outTime);
+                            Log.d("Registration", "Response Body: " + response.body());
+                            Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Inward_Tanker_Laboratory.this, grid.class));
+                            finish();
+                        } else {
+                            Toasty.error(Inward_Tanker_Laboratory.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    Toasty.error(Inward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after failure
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Inward_Tanker_Laboratory.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }
@@ -635,13 +639,15 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
         try {
             Log.d("JSON Parser", "JSON String: " + jsonString);
             Gson gson = new Gson();
-            Type listType = new TypeToken<List<ExtraMaterial>>() {}.getType();
+            Type listType = new TypeToken<List<ExtraMaterial>>() {
+            }.getType();
             return gson.fromJson(jsonString, listType);
         } catch (JsonSyntaxException e) {
             Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
             return new ArrayList<>(); // Return an empty list in case of parsing error
         }
     }
+
     private void validateJson(String jsonString) {
         try {
             new JsonParser().parse(jsonString);
@@ -650,6 +656,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
             Log.e("JSON Validator", "Invalid JSON: " + jsonString, e);
         }
     }
+
     public void createExtraMaterialViews(List<ExtraMaterial> extraMaterials) {
         LinearLayout linearLayout = findViewById(R.id.layout_labotarylistmaterial); // Ensure this is the correct ID
 
@@ -668,7 +675,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
             qtyEditText.setText(extraMaterial.getQty());
             qtyEditText.setEnabled(false);
 
-            List<String> teamList = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
+            List<String> teamList = Arrays.asList("NA", "Ton", "Litre", "KL", "Kgs", "Pcs", "M3", "Meter", "Feet"); // or fetch it dynamically
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
             uomSpinner.setAdapter(arrayAdapter);
             uomSpinner.setEnabled(false);
@@ -987,7 +994,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful() && response.body() != null && response.body()==true) {
+                if (response.isSuccessful() && response.body() != null && response.body()) {
                     //makeNotification(vehicle, outTime);
                     Log.d("Registration", "Response Body: " + response.body());
                     Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
