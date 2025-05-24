@@ -33,6 +33,7 @@ import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
 import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -52,27 +53,27 @@ import retrofit2.Response;
 
 public class Outward_Truck_Production extends NotificationCommonfunctioncls {
 
-    EditText intime,serialnumber,vehiclenumber,typepack,signdis,dtdis,signsec,dtsec,signweigh,dtweigh,tare,etremark;
-    Button submit;
-    FirebaseFirestore dbroot;
-    TimePickerDialog tpicker;
-    Calendar calendar = Calendar.getInstance();
+    public static String Tanker;
+    public static String Truck;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    EditText intime, serialnumber, vehiclenumber, typepack, signdis, dtdis, signsec, dtsec, signweigh, dtweigh, tare, etremark;
+    Button submit;
+    FirebaseFirestore dbroot;
+    TimePickerDialog tpicker;
+    Calendar calendar = Calendar.getInstance();
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private int OutwardId;
     private Outward_Tanker_Lab outwardTankerLab;
     private Outward_Truck_interface outwardTruckInterface;
-
     private Outward_Truck_Production_interface outwardTruckProductionInterface;
     private LoginMethod userDetails;
     private String token;
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
 
-    public static String Tanker;
-    public static String Truck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,7 +99,7 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
         etremark = findViewById(R.id.etremark);
 
         submit = findViewById(R.id.etssubmit);
-        dbroot= FirebaseFirestore.getInstance();
+        dbroot = FirebaseFirestore.getInstance();
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -112,7 +113,7 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 intime.setText(time);
             }
         });
@@ -128,15 +129,16 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
         }
 
     }
+
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Billing";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -152,8 +154,7 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -181,13 +182,13 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
 
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
-        Call<Model_Outward_Truck_Dispatch> call = outwardTruckInterface.fetchdispatch(vehicleNo,vehicleType,nextProcess,inOut);
+        Call<Model_Outward_Truck_Dispatch> call = outwardTruckInterface.fetchdispatch(vehicleNo, vehicleType, nextProcess, inOut);
         call.enqueue(new Callback<Model_Outward_Truck_Dispatch>() {
             @Override
             public void onResponse(Call<Model_Outward_Truck_Dispatch> call, Response<Model_Outward_Truck_Dispatch> response) {
-                if (response.isSuccessful() ){
+                if (response.isSuccessful()) {
                     Model_Outward_Truck_Dispatch data = response.body();
-                    if (data.getVehicleNumber() != "" && data.getVehicleNumber()!= null){
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
                         OutwardId = data.getOutwardId();
                         serialnumber.setText(data.getSerialNumber());
                         vehiclenumber.setText(data.getVehicleNumber());
@@ -224,7 +225,7 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
                     } else {
                         Toasty.success(Outward_Truck_Production.this, "Vehicle Is Not Available", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
@@ -255,80 +256,66 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
-    public void insert(){
+
+    public void insert() {
 //        intime,serialnumber,vehiclenumber,material,oanumber;
         String etintime = intime.getText().toString().trim();
-        String etserialnumber =serialnumber.getText().toString().trim();
+        String etserialnumber = serialnumber.getText().toString().trim();
         String etvehiclnumber = vehiclenumber.getText().toString().trim();
         String outTime = getCurrentTime();
         String uremark = etremark.getText().toString().trim();
-
-
-        if (etintime.isEmpty()||etserialnumber.isEmpty()||etvehiclnumber.isEmpty()){
+        if (etintime.isEmpty() || etserialnumber.isEmpty() || etvehiclnumber.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-//            Map<String,String>items = new HashMap<>();
-//
-//            items.put("In_Time",intime.getText().toString().trim());
-//            items.put("Serial_Number",serialnumber.getText().toString().trim());
-//            items.put("Vehicle_Number",vehiclenumber.getText().toString().trim());
-//            items.put("Material",material.getText().toString().trim());
-//            items.put("OA_Number",oanumber.getText().toString().trim());
-//
-//            dbroot.collection("Outward_Truck_Prodution").add(items)
-//                    .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-//                        @Override
-//                        public void onComplete(@NonNull Task<DocumentReference> task) {
-//                            Toast.makeText(Outward_Truck_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-//                        }
-//                    });
-
-            Outward_Truck_Production_Model outwardTruckProductionModel = new Outward_Truck_Production_Model(OutwardId,etintime,outTime,
-                    uremark,'P',EmployeId,'B','O',vehicleType);
-            Call<Boolean> call = outwardTruckProductionInterface.updateouttruckproduction(outwardTruckProductionModel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
-                        makeNotification(etvehiclnumber, outTime);
-                        Toasty.success(Outward_Truck_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        startActivity(new Intent(Outward_Truck_Production.this, Grid_Outward.class));
-                        finish();
-                    }else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+        } else {
+            Outward_Truck_Production_Model outwardTruckProductionModel = new Outward_Truck_Production_Model(OutwardId, etintime, outTime,
+                    uremark, 'P', EmployeId, 'B', 'O', vehicleType);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTruckProductionInterface.updateouttruckproduction(outwardTruckProductionModel);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            makeNotification(etvehiclnumber, outTime);
+                            Toasty.success(Outward_Truck_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+                            startActivity(new Intent(Outward_Truck_Production.this, Grid_Outward.class));
+                            finish();
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
                         }
                     }
-                    Toasty.error(Outward_Truck_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Outward_Truck_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
             });
-
-
         }
     }
-    public void outwardtruckpropending(View view){
+
+    public void outwardtruckpropending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }
 
-    public void Viewclick(View view)
-    {
+    public void Viewclick(View view) {
         Intent intent = new Intent(this, OR_DataEntry_Completed_Listing.class);
         startActivity(intent);
     }

@@ -37,6 +37,7 @@ import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
 import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Security.SecOut_OR_Complete;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -61,32 +62,29 @@ import retrofit2.Response;
 
 public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
 
-    EditText intime,serialnumber,vehiclenumber,invoice,party,gooddis,qty,uom1,netweight,qtyuom,outtime,sign,remark,etproduct,erinvoice;
-
-    TextView smallpacktitle,indutialpacktitle;
-    LinearLayout lnlindustrialbarrel;
-    EditText ilpack10literqty,ilpack18literqty,ilpack20literqty,
-            ilpack26literqty, ilpack50literqty,ilpack210literqty,ilpackboxbucketqty,
-            iltotqty,iltotweight,industotqty,industotwight;
-
-    LinearLayout lnlsmallpackqty;
-    EditText splpack7literqty,splpack7_5literqty,splpack8_5literqty,splpack10literqty,splpack11literqty,
-            splpack12literqty,splpack13literqty,splpack15literqty,splpack18literqty,splpack20literqty,
-            splpack26literqty, splpack50literqty,splpack210literqty,splpackboxbucketqty,
-            smalltotqty,smalltotweight;
-
-    //EditText erqty,etqtyspl;
-    Button submit,complete;
-    FirebaseFirestore dbroot;
-    TimePickerDialog tpicker;
-    Calendar calendar = Calendar.getInstance();
+    public static String Tanker;
+    public static String Truck;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
-    private int OutwardId;
-    RadioButton Trasnportyes,transportno,tremyes,tremno,ewayyes,ewayno,testyes,testno,invoiceyes,invoicenono;
-    private Outward_Tanker outwardTanker;
+    EditText intime, serialnumber, vehiclenumber, invoice, party, gooddis, qty, uom1, netweight, qtyuom, outtime, sign, remark, etproduct, erinvoice;
+    TextView smallpacktitle, indutialpacktitle;
+    LinearLayout lnlindustrialbarrel;
+    EditText ilpack10literqty, ilpack18literqty, ilpack20literqty,
+            ilpack26literqty, ilpack50literqty, ilpack210literqty, ilpackboxbucketqty,
+            iltotqty, iltotweight, industotqty, industotwight;
+    LinearLayout lnlsmallpackqty;
+    EditText splpack7literqty, splpack7_5literqty, splpack8_5literqty, splpack10literqty, splpack11literqty,
+            splpack12literqty, splpack13literqty, splpack15literqty, splpack18literqty, splpack20literqty,
+            splpack26literqty, splpack50literqty, splpack210literqty, splpackboxbucketqty,
+            smalltotqty, smalltotweight;
+    //EditText erqty,etqtyspl;
+    Button submit, complete;
+    FirebaseFirestore dbroot;
+    TimePickerDialog tpicker;
+    Calendar calendar = Calendar.getInstance();
+    RadioButton Trasnportyes, transportno, tremyes, tremno, ewayyes, ewayno, testyes, testno, invoiceyes, invoicenono;
     AutoCompleteTextView autoCompleteTextView, autoCompleteTextView1outwardoutse, autoCompleteTextView2outwardoutse;
     Map<String, Integer> qtyUomMapping = new HashMap<>();
     ArrayAdapter<String> qtyuomdrop;
@@ -96,14 +94,14 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
     String[] netweuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
     SimpleDateFormat dtFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     DatePickerDialog picker;
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
+    private int OutwardId;
+    private Outward_Tanker outwardTanker;
     private LoginMethod userDetails;
     private String token;
     private String svehicleno;
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
-
-    public static String Tanker;
-    public static String Truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,21 +110,21 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic("all");
-        intime=findViewById(R.id.etintime);
-        serialnumber=findViewById(R.id.etserialnumber);
-        vehiclenumber=findViewById(R.id.etvehical);
-        party=findViewById(R.id.etpartyname);
-        gooddis=findViewById(R.id.etdisc);
-        netweight=findViewById(R.id.etnetweight);
-        sign=findViewById(R.id.etsign);
-        remark=findViewById(R.id.etremark);
+        intime = findViewById(R.id.etintime);
+        serialnumber = findViewById(R.id.etserialnumber);
+        vehiclenumber = findViewById(R.id.etvehical);
+        party = findViewById(R.id.etpartyname);
+        gooddis = findViewById(R.id.etdisc);
+        netweight = findViewById(R.id.etnetweight);
+        sign = findViewById(R.id.etsign);
+        remark = findViewById(R.id.etremark);
         //erqty = findViewById(R.id.etqty);
         //etqtyspl=findViewById(R.id.etqtyspl);
         erinvoice = findViewById(R.id.etinvoicenum);
 
         submit = findViewById(R.id.submit);
         complete = findViewById(R.id.truckotoutsecuritycompleted);
-        dbroot= FirebaseFirestore.getInstance();
+        dbroot = FirebaseFirestore.getInstance();
 
         Trasnportyes = findViewById(R.id.outwaoutrb_LRCopyYes);
         transportno = findViewById(R.id.outwaourb_LRCopyNo);
@@ -139,36 +137,36 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         invoiceyes = findViewById(R.id.invoiceyes);
         invoicenono = findViewById(R.id.invoiceno);
 
-        indutialpacktitle=findViewById(R.id.txtoroutseindustrailtitle);
-        lnlindustrialbarrel=findViewById(R.id.lnloroutseindustrialbarrel);
-        ilpack10literqty=findViewById(R.id.oroutseilpack10Liter);
-        ilpack18literqty=findViewById(R.id.oroutseilpack18Liter);
-        ilpack20literqty=findViewById(R.id.oroutseilpack20Liter);
-        ilpack26literqty=findViewById(R.id.oroutseilpack26Liter);
-        ilpack50literqty=findViewById(R.id.oroutseilpack50Liter);
-        ilpack210literqty=findViewById(R.id.oroutseilpack210Liter);
-        ilpackboxbucketqty=findViewById(R.id.oroutseilpackboxbucket);
-        industotqty=findViewById(R.id.oroutseetinudustotqty);
-        industotwight=findViewById(R.id.oroutseetinudustotweight);
+        indutialpacktitle = findViewById(R.id.txtoroutseindustrailtitle);
+        lnlindustrialbarrel = findViewById(R.id.lnloroutseindustrialbarrel);
+        ilpack10literqty = findViewById(R.id.oroutseilpack10Liter);
+        ilpack18literqty = findViewById(R.id.oroutseilpack18Liter);
+        ilpack20literqty = findViewById(R.id.oroutseilpack20Liter);
+        ilpack26literqty = findViewById(R.id.oroutseilpack26Liter);
+        ilpack50literqty = findViewById(R.id.oroutseilpack50Liter);
+        ilpack210literqty = findViewById(R.id.oroutseilpack210Liter);
+        ilpackboxbucketqty = findViewById(R.id.oroutseilpackboxbucket);
+        industotqty = findViewById(R.id.oroutseetinudustotqty);
+        industotwight = findViewById(R.id.oroutseetinudustotweight);
 
-        smallpacktitle=findViewById(R.id.oroutsesmalltitle);
-        lnlsmallpackqty=findViewById(R.id.lnloroutsesmallpackbarrel);
-        splpack7literqty=findViewById(R.id.oroutsesplpack7Liter);
-        splpack7_5literqty=findViewById(R.id.oroutsesplpack7_5Liter);
-        splpack8_5literqty=findViewById(R.id.oroutsesplpack8_5Liter);
-        splpack10literqty=findViewById(R.id.oroutsesplpack10Liter);
-        splpack11literqty=findViewById(R.id.oroutsesplpack11Liter);
-        splpack12literqty=findViewById(R.id.oroutsesplpack12Liter);
-        splpack13literqty=findViewById(R.id.oroutsesplpack13Liter);
-        splpack15literqty=findViewById(R.id.oroutsesplpack15Liter);
-        splpack18literqty=findViewById(R.id.oroutsesplpack18Liter);
-        splpack20literqty=findViewById(R.id.oroutsesplpack20Liter);
-        splpack26literqty=findViewById(R.id.oroutsesplpack26Liter);
-        splpack50literqty=findViewById(R.id.oroutsesplpack50Liter);
-        splpack210literqty=findViewById(R.id.oroutsesplpack210Liter);
-        splpackboxbucketqty=findViewById(R.id.oroutsesplpackboxbucket);
-        smalltotqty=findViewById(R.id.oroutseetsmalltotqty);
-        smalltotweight=findViewById(R.id.oroutseetsmalltotweight);
+        smallpacktitle = findViewById(R.id.oroutsesmalltitle);
+        lnlsmallpackqty = findViewById(R.id.lnloroutsesmallpackbarrel);
+        splpack7literqty = findViewById(R.id.oroutsesplpack7Liter);
+        splpack7_5literqty = findViewById(R.id.oroutsesplpack7_5Liter);
+        splpack8_5literqty = findViewById(R.id.oroutsesplpack8_5Liter);
+        splpack10literqty = findViewById(R.id.oroutsesplpack10Liter);
+        splpack11literqty = findViewById(R.id.oroutsesplpack11Liter);
+        splpack12literqty = findViewById(R.id.oroutsesplpack12Liter);
+        splpack13literqty = findViewById(R.id.oroutsesplpack13Liter);
+        splpack15literqty = findViewById(R.id.oroutsesplpack15Liter);
+        splpack18literqty = findViewById(R.id.oroutsesplpack18Liter);
+        splpack20literqty = findViewById(R.id.oroutsesplpack20Liter);
+        splpack26literqty = findViewById(R.id.oroutsesplpack26Liter);
+        splpack50literqty = findViewById(R.id.oroutsesplpack50Liter);
+        splpack210literqty = findViewById(R.id.oroutsesplpack210Liter);
+        splpackboxbucketqty = findViewById(R.id.oroutsesplpackboxbucket);
+        smalltotqty = findViewById(R.id.oroutseetsmalltotqty);
+        smalltotweight = findViewById(R.id.oroutseetsmalltotweight);
 
         setupHeader();
 
@@ -193,7 +191,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 intime.setText(time);
             }
         });
@@ -207,11 +205,13 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
             }
         });
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+
     private String getWeightUnit(int unitCode) {
         switch (unitCode) {
             case 1:
@@ -238,10 +238,10 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Security";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -257,8 +257,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -289,8 +288,8 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
             @Override
             public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
-                if (response.isSuccessful() && response.body()!= null){
-                    if (response.body().size() >0){
+                if (response.isSuccessful() && response.body() != null) {
+                    if (response.body().size() > 0) {
                         List<Response_Outward_Security_Fetching> data = response.body();
                         Response_Outward_Security_Fetching obj = data.get(0);
                         OutwardId = obj.getOutwardId();
@@ -306,81 +305,78 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
                         erinvoice.setText(obj.getOutInvoiceNumber());
                         erinvoice.setEnabled(false);
                         gooddis.setText("Ok");
-                        if(obj.iltotqty.isEmpty() || obj.ilweight=="0")
-                        {
+                        if (obj.iltotqty.isEmpty() || obj.ilweight == "0") {
                             smallpacktitle.setVisibility(View.VISIBLE);
                             lnlsmallpackqty.setVisibility(View.VISIBLE);
-                            splpack7literqty.setText(String.valueOf("SmallPack 7 Liter Qty :- "+ obj.getSplpackof7ltrqty()));
+                            splpack7literqty.setText("SmallPack 7 Liter Qty :- " + obj.getSplpackof7ltrqty());
                             splpack7literqty.setEnabled(false);
-                            splpack7_5literqty.setText(String.valueOf("SmallPack 7.5 Liter Qty :- "+ obj.getSplpackof7_5ltrqty()));
+                            splpack7_5literqty.setText("SmallPack 7.5 Liter Qty :- " + obj.getSplpackof7_5ltrqty());
                             splpack7_5literqty.setEnabled(false);
-                            splpack8_5literqty.setText(String.valueOf("SmallPack 8.5 Liter Qty :- "+ obj.getSplpackof8_5ltrqty()));
+                            splpack8_5literqty.setText("SmallPack 8.5 Liter Qty :- " + obj.getSplpackof8_5ltrqty());
                             splpack8_5literqty.setEnabled(false);
-                            splpack10literqty.setText(String.valueOf("SmallPack 10 Liter Qty :- "+ obj.getSplpackof10ltrqty()));
+                            splpack10literqty.setText("SmallPack 10 Liter Qty :- " + obj.getSplpackof10ltrqty());
                             splpack10literqty.setEnabled(false);
-                            splpack11literqty.setText(String.valueOf("SmallPack 11 Liter Qty :- "+ obj.getSplpackof11ltrqty()));
+                            splpack11literqty.setText("SmallPack 11 Liter Qty :- " + obj.getSplpackof11ltrqty());
                             splpack11literqty.setEnabled(false);
-                            splpack12literqty.setText(String.valueOf("SmallPack 12 Liter Qty :- "+ obj.getSplpackof12ltrqty()));
+                            splpack12literqty.setText("SmallPack 12 Liter Qty :- " + obj.getSplpackof12ltrqty());
                             splpack12literqty.setEnabled(false);
-                            splpack13literqty.setText(String.valueOf("SmallPack 13 Liter Qty :- "+ obj.getSplpackof13ltrqty()));
+                            splpack13literqty.setText("SmallPack 13 Liter Qty :- " + obj.getSplpackof13ltrqty());
                             splpack13literqty.setEnabled(false);
-                            splpack15literqty.setText(String.valueOf("SmallPack 15 Liter Qty :- "+ obj.getSplpackof15ltrqty()));
+                            splpack15literqty.setText("SmallPack 15 Liter Qty :- " + obj.getSplpackof15ltrqty());
                             splpack15literqty.setEnabled(false);
-                            splpack18literqty.setText(String.valueOf("SmallPack 18 Liter Qty :- "+ obj.getSplpackof18ltrqty()));
+                            splpack18literqty.setText("SmallPack 18 Liter Qty :- " + obj.getSplpackof18ltrqty());
                             splpack18literqty.setEnabled(false);
-                            splpack20literqty.setText(String.valueOf("SmallPack 20 Liter Qty :- "+ obj.getSplpackof20ltrqty()));
+                            splpack20literqty.setText("SmallPack 20 Liter Qty :- " + obj.getSplpackof20ltrqty());
                             splpack20literqty.setEnabled(false);
-                            splpack26literqty.setText(String.valueOf("SmallPack 26 Liter Qty :- "+ obj.getSplpackof26ltrqty()));
+                            splpack26literqty.setText("SmallPack 26 Liter Qty :- " + obj.getSplpackof26ltrqty());
                             splpack26literqty.setEnabled(false);
-                            splpack50literqty.setText(String.valueOf("SmallPack 50 Liter Qty :- "+ obj.getSplpackof50ltrqty()));
+                            splpack50literqty.setText("SmallPack 50 Liter Qty :- " + obj.getSplpackof50ltrqty());
                             splpack50literqty.setEnabled(false);
-                            splpack210literqty.setText(String.valueOf("SmallPack 210 Liter Qty :- "+ obj.getSplpackof210ltrqty()));
+                            splpack210literqty.setText("SmallPack 210 Liter Qty :- " + obj.getSplpackof210ltrqty());
                             splpack210literqty.setEnabled(false);
-                            splpackboxbucketqty.setText(String.valueOf("SmallPack BoxBucket Qty :- "+ obj.getSplpackofboxbuxketltrqty()));
+                            splpackboxbucketqty.setText("SmallPack BoxBucket Qty :- " + obj.getSplpackofboxbuxketltrqty());
                             splpackboxbucketqty.setEnabled(false);
                             smalltotqty.setText("SmallPack Total Qty :- " + obj.getSpltotqty());
                             smalltotqty.setEnabled(false);
                             smalltotweight.setText("SmallPack Weight :- " + obj.getSplweight());
                             smalltotweight.setEnabled(false);
-                        }
-                        else if(obj.spltotqty.isEmpty() || obj.splweight=="0") {
+                        } else if (obj.spltotqty.isEmpty() || obj.splweight == "0") {
                             indutialpacktitle.setVisibility(View.VISIBLE);
                             lnlindustrialbarrel.setVisibility(View.VISIBLE);
-                            ilpack10literqty.setText(String.valueOf("IndusPack 10 Liter Qty :- " + obj.getIlpackof10ltrqty()));
+                            ilpack10literqty.setText("IndusPack 10 Liter Qty :- " + obj.getIlpackof10ltrqty());
                             ilpack10literqty.setEnabled(false);
-                            ilpack18literqty.setText(String.valueOf("IndusPack 18 Liter Qty :- " + obj.getIlpackof18ltrqty()));
+                            ilpack18literqty.setText("IndusPack 18 Liter Qty :- " + obj.getIlpackof18ltrqty());
                             ilpack18literqty.setEnabled(false);
-                            ilpack20literqty.setText(String.valueOf("IndusPack 20 Liter Qty :- " + obj.getIlpackof20ltrqty()));
+                            ilpack20literqty.setText("IndusPack 20 Liter Qty :- " + obj.getIlpackof20ltrqty());
                             ilpack20literqty.setEnabled(false);
-                            ilpack26literqty.setText(String.valueOf("IndusPack 26 Liter Qty :- " + obj.getIlpackof26ltrqty()));
+                            ilpack26literqty.setText("IndusPack 26 Liter Qty :- " + obj.getIlpackof26ltrqty());
                             ilpack26literqty.setEnabled(false);
-                            ilpack50literqty.setText(String.valueOf("IndusPack 50 Liter Qty :- " + obj.getIlpackof50ltrqty()));
+                            ilpack50literqty.setText("IndusPack 50 Liter Qty :- " + obj.getIlpackof50ltrqty());
                             ilpack50literqty.setEnabled(false);
-                            ilpack210literqty.setText(String.valueOf("IndusPack 210 Liter Qty :- " + obj.getIlpackof50ltrqty()));
+                            ilpack210literqty.setText("IndusPack 210 Liter Qty :- " + obj.getIlpackof50ltrqty());
                             ilpack210literqty.setEnabled(false);
-                            ilpackboxbucketqty.setText(String.valueOf("IndusPack BoxBucket Qty :- " + obj.getIlpackofboxbuxketltrqty()));
+                            ilpackboxbucketqty.setText("IndusPack BoxBucket Qty :- " + obj.getIlpackofboxbuxketltrqty());
                             ilpackboxbucketqty.setEnabled(false);
                             industotqty.setText("IndusPack Total Qty :- " + obj.getIltotqty());
                             industotqty.setEnabled(false);
                             industotwight.setText("IndusPack Total Weight :- " + obj.getIlweight());
                             industotwight.setEnabled(false);
-                        }
-                        else{
+                        } else {
                             indutialpacktitle.setVisibility(View.VISIBLE);
                             lnlindustrialbarrel.setVisibility(View.VISIBLE);
-                            ilpack10literqty.setText(String.valueOf("IndusPack 10 Liter Qty :- " + obj.getIlpackof10ltrqty()));
+                            ilpack10literqty.setText("IndusPack 10 Liter Qty :- " + obj.getIlpackof10ltrqty());
                             ilpack10literqty.setEnabled(false);
-                            ilpack18literqty.setText(String.valueOf("IndusPack 18 Liter Qty :- " + obj.getIlpackof18ltrqty()));
+                            ilpack18literqty.setText("IndusPack 18 Liter Qty :- " + obj.getIlpackof18ltrqty());
                             ilpack18literqty.setEnabled(false);
-                            ilpack20literqty.setText(String.valueOf("IndusPack 20 Liter Qty :- " + obj.getIlpackof20ltrqty()));
+                            ilpack20literqty.setText("IndusPack 20 Liter Qty :- " + obj.getIlpackof20ltrqty());
                             ilpack20literqty.setEnabled(false);
-                            ilpack26literqty.setText(String.valueOf("IndusPack 26 Liter Qty :- " + obj.getIlpackof26ltrqty()));
+                            ilpack26literqty.setText("IndusPack 26 Liter Qty :- " + obj.getIlpackof26ltrqty());
                             ilpack26literqty.setEnabled(false);
-                            ilpack50literqty.setText(String.valueOf("IndusPack 50 Liter Qty :- " + obj.getIlpackof50ltrqty()));
+                            ilpack50literqty.setText("IndusPack 50 Liter Qty :- " + obj.getIlpackof50ltrqty());
                             ilpack50literqty.setEnabled(false);
-                            ilpack210literqty.setText(String.valueOf("IndusPack 210 Liter Qty :- " + obj.getIlpackof50ltrqty()));
+                            ilpack210literqty.setText("IndusPack 210 Liter Qty :- " + obj.getIlpackof50ltrqty());
                             ilpack210literqty.setEnabled(false);
-                            ilpackboxbucketqty.setText(String.valueOf("IndusPack BoxBucket Qty :- " + obj.getIlpackofboxbuxketltrqty()));
+                            ilpackboxbucketqty.setText("IndusPack BoxBucket Qty :- " + obj.getIlpackofboxbuxketltrqty());
                             ilpackboxbucketqty.setEnabled(false);
                             industotqty.setText("IndusPack Total Qty :- " + obj.getIltotqty());
                             industotqty.setEnabled(false);
@@ -389,33 +385,33 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
 
                             smallpacktitle.setVisibility(View.VISIBLE);
                             lnlsmallpackqty.setVisibility(View.VISIBLE);
-                            splpack7literqty.setText(String.valueOf("SmallPack 7 Liter Qty :- "+ obj.getSplpackof7ltrqty()));
+                            splpack7literqty.setText("SmallPack 7 Liter Qty :- " + obj.getSplpackof7ltrqty());
                             splpack7literqty.setEnabled(false);
-                            splpack7_5literqty.setText(String.valueOf("SmallPack 7.5 Liter Qty :- "+ obj.getSplpackof7_5ltrqty()));
+                            splpack7_5literqty.setText("SmallPack 7.5 Liter Qty :- " + obj.getSplpackof7_5ltrqty());
                             splpack7_5literqty.setEnabled(false);
-                            splpack8_5literqty.setText(String.valueOf("SmallPack 8.5 Liter Qty :- "+ obj.getSplpackof8_5ltrqty()));
+                            splpack8_5literqty.setText("SmallPack 8.5 Liter Qty :- " + obj.getSplpackof8_5ltrqty());
                             splpack8_5literqty.setEnabled(false);
-                            splpack10literqty.setText(String.valueOf("SmallPack 10 Liter Qty :- "+ obj.getSplpackof10ltrqty()));
+                            splpack10literqty.setText("SmallPack 10 Liter Qty :- " + obj.getSplpackof10ltrqty());
                             splpack10literqty.setEnabled(false);
-                            splpack11literqty.setText(String.valueOf("SmallPack 11 Liter Qty :- "+ obj.getSplpackof11ltrqty()));
+                            splpack11literqty.setText("SmallPack 11 Liter Qty :- " + obj.getSplpackof11ltrqty());
                             splpack11literqty.setEnabled(false);
-                            splpack12literqty.setText(String.valueOf("SmallPack 12 Liter Qty :- "+ obj.getSplpackof12ltrqty()));
+                            splpack12literqty.setText("SmallPack 12 Liter Qty :- " + obj.getSplpackof12ltrqty());
                             splpack12literqty.setEnabled(false);
-                            splpack13literqty.setText(String.valueOf("SmallPack 13 Liter Qty :- "+ obj.getSplpackof13ltrqty()));
+                            splpack13literqty.setText("SmallPack 13 Liter Qty :- " + obj.getSplpackof13ltrqty());
                             splpack13literqty.setEnabled(false);
-                            splpack15literqty.setText(String.valueOf("SmallPack 15 Liter Qty :- "+ obj.getSplpackof15ltrqty()));
+                            splpack15literqty.setText("SmallPack 15 Liter Qty :- " + obj.getSplpackof15ltrqty());
                             splpack15literqty.setEnabled(false);
-                            splpack18literqty.setText(String.valueOf("SmallPack 18 Liter Qty :- "+ obj.getSplpackof18ltrqty()));
+                            splpack18literqty.setText("SmallPack 18 Liter Qty :- " + obj.getSplpackof18ltrqty());
                             splpack18literqty.setEnabled(false);
-                            splpack20literqty.setText(String.valueOf("SmallPack 20 Liter Qty :- "+ obj.getSplpackof20ltrqty()));
+                            splpack20literqty.setText("SmallPack 20 Liter Qty :- " + obj.getSplpackof20ltrqty());
                             splpack20literqty.setEnabled(false);
-                            splpack26literqty.setText(String.valueOf("SmallPack 26 Liter Qty :- "+ obj.getSplpackof26ltrqty()));
+                            splpack26literqty.setText("SmallPack 26 Liter Qty :- " + obj.getSplpackof26ltrqty());
                             splpack26literqty.setEnabled(false);
-                            splpack50literqty.setText(String.valueOf("SmallPack 50 Liter Qty :- "+ obj.getSplpackof50ltrqty()));
+                            splpack50literqty.setText("SmallPack 50 Liter Qty :- " + obj.getSplpackof50ltrqty());
                             splpack50literqty.setEnabled(false);
-                            splpack210literqty.setText(String.valueOf("SmallPack 210 Liter Qty :- "+ obj.getSplpackof210ltrqty()));
+                            splpack210literqty.setText("SmallPack 210 Liter Qty :- " + obj.getSplpackof210ltrqty());
                             splpack210literqty.setEnabled(false);
-                            splpackboxbucketqty.setText(String.valueOf("SmallPack BoxBucket Qty :- "+ obj.getSplpackofboxbuxketltrqty()));
+                            splpackboxbucketqty.setText("SmallPack BoxBucket Qty :- " + obj.getSplpackofboxbuxketltrqty());
                             splpackboxbucketqty.setEnabled(false);
                             smalltotqty.setText("SmallPack Total Qty :- " + obj.getSpltotqty());
                             smalltotqty.setEnabled(false);
@@ -429,10 +425,10 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
                         etqtyspl.setEnabled(false);*/
                         /*qtyuom.setText(getWeightUnit(obj.getOutTotalQtyUOM()));
                         qtyuom.setEnabled(false);*/
-                    }else {
+                    } else {
                         Toasty.error(OutwardOut_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error" + response.code());
                 }
             }
@@ -457,7 +453,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         });
     }
 
-    public void insert(){
+    public void insert() {
 //        intime,serialnumber,vehiclenumber,invoice,party,gooddis,qty,uom1,netweight,uom2,outtime,sign,remark;
 
         String lrCopySelection = Trasnportyes.isChecked() ? "Yes" : "No";
@@ -475,43 +471,47 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
 
 //        int qtyuom = Integer.parseInt(qtyUomNumericValue.toString().trim());
 //        int netweuom = Integer.parseInt(netweuomvalue.toString().trim());
-        if (etintime.isEmpty()||etsign.isEmpty()||etremark.isEmpty()){
+        if (etintime.isEmpty() || etsign.isEmpty() || etremark.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-            Model_OutwardOut_Truck_Security modelOutwardOutTruckSecurity = new Model_OutwardOut_Truck_Security(OutwardId,"",
-                    "",etgooddis,etsign,lrCopySelection,tremselection,ewayselection,testreselection,invoiceselection,
-                    outTime,EmployeId,'S',inOut,vehicleType,etremark);
-            Call<Boolean> call = outwardTanker.updateout_Truck_wardoutsecurity(modelOutwardOutTruckSecurity);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
-                        makeNotification(svehicleno);
-                        makeNotification(svehicleno, outTime);
-                        Toasty.success(OutwardOut_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(OutwardOut_Truck_Security.this, Grid_Outward.class));
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+        } else {
+            Model_OutwardOut_Truck_Security modelOutwardOutTruckSecurity = new Model_OutwardOut_Truck_Security(OutwardId, "",
+                    "", etgooddis, etsign, lrCopySelection, tremselection, ewayselection, testreselection, invoiceselection,
+                    outTime, EmployeId, 'S', inOut, vehicleType, etremark);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTanker.updateout_Truck_wardoutsecurity(modelOutwardOutTruckSecurity);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            makeNotification(svehicleno);
+                            makeNotification(svehicleno, outTime);
+                            Toasty.success(OutwardOut_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(OutwardOut_Truck_Security.this, Grid_Outward.class));
+                            finish();
                         }
                     }
-                    Toasty.error(OutwardOut_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(OutwardOut_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }
@@ -527,7 +527,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         notificationsSender.triggerSendNotification();
     }
 
-    public void outwardoutsecpending(View view){
+    public void outwardoutsecpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }

@@ -44,6 +44,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.google.android.material.textfield.TextInputLayout;
@@ -82,39 +83,39 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     public char inOut = Global_Var.getInstance().InOutType;
+    public String procompart;
+    public String compartme, updateserialnumber, updatevehiclenumber;
+    public CheckBox checkBoxMultipleVehicle;
+    public int compartmentArraycount;
+    public int compartmentcount;
+    public int currentCompartment;
+    EditText serialnumber, vehiclenumber, oanumber, product, customer, location, howqty, transporter, intime, blendernumber, signproduction, oprator, remark, etbillremark, etproduct;
+    Button btnsubmit, btncompletd, btnupdate;
+    ArrayAdapter<String> nextdeptdrop;
+    Map<String, String> nextdeptmapping = new HashMap<>();
+    String nextdeptvalue = "W";
+    String movementvalue = "";
+    AutoCompleteTextView dept, vehmovement;
+    Map<String, Integer> Movement = new HashMap<>();
+    ArrayAdapter<String> Movementdrop;
+    String deptNumericValue = "W";
+    LinearLayout productDetailsLayout;
+    EditText etProductName;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private Outward_Tanker_Lab outwardTankerLab;
     private String token;
     private LoginMethod userDetails;
     private int oploutwardid = 0;
     private int OutwardId;
-    EditText serialnumber,vehiclenumber,oanumber,product,customer,location,howqty,transporter,intime,blendernumber,signproduction,oprator,remark,etbillremark,etproduct;
-    Button btnsubmit,btncompletd,btnupdate;
-    ArrayAdapter<String> nextdeptdrop;
-    Map<String, String> nextdeptmapping = new HashMap<>();
-    String nextdeptvalue = "W";
-    String movementvalue = "";
-    AutoCompleteTextView dept,vehmovement;
-    Map<String, Integer> Movement = new HashMap<>();
-    ArrayAdapter<String> Movementdrop;
-    String deptNumericValue = "W";
     private List<Compartment> compartmentList;
     private CompartmentAdapter adapter;
     private Button btnAddCompartment;
     private RecyclerView recyclerView;
-    public String procompart;
-    public String compartme,updateserialnumber,updatevehiclenumber;
-    public CheckBox checkBoxMultipleVehicle;
     // ✅ Declare Global Variable
     private int movementValueInt = 0; // Default value
     // ✅ Declare Global Variable
     private boolean isMultipleVehicle = false; // Default is false
-    public int compartmentArraycount;
-    public int compartmentcount;
-    public  int currentCompartment;
-    LinearLayout productDetailsLayout;
-    EditText etProductName;
     private ProductAdapter productAdapter; // ✅ Declare globally
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,7 +147,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         oprator = findViewById(R.id.etnewsignofoprator);
         remark = findViewById(R.id.etnewremark);
         etproduct = findViewById(R.id.etproductottankerprodcut);
-        etbillremark=findViewById(R.id.etprducBillingRemark);
+        etbillremark = findViewById(R.id.etprducBillingRemark);
         btnupdate = findViewById(R.id.etnewsupdate);
         btnupdate.setVisibility(View.GONE);
         btnsubmit = findViewById(R.id.etnewssubmit);
@@ -168,7 +169,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 intime.setText(time);
             }
         });
@@ -190,9 +191,6 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 //            vehicleMovementLayout.setVisibility(isMultipleVehicle ? View.VISIBLE : View.GONE); // ✅ Update visibility
 //            Log.d("MULTIPLE_VEHICLE", "isMultipleVehicle: " + isMultipleVehicle);
 //        });
-
-
-
 
 
         if (getIntent().hasExtra("vehiclenum")) {
@@ -250,8 +248,6 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 //        });
 
 
-
-
         btnAddCompartment = findViewById(R.id.btnAddCompartment);
         recyclerView = findViewById(R.id.recyclerView);
 
@@ -268,11 +264,12 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                 Toast.makeText(this, "Maximum 6 compartments allowed", Toast.LENGTH_SHORT).show();
             }
         });
-         productDetailsLayout = findViewById(R.id.productDetailsLayout);
-         etProductName = findViewById(R.id.etproductottankerprodcut);
+        productDetailsLayout = findViewById(R.id.productDetailsLayout);
+        etProductName = findViewById(R.id.etproductottankerprodcut);
         EditText etBlenderNumber = findViewById(R.id.elnewblendingno);
         EditText etRemark = findViewById(R.id.etnewremark);
     }
+
     public void onProductClick(String productName) {
         // Show the hidden layout
 
@@ -662,11 +659,11 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
             String productname = edproductname.getText().toString().trim();
 
 
-            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()||productname.isEmpty()) {
+            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty() || productname.isEmpty()) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             } else {
                 // ✅ Add new compartment and update adapter
-                compartmentList.add(new Compartment(blender, productionSign, operatorSign,productname));
+                compartmentList.add(new Compartment(blender, productionSign, operatorSign, productname));
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
 
@@ -677,7 +674,6 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 
         dialog.show();
     }
-
 
 
     public void insert() {
@@ -728,7 +724,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                 selectedProduct.getOperatorSign().isEmpty() ||
                 selectedProduct.getSignOfProduction().isEmpty() ||
                 selectedProduct.getRemark().isEmpty()
-                ) {
+        ) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -742,61 +738,76 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 
         // ✅ Assign data to the selected compartment
         switch (selectedCompartmentIndex) {
-            case 0: compartment1String = selectedCompartmentJson; break;
-            case 1: compartment2String = selectedCompartmentJson; break;
-            case 2: compartment3String = selectedCompartmentJson; break;
-            case 3: compartment4String = selectedCompartmentJson; break;
-            case 4: compartment5String = selectedCompartmentJson; break;
-            case 5: compartment6String = selectedCompartmentJson; break;
+            case 0:
+                compartment1String = selectedCompartmentJson;
+                break;
+            case 1:
+                compartment2String = selectedCompartmentJson;
+                break;
+            case 2:
+                compartment3String = selectedCompartmentJson;
+                break;
+            case 3:
+                compartment4String = selectedCompartmentJson;
+                break;
+            case 4:
+                compartment5String = selectedCompartmentJson;
+                break;
+            case 5:
+                compartment6String = selectedCompartmentJson;
+                break;
         }
-
 
 
         if (selectedCompartmentJson.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-            New_Production_Model_Outward newproductionoutwardmodel = new New_Production_Model_Outward(OutwardId,inTime,
-                    outTime,"","","","P",iremark,EmployeId,vehicleType,
-                    iserialnum,ivehicle,'L',inOut,EmployeId,"P",
+        } else {
+            New_Production_Model_Outward newproductionoutwardmodel = new New_Production_Model_Outward(OutwardId, inTime,
+                    outTime, "", "", "", "P", iremark, EmployeId, vehicleType,
+                    iserialnum, ivehicle, 'L', inOut, EmployeId, "P",
                     compartment1String, compartment2String, compartment3String,
-                    compartment4String, compartment5String, compartment6String,movementValueInt,isMultipleVehicle);
+                    compartment4String, compartment5String, compartment6String, movementValueInt, isMultipleVehicle);
             Gson gson = new Gson();
             String jsonRequest = gson.toJson(newproductionoutwardmodel);
             Log.d("API_REQUEST", jsonRequest);
-            Call<Boolean> call = outwardTankerLab.newOutwardTankerProduction(newproductionoutwardmodel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body() == true) {
-                        //Log.e("API_ERROR", "Error Body: " + response.errorBody().toString());
-                        Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
-                        makeNotification(ivehicle, outTime);
-                        startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
-                        finish();
-                    }else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
-                        Log.e("API_ERROR", "Error Body: " + response.errorBody().toString());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTankerLab.newOutwardTankerProduction(newproductionoutwardmodel);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                            //Log.e("API_ERROR", "Error Body: " + response.errorBody().toString());
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
+                            makeNotification(ivehicle, outTime);
+                            startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
+                            finish();
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
+                            Log.e("API_ERROR", "Error Body: " + response.errorBody().toString());
                         }
                     }
-                    Toasty.error(Outward_Tanker_Production_Multiple.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Outward_Tanker_Production_Multiple.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
 
@@ -1045,37 +1056,38 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         Gson gson = new Gson();
         String jsonRequest = gson.toJson(updateModel);
         Log.d("API_REQUEST", jsonRequest);
-
-        Call<Boolean> call = outwardTankerLab.UpdateOutwardTankerProduction(updateModel);
-        call.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful() && response.body() != null && response.body()) {
-                    Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
-                    makeNotification(ivehicle, outTime);
-                    startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
-                    finish();
-                } else {
-                    Log.e("Retrofit", "Error Response Code: " + response.code());
-                    try {
-                        Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+        dialogHelper.showConfirmationDialog(this, () -> {
+            dialogHelper.showProgressDialog(this); // Show progress when confirmed
+            Call<Boolean> call = outwardTankerLab.UpdateOutwardTankerProduction(updateModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body()) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
+                        makeNotification(ivehicle, outTime);
+                        startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
+                        finish();
+                    } else {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Toasty.error(Outward_Tanker_Production_Multiple.this, "Update Failed!", Toast.LENGTH_SHORT).show();
                     }
-                    Toasty.error(Outward_Tanker_Production_Multiple.this, "Update Failed!", Toast.LENGTH_SHORT).show();
                 }
-            }
 
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.e("Retrofit", "Failure: " + t.getMessage());
-                Toasty.error(Outward_Tanker_Production_Multiple.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
-            }
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    dialogHelper.hideProgressDialog(); // Hide after response
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    Toasty.error(Outward_Tanker_Production_Multiple.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
     }
-
-
-
 
 
     public void makeNotification(String vehicleNumber, String outTime) {
@@ -1118,11 +1130,13 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         Intent intent = new Intent(this, OT_Completed_inproc_production.class);
         startActivity(intent);
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+
     public void new_uttankerproinprocpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
@@ -1145,6 +1159,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
             return "{}"; // Return empty JSON if an error occurs
         }
     }
+
     private String convertCompartmentToJson(Product product) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -1174,9 +1189,6 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
     }
 
 
-
-
-
     private Compartment parseCompartment(String jsonString) {
         if (jsonString == null || jsonString.isEmpty()) {
             Log.e("JSON_ERROR", "Empty JSON string");
@@ -1184,12 +1196,13 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         }
         try {
             Gson gson = new Gson();
-            return gson.fromJson(jsonString.replace("/",""), Compartment.class);
+            return gson.fromJson(jsonString.replace("/", ""), Compartment.class);
         } catch (Exception e) {
             Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage());
             return null;
         }
     }
+
     private int getSelectedCompartmentIndex() {
         List<Product> productList = ProductAdapter.getProductList(); // ✅ Get updated product list
 
@@ -1220,7 +1233,6 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         Log.d("EXISTING_DATA", "Fetched compartments: " + existingData);
         return existingData;
     }
-
 
 
 }

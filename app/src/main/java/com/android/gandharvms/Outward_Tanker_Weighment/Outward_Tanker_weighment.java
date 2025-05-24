@@ -60,6 +60,7 @@ import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.LabCompartmentAdapter;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_compartment_model;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -107,10 +108,14 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    public LinearLayout layoutname, layoutimg;
+    public String Netxtdept = "";
+    public String despatchnext = "";
+    public int compartmentArraycount, copartmentcount;
     EditText intime, serialnumber, vehiclenumber, materialname, custname, oanum, tareweight, tankernumber,
-            etremark, transportername, howmuchqty, elocation,etbillremark,verifyremark,compartment1,compartment2,compartment3,compartment4,compartment5,compartment6,
-             grossweight1,grossweight2,grossweight3,grossweight4,grossweight5,grossweight6,edgrosswt,edoneremark;
-    Button submit, complted,verifybtn;
+            etremark, transportername, howmuchqty, elocation, etbillremark, verifyremark, compartment1, compartment2, compartment3, compartment4, compartment5, compartment6,
+            grossweight1, grossweight2, grossweight3, grossweight4, grossweight5, grossweight6, edgrosswt, edoneremark;
+    Button submit, complted, verifybtn;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
@@ -121,23 +126,20 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     Uri[] LocalImgPath = new Uri[2];
     ImageView btnlogout, btnhome;
     TextView username, empid;
+    char despatchNextChar = ' ';
+    CardView cardone, cardtwo, cardthree, cardfour, cardfive, cardsix;
+    LinearLayout mainContainer;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private int OutwardId;
     private Outward_weighment outwardWeighment;
     private String token;
     private LoginMethod userDetails;
     private String serialNo;
     private String imgPath1, imgPath2;
-    public LinearLayout layoutname,layoutimg;
-    public String Netxtdept = "";
-    char despatchNextChar = ' ';
-    public String despatchnext = "";
     private Outward_Truck_interface outwardTruckInterface;
-    CardView cardone,cardtwo,cardthree,cardfour,cardfive,cardsix;
     private List<Lab_compartment_model> compartmentList;
     private Weighment_compartment_Adapter adapter;
     private RecyclerView recyclerView;
-    public int compartmentArraycount,copartmentcount;
-    LinearLayout mainContainer ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -162,14 +164,14 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         transportername = findViewById(R.id.ettransportname);
         howmuchqty = findViewById(R.id.ethowmuchqtyfill);
         elocation = findViewById(R.id.etlocation);
-        etbillremark=findViewById(R.id.etBillingRemark);
+        etbillremark = findViewById(R.id.etBillingRemark);
         layoutname = findViewById(R.id.imglayoutouttanername);
         layoutimg = findViewById(R.id.imglayoutouttanerimg);
         verifybtn = findViewById(R.id.outwardtankerbtnvarified);
         verifybtn.setVisibility(View.GONE);
         verifyremark = findViewById(R.id.etoutwardtankerweightvarifyremark);
         verifyremark.setVisibility(View.GONE);
-        cardone  = findViewById(R.id.compaone);
+        cardone = findViewById(R.id.compaone);
         cardone.setVisibility(View.GONE);
         cardtwo = findViewById(R.id.compatwo);
         cardtwo.setVisibility(View.GONE);
@@ -203,7 +205,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         submit = findViewById(R.id.etssubmit_outwardtanker);
         dbroot = FirebaseFirestore.getInstance();
         complted = findViewById(R.id.otinweighcompleted);
-        mainContainer  = findViewById(R.id.mainContainer);
+        mainContainer = findViewById(R.id.mainContainer);
 
         tankernumber.setVisibility(View.GONE);
         submit.setOnClickListener(new View.OnClickListener() {
@@ -448,7 +450,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                             }
                         }
                         // If Cluase to get Latest Compartment Data for Weight Verification
-                        if( ismultiple && compartmentList.size() < procompartmentsJson.size() ) {
+                        if (ismultiple && compartmentList.size() < procompartmentsJson.size()) {
                             Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
                             compartmentList.add(labCompartmentModel1);
                             adapter.notifyDataSetChanged();
@@ -467,7 +469,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                             etremark.setVisibility(View.VISIBLE);
                             verifybtn.setVisibility(View.GONE);
                             submit.setVisibility(View.VISIBLE);
-                           // mainContainer.setVisibility(View.GONE);
+                            // mainContainer.setVisibility(View.GONE);
                             Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
                         }
                     } else {
@@ -604,7 +606,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                             etremark.setVisibility(View.VISIBLE);
                             verifybtn.setVisibility(View.GONE);
                             submit.setVisibility(View.VISIBLE);
-                             mainContainer.setVisibility(View.GONE);
+                            mainContainer.setVisibility(View.GONE);
                             Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
                         }
 
@@ -646,8 +648,6 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             }
         });
     }
-
-
 
 
     private List<ProductListData> parseExtraMaterials(String jsonString) {
@@ -753,36 +753,40 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                     OutwardId, etintime, outTime, imgPath2, imgPath1, "", "", "",
                     "", ettareweight, "", "", "", "", 'W',
                     uremark, EmployeId, EmployeId, 'P', 'I', vehicleType, etserialnumber, etvehiclenumber);
-            Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body()) {
-                        Log.d("Registration", "Response Body: " + response.body());
-                        deleteLocalImage(etvehiclenumber, outTime);
-                    } else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardWeighment.updateweighmentoutwardtanker(responseOutwardTankerWeighment);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            Log.d("Registration", "Response Body: " + response.body());
+                            deleteLocalImage(etvehiclenumber, outTime);
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
                         }
                     }
-                    Toasty.error(Outward_Tanker_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Outward_Tanker_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }
@@ -905,6 +909,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         /*Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);*/
     }
+
     private void verification() {
         //String verification_remark = verifyremark.getText().toString().trim();
         String outTime = getCurrentTime();
@@ -963,11 +968,11 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
 //        if (Netxtdept.length()>0){
 //            despatchNextChar = Netxtdept.charAt(0);
 //        }
-        if (verification_remark.isEmpty()){
+        if (verification_remark.isEmpty()) {
             Toasty.warning(this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
-        }else {
-            Tanker_verification_model tankerVerificationModel = new Tanker_verification_model(OutwardId,"Yes",'P',inOut,vehicleType,EmployeId,
-                    verification_remark,compartment1String,compartment2String,compartment3String,compartment4String,compartment5String,compartment6String);
+        } else {
+            Tanker_verification_model tankerVerificationModel = new Tanker_verification_model(OutwardId, "Yes", 'P', inOut, vehicleType, EmployeId,
+                    verification_remark, compartment1String, compartment2String, compartment3String, compartment4String, compartment5String, compartment6String);
             //Log.d("API_REQUEST", "Sending: " + new Gson().toJson(tankerVerificationModel));
             // ✅ Convert to JSON and log for debugging
             Gson gson = new Gson();
@@ -977,7 +982,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
+                    if (response.isSuccessful() && response.body() && response.body()) {
                         Log.d("API_RESPONSE", "Response: " + response.body());
                         Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                         makeNotification(etvehiclenumber, outTime);
@@ -1006,6 +1011,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             });
         }
     }
+
     // Helper method to safely parse integer values
     private int getSafeInt(EditText editText) {
         String text = editText.getText().toString().trim();
@@ -1036,6 +1042,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             compartmentField.setEnabled(true);
         }
     }
+
     private void setupGrossWeightLogic() {
         setupNetWeightCalculation(grossweight1, compartment1);
         setupNetWeightCalculation(grossweight2, compartment2);
@@ -1048,10 +1055,12 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private void setupNetWeightCalculation(EditText grossWeightField, EditText netWeightField) {
         grossWeightField.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -1076,10 +1085,12 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             return 0; // Return 0 if the value is empty or invalid
         }
     }
+
     private void setCompartmentValue(EditText editText, int value) {
         editText.setText(String.valueOf(value));
         editText.setEnabled(value == 0);  // Disable field if value exists, enable if empty
     }
+
     private Lab_compartment_model parseCompartment(String jsonString) {
         if (jsonString == null || jsonString.isEmpty()) {
             Log.e("JSON_ERROR", "Empty JSON string");
@@ -1087,7 +1098,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         }
         try {
             Gson gson = new Gson();
-            return gson.fromJson(jsonString.replace("/",""), Lab_compartment_model.class);
+            return gson.fromJson(jsonString.replace("/", ""), Lab_compartment_model.class);
         } catch (Exception e) {
             Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage());
             return null;
@@ -1101,7 +1112,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
             jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
             jsonObject.put("TareWeight", compartment.getTareweight()); // Tare Weight")
-            jsonObject.put("VerificationRemark",compartment.getVerificationRemark());
+            jsonObject.put("VerificationRemark", compartment.getVerificationRemark());
 //            jsonObject.put("VerificationRemark", compartment.getremark()); // Weight Remark")
             return jsonObject.toString();
         } catch (JSONException e) {
@@ -1109,6 +1120,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             return "{}"; // Return empty JSON if an error occurs
         }
     }
+
     private String convertCompartmentToJsonfirst(First_compartment_model firstCompartmentModel) {
         try {
             JSONObject jsonObject = new JSONObject();
