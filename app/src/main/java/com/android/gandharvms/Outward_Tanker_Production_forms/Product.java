@@ -9,7 +9,13 @@ public class Product {
     private String InTime;
     private boolean isExpanded; // To track visibility of details
     private boolean isSelected; // ✅ New field to track selection
+    private String OANumber;
 
+
+    public Product(String productName, String OANumber) {
+        this.productName = productName;
+        this.OANumber = OANumber;
+    }
 
     public Product(String productName) {
         this.productName = productName;
@@ -41,4 +47,12 @@ public class Product {
     public void setSelected(boolean selected) { this.isSelected = selected; }
     public String getSignOfProduction() { return signOfProduction; }
     public void setSignOfProduction(String signOfProduction) { this.signOfProduction = signOfProduction; }
+
+    public String getOANumber() {
+        return OANumber;
+    }
+
+    public void setOANumber(String OANumber) {
+        this.OANumber = OANumber;
+    }
 }

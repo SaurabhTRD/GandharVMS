@@ -114,6 +114,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
     LinearLayout productDetailsLayout;
     EditText etProductName;
     private ProductAdapter productAdapter; // ✅ Declare globally
+    public String productdtls;
 
 
     @Override
@@ -308,6 +309,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                         oanumber.setEnabled(false);
                         product.setText(data.getProductQTYUOMOA());
                         product.setEnabled(false);
+                        productdtls = data.getProductQTYUOMOA();
                         // Dynamically create product links
 //                        GridLayout productGrid = findViewById(R.id.productGridLayout);
 //                        productGrid.removeAllViews();
@@ -354,7 +356,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 
                         List<Product> productList = new ArrayList<>(); // ✅ Always initialize the list
 
-// 🔹 Log the JSON before parsing
+                             // 🔹 Log the JSON before parsing
                         Log.d("JSON_DEBUG", "Raw JSON Data: " + data.getProductQTYUOMOA());
 
                         try {
@@ -378,11 +380,11 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                                     JSONObject obj = jsonArray.getJSONObject(i);
                                     if (obj.has("ProductName")) {
                                         String productName = obj.getString("ProductName");
+                                        String oaNumber = obj.optString("OANumber", ""); // ✅ Create the variable here
                                         //productList.add(new Product(productName));
-
                                         // ✅ Step 2: Only add products that are NOT in `compartmentList`
                                         if (!insertedProducts.contains(productName)) {
-                                            productList.add(new Product(obj.getString("ProductName"))); // Keep original case
+                                            productList.add(new Product(obj.getString("ProductName"), oaNumber)); // Keep original case
                                             Log.d("JSON_DEBUG", "Added Product: " + obj.getString("ProductName"));
                                         } else {
                                             Log.d("JSON_DEBUG", "Skipping Inserted Product: " + obj.getString("ProductName"));
@@ -424,7 +426,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                             RecyclerView productRecyclerView = findViewById(R.id.productRecyclerView);
                             productRecyclerView.setLayoutManager(new LinearLayoutManager(Outward_Tanker_Production_Multiple.this));
 
-                            ProductAdapter adapter = new ProductAdapter(productList, compartmentDataList);
+                            ProductAdapter adapter = new ProductAdapter(productList, compartmentDataList,OutwardId,productdtls);
                             productRecyclerView.setAdapter(adapter);
                             Log.d("RecyclerView", "Adapter set with " + productList.size() + " products.");
                         }

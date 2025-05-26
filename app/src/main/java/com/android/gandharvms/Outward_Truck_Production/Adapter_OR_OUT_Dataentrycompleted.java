@@ -1,6 +1,7 @@
 package com.android.gandharvms.Outward_Truck_Production;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Truck_Logistic.Adapter_Logi_complete;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
@@ -69,6 +73,17 @@ public class Adapter_OR_OUT_Dataentrycompleted extends RecyclerView.Adapter<Adap
         holder.signofweighment.setText(club.getWeighmentCreatedBy());
         holder.weighmnetdatetime.setText(club.getWeighmentCreatedDate());
         holder.remark.setText(club.getProductionRemark());
+
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common_Outward_model club = filteredGridList.get(position);
+                Intent intent = new Intent(view.getContext(), Outward_Tanker_Security.class);
+                intent.putExtra("VehicleNumber", club.getVehicleNumber());
+                intent.putExtra("Action", "Up");
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

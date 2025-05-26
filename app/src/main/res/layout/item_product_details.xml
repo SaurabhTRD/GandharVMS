@@ -20,22 +20,70 @@
 <!--        android:clickable="true"-->
 <!--        android:focusable="true"/>-->
 
-    <TextView
-        android:id="@+id/txtProductName"
+<!--    <TextView-->
+<!--        android:id="@+id/txtProductName"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Product Name"-->
+<!--        android:textSize="18sp"-->
+<!--        android:textStyle="bold"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:background="@drawable/product_item_bg"-->
+<!--        android:drawableEnd="@drawable/baseline_arrow_drop_down_24"-->
+<!--        android:padding="16dp"-->
+<!--        android:gravity="center"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:elevation="8dp"-->
+<!--        android:layout_margin="10dp"/>-->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Product Name"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@android:color/white"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:background="@drawable/product_item_bg"
-        android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
         android:padding="16dp"
-        android:gravity="center"
-        android:clickable="true"
-        android:focusable="true"
-        android:elevation="8dp"
-        android:layout_margin="10dp"/>
+        android:layout_margin="10dp"
+        android:elevation="8dp">
+
+        <!-- Product Name Text -->
+        <TextView
+            android:id="@+id/txtProductName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Product Name"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:drawableEnd="@drawable/baseline_arrow_drop_down_24"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"/>
+
+        <!-- Spacer between text and icon -->
+        <Space
+            android:layout_width="8dp"
+            android:layout_height="wrap_content" />
+
+        <!-- Edit Icon with Circular Background -->
+        <LinearLayout
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:gravity="center"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="4dp">
+
+            <ImageView
+                android:id="@+id/ivEditProduct"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/edit"
+                android:contentDescription="Edit"/>
+        </LinearLayout>
+    </LinearLayout>
 
 
     <!-- Product Details Layout (Initially Hidden) -->

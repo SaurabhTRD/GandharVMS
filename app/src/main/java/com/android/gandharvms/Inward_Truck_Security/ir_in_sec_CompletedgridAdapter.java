@@ -124,7 +124,7 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
         holder.TaxInvoice.setText(club.getTaxInvoice());
         holder.EwayBill.setText(club.getEwayBill());
         holder.vehiclenum.setText(club.getVehicleNo());
-        /*holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CommonResponseModelForAllDepartment club = filteredGridList.get(position);
@@ -134,7 +134,7 @@ public class ir_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<ir_in_s
                 intent.putExtra("Action","Up");
                 view.getContext().startActivity(intent);
             }
-        });*/
+        });
     }
     public int getItemCount() {
         return Gridmodel.size();
