@@ -36,6 +36,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -87,6 +88,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
     Button productaddbtn;
     List<String> uomList = new ArrayList<>();
     String holdremark = "";
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private Outward_Tanker_Billinginterface outwardTankerBillinginterface;
     private com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker outwardTanker;
     private int OutwardId;
@@ -489,69 +491,73 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
                     "", EmployeId, EmployeId, 'B', etremark, etserilnumber, etvehiclenumber, "", ucustname,
                     "", 0, ulocation, 'W', inOut,
                     vehicleType, "", allproductString);
-            Call<Boolean> call = outwardTankerBillinginterface.updatebillingoanumber(responsOutwardTankerBilling);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()) {
-                        makeNotificationSecurity(etvehiclenumber, dyprooano);
-                        makeNotificationforweighment(etvehiclenumber, outTime);
-                        makeNotificationforproduction(etvehiclenumber, outTime);
-                        if (!holdremark.isEmpty()) {
-                            Call<Boolean> call1 = outwardTanker.updateBillingActivestatus(etvehiclenumber, Global_Var.getInstance().Name);
-                            call1.enqueue(new Callback<Boolean>() {
-                                @Override
-                                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                                    if (response.isSuccessful() && response.body() != null && response.body()) {
-                                        Toasty.success(Outward_Tanker_Billing.this, "Vehicle Active", Toast.LENGTH_SHORT, true).show();
-                                    }
-                                }
-
-                                @Override
-                                public void onFailure(Call<Boolean> call, Throwable t) {
-                                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                                    // Check if there's a response body in case of an HTTP error
-                                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                                        Response<?> response = ((HttpException) t).response();
-                                        if (response != null) {
-                                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                                            try {
-                                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                                            } catch (IOException e) {
-                                                e.printStackTrace();
-                                            }
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTankerBillinginterface.updatebillingoanumber(responsOutwardTankerBilling);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            makeNotificationSecurity(etvehiclenumber, dyprooano);
+                            makeNotificationforweighment(etvehiclenumber, outTime);
+                            makeNotificationforproduction(etvehiclenumber, outTime);
+                            if (!holdremark.isEmpty()) {
+                                Call<Boolean> call1 = outwardTanker.updateBillingActivestatus(etvehiclenumber, Global_Var.getInstance().Name);
+                                call1.enqueue(new Callback<Boolean>() {
+                                    @Override
+                                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                                            Toasty.success(Outward_Tanker_Billing.this, "Vehicle Active", Toast.LENGTH_SHORT, true).show();
                                         }
                                     }
-                                    Toasty.error(Outward_Tanker_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
-                                }
-                            });
+
+                                    @Override
+                                    public void onFailure(Call<Boolean> call, Throwable t) {
+                                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                                        // Check if there's a response body in case of an HTTP error
+                                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                                            Response<?> response = ((HttpException) t).response();
+                                            if (response != null) {
+                                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                                try {
+                                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                                } catch (IOException e) {
+                                                    e.printStackTrace();
+                                                }
+                                            }
+                                        }
+                                        Toasty.error(Outward_Tanker_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            Toasty.success(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+                            startActivity(new Intent(Outward_Tanker_Billing.this, Grid_Outward.class));
+                            finish();
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
                         }
-                        Toasty.success(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                        startActivity(new Intent(Outward_Tanker_Billing.this, Grid_Outward.class));
-                        finish();
-                    } else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
                     }
-                }
 
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                         }
+                        Toasty.error(Outward_Tanker_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
                     }
-                    Toasty.error(Outward_Tanker_Billing.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+                });
             });
         }
     }

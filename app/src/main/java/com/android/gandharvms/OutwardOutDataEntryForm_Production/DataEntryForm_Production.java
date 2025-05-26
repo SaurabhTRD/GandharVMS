@@ -31,6 +31,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.google.common.reflect.TypeToken;
@@ -55,24 +56,24 @@ import retrofit2.HttpException;
 import retrofit2.Response;
 
 public class DataEntryForm_Production extends NotificationCommonfunctioncls {
-    EditText odeintime,odeserialnumber,odevehiclenumber,odedensity,odesealnumber,odeetremark,party,location,oanum,batch,product;
-    Button odesubmit,completd;
-    TimePickerDialog tpicker;
-
+    public static String Tanker;
+    public static String Truck;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    EditText odeintime, odeserialnumber, odevehiclenumber, odedensity, odesealnumber, odeetremark, party, location, oanum, batch, product;
+    Button odesubmit, completd;
+    TimePickerDialog tpicker;
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private Outward_Tanker_Lab outwardTankerLab;
     private LoginMethod userDetails;
     private String token;
     private int OutwardId;
     private String odvehiclenum;
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
 
-    public static String Tanker;
-    public static String Truck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,13 +81,13 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
         setupHeader();
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
 
-        odeintime=findViewById(R.id.etoutdataentryintime);
-        odeserialnumber=findViewById(R.id.etoutdataentryserialnumber);
-        odevehiclenumber=findViewById(R.id.etoutdataentryvehicleno);
-        odedensity=findViewById(R.id.etoutdataentrydensity);
-        odesealnumber=findViewById(R.id.etoutdataentrysealnumber);
-        odeetremark=findViewById(R.id.etoutdataentryremakr);
-        completd =findViewById(R.id.outdataentrycompletd);
+        odeintime = findViewById(R.id.etoutdataentryintime);
+        odeserialnumber = findViewById(R.id.etoutdataentryserialnumber);
+        odevehiclenumber = findViewById(R.id.etoutdataentryvehicleno);
+        odedensity = findViewById(R.id.etoutdataentrydensity);
+        odesealnumber = findViewById(R.id.etoutdataentrysealnumber);
+        odeetremark = findViewById(R.id.etoutdataentryremakr);
+        completd = findViewById(R.id.outdataentrycompletd);
 
         party = findViewById(R.id.etpartyname);
         location = findViewById(R.id.etlocation);
@@ -94,7 +95,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
         batch = findViewById(R.id.etbatchno);
         product = findViewById(R.id.etproduct);
 
-        odesubmit=findViewById(R.id.etoutdataentrysubmit);
+        odesubmit = findViewById(R.id.etoutdataentrysubmit);
 
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
@@ -140,7 +141,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 odeintime.setText(time);
             }
         });
@@ -171,7 +172,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
                         odeserialnumber.setEnabled(false);
                         odevehiclenumber.setText(data.getVehicleNumber());
                         odevehiclenumber.setEnabled(false);
-                        odvehiclenum=data.getVehicleNumber();
+                        odvehiclenum = data.getVehicleNumber();
                         odedensity.setText(data.getDensity_29_5C());
                         odedensity.setEnabled(false);
                         odesealnumber.setText(String.valueOf(data.getSealNumber()));
@@ -316,10 +317,10 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Billing";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -335,8 +336,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -364,44 +364,49 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
 
     public void update() {
         String odfintime = odeintime.getText().toString().trim();
-        String odfremark=odeetremark.getText().toString().trim();
-        String odfouttime=getCurrentTime();
-        if (odfintime.isEmpty()|| odfremark.isEmpty()){
+        String odfremark = odeetremark.getText().toString().trim();
+        String odfouttime = getCurrentTime();
+        if (odfintime.isEmpty() || odfremark.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             otoutDataEntryProduction_RequestModel requestmodeldata = new otoutDataEntryProduction_RequestModel(OutwardId, odfintime, odfouttime,
                     odfremark, 'B', inOut, vehicleType, EmployeId);
-            Call<Boolean> call = outwardTankerLab.updateDataEntryFormProduction(requestmodeldata);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true) {
-                        makeNotification(odvehiclenum);
-                        Toasty.success(DataEntryForm_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                        startActivity(new Intent(DataEntryForm_Production.this, Grid_Outward.class));
-                        finish();
-                    } else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTankerLab.updateDataEntryFormProduction(requestmodeldata);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            makeNotification(odvehiclenum);
+                            Toasty.success(DataEntryForm_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+                            startActivity(new Intent(DataEntryForm_Production.this, Grid_Outward.class));
+                            finish();
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
                         }
                     }
-                    Toasty.error(DataEntryForm_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(DataEntryForm_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }

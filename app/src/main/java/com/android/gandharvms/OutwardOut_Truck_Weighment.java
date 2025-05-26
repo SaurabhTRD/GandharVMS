@@ -46,6 +46,7 @@ import com.android.gandharvms.Outward_Truck_Weighment.Weigh_Out_OR_Complete;
 import com.android.gandharvms.Outwardout_Tanker_Weighment.OutwardOut_Tanker_Weighment;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -115,7 +116,7 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
     private int ushwe;
     ImageView btnlogout,btnhome;
     TextView username,empid;
-
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     public static String Tanker;
     public static String Truck;
     @Override
@@ -534,23 +535,20 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
             Toasty.warning(this,"Shortage Weight Is Empty",Toast.LENGTH_SHORT).show();
         }
 
-
-//        String etserialnumber = serialnumber.getText().toString().trim();
-//        String etvehiclenum = vehiclenum.getText().toString().trim();
-
-
-
         if (etintime.isEmpty()||etgrossweight.isEmpty()||etnoofpack.isEmpty() ){
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         }else {
             Model_OutwardOut_Truck_Weighment modelOutwardOutTruckWeighment = new Model_OutwardOut_Truck_Weighment(OutwardId,
                     imgPath1,imgPath2,etintime,unetwt,etgrossweight,etnoofpack,uremark,useal,EmployeId,'P',inOut,
                     vehicleType,ushdip,ushwe);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
             Call<Boolean> call = outwardWeighment.updateoutwardouttruckweighment(modelOutwardOutTruckWeighment);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                     if (response.isSuccessful()&& response.body() && response.body() == true){
+                        dialogHelper.hideProgressDialog(); // Hide after response
                        // not available outtime and vehicle no for notification
                         deleteLocalImage(wvehiclenumber);
                     }else {
@@ -560,7 +558,7 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
 
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
-
+                    dialogHelper.hideProgressDialog(); // Hide after response
                     Log.e("Retrofit", "Failure: " + t.getMessage());
                     // Check if there's a response body in case of an HTTP error
                     if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
@@ -576,6 +574,7 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
                     }
                     Toasty.error(OutwardOut_Truck_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
                 }
+            });
             });
         }
     }

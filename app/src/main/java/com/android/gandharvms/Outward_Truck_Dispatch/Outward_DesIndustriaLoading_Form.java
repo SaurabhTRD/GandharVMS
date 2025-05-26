@@ -32,6 +32,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
@@ -52,40 +53,56 @@ import retrofit2.Response;
 
 public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunctioncls {
 
-    Button btndesilsubmit,pending,submit;
-    EditText etdesilserialnumber,etdesilvehiclenumber,etdesiltransport,etdesilintime,etdesiltotqty,
-            etdesilremark,etdesiltypeofpackingid;
-    EditText tenltr,eighteenltr,twentyltr,twentysixltr,fiftyltr,twotenltr,boxbucket,weight,indussign,indusremark,oa,party;
-    String[] typeofpacking= {"Packing of 210 Ltr", "Packing of 50 Ltr", "Packing Of 26 Ltr", "Packing of 20 Ltr", "Packing of 10 Ltr", "Packing of Box & Bucket"};
-    Integer typeofpackingNumericValue = 1;
-    AutoCompleteTextView  typeofpackingautoCompleteTextView1;
-    Map<String, Integer> typeofpackingMapping = new HashMap<>();
-    ArrayAdapter<String> typeofpackingdrop;
+    public static String Tanker;
+    public static String Truck;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
-    public char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
-    private int OutwardId;
-    private Outward_Truck_interface outwardTruckInterface;
-    private LoginMethod userDetails;
+    public char inOut = Global_Var.getInstance().InOutType;
+    public String vehnumber = "";
+    Button btndesilsubmit, pending, submit;
+    EditText etdesilserialnumber, etdesilvehiclenumber, etdesiltransport, etdesilintime, etdesiltotqty,
+            etdesilremark, etdesiltypeofpackingid;
+    EditText tenltr, eighteenltr, twentyltr, twentysixltr, fiftyltr, twotenltr, boxbucket, weight, indussign, indusremark, oa, party;
+    String[] typeofpacking = {"Packing of 210 Ltr", "Packing of 50 Ltr", "Packing Of 26 Ltr", "Packing of 20 Ltr", "Packing of 10 Ltr", "Packing of Box & Bucket"};
+    Integer typeofpackingNumericValue = 1;
+    AutoCompleteTextView typeofpackingautoCompleteTextView1;
+    Map<String, Integer> typeofpackingMapping = new HashMap<>();
+    ArrayAdapter<String> typeofpackingdrop;
     AutoCompleteTextView dept;
     ArrayAdapter<String> nextdeptdrop;
     Map<String, String> nextdeptmapping = new HashMap<>();
     String nextdeptvalue = "W";
     String deptNumericValue = "W";
-    private int Id;
-    public String vehnumber="";
-
     LinearLayout lnlsmallpackqty;
-    EditText splpack7literqty,splpack7_5literqty,splpack8_5literqty,splpack10literqty,splpack11literqty,
-             splpack12literqty,splpack13literqty,splpack15literqty,splpack18literqty,splpack20literqty,
-             splpack26literqty, splpack50literqty,splpack210literqty,splpackboxbucketqty,
-             spltotqty,spltotweight;
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
+    EditText splpack7literqty, splpack7_5literqty, splpack8_5literqty, splpack10literqty, splpack11literqty,
+            splpack12literqty, splpack13literqty, splpack15literqty, splpack18literqty, splpack20literqty,
+            splpack26literqty, splpack50literqty, splpack210literqty, splpackboxbucketqty,
+            spltotqty, spltotweight;
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
+    TextWatcher textWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
 
-    public static String Tanker;
-    public static String Truck;
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            calculateTotal();
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+    private int OutwardId;
+    private Outward_Truck_interface outwardTruckInterface;
+    private LoginMethod userDetails;
+    private int Id;
     private String token;
 
     @Override
@@ -121,17 +138,17 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
 //            }
 //        });
 
-        etdesilserialnumber=findViewById(R.id.etdesindusloadserialnumber);
-        etdesilvehiclenumber=findViewById(R.id.etdesindusloadvehical);
-        etdesiltransport=findViewById(R.id.etdesindusloadtranseportname);
-        etdesilintime=findViewById(R.id.etdesindusloadintime);
-        etdesilremark=findViewById(R.id.eddesindusloadremark);
-        etdesiltypeofpackingid=findViewById(R.id.etdesindusloadserialnumber);
-        oa= findViewById(R.id.etoanumberindus);
+        etdesilserialnumber = findViewById(R.id.etdesindusloadserialnumber);
+        etdesilvehiclenumber = findViewById(R.id.etdesindusloadvehical);
+        etdesiltransport = findViewById(R.id.etdesindusloadtranseportname);
+        etdesilintime = findViewById(R.id.etdesindusloadintime);
+        etdesilremark = findViewById(R.id.eddesindusloadremark);
+        etdesiltypeofpackingid = findViewById(R.id.etdesindusloadserialnumber);
+        oa = findViewById(R.id.etoanumberindus);
         party = findViewById(R.id.etpartyname);
 //        etdesiltypeofpackingid=findViewById(R.id.autodesindusloadTypeOfPacking);
 
-        btndesilsubmit=findViewById(R.id.etdesindusloadsubmit);
+        btndesilsubmit = findViewById(R.id.etdesindusloadsubmit);
         pending = findViewById(R.id.pendingindustrial);
 
         tenltr = findViewById(R.id.etdesindusloadpacking10ltrqty);
@@ -141,28 +158,28 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         fiftyltr = findViewById(R.id.etdesindusloadpacking50ltrqty);
         twotenltr = findViewById(R.id.etdesindusloadpacking210ltrqty);
         boxbucket = findViewById(R.id.etdesindusloadpackingboxbucket);
-        etdesiltotqty=findViewById(R.id.etdesindusloadTotalQuantity);
+        etdesiltotqty = findViewById(R.id.etdesindusloadTotalQuantity);
         weight = findViewById(R.id.industrialweight);
         indussign = findViewById(R.id.industrialsign);
         indusremark = findViewById(R.id.eddesindusloadremark);
 
-        lnlsmallpackqty=findViewById(R.id.lnlsmallpackbarrel);
-        splpack7literqty=findViewById(R.id.splpack7Liter);
-        splpack7_5literqty=findViewById(R.id.splpack7_5Liter);
-        splpack8_5literqty=findViewById(R.id.splpack8_5Liter);
-        splpack10literqty=findViewById(R.id.splpack10Liter);
-        splpack11literqty=findViewById(R.id.splpack11Liter);
-        splpack12literqty=findViewById(R.id.splpack12Liter);
-        splpack13literqty=findViewById(R.id.splpack13Liter);
-        splpack15literqty=findViewById(R.id.splpack15Liter);
-        splpack18literqty=findViewById(R.id.splpack18Liter);
-        splpack20literqty=findViewById(R.id.splpack20Liter);
-        splpack26literqty=findViewById(R.id.splpack26Liter);
-        splpack50literqty=findViewById(R.id.splpack50Liter);
-        splpack210literqty=findViewById(R.id.splpack210Liter);
-        splpackboxbucketqty=findViewById(R.id.splpackboxbucket);
-        spltotqty=findViewById(R.id.spltotqtyLiter);
-        spltotweight=findViewById(R.id.spltotalweight);
+        lnlsmallpackqty = findViewById(R.id.lnlsmallpackbarrel);
+        splpack7literqty = findViewById(R.id.splpack7Liter);
+        splpack7_5literqty = findViewById(R.id.splpack7_5Liter);
+        splpack8_5literqty = findViewById(R.id.splpack8_5Liter);
+        splpack10literqty = findViewById(R.id.splpack10Liter);
+        splpack11literqty = findViewById(R.id.splpack11Liter);
+        splpack12literqty = findViewById(R.id.splpack12Liter);
+        splpack13literqty = findViewById(R.id.splpack13Liter);
+        splpack15literqty = findViewById(R.id.splpack15Liter);
+        splpack18literqty = findViewById(R.id.splpack18Liter);
+        splpack20literqty = findViewById(R.id.splpack20Liter);
+        splpack26literqty = findViewById(R.id.splpack26Liter);
+        splpack50literqty = findViewById(R.id.splpack50Liter);
+        splpack210literqty = findViewById(R.id.splpack210Liter);
+        splpackboxbucketqty = findViewById(R.id.splpackboxbucket);
+        spltotqty = findViewById(R.id.spltotqtyLiter);
+        spltotweight = findViewById(R.id.spltotalweight);
 
         tenltr.addTextChangedListener(textWatcher);
         eighteenltr.addTextChangedListener(textWatcher);
@@ -176,34 +193,12 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         FirebaseMessaging.getInstance().subscribeToTopic(token);
         submit = findViewById(R.id.etdesindusloadsubmit);
         setupHeader();
-        /*btnhome = findViewById(R.id.btn_homeButton);
-        btnlogout=findViewById(R.id.btn_logoutButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Menu.class));
-            }
-        });*/
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (Id == 0){
+                if (Id == 0) {
                     indusinsert();
-                }else {
+                } else {
                     indusupdate();
                 }
 
@@ -214,7 +209,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 etdesilintime.setText(time);
             }
         });
@@ -225,7 +220,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         etdesilvehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean hasfocus) {
-                if (!hasfocus){
+                if (!hasfocus) {
                     FetchVehicleDetails(etdesilvehiclenumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
                 }
             }
@@ -254,24 +249,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
 
     }
 
-    TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence charSequence, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            calculateTotal();
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
-    public void calculateTotal(){
+    public void calculateTotal() {
 
         int total = 0;
         total += getEditTextValue(tenltr);
@@ -290,7 +268,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         try {
 
             return Integer.parseInt(editText.getText().toString());
-        }    catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return 0; // Return 0 if EditText is empty or non-numeric
 
         }
@@ -302,61 +280,60 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
     }
 
 
-    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut){
-        Call<Model_industrial> call = outwardTruckInterface.fetchindusrtial(vehicleNo,vehicleType,NextProcess,inOut);
+    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
+        Call<Model_industrial> call = outwardTruckInterface.fetchindusrtial(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<Model_industrial>() {
             @Override
             public void onResponse(Call<Model_industrial> call, Response<Model_industrial> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Model_industrial data = response.body();
-                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null){
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
                         OutwardId = data.getOutwardId();
                         Id = data.getId();
                         etdesilserialnumber.setText(data.getSerialNumber());
                         etdesilserialnumber.setEnabled(false);
                         etdesilvehiclenumber.setText(data.getVehicleNumber());
                         etdesilvehiclenumber.setEnabled(false);
-                        vehnumber=data.getVehicleNumber();
+                        vehnumber = data.getVehicleNumber();
                         etdesiltransport.setText(data.getTransportName());
                         etdesiltransport.setEnabled(false);
                         oa.setText(data.getOAnumber());
                         oa.setEnabled(false);
                         party.setText(data.getCustomerName());
                         party.setEnabled(false);
-                        if(!data.splweight.contains("0"))
-                        {
+                        if (!data.splweight.contains("0")) {
                             lnlsmallpackqty.setVisibility(View.VISIBLE);
-                            splpack7literqty.setText(String.valueOf("SmallPack 7 Liter Qty :- "+ data.getSplpackof7ltrqty()));
+                            splpack7literqty.setText("SmallPack 7 Liter Qty :- " + data.getSplpackof7ltrqty());
                             splpack7literqty.setEnabled(false);
-                            splpack7_5literqty.setText(String.valueOf("SmallPack 7.5 Liter Qty :- "+ data.getSplpackof7_5ltrqty()));
+                            splpack7_5literqty.setText("SmallPack 7.5 Liter Qty :- " + data.getSplpackof7_5ltrqty());
                             splpack7_5literqty.setEnabled(false);
-                            splpack8_5literqty.setText(String.valueOf("SmallPack 8.5 Liter Qty :- "+ data.getSplpackof8_5ltrqty()));
+                            splpack8_5literqty.setText("SmallPack 8.5 Liter Qty :- " + data.getSplpackof8_5ltrqty());
                             splpack8_5literqty.setEnabled(false);
-                            splpack10literqty.setText(String.valueOf("SmallPack 10 Liter Qty :- "+ data.getSplpackof10ltrqty()));
+                            splpack10literqty.setText("SmallPack 10 Liter Qty :- " + data.getSplpackof10ltrqty());
                             splpack10literqty.setEnabled(false);
-                            splpack11literqty.setText(String.valueOf("SmallPack 11 Liter Qty :- "+ data.getSplpackof11ltrqty()));
+                            splpack11literqty.setText("SmallPack 11 Liter Qty :- " + data.getSplpackof11ltrqty());
                             splpack11literqty.setEnabled(false);
-                            splpack12literqty.setText(String.valueOf("SmallPack 12 Liter Qty :- "+ data.getSplpackof12ltrqty()));
+                            splpack12literqty.setText("SmallPack 12 Liter Qty :- " + data.getSplpackof12ltrqty());
                             splpack12literqty.setEnabled(false);
-                            splpack13literqty.setText(String.valueOf("SmallPack 13 Liter Qty :- "+ data.getSplpackof13ltrqty()));
+                            splpack13literqty.setText("SmallPack 13 Liter Qty :- " + data.getSplpackof13ltrqty());
                             splpack13literqty.setEnabled(false);
-                            splpack15literqty.setText(String.valueOf("SmallPack 15 Liter Qty :- "+ data.getSplpackof15ltrqty()));
+                            splpack15literqty.setText("SmallPack 15 Liter Qty :- " + data.getSplpackof15ltrqty());
                             splpack15literqty.setEnabled(false);
-                            splpack18literqty.setText(String.valueOf("SmallPack 18 Liter Qty :- "+ data.getSplpackof18ltrqty()));
+                            splpack18literqty.setText("SmallPack 18 Liter Qty :- " + data.getSplpackof18ltrqty());
                             splpack18literqty.setEnabled(false);
-                            splpack20literqty.setText(String.valueOf("SmallPack 20 Liter Qty :- "+ data.getSplpackof20ltrqty()));
+                            splpack20literqty.setText("SmallPack 20 Liter Qty :- " + data.getSplpackof20ltrqty());
                             splpack20literqty.setEnabled(false);
-                            splpack26literqty.setText(String.valueOf("SmallPack 26 Liter Qty :- "+ data.getSplpackof26ltrqty()));
+                            splpack26literqty.setText("SmallPack 26 Liter Qty :- " + data.getSplpackof26ltrqty());
                             splpack26literqty.setEnabled(false);
-                            splpack50literqty.setText(String.valueOf("SmallPack 50 Liter Qty :- "+ data.getSplpackof50ltrqty()));
+                            splpack50literqty.setText("SmallPack 50 Liter Qty :- " + data.getSplpackof50ltrqty());
                             splpack50literqty.setEnabled(false);
-                            splpack210literqty.setText(String.valueOf("SmallPack 210 Liter Qty :- "+ data.getSplpackof210ltrqty()));
+                            splpack210literqty.setText("SmallPack 210 Liter Qty :- " + data.getSplpackof210ltrqty());
                             splpack210literqty.setEnabled(false);
-                            splpackboxbucketqty.setText(String.valueOf("SmallPack BoxBucket Qty :- "+ data.getSplpackofboxbuxketltrqty()));
+                            splpackboxbucketqty.setText("SmallPack BoxBucket Qty :- " + data.getSplpackofboxbuxketltrqty());
                             splpackboxbucketqty.setEnabled(false);
-                            spltotqty.setText("SmallPack Total Qty :- "+ data.getSpltotqty());
+                            spltotqty.setText("SmallPack Total Qty :- " + data.getSpltotqty());
                             spltotqty.setEnabled(false);
-                            spltotweight.setText("SmallPack Total Weight :- "+ data.getSplweight());
+                            spltotweight.setText("SmallPack Total Weight :- " + data.getSplweight());
                             spltotweight.setEnabled(false);
                         }
                     }
@@ -383,12 +360,14 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         });
 
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
-    public void indusinsert(){
+
+    public void indusinsert() {
         String uintime = etdesilintime.getText().toString().trim();
         String uouttime = getCurrentTime();
         int u10 = !tenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(tenltr.getText().toString().trim()) : 0;
@@ -405,60 +384,61 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
 
         String uvehiclenum = etdesilvehiclenumber.getText().toString().trim();
         String userial = etdesilserialnumber.getText().toString().trim();
-        String nextu = nextdeptvalue.toString().trim();
+        String nextu = nextdeptvalue.trim();
 
         char Inoutins;
-        if (nextu.contains("W"))
-        {
+        if (nextu.contains("W")) {
             Inoutins = 'O';
-        }else {
+        } else {
             Inoutins = 'I';
         }
 
-        if (uindussign.isEmpty()||uweight.isEmpty()|| nextu.isEmpty()){
+        if (uindussign.isEmpty() || uweight.isEmpty() || nextu.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        }else {
-            Model_industrial modelIndustrial = new Model_industrial(OutwardId,uintime,uouttime,u10,u18,u20,
-                    u26,u50,u210,uboxbucet,totalqty,uweight,uindussign,uindusremark,EmployeId,uvehiclenum,vehicleType,userial,
-                    EmployeId,'W',Inoutins,nextu);
-            Call<Boolean> call = outwardTruckInterface.insertindustrial(modelIndustrial);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
-                        Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        makeNotification(vehnumber,uintime);
-                        makeNotificationforsmallpack(vehnumber,uintime);
-                        startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Grid_Outward.class));
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+        } else {
+            Model_industrial modelIndustrial = new Model_industrial(OutwardId, uintime, uouttime, u10, u18, u20,
+                    u26, u50, u210, uboxbucet, totalqty, uweight, uindussign, uindusremark, EmployeId, uvehiclenum, vehicleType, userial,
+                    EmployeId, 'W', Inoutins, nextu);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTruckInterface.insertindustrial(modelIndustrial);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() && response.body()) {
+                            dialogHelper.hideProgressDialog();
+                            Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                            makeNotification(vehnumber, uintime);
+                            makeNotificationforsmallpack(vehnumber, uintime);
+                            startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Grid_Outward.class));
+                            finish();
                         }
                     }
-                    Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed", Toast.LENGTH_SHORT).show();
-                }
-            });
 
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog();
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
         }
     }
 
-    public void  indusupdate(){
-
+    public void indusupdate() {
         String uintime = etdesilintime.getText().toString().trim();
         String uouttime = getCurrentTime();
         int u10 = !tenltr.getText().toString().trim().isEmpty() ? Integer.parseInt(tenltr.getText().toString().trim()) : 0;
@@ -472,59 +452,56 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         String uweight = weight.getText().toString().trim();
         String uindussign = indussign.getText().toString().trim();
         String uindusremark = indusremark.getText().toString().trim();
-        String nextu = nextdeptvalue.toString().trim();
+        String nextu = nextdeptvalue.trim();
 
         char Inoutins;
-        if (nextu.contains("W"))
-        {
+        if (nextu.contains("W")) {
             Inoutins = 'O';
-        }else {
+        } else {
             Inoutins = 'I';
         }
 
-
-        //if selcet Na to go weighment and if sp select then go smallpack handle the code in this method
-        // we mila tho w pe and sp mila tho j milna chaiye
-
-
-        if (uintime.isEmpty()||uouttime.isEmpty()|| uweight.isEmpty()||uindusremark.isEmpty()||uindussign.isEmpty()||nextu.isEmpty()){
+        if (uintime.isEmpty() || uouttime.isEmpty() || uweight.isEmpty() || uindusremark.isEmpty() || uindussign.isEmpty() || nextu.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        }else {
+        } else {
 
-            Indus_update_Model indusUpdateModel = new Indus_update_Model(OutwardId,uintime,uouttime,u10,u18,u20,u26,u50,u210,uboxbucet,totalqty,
-                    uweight,uindussign,uindusremark,EmployeId,vehicleType,EmployeId,'W',Inoutins,nextu);
-            Call<Boolean> call = outwardTruckInterface.updateindustrial(indusUpdateModel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
-                        Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        makeNotification(vehnumber,uintime);
-                        startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Grid_Outward.class));
-                        finish();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            Indus_update_Model indusUpdateModel = new Indus_update_Model(OutwardId, uintime, uouttime, u10, u18, u20, u26, u50, u210, uboxbucet, totalqty,
+                    uweight, uindussign, uindusremark, EmployeId, vehicleType, EmployeId, 'W', Inoutins, nextu);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTruckInterface.updateindustrial(indusUpdateModel);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                            makeNotification(vehnumber, uintime);
+                            startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Grid_Outward.class));
+                            finish();
                         }
                     }
-                    Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed", Toast.LENGTH_SHORT).show();
-                }
-            });
 
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Outward_DesIndustriaLoading_Form.this, "failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
         }
     }
 
@@ -533,10 +510,10 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Weighment";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -552,8 +529,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -584,10 +560,10 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "SmallPack";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -603,8 +579,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -629,7 +604,8 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
             }
         });
     }
-    public void pendingindustrial(View view){
+
+    public void pendingindustrial(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }

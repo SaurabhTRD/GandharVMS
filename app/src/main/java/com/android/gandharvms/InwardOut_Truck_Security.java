@@ -33,6 +33,7 @@ import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.common.reflect.TypeToken;
@@ -59,19 +60,21 @@ import retrofit2.Response;
 
 public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
 
-    EditText edintime ,etvehicle,etinvoice,etsupplier ;
+    EditText edintime, etvehicle, etinvoice, etsupplier;
     Button submit;
-    RadioButton Trasnportyes,transportno,deliveryes,deliveryno,taxyes,taxno,ewayyes,ewayno;
-    private API_In_Tanker_Security apiInTankerSecurity;
-    private int InwardId;
-    String vehicltype= Global_Var.getInstance().MenuType;
+    RadioButton Trasnportyes, transportno, deliveryes, deliveryno, taxyes, taxno, ewayyes, ewayno;
+    String vehicltype = Global_Var.getInstance().MenuType;
     char InOutType = Global_Var.getInstance().InOutType;
-    char DeptType= Global_Var.getInstance().DeptType;
-    private String EmployeId=Global_Var.getInstance().EmpId;
+    char DeptType = Global_Var.getInstance().DeptType;
     TimePickerDialog tpicker;
     Button view;
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
+    private API_In_Tanker_Security apiInTankerSecurity;
+    private int InwardId;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,8 +141,8 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<List<Respo_Model_In_Tanker_security>>() {
             @Override
             public void onResponse(Call<List<Respo_Model_In_Tanker_security>> call, Response<List<Respo_Model_In_Tanker_security>> response) {
-                if (response.isSuccessful()){
-                    if (response.body().size()>0){
+                if (response.isSuccessful()) {
+                    if (response.body().size() > 0) {
                         List<Respo_Model_In_Tanker_security> Data = response.body();
                         Respo_Model_In_Tanker_security obj = Data.get(0);
                         InwardId = obj.getInwardId();
@@ -158,7 +161,7 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
                         etsupplier.setText(obj.getPartyName());
                         etsupplier.setEnabled(false);
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error" + response.code());
                 }
             }
@@ -192,7 +195,8 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
         try {
             Log.d("JSON Parser", "JSON String: " + jsonString);
             Gson gson = new Gson();
-            Type listType = new TypeToken<List<ExtraMaterial>>() {}.getType();
+            Type listType = new TypeToken<List<ExtraMaterial>>() {
+            }.getType();
             return gson.fromJson(jsonString, listType);
         } catch (JsonSyntaxException e) {
             Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
@@ -218,7 +222,7 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
             qtyEditText.setText(extraMaterial.getQty());
             qtyEditText.setEnabled(false);
 
-            List<String> teamList = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
+            List<String> teamList = Arrays.asList("NA", "Ton", "Litre", "KL", "Kgs", "Pcs", "M3", "Meter", "Feet"); // or fetch it dynamically
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
             uomSpinner.setAdapter(arrayAdapter);
             uomSpinner.setEnabled(false);
@@ -278,47 +282,51 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
         String supplier = etsupplier.getText().toString().trim();
         String invoice = etinvoice.getText().toString().trim();
 
-        if (lrCopySelection.isEmpty()|| deliverySelection.isEmpty()||taxInvoiceSelection.isEmpty()||
-                ewayBillSelection.isEmpty()||outinintime.isEmpty()||
-                vehiclenumber.isEmpty()|| supplier.isEmpty()||invoice.isEmpty()){
+        if (lrCopySelection.isEmpty() || deliverySelection.isEmpty() || taxInvoiceSelection.isEmpty() ||
+                ewayBillSelection.isEmpty() || outinintime.isEmpty() ||
+                vehiclenumber.isEmpty() || supplier.isEmpty() || invoice.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        }else {
+        } else {
             UpdateOutSecurityRequestModel updateOutSecRequestModel = new UpdateOutSecurityRequestModel(outinintime,
-                    InwardId,lrCopySelection,deliverySelection,taxInvoiceSelection,ewayBillSelection
-                    ,'F','O',vehicltype,EmployeId);
+                    InwardId, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection
+                    , 'F', 'O', vehicltype, EmployeId);
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
-            Call<Boolean> call = apiInTankerSecurity.intankersecurityoutupdate(updateOutSecRequestModel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body() == true){
-                        Toasty.success(InwardOut_Truck_Security.this, "Data Inserted Succesfully", Toast.LENGTH_SHORT).show();
-                        makeNotification(vehiclenumber);
-                        startActivity(new Intent(InwardOut_Truck_Security.this, grid.class));
-                        finish();
-                    }
-                    else{
-                        Toasty.error(InwardOut_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = apiInTankerSecurity.intankersecurityoutupdate(updateOutSecRequestModel);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            Toasty.success(InwardOut_Truck_Security.this, "Data Inserted Succesfully", Toast.LENGTH_SHORT).show();
+                            makeNotification(vehiclenumber);
+                            startActivity(new Intent(InwardOut_Truck_Security.this, grid.class));
+                            finish();
+                        } else {
+                            Toasty.error(InwardOut_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    Toasty.error(InwardOut_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(InwardOut_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }
@@ -334,18 +342,18 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
         notificationsSender.triggerSendNotification();
     }
 
-    public void onBackPressed(){
+    public void onBackPressed() {
         Intent intent = new Intent(this, Menu.class);
         startActivity(intent);
         finish();
     }
 
-    public void irosecclickevent(View view){
+    public void irosecclickevent(View view) {
         Intent intent = new Intent(this, it_out_sec_Completedgrid.class);
         startActivity(intent);
     }
 
-    public void inwardtrOutSecurityPendingClick(View view){
+    public void inwardtrOutSecurityPendingClick(View view) {
         Intent intent = new Intent(this, grid.class);
         startActivity(intent);
     }

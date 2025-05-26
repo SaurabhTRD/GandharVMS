@@ -43,6 +43,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
@@ -74,23 +75,25 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
     public char inOut = Global_Var.getInstance().InOutType;
+    public boolean isCheck = false;
+    public int compartmentArraycount, copartmentcount;
+    public String procompartment1, procompartment2, procompartment3, procompartment4, procompartment5, procompartment6;
+    public String compartment1, compartment2, compartment3, compartment4, compartment5, compartment6;
+    public First_LabCompartmentAdapter firstLabCompartmentAdapter;
+    public LinearLayout labDetailsContainer;
+    EditText newlseralnum, newlvehiclenum, newloanum, newlprodcut, newlcustomername, newldestination, newlquantity, newltransporter,
+            newlintime, newlviscosity, newldentinity, newlbatchnum, newlqcofficer, newlremarks, billremark, proremark;
+    Button btnsubmit, btnupdate;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private Outward_Tanker_Lab outwardTankerLab;
     private String token;
     private LoginMethod userDetails;
     private int oploutwardid = 0;
     private int OutwardId;
-    EditText newlseralnum,newlvehiclenum,newloanum,newlprodcut,newlcustomername,newldestination,newlquantity,newltransporter,
-    newlintime,newlviscosity,newldentinity,newlbatchnum,newlqcofficer,newlremarks,billremark,proremark;
-    Button btnsubmit,btnupdate;
-    public boolean isCheck = false;
-    public int compartmentArraycount,copartmentcount;
-    public String procompartment1,procompartment2,procompartment3,procompartment4,procompartment5,procompartment6;
-    public String compartment1,compartment2,compartment3,compartment4,compartment5,compartment6;
     private List<Lab_compartment_model> compartmentList;
     private RecyclerView recyclerView;
     private LabCompartmentAdapter adapter;
-    public First_LabCompartmentAdapter firstLabCompartmentAdapter;
-    public LinearLayout labDetailsContainer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,7 +149,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 newlintime.setText(time);
             }
         });
@@ -179,9 +182,9 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
             @Override
             public void onResponse(Call<Lab_Model__Outward_Tanker> call, Response<Lab_Model__Outward_Tanker> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Lab_Model__Outward_Tanker data = response.body();
-                    if (data.getVehicleNumber() != null && data.getVehicleNumber()!= ""){
+                    if (data.getVehicleNumber() != null && data.getVehicleNumber() != "") {
                         oploutwardid = data.getOplOutwardId();
                         OutwardId = data.getOutwardId();
                         newlseralnum.setText(data.getSerialNumber());
@@ -269,8 +272,6 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 //                        }
 
 
-
-
                         List<String> LabcompartmentsJson = Arrays.asList(
                                 data.getLabcompartment1(),
                                 data.getLabcompartment2(),
@@ -300,7 +301,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             }
                         }
 
-                           // ✅ If "procompartmentsJson" Exists, Fetch the Latest One
+                        // ✅ If "procompartmentsJson" Exists, Fetch the Latest One
                         if (isCheck && compartmentList.size() < procompartmentsJson.size()) {
                             int index = compartmentList.size(); // ✅ Safe indexing
                             if (index >= 0 && index < procompartmentsJson.size()) {
@@ -312,7 +313,6 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             }
                         }
                         adapter.notifyDataSetChanged(); // ✅ Call once after updating all data
-
 
 
                         // ✅ Show "Update" Button If More Than One Compartment Exists
@@ -339,10 +339,10 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
                         }
 
-                    }else {
+                    } else {
                         Toasty.error(New_Outward_tanker_Lab.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
@@ -366,6 +366,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             }
         });
     }
+
     // ✅ Helper Function to Add Non-Empty Compartments
     private void addCompartmentIfNotEmpty(String compartmentJson) {
         if (compartmentJson != null && !compartmentJson.isEmpty()) {
@@ -456,9 +457,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     }
 
 
-
-    public void insert()
-    {
+    public void insert() {
         String outTime = getCurrentTime();
         String inTime = newlintime.getText().toString();
         String iserialnum = newlseralnum.getText().toString();
@@ -486,55 +485,59 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 
         // ✅ Determine I_O based on compartmentcount
         char I_O_Value;
-        if (isCheck == true && compartmentArraycount < copartmentcount) {
+        if (isCheck && compartmentArraycount < copartmentcount) {
             I_O_Value = 'I';  // If exactly 1 compartment and copartmentcount is 0, pass 'O'
         } else {
             I_O_Value = 'O';  // Default case (fallback)
         }
 
-        if (compartment1String.isEmpty()){
+        if (compartment1String.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-            New_Lab_Model_OutwardTanker newLabModelOutwardTanker = new New_Lab_Model_OutwardTanker(OutwardId,"",outTime,iviscosity,objdensity,
-                    "","","",EmployeId,"P",iserialnum,ivehicle,'W',I_O_Value,vehicleType,EmployeId,compartment1String);
-            Call<Boolean> call = outwardTankerLab.newOutwardTankerLaboratory(newLabModelOutwardTanker);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body() == true){
-                        Toasty.success(New_Outward_tanker_Lab.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
-                        makeNotification(ivehicle, outTime);
-                        startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
-                        finish();
-                    }else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+        } else {
+            New_Lab_Model_OutwardTanker newLabModelOutwardTanker = new New_Lab_Model_OutwardTanker(OutwardId, "", outTime, iviscosity, objdensity,
+                    "", "", "", EmployeId, "P", iserialnum, ivehicle, 'W', I_O_Value, vehicleType, EmployeId, compartment1String);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTankerLab.newOutwardTankerLaboratory(newLabModelOutwardTanker);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            Toasty.success(New_Outward_tanker_Lab.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
+                            makeNotification(ivehicle, outTime);
+                            startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
+                            finish();
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
                         }
                     }
-                    Toasty.error(New_Outward_tanker_Lab.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(New_Outward_tanker_Lab.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
 
     }
 
-    public void update1(){
+    public void update1() {
         String iserialnum = newlseralnum.getText().toString();
         String ivehicle = newlvehiclenum.getText().toString();
 
@@ -572,9 +575,9 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         Log.d("Compartment JSON", compartment5String);
         Log.d("Compartment JSON", compartment6String);
 
-        Repet_update_Model repetUpdateModel = new Repet_update_Model(oploutwardid,"",
-                compartment1String,compartment2String,compartment3String,compartment4String,compartment5String,compartment6String,
-                iserialnum,ivehicle,'W',inOut,vehicleType,EmployeId);
+        Repet_update_Model repetUpdateModel = new Repet_update_Model(oploutwardid, "",
+                compartment1String, compartment2String, compartment3String, compartment4String, compartment5String, compartment6String,
+                iserialnum, ivehicle, 'W', inOut, vehicleType, EmployeId);
         //Convert the object to JSON for logging
         Gson gson = new Gson();
         String jsonRequest = gson.toJson(repetUpdateModel);
@@ -585,11 +588,11 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful() && response.body() != null && response.body() == true){
+                if (response.isSuccessful() && response.body() != null && response.body()) {
                     Toasty.success(New_Outward_tanker_Lab.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
                     startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
                     finish();
-                }else {
+                } else {
                     Log.e("Retrofit", "Error Response Code: " + response.code());
                     try {
                         Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
@@ -610,12 +613,12 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 
     }
 
-    public void update(){
+    public void update() {
         String outTime = getCurrentTime();
         String iserialnum = newlseralnum.getText().toString();
         String ivehicle = newlvehiclenum.getText().toString();
         char I_O_Value;
-        if (isCheck == true && compartmentArraycount < copartmentcount) {
+        if (isCheck && compartmentArraycount < copartmentcount) {
             I_O_Value = 'I';  // If exactly 1 compartment and copartmentcount is 0, pass 'O'
         } else {
             I_O_Value = 'O';  // Default case (fallback)
@@ -683,8 +686,6 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     }
 
 
-
-
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
         call.enqueue(new Callback<List<ResponseModel>>() {
@@ -720,15 +721,18 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             }
         });
     }
+
     public void inprocesprocompletedclick(View view) {
         Intent intent = new Intent(this, OT_Completd_bilkload_laboratory.class);
         startActivity(intent);
     }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         return sdf.format(new Date());
     }
+
     public void new_uttankerlabinprocpending(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
@@ -787,12 +791,13 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         }
         try {
             Gson gson = new Gson();
-            return gson.fromJson(jsonString.replace("/",""), Lab_compartment_model.class);
+            return gson.fromJson(jsonString.replace("/", ""), Lab_compartment_model.class);
         } catch (Exception e) {
             Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage());
             return null;
         }
     }
+
     private void showSingleCompartmentCard(Lab_compartment_model compartment) {
         CardView compartmentCard = findViewById(R.id.compartmentCard);
         TextView txtBlender = findViewById(R.id.txtBlender);
@@ -848,15 +853,16 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             return "{}"; // Return empty JSON if an error occurs
         }
     }
+
     private String convertCompartmentToJson_compartment1(LabCompartment_Model compartment) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("inTime",compartment.getInTime());
-            jsonObject.put("iviscosity",compartment.getIviscosity());
-            jsonObject.put("identinity",compartment.getIdentinity());
-            jsonObject.put("ibatchnum",compartment.getIbatchnum());
-            jsonObject.put("iqcofficer",compartment.getIqcofficer());
-            jsonObject.put("iremarks",compartment.getIremarks());
+            jsonObject.put("inTime", compartment.getInTime());
+            jsonObject.put("iviscosity", compartment.getIviscosity());
+            jsonObject.put("identinity", compartment.getIdentinity());
+            jsonObject.put("ibatchnum", compartment.getIbatchnum());
+            jsonObject.put("iqcofficer", compartment.getIqcofficer());
+            jsonObject.put("iremarks", compartment.getIremarks());
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();

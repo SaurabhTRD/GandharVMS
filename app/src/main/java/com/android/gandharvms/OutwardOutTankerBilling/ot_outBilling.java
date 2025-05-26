@@ -35,6 +35,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
@@ -61,36 +62,32 @@ import retrofit2.Response;
 
 public class ot_outBilling extends NotificationCommonfunctioncls {
 
-    String[] items1 = {"Ton", "Litre", "KL", "Kgs", "pcs"};
-    AutoCompleteTextView totqtyautoCompleteTextView2;
-    ArrayAdapter<String> nettotqtyuomdrop;
-    Map<String, Integer> totqtyUomMapping= new HashMap<>();
-    Integer nettotqtyuomvalue = 3;
-
-    private int netweuom;
-    EditText oobintime,oobserialnumber,oobvehiclenumber,oobsealnumber,oobtareweight,
-            oobnetweight,oobgrossw,oobetremark,oobfetchdensity,oobOANumber,
-            oobTransporter,oobdriverno,oobbatchno,oobtotalQuantity,oobinvoicenumber,partyname;
-    Button oobsubmit,completed;
-    TimePickerDialog tpicker;
+    public static String Tanker;
+    public static String Truck;
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeId = Global_Var.getInstance().EmpId;
-
+    String[] items1 = {"Ton", "Litre", "KL", "Kgs", "pcs"};
+    AutoCompleteTextView totqtyautoCompleteTextView2;
+    ArrayAdapter<String> nettotqtyuomdrop;
+    Map<String, Integer> totqtyUomMapping = new HashMap<>();
+    Integer nettotqtyuomvalue = 3;
+    EditText oobintime, oobserialnumber, oobvehiclenumber, oobsealnumber, oobtareweight,
+            oobnetweight, oobgrossw, oobetremark, oobfetchdensity, oobOANumber,
+            oobTransporter, oobdriverno, oobbatchno, oobtotalQuantity, oobinvoicenumber, partyname;
+    Button oobsubmit, completed;
+    TimePickerDialog tpicker;
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
+    private int netweuom;
     private Outward_Tanker_Billinginterface outwardTankerBillinginterface;
     private int OutwardId;
-
     private LoginMethod userDetails;
     private String token;
-
     private String obvehiclenum;
 
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
-
-    public static String Tanker;
-    public static String Truck;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,24 +95,24 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
 
         outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
 
-        oobintime=findViewById(R.id.etotoutbilintime);
-        oobserialnumber=findViewById(R.id.etotoutbilserialnumber);
-        oobvehiclenumber=findViewById(R.id.etotoutbilvehicleno);
-        oobsealnumber=findViewById(R.id.etotoutbilsealnumber);
-        oobtareweight=findViewById(R.id.etotoutbiltareweight);
-        oobnetweight=findViewById(R.id.etotoutbilnetweight);
-        oobgrossw=findViewById(R.id.etotoutbilgrosswt);
-        oobetremark=findViewById(R.id.etotoutbilremakr);
-        oobfetchdensity=findViewById(R.id.etotoutbildensity);
-        oobOANumber=findViewById(R.id.etotoutbilOANumber);
-        oobTransporter=findViewById(R.id.etotoutbilTransporter);
-        oobdriverno=findViewById(R.id.etotoutbildrivermonumber);
-        oobbatchno=findViewById(R.id.etotoutbilBatchno);
-        oobtotalQuantity=findViewById(R.id.etotoutbiltotalQuantity);
-        oobinvoicenumber=findViewById(R.id.etotoutbilinvoicenumber);
+        oobintime = findViewById(R.id.etotoutbilintime);
+        oobserialnumber = findViewById(R.id.etotoutbilserialnumber);
+        oobvehiclenumber = findViewById(R.id.etotoutbilvehicleno);
+        oobsealnumber = findViewById(R.id.etotoutbilsealnumber);
+        oobtareweight = findViewById(R.id.etotoutbiltareweight);
+        oobnetweight = findViewById(R.id.etotoutbilnetweight);
+        oobgrossw = findViewById(R.id.etotoutbilgrosswt);
+        oobetremark = findViewById(R.id.etotoutbilremakr);
+        oobfetchdensity = findViewById(R.id.etotoutbildensity);
+        oobOANumber = findViewById(R.id.etotoutbilOANumber);
+        oobTransporter = findViewById(R.id.etotoutbilTransporter);
+        oobdriverno = findViewById(R.id.etotoutbildrivermonumber);
+        oobbatchno = findViewById(R.id.etotoutbilBatchno);
+        oobtotalQuantity = findViewById(R.id.etotoutbiltotalQuantity);
+        oobinvoicenumber = findViewById(R.id.etotoutbilinvoicenumber);
         partyname = findViewById(R.id.etpartyname);
 
-        oobsubmit=findViewById(R.id.etotoutbilsubmit);
+        oobsubmit = findViewById(R.id.etotoutbilsubmit);
         completed = findViewById(R.id.otoutbillcompleted);
 
         userDetails = RetroApiClient.getLoginApi();
@@ -162,25 +159,24 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         }
 
         totqtyautoCompleteTextView2 = findViewById(R.id.etotoutbiltotalQuantityUOM);
-        totqtyUomMapping= new HashMap<>();
-        totqtyUomMapping.put("NA",1);
+        totqtyUomMapping = new HashMap<>();
+        totqtyUomMapping.put("NA", 1);
         totqtyUomMapping.put("Ton", 2);
         totqtyUomMapping.put("Litre", 3);
         totqtyUomMapping.put("KL", 4);
         totqtyUomMapping.put("Kgs", 5);
         totqtyUomMapping.put("pcs", 6);
 
-        nettotqtyuomdrop = new ArrayAdapter<String>(this,R.layout.in_tr_se_nwe_list,new ArrayList<>(totqtyUomMapping.keySet()));
+        nettotqtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_tr_se_nwe_list, new ArrayList<>(totqtyUomMapping.keySet()));
         totqtyautoCompleteTextView2.setAdapter(nettotqtyuomdrop);
         totqtyautoCompleteTextView2.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item2 = parent.getItemAtPosition(position).toString();
                 nettotqtyuomvalue = totqtyUomMapping.get(item2);
-                if (nettotqtyuomvalue != null){
+                if (nettotqtyuomvalue != null) {
                     Toasty.success(ot_outBilling.this, "Total-Quantity:- " + item2 + " Selected", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     Toasty.warning(ot_outBilling.this, "Unknown Total-QuantityUom:- " + item2, Toast.LENGTH_SHORT).show();
                 }
             }
@@ -198,7 +194,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 oobintime.setText(time);
             }
         });
@@ -206,17 +202,17 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
 
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
-        Call<Respons_Outward_Tanker_Billing> call = outwardTankerBillinginterface.outwardbillingfetching(vehicleNo,vehicleType,NextProcess,inOut);
+        Call<Respons_Outward_Tanker_Billing> call = outwardTankerBillinginterface.outwardbillingfetching(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<Respons_Outward_Tanker_Billing>() {
             @Override
             public void onResponse(Call<Respons_Outward_Tanker_Billing> call, Response<Respons_Outward_Tanker_Billing> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Respons_Outward_Tanker_Billing data = response.body();
-                    if (data.getVehicleNumber() != "" && data.getVehicleNumber()!=null){
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
                         OutwardId = data.getOutwardId();
                         oobvehiclenumber.setText(data.getVehicleNumber());
                         oobvehiclenumber.setEnabled(false);
-                        obvehiclenum=data.getVehicleNumber();
+                        obvehiclenum = data.getVehicleNumber();
                         oobserialnumber.setText(data.getSerialNumber());
                         oobserialnumber.setEnabled(false);
                         oobTransporter.setText(data.getTransportName());
@@ -245,11 +241,10 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
                         Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
                         createExtraMaterialViews(extraMaterials);
-                    }
-                    else {
+                    } else {
                         Toasty.error(ot_outBilling.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
-                }else {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
@@ -390,10 +385,10 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "Security";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -409,8 +404,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -436,60 +430,62 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         });
     }
 
-    public void insert(){
+    public void insert() {
         String obintime = oobintime.getText().toString().trim();
         String obremark = oobetremark.getText().toString().trim();
-        String oobtotalqty=oobtotalQuantity.getText().toString().trim();
-        String oobinvcnum=oobinvoicenumber.getText().toString().trim();
-        if(!nettotqtyuomvalue.toString().trim().isEmpty())
-        {
+        String oobtotalqty = oobtotalQuantity.getText().toString().trim();
+        String oobinvcnum = oobinvoicenumber.getText().toString().trim();
+        if (!nettotqtyuomvalue.toString().trim().isEmpty()) {
             try {
-                netweuom=Integer.parseInt(nettotqtyuomvalue.toString().trim().trim());
-            }catch (NumberFormatException e){
+                netweuom = Integer.parseInt(nettotqtyuomvalue.toString().trim().trim());
+            } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
-        }
-        else{
+        } else {
             Toasty.warning(this, "TotaQty Uom Is Not Selected", Toast.LENGTH_SHORT).show();
         }
-        String obOutTime=getCurrentTime();
-        if (obintime.isEmpty()|| obremark.isEmpty()||oobtotalqty.isEmpty()||oobinvcnum.isEmpty()){
+        String obOutTime = getCurrentTime();
+        if (obintime.isEmpty() || obremark.isEmpty() || oobtotalqty.isEmpty() || oobinvcnum.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-            ot_outBillingRequestModel requestoutBilmodel = new ot_outBillingRequestModel(OutwardId,obintime,obOutTime,
-                    oobtotalqty,netweuom,oobinvcnum,obremark, 'S',inOut, vehicleType,EmployeId);
-            Call<Boolean> call = outwardTankerBillinginterface.UpdateOutBillingDetails(requestoutBilmodel);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()==true){
-                        makeNotification(obvehiclenum);
-                        Toasty.success(ot_outBilling.this, "Data Inserted Successfully", Toast.LENGTH_SHORT,true).show();
-                        startActivity(new Intent(ot_outBilling.this, Grid_Outward.class));
-                        finish();
-                    }else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+        } else {
+            ot_outBillingRequestModel requestoutBilmodel = new ot_outBillingRequestModel(OutwardId, obintime, obOutTime,
+                    oobtotalqty, netweuom, oobinvcnum, obremark, 'S', inOut, vehicleType, EmployeId);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardTankerBillinginterface.UpdateOutBillingDetails(requestoutBilmodel);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            makeNotification(obvehiclenum);
+                            Toasty.success(ot_outBilling.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+                            startActivity(new Intent(ot_outBilling.this, Grid_Outward.class));
+                            finish();
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
                         }
                     }
-                    Toasty.error(ot_outBilling.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(ot_outBilling.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }
@@ -498,6 +494,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
     }
+
     public void otoutbilcompletedclick(View view) {
         /*Intent intent = new Intent(this, in_tanker_lab_grid.class);
         startActivity(intent);*/

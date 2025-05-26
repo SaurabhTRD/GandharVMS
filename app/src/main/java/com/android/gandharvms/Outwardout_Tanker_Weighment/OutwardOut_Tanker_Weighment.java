@@ -54,6 +54,7 @@ import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_compartment_model;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -84,42 +85,42 @@ import retrofit2.Response;
 
 public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
 
-    EditText intime,serialnumber,vehiclenumber,sealnumber,tareweight,netweight,grossw,etnumberpack,etremark,fetchdensity,etotdip,etotwt,batch,product;
-    Button submit,completed;
-    FirebaseFirestore dbroot;
-    TimePickerDialog tpicker;
-    Calendar calendar = Calendar.getInstance();
-    private final String vehicleType = Global_Var.getInstance().MenuType;
-    private final char nextProcess = Global_Var.getInstance().DeptType;
-    private final char inOut = Global_Var.getInstance().InOutType;
-    private final String EmployeId = Global_Var.getInstance().EmpId;
-    private int OutwardId;
-    private Outward_weighment outwardWeighment;
-    private LoginMethod userDetails;
-    private String token;
-
     private static final int CAMERA_PERM_CODE1 = 100;
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int CAMERA_REQUEST_CODE1 = 103;
+    public static String Tanker;
+    public static String Truck;
+    private final String vehicleType = Global_Var.getInstance().MenuType;
+    private final char nextProcess = Global_Var.getInstance().DeptType;
+    private final char inOut = Global_Var.getInstance().InOutType;
+    private final String EmployeId = Global_Var.getInstance().EmpId;
+    EditText intime, serialnumber, vehiclenumber, sealnumber, tareweight, netweight, grossw, etnumberpack, etremark, fetchdensity, etotdip, etotwt, batch, product;
+    Button submit, completed;
+    FirebaseFirestore dbroot;
+    TimePickerDialog tpicker;
+    Calendar calendar = Calendar.getInstance();
     ImageView img1, img2;
     Uri image1, image2;
     byte[] ImgDriver, ImgVehicle;
     byte[][] arrayOfByteArrays = new byte[2][];
     Uri[] LocalImgPath = new Uri[2];
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
+    private int OutwardId;
+    private Outward_weighment outwardWeighment;
+    private LoginMethod userDetails;
+    private String token;
     private String imgPath1, imgPath2;
     private String etSerialNumber;
     private String vehicleNum;
     private int isemushdip;
     private int iseushwt;
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
     private List<Lab_compartment_model> compartmentList;
     private Weighment_compartment_Adapter adapter;
-
-    public static String Tanker;
-    public static String Truck;
     private RecyclerView recyclerView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,24 +128,24 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         outwardWeighment = Outward_RetroApiclient.outwardWeighment();
         userDetails = RetroApiClient.getLoginApi();
 
-        intime= findViewById(R.id.etintime);
+        intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
         vehiclenumber = findViewById(R.id.etvehicleno);
-        fetchdensity=findViewById(R.id.etdensitybyfetching);
-        tareweight=findViewById(R.id.ettareweight);
+        fetchdensity = findViewById(R.id.etdensitybyfetching);
+        tareweight = findViewById(R.id.ettareweight);
         netweight = findViewById(R.id.etnetweight);
         grossw = findViewById(R.id.etgrosswt);
         sealnumber = findViewById(R.id.etsealnumber);
         etnumberpack = findViewById(R.id.etnumberpack);
         etremark = findViewById(R.id.etremakr);
-        batch =findViewById(R.id.etbatchn);
+        batch = findViewById(R.id.etbatchn);
         product = findViewById(R.id.etproductnam);
 
-        img1=findViewById(R.id.otoutweighvehicleimage);
-        img2=findViewById(R.id.otoutweighdriverimage);
+        img1 = findViewById(R.id.otoutweighvehicleimage);
+        img2 = findViewById(R.id.otoutweighdriverimage);
 
         submit = findViewById(R.id.etssubmit);
-        dbroot= FirebaseFirestore.getInstance();
+        dbroot = FirebaseFirestore.getInstance();
 //        etotdip = findViewById(R.id.otouttankeretshortdip);
 //        etotwt = findViewById(R.id.otouttankeretshortwt);
         completed = findViewById(R.id.otoutweighcompleted);
@@ -188,7 +189,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         completed.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(OutwardOut_Tanker_Weighment.this,OT_Completed_Outweighment.class));
+                startActivity(new Intent(OutwardOut_Tanker_Weighment.this, OT_Completed_Outweighment.class));
             }
         });
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -224,7 +225,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
             public void onClick(View v) {
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
-                String time =  format.format(calendar.getTime());
+                String time = format.format(calendar.getTime());
                 intime.setText(time);
             }
         });
@@ -250,21 +251,22 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
 
         grossw.setText(String.valueOf(grossweig));
     }
+
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
-        Call<Response_Outward_Tanker_Weighment> call = outwardWeighment.fetchweighment(vehicleNo,vehicleType,NextProcess,inOut);
+        Call<Response_Outward_Tanker_Weighment> call = outwardWeighment.fetchweighment(vehicleNo, vehicleType, NextProcess, inOut);
         call.enqueue(new Callback<Response_Outward_Tanker_Weighment>() {
             @Override
             public void onResponse(Call<Response_Outward_Tanker_Weighment> call, Response<Response_Outward_Tanker_Weighment> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Response_Outward_Tanker_Weighment data = response.body();
-                    if (data.getVehicleNumber() != "" && data.getVehicleNumber()!=null){
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
                         OutwardId = data.getOutwardId();
-                        etSerialNumber=data.getSerialNumber();
+                        etSerialNumber = data.getSerialNumber();
                         serialnumber.setText(data.getSerialNumber());
                         serialnumber.setEnabled(false);
                         vehiclenumber.setText(data.getVehicleNumber());
                         vehiclenumber.setEnabled(false);
-                        vehicleNum=data.getVehicleNumber();
+                        vehicleNum = data.getVehicleNumber();
                         fetchdensity.setText(data.getDensity_29_5C());
                         fetchdensity.setEnabled(false);
                         tareweight.setText(String.valueOf(data.getTareWeight()));
@@ -280,7 +282,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         createExtraMaterialViews(extraMaterials);
                        /* intime.requestFocus();
                         intime.callOnClick();*/
-                    //  List<Lab_compartment_model> lstlabcompmodel = new ArrayList<>() ;
+                        //  List<Lab_compartment_model> lstlabcompmodel = new ArrayList<>() ;
 //                        Lab_compartment_model labCompartmentModel1 =  parseCompartment(data.getProcompartment1());
 //                        if (labCompartmentModel1 != null) {
 //                            labCompartmentModel1.setTareweight(String.valueOf(data.getCompartment1()));
@@ -348,20 +350,19 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                             }
                         }
                         // If Cluase to get Latest Compartment Data for Weight Verification
-                        if(compartmentList.size() < procompartmentsJson.size()) {
+                        if (compartmentList.size() < procompartmentsJson.size()) {
                             Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
                             compartmentList.add(labCompartmentModel1);
                             adapter.notifyDataSetChanged();
                         }
-                    }
-                    else{
+                    } else {
                         Toasty.error(OutwardOut_Tanker_Weighment.this, "This Vehicle Number is Not Availabe", Toast.LENGTH_SHORT).show();
                     }
-                }
-                else {
+                } else {
                     Log.e("Retrofit", "Error Response Body: " + response.code());
                 }
             }
+
             @Override
             public void onFailure(Call<Response_Outward_Tanker_Weighment> call, Throwable t) {
 
@@ -475,10 +476,10 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<List<ResponseModel>>() {
             @Override
             public void onResponse(Call<List<ResponseModel>> call, Response<List<ResponseModel>> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     List<ResponseModel> userList = response.body();
-                    if (userList != null){
-                        for (ResponseModel resmodel : userList){
+                    if (userList != null) {
+                        for (ResponseModel resmodel : userList) {
                             String specificRole = "DataEntry";
                             if (specificRole.equals(resmodel.getDepartment())) {
                                 token = resmodel.getToken();
@@ -494,8 +495,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                             }
                         }
                     }
-                }
-                else {
+                } else {
                     Log.d("API", "Unsuccessful API response");
                 }
             }
@@ -520,14 +520,15 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
             }
         });
     }
-    public void insert(){
+
+    public void insert() {
         String etintime = intime.getText().toString().trim();
         String etsealnumber = sealnumber.getText().toString().trim();
         String etnetweight = netweight.getText().toString().trim();
         String outTime = getCurrentTime();
         String ugrosswt = grossw.getText().toString().trim();
-        String unumberpack = etnumberpack.getText().toString().trim()!=null?etnumberpack.getText().toString():"";
-        String uremark = etremark.getText().toString().trim()!=null?etremark.getText().toString():"";
+        String unumberpack = etnumberpack.getText().toString().trim() != null ? etnumberpack.getText().toString() : "";
+        String uremark = etremark.getText().toString().trim() != null ? etremark.getText().toString() : "";
 
         // Convert Compartment objects to JSON strings
         String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
@@ -546,42 +547,46 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         Log.d("Compartment JSON", compartment6String);
 
 
-        if (etintime.isEmpty()||etsealnumber.isEmpty()||etnetweight.isEmpty()||ugrosswt.isEmpty()
-                ||uremark.isEmpty()||unumberpack.isEmpty()) {
+        if (etintime.isEmpty() || etsealnumber.isEmpty() || etnetweight.isEmpty() || ugrosswt.isEmpty()
+                || uremark.isEmpty() || unumberpack.isEmpty()) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        }else {
-            out_weighment_model modelOutwardOutWeighment = new out_weighment_model(OutwardId,imgPath2,imgPath1,
-                    etintime,etnetweight,ugrosswt,unumberpack,uremark,etsealnumber,EmployeId,'P',inOut,vehicleType,0,0,
-                    compartment1String,compartment2String,compartment3String,compartment4String,compartment5String,compartment6String);
-            Call<Boolean> call = outwardWeighment.updateoutwardoutweighment_outTanker(modelOutwardOutWeighment);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body() == true){
-                        deleteLocalImage(vehicleNum);
-                    }else {
-                        Log.e("Retrofit", "Error Response Body: " + response.code());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+        } else {
+            out_weighment_model modelOutwardOutWeighment = new out_weighment_model(OutwardId, imgPath2, imgPath1,
+                    etintime, etnetweight, ugrosswt, unumberpack, uremark, etsealnumber, EmployeId, 'P', inOut, vehicleType, 0, 0,
+                    compartment1String, compartment2String, compartment3String, compartment4String, compartment5String, compartment6String);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardWeighment.updateoutwardoutweighment_outTanker(modelOutwardOutWeighment);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            deleteLocalImage(vehicleNum);
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
                         }
                     }
-                    Toasty.error(OutwardOut_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(OutwardOut_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }
@@ -590,14 +595,14 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         String FileInitial = "OutwardVeh_Out_";
         arrayOfByteArrays[0] = ImgVehicle;
         arrayOfByteArrays[1] = ImgDriver;
-        imgPath1 = "GAimages/"+ FileInitial + etSerialNumber.toString() + ".jpeg";
+        imgPath1 = "GAimages/" + FileInitial + etSerialNumber + ".jpeg";
         for (byte[] byteArray : arrayOfByteArrays) {
 
-            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + etSerialNumber.toString() + ".jpeg", "");
+            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + etSerialNumber + ".jpeg", "");
             multipartTask.execute();
             FileInitial = "OutwardDrv_Out_";
         }
-        imgPath2 = "GAimages/"+ FileInitial + etSerialNumber.toString() + ".jpeg";
+        imgPath2 = "GAimages/" + FileInitial + etSerialNumber + ".jpeg";
         FileInitial = "";
         insert();
     }
@@ -683,7 +688,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         File imageFile;
         try {
             for (Uri imgpath : LocalImgPath) {
-                ImageUtils.deleteImage(this,imgpath);
+                ImageUtils.deleteImage(this, imgpath);
             }
             makeNotification(vehicleNum);
             Toasty.success(OutwardOut_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
@@ -703,6 +708,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         /*Intent intent = new Intent(this, it_in_weigh_Completedgrid.class);
         startActivity(intent);*/
     }
+
     private Lab_compartment_model parseCompartment(String jsonString) {
         if (jsonString == null || jsonString.isEmpty()) {
             Log.e("JSON_ERROR", "Empty JSON string");
@@ -710,12 +716,13 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         }
         try {
             Gson gson = new Gson();
-            return gson.fromJson(jsonString.replace("/",""), Lab_compartment_model.class);
+            return gson.fromJson(jsonString.replace("/", ""), Lab_compartment_model.class);
         } catch (Exception e) {
             Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage());
             return null;
         }
     }
+
     private String convertCompartmentToJson(Lab_compartment_model compartment) {
         try {
             JSONObject jsonObject = new JSONObject();
@@ -723,7 +730,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
             jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
             jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
             jsonObject.put("TareWeight", compartment.getTareweight()); // Tare Weight")
-            jsonObject.put("",compartment.getVerificationRemark());
+            jsonObject.put("", compartment.getVerificationRemark());
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();

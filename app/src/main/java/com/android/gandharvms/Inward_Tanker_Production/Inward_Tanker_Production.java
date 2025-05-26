@@ -43,6 +43,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -78,13 +79,15 @@ import retrofit2.Response;
 
 public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
 
+    public static String Tanker;
+    public static String Truck;
     final Calendar calendar = Calendar.getInstance();
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private final String EmployeName = Global_Var.getInstance().Name;
     private final String EmployeId = Global_Var.getInstance().EmpId;
-    EditText etint, etserno, edunloadabovematerial, abovematerialunload, etconbyop, opratorname, etconunloadDateTime, etVehicleNumber,etremark;
+    EditText etint, etserno, edunloadabovematerial, abovematerialunload, etconbyop, opratorname, etconunloadDateTime, etVehicleNumber, etremark;
     /*  Button viewdata;*/
     Button prosubmit, viewlabreport, updateproclick;
     FirebaseFirestore prodbroot;
@@ -92,19 +95,15 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-YYYY, HH:mm:ss");
     Timestamp timestamp = new Timestamp(calendar.getTime());
     TimePickerDialog tpicker;
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private String token;
     private API_In_Tanker_production apiInTankerProduction;
     private int inwardid;
     private LoginMethod userDetails;
     private int reqtounload;
     private int abovematerialtank;
-
-    ImageView btnlogout,btnhome;
-    TextView username,empid;
-
-    public static String Tanker;
-    public static String Truck;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,7 +124,7 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
         etconbyop = findViewById(R.id.etconbyop);
         abovematerialunload = findViewById(R.id.ettankno);
         opratorname = findViewById(R.id.tanknoun);
-        etremark=findViewById(R.id.irinproremark);
+        etremark = findViewById(R.id.irinproremark);
         viewlabreport = findViewById(R.id.btn_ViewlabReport);
 
         prosubmit = findViewById(R.id.prosubmit);
@@ -306,9 +305,9 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
         String intime = etint.getText().toString().trim();
         String etser = etserno.getText().toString().trim();
         String eddate = etconunloadDateTime.getText().toString().trim();
-        String unloadmaterialmaterialtk=edunloadabovematerial.getText().toString().trim();
-        String abovematerialunloadtk=abovematerialunload.getText().toString().trim();
-        String remark=!etremark.getText().toString().trim().isEmpty()?etremark.getText().toString().trim():"";
+        String unloadmaterialmaterialtk = edunloadabovematerial.getText().toString().trim();
+        String abovematerialunloadtk = abovematerialunload.getText().toString().trim();
+        String remark = !etremark.getText().toString().trim().isEmpty() ? etremark.getText().toString().trim() : "";
         String confirmunload = etconbyop.getText().toString().trim();
         String oprator = opratorname.getText().toString().trim();
         String conunload = etconunloadDateTime.getText().toString().trim();
@@ -316,47 +315,50 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
         //String material = etMaterial.getText().toString().trim();
         String vehicleNumber = etVehicleNumber.getText().toString().trim();
 
-        if (intime.isEmpty() || unloadmaterialmaterialtk.isEmpty()  || abovematerialunloadtk.isEmpty() || confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || vehicleNumber.isEmpty()) {
+        if (intime.isEmpty() || unloadmaterialmaterialtk.isEmpty() || abovematerialunloadtk.isEmpty() || confirmunload.isEmpty() || oprator.isEmpty() || conunload.isEmpty() || vehicleNumber.isEmpty()) {
             Toasty.warning(this, "All Fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
             Request_In_Tanker_Production requestInTankerProduction = new Request_In_Tanker_Production(inwardid, intime,
-                    outTime, unloadmaterialmaterialtk, confirmunload, abovematerialunloadtk, oprator,remark,
+                    outTime, unloadmaterialmaterialtk, confirmunload, abovematerialunloadtk, oprator, remark,
                     EmployeId, vehicleNumber, etser, 'W', 'O', vehicleType, eddate, "material", EmployeName);
-
-            Call<Boolean> call = apiInTankerProduction.insertproductionData(requestInTankerProduction);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
-                        makeNotification(vehicleNumber, outTime);
-                        Log.d("Production", "Response Body: " + response.body());
-                        Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Tanker_Production.this, grid.class));
-                        finish();
-                    } else {
-                        Toasty.error(Inward_Tanker_Production.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = apiInTankerProduction.insertproductionData(requestInTankerProduction);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                            dialogHelper.hideProgressDialog();
+                            makeNotification(vehicleNumber, outTime);
+                            Log.d("Production", "Response Body: " + response.body());
+                            Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(Inward_Tanker_Production.this, grid.class));
+                            finish();
+                        } else {
+                            Toasty.error(Inward_Tanker_Production.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }
                     }
-                    Toasty.error(Inward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
-                }
+
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after failure
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Inward_Tanker_Production.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
             });
         }
     }
@@ -427,13 +429,15 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
         try {
             Log.d("JSON Parser", "JSON String: " + jsonString);
             Gson gson = new Gson();
-            Type listType = new TypeToken<List<ExtraMaterial>>() {}.getType();
+            Type listType = new TypeToken<List<ExtraMaterial>>() {
+            }.getType();
             return gson.fromJson(jsonString, listType);
         } catch (JsonSyntaxException e) {
             Log.e("JSON Parser", "Failed to parse JSON: " + jsonString, e);
             return new ArrayList<>(); // Return an empty list in case of parsing error
         }
     }
+
     private void validateJson(String jsonString) {
         try {
             new JsonParser().parse(jsonString);
@@ -442,6 +446,7 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
             Log.e("JSON Validator", "Invalid JSON: " + jsonString, e);
         }
     }
+
     public void createExtraMaterialViews(List<ExtraMaterial> extraMaterials) {
         LinearLayout linearLayout = findViewById(R.id.layout_productionlistmaterial); // Ensure this is the correct ID
 
@@ -460,7 +465,7 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
             qtyEditText.setText(extraMaterial.getQty());
             qtyEditText.setEnabled(false);
 
-            List<String> teamList = Arrays.asList("NA","Ton", "Litre", "KL","Kgs","Pcs","M3","Meter","Feet"); // or fetch it dynamically
+            List<String> teamList = Arrays.asList("NA", "Ton", "Litre", "KL", "Kgs", "Pcs", "M3", "Meter", "Feet"); // or fetch it dynamically
             ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, teamList);
             uomSpinner.setAdapter(arrayAdapter);
             uomSpinner.setEnabled(false);
@@ -582,8 +587,8 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
             }
         }*/
 
-        String unloadmaterialmaterialtk=edunloadabovematerial.getText().toString().trim();
-        String abovematerialunloadtk=abovematerialunload.getText().toString().trim();
+        String unloadmaterialmaterialtk = edunloadabovematerial.getText().toString().trim();
+        String abovematerialunloadtk = abovematerialunload.getText().toString().trim();
         String confirmunload = etconbyop.getText().toString().trim();
         String oprator = opratorname.getText().toString().trim();
 
@@ -595,7 +600,7 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
         call.enqueue(new Callback<Boolean>() {
             @Override
             public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful() && response.body() != null && response.body()==true) {
+                if (response.isSuccessful() && response.body() != null && response.body()) {
                     Log.d("Production", "Response Body: " + response.body());
                     Toasty.success(Inward_Tanker_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(Inward_Tanker_Production.this, Inward_Tanker.class));
