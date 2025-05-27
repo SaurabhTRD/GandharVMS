@@ -2,6 +2,7 @@ package com.android.gandharvms.Outward_Truck_Security;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_CompletedgridAdapter;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.R;
 
 import java.util.ArrayList;
@@ -86,6 +88,17 @@ public class Adapter_OR_Completesec extends RecyclerView.Adapter<Adapter_OR_Comp
         holder.driverlicenses.setText(club.getDriverLicenses());
         holder.rcbook.setText(club.getRcBook());
         holder.remark.setText(club.getRemark());
+
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common_Outward_model club = filteredGridList.get(position);
+                Intent intent = new Intent(view.getContext(), Outward_Truck_Security.class);
+                intent.putExtra("VehicleNumber", club.getVehicleNumber());
+                intent.putExtra("Action", "Up");
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

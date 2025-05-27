@@ -667,12 +667,12 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                         //etsmaterial.setEnabled(true);
                         etoapo.setText(obj.getOA_PO_number());
                         etoapo.setEnabled(true);
-                        etsqty.setText(String.valueOf(obj.getQty()));
-                        etsqty.setEnabled(true);
+//                        etsqty.setText(String.valueOf(obj.getQty()));
+//                        etsqty.setEnabled(true);
                         etsnetwt.setText(String.valueOf(obj.getNetWeight()));
                         etsnetwt.setEnabled(true);
-                        etsuom.setText(obj.getUnitOfMeasurement());
-                        etsuom.setEnabled(true);
+//                        etsuom.setText(obj.getUnitOfMeasurement());
+//                        etsuom.setEnabled(true);
                         etsuom2.setText(obj.getUnitOfNetWeight());
                         etsuom2.setEnabled(true);
                         etremark.setText(obj.getSecRemark());
@@ -687,9 +687,9 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                         ewaybillNo.setChecked(obj.getEwayBill().equalsIgnoreCase("No"));
                         etregister.setText(obj.getSelectregister());
                         etregister.setEnabled(true);
-                        isReportingCheckBox.setEnabled(false);
+                        //isReportingCheckBox.setEnabled(false);
                         //isReportingCheckBox.setVisibility(View.GONE);
-                        saveButton.setVisibility(View.GONE);
+                        //saveButton.setVisibility(View.GONE);
                         wesubmit.setVisibility(View.GONE);
                         updbtnclick.setVisibility(View.VISIBLE);
                         etintime.setVisibility(View.GONE);

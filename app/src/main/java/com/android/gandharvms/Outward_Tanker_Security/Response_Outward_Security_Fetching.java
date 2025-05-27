@@ -118,6 +118,16 @@ public class Response_Outward_Security_Fetching {
     public int splpackof210ltrqty;
     public int splpackofboxbuxketltrqty;
 
+    public String OutSRemark;
+
+    public String getOutSRemark() {
+        return OutSRemark;
+    }
+
+    public void setOutSRemark(String outSRemark) {
+        OutSRemark = outSRemark;
+    }
+
     public String getIRDataEntryTime() {
         return IRDataEntryTime;
     }

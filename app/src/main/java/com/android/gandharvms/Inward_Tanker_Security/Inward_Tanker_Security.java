@@ -851,10 +851,10 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
                         etremark.setEnabled(true);
                         updbtnclick.setVisibility(View.VISIBLE);
                         etintime.setVisibility(View.GONE);
-                        isReportingCheckBox.setEnabled(false);
+                        //isReportingCheckBox.setEnabled(false);
                         btnadd.setVisibility(View.GONE);
                         //isReportingCheckBox.setVisibility(View.GONE);
-                        saveButton.setVisibility(View.GONE);
+                        //saveButton.setVisibility(View.GONE);
                     }else {
                         Toasty.error(Inward_Tanker_Security.this, "This Vehicle Number Is Out From Factory.\n You Can Not Update", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(Inward_Tanker_Security.this, it_in_sec_Completedgrid.class));

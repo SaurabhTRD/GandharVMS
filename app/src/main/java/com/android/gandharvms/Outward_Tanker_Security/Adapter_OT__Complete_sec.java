@@ -1,6 +1,7 @@
 package com.android.gandharvms.Outward_Tanker_Security;
 
 import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Outward_Truck_Security.Adapter_OR_Completesec;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.Outward_Truck_Weighment.Adater_Weigh_Out_Complete;
@@ -93,6 +96,17 @@ public class Adapter_OT__Complete_sec extends RecyclerView.Adapter<Adapter_OT__C
         holder.place.setText(club.getPlace());
         holder.mobile.setText(club.getMobileNumber());
         holder.remark.setText(club.getRemark());
+
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common_Outward_model club = filteredGridList.get(position);
+                Intent intent = new Intent(view.getContext(), Outward_Tanker_Security.class);
+                intent.putExtra("VehicleNumber", club.getVehicleNumber());
+                intent.putExtra("Action", "Up");
+                view.getContext().startActivity(intent);
+            }
+        });
     }
 
     private String formattedDate(String inputDate) {

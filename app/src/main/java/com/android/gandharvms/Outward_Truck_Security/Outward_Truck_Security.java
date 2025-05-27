@@ -277,6 +277,122 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
 //        if (getIntent().hasExtra("vehiclenum")) {
 //            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
 //        }
+
+        if (sharedPreferences != null) {
+            if (getIntent().hasExtra("VehicleNumber")) {
+                String action = getIntent().getStringExtra("Action");
+                if (action != null && action.equals("Up")) {
+                    FetchVehicleDetailsforUpdate(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'x', 'I');
+                } else {
+                    FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
+                    saveButton.setVisibility(View.GONE);
+//                    button1.setVisibility(View.GONE);
+                }
+//                btnadd.setVisibility(View.GONE);
+            } else {
+                GetMaxSerialNo(vehicleType + formattedDate);
+            }
+
+        } else {
+            Log.e("MainActivity", "SharedPreferences is null");
+        }
+    }
+
+
+    private void FetchVehicleDetails(String vehicleNumber, String menuType, char s, char i) {
+        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNumber, menuType, s, i);
+        call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
+            @Override
+            public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0) {
+                        List<Response_Outward_Security_Fetching> outlist = response.body();
+                        Response_Outward_Security_Fetching out = outlist.get(0);
+                        OutwardId = out.getOutwardId();
+                        serialnumber.setText(out.getSerialNumber());
+                        vehiclenumber.setText(out.getVehicleNumber());
+                        date.setText(out.getDate());
+                        remark.setText(out.getRemark());
+                        serialnumber.setEnabled(false);
+                        place.setText(out.getPlace());
+//                        saveButton.setVisibility(View.GONE);
+//                        button1.setVisibility(View.GONE);
+//                        btnadd.setVisibility(View.GONE);
+
+                    }
+                }else {
+                    Toasty.error(Outward_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void FetchVehicleDetailsforUpdate(String vehicleNumber, String menuType, char x, char i) {
+        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNumber, menuType, x, i);
+        call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
+            @Override
+            public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0) {
+                        List<Response_Outward_Security_Fetching> outlist = response.body();
+                        Response_Outward_Security_Fetching out = outlist.get(0);
+                        OutwardId = out.getOutwardId();
+                        serialnumber.setText(out.getSerialNumber());
+                        vehiclenumber.setText(out.getVehicleNumber());
+                        date.setText(out.getDate());
+                        remark.setText(out.getRemark());
+                        serialnumber.setEnabled(false);
+                        place.setText(out.getPlace());
+                        transporter.setText(out.getTransportName());
+                        mobilenumber.setText(out.getMobileNumber());
+                        remark.setText(out.getRemark());
+//                        saveButton.setVisibility(View.GONE);
+//                        button1.setVisibility(View.GONE);
+//                        btnadd.setVisibility(View.GONE);
+                       // updatebtn.setVisibility(View.VISIBLE);
+                        submit.setVisibility(View.GONE);
+
+
+                    }
+                }else {
+                    Toasty.error(Outward_Truck_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public void makeNotification(String vehicleNumber, String outTime) {

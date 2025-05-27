@@ -105,18 +105,30 @@ public class it_in_sec_CompletedgridAdapter extends RecyclerView.Adapter<it_in_s
         holder.oapo.setText(club.getOA_PO_number());
         holder.mob.setText(club.getDriver_MobileNo());
 
-        holder.vehiclenum.setText(club.getVehicleNo());
-        /*new View.OnClickListener() {
+//        holder.vehiclenum.setText(club.getVehicleNo());
+//        new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                CommonResponseModelForAllDepartment club = filteredGridList.get(position);
+//                Intent intent;
+//                intent = new Intent(view.getContext(), Inward_Tanker_Security.class);
+//                intent.putExtra("VehicleNumber",club.getVehicleNo());
+//                intent.putExtra("Action","Up");
+//                view.getContext().startActivity(intent);
+//            }
+//        };
+
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 CommonResponseModelForAllDepartment club = filteredGridList.get(position);
-                Intent intent;
-                intent = new Intent(view.getContext(), Inward_Tanker_Security.class);
-                intent.putExtra("VehicleNumber",club.getVehicleNo());
-                intent.putExtra("Action","Up");
+                Intent intent = new Intent(view.getContext(), Inward_Tanker_Security.class);
+                intent.putExtra("VehicleNumber", club.getVehicleNo());
+                intent.putExtra("Action", "Up");
                 view.getContext().startActivity(intent);
             }
-        });*/
+        });
+
     }
     public int getItemCount() {
         return Gridmodel.size();
