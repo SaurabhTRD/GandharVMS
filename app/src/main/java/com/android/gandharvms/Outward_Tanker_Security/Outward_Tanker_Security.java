@@ -238,13 +238,6 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 
             }
         });
-//        saveButton = findViewById(R.id.saveButton);
-//        saveButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                insertreporting();
-//            }
-//        });
 
 
         intime.setOnClickListener(new View.OnClickListener() {
