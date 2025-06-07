@@ -62,7 +62,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
-    Button saveButton, completed;
+    Button saveButton, completed,updatebtn;
     RadioButton rbvehpermityes, rbvehpermitno, rbpucyes, rbpucno, rbinsuranceyes, rbinsuranceno, vehfitnessyes, vehfitnessno, licye, licno, rcyes, rcno;
     DatePickerDialog picker;
     SimpleDateFormat datef = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
@@ -103,6 +103,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 //         saveButton.setVisibility(View.GONE);
 
         completed = findViewById(R.id.otsecuritycompleted);
+        updatebtn = findViewById(R.id.outwardsececupdateclick);
 
 //        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
 //            if (isChecked) {
@@ -238,6 +239,13 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 
             }
         });
+
+        updatebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateData();
+            }
+        });
 //        saveButton = findViewById(R.id.saveButton);
 //        saveButton.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -278,14 +286,33 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
                 picker.show();
             }
         });
-//        vehiclenum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//            @Override
-//            public void onFocusChange(View v, boolean hasFocus) {
-//                if (!hasFocus) {
-//                    FetchVehicleDetail(vehiclenum.getText().toString().trim(), vehicleType, nextProcess, inOut);
-//                }
-//            }
-//        });
+        vehiclenum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    FetchVehicleDetail(vehiclenum.getText().toString().trim(), vehicleType, nextProcess, inOut);
+                }
+            }
+        });
+
+        if (sharedPreferences != null) {
+            if (getIntent().hasExtra("VehicleNumber")) {
+                String action = getIntent().getStringExtra("Action");
+                if (action != null && action.equals("Up")) {
+                    FetchVehicleDetailsforUpdate(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'x', 'I');
+                } else {
+                    FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
+                    saveButton.setVisibility(View.GONE);
+//                    button1.setVisibility(View.GONE);
+                }
+//                btnadd.setVisibility(View.GONE);
+            } else {
+                GetMaxSerialNo(vehicleType + formattedDate);
+            }
+
+        } else {
+            Log.e("MainActivity", "SharedPreferences is null");
+        }
 
 
     }
@@ -401,6 +428,108 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
         });
     }
 
+
+    private void FetchVehicleDetails(String vehicleNumber, String menuType, char s, char i) {
+        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNumber, menuType, s, i);
+        call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
+            @Override
+            public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0) {
+                        List<Response_Outward_Security_Fetching> outlist = response.body();
+                        Response_Outward_Security_Fetching out = outlist.get(0);
+                        OutwardId = out.getOutwardId();
+                        serialnumber.setText(out.getSerialNumber());
+                        vehiclenum.setText(out.getVehicleNumber());
+                        eddate.setText(out.getDate());
+                        edremark.setText(out.getRemark());
+                        serialnumber.setEnabled(false);
+                        kl.setText(String.valueOf(out.getKl()));
+                        transname.setText(out.getTransportName());
+                        place.setText(out.getPlace());
+                        mobilenum.setText(out.getMobileNumber());
+//                        saveButton.setVisibility(View.GONE);
+//                        button1.setVisibility(View.GONE);
+//                        btnadd.setVisibility(View.GONE);
+                        updatebtn.setVisibility(View.VISIBLE);
+                        submit.setVisibility(View.GONE);
+
+                    }
+                }else {
+                    Toasty.error(Outward_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void FetchVehicleDetailsforUpdate(String vehicleNumber, String menuType, char x, char i) {
+        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNumber, menuType, x, i);
+        call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
+            @Override
+            public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
+                if (response.isSuccessful()){
+                    if (response.body().size() > 0) {
+                        List<Response_Outward_Security_Fetching> outlist = response.body();
+                        Response_Outward_Security_Fetching out = outlist.get(0);
+                        OutwardId = out.getOutwardId();
+                        serialnumber.setText(out.getSerialNumber());
+                        vehiclenum.setText(out.getVehicleNumber());
+                        eddate.setText(out.getDate());
+                        edremark.setText(out.getRemark());
+                        serialnumber.setEnabled(false);
+                        kl.setText(String.valueOf(out.getKl()));
+                        transname.setText(out.getTransportName());
+                        place.setText(out.getPlace());
+                        mobilenum.setText(out.getMobileNumber());
+//                        saveButton.setVisibility(View.GONE);
+//                        button1.setVisibility(View.GONE);
+//                        btnadd.setVisibility(View.GONE);
+                        updatebtn.setVisibility(View.VISIBLE);
+                        submit.setVisibility(View.GONE);
+
+
+                    }
+                }else {
+                    Toasty.error(Outward_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
 //    private void insertreporting() {
 //        String serial = serialnumber.getText().toString().trim();
 //        String vehicle = vehiclenum.getText().toString().trim();
@@ -454,54 +583,56 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 //        }
 //    }
 
-//    private void FetchVehicleDetail(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
-//
-//        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);
-//        call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
-//            @Override
-//            public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
-//                if (response.isSuccessful()&& response.body()!= null ) {
-//                    if (response.body().size() > 0){
-//                        List<Response_Outward_Security_Fetching> data = response.body();
-//                        Response_Outward_Security_Fetching obj = data.get(0);
-//                        OutwardId = obj.getOutwardId();
-//                        serialnumber.setText(obj.getSerialNumber());
-//                        serialnumber.setEnabled(false);
-//                        vehiclenum.setText(obj.getVehicleNumber());
-//                        vehiclenum.setEnabled(false);
-//                        eddate.setText(obj.getDate());
-//                        eddate.setEnabled(false);
-////                        cbox.setChecked(true);
-////                        cbox.setEnabled(false);
-////                        saveButton.setVisibility(View.GONE);
-////                        reportingremark.setEnabled(false);
-////                        reportingremark.setVisibility(View.GONE);
-//                        /*intime.callOnClick();*/
-//                    }
-//                } else {
-//                    Toasty.error(Outward_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
-//
-//                Log.e("Retrofit", "Failure: " + t.getMessage());
-//// Check if there's a response body in case of an HTTP error
-//                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-//                    Response<?> response = ((HttpException) t).response();
-//                    if (response != null) {
-//                        Log.e("Retrofit", "Error Response Code: " + response.code());
-//                        try {
-//                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//            }
-//        });
-//    }
+
+
+    private void FetchVehicleDetail(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
+
+        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);
+        call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
+            @Override
+            public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
+                if (response.isSuccessful()&& response.body()!= null ) {
+                    if (response.body().size() > 0){
+                        List<Response_Outward_Security_Fetching> data = response.body();
+                        Response_Outward_Security_Fetching obj = data.get(0);
+                        OutwardId = obj.getOutwardId();
+                        serialnumber.setText(obj.getSerialNumber());
+                        serialnumber.setEnabled(false);
+                        vehiclenum.setText(obj.getVehicleNumber());
+                        vehiclenum.setEnabled(false);
+                        eddate.setText(obj.getDate());
+                        eddate.setEnabled(false);
+//                        cbox.setChecked(true);
+//                        cbox.setEnabled(false);
+//                        saveButton.setVisibility(View.GONE);
+//                        reportingremark.setEnabled(false);
+//                        reportingremark.setVisibility(View.GONE);
+                        /*intime.callOnClick();*/
+                    }
+                } else {
+                    Toasty.error(Outward_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Response_Outward_Security_Fetching>> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     public void GetMaxSerialNo(String formattedDate) {
         /*String serialNoPreFix = "GA" + formattedDate;*/
@@ -634,81 +765,81 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
         }
     }
 
-    //    private void updateData() {
-//        String serial = serialnumber.getText().toString().trim();
-//        String uvehicle = vehiclenum.getText().toString().trim();
-//        String udate = eddate.getText().toString().trim();
-//        String uintime = intime.getText().toString().trim();
-//        if(!kl.getText().toString().isEmpty())
-//        {
-//            try {
-//                ukl=Integer.parseInt(kl.getText().toString().trim());
-//            }catch (NumberFormatException e){
-//                e.printStackTrace();
-//            }
-//        }
-//        else{
-//            Toasty.warning(this, "Kl is Empty", Toast.LENGTH_SHORT).show();
-//        }
-//        String utransporter = transname.getText().toString().trim();
-//        String uplace = place.getText().toString().trim();
-//        String umobile = mobilenum.getText().toString().trim();
-//        //String ucapacity = capacityvehicle.getText().toString().trim();
-//        String uremark = edremark.getText().toString().trim();
-//        String outTime = getCurrentTime();
-//
-//        String permitselection = rbvehpermityes.isChecked() ? "Yes" : "No";
-//        String pucselection = rbpucyes.isChecked() ? "Yes" : "No";
-//        String insuranceselection = rbinsuranceyes.isChecked() ? "Yes" : "No";
-//        String vehfitnesselection = vehfitnessyes.isChecked() ? "Yes" : "No";
-//        String licselection = licye.isChecked() ? "Yes" : "No";
-//        String rcselection = rcyes.isChecked() ? "Yes" : "No";
-//
-//        if (serial.isEmpty()||uvehicle.isEmpty()||udate.isEmpty()||uintime.isEmpty()||utransporter.isEmpty()||uplace.isEmpty()||
-//        umobile.isEmpty()||uremark.isEmpty()||permitselection.isEmpty()||pucselection.isEmpty()||insuranceselection.isEmpty()||
-//        vehfitnesselection.isEmpty()||licselection.isEmpty()||rcselection.isEmpty()){
-//            Toasty.warning(this,"All fields must be filled",Toast.LENGTH_SHORT,true).show();
-//        }else {
-//            Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId,uintime,outTime,
-//                    ukl,uplace,permitselection,pucselection,insuranceselection,vehfitnesselection,licselection,rcselection,"",
-//                    "","","",uremark,"",EmployeId,"","","",
-//                    "","",'S',serial,uvehicle,utransporter,umobile,"","","","","",0,
-//                    "",0,"",'B',inOut,vehicleType,uintime,"");
-//
-//            Call<Boolean> call = outwardTanker.updateoutwardsecurity(isreportingupdateSecurityModel);
-//            call.enqueue(new Callback<Boolean>() {
-//                @Override
-//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                    if (response.isSuccessful() && response.body() && response.body() == true){
-//                        makeNotification(uvehicle, outTime);
-//                        productionnotification(uvehicle, outTime );
-//                        Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(Outward_Tanker_Security.this,com.android.gandharvms.Outward_Tanker.class));
-//                        finish();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Boolean> call, Throwable t) {
-//
-//                    Log.e("Retrofit", "Failure: " + t.getMessage());
-//// Check if there's a response body in case of an HTTP error
-//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-//                        Response<?> response = ((HttpException) t).response();
-//                        if (response != null) {
-//                            Log.e("Retrofit", "Error Response Code: " + response.code());
-//                            try {
-//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                    Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    }
+        private void updateData() {
+        String serial = serialnumber.getText().toString().trim();
+        String uvehicle = vehiclenum.getText().toString().trim();
+        String udate = eddate.getText().toString().trim();
+        String uintime = intime.getText().toString().trim();
+        if(!kl.getText().toString().isEmpty())
+        {
+            try {
+                ukl=Integer.parseInt(kl.getText().toString().trim());
+            }catch (NumberFormatException e){
+                e.printStackTrace();
+            }
+        }
+        else{
+            Toasty.warning(this, "Kl is Empty", Toast.LENGTH_SHORT).show();
+        }
+        String utransporter = transname.getText().toString().trim();
+        String uplace = place.getText().toString().trim();
+        String umobile = mobilenum.getText().toString().trim();
+        //String ucapacity = capacityvehicle.getText().toString().trim();
+        String uremark = edremark.getText().toString().trim();
+        String outTime = getCurrentTime();
+
+        String permitselection = rbvehpermityes.isChecked() ? "Yes" : "No";
+        String pucselection = rbpucyes.isChecked() ? "Yes" : "No";
+        String insuranceselection = rbinsuranceyes.isChecked() ? "Yes" : "No";
+        String vehfitnesselection = vehfitnessyes.isChecked() ? "Yes" : "No";
+        String licselection = licye.isChecked() ? "Yes" : "No";
+        String rcselection = rcyes.isChecked() ? "Yes" : "No";
+
+        if (serial.isEmpty()||uvehicle.isEmpty()||udate.isEmpty()||uintime.isEmpty()||utransporter.isEmpty()||uplace.isEmpty()||
+        umobile.isEmpty()||uremark.isEmpty()||permitselection.isEmpty()||pucselection.isEmpty()||insuranceselection.isEmpty()||
+        vehfitnesselection.isEmpty()||licselection.isEmpty()||rcselection.isEmpty()){
+            Toasty.warning(this,"All fields must be filled",Toast.LENGTH_SHORT,true).show();
+        }else {
+            Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId,uintime,outTime,
+                    ukl,uplace,permitselection,pucselection,insuranceselection,vehfitnesselection,licselection,rcselection,"",
+                    "","","",uremark,"",EmployeId,"","","",
+                    "","",'S',serial,uvehicle,utransporter,umobile,"","","","","",0,
+                    "",0,"",'B',inOut,vehicleType,uintime,"");
+
+            Call<Boolean> call = outwardTanker.updateoutwardsecurity(isreportingupdateSecurityModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() && response.body() == true){
+                        makeNotification(uvehicle, outTime);
+                        productionnotification(uvehicle, outTime );
+                        Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        startActivity(new Intent(Outward_Tanker_Security.this,com.android.gandharvms.Outward_Tanker.class));
+                        finish();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+// Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
     public void outwardolcgridclick(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);

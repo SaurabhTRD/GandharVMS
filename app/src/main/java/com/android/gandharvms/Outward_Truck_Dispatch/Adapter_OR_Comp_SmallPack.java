@@ -1,5 +1,6 @@
 package com.android.gandharvms.Outward_Truck_Dispatch;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -75,6 +76,17 @@ public class Adapter_OR_Comp_SmallPack extends RecyclerView.Adapter<Adapter_OR_C
         holder.industrialsign.setText(club.getSplsign());
         holder.nextdepartment.setText(club.getPurposeProcess());
         holder.remark.setText(club.getSplRemark());
+
+        holder.vehicle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Common_Outward_model club = filteredGridList.get(position);
+                Intent intent = new Intent(v.getContext(), Outward_DesSmallPackLoading_Form.class);
+                intent.putExtra("VehicleNumber", club.getVehicleNumber());
+                intent.putExtra("Action", "Up");
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     public int getItemViewType(int position) {

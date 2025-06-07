@@ -271,7 +271,17 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         fetchdensity.setEnabled(false);
                         tareweight.setText(String.valueOf(data.getTareWeight()));
                         tareweight.setEnabled(false);
-                        batch.setText(data.getBatchNo());
+                        String jsonString = data.getLabcompartment1();
+                        String ibatchnum = "";
+
+                        int index = jsonString.indexOf("\"ibatchnum\"");
+                        if (index != -1) {
+                            int start = jsonString.indexOf("\"", index + 11) + 1;
+                            int end = jsonString.indexOf("\"", start);
+                            ibatchnum = jsonString.substring(start, end);
+                        }
+
+                        batch.setText(ibatchnum);
                         batch.setEnabled(false);
                         product.setText(data.getProductName());
                         product.setEnabled(false);

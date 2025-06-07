@@ -88,6 +88,12 @@ public class Response_Outward_Tanker_Weighment {
     public String procompartment6;
     public boolean IsCheck;
 
+    public String labcompartment1;
+
+    public String getLabcompartment1() {
+        return labcompartment1;
+    }
+
     public boolean isCheck() {
         return IsCheck;
     }

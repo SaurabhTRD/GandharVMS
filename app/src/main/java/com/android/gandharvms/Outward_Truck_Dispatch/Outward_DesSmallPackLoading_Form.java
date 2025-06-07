@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -61,7 +62,7 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
     public char inOut = Global_Var.getInstance().InOutType;
     public String vehnumber = "";
     EditText serial, vehicle, transporter, intime, sevenltr, sevenandhalfltr, eighthalfltr, elevenltr, twelltr, threteenltr, fifteenltr, tenltr, eighteenltr, twentyltr, twentysixltr, fiftyltr, twotenltr, boxbucket, totalqty, etweight, smallsign, remark, party, oa;
-    Button submit;
+    Button submit,updatbtn;
     AutoCompleteTextView dept;
     ArrayAdapter<String> nextdeptdrop;
     Map<String, String> nextdeptmapping = new HashMap<>();
@@ -96,6 +97,7 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
     private LoginMethod userDetails;
     private int Id;
     private String token;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +105,7 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
         setContentView(R.layout.activity_outward_des_small_pack_loading_form);
         outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
         userDetails = RetroApiClient.getLoginApi();
+        sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
         serial = findViewById(R.id.etsmallserialnumber);
         vehicle = findViewById(R.id.etdessmallloadvehical);
         transporter = findViewById(R.id.etdessmallloadtranseportname);
@@ -155,6 +158,8 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
         fiftyltr.addTextChangedListener(textWatcher);
         twotenltr.addTextChangedListener(textWatcher);
         boxbucket.addTextChangedListener(textWatcher);
+
+        updatbtn = findViewById(R.id.etdesindusloadupdate);
 
         submit = findViewById(R.id.etdesindusloadsubmit);
         setupHeader();
@@ -211,6 +216,32 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
             }
         });
 
+        if (sharedPreferences != null) {
+            if (getIntent().hasExtra("VehicleNumber")) {
+                String action = getIntent().getStringExtra("Action");
+                if (action != null && action.equals("Up")) {
+                    FetchVehicleDetailsforUpdate(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'W', 'O');
+                } else {
+                    FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
+                    submit.setVisibility(View.GONE);
+//                    button1.setVisibility(View.GONE);
+                }
+//                btnadd.setVisibility(View.GONE);
+            } else {
+                //GetMaxSerialNo(vehicletype+ formattedDate);
+            }
+
+        } else {
+            Log.e("MainActivity", "SharedPreferences is null");
+        }
+
+        updatbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                smallupdate();
+            }
+        });
+
     }
 
     private void calculateTotal() {
@@ -241,6 +272,97 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
             return 0; // Return 0 if EditText is empty or non-numeric
 
         }
+    }
+
+    public void FetchVehicleDetailsforUpdate(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut){
+        Call<Model_industrial> call = outwardTruckInterface.fetchidnussmall(vehicleNo, vehicleType, NextProcess, inOut);
+        call.enqueue(new Callback<Model_industrial>() {
+            @Override
+            public void onResponse(Call<Model_industrial> call, Response<Model_industrial> response) {
+                if (response.isSuccessful()) {
+                    Model_industrial data = response.body();
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
+                        OutwardId = data.getOutwardId();
+                        serial.setText(data.getSerialNumber());
+                        serial.setEnabled(false);
+                        vehicle.setText(data.getVehicleNumber());
+                        vehicle.setEnabled(false);
+                        transporter.setText(data.getTransportName());
+                        transporter.setEnabled(false);
+                        vehnumber = data.getVehicleNumber();
+                        Id = data.getId();
+                        party.setText(data.getCustomerName());
+                        party.setEnabled(false);
+                        oa.setText(data.getOAnumber());
+                        oa.setEnabled(false);
+//                        sevenltr, sevenandhalfltr, eighthalfltr, elevenltr, twelltr, threteenltr, fifteenltr,
+//                                tenltr, eighteenltr, twentyltr, twentysixltr, fiftyltr, twotenltr,
+//                                boxbucket, totalqty, etweight, smallsign, remark, party, oa;
+                        sevenltr.setText(String.valueOf(data.getSplpackof7ltrqty()));
+                        sevenandhalfltr.setText(String.valueOf(data.getSplpackof7_5ltrqty()));
+                        eighthalfltr.setText(String.valueOf(data.getSplpackof8_5ltrqty()));
+                        tenltr.setText(String.valueOf(data.getSplpackof10ltrqty()));
+                        elevenltr.setText(String.valueOf(data.getSplpackof11ltrqty()));
+                        threteenltr.setText(String.valueOf(data.getSplpackof13ltrqty()));
+                        fifteenltr.setText(String.valueOf(data.getSplpackof15ltrqty()));
+                        twelltr.setText(String.valueOf(data.getSplpackof20ltrqty()));
+                        eighteenltr.setText(String.valueOf(data.getSplpackof18ltrqty()));
+                        twentysixltr.setText(String.valueOf(data.getSplpackof26ltrqty()));
+                        fiftyltr.setText(String.valueOf(data.getSplpackof50ltrqty()));
+                        twotenltr.setText(String.valueOf(data.getSplpackof210ltrqty()));
+                        boxbucket.setText(String.valueOf(data.getSplpackofboxbuxketltrqty()));
+                        totalqty.setText(String.valueOf(data.getSpltotqty()));
+                        etweight.setText(String.valueOf(data.getSplweight()));
+                        smallsign.setText(data.getSplsign());
+                        remark.setText(data.getSplRemark());
+                        party.setText(data.getCustomerName());
+                        submit.setVisibility(View.GONE);
+                        updatbtn.setVisibility(View.VISIBLE);
+
+
+                        if (!data.ilweight.equals("0")) {
+                            lnlindustrialbarrel.setVisibility(View.VISIBLE);
+                            ilpack10literqty.setText("IndusPack 10 Liter Qty :- " + data.getIlpackof10ltrqty());
+                            ilpack10literqty.setEnabled(false);
+                            ilpack18literqty.setText("IndusPack 18 Liter Qty :- " + data.getIlpackof18ltrqty());
+                            ilpack18literqty.setEnabled(false);
+                            ilpack20literqty.setText("IndusPack 20 Liter Qty :- " + data.getIlpackof20ltrqty());
+                            ilpack20literqty.setEnabled(false);
+                            ilpack26literqty.setText("IndusPack 26 Liter Qty :- " + data.getIlpackof26ltrqty());
+                            ilpack26literqty.setEnabled(false);
+                            ilpack50literqty.setText("IndusPack 50 Liter Qty :- " + data.getIlpackof50ltrqty());
+                            ilpack50literqty.setEnabled(false);
+                            ilpack210literqty.setText("IndusPack 210 Liter Qty :- " + data.getIlpackof50ltrqty());
+                            ilpack210literqty.setEnabled(false);
+                            ilpackboxbucketqty.setText("IndusPack BoxBucket Qty :- " + data.getIlpackofboxbuxketltrqty());
+                            ilpackboxbucketqty.setEnabled(false);
+                            iltotqty.setText("IndusPack Total Qty :- " + data.getIltotqty());
+                            iltotqty.setEnabled(false);
+                            iltotweight.setText("IndusPack Total Weight :- " + data.getIlweight());
+                            iltotweight.setEnabled(false);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Model_industrial> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Outward_DesSmallPackLoading_Form.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
