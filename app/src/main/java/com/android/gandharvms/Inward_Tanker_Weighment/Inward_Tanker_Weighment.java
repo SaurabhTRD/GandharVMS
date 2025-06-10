@@ -548,11 +548,12 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
                 call.enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful() && response.body() != null && response.body()) {
+                        if (response.isSuccessful() && response.body() != null && response.body()==true) {
                             dialogHelper.hideProgressDialog(); // Hide after response
                             Log.d("Registration", "Response Body: " + response.body());
                             deleteLocalImage(vehicelnumber, outTime);
                         } else {
+                            dialogHelper.hideProgressDialog();
                             Toasty.error(Inward_Tanker_Weighment.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }
                     }
