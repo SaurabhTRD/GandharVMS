@@ -15,7 +15,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class RetroApiClient {
     public static Retrofit retrofit = null;
-    public static String BASE_URL = "https://gandhardevapi.azurewebsites.net/";
+    //When Given for Production then use Below URL
+    //public static String BASE_URL = "https://gandhardevapi.azurewebsites.net/";
+    //For Developer Use below URL and Check
+    public static String BASE_URL = "https://gandharuatapi.azurewebsites.net/";
 //    private static String BASE_URL = "http://52.183.160.211:8097/";
     //public static String UploadImage_URL="https://gandhardevapi.azurewebsites.net/api/Common/Upload";
 

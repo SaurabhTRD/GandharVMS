@@ -3,14 +3,19 @@ package com.android.gandharvms.Inward_Tanker_Weighment;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.icu.text.SimpleDateFormat;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -48,11 +53,13 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
     private Context context;
     private OnImageClickListener imageClickListener;
     String formattedDate;
+    Inward_Tanker_Weighment itw = new Inward_Tanker_Weighment();
 
     public it_in_weigh_CompletedgridAdapter(List<CommonResponseModelForAllDepartment> inwardcomresponsemodel) {
         this.Gridmodel = inwardcomresponsemodel;
         this.filteredGridList = inwardcomresponsemodel;
     }
+
     @Override
     public int getItemViewType(int position) {
         if (position % 2 == 0) {
@@ -77,8 +84,8 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
     @Override
     public void onBindViewHolder(it_in_weigh_CompletedgridAdapter.myviewHolder holder, @SuppressLint("RecyclerView") int position) {
         CommonResponseModelForAllDepartment club = filteredGridList.get(position);
-        int intimelength = club.getInTime()!=null ? club.getInTime().length() : 0;
-        int outtimelength = club.getOutTime()!=null ? club.getOutTime().length() : 0;
+        int intimelength = club.getInTime() != null ? club.getInTime().length() : 0;
+        int outtimelength = club.getOutTime() != null ? club.getOutTime().length() : 0;
         if (intimelength > 0) {
             holder.intime.setText(club.getInTime().substring(12, intimelength));
         }
@@ -87,11 +94,18 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
         }
         holder.sernum.setText(club.getSerialNo());
         holder.vehiclenum.setText(club.getVehicleNo());
+        holder.vehiclenum.setTextColor(Color.BLUE);
+        holder.vehiclenum.setPaintFlags(holder.vehiclenum.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
         //holder.material.setText(club.getMaterial());
-        holder.material.setOnClickListener(new View.OnClickListener() {
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showMaterialDialog_InwardTanker(view, club.getExtramaterials());
+                Context context = view.getContext();
+                Intent intent = new Intent(context, Inward_Tanker_Weighment.class);
+                intent.putExtra("vehicle_number", club.getVehicleNo());
+                intent.putExtra("mode", "update"); // Important flag
+                context.startActivity(intent);
             }
         });
 
@@ -108,13 +122,13 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
                 .load(RetroApiClient.BASE_URL + club.getInVehicleImage())
                 .placeholder(R.drawable.gandhar)
                 .error(R.drawable.gandhar2)
-                .noFade().resize(120,120)
+                .noFade().resize(120, 120)
                 .centerCrop().into(holder.invehicleimage);
         Picasso.get()
                 .load(RetroApiClient.BASE_URL + club.getInDriverImage())
                 .placeholder(R.drawable.gandhar)
                 .error(R.drawable.gandhar2)
-                .noFade().resize(120,120)
+                .noFade().resize(120, 120)
                 .centerCrop().into(holder.indriverimage);
         holder.invehicleimage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,9 +149,11 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
             }
         });
     }
+
     public int getItemCount() {
         return Gridmodel.size();
     }
+
     @Override
     public Filter getFilter() {
         return new Filter() {
@@ -171,18 +187,19 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
         };
     }
 
-    public interface OnImageClickListener{
+    public interface OnImageClickListener {
         void onImageClick(String imageUrl);
     }
 
     public void setImageClickListener(OnImageClickListener listener) {
         this.imageClickListener = listener;
     }
+
     public class myviewHolder extends RecyclerView.ViewHolder {
         public
-        TextView sernum, vehiclenum, material, intime, outtime,date,partyname,remark,oapo,mob,
-                grossweight,containerno, sighby;
-        ImageView invehicleimage,indriverimage;
+        TextView sernum, vehiclenum, material, intime, outtime, date, partyname, remark, oapo, mob,
+                grossweight, containerno, sighby;
+        ImageView invehicleimage, indriverimage;
 
         public myviewHolder(View view) {
             super(view);
@@ -190,18 +207,18 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
             vehiclenum = view.findViewById(R.id.itinweitextcoVehicleNumber);
             material = view.findViewById(R.id.itinweitextcoMaterial);
             material.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
-            intime =view.findViewById(R.id.itinweitextcoInTime);
-            outtime=view.findViewById(R.id.itinweitextcoOutTime);
-            date=view.findViewById(R.id.itinweitextcodate);
-            partyname=view.findViewById(R.id.itinweitextcopartyname);
-            remark=view.findViewById(R.id.itinweitextcoremark);
-            oapo=view.findViewById(R.id.itinweitextcooapo);
-            mob=view.findViewById(R.id.itinweitextcomob);
-            grossweight=view.findViewById(R.id.itinweitextcogrossweight);
-            containerno=view.findViewById(R.id.itinweitextcocontainerno);
-            invehicleimage=view.findViewById(R.id.itinweitextInVehicleImage);
-            indriverimage=view.findViewById(R.id.itinweitextInDriverImage);
-            sighby=view.findViewById(R.id.itinweitextcosighby);
+            intime = view.findViewById(R.id.itinweitextcoInTime);
+            outtime = view.findViewById(R.id.itinweitextcoOutTime);
+            date = view.findViewById(R.id.itinweitextcodate);
+            partyname = view.findViewById(R.id.itinweitextcopartyname);
+            remark = view.findViewById(R.id.itinweitextcoremark);
+            oapo = view.findViewById(R.id.itinweitextcooapo);
+            mob = view.findViewById(R.id.itinweitextcomob);
+            grossweight = view.findViewById(R.id.itinweitextcogrossweight);
+            containerno = view.findViewById(R.id.itinweitextcocontainerno);
+            invehicleimage = view.findViewById(R.id.itinweitextInVehicleImage);
+            indriverimage = view.findViewById(R.id.itinweitextInDriverImage);
+            sighby = view.findViewById(R.id.itinweitextcosighby);
         }
     }
 
@@ -251,5 +268,69 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
             e.printStackTrace();
             return inputDate;
         }
+    }
+
+    private void showUpdateDialog(View view, int position, String currentVehicleNo, String serialNo) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+        builder.setTitle("Update Vehicle Number");
+
+// Create a vertical LinearLayout to hold both views
+        LinearLayout layout = new LinearLayout(view.getContext());
+        layout.setOrientation(LinearLayout.VERTICAL);
+        layout.setPadding(50, 40, 50, 10); // Optional: Padding for nicer layout
+
+        // Create and add a TextView for displaying the Serial Number
+        TextView serialLabel = new TextView(view.getContext());
+        serialLabel.setText("Serial No: " + serialNo);
+        serialLabel.setTextSize(16);
+        layout.addView(serialLabel);
+
+        final EditText input = new EditText(view.getContext());
+        input.setInputType(InputType.TYPE_CLASS_TEXT);
+        input.setText(currentVehicleNo);
+        input.setSelection(currentVehicleNo.length());
+        layout.addView(input);
+        builder.setView(layout);
+
+        // Gross Weight input
+        final EditText grossWeightInput = new EditText(view.getContext());
+        grossWeightInput.setHint("Gross Weight");
+        grossWeightInput.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        grossWeightInput.setText(String.valueOf(filteredGridList.get(position).getGrossWeight()));
+        layout.addView(grossWeightInput);
+        // Remarks input
+        final EditText remarksInput = new EditText(view.getContext());
+        remarksInput.setHint("Remarks (Reason for Update)");
+        remarksInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_MULTI_LINE);
+        layout.addView(remarksInput);
+        builder.setView(layout);
+
+//        EditText hiddenSerialNo = new EditText(view.getContext());
+//        hiddenSerialNo.setText(serialNo);
+//        hiddenSerialNo.setVisibility(View.VISIBLE);
+
+        builder.setPositiveButton("Save", (dialog, which) -> {
+            String updatedVehicleNo = input.getText().toString().trim();
+//            String hidden_SerialNo = hiddenSerialNo.getText().toString().trim();
+            if (!updatedVehicleNo.isEmpty()) {
+                // Update the filtered list
+                filteredGridList.get(position).setVehicleNo(updatedVehicleNo);
+
+                // Also update the original list
+                for (CommonResponseModelForAllDepartment model : Gridmodel) {
+                    if (model.getSerialNo().equals(filteredGridList.get(position).getSerialNo())) {
+                        model.setVehicleNo(updatedVehicleNo);
+                        break;
+                    }
+                }
+
+                notifyItemChanged(position);
+
+            }
+        });
+
+        builder.setNegativeButton("Cancel", (dialog, which) -> dialog.dismiss());
+
+        builder.show();
     }
 }

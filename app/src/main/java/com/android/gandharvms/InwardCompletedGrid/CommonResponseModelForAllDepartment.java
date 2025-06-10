@@ -372,7 +372,7 @@ public class CommonResponseModelForAllDepartment {
     }
 
     public void setVehicleNo(String vehicleNo) {
-        VehicleNo = vehicleNo;
+        this.VehicleNo = vehicleNo;
     }
 
     public String getDate() {

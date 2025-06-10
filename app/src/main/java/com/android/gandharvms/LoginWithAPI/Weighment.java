@@ -4,6 +4,7 @@ import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepar
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.ItInsweighrequestmodel;
+import com.android.gandharvms.Inward_Tanker_Weighment.ItUpdweighrequestmodel;
 import com.android.gandharvms.Inward_Tanker_Weighment.Model_InwardOutweighment;
 
 import java.util.List;
@@ -36,4 +37,15 @@ public interface Weighment {
     Call<Boolean> itinsertweighdata(@Body ItInsweighrequestmodel insertweighreqmodel);
     @POST("api/InwardWeighment/UpdateOutWeighmentDetails")
     Call<Boolean> inwardoutweighment(@Body Model_InwardOutweighment modelInwardOutweighment);
+
+    @POST("api/InwardWeighment/UpdateWeighmentVehicleNo")
+    Call<Boolean> UpdateWeighmentVehicleNo(@Query("SerialNo") String SerialNo,
+                                           @Query("vehicleNo") String vehicleNo);
+
+    @POST("api/InwardWeighment/UpdateWeighmentGrossWeight")
+    Call<Boolean> UpdateWeighmentGrossWeight(@Query("SerialNo") String SerialNo,
+                                             @Query("GrossWeight") String GrossWeight);
+
+    @POST("api/InwardWeighment/UpdateInwardTankerWeighment")
+    Call<Boolean> itupdateweighdata(@Body ItUpdweighrequestmodel updateweighreqmodel);
 }
