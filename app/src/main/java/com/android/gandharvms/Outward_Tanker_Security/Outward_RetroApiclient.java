@@ -16,7 +16,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Outward_RetroApiclient {
 
     private static Retrofit retrofit = null;
-    private static String BASE_URL = "https://gandhardevapi.azurewebsites.net/";
+    //When Given for Production then use Below URL
+    //public static String BASE_URL = "https://gandhardevapi.azurewebsites.net/";
+    //For Developer Use below URL and Check
+    public static String BASE_URL = "https://gandharuatapi.azurewebsites.net/";
 
     public static Retrofit getClient() {
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
