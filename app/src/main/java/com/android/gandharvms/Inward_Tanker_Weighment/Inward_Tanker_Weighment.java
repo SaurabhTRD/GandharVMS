@@ -115,6 +115,8 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
     private static final int CAMERA_PERM_CODE = 101;
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int CAMERA_REQUEST_CODE1 = 103;
+    public static String Tanker;
+    public static String Truck;
     final Calendar calendar = Calendar.getInstance();
     private final int MAX_LENGTH = 10;
     private final String dateTimeString = "";
@@ -137,6 +139,15 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
     byte[][] arrayOfByteArrays = new byte[2][];
     Uri[] LocalImgPath = new Uri[2];
     TimePickerDialog tpicker;
+    String[] weighqtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
+    Integer weighqtyUomNumericValue = 1;
+    AutoCompleteTextView weighautoCompleteTextView1;
+    Map<String, Integer> weighqtyUomMapping = new HashMap<>();
+    ArrayAdapter<String> weighqtyuomdrop;
+    List<String> teamList = new ArrayList<>();
+    ImageView btnlogout, btnhome;
+    TextView username, empid;
+    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private Weighment weighmentdetails;
     private String imgPath1, imgPath2;
     private SharedPreferences sharedPreferences;
@@ -144,19 +155,8 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
     private String token, vehicle_No;
     private int id, inwardid;
     private LoginMethod userDetails;
-    String[] weighqtyuom = {"Ton", "Litre", "KL", "Kgs", "pcs", "NA"};
-    Integer weighqtyUomNumericValue = 1;
-    AutoCompleteTextView weighautoCompleteTextView1;
-    Map<String, Integer> weighqtyUomMapping = new HashMap<>();
-    ArrayAdapter<String> weighqtyuomdrop;
     private int insertweighqty;
     private int insertnetweighqtyUom;
-    List<String> teamList = new ArrayList<>();
-    ImageView btnlogout, btnhome;
-    TextView username, empid;
-    dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
-    public static String Tanker;
-    public static String Truck;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -548,7 +548,7 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
                 call.enqueue(new Callback<Boolean>() {
                     @Override
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful() && response.body() != null && response.body()==true) {
+                        if (response.isSuccessful() && response.body() != null && response.body()) {
                             dialogHelper.hideProgressDialog(); // Hide after response
                             Log.d("Registration", "Response Body: " + response.body());
                             deleteLocalImage(vehicelnumber, outTime);
@@ -884,15 +884,14 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
             public void onResponse(Call<InTanWeighResponseModel> call, Response<InTanWeighResponseModel> response) {
                 if (response.isSuccessful()) {
                     InTanWeighResponseModel data = response.body();
-                    if (data.getVehicleNo() != null) {
+                    if (data.getVehicleNo() != null && !data.getVehicleNo().isEmpty()) {
                         id = data.getId();
                         inwardid = data.getInwardId();
+                        etint.setVisibility(View.GONE);
                         etserialnumber.setText(data.getSerialNo());
                         etserialnumber.setEnabled(false);
                         etvehicalno.setText(data.getVehicleNo());
                         etvehicalno.setEnabled(true); // editable only if not update mode
-                        //etmaterialname.setText(data.getMaterial());
-                        //etmaterialname.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);
                         etsuppliername.setText(data.getPartyName());
@@ -904,17 +903,18 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
                         etdriverno.setText(data.getDriver_MobileNo());
                         etdriverno.setEnabled(true);
                         etoano.setText(data.getOA_PO_number());
-                        etoano.setEnabled(false);
+                        etoano.setEnabled(true);
                         etint.setText(data.getInTime());
                         //etint.setEnabled(false);
                         etgrossweight.setText(data.getGrossWeight());
                         etgrossweight.setEnabled(false);
                         etcontainer.setText(data.getContainerNo());
-                        etcontainer.setEnabled(true);
-                        etremark.setText(data.getRemark());
-                        etremark.setEnabled(true);
+                        etcontainer.setEnabled(false);
+                        etremark.setVisibility(View.GONE);
                         etsignby.setText(data.getSignBy());
-                        etsignby.setEnabled(true);
+                        etsignby.setEnabled(false);
+                        img1.setVisibility(View.GONE);
+                        img2.setVisibility(View.GONE);
                         String extraMaterialsJson = data.getExtramaterials();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
@@ -924,86 +924,14 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
                         if ("update".equals(mode)) {
                             wesubmit.setVisibility(View.VISIBLE);
                             wesubmit.setText("Update");
-
                             wesubmit.setOnClickListener(v -> {
-                                // Call update logic here
-                                // updateWeighmentData(); // you must define this method
                                 weupdatedata();
                             });
                         }
 
                     } else {
-                        Toast.makeText(Inward_Tanker_Weighment.this, "This Vehicle is Completed Inward Tanker Process", Toast.LENGTH_SHORT).show();
-
+                        Toasty.warning(Inward_Tanker_Weighment.this, "This Vehicle is Completed Inward Tanker Process", Toast.LENGTH_SHORT).show();
                     }
-                }
-            }
-
-            private void updateWeighmentData() {
-//                String FileInitial = "InVeh_In_";
-//                arrayOfByteArrays[0] = ImgVehicle;
-//                arrayOfByteArrays[1] = ImgDriver;
-//                imgPath1 = "GAimages/"+ FileInitial + etserialnumber.getText().toString() + ".jpeg";
-//                for (byte[] byteArray : arrayOfByteArrays) {
-//
-//                    MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + etserialnumber.getText().toString() + ".jpeg", "");
-//                    multipartTask.execute();
-//                    FileInitial = "InDrv_In_";
-//                }
-//                imgPath2 = "GAimages/"+ FileInitial + etserialnumber.getText().toString() + ".jpeg";
-//                FileInitial = "";
-                weupdatedata();
-            }
-
-            public void weupdatedata() {
-                String vehicelnumber = etvehicalno.getText().toString().trim();
-                String suppliername = etsuppliername.getText().toString().trim();
-                String driverno = etdriverno.getText().toString().trim();
-                String oan = etoano.getText().toString().trim();
-                String grossweight = etgrossweight.getText().toString().trim();
-                String remark = etremark.getText().toString().trim();
-                String signby = etsignby.getText().toString().trim();
-                String container = etcontainer.getText().toString().trim();
-
-                if (vehicelnumber.isEmpty() || suppliername.isEmpty() ||
-                        driverno.isEmpty() || oan.isEmpty() || grossweight.isEmpty() ||
-                        signby.isEmpty() || container.isEmpty()) {
-                    Toasty.warning(Inward_Tanker_Weighment.this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-                } else {
-                    ItUpdweighrequestmodel weighReqModel = new ItUpdweighrequestmodel(inwardid,grossweight,
-                           remark, signby, container,"","",EmployeId,driverno,oan,
-                            vehicelnumber,suppliername);
-
-                    Call<Boolean> call = weighmentdetails.itupdateweighdata(weighReqModel);
-                    call.enqueue(new Callback<Boolean>() {
-                        @Override
-                        public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                            if (response.isSuccessful() && response.body() != null && response.body() == true) {
-                                Log.d("Registration", "Response Body: " + response.body());
-                                Toasty.error(Inward_Tanker_Weighment.this, "Data Updated successfully..!", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toasty.error(Inward_Tanker_Weighment.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<Boolean> call, Throwable t) {
-                            Log.e("Retrofit", "Failure: " + t.getMessage());
-                            // Check if there's a response body in case of an HTTP error
-                            if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                                Response<?> response = ((HttpException) t).response();
-                                if (response != null) {
-                                    Log.e("Retrofit", "Error Response Code: " + response.code());
-                                    try {
-                                        Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                }
-                            }
-                            Toasty.error(Inward_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
-                        }
-                    });
                 }
             }
 
@@ -1025,5 +953,73 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
                 Toasty.error(Inward_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void weupdatedata() {
+        String vehicelnumber = etvehicalno.getText().toString().trim();
+        String suppliername = etsuppliername.getText().toString().trim();
+        String driverno = etdriverno.getText().toString().trim();
+        String oan = etoano.getText().toString().trim();
+
+        if (vehicelnumber.isEmpty() || suppliername.isEmpty() ||
+                driverno.isEmpty() || oan.isEmpty()) {
+            Toasty.warning(Inward_Tanker_Weighment.this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+        } else {
+            ItUpdweighrequestmodel weighReqModel = new ItUpdweighrequestmodel();
+            if (!etweighqty.getText().toString().isEmpty()) {
+                try {
+                    insertweighqty = Integer.parseInt(etweighqty.getText().toString().trim());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+            if (!weighqtyUomNumericValue.toString().isEmpty()) {
+                try {
+                    insertnetweighqtyUom = Integer.parseInt(weighqtyUomNumericValue.toString().trim());
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+            weighReqModel.InwardId = inwardid;
+            weighReqModel.WeighQty = insertweighqty;
+            weighReqModel.WeightQtyUOM = insertnetweighqtyUom;
+            weighReqModel.UpdatedBy = EmployeId;
+            weighReqModel.VehicleNo = etvehicalno.getText().toString().trim();
+            weighReqModel.PartyName = etsuppliername.getText().toString().trim();
+            weighReqModel.OA_PO_number = etoano.getText().toString().trim();
+            weighReqModel.Driver_MobileNo = etdriverno.getText().toString().trim();
+            Call<Boolean> call = weighmentdetails.itupdateweighdata(weighReqModel);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    if (response.isSuccessful() && response.body() != null && response.body()) {
+                        Log.d("Registration", "Response Body: " + response.body());
+                        Toasty.success(Inward_Tanker_Weighment.this, "Data Updated successfully..!", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(Inward_Tanker_Weighment.this, grid.class);
+                        startActivity(intent);
+                    } else {
+                        Toasty.error(Inward_Tanker_Weighment.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    // Check if there's a response body in case of an HTTP error
+                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                        Response<?> response = ((HttpException) t).response();
+                        if (response != null) {
+                            Log.e("Retrofit", "Error Response Code: " + response.code());
+                            try {
+                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }
+                    Toasty.error(Inward_Tanker_Weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 }
