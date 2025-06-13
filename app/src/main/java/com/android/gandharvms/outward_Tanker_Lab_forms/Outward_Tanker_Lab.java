@@ -8,6 +8,7 @@ import com.android.gandharvms.Outward_Tanker_Production_forms.Production_Model_U
 import com.android.gandharvms.Outward_Tanker_Production_forms.Production_bulkloading_model;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Repet_update_Model;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Request_Model_blendflush;
+import com.android.gandharvms.Outward_Tanker_Production_forms.updatecustomername;
 import com.android.gandharvms.Outward_Tanker_Production_forms.updateproduct;
 
 import retrofit2.Call;
@@ -86,4 +87,9 @@ public interface Outward_Tanker_Lab {
     //update prodcut name for outward tanker production
     @POST("api/OutwardBulkProductionAndLaboratory/UpdateProductNameById")
     Call<Boolean> updateProductName(@Body updateproduct updateproduct);
+
+    //update customername outwaerd tanker production
+
+    @POST("api/OutwardBulkProductionAndLaboratory/UpdatecustomerNameById")
+    Call<Boolean> updateCustomerName(@Body updatecustomername updatecustomername);
 }

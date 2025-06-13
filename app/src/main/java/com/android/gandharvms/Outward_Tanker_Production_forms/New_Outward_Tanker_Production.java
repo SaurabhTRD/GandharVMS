@@ -2,6 +2,7 @@ package com.android.gandharvms.Outward_Tanker_Production_forms;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,6 +14,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
@@ -109,6 +111,9 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
     public int compartmentcount;
     public  int currentCompartment;
 
+    private SharedPreferences sharedPreferences;
+    public ImageView imgupdate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -163,6 +168,13 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                 String time =  format.format(calendar.getTime());
                 intime.setText(time);
+            }
+        });
+        imgupdate = findViewById(R.id.updateIcon);
+        imgupdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updatecustomername();
             }
         });
 
@@ -260,6 +272,27 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
             }
         });
 
+        sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
+
+        if (sharedPreferences != null) {
+            if (getIntent().hasExtra("VehicleNumber")) {
+                String action = getIntent().getStringExtra("Action");
+                if (action != null && action.equals("Up")) {
+                    FetchVehicleDetailsupdate(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'x', 'I');
+                } else {
+                    FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
+                    btnsubmit.setVisibility(View.GONE);
+                    //button1.setVisibility(View.GONE);
+                }
+//                btnadd.setVisibility(View.GONE);
+            } else {
+                //GetMaxSerialNo(vehicletype+ formattedDate);
+            }
+
+        } else {
+            Log.e("MainActivity", "SharedPreferences is null");
+        }
+
 
 
 
@@ -287,6 +320,138 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
                         product.setEnabled(false);
                         customer.setText(data.getCustomerName());
                         customer.setEnabled(false);
+                        location.setText(data.getLocation());
+                        location.setEnabled(false);
+                        howqty.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+                        howqty.setEnabled(false);
+                        transporter.setText(data.getTransportName());
+                        transporter.setEnabled(false);
+                        etbillremark.setText(data.getTankerBillingRemark());
+                        etbillremark.setEnabled(false);
+                        compartmentcount = data.getCompartmentCount();
+
+                        // ✅ Compartment Count Logic
+                        List<String> compartments = new ArrayList<>();
+
+                        if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty())
+                            compartments.add(data.getProcompartment1());
+                        if (data.getProcompartment2() != null && !data.getProcompartment2().isEmpty())
+                            compartments.add(data.getProcompartment2());
+                        if (data.getProcompartment3() != null && !data.getProcompartment3().isEmpty())
+                            compartments.add(data.getProcompartment3());
+                        if (data.getProcompartment4() != null && !data.getProcompartment4().isEmpty())
+                            compartments.add(data.getProcompartment4());
+                        if (data.getProcompartment5() != null && !data.getProcompartment5().isEmpty())
+                            compartments.add(data.getProcompartment5());
+                        if (data.getProcompartment6() != null && !data.getProcompartment6().isEmpty())
+                            compartments.add(data.getProcompartment6());
+
+                        compartmentArraycount = compartments.size(); // ✅ Store count dynamically
+                        Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
+
+                        // 🔹 Fetch and parse compartments, then show dialog
+                        List<String> compartmentsJson = Arrays.asList(
+                                data.getProcompartment1(),
+                                data.getProcompartment2(),
+                                data.getProcompartment3(),
+                                data.getProcompartment4(),
+                                data.getProcompartment5(),
+                                data.getProcompartment6()
+                        );
+                        boolean hasCompartmentData = false; // Flag to check if at least one compartment has data
+
+                        for (String json : compartmentsJson) {
+                            Compartment compartment = parseCompartment(json);
+                            if (compartment != null) {
+                                compartmentList.add(compartment);
+                                hasCompartmentData = true; // Set flag to true when a compartment is found
+                                adapter.notifyDataSetChanged();
+                                // 🔹 Show Update or Submit button based on compartment data
+                                if (compartmentcount >= compartmentArraycount) {
+                                    btnsubmit.setVisibility(View.GONE);
+                                    btnupdate.setVisibility(View.VISIBLE);
+//                                    intime.setVisibility(View.GONE);
+//                                    blendernumber.setVisibility(View.GONE);
+//                                    signproduction.setVisibility(View.GONE);
+//                                    oprator.setVisibility(View.GONE);
+//                                    remark.setVisibility(View.GONE);
+//                                    etbillremark.setVisibility(View.GONE);
+
+                                } else {
+                                    btnsubmit.setVisibility(View.VISIBLE);
+                                    btnupdate.setVisibility(View.GONE);
+                                }
+                            }
+                        }
+                        // ✅ Hide fields if more than 1 compartment
+                        if (compartmentArraycount >= 1) {
+                            intime.setVisibility(View.GONE);
+                            blendernumber.setVisibility(View.GONE);
+                            signproduction.setVisibility(View.GONE);
+                            oprator.setVisibility(View.GONE);
+                            remark.setVisibility(View.GONE);
+                            checkBoxMultipleVehicle.setVisibility(View.GONE);
+                            Log.d("VISIBILITY_UPDATE", "Hiding fields because compartment count is: " + compartmentArraycount);
+                        } else {
+                            // ✅ Show fields if only one compartment
+                            intime.setVisibility(View.VISIBLE);
+                            blendernumber.setVisibility(View.VISIBLE);
+                            signproduction.setVisibility(View.VISIBLE);
+                            oprator.setVisibility(View.VISIBLE);
+                            remark.setVisibility(View.VISIBLE);
+                            checkBoxMultipleVehicle.setVisibility(View.VISIBLE);
+                            Log.d("VISIBILITY_UPDATE", "Showing fields because compartment count is: " + compartmentArraycount);
+                        }
+
+                    } else {
+                        Toasty.error(New_Outward_Tanker_Production.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Lab_Model__Outward_Tanker> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    private void FetchVehicleDetailsupdate(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
+        Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo, vehicleType, nextProcess, inOut);
+        call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
+            @Override
+            public void onResponse(Call<Lab_Model__Outward_Tanker> call, Response<Lab_Model__Outward_Tanker> response) {
+                if (response.isSuccessful()) {
+                    Lab_Model__Outward_Tanker data = response.body();
+                    if (data.getVehicleNumber() != null && data.getVehicleNumber() != "") {
+                        oploutwardid = data.getOplOutwardId();
+                        OutwardId = data.getOutwardId();
+                        serialnumber.setText(data.getSerialNumber());
+                        serialnumber.setEnabled(false);
+                        updateserialnumber = data.getSerialNumber();
+                        vehiclenumber.setText(data.getVehicleNumber());
+                        vehiclenumber.setEnabled(false);
+                        updatevehiclenumber = data.getVehicleNumber();
+                        oanumber.setText(data.getOAnumber());
+                        oanumber.setEnabled(false);
+                        product.setText(data.getProductQTYUOMOA());
+                        product.setEnabled(false);
+                        customer.setText(data.getCustomerName());
                         location.setText(data.getLocation());
                         location.setEnabled(false);
                         howqty.setText(String.valueOf(data.getHowMuchQuantityFilled()));
@@ -785,6 +950,41 @@ private void showAddCompartmentDialogs(int count) {
             public void onFailure(Call<Boolean> call, Throwable t) {
                 Log.e("Retrofit", "Failure: " + t.getMessage());
                 Toasty.error(New_Outward_Tanker_Production.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void updatecustomername(){
+        String custname = customer.getText().toString();
+
+        updatecustomername updatecustomername = new updatecustomername(OutwardId,custname,EmployeId);
+
+        Call<Boolean> call = outwardTankerLab.updateCustomerName(updatecustomername);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null){
+                    Toasty.success(New_Outward_Tanker_Production.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
+                }else {
+                    Toasty.error(New_Outward_Tanker_Production.this, "Update Failed!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
             }
         });
     }

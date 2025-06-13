@@ -2,6 +2,7 @@ package com.android.gandharvms.Outward_Tanker_Production_forms;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Weighment.Adapter_OT_completed_Weighment;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.ProductOA_Adapter;
@@ -82,6 +85,18 @@ public class Adapter_OT_completed_inproc_prodcuction extends RecyclerView.Adapte
         }
         holder.serialnum.setText(club.getSerialNumber());
         holder.vehiclenum.setText(club.getVehicleNumber());
+
+        holder.vehiclenum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common_Outward_model club = filteredGridList.get(position);
+                Intent intent = new Intent(view.getContext(), New_Outward_Tanker_Production.class);
+                intent.putExtra("VehicleNumber", club.getVehicleNumber());
+                intent.putExtra("Action", "Up");
+                view.getContext().startActivity(intent);
+            }
+        });
+
         holder.prodOaNo.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         holder.prodOaNo.setOnClickListener(new View.OnClickListener() {
             @Override
