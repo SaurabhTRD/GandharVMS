@@ -327,7 +327,7 @@ public class OutwardOut_Truck_Billing extends NotificationCommonfunctioncls {
                             ilpack26literqty.setEnabled(false);
                             ilpack50literqty.setText("IndusPack 50 Liter Qty :- " + data.getIlpackof50ltrqty());
                             ilpack50literqty.setEnabled(false);
-                            ilpack210literqty.setText("IndusPack 210 Liter Qty :- " + data.getIlpackof50ltrqty());
+                            ilpack210literqty.setText("IndusPack 210 Liter Qty :- " + data.getIlpackof210ltrqty());
                             ilpack210literqty.setEnabled(false);
                             ilpackboxbucketqty.setText("IndusPack BoxBucket Qty :- " + data.getIlpackofboxbuxketltrqty());
                             ilpackboxbucketqty.setEnabled(false);
@@ -348,7 +348,7 @@ public class OutwardOut_Truck_Billing extends NotificationCommonfunctioncls {
                             ilpack26literqty.setEnabled(false);
                             ilpack50literqty.setText("IndusPack 50 Liter Qty :- " + data.getIlpackof50ltrqty());
                             ilpack50literqty.setEnabled(false);
-                            ilpack210literqty.setText("IndusPack 210 Liter Qty :- " + data.getIlpackof50ltrqty());
+                            ilpack210literqty.setText("IndusPack 210 Liter Qty :- " + data.getIlpackof210ltrqty());
                             ilpack210literqty.setEnabled(false);
                             ilpackboxbucketqty.setText("IndusPack BoxBucket Qty :- " + data.getIlpackofboxbuxketltrqty());
                             ilpackboxbucketqty.setEnabled(false);
