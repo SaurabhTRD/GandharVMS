@@ -352,18 +352,26 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                                 data.getProcompartment6()
                         );
                         for (String json : compartmentsJson) {
-                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
-                            if (labCompartmentModel != null) {
-                                compartmentList.add(labCompartmentModel);
-                                adapter.notifyDataSetChanged();
-                                // 🔹 Show Update or Submit button based on compartment data
+                            if (json != null && !json.trim().isEmpty()) {
+
+                                Lab_compartment_model labCompartmentModel = parseCompartment(json);
+                                if (labCompartmentModel != null) {
+                                    compartmentList.add(labCompartmentModel);
+                                    //adapter.notifyDataSetChanged();
+                                    // 🔹 Show Update or Submit button based on compartment data
+                                }
                             }
+
                         }
+                        adapter.notifyDataSetChanged();
                         // If Cluase to get Latest Compartment Data for Weight Verification
-                        if (compartmentList.size() < procompartmentsJson.size()) {
-                            Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
-                            compartmentList.add(labCompartmentModel1);
-                            adapter.notifyDataSetChanged();
+                        String json = procompartmentsJson.get(compartmentList.size());
+                        if (json != null && !json.trim().isEmpty()) {
+                            if (compartmentList.size() < procompartmentsJson.size()) {
+                                Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
+                                compartmentList.add(labCompartmentModel1);
+                                adapter.notifyDataSetChanged();
+                            }
                         }
                     } else {
                         Toasty.error(OutwardOut_Tanker_Weighment.this, "This Vehicle Number is Not Availabe", Toast.LENGTH_SHORT).show();
@@ -720,13 +728,14 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
     }
 
     private Lab_compartment_model parseCompartment(String jsonString) {
-        if (jsonString == null || jsonString.isEmpty()) {
+        if (jsonString == null || jsonString.trim().isEmpty()) {
             Log.e("JSON_ERROR", "Empty JSON string");
             return null; // Handle empty data safely
         }
         try {
+            Log.d("JSON_PARSE", "Parsing compartment JSON: " + jsonString);
             Gson gson = new Gson();
-            return gson.fromJson(jsonString.replace("/", ""), Lab_compartment_model.class);
+            return gson.fromJson(jsonString, Lab_compartment_model.class);
         } catch (Exception e) {
             Log.e("JSON_ERROR", "Error parsing JSON: " + e.getMessage());
             return null;
