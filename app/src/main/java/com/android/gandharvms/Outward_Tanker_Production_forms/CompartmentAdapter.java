@@ -38,7 +38,7 @@ public class CompartmentAdapter extends RecyclerView.Adapter<CompartmentAdapter.
         holder.txtBlender.setText("Blender: " + compartment.getBlenderNumber());
         holder.txtProduction.setText("Production Sign: " + compartment.getProductionSign());
         holder.txtOperator.setText("Operator: " + compartment.getOperatorSign());
-        holder.txtproduct.setText("ProductName: " + compartment.getProductname() + "");
+        holder.txtproduct.setText("ProductName: " + compartment.getProductname());
 
         // Set text color and size for better visibility
         holder.txtBlender.setTextColor(Color.BLACK);

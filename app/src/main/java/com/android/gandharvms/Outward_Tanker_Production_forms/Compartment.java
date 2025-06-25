@@ -16,7 +16,7 @@ public class Compartment {
     private String qcOfficer;
     private String Remark;
 
-    public String productname;
+    public String ProductName;
     private boolean isSelected; // ✅ New field to track selection
     public String InTime;
 
@@ -24,13 +24,13 @@ public class Compartment {
         this.blenderNumber = blenderNumber;
         this.productionSign = productionSign;
         this.operatorSign = operatorSign;
-        this.productname = productname;
+        this.ProductName = productname;
         this.isSelected = false; // Default: Not selected
     }
     public String getBlenderNumber() { return blenderNumber; }
     public String getProductionSign() { return productionSign; }
     public String getOperatorSign() { return operatorSign; }
-    public String getProductname() { return operatorSign; }
+    public String getProductname() { return ProductName; }
     public String setProductname() { return operatorSign; }
 
 

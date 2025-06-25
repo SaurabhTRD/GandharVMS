@@ -119,6 +119,7 @@ public class LabCompartmentAdapter extends RecyclerView.Adapter<LabCompartmentAd
         holder.txtBlender.setText(compartment.getBlenderNumber() != null ? "Blender: " + compartment.getBlenderNumber() : "Blender: N/A");
         holder.txtProductionSign.setText(compartment.getProductionSign() != null ? "Production Sign: " + compartment.getProductionSign() : "Production Sign: N/A");
         holder.txtOperatorSign.setText(compartment.getOperatorSign() != null ? "Operator Sign: " + compartment.getOperatorSign() : "Operator Sign: N/A");
+        holder.productiomremark.setText(compartment.getRemark() != null ? "Production Remark: " + compartment.getRemark() : "Production Remark: N/A");
 
         holder.edtViscosity.setText(compartment.getViscosity() != null ? "Viscosity: " + compartment.getViscosity() : "");
         holder.edtDensity.setText(compartment.getDensity() != null ? "Density: " + compartment.getDensity() : "");
@@ -168,7 +169,7 @@ public class LabCompartmentAdapter extends RecyclerView.Adapter<LabCompartmentAd
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView txtCompartmentNumber, txtBlender, txtProductionSign, txtOperatorSign,txtproduct;
+        TextView txtCompartmentNumber, txtBlender, txtProductionSign, txtOperatorSign,txtproduct,productiomremark;
         EditText edtViscosity, edtDensity, edtBatchNumber, edtQCOfficer, edtRemark;
         Button btnSaveCompartment;
         public ViewHolder(@NonNull View itemView) {
@@ -178,6 +179,7 @@ public class LabCompartmentAdapter extends RecyclerView.Adapter<LabCompartmentAd
             txtBlender = itemView.findViewById(R.id.txtBlender);
             txtProductionSign = itemView.findViewById(R.id.txtProductionSign);
             txtOperatorSign = itemView.findViewById(R.id.txtOperatorSign);
+            productiomremark = itemView.findViewById(R.id.txtremark);
             // ✅ Initialize EditText fields
             edtViscosity = itemView.findViewById(R.id.edtViscosity);
             edtDensity = itemView.findViewById(R.id.edtDensity);

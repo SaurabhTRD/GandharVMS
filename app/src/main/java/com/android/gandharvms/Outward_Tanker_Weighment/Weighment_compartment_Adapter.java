@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -34,14 +35,24 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
         return new Weighment_compartment_Adapter.ViewHolder(view);
     }
 
+
     @Override
     public void onBindViewHolder(@NonNull Weighment_compartment_Adapter.ViewHolder holder, int position) {
         Lab_compartment_model compartment = compartmentList.get(position);
         Log.d("AdapterBinding", "Binding compartment at position: " + position);
 
+        if (compartment == null) {
+            Toast.makeText(context, "Data Not Found", Toast.LENGTH_SHORT).show();
+            Log.e("AdapterBinding", "Null compartment at position: " + position);
+            return;
+
+        }
+
+        Log.d("AdapterBinding", "Binding compartment at position: " + position);
+
         // ✅ View-Only Production Data (Read-Only)
         holder.txtCompartmentNumber.setText("Compartment " + (position + 1));
-        holder.txtBlender.setText("Blender: " + String.valueOf(compartment.getBlenderNumber()));
+        holder.txtBlender.setText("Blender: " + (compartment.getBlenderNumber().trim()));
         holder.txtProductionSign.setText("Production Sign: " + compartment.getProductionSign());
         holder.txtOperatorSign.setText("Operator Sign: " + compartment.getOperatorSign());
         holder.tareweight.setText(" " + compartment.getTareweight());

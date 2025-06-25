@@ -70,6 +70,18 @@
             android:text="Operator: Z"
             android:textSize="14sp"
             android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Operator Sign -->
+        <TextView
+            android:id="@+id/txtremark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remark: Z"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
             android:layout_marginTop="4dp"/>
 
         <View
