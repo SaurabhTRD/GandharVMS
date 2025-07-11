@@ -99,4 +99,8 @@ dependencies {
     implementation("com.google.auth:google-auth-library-credentials:1.13.0")
     implementation("com.google.auth:google-auth-library-oauth2-http:1.13.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.11.0")
+
+    implementation ("com.google.zxing:core:3.5.2") // ✅ ZXing core library
+    implementation ("androidx.appcompat:appcompat:1.6.1")
+    implementation ("androidx.print:print:1.1.0")
 }

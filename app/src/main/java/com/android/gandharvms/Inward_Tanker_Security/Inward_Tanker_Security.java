@@ -3,18 +3,24 @@ package com.android.gandharvms.Inward_Tanker_Security;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
+import static com.android.gandharvms.QR_Code.QRGeneratorUtil.generateQRCode;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.AppCompatSpinner;
+import androidx.print.PrintHelper;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.ColorSpace;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -46,6 +52,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
+import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
@@ -61,6 +68,7 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.zxing.WriterException;
 
 
 import org.json.JSONArray;
@@ -150,6 +158,10 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
     public static String Tanker;
     public static String Truck;
     dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
+
+    CheckBox cbGenerateQR;
+    ImageView ivQRCode;
+    Button btnPrint;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -276,6 +288,10 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
 //        repremark = findViewById(R.id.edtreportingremark);
 //        cbox = findViewById(R.id.isreporting);
 
+
+        cbGenerateQR = findViewById(R.id.cbGenerateQR);
+        ivQRCode = findViewById(R.id.ivQRCode);
+        Button btnPrint = findViewById(R.id.btnPrintQR);
 
         // for Auto Genrated serial number
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
@@ -489,9 +505,9 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
         } else {
             Log.e("MainActivity", "SharedPreferences is null");
         }
+        // call reusable QR function
+        QRGeneratorUtil.handleQRCheckbox(this, cbGenerateQR, etvehical, etreg, etdate, etintime, ivQRCode, btnPrint);
     }
-
-
     public void onClick(View v) {
         addview();
     }

@@ -34,11 +34,15 @@ public class ot_statusgrid_adapter extends RecyclerView.Adapter<ot_statusgrid_ad
     private List<Response_Outward_Security_Fetching> outwardfilteredGridList;
     private Context context;
 
+//    public ot_statusgrid_adapter(List<Response_Outward_Security_Fetching> responseoutwardgrid) {
+//        this.outwardGridmodel = responseoutwardgrid;
+//        this.outwardfilteredGridList = responseoutwardgrid;
+//    }
+
     public ot_statusgrid_adapter(List<Response_Outward_Security_Fetching> responseoutwardgrid) {
         this.outwardGridmodel = responseoutwardgrid;
-        this.outwardfilteredGridList = responseoutwardgrid;
+        this.outwardfilteredGridList = new ArrayList<>(responseoutwardgrid);
     }
-
     @NonNull
     @Override
     public myviewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
@@ -120,7 +124,7 @@ public class ot_statusgrid_adapter extends RecyclerView.Adapter<ot_statusgrid_ad
 
     @Override
     public int getItemCount() {
-        return outwardGridmodel.size();
+        return outwardfilteredGridList.size();
     }
 
     public class myviewHolder extends RecyclerView.ViewHolder {
@@ -183,33 +187,73 @@ public class ot_statusgrid_adapter extends RecyclerView.Adapter<ot_statusgrid_ad
         builder.setPositiveButton("Close", null);
         builder.show();
     }
+//    public Filter getFilter() {
+//        return new Filter() {
+//            protected FilterResults performFiltering(CharSequence charSequence) {
+//                String charString = charSequence.toString();
+//                if (charString.isEmpty()) {
+//                    outwardfilteredGridList = outwardGridmodel;
+//                } else {
+//                    List<Response_Outward_Security_Fetching> filteredList = new ArrayList<>();
+//                    for (Response_Outward_Security_Fetching club : outwardfilteredGridList) {
+//                        // name match condition. this might differ depending on your requirement
+//                        // here we are looking for name
+//                        if (club.getSerialNumber().toLowerCase().contains(charString.toLowerCase()) || club.getVehicleNumber().toLowerCase().contains(charString.toLowerCase())) {
+//                            filteredList.add(club);
+//                        }
+//                    }
+//                    outwardfilteredGridList = filteredList;
+//                }
+//                FilterResults filterResults = new FilterResults();
+//                filterResults.values = outwardfilteredGridList;
+//                return filterResults;
+//            }
+//
+//            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+//                outwardfilteredGridList = (ArrayList<Response_Outward_Security_Fetching>) filterResults.values;
+//                // refresh the list with filtered data
+//                notifyDataSetChanged();
+//            }
+//        };
+//    }
+
+    @Override
     public Filter getFilter() {
         return new Filter() {
+            @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
-                if (charString.isEmpty()) {
+                String[] parts = charString.split("\\|");
+
+                String vehicleNumberQuery = parts.length > 0 ? parts[0] : "";
+                String customerNameQuery = parts.length > 1 ? parts[1] : "";
+
+                if (vehicleNumberQuery.isEmpty() && customerNameQuery.isEmpty()) {
                     outwardfilteredGridList = outwardGridmodel;
                 } else {
                     List<Response_Outward_Security_Fetching> filteredList = new ArrayList<>();
-                    for (Response_Outward_Security_Fetching club : outwardfilteredGridList) {
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name
-                        if (club.getSerialNumber().toLowerCase().contains(charString.toLowerCase()) || club.getVehicleNumber().toLowerCase().contains(charString.toLowerCase())) {
+                    for (Response_Outward_Security_Fetching club : outwardGridmodel) {
+                        boolean matchesVehicle = vehicleNumberQuery.isEmpty() || (club.getVehicleNumber() != null && club.getVehicleNumber().toLowerCase().contains(vehicleNumberQuery.toLowerCase()));
+                        boolean matchesCustomer = customerNameQuery.isEmpty() || (club.getTransportName() != null && club.getTransportName().toLowerCase().contains(customerNameQuery.toLowerCase()));
+
+                        if (matchesVehicle && matchesCustomer) {
                             filteredList.add(club);
                         }
                     }
                     outwardfilteredGridList = filteredList;
                 }
+
                 FilterResults filterResults = new FilterResults();
                 filterResults.values = outwardfilteredGridList;
                 return filterResults;
             }
 
+            @Override
             protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
                 outwardfilteredGridList = (ArrayList<Response_Outward_Security_Fetching>) filterResults.values;
-                // refresh the list with filtered data
                 notifyDataSetChanged();
             }
         };
     }
+
 }

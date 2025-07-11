@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -64,6 +65,8 @@ public class ot_statusgrid_livedata extends AppCompatActivity {
     //List<Respo_Model_In_Tanker_security> clubList = new ArrayList<>();
     List<Common_Outward_model> clubList = new ArrayList<>();
     private Outward_Tanker outwardTanker;
+    EditText edtVehicleNumber, edtCustomerName;
+    Button btnSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,9 @@ public class ot_statusgrid_livedata extends AppCompatActivity {
         outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
         setContentView(R.layout.activity_ot_statusgrid_livedata);
         currdate=findViewById(R.id.otgridcurrrentdate);
+        edtVehicleNumber = findViewById(R.id.edtVehicleNumber);
+        edtCustomerName = findViewById(R.id.edtCustomerName);
+        btnSearch = findViewById(R.id.btnSearch);
 
         currdate.setText(getCurrentDateTime().toString().trim());
         fromDate = findViewById(R.id.gridbtnfromDateoutwardtanker);
@@ -128,6 +134,16 @@ public class ot_statusgrid_livedata extends AppCompatActivity {
             public void onClick(View v) {
                 // Handle the onClick for fromDate button
                 showDatePickerDialog(toDate, false);
+            }
+        });
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String vehicleNumber = edtVehicleNumber.getText().toString().trim();
+                String customerName = edtCustomerName.getText().toString().trim();
+
+                // Apply filter in adapter
+                outwardGridAdapter.getFilter().filter(vehicleNumber + "|" + customerName);
             }
         });
     }

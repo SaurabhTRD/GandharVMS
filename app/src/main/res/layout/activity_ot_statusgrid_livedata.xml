@@ -56,6 +56,36 @@
             android:layout_height="wrap_content"
             android:text="To-Date"/>
     </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="3"
+        android:padding="8dp">
+
+        <EditText
+            android:id="@+id/edtVehicleNumber"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Vehicle Number"/>
+
+        <EditText
+            android:id="@+id/edtCustomerName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="Customer Name"/>
+
+        <Button
+            android:id="@+id/btnSearch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Search"
+            android:background="@drawable/rounded_button"/>
+    </LinearLayout>
+
     <HorizontalScrollView
         android:id="@+id/otstatusgridheaderscroll"
         android:layout_width="match_parent"
