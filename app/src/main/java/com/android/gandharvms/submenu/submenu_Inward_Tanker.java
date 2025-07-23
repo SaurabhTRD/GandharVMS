@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.IT_VehicleStatus_Grid.it_departmentscompleted_trackdata;
 import com.android.gandharvms.IT_VehicleStatus_Grid.it_statusgrid_livedata;
 import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
 import com.android.gandharvms.Inward_Tanker;
@@ -89,6 +90,17 @@ public class submenu_Inward_Tanker extends NotificationCommonfunctioncls {
             Toasty.info(submenu_Inward_Tanker.this, "You Don't Have Access to View Vehicle Reports Data", Toast.LENGTH_LONG).show();
         }
     }
+
+    public void itdepartmenttrackdata(View view)
+    {
+        if(Global_Var.getInstance().Department.contains("Production") || Global_Var.getInstance().Name.contains("Admin")){
+            Intent intent = new Intent(this, it_departmentscompleted_trackdata.class);
+            startActivity(intent);
+        } else {
+            Toasty.info(submenu_Inward_Tanker.this, "You Don't Have Access to View Departments Track Data", Toast.LENGTH_LONG).show();
+        }
+    }
+
     public void onBackPressed() {
         super.onBackPressed();
         Intent intent = new Intent(this, Menu.class);

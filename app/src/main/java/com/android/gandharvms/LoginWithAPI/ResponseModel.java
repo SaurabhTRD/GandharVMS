@@ -9,6 +9,7 @@ public class ResponseModel {
     private String Department;
     private String Password;
     private String Token;
+    private String App_Version;
     private int DeptId;
 
     public String getEmpId() {
@@ -80,5 +81,13 @@ public class ResponseModel {
 
     public void setDeptId(int deptId) {
         DeptId = deptId;
+    }
+
+    public String getApp_Version() {
+        return App_Version;
+    }
+
+    public void setApp_Version(String app_Version) {
+        App_Version = app_Version;
     }
 }

@@ -47,6 +47,8 @@ public interface API_In_Tanker_Security {
 
     @GET("api/InwardCommon/GetInwardCompDepartmentWiseFactoryOutListing")
     Call<List<CommonResponseModelForAllDepartment>> getitreportdata(
+            @Query("FromDate") String fromdate,
+            @Query("ToDate") String todate,
             @Query("vehicleType") String vehicletype);
 
     @POST("api/InwardSecurity/UpdateOutSecurityDetails")

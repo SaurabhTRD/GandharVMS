@@ -7,38 +7,40 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <!--<LinearLayout
+    <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left">
         <Button
-            android:id="@+id/btnfromDate"
+            android:id="@+id/IttotgridcompletedbtnfromDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="From-Date"/>
 
         <Space
-            android:layout_width="5dp"
+            android:layout_width="15dp"
             android:layout_height="match_parent"/>
 
         <Button
-            android:id="@+id/btntoDate"
+            android:id="@+id/IttotgridcompletedbtntoDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="To-Date"/>
-    </LinearLayout>-->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Ittotgridcompletedrecdepartmentwise"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tot-Rec: "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="8dp"/>
 
-    <TextView
-        android:id="@+id/totrecdepartmentwise"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tot-Rec: "
-        android:textSize="16sp"
-        android:textStyle="bold"
-        android:layout_marginTop="1dp"
-        android:layout_marginLeft="235dp"
-        android:padding="8dp"/>
+    </LinearLayout>
 
     <HorizontalScrollView
         android:layout_width="match_parent"
