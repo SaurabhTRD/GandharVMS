@@ -757,6 +757,25 @@
                     />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginRight="30dp">
+
+                <EditText
+                    android:id="@+id/outwardtruckoutdate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Date"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -961,6 +980,29 @@
                 </RadioGroup>
 
             </LinearLayout>
+
+            <CheckBox
+                android:id="@+id/cbGenerateQR"
+                android:text="Generate QR Code"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"/>
+
+            <ImageView
+                android:id="@+id/ivQRCode"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:padding="8dp"
+                android:visibility="gone"/>
+            <Button
+                android:id="@+id/btnPrintQR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Print QR"
+                android:layout_marginStart="280dp"
+                android:background="@drawable/rounded_button"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

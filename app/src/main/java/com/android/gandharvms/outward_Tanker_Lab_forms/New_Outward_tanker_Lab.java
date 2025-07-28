@@ -93,6 +93,11 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     private List<Lab_compartment_model> compartmentList;
     private RecyclerView recyclerView;
     private LabCompartmentAdapter adapter;
+    int selectedCompartmentIndex = 0;
+    int firstProCompartmentIndex;
+    private String[] compartmentJsonStrings = new String[6];
+    public List<String> procompartmentsJson ;
+    public  List<String> LabcompartmentsJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -245,34 +250,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                         compartmentArraycount = compartments.size(); // ✅ Store count dynamically
                         Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
 
-                        // ✅ Show First Compartment (procompartment1)
-//                        if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty()) {
-//                            Lab_compartment_model labfirstCompartment = parseCompartment(data.getProcompartment1());
-//                            if (labfirstCompartment != null) {
-//                                showSingleCompartmentCard(labfirstCompartment);
-//                            }
-//                        } else {
-//                            Log.e("COMPARTMENT", "No Compartment 1 Data Available");
-//                        }
-//                        List<String> compartmentsJson = Arrays.asList(
-////                                data.getProcompartment1(),
-//                                data.getProcompartment2(),
-//                                data.getProcompartment3(),
-//                                data.getProcompartment4(),
-//                                data.getProcompartment5(),
-//                                data.getProcompartment6()
-//                        );
-//                        for (String json : compartmentsJson) {
-//                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
-//                            if (labCompartmentModel != null) {
-//                                compartmentList.add(labCompartmentModel);
-//                                adapter.notifyDataSetChanged();
-//                                // 🔹 Show Update or Submit button based on compartment data
-//                            }
-//                        }
-
-
-                        List<String> LabcompartmentsJson = Arrays.asList(
+                         LabcompartmentsJson = Arrays.asList(
                                 data.getLabcompartment1(),
                                 data.getLabcompartment2(),
                                 data.getLabcompartment3(),
@@ -280,7 +258,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                                 data.getLabcompartment5(),
                                 data.getLabcompartment6()
                         );
-                        List<String> procompartmentsJson = Arrays.asList(
+                         procompartmentsJson = Arrays.asList(
                                 data.getProcompartment1(),
                                 data.getProcompartment2(),
                                 data.getProcompartment3(),
@@ -289,26 +267,55 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                                 data.getProcompartment6()
                         );
 
+                        compartmentList.clear();
 
-                        // ✅ Process Lab Compartments (Main Data)
-                        for (String json : LabcompartmentsJson) {
-                            if (json != null && !json.trim().isEmpty()) {
-                                Lab_compartment_model labCompartmentModel = parseCompartment(json);
-                                if (labCompartmentModel != null) {
-                                    Log.d("DEBUG", "Adding Lab Compartment: " + json);
-                                    compartmentList.add(labCompartmentModel);
+//                        firstProCompartmentIndex = -1;
+//                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+//                            String proJson = procompartmentsJson.get(i);
+//                            if (proJson != null && !proJson.trim().isEmpty()) {
+//                                firstProCompartmentIndex = i;
+//                                break;
+//                            }
+//                        }
+                        firstProCompartmentIndex = -1;
+
+                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+                            String proJson = procompartmentsJson.get(i);
+                            String labJson = (i < LabcompartmentsJson.size()) ? LabcompartmentsJson.get(i) : null;
+
+                            if (proJson != null && !proJson.trim().isEmpty()) {
+                                boolean isNewCompartment = (labJson == null || labJson.trim().isEmpty());
+
+                                if (isNewCompartment) {
+                                    firstProCompartmentIndex = i;
+                                    break;
                                 }
                             }
                         }
 
-                        // ✅ If "procompartmentsJson" Exists, Fetch the Latest One
-                        if (isCheck && compartmentList.size() < procompartmentsJson.size()) {
-                            int index = compartmentList.size(); // ✅ Safe indexing
-                            if (index >= 0 && index < procompartmentsJson.size()) {
-                                Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(index));
-                                if (labCompartmentModel1 != null) {
-                                    Log.d("DEBUG", "Adding Latest Procompartment: " + procompartmentsJson.get(index));
-                                    compartmentList.add(labCompartmentModel1);
+
+                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+                            String proJson = procompartmentsJson.get(i);
+                            String labJson = (i < LabcompartmentsJson.size()) ? LabcompartmentsJson.get(i) : null;
+
+                            if (proJson != null && !proJson.trim().isEmpty()) {
+                                boolean shouldBind = false;
+
+                                if (labJson == null || labJson.trim().isEmpty()) {
+                                    shouldBind = true;  // ✅ Compartment not filled yet, bind for verification
+                                }
+
+                                if (shouldBind) {
+                                    Lab_compartment_model model = parseCompartment(proJson);
+                                    model.setTargetIndex(firstProCompartmentIndex);
+                                    if (model != null) {
+                                        model.setTargetIndex(i);
+                                        model.setOriginalJson(proJson);
+                                        compartmentList.add(model);
+                                        Log.d("VERIFY_BIND", "✔ Added proCompartment at index " + i);
+                                    } else {
+                                        Log.w("VERIFY_BIND", "⚠ Failed to parse proCompartment at index " + i);
+                                    }
                                 }
                             }
                         }
@@ -464,153 +471,103 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         String ivehicle = newlvehiclenum.getText().toString();
         String iviscosity = newlviscosity.getText().toString();
         String idensity = newldentinity.getText().toString();
-        //BigDecimal objdensity = new BigDecimal(idensity);
         BigDecimal objdensity = idensity.isEmpty() ? null : new BigDecimal(idensity);
         String ibatchnum = newlbatchnum.getText().toString();
         String iqcofficer = newlqcofficer.getText().toString();
         String iremarks = newlremarks.getText().toString();
-        String compartment1String; // ✅ Declare outside
+
+        int targetIndex = firstProCompartmentIndex;
+
+        // Check index validity
+        if (targetIndex < 0 || targetIndex > 5) {
+            Toast.makeText(this, "Invalid compartment index", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Initialize the array if not already
+        if (compartmentJsonStrings == null || compartmentJsonStrings.length != 6) {
+            compartmentJsonStrings = new String[6];
+        }
 
         if (isCheck) {
-            compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
-        } else {
-            LabCompartment_Model compartment1 = new LabCompartment_Model(inTime, iviscosity, idensity, ibatchnum, iqcofficer, iremarks);
-            compartment1String = convertCompartmentToJson_compartment1(compartment1);
-        }
+            for (int i = 0; i < compartmentList.size(); i++) {
+                Lab_compartment_model comp = compartmentList.get(i);
 
+                 targetIndex = comp.getTargetIndex();  // ✅ Use actual target index
 
-        //String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
-//        LabCompartment_Model compartment1 = new LabCompartment_Model(inTime,iviscosity,idensity,ibatchnum,iqcofficer,iremarks);
-//        String compartment1String = convertCompartmentToJson_compartment1(compartment1);
-
-        // ✅ Determine I_O based on compartmentcount
-        char I_O_Value;
-        if (isCheck && compartmentArraycount < copartmentcount) {
-            I_O_Value = 'I';  // If exactly 1 compartment and copartmentcount is 0, pass 'O'
-        } else {
-            I_O_Value = 'O';  // Default case (fallback)
-        }
-
-        if (compartment1String.isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-        } else {
-            New_Lab_Model_OutwardTanker newLabModelOutwardTanker = new New_Lab_Model_OutwardTanker(OutwardId, "", outTime, iviscosity, objdensity,
-                    "", "", "", EmployeId, "P", iserialnum, ivehicle, 'W', I_O_Value, vehicleType, EmployeId, compartment1String);
-            dialogHelper.showConfirmationDialog(this, () -> {
-                dialogHelper.showProgressDialog(this); // Show progress when confirmed
-                Call<Boolean> call = outwardTankerLab.newOutwardTankerLaboratory(newLabModelOutwardTanker);
-                call.enqueue(new Callback<Boolean>() {
-                    @Override
-                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                        if (response.isSuccessful() && response.body() != null && response.body()) {
-                            dialogHelper.hideProgressDialog(); // Hide after response
-                            Toasty.success(New_Outward_tanker_Lab.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
-                            makeNotification(ivehicle, outTime);
-                            startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
-                            finish();
-                        } else {
-                            Log.e("Retrofit", "Error Response Body: " + response.code());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Boolean> call, Throwable t) {
-                        dialogHelper.hideProgressDialog(); // Hide after response
-                        Log.e("Retrofit", "Failure: " + t.getMessage());
-                        // Check if there's a response body in case of an HTTP error
-                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                            Response<?> response = ((HttpException) t).response();
-                            if (response != null) {
-                                Log.e("Retrofit", "Error Response Code: " + response.code());
-                                try {
-                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                        Toasty.error(New_Outward_tanker_Lab.this, "failed..!", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            });
-        }
-
-    }
-
-    public void update1() {
-        String iserialnum = newlseralnum.getText().toString();
-        String ivehicle = newlvehiclenum.getText().toString();
-
-        // ✅ Ensure data in `compartmentList` is up-to-date before sending to API
-        for (int i = 0; i < compartmentList.size(); i++) {
-            View view = recyclerView.getLayoutManager().findViewByPosition(i);
-            if (view != null) {
-                EditText edtViscosity = view.findViewById(R.id.edtViscosity);
-                EditText edtDensity = view.findViewById(R.id.edtDensity);
-                EditText edtBatchNumber = view.findViewById(R.id.edtBatchNumber);
-                EditText edtQCOfficer = view.findViewById(R.id.edtQCOfficer);
-                EditText edtRemark = view.findViewById(R.id.edtRemark);
-
-                Lab_compartment_model compartment = compartmentList.get(i);
-                compartment.setViscosity(edtViscosity.getText().toString());
-                compartment.setDensity(edtDensity.getText().toString());
-                compartment.setBatchNumber(edtBatchNumber.getText().toString());
-                compartment.setQcOfficer(edtQCOfficer.getText().toString());
-                compartment.setRemark(edtRemark.getText().toString());
-            }
-        }
-
-        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
-        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
-        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
-        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
-        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
-        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
-
-        // Log the compartment strings to check their format
-        Log.d("Compartment JSON", compartment1String);
-        Log.d("Compartment JSON", compartment2String);
-        Log.d("Compartment JSON", compartment3String);
-        Log.d("Compartment JSON", compartment4String);
-        Log.d("Compartment JSON", compartment5String);
-        Log.d("Compartment JSON", compartment6String);
-
-        Repet_update_Model repetUpdateModel = new Repet_update_Model(oploutwardid, "",
-                compartment1String, compartment2String, compartment3String, compartment4String, compartment5String, compartment6String,
-                iserialnum, ivehicle, 'W', inOut, vehicleType, EmployeId);
-        //Convert the object to JSON for logging
-        Gson gson = new Gson();
-        String jsonRequest = gson.toJson(repetUpdateModel);
-        Log.d("API_REQUEST", jsonRequest);
-
-
-        Call<Boolean> call = outwardTankerLab.UpdateOutwardLabTestProduction(repetUpdateModel);
-        call.enqueue(new Callback<Boolean>() {
-            @Override
-            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                if (response.isSuccessful() && response.body() != null && response.body()) {
-                    Toasty.success(New_Outward_tanker_Lab.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
-                    startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
-                    finish();
-                } else {
-                    Log.e("Retrofit", "Error Response Code: " + response.code());
-                    try {
-                        Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    Toasty.error(New_Outward_tanker_Lab.this, "Update Failed!", Toast.LENGTH_SHORT).show();
+                if (targetIndex < 0 || targetIndex > 5) {
+                    Toast.makeText(this, "Invalid compartment index: " + targetIndex, Toast.LENGTH_SHORT).show();
+                    return;
                 }
+
+                // ✅ Validate required fields
+                if (comp.getViscosity() == null || comp.getViscosity().isEmpty()
+                        || comp.getDensity() == null || comp.getDensity().isEmpty()
+                        || comp.getBatchNumber() == null || comp.getBatchNumber().isEmpty()
+                        || comp.getQcOfficer() == null || comp.getQcOfficer().isEmpty()) {
+                    Toast.makeText(this, "All fields must be filled for Compartment " + (targetIndex + 1), Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                String json = convertCompartmentToJson(comp);
+                compartmentJsonStrings[targetIndex] = json;  // ✅ Assign to correct index
+            }
+        } else {
+            // ✅ Handle Single Compartment
+            LabCompartment_Model model = new LabCompartment_Model(inTime, iviscosity, idensity, ibatchnum, iqcofficer, iremarks);
+            String selectedCompartmentJson = convertCompartmentToJson_compartment1(model);
+
+            if (selectedCompartmentJson.isEmpty()) {
+                Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+                return;
             }
 
-            @Override
-            public void onFailure(Call<Boolean> call, Throwable t) {
-                Log.e("Retrofit", "Failure: " + t.getMessage());
-                Toasty.error(New_Outward_tanker_Lab.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
+            compartmentJsonStrings[targetIndex] = selectedCompartmentJson;
+        }
 
-            }
+        // Decide Inward/Outward Value
+        char I_O_Value = (isCheck && compartmentArraycount < copartmentcount) ? 'I' : 'O';
+
+        // Create the complete outward model
+        New_Lab_Model_OutwardTanker newLabModelOutwardTanker = new New_Lab_Model_OutwardTanker(
+                OutwardId, "", outTime, iviscosity, objdensity,
+                "", "", "", EmployeId, "P", iserialnum, ivehicle, 'W', I_O_Value, vehicleType, EmployeId,
+                compartmentJsonStrings[0] == null ? "" : compartmentJsonStrings[0],
+                compartmentJsonStrings[1] == null ? "" : compartmentJsonStrings[1],
+                compartmentJsonStrings[2] == null ? "" : compartmentJsonStrings[2],
+                compartmentJsonStrings[3] == null ? "" : compartmentJsonStrings[3],
+                compartmentJsonStrings[4] == null ? "" : compartmentJsonStrings[4],
+                compartmentJsonStrings[5] == null ? "" : compartmentJsonStrings[5]
+        );
+
+        // Show confirmation dialog
+        dialogHelper.showConfirmationDialog(this, () -> {
+            dialogHelper.showProgressDialog(this);
+
+            Call<Boolean> call = outwardTankerLab.newOutwardTankerLaboratory(newLabModelOutwardTanker);
+            call.enqueue(new Callback<Boolean>() {
+                @Override
+                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                    dialogHelper.hideProgressDialog();
+                    if (response.isSuccessful() && response.body() != null && response.body()) {
+                        Toasty.success(New_Outward_tanker_Lab.this, "Data Inserted Successfully...!!", Toast.LENGTH_SHORT, true).show();
+                        makeNotification(ivehicle, outTime);
+                        startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
+                        finish();
+                    } else {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        Toasty.error(New_Outward_tanker_Lab.this, "Server error occurred!", Toast.LENGTH_SHORT, true).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<Boolean> call, Throwable t) {
+                    dialogHelper.hideProgressDialog();
+                    Log.e("Retrofit", "Failure: " + t.getMessage());
+                    Toasty.error(New_Outward_tanker_Lab.this, "Failed to insert data..!", Toast.LENGTH_SHORT).show();
+                }
+            });
         });
-
     }
 
     public void update() {
@@ -624,21 +581,31 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             I_O_Value = 'O';  // Default case (fallback)
         }
 
-        // ✅ Now compartmentList already has the latest values, so just convert to JSON
-        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
-        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
-        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
-        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
-        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
-        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
+        List<String> compartmentStrings  = LabcompartmentsJson;
 
-        // ✅ Log the updated compartment values
-        Log.d("Compartment JSON", compartment1String);
-        Log.d("Compartment JSON", compartment2String);
-        Log.d("Compartment JSON", compartment3String);
-        Log.d("Compartment JSON", compartment4String);
-        Log.d("Compartment JSON", compartment5String);
-        Log.d("Compartment JSON", compartment6String);
+        int targetIndex = firstProCompartmentIndex;
+        Gson gson = new Gson();
+        List<String> finalCompartmentJsons = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            if (i == firstProCompartmentIndex && compartmentList.size() > 0 && compartmentList.get(0) != null) {
+                // ✅ Only update the target index with latest value from compartmentList[0]
+                finalCompartmentJsons.add(convertCompartmentToJson(compartmentList.get(0)));
+            } else if (i < LabcompartmentsJson.size() && LabcompartmentsJson.get(i) != null && !LabcompartmentsJson.get(i).isEmpty()) {
+                // ✅ Preserve existing compartment data
+                finalCompartmentJsons.add(LabcompartmentsJson.get(i));
+            } else {
+                // ✅ Empty value for uninitialized compartments
+                finalCompartmentJsons.add("");
+            }
+        }
+
+// Now extract values to variables
+        String compartment1String = finalCompartmentJsons.get(0);
+        String compartment2String = finalCompartmentJsons.get(1);
+        String compartment3String = finalCompartmentJsons.get(2);
+        String compartment4String = finalCompartmentJsons.get(3);
+        String compartment5String = finalCompartmentJsons.get(4);
+        String compartment6String = finalCompartmentJsons.get(5);
 
         // ✅ Create API Model
         Repet_update_Model repetUpdateModel = new Repet_update_Model(oploutwardid, "P",
@@ -646,7 +613,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                 iserialnum, ivehicle, 'W', I_O_Value, vehicleType, EmployeId);
 
         // ✅ Convert to JSON and log for debugging
-        Gson gson = new Gson();
+        //Gson gson = new Gson();
         String jsonRequest = gson.toJson(repetUpdateModel);
         Log.d("API_REQUEST", jsonRequest);
 

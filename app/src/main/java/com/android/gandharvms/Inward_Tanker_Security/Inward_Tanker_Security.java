@@ -3,6 +3,7 @@ package com.android.gandharvms.Inward_Tanker_Security;
 
 import static android.icu.lang.UCharacter.GraphemeClusterBreak.T;
 
+import static com.android.gandharvms.QR_Code.QRGeneratorUtil.callUpdateEmployeeExSOAP;
 import static com.android.gandharvms.QR_Code.QRGeneratorUtil.generateQRCode;
 
 import androidx.annotation.NonNull;
@@ -668,8 +669,38 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
         }else {
 // Convert JSONArray to string
             String extraMaterialsString = extraMaterialsArray.toString();
-            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, "material", "", "", 'W', 'I', Date,
-                    "", vehicltype, intime, outTime, 1, insertnetweightUom, insertnetweight, 1, extraMaterialsString.toString(), remark, false, "No", "", "", "", "", "", EmployeId, "", InwardId);
+            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber,
+                    invoicenumber,
+                    vehicalnumber,
+                    Date,
+                    partyname,
+                    "material",
+                    "", "", 'W', 'I',
+                    Date,
+                    "",
+                    vehicltype,
+                    intime,
+                    outTime,
+                    1,
+                    insertnetweightUom,
+                    insertnetweight,
+                    1,
+                    extraMaterialsString.toString(),
+                    remark,
+                    false,
+                    "No",
+                    "",
+                    "",
+                    "",
+                    "", "",
+                    EmployeId,
+                    "", InwardId,
+                    "inward tanker in qr",
+                    "outward tanker out qr",
+                    true,
+                    true
+            );
+
             dialogHelper.showConfirmationDialog(this, () -> {
                 dialogHelper.showProgressDialog(this); // Show progress when confirmed
                 // Proceed with API call
@@ -679,6 +710,7 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
                     public void onResponse(Call<Boolean> call, Response<Boolean> response) {
                         dialogHelper.hideProgressDialog(); // Hide after response
                         if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
+                            callUpdateEmployeeExSOAP(Inward_Tanker_Security.this, vehicalnumber, serialnumber, intime, Date);
                             Toasty.success(Inward_Tanker_Security.this, "Data Inserted Successfully!", Toast.LENGTH_SHORT).show();
                             startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
                             finish();
@@ -710,73 +742,73 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
         }
     }
 
-    public void insertreporting() {
-        String serialnumber = etreg.getText().toString().trim();
-        String vehicalnumber = etvehical.getText().toString().trim();
-        String invoicenumber = "";
-        String Date = etdate.getText().toString().trim();
-        String partyname = "";
-        String material = "";
-        int qty = 0;
-        int netweight = 0;
-        String intime = "";
-        String outTime = "";//Insert out Time Directly to the Database
-        int qtyuom = 1;
-
-        String vehicltype = Global_Var.getInstance().MenuType;
-        char InOutType = Global_Var.getInstance().InOutType;
-        char DeptType = Global_Var.getInstance().DeptType;
-        int netweuom = 1;
-        String remark = "";
-        String pooa = "";
-        String mobnumber = "";
-        String edremark = "";
-        Boolean isreporting = false;
-        if (cbox.isChecked()) {
-            edremark = repremark.getText().toString().trim();
-            isreporting = true;
-        }
-        if (vehicalnumber.isEmpty() || Date.isEmpty()) {
-            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-        } else {
-            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'S', InOutType, "",
-                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId, "", InwardId);
-
-            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
-            Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
-            call.enqueue(new Callback<Boolean>() {
-                @Override
-                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
-                        Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
-                        finish();
-                    } else {
-                        Toasty.error(Inward_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Boolean> call, Throwable t) {
-
-                    Log.e("Retrofit", "Failure: " + t.getMessage());
-// Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    Toasty.error(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
-    }
+//    public void insertreporting() {
+//        String serialnumber = etreg.getText().toString().trim();
+//        String vehicalnumber = etvehical.getText().toString().trim();
+//        String invoicenumber = "";
+//        String Date = etdate.getText().toString().trim();
+//        String partyname = "";
+//        String material = "";
+//        int qty = 0;
+//        int netweight = 0;
+//        String intime = "";
+//        String outTime = "";//Insert out Time Directly to the Database
+//        int qtyuom = 1;
+//
+//        String vehicltype = Global_Var.getInstance().MenuType;
+//        char InOutType = Global_Var.getInstance().InOutType;
+//        char DeptType = Global_Var.getInstance().DeptType;
+//        int netweuom = 1;
+//        String remark = "";
+//        String pooa = "";
+//        String mobnumber = "";
+//        String edremark = "";
+//        Boolean isreporting = false;
+//        if (cbox.isChecked()) {
+//            edremark = repremark.getText().toString().trim();
+//            isreporting = true;
+//        }
+//        if (vehicalnumber.isEmpty() || Date.isEmpty()) {
+//            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+//        } else {
+//            Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, material, pooa, mobnumber, 'S', InOutType, "",
+//                    "", vehicltype, intime, outTime, qtyuom, netweuom, netweight, qty, "", remark, isreporting, edremark, "", "", "", "", "", EmployeId, "", InwardId);
+//
+//            apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
+//            Call<Boolean> call = apiInTankerSecurity.postData(requestModelInTankerSecurity);
+//            call.enqueue(new Callback<Boolean>() {
+//                @Override
+//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+//                    if (response.isSuccessful() && response.body() != null && response.body()==true) {
+//                        Toasty.success(Inward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+//                        startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
+//                        finish();
+//                    } else {
+//                        Toasty.error(Inward_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
+//                    }
+//                }
+//
+//                @Override
+//                public void onFailure(Call<Boolean> call, Throwable t) {
+//
+//                    Log.e("Retrofit", "Failure: " + t.getMessage());
+//// Check if there's a response body in case of an HTTP error
+//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+//                        Response<?> response = ((HttpException) t).response();
+//                        if (response != null) {
+//                            Log.e("Retrofit", "Error Response Code: " + response.code());
+//                            try {
+//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+//                            } catch (IOException e) {
+//                                e.printStackTrace();
+//                            }
+//                        }
+//                    }
+//                    Toasty.error(Inward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//        }
+//    }
 
     public void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
         Call<List<Respo_Model_In_Tanker_security>> call = RetroApiClient.getserccrityveh().GetIntankerSecurityByVehicle(VehicleNo, vehicltype, DeptType, InOutType);

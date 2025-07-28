@@ -19,7 +19,7 @@
             android:id="@+id/txtCompartmentNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Compartment #1"
+            android:text="Compartment "
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@color/black"/>
