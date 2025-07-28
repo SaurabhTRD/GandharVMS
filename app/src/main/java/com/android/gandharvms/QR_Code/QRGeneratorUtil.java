@@ -90,4 +90,59 @@ public class QRGeneratorUtil {
         printHelper.setScaleMode(PrintHelper.SCALE_MODE_FIT);
         printHelper.printBitmap("QR_Code_Print", qrBitmap);
     }
+
+    public static void callUpdateEmployeeExSOAP(Activity activity,
+                                                String vehicleNumber,
+                                                String serialNumber,
+                                                String intime,
+                                                String date) {
+        new Thread(() -> {
+            try {
+                String soapRequest = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                        "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n" +
+                        "  <soap12:Body>\n" +
+                        "    <UpdateEmployeeEx xmlns=\"http://tempuri.org/\">\n" +
+                        "      <UserName>" + vehicleNumber + "</UserName>\n" +
+                        "      <Password>" + serialNumber + "</Password>\n" +
+                        "      <EmployeeCode>" + intime + "</EmployeeCode>\n" +
+                        "      <EmployeeName>" + date + "</EmployeeName>\n" +
+                        "      <EmployeeLocation></EmployeeLocation>\n" +
+                        "      <EmployeeRole></EmployeeRole>\n" +
+                        "      <EmployeeVerificationType></EmployeeVerificationType>\n" +
+                        "      <EmployeeExpiryFrom></EmployeeExpiryFrom>\n" +
+                        "      <EmployeeExpiryTo></EmployeeExpiryTo>\n" +
+                        "      <EmployeeCardNumber></EmployeeCardNumber>\n" +
+                        "      <GroupId></GroupId>\n" +
+                        "      <EmployeePhoto></EmployeePhoto>\n" +
+                        "    </UpdateEmployeeEx>\n" +
+                        "  </soap12:Body>\n" +
+                        "</soap12:Envelope>";
+
+                java.net.URL url = new java.net.URL("http://ebioservernew.esslsecurity.com:99/webservice.asmx?op=UpdateEmployeeEx");
+                java.net.HttpURLConnection connection = (java.net.HttpURLConnection) url.openConnection();
+                connection.setRequestMethod("POST");
+                connection.setRequestProperty("Content-Type", "application/soap+xml; charset=utf-8");
+                connection.setDoOutput(true);
+
+                connection.getOutputStream().write(soapRequest.getBytes());
+
+                java.io.InputStream responseStream = connection.getInputStream();
+                java.util.Scanner s = new java.util.Scanner(responseStream).useDelimiter("\\A");
+                String response = s.hasNext() ? s.next() : "";
+
+                // Log or show on UI thread
+                activity.runOnUiThread(() -> {
+                    android.util.Log.d("SOAP_RESPONSE", response);
+                    android.widget.Toast.makeText(activity, "API called successfully!", android.widget.Toast.LENGTH_SHORT).show();
+                });
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                activity.runOnUiThread(() -> {
+                    android.widget.Toast.makeText(activity, "API call failed: " + e.getMessage(), android.widget.Toast.LENGTH_LONG).show();
+                });
+            }
+        }).start();
+    }
+
 }

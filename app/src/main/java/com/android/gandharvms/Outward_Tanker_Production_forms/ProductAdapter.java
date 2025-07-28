@@ -33,6 +33,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -49,10 +50,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public int outwardId;
     public String productdtls;
     public String Empid = Global_Var.getInstance().EmpId;
+    private Map<Integer, Compartment> compartmentDataMap;
 
-    public ProductAdapter(List<Product> productList,List<Compartment> compartmentDataList,int outwardId,String productdtls) {
+    public ProductAdapter(List<Product> productList,Map<Integer, Compartment> compartmentDataMap,int outwardId,String productdtls) {
         this.productList = productList;
-        this.compartmentDataList = compartmentDataList;
+//        this.compartmentDataList = compartmentDataList;
+        this.compartmentDataMap = compartmentDataMap;
         this.expandedPosition = expandedPosition; // ✅ Initialize expandedPosition from constructor
         this.outwardId = outwardId;
         this.productdtls = productdtls;
@@ -71,8 +74,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         Product product = productList.get(position); // ✅ Use position directly
 
         holder.txtProductName.setText(product.getProductName());
-        if (position < compartmentDataList.size()) {
-            Compartment compartment = compartmentDataList.get(position);
+
+        Compartment compartment = compartmentDataMap.get(position);
+
+        holder.txtProductName.setText(product.getProductName());
+        if (compartment != null) {
+//            Compartment compartment = compartmentDataList.get(position);
             holder.etBlenderNumber.setText(compartment.getBlenderNumber());
 //            holder.etBlenderNumber.setEnabled(false);
             holder.etOperator.setText(compartment.getOperatorSign());

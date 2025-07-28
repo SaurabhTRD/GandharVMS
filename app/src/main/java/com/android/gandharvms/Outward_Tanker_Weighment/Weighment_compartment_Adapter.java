@@ -39,6 +39,7 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
     @Override
     public void onBindViewHolder(@NonNull Weighment_compartment_Adapter.ViewHolder holder, int position) {
         Lab_compartment_model compartment = compartmentList.get(position);
+        int index = compartment.getTargetIndex();
         Log.d("AdapterBinding", "Binding compartment at position: " + position);
 
         if (compartment == null) {
@@ -51,7 +52,7 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
         Log.d("AdapterBinding", "Binding compartment at position: " + position);
 
         // ✅ View-Only Production Data (Read-Only)
-        holder.txtCompartmentNumber.setText("Compartment " + (position + 1));
+        holder.txtCompartmentNumber.setText("Compartment " + (index + 1));
         holder.txtBlender.setText("Blender: " + (compartment.getBlenderNumber().trim()));
         holder.txtProductionSign.setText("Production Sign: " + compartment.getProductionSign());
         holder.txtOperatorSign.setText("Operator Sign: " + compartment.getOperatorSign());

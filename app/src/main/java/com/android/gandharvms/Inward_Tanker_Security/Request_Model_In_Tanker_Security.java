@@ -33,8 +33,12 @@ public class Request_Model_In_Tanker_Security {
     public String EwayBill;
     public String CreatedBy;
     public String OutInTime;
-
-    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy,String outInTime,int inwardId) {
+    public String InQR;
+    public String OutQR;
+    public boolean InScanned;
+    public boolean OutScanned;
+    public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, boolean isReporting, String reportingRemark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy,String outInTime,int inwardId,
+    String inQR, String outQR, boolean inScanned, boolean outScanned) {
         SerialNo = serialNo;
         InvoiceNo = invoiceNo;
         VehicleNo = vehicleNo;
@@ -66,6 +70,10 @@ public class Request_Model_In_Tanker_Security {
         CreatedBy = createdBy;
         OutInTime = outInTime;
         InwardId = inwardId;
+        InQR = inQR;
+        OutQR = outQR;
+        InScanned = inScanned;
+        OutScanned = outScanned;
     }
 
     public Request_Model_In_Tanker_Security(String serialNo, String invoiceNo, String vehicleNo, String date, String partyName, String material, String OA_PO_number, String driver_MobileNo, char nextprocess, char i_O, String factoryIn, String factoryOut, String vehicleType, String inTime, String outTime, int qtyUOM, int netWeightUOM, int netWeight, int qty, String extramaterials, String remark, String selectregister, String irCopy, String deliveryBill, String taxInvoice, String ewayBill, String createdBy) {
