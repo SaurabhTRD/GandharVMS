@@ -2,11 +2,16 @@ package com.android.gandharvms.LoginWithAPI;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -57,33 +62,24 @@ public class Login extends AppCompatActivity {
 
     private static final String ALLOWED_VERSION = Global_Var.getInstance().APKversion;
     String versionName = Global_Var.getInstance().APKversion;
-
+    String localVersionName = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         final EditText Userid = findViewById(R.id.emplid);
         final EditText password = findViewById(R.id.etpassword);
         final Button login = findViewById(R.id.btnlogin);
         final TextView NotRegister = findViewById(R.id.registerlink);
-        final TextView versionname=findViewById(R.id.txtversionname);
-
-        versionname.setText(versionName);
-        // version vise login
-        String versionName =Global_Var.getInstance().APKversion;
-        if (!ALLOWED_VERSION.equals(versionName)) {
-            Toasty.error(this, "This version is not allowed for login.", Toast.LENGTH_LONG, true).show();
-            login.setEnabled(false);
-            return;
-        }
 
         // Check and request notification permission for Android 13 (API level 33) and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
                 // Request the permission
-                ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATION_PERMISSION_CODE);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, NOTIFICATION_PERMISSION_CODE);
             } else {
                 // Permission already granted
                 showNotification();
@@ -126,6 +122,28 @@ public class Login extends AppCompatActivity {
                                 Global_Var.getInstance().Department=resModel.getDepartment();
                                 Global_Var.getInstance().Name=resModel.getEmployeeName();
                                 Global_Var.getInstance().Token=resModel.getToken();
+                                Global_Var.getInstance().APKversion=resModel.getApp_Version();
+                                try {
+                                     localVersionName = getPackageManager()
+                                            .getPackageInfo(getPackageName(), 0).versionName;
+                                } catch (PackageManager.NameNotFoundException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    String serverVersion = resModel.getApp_Version();
+                                    String localVersion = localVersionName;
+
+                                    if (serverVersion != null && !serverVersion.isEmpty()) {
+                                        if (compareVersions(localVersion, serverVersion) < 0) {
+                                            showVersionBlockDialog(serverVersion);
+                                            return;
+                                        }
+                                    } else {
+                                        Log.w("VersionCheck", "Server version missing. Skipping check.");
+                                    }
+                                } catch (Exception e) {
+                                    Log.e("VersionCheck", "Version comparison failed: " + e.getMessage());
+                                }
 
                                 SharedPreferences preferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
                                 SharedPreferences preferences1 = getSharedPreferences(pass, MODE_PRIVATE);
@@ -159,6 +177,9 @@ public class Login extends AppCompatActivity {
                                     }
                                 }
                             }
+                            else{
+                                Toasty.error(Login.this, "Incorrect UserName or Password.", Toast.LENGTH_SHORT,true).show();
+                            }
                         }
                         @Override
                         public void onFailure(Call<List<ResponseModel>> call, Throwable t) {
@@ -190,7 +211,6 @@ public class Login extends AppCompatActivity {
     }
 
     public void AutoLogin(String Username, String Password) {
-
         loginMethod = RetroApiClient.getLoginApi();
         RequestModel restmodel = new RequestModel();
         restmodel.setEmpId(Username);
@@ -210,6 +230,28 @@ public class Login extends AppCompatActivity {
                     Global_Var.getInstance().Department=resModel.getDepartment();
                     Global_Var.getInstance().Name=resModel.getEmployeeName();
                     Global_Var.getInstance().Token=resModel.getToken();
+                    Global_Var.getInstance().APKversion=resModel.getApp_Version();
+                    try {
+                        localVersionName = getPackageManager()
+                                .getPackageInfo(getPackageName(), 0).versionName;
+                    } catch (PackageManager.NameNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        String serverVersion = resModel.getApp_Version();
+                        String localVersion = localVersionName;
+
+                        if (serverVersion != null && !serverVersion.isEmpty()) {
+                            if (compareVersions(localVersion, serverVersion) < 0) {
+                                showVersionBlockDialog(serverVersion);
+                                return;
+                            }
+                        } else {
+                            Log.w("VersionCheck", "Server version missing. Skipping check.");
+                        }
+                    } catch (Exception e) {
+                        Log.e("VersionCheck", "Version comparison failed: " + e.getMessage());
+                    }
                     if (resModel != null) {
                         if (empid != null || password != null) {
                             Toasty.success(getApplicationContext(), "Succesfully Logged In ..!", Toast.LENGTH_SHORT,true).show();
@@ -300,6 +342,35 @@ public class Login extends AppCompatActivity {
         }
     }
 
+    private void showVersionBlockDialog(String serverVersion) {
+        new AlertDialog.Builder(Login.this)
+                .setTitle("Update Required")
+                .setMessage("You are using version " +localVersionName+
+                        "\nRequired version: " + serverVersion +
+                        "\nPlease Update the latest version to continue.")
+                .setCancelable(false)
+                .setPositiveButton("Ok", (dialog, which) -> {
+                    dialog.dismiss();
+                    finishAffinity();
+                    System.exit(0);
+                })
+                .show();
+    }
+
+    public int compareVersions(String v1, String v2) {
+        String[] arr1 = v1.split("\\.");
+        String[] arr2 = v2.split("\\.");
+        int len = Math.max(arr1.length, arr2.length);
+
+        for (int i = 0; i < len; i++) {
+            int val1 = i < arr1.length ? Integer.parseInt(arr1[i]) : 0;
+            int val2 = i < arr2.length ? Integer.parseInt(arr2[i]) : 0;
+
+            if (val1 < val2) return -1; // v1 < v2
+            if (val1 > val2) return 1;  // v1 > v2
+        }
+        return 0; // equal
+    }
     // Example function that triggers a notification (you can implement your notification here)
     private void showNotification() {
         // Your code to show notification (e.g., using NotificationManager or Firebase)

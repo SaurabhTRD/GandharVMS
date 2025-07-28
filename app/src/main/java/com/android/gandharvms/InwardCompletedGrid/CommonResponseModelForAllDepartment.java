@@ -102,6 +102,14 @@ public class CommonResponseModelForAllDepartment {
     public String OutWeiOutTime ;
     public String ProRemark;
     public String UpdatedDate;
+    public String SecWTTime;
+    public String WeiWTTime;
+    public String SamWTTime;
+    public String LabWTTime;
+    public String ProWTTime;
+    public String StoreWTTime;
+    public String OutSecWTTime;
+    public String OutWeiWTTime;
 
     public String getUpdatedDate() {
         return UpdatedDate;
@@ -861,5 +869,69 @@ public class CommonResponseModelForAllDepartment {
 
     public void setStoreExtramaterials(String storeExtramaterials) {
         StoreExtramaterials = storeExtramaterials;
+    }
+
+    public String getSecWTTime() {
+        return SecWTTime;
+    }
+
+    public void setSecWTTime(String secWTTime) {
+        SecWTTime = secWTTime;
+    }
+
+    public String getWeiWTTime() {
+        return WeiWTTime;
+    }
+
+    public void setWeiWTTime(String weiWTTime) {
+        WeiWTTime = weiWTTime;
+    }
+
+    public String getSamWTTime() {
+        return SamWTTime;
+    }
+
+    public void setSamWTTime(String samWTTime) {
+        SamWTTime = samWTTime;
+    }
+
+    public String getLabWTTime() {
+        return LabWTTime;
+    }
+
+    public void setLabWTTime(String labWTTime) {
+        LabWTTime = labWTTime;
+    }
+
+    public String getProWTTime() {
+        return ProWTTime;
+    }
+
+    public void setProWTTime(String proWTTime) {
+        ProWTTime = proWTTime;
+    }
+
+    public String getStoreWTTime() {
+        return StoreWTTime;
+    }
+
+    public void setStoreWTTime(String storeWTTime) {
+        StoreWTTime = storeWTTime;
+    }
+
+    public String getOutSecWTTime() {
+        return OutSecWTTime;
+    }
+
+    public void setOutSecWTTime(String outSecWTTime) {
+        OutSecWTTime = outSecWTTime;
+    }
+
+    public String getOutWeiWTTime() {
+        return OutWeiWTTime;
+    }
+
+    public void setOutWeiWTTime(String outWeiWTTime) {
+        OutWeiWTTime = outWeiWTTime;
     }
 }

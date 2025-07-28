@@ -4,10 +4,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
+import android.app.ProgressDialog;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.HorizontalScrollView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
@@ -30,6 +34,7 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -57,7 +62,7 @@ public class ir_Comp_Data_Report extends AppCompatActivity {
     /*gridAdapter GridAdapter;*/
     it_comp_data_report_adapter truckgridadapter;
     RecyclerView recyclerView;
-    Button fromDate, toDate;
+    Button btnFromDate,btnToDate;
     TextView totrec;
     String fromdate;
     String todate;
@@ -68,7 +73,9 @@ public class ir_Comp_Data_Report extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ir_comp_data_report);
 
-        totrec = findViewById(R.id.totrecdepartmentwise);
+        btnFromDate = findViewById(R.id.IrtotgridcompletedbtnfromDate);
+        btnToDate = findViewById(R.id.IrtotgridcompletedbtntoDate);
+        totrec = findViewById(R.id.Irtotgridcompletedrecdepartmentwise);
         fromdate = getCurrentDateTime();
         todate = getCurrentDateTime();
 
@@ -87,10 +94,32 @@ public class ir_Comp_Data_Report extends AppCompatActivity {
                 super.onScrollStateChanged(recyclerView, newState);
             }
         });
+
+        btnFromDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the onClick for fromDate button
+                showDatePickerDialog(btnFromDate, true);
+            }
+        });
+
+        btnToDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Handle the onClick for fromDate button
+                showDatePickerDialog(btnToDate, false);
+            }
+        });
     }
 
     private void getDatabydateselection() {
-        fetchDataFromApiForCompReport(vehicleType);
+        ProgressDialog loadingDialog = new ProgressDialog(ir_Comp_Data_Report.this);
+        loadingDialog.setMessage("Syncing data, please wait...");
+        loadingDialog.setCancelable(false); // Prevent user from dismissing the dialog
+        loadingDialog.show();
+        fromdate = getCurrentDateTime();
+        todate = getCurrentDateTime();
+        fetchDataFromApiForCompReport(fromdate,todate,vehicleType,loadingDialog);
     }
 
     private String getCurrentDateTime() {
@@ -117,41 +146,115 @@ public class ir_Comp_Data_Report extends AppCompatActivity {
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
-    public void fetchDataFromApiForCompReport(String vehicleType) {
-
-        Call<List<CommonResponseModelForAllDepartment>> call = RetroApiClient.getserccrityveh().getitreportdata(vehicleType);
+    public void fetchDataFromApiForCompReport(String fromdate, String todate, String vehicleType, ProgressDialog loadingDialog) {
+        Call<List<CommonResponseModelForAllDepartment>> call = RetroApiClient
+                .getserccrityveh()
+                .getitreportdata(fromdate, todate, vehicleType);
 
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
-                if (response.isSuccessful()) {
-                    if (response.body().size() > 0) {
-                        List<CommonResponseModelForAllDepartment> data = response.body();
+                loadingDialog.dismiss(); // Always dismiss the dialog
+
+                if (response.isSuccessful() && response.body() != null) {
+                    List<CommonResponseModelForAllDepartment> data = response.body();
+
+                    if (!data.isEmpty()) {
                         int totalcount = data.size();
                         totrec.setText("Tot-Rec: " + totalcount);
                         clubList = data;
                         setUpRecyclerView();
+                    } else {
+                        totrec.setText("Tot-Rec: 0");
+                        Toasty.info(ir_Comp_Data_Report.this, "No records found", Toast.LENGTH_SHORT).show();
                     }
+                } else {
+                    Toasty.error(ir_Comp_Data_Report.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<List<CommonResponseModelForAllDepartment>> call, Throwable t) {
+                loadingDialog.dismiss(); // Always dismiss the dialog
                 Log.e("Retrofit", "Failure: " + t.getMessage());
-                // Check if there's a response body in case of an HTTP error
-                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                    Response<?> response = ((HttpException) t).response();
-                    if (response != null) {
-                        Log.e("Retrofit", "Error Response Code: " + response.code());
+
+                if (t instanceof HttpException) {
+                    Response<?> errorResponse = ((HttpException) t).response();
+                    if (errorResponse != null) {
+                        Log.e("Retrofit", "HTTP error code: " + errorResponse.code());
                         try {
-                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                            Log.e("Retrofit", "Error Body: " + errorResponse.errorBody().string());
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
                     }
                 }
-                Toasty.error(ir_Comp_Data_Report.this, "failed..!", Toast.LENGTH_SHORT).show();
+
+                Toasty.error(ir_Comp_Data_Report .this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showDatePickerDialog(final TextView dateTextView, final boolean isFromDate) {
+        Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                this,
+                new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Update the TextView with the selected date
+                        String selectedDate = year + "-" + (month + 1) + "-" + dayOfMonth;
+                        if ((isFromDate || !isFromDate)) {
+                            dateTextView.setText(selectedDate);
+                            if (isFromDate) {
+                                fromdate = selectedDate;
+                            } else {
+                                todate = selectedDate;
+                            }
+                            ProgressDialog loadingDialog = new ProgressDialog(ir_Comp_Data_Report.this);
+                            loadingDialog.setMessage("Syncing data, please wait...");
+                            loadingDialog.setCancelable(false); // Prevent user from dismissing the dialog
+                            loadingDialog.show();
+                            fetchDataFromApiForCompReport(fromdate, todate,vehicleType,loadingDialog);
+
+                            rvClub.addOnScrollListener(new RecyclerView.OnScrollListener() {
+                                @Override
+                                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                                    super.onScrolled(recyclerView, dx, dy);
+                                    //scrollX += dx;
+                                    //headerscroll.scrollTo(scrollX, 0);
+                                }
+
+                                @Override
+                                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                                    super.onScrollStateChanged(recyclerView, newState);
+                                }
+                            });
+                        } else {
+                            // Show an error message or take appropriate action
+                            Toasty.warning(ir_Comp_Data_Report.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                year, month, day);
+        if (isFromDate && !todate.isEmpty()) {
+            try {
+                datePickerDialog.getDatePicker().setMaxDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(todate).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        } else if (!isFromDate && !fromdate.isEmpty()) {
+            try {
+                datePickerDialog.getDatePicker().setMinDate(new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).parse(fromdate).getTime());
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        // Show the date picker dialog
+        datePickerDialog.show();
     }
 }

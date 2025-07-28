@@ -54,7 +54,6 @@
         android:id="@+id/txtversionname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Version 1.0.7"
         android:textSize="15sp"
         android:textStyle="bold"
         android:textColor="@color/blue"
