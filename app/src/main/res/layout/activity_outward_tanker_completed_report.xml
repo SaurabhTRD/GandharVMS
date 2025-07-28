@@ -6,17 +6,52 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".OT_CompletedReport.Outward_Tanker_CompletedReport">
-
-    <TextView
-        android:id="@+id/totrecdepartmentwise"
-        android:layout_width="wrap_content"
+    <include layout="@layout/header_layout"></include>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="235dp"
-        android:layout_marginTop="5dp"
-        android:padding="8dp"
-        android:text="Tot-Rec: "
-        android:textSize="16sp"
-        android:textStyle="bold" />
+        android:gravity="left"
+        android:layout_marginTop="5dp">
+        <Button
+            android:id="@+id/OtdepttrackbtnfromDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="From-Date"/>
+
+        <Space
+            android:layout_width="15dp"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/OtdepttrackcompbtntoDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="To-Date"/>
+
+        <!--<ImageButton
+            android:id="@+id/btnOtdepttrackcompExportToExcel"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:src="@drawable/iconsexportcsv"
+            android:contentDescription="Export To Excel"
+            android:background="@null"
+            android:layout_centerHorizontal="true"/>-->
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <TextView
+            android:id="@+id/Otdepttracktotrecord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tot-Rec: "
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:padding="8dp"/>
+
+    </LinearLayout>
 
     <HorizontalScrollView
         android:id="@+id/hsotcompletereport"
@@ -1126,6 +1161,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerotcompletereport"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+        android:layout_height="match_parent">
+    </androidx.recyclerview.widget.RecyclerView>
 
 </LinearLayout>

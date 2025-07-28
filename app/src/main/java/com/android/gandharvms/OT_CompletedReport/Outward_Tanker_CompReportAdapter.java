@@ -71,7 +71,6 @@ public class Outward_Tanker_CompReportAdapter extends RecyclerView.Adapter<Outwa
 
     @Override
     public void onBindViewHolder(@NonNull Outward_Tanker_CompReportAdapter.myviewHolder holder, int position) {
-
         Common_Outward_model club = filteredGridList.get(position);
         String secintime = club.getSecInTime()!= null ? club.getSecInTime() :"";
         String secouttime = club.getSecOutTime()!=null ? club.getSecOutTime() : "";
