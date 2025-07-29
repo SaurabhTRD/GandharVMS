@@ -72,6 +72,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -112,6 +113,9 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     public String Netxtdept = "";
     public String despatchnext = "";
     public int compartmentArraycount, copartmentcount;
+    private boolean isUpdateMode = false;
+    private String outwardIdToUpdate;    // will store the id to send back
+
     EditText intime, serialnumber, vehiclenumber, materialname, custname, oanum, tareweight, tankernumber,
             etremark, transportername, howmuchqty, elocation, etbillremark, verifyremark, compartment1, compartment2, compartment3, compartment4, compartment5, compartment6,
             grossweight1, grossweight2, grossweight3, grossweight4, grossweight5, grossweight6, edgrosswt, edoneremark;
@@ -140,6 +144,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private List<Lab_compartment_model> compartmentList;
     private Weighment_compartment_Adapter adapter;
     private RecyclerView recyclerView;
+    boolean isEditMode = false;
+
     int firstProCompartmentIndex;
     public List<String> compartmentsJson ;
 
@@ -210,16 +216,50 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         mainContainer = findViewById(R.id.mainContainer);
 
         tankernumber.setVisibility(View.GONE);
+        submit = findViewById(R.id.etssubmit_outwardtanker); // ensure this line exists
+
+        String vehicleNo = getIntent().getStringExtra("vehiclenumber");
+        String mode = getIntent().getStringExtra("mode"); // "update" or null
+
+        if (vehicleNo != null && !vehicleNo.isEmpty()) {
+            readWeighmentDataOutward(vehicleNo,vehicleType);
+        }
+
+//        String mode = getIntent().getStringExtra("mode"); // Get the "mode" value
+//        if ("update".equals(mode)) {
+//            submit.setText("Update");  // ✅ change text
+//        }
+//// Fetch record and pre-fill form
+//        if (vehiclenumber.getText() != null) {
+//            readWeighmentDataOutward(String.valueOf(vehiclenumber), mode);
+//        }
+        Intent in = getIntent();                       // comes from adapter
+        if (in != null && "update".equals(in.getStringExtra("mode"))) {
+            // We’re editing an existing record – flip the button text
+            submit.setText("Update");               // or use R.string.update
+            isUpdateMode = true;
+
+        }
+        // 2️⃣  Your UNCHANGED listener, with ONE tiny branch inside
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (image1 == null || image2 == null) {
-                    Toasty.warning(Outward_Tanker_weighment.this, "Please Upload Image", Toast.LENGTH_SHORT).show();
-                } else {
-                    UploadImagesAndUpdate();
+                /* --- NEW: decide which method to call --- */
+                if (isUpdateMode) {          // ← true when you loaded a record to edit
+                    weupdatedata();          //    call your update API
+                }
+                else
+                {
+                    if (image1 == null || image2 == null) {
+                        Toasty.warning(Outward_Tanker_weighment.this,
+                                "Please Upload Image", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    UploadImagesAndUpdate(); //    keep your original “submit” flow
                 }
             }
         });
+
         complted.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,6 +304,123 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
 
 
     }
+
+    private void readWeighmentDataOutward(String vehicleNo,String vehicleType) {
+        Call<Response_Outward_Tanker_Weighment> call = outwardWeighment.fetchweighmentbyvehicleno(vehicleNo, vehicleType);
+
+        call.enqueue(new Callback<Response_Outward_Tanker_Weighment>() {
+            @Override
+            public void onResponse(Call<Response_Outward_Tanker_Weighment> call, Response<Response_Outward_Tanker_Weighment> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    Response_Outward_Tanker_Weighment data = response.body();
+                    serialnumber.setFocusable(false);
+                    serialnumber.setEnabled(false);
+                    serialnumber.setClickable(false);
+                    serialnumber.setCursorVisible(false);
+                    serialnumber.setLongClickable(false);
+                    serialnumber.setKeyListener(null);
+
+                    vehiclenumber.setFocusable(false);
+                    vehiclenumber.setEnabled(false);
+                    vehiclenumber.setClickable(false);
+                    vehiclenumber.setCursorVisible(false);
+                    vehiclenumber.setLongClickable(false);
+                    vehiclenumber.setKeyListener(null);
+
+                    elocation.setFocusable(false);
+                    elocation.setEnabled(false);
+                    elocation.setClickable(false);
+                    elocation.setCursorVisible(false);
+                    elocation.setLongClickable(false);
+                    elocation.setKeyListener(null);
+
+                    intime.setFocusable(false);
+                    intime.setEnabled(false);
+                    intime.setClickable(false);
+                    intime.setCursorVisible(false);
+                    intime.setLongClickable(false);
+                    intime.setKeyListener(null);
+
+
+                    // Populate UI fields
+                    OutwardId = data.getOutwardId();
+                    serialnumber.setText(nonNull(data.SerialNumber));
+                    vehiclenumber.setText(nonNull(data.VehicleNumber));
+                    custname.setText(nonNull(data.CustomerName));
+                    transportername.setText(nonNull(data.TransportName));
+                    elocation.setText(nonNull(data.Location));
+                    etremark.setText(nonNull(data.Remark));
+//                    grossweight1.setText(nonNull(data.GrossWeight));
+                    tareweight.setText(nonNull(data.TareWeight));
+//                    oanum.setText(nonNull(data.OAnumber));
+                    etbillremark.setText(nonNull(data.TankerBillingRemark));
+                    if (data.Intime != null && !data.Intime.isEmpty())
+                    {
+                        intime.setText(nonNull(data.Intime.substring(12,17)));
+                    }
+
+                    if (data.InVehicleImage != null && !data.InVehicleImage.isEmpty()) {
+                        Picasso.get()
+                                .load(RetroApiClient.BASE_URL + data.InVehicleImage)
+                                .placeholder(R.drawable.gandhar)
+                                .error(R.drawable.gandhar2)
+                                .noFade().resize(120, 120)
+                                .centerCrop()
+                                .into(img1);
+
+                    }
+
+                    if (data.InDriverImage != null && !data.InDriverImage.isEmpty()) {
+                        Picasso.get()
+                                .load(RetroApiClient.BASE_URL + data.InDriverImage)
+                                .placeholder(R.drawable.gandhar)
+                                .noFade().resize(120, 120)
+                                .into(img2);
+                        }
+
+                    if (data.InVehicleImage != null && !data.InVehicleImage.isEmpty()) {
+                        imgPath1 = data.InVehicleImage;
+                    }
+
+                    if (data.InDriverImage != null && !data.InDriverImage.isEmpty()) {
+                        imgPath2 = data.InDriverImage;
+                    }
+
+                }
+                else {
+                     Toast.makeText(Outward_Tanker_weighment.this, "No record found", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response_Outward_Tanker_Weighment> call, Throwable t) {
+                Toast.makeText(Outward_Tanker_weighment.this, "Failed to fetch: " + t.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void weupdatedata() {
+//        String FileInitial = "OutwardVeh_In_";
+//        arrayOfByteArrays[0] = ImgVehicle;
+//        arrayOfByteArrays[1] = ImgDriver;
+//        imgPath1 = "GAimages/" + FileInitial + serialNo + ".jpeg";
+//        for (byte[] byteArray : arrayOfByteArrays) {
+//
+//            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + serialNo + ".jpeg", "");
+//            multipartTask.execute();
+//            FileInitial = "OutwardDrv_In_";
+//        }
+//        imgPath2 = "GAimages/" + FileInitial + serialNo + ".jpeg";
+//        FileInitial = "";
+        update();
+    }
+
+    // Utility to handle null strings safely
+    private String nonNull(String value) {
+        return value != null ? value : "";
+    }
+
+
 
     public void makeNotification(String vehicleNumber, String outTime) {
         Call<List<ResponseModel>> call = userDetails.getUsersListData();
@@ -475,6 +632,139 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         });
     }
 
+    private void FetchVehicleDetailsByVehicleNo(@NonNull String vehicleNo, String vehicleType) {
+        Call<Response_Outward_Tanker_Weighment> call = outwardWeighment.fetchweighmentbyvehicleno(vehicleNo, vehicleType);
+        call.enqueue(new Callback<Response_Outward_Tanker_Weighment>() {
+            @Override
+            public void onResponse(Call<Response_Outward_Tanker_Weighment> call, Response<Response_Outward_Tanker_Weighment> response) {
+                if (response.isSuccessful()) {
+                    Response_Outward_Tanker_Weighment data = response.body();
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
+                        OutwardId = data.getOutwardId();
+                        serialNo = data.getSerialNumber();
+                        serialnumber.setText(data.getSerialNumber());
+                        serialnumber.setEnabled(false);
+                        oanum.setText(data.getOAnumber());
+                        oanum.setEnabled(false);
+                        vehiclenumber.setText(data.getVehicleNumber());
+                        vehiclenumber.setEnabled(false);
+                        materialname.setText(data.getProductName());
+                        materialname.setEnabled(false);
+                        custname.setText(data.getCustomerName());
+                        custname.setEnabled(false);
+                        howmuchqty.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+                        howmuchqty.setEnabled(false);
+                        transportername.setText(data.getTransportName());
+                        transportername.setEnabled(false);
+                        elocation.setText(data.getLocation());
+                        elocation.setEnabled(false);
+                        etbillremark.setText(data.getTankerBillingRemark());
+                        etbillremark.setEnabled(false);
+                        boolean ismultiple = data.isCheck();
+//                        tareweight.setEnabled(false);
+                        String extraMaterialsJson = data.getProductQTYUOMOA();
+                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+                        List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+                        createExtraMaterialViews(extraMaterials);
+                        /*intime.requestFocus();
+                        intime.callOnClick();*/
+                        Netxtdept = data.getPurposeProcess();
+                        String procompartment1 = data.getProcompartment1();
+
+                        List<String> compartments = new ArrayList<>();
+
+                        if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty())
+                            compartments.add(data.getProcompartment1());
+                        if (data.getProcompartment2() != null && !data.getProcompartment2().isEmpty())
+                            compartments.add(data.getProcompartment2());
+                        if (data.getProcompartment3() != null && !data.getProcompartment3().isEmpty())
+                            compartments.add(data.getProcompartment3());
+                        if (data.getProcompartment4() != null && !data.getProcompartment4().isEmpty())
+                            compartments.add(data.getProcompartment4());
+                        if (data.getProcompartment5() != null && !data.getProcompartment5().isEmpty())
+                            compartments.add(data.getProcompartment5());
+                        if (data.getProcompartment6() != null && !data.getProcompartment6().isEmpty())
+                            compartments.add(data.getProcompartment6());
+
+                        compartmentArraycount = compartments.size(); // ✅ Store count dynamically
+                        Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
+
+
+                        List<String> compartmentsJson = Arrays.asList(
+                                data.getCompartment1(),
+                                data.getCompartment2(),
+                                data.getCompartment3(),
+                                data.getCompartment4(),
+                                data.getCompartment5(),
+                                data.getCompartment6()
+                        );
+                        List<String> procompartmentsJson = Arrays.asList(
+                                data.getProcompartment1(),
+                                data.getProcompartment2(),
+                                data.getProcompartment3(),
+                                data.getProcompartment4(),
+                                data.getProcompartment5(),
+                                data.getProcompartment6()
+                        );
+                        for (String json : compartmentsJson) {
+                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
+                            if (labCompartmentModel != null) {
+                                compartmentList.add(labCompartmentModel);
+                                adapter.notifyDataSetChanged();
+                                // 🔹 Show Update or Submit button based on compartment data
+                            }
+                        }
+                        // If Cluase to get Latest Compartment Data for Weight Verification
+                        if (ismultiple && compartmentList.size() < procompartmentsJson.size()) {
+                            Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
+                            compartmentList.add(labCompartmentModel1);
+                            adapter.notifyDataSetChanged();
+                        }
+                        if (compartmentArraycount > 0) {
+                            verifybtn.setVisibility(View.VISIBLE);
+                            tareweight.setVisibility(View.GONE);
+                            etremark.setVisibility(View.GONE);
+                            submit.setVisibility(View.GONE);
+                            intime.setVisibility(View.GONE);
+                            mainContainer.setVisibility(View.GONE);
+                            Log.d("BUTTON_DEBUG", "Showing UPDATE button");
+                        } else {
+                            intime.setVisibility(View.VISIBLE);
+                            tareweight.setVisibility(View.VISIBLE);
+                            etremark.setVisibility(View.VISIBLE);
+                            verifybtn.setVisibility(View.GONE);
+                            submit.setVisibility(View.VISIBLE);
+                            // mainContainer.setVisibility(View.GONE);
+                            Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
+                        }
+                    } else {
+                        Toasty.error(Outward_Tanker_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Response_Outward_Tanker_Weighment> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+    }
 
     private void FetchVehicleDetails1(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
         Call<Response_Outward_Tanker_Weighment> call = outwardWeighment.fetchweighment(vehicleNo, vehicleType, NextProcess, inOut);
@@ -766,6 +1056,58 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         }
     }
 
+    public void update() {
+        String etintime = intime.getText().toString().trim();
+        String etserialnumber = serialnumber.getText().toString().trim();
+        String etvehiclenumber = vehiclenumber.getText().toString().trim();
+        String ettareweight = tareweight.getText().toString().trim();
+        String outTime = getCurrentTime();
+        String uremark = etremark.getText().toString().trim();
+        if (etintime.isEmpty() || etserialnumber.isEmpty() || etvehiclenumber.isEmpty() || ettareweight.isEmpty() || uremark.isEmpty()) {
+            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
+        } else {
+            Response_Outward_Tanker_Weighment responseOutwardTankerWeighment = new Response_Outward_Tanker_Weighment(
+                    OutwardId, etintime, outTime, imgPath2, imgPath1, "", "", "",
+                    "", ettareweight, "", "", "", "", 'W',
+                    uremark, EmployeId, EmployeId, 'P', 'I', vehicleType, etserialnumber, etvehiclenumber);
+            dialogHelper.showConfirmationDialog(this, () -> {
+                dialogHelper.showProgressDialog(this); // Show progress when confirmed
+                Call<Boolean> call = outwardWeighment.updateweighmentoutwardtankerDetails(responseOutwardTankerWeighment);
+                call.enqueue(new Callback<Boolean>() {
+                    @Override
+                    public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                        if (response.isSuccessful() && response.body() && response.body()) {
+                            dialogHelper.hideProgressDialog(); // Hide after response
+                            Log.d("Registration", "Response Body: " + response.body());
+                            deleteLocalImageAfterUpdate(etvehiclenumber, outTime);
+                        } else {
+                            Log.e("Retrofit", "Error Response Body: " + response.code());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Boolean> call, Throwable t) {
+                        dialogHelper.hideProgressDialog(); // Hide after response
+                        Log.e("Retrofit", "Failure: " + t.getMessage());
+                        // Check if there's a response body in case of an HTTP error
+                        if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                            Response<?> response = ((HttpException) t).response();
+                            if (response != null) {
+                                Log.e("Retrofit", "Error Response Code: " + response.code());
+                                try {
+                                    Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        Toasty.error(Outward_Tanker_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            });
+        }
+    }
+
     public void UploadImagesAndUpdate() {
 
         String FileInitial = "OutwardVeh_In_";
@@ -869,6 +1211,23 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             makeNotification(vehicalnumber, outTime);
             Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
             startActivity(new Intent(Outward_Tanker_weighment.this, Grid_Outward.class));
+            finish();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void deleteLocalImageAfterUpdate(String vehicalnumber, String outTime) {
+        File imageFile;
+        try {
+            for (Uri imgpath : LocalImgPath) {
+                if (imgpath != null) {
+                    ImageUtils.deleteImage(this, imgpath);
+                }
+            }
+            makeNotification(vehicalnumber, outTime);
+            Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
+            startActivity(new Intent(Outward_Tanker_weighment.this, OT_Completed_Weighment.class));
             finish();
         } catch (Exception e) {
             e.printStackTrace();
