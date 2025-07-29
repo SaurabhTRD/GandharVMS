@@ -2,6 +2,8 @@ package com.android.gandharvms.Outward_Tanker_Weighment;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -85,6 +87,19 @@ public class Adapter_OT_completed_Weighment extends RecyclerView.Adapter<Adapter
         }
         holder.serial.setText(club.getSerialNumber());
         holder.vehicle.setText(club.getVehicleNumber());
+        holder.vehicle.setTextColor(Color.parseColor("#0000EE")); // Standard link blue
+        holder.vehicle.setPaintFlags(holder.vehicle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        holder.vehicle.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, Outward_Tanker_weighment.class);
+            intent.putExtra("vehiclenumber", club.VehicleNumber);
+            intent.putExtra("recordId", club.getId());
+            intent.putExtra("mode", "update"); // Tell the activity to enter edit mode
+            context.startActivity(intent);
+        });
+
+
 
         holder.productoano.setPaintFlags(Paint.UNDERLINE_TEXT_FLAG);
         holder.productoano.setOnClickListener(new View.OnClickListener() {

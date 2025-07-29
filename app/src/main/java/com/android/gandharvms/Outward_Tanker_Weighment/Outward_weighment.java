@@ -33,4 +33,14 @@ public interface Outward_weighment {
 
     @POST("api/OutwardIndusSmallDispatch/AddOutwardIndusSmallDispatch")
     Call<Boolean> varifyindus(@Body Varified_Model request);
+
+    @POST("api/OutwardWeighment/UpdateWeighmentDetails")
+    Call<Boolean> updateweighmentoutwardtankerDetails(@Body Response_Outward_Tanker_Weighment request);
+
+    @GET("api/OutwardWeighment/GetOutwardDatabyfetchbyVehicle")
+    Call<Response_Outward_Tanker_Weighment> fetchweighmentbyvehicleno(
+            @Query("vehicleNo")String vehicleNo,
+            @Query("vehicleType")String vehicleType
+           );
+
 }

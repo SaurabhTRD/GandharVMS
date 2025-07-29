@@ -38,9 +38,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-
-            >
+            android:layout_marginTop="20dp">
             <EditText
                 android:id="@+id/etserialnumber"
                 android:layout_width="match_parent"
@@ -1379,7 +1377,7 @@
                     android:layout_marginLeft="30dp"
                     android:text="SUBMIT"
 
-                    android:textSize="22dp"
+                    android:textSize="17dp"
                     android:textStyle="bold">
 
                 </androidx.appcompat.widget.AppCompatButton>
