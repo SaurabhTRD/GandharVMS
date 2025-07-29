@@ -264,6 +264,27 @@ public class Common_Outward_model {
     public String PurposeProcess;
 
     public String ProductQTYUOMOA;
+    public String OutDEProRemark;
+    public String OutDEProductionIntime;
+    public String OutDEProductinOutTime;
+    public String OutDEProWTTime;
+    public String SecWTTime;
+    public String WeiWTTime;
+    public String BillWTTime;
+    public String IPFLabWTTime;
+    public String IPFProWTTime;
+    public String BLFLabWTTime;
+    public String BLFProWTTime;
+    public String LogWTTime;
+    public String BRFBilWTTime;
+    public String BRFProWTTime;
+    public String BRFLabWTTime;
+    public String IndustrialWTTime;
+    public String SmallpackWTTime;
+    public String OutWeiWTTime;
+    public String OutDataEntryWTTime;
+    public String OutBilWTTime;
+    public String OutSecWTTime;
 
     public String getProductQTYUOMOA() {
         return ProductQTYUOMOA;
@@ -2239,5 +2260,173 @@ public class Common_Outward_model {
 
     public void setPurposeProcess(String purposeProcess) {
         PurposeProcess = purposeProcess;
+    }
+
+    public String getOutDEProRemark() {
+        return OutDEProRemark;
+    }
+
+    public void setOutDEProRemark(String outDEProRemark) {
+        OutDEProRemark = outDEProRemark;
+    }
+
+    public String getOutDEProductionIntime() {
+        return OutDEProductionIntime;
+    }
+
+    public void setOutDEProductionIntime(String outDEProductionIntime) {
+        OutDEProductionIntime = outDEProductionIntime;
+    }
+
+    public String getOutDEProductinOutTime() {
+        return OutDEProductinOutTime;
+    }
+
+    public void setOutDEProductinOutTime(String outDEProductinOutTime) {
+        OutDEProductinOutTime = outDEProductinOutTime;
+    }
+
+    public String getOutDEProWTTime() {
+        return OutDEProWTTime;
+    }
+
+    public void setOutDEProWTTime(String outDEProWTTime) {
+        OutDEProWTTime = outDEProWTTime;
+    }
+
+    public String getOutWeiWTTime() {
+        return OutWeiWTTime;
+    }
+
+    public void setOutWeiWTTime(String outWeiWTTime) {
+        OutWeiWTTime = outWeiWTTime;
+    }
+
+    public String getSecWTTime() {
+        return SecWTTime;
+    }
+
+    public void setSecWTTime(String secWTTime) {
+        SecWTTime = secWTTime;
+    }
+
+    public String getWeiWTTime() {
+        return WeiWTTime;
+    }
+
+    public void setWeiWTTime(String weiWTTime) {
+        WeiWTTime = weiWTTime;
+    }
+
+    public String getBillWTTime() {
+        return BillWTTime;
+    }
+
+    public void setBillWTTime(String billWTTime) {
+        BillWTTime = billWTTime;
+    }
+
+    public String getIPFLabWTTime() {
+        return IPFLabWTTime;
+    }
+
+    public void setIPFLabWTTime(String IPFLabWTTime) {
+        this.IPFLabWTTime = IPFLabWTTime;
+    }
+
+    public String getIPFProWTTime() {
+        return IPFProWTTime;
+    }
+
+    public void setIPFProWTTime(String IPFProWTTime) {
+        this.IPFProWTTime = IPFProWTTime;
+    }
+
+    public String getBLFLabWTTime() {
+        return BLFLabWTTime;
+    }
+
+    public void setBLFLabWTTime(String BLFLabWTTime) {
+        this.BLFLabWTTime = BLFLabWTTime;
+    }
+
+    public String getBLFProWTTime() {
+        return BLFProWTTime;
+    }
+
+    public void setBLFProWTTime(String BLFProWTTime) {
+        this.BLFProWTTime = BLFProWTTime;
+    }
+
+    public String getLogWTTime() {
+        return LogWTTime;
+    }
+
+    public void setLogWTTime(String logWTTime) {
+        LogWTTime = logWTTime;
+    }
+
+    public String getBRFBilWTTime() {
+        return BRFBilWTTime;
+    }
+
+    public void setBRFBilWTTime(String BRFBilWTTime) {
+        this.BRFBilWTTime = BRFBilWTTime;
+    }
+
+    public String getBRFProWTTime() {
+        return BRFProWTTime;
+    }
+
+    public void setBRFProWTTime(String BRFProWTTime) {
+        this.BRFProWTTime = BRFProWTTime;
+    }
+
+    public String getBRFLabWTTime() {
+        return BRFLabWTTime;
+    }
+
+    public void setBRFLabWTTime(String BRFLabWTTime) {
+        this.BRFLabWTTime = BRFLabWTTime;
+    }
+
+    public String getIndustrialWTTime() {
+        return IndustrialWTTime;
+    }
+
+    public void setIndustrialWTTime(String industrialWTTime) {
+        IndustrialWTTime = industrialWTTime;
+    }
+
+    public String getSmallpackWTTime() {
+        return SmallpackWTTime;
+    }
+
+    public void setSmallpackWTTime(String smallpackWTTime) {
+        SmallpackWTTime = smallpackWTTime;
+    }
+
+    public String getOutDataEntryWTTime() {
+        return OutDataEntryWTTime;
+    }
+
+    public void setOutDataEntryWTTime(String outDataEntryWTTime) {
+        OutDataEntryWTTime = outDataEntryWTTime;
+    }
+
+    public String getOutBilWTTime() {
+        return OutBilWTTime;
+    }
+
+    public void setOutBilWTTime(String outBilWTTime) {
+        OutBilWTTime = outBilWTTime;
+    }
+
+    public String getOutSecWTTime() {
+        return OutSecWTTime;
+    }
+
+    public void setOutSecWTTime(String outSecWTTime) {
+        OutSecWTTime = outSecWTTime;
     }
 }

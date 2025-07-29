@@ -165,11 +165,11 @@ public class Outward_Truck_CompletedReportAdapter extends RecyclerView.Adapter<O
                 .error(R.drawable.gandhar2)
                 .noFade().resize(120,120)
                 .centerCrop().into(holder.outdriverimage);
-        String dataentryintime = club.getOutDataEntryInTime()!= null ? club.getOutDataEntryInTime() :"";
-        String dataentryouttime = club.getOutDataEntryOutTime()!=null ? club.getOutDataEntryOutTime(): "";
+        String dataentryintime = club.getOutDEProductionIntime()!= null ? club.getOutDEProductionIntime() :"";
+        String dataentryouttime = club.getOutDEProductinOutTime()!=null ? club.getOutDEProductinOutTime(): "";
         holder.dataentryIntime.setText(dataentryintime);
         holder.dataentryOutTime.setText(dataentryouttime);
-        holder.datantryremark.setText(club.getDataEntryRemark());
+        holder.datantryremark.setText(club.getOutDEProRemark());
         String outbilintime = club.getOutBilInTime()!= null ? club.getOutBilInTime() :"";
         String outbillouttime = club.getOutBilOutTime()!=null ? club.getOutBilOutTime() : "";
         holder.outbilInTime.setText(outbilintime);
