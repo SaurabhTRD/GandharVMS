@@ -3,6 +3,7 @@ package com.android.gandharvms.OutwardOut_Tanker_Security;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -21,6 +24,7 @@ import android.widget.Toast;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardOut_Tanker_Security;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -33,6 +37,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
 import com.android.gandharvms.ProductListData;
+import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.common.reflect.TypeToken;
@@ -61,7 +66,7 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
 
     public static String Tanker;
     public static String Truck;
-    EditText intime, serialnumber, date, vehiclenumber, invoiceno, partyname, goodsdiscription, qty, otoutsecqtyuom, netweight, sign, remark, etsealn;
+    EditText intime, serialnumber, date, vehiclenumber, invoiceno, partyname, goodsdiscription, qty, otoutsecqtyuom, netweight, sign, remark, etsealn,etdate;
     Button submit, complted;
     FirebaseFirestore dbroot;
     TimePickerDialog tpicker;
@@ -80,6 +85,11 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
     private String outsecvehiclenum;
     private LoginMethod userDetails;
     private String token;
+    CheckBox cbGenerateQR;
+    ImageView ivQRCode;
+
+    DatePickerDialog picker;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,6 +102,7 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
 
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
+        etdate = findViewById(R.id.outwarddoutdate);
         vehiclenumber = findViewById(R.id.etvehicleno);
         invoiceno = findViewById(R.id.etinvoicenumber);
         partyname = findViewById(R.id.etpartyname);
@@ -165,6 +176,27 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
                 intime.setText(time);
             }
         });
+        etdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(OutwardOut_Tanker_Security.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        etdate.setText(dateFormat.format(calendar.getTime()).replace("Sept","Sep"));
+                    }
+                }, year, month, day);
+                picker.show();
+            }
+        });
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -177,6 +209,12 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
         if (getIntent().hasExtra("vehiclenum")) {
             FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
+        cbGenerateQR = findViewById(R.id.cbGenerateQR);
+        ivQRCode = findViewById(R.id.ivQRCode);
+        Button btnPrint = findViewById(R.id.btnPrintQR);
+
+        // call reusable QR function
+        QRGeneratorUtil.handleQRCheckbox(this, cbGenerateQR,vehiclenumber, serialnumber, etdate,intime, ivQRCode, btnPrint);
 
     }
 

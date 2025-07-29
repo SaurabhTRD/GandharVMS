@@ -2,6 +2,7 @@ package com.android.gandharvms.LoginWithAPI;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -9,6 +10,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
@@ -66,21 +68,12 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LOCKED);
         final EditText Userid = findViewById(R.id.emplid);
         final EditText password = findViewById(R.id.etpassword);
         final Button login = findViewById(R.id.btnlogin);
         final TextView NotRegister = findViewById(R.id.registerlink);
-        //final TextView versionname=findViewById(R.id.txtversionname);
-
-        /*versionname.setText(versionName);
-        // version vise login
-        String versionName =Global_Var.getInstance().APKversion;
-        if (!ALLOWED_VERSION.equals(versionName)) {
-            Toasty.error(this, "This version is not allowed for login.", Toast.LENGTH_LONG, true).show();
-            login.setEnabled(false);
-            return;
-        }*/
 
         // Check and request notification permission for Android 13 (API level 33) and above
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {

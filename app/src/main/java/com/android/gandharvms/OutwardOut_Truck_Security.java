@@ -13,6 +13,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ import com.android.gandharvms.Outward_Truck_Laboratory.Outward_Truck_Laboratory;
 import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Security.SecOut_OR_Complete;
+import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -78,7 +80,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
     EditText splpack7literqty, splpack7_5literqty, splpack8_5literqty, splpack10literqty, splpack11literqty,
             splpack12literqty, splpack13literqty, splpack15literqty, splpack18literqty, splpack20literqty,
             splpack26literqty, splpack50literqty, splpack210literqty, splpackboxbucketqty,
-            smalltotqty, smalltotweight;
+            smalltotqty, smalltotweight,etdate;
     //EditText erqty,etqtyspl;
     Button submit, complete;
     FirebaseFirestore dbroot;
@@ -102,6 +104,9 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
     private LoginMethod userDetails;
     private String token;
     private String svehicleno;
+    CheckBox cbGenerateQR;
+    ImageView ivQRCode;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,6 +117,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         FirebaseMessaging.getInstance().subscribeToTopic("all");
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);
+        etdate = findViewById(R.id.outwardtruckoutdate);
         vehiclenumber = findViewById(R.id.etvehical);
         party = findViewById(R.id.etpartyname);
         gooddis = findViewById(R.id.etdisc);
@@ -195,6 +201,27 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
                 intime.setText(time);
             }
         });
+        etdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(OutwardOut_Truck_Security.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        etdate.setText(dateFormat.format(calendar.getTime()).replace("Sept","Sep"));
+                    }
+                }, year, month, day);
+                picker.show();
+            }
+        });
 
 
         vehiclenumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -204,6 +231,11 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
                 }
             }
         });
+        cbGenerateQR = findViewById(R.id.cbGenerateQR);
+        ivQRCode = findViewById(R.id.ivQRCode);
+        Button btnPrint = findViewById(R.id.btnPrintQR);
+        // call reusable QR function
+        QRGeneratorUtil.handleQRCheckbox(this, cbGenerateQR,vehiclenumber, serialnumber, etdate,intime, ivQRCode, btnPrint);
     }
 
     private String getCurrentTime() {

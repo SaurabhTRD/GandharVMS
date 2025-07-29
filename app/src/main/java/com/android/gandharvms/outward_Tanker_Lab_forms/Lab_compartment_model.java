@@ -55,6 +55,16 @@ public class Lab_compartment_model {
     public String ibatchnum;
     public String iqcofficer;
     public String iremarks;
+    private String originalJson; // New field
+
+    public void setOriginalJson(String json) {
+        this.originalJson = json;
+    }
+
+    public String getOriginalJson() {
+        return originalJson;
+    }
+
 
     public String getInTime() {
         return inTime;
@@ -111,6 +121,8 @@ public class Lab_compartment_model {
     @SerializedName("weighremark")
     private String weighremark;
 
+    public int targetIndex; // New field
+
 
 //    public Lab_compartment_model(String blenderNumber, String productionSign, String operatorSign) {
 //        this.blenderNumber = blenderNumber;
@@ -118,12 +130,13 @@ public class Lab_compartment_model {
 //        this.operatorSign = operatorSign;
 //    }
 
-    public Lab_compartment_model(String viscosity, String density, String batchNumber, String qcOfficer, String remark) {
+    public Lab_compartment_model(String viscosity, String density, String batchNumber, String qcOfficer, String remark, int targetIndex) {
         this.viscosity = viscosity;
         this.density = density;
         this.batchNumber = batchNumber;
         this.qcOfficer = qcOfficer;
         this.remark = remark;
+        this.targetIndex = targetIndex;
     }
 
     public String getProductName() {
@@ -232,5 +245,13 @@ public class Lab_compartment_model {
 
     public void setLabremark(String labremark) {
         Labremark = labremark;
+    }
+
+    public int getTargetIndex() {
+        return targetIndex;
+    }
+
+    public void setTargetIndex(int targetIndex) {
+        this.targetIndex = targetIndex;
     }
 }

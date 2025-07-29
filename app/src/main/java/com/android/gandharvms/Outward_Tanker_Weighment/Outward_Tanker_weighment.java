@@ -146,6 +146,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     private RecyclerView recyclerView;
     boolean isEditMode = false;
 
+    int firstProCompartmentIndex;
+    public List<String> compartmentsJson ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -511,41 +513,6 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         Netxtdept = data.getPurposeProcess();
                         String procompartment1 = data.getProcompartment1();
 
-
-//                        if(data.getPurposeProcess() == null || data.getPurposeProcess().trim().isEmpty()){
-//                            intime.setVisibility(View.VISIBLE);
-//                            tareweight.setVisibility(View.VISIBLE);
-//                            etremark.setVisibility(View.VISIBLE);
-//                        }else {
-//                            // Hide fields when purposeProcess contains any value
-//                            intime.setVisibility(View.GONE);
-////                            tareweight.setVisibility(View.GONE);
-//                            etremark.setVisibility(View.GONE);
-//                            layoutname.setVisibility(View.GONE);
-//                            layoutimg.setVisibility(View.GONE);
-//                            submit.setVisibility(View.GONE);
-//                            verifybtn.setVisibility(View.VISIBLE);
-//                            verifyremark.setVisibility(View.VISIBLE);
-//                            cardone.setVisibility(View.VISIBLE);
-//                            cardtwo.setVisibility(View.VISIBLE);
-//                            cardthree.setVisibility(View.VISIBLE);
-//                            cardfour.setVisibility(View.VISIBLE);
-//                            cardfive.setVisibility(View.VISIBLE);
-//                            cardsix.setVisibility(View.VISIBLE);
-////                            compartment1.setText(data.get);
-//                            tareweight.setText(data.getTareWeight());
-//                            tareweight.setEnabled(false);
-//                            handleCompartmentFields(data);
-//                            // Handle gross weight and net weight logic
-//                            setupGrossWeightLogic();
-//                            compartment1.setText(String.valueOf(data.getCompartment1()));
-//                            compartment2.setText(String.valueOf(data.getCompartment2()));
-//                            compartment3.setText(String.valueOf(data.getCompartment3()));
-//                            compartment4.setText(String.valueOf(data.getCompartment4()));
-//                            compartment5.setText(String.valueOf(data.getCompartment5()));
-//                            compartment6.setText(String.valueOf(data.getCompartment6()));
-//
-//                        }
                         List<String> compartments = new ArrayList<>();
 
                         if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty())
@@ -564,25 +531,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         compartmentArraycount = compartments.size(); // ✅ Store count dynamically
                         Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
 
-
-//                        List<String> compartmentsJson = Arrays.asList(
-//                                data.getProcompartment1(),
-//                                data.getProcompartment2(),
-//                                data.getProcompartment3(),
-//                                data.getProcompartment4(),
-//                                data.getProcompartment5(),
-//                                data.getProcompartment6()
-//                        );
-//                        for (String json : compartmentsJson) {
-//                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
-//                            if (labCompartmentModel != null) {
-//                                compartmentList.add(labCompartmentModel);
-//                                adapter.notifyDataSetChanged();
-//                                // 🔹 Show Update or Submit button based on compartment data
-//                            }
-//                        }
-
-                        List<String> compartmentsJson = Arrays.asList(
+                         compartmentsJson = Arrays.asList(
                                 data.getCompartment1(),
                                 data.getCompartment2(),
                                 data.getCompartment3(),
@@ -598,20 +547,46 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                                 data.getProcompartment5(),
                                 data.getProcompartment6()
                         );
-                        for (String json : compartmentsJson) {
-                            Lab_compartment_model labCompartmentModel = parseCompartment(json);
-                            if (labCompartmentModel != null) {
-                                compartmentList.add(labCompartmentModel);
-                                adapter.notifyDataSetChanged();
-                                // 🔹 Show Update or Submit button based on compartment data
+
+                        compartmentList.clear(); // 🔄 Clear old data
+
+                        firstProCompartmentIndex = -1;
+                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+                            String proJson = procompartmentsJson.get(i);
+                            if (proJson != null && !proJson.trim().isEmpty()) {
+                                firstProCompartmentIndex = i;
+                                break;
                             }
                         }
-                        // If Cluase to get Latest Compartment Data for Weight Verification
-                        if (ismultiple && compartmentList.size() < procompartmentsJson.size()) {
-                            Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
-                            compartmentList.add(labCompartmentModel1);
-                            adapter.notifyDataSetChanged();
+
+                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+                            String proJson = procompartmentsJson.get(i);
+                            String labJson = (i < compartmentsJson.size()) ? compartmentsJson.get(i) : null;
+
+                            if (proJson != null && !proJson.trim().isEmpty()) {
+                                boolean shouldBind = false;
+
+                                if (labJson == null || labJson.trim().isEmpty()) {
+                                    shouldBind = true;  // ✅ Compartment not filled yet, bind for verification
+                                }
+
+                                if (shouldBind) {
+                                    Lab_compartment_model model = parseCompartment(proJson);
+                                    model.setTargetIndex(firstProCompartmentIndex);
+                                    if (model != null) {
+                                        model.setTargetIndex(i);
+                                        model.setOriginalJson(proJson);
+                                        compartmentList.add(model);
+                                        Log.d("VERIFY_BIND", "✔ Added proCompartment at index " + i);
+                                    } else {
+                                        Log.w("VERIFY_BIND", "⚠ Failed to parse proCompartment at index " + i);
+                                    }
+                                }
+                            }
                         }
+
+                        adapter.notifyDataSetChanged();
+
                         if (compartmentArraycount > 0) {
                             verifybtn.setVisibility(View.VISIBLE);
                             tareweight.setVisibility(View.GONE);
@@ -1270,80 +1245,71 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     }
 
     private void verification() {
-        //String verification_remark = verifyremark.getText().toString().trim();
         String outTime = getCurrentTime();
         String etvehiclenumber = vehiclenumber.getText().toString().trim();
         String verification_remark = "ok";
 
-//        // Fetch existing net weight values (if available)
-//        double existingNet1 = getSafeDouble(compartment1);
-//        double existingNet2 = getSafeDouble(compartment2);
-//        double existingNet3 = getSafeDouble(compartment3);
-//        double existingNet4 = getSafeDouble(compartment4);
-//        double existingNet5 = getSafeDouble(compartment5);
-//        double existingNet6 = getSafeDouble(compartment6);
-//        // Handle empty fields safely
-//        double tareWeight = getSafeDouble(tareweight);
-//        double gross1 = getSafeDouble(grossweight1);
-//        Log.d("Debug", "Gross1 value: " + gross1);
-//        double gross2 = getSafeDouble(grossweight2);
-//        double gross3 = getSafeDouble(grossweight3);
-//        double gross4 = getSafeDouble(grossweight3);
-//        double gross5 = getSafeDouble(grossweight3);
-//        double gross6 = getSafeDouble(grossweight6);
-//
-//
-//        // Calculate net weight for each compartment (use existing value if available)
-//        int netw1 = (int) ((existingNet1 > 0) ? existingNet1 : Math.max(gross1 - tareWeight, 0));
-//        int netw2 = (int) ((existingNet2 > 0) ? existingNet2 : Math.max(gross2 - tareWeight, 0));
-//        int netw3 = (int) ((existingNet3 > 0) ? existingNet3 : Math.max(gross3 - tareWeight, 0));
-//        int netw4 = (int) ((existingNet4 > 0) ? existingNet4 : Math.max(gross4 - tareWeight, 0));
-//        int netw5 = (int) ((existingNet5 > 0) ? existingNet5 : Math.max(gross5 - tareWeight, 0));
-//        int netw6 = (int) ((existingNet6 > 0) ? existingNet6 : Math.max(gross6 - tareWeight, 0));
-//
-//        // Set net weight values in respective fields
-//        setCompartmentValue(compartment1, netw1);
-//        setCompartmentValue(compartment2, netw2);
-//        setCompartmentValue(compartment3, netw3);
-//        setCompartmentValue(compartment4, netw4);
-//        setCompartmentValue(compartment5, netw5);
-//        setCompartmentValue(compartment6, netw6);
+        // Use array for cleaner index-based assignment
+        String[] compartmentJsonStrings = new String[6]; // default all null
 
-        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
-        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
-        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
-        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
-        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
-        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
+        // Initialize all compartments as empty
+        for (int i = 0; i < 6; i++) {
+            compartmentJsonStrings[i] = "";
+        }
 
-        // Log the compartment strings to check their format
-        Log.d("Compartment JSON", compartment1String);
-        Log.d("Compartment JSON", compartment2String);
-        Log.d("Compartment JSON", compartment3String);
-        Log.d("Compartment JSON", compartment4String);
-        Log.d("Compartment JSON", compartment5String);
-        Log.d("Compartment JSON", compartment6String);
+        // Step 2: Fill from existing saved compartmentsJson if available
+        for (int i = 0; i < 6; i++) {
+            if (compartmentsJson != null && compartmentsJson.size() > i && compartmentsJson.get(i) != null && !compartmentsJson.get(i).isEmpty()) {
+                compartmentJsonStrings[i] = compartmentsJson.get(i);
+            }
+        }
 
-//        if (Netxtdept.length()>0){
-//            despatchNextChar = Netxtdept.charAt(0);
-//        }
+        // Step 3: Override specific indexes with newly inserted values from adapter
+        for (Lab_compartment_model comp : compartmentList) {
+            int index = comp.getTargetIndex(); // expected 0–5
+            if (index >= 0 && index < 6) {
+                compartmentJsonStrings[index] = convertCompartmentToJson(comp);
+            }
+        }
+
+
+
+        // ✅ Log the updated compartment values
+//        Log.d("Compartment JSON", compartment1String);
+//        Log.d("Compartment JSON", compartment2String);
+//        Log.d("Compartment JSON", compartment3String);
+//        Log.d("Compartment JSON", compartment4String);
+//        Log.d("Compartment JSON", compartment5String);
+//        Log.d("Compartment JSON", compartment6String);
+
         if (verification_remark.isEmpty()) {
             Toasty.warning(this, "Please Enter Remark", Toast.LENGTH_SHORT).show();
         } else {
-            Tanker_verification_model tankerVerificationModel = new Tanker_verification_model(OutwardId, "Yes", 'P', inOut, vehicleType, EmployeId,
-                    verification_remark, compartment1String, compartment2String, compartment3String, compartment4String, compartment5String, compartment6String);
-            //Log.d("API_REQUEST", "Sending: " + new Gson().toJson(tankerVerificationModel));
-            // ✅ Convert to JSON and log for debugging
+            Tanker_verification_model tankerVerificationModel = new Tanker_verification_model(
+                    OutwardId, "Yes", 'P', inOut, vehicleType, EmployeId,
+                    verification_remark,
+                    compartmentJsonStrings[0],
+                    compartmentJsonStrings[1],
+                    compartmentJsonStrings[2],
+                    compartmentJsonStrings[3],
+                    compartmentJsonStrings[4],
+                    compartmentJsonStrings[5]
+
+//                    compartmentJsonStrings[0], compartmentJsonStrings[1], compartmentJsonStrings[2],
+//                    compartmentJsonStrings[3], compartmentJsonStrings[4], compartmentJsonStrings[5]
+            );
+
             Gson gson = new Gson();
             String jsonRequest = gson.toJson(tankerVerificationModel);
             Log.d("API_REQUEST", jsonRequest);
+
             Call<Boolean> call = outwardTruckInterface.Tanker_weighmentvarified(tankerVerificationModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() && response.body()) {
+                    if (response.isSuccessful() && response.body()) {
                         Log.d("API_RESPONSE", "Response: " + response.body());
-                        Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
+                        Toasty.success(Outward_Tanker_weighment.this, "Data Inserted Successfully!", Toast.LENGTH_SHORT).show();
                         makeNotification(etvehiclenumber, outTime);
                         startActivity(new Intent(Outward_Tanker_weighment.this, Outward_Tanker.class));
                         finish();
@@ -1353,23 +1319,12 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
                     Log.e("Retrofit", "Failure: " + t.getMessage());
-                    // Check if there's a response body in case of an HTTP error
-                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-                        Response<?> response = ((HttpException) t).response();
-                        if (response != null) {
-                            Log.e("Retrofit", "Error Response Code: " + response.code());
-                            try {
-                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-                    Toasty.error(Outward_Tanker_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Outward_Tanker_weighment.this, "Failed..!", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
+
 
     // Helper method to safely parse integer values
     private int getSafeInt(EditText editText) {
@@ -1472,7 +1427,13 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
             jsonObject.put("TareWeight", compartment.getTareweight()); // Tare Weight")
             jsonObject.put("VerificationRemark", compartment.getVerificationRemark());
-//            jsonObject.put("VerificationRemark", compartment.getremark()); // Weight Remark")
+            jsonObject.put("VerificationRemark", compartment.getVerificationRemark()); // Weight Remark")
+//            jsonObject.put("ProductName", compartment.getProductName()); // ✅ Product Name
+//            jsonObject.put("InTime", compartment.getInTime()); // ✅ In-Time
+//            jsonObject.put("Blender", compartment.getBlenderNumber()); // ✅ Blender Number
+//            jsonObject.put("ProductionSign", compartment.getProductionSign()); // ✅ Production Sign
+//            jsonObject.put("OperatorSign", compartment.getOperatorSign()); // ✅ Operator Sign
+//            jsonObject.put("Remark", compartment.getRemark()); // ✅ Remark
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();

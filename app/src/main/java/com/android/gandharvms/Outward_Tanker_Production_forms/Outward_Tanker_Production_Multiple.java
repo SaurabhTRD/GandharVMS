@@ -6,6 +6,7 @@ import android.content.pm.ActivityInfo;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -117,6 +118,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
     private boolean isMultipleVehicle = false; // Default is false
     private ProductAdapter productAdapter; // ✅ Declare globally
     public String productdtls;
+    public  List<String> compartmentsJson;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -307,43 +309,6 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                         product.setText(data.getProductQTYUOMOA());
                         product.setEnabled(false);
                         productdtls = data.getProductQTYUOMOA();
-                        // Dynamically create product links
-//                        GridLayout productGrid = findViewById(R.id.productGridLayout);
-//                        productGrid.removeAllViews();
-//                        try {
-//                            JSONArray jsonArray = new JSONArray(data.getProductQTYUOMOA());
-//
-//                            for (int i = 0; i < jsonArray.length(); i++) {
-//                                JSONObject obj = jsonArray.getJSONObject(i);
-//                                if (obj.has("ProductName")) {
-//                                    String productName = obj.getString("ProductName");
-//
-//                                    TextView textView = new TextView(Outward_Tanker_Production_Multiple.this);
-//                                    textView.setText(productName);
-//                                    textView.setTextColor(Color.BLUE);
-//                                    textView.setTextSize(16);
-//                                    textView.setPadding(20, 10, 20, 10);
-//                                    textView.setPaintFlags(textView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-//                                    textView.setClickable(true);
-//                                    textView.setGravity(Gravity.CENTER);
-//
-//                                    // Click event to show form
-//                                    textView.setOnClickListener(view -> onProductClick(productName));
-//
-//                                    // Set Grid Layout params (3 products per row)
-//                                    GridLayout.LayoutParams params = new GridLayout.LayoutParams();
-//                                    params.width = 0;
-//                                    params.height = GridLayout.LayoutParams.WRAP_CONTENT;
-//                                    params.columnSpec = GridLayout.spec(i % 3, 1f);
-//                                    params.rowSpec = GridLayout.spec(i / 3);
-//
-//                                    textView.setLayoutParams(params);
-//                                    productGrid.addView(textView);
-//                                }
-//                            }
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
 
                         Set<String> insertedProducts = new HashSet<>();
                         for (Compartment compartment : compartmentList) {
@@ -400,21 +365,33 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                         }
 
                         // ✅ 2. Fetch and parse Procompartment Data
-                        List<Compartment> compartmentDataList = new ArrayList<>();
-                        List<String> compartmentsJson = Arrays.asList(
+//                        List<Compartment> compartmentDataList = new ArrayList<>();
+                        Map<Integer, Compartment> compartmentDataMap = new HashMap<>();
+                         compartmentsJson = Arrays.asList(
                                 data.getProcompartment1(), data.getProcompartment2(), data.getProcompartment3(),
                                 data.getProcompartment4(), data.getProcompartment5(), data.getProcompartment6()
                         );
 
-                        for (String json : compartmentsJson) {
+                        for (int i = 0; i < compartmentsJson.size(); i++) {
+                            String json = compartmentsJson.get(i);
                             if (json != null && !json.trim().isEmpty()) {
                                 Compartment compartment = parseCompartment(json);
                                 if (compartment != null) {
-                                    compartmentDataList.add(compartment);
-                                    Log.d("DEBUG", "Added Procompartment: " + compartment.getProductname());
+                                    compartmentDataMap.put(i, compartment); // 🔥 Index-based mapping
+                                    Log.d("DEBUG", "Added Compartment at index " + i + ": " + compartment.getProductname());
                                 }
                             }
                         }
+
+//                        for (String json : compartmentsJson) {
+//                            if (json != null && !json.trim().isEmpty()) {
+//                                Compartment compartment = parseCompartment(json);
+//                                if (compartment != null) {
+//                                    compartmentDataList.add(compartment);
+//                                    Log.d("DEBUG", "Added Procompartment: " + compartment.getProductname());
+//                                }
+//                            }
+//                        }
 
 //                          ✅ Check if productList is empty before setting the adapter
                         if (productList.isEmpty()) {
@@ -423,7 +400,9 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                             RecyclerView productRecyclerView = findViewById(R.id.productRecyclerView);
                             productRecyclerView.setLayoutManager(new LinearLayoutManager(Outward_Tanker_Production_Multiple.this));
 
-                            ProductAdapter adapter = new ProductAdapter(productList, compartmentDataList,OutwardId,productdtls);
+//                            ProductAdapter adapter = new ProductAdapter(productList, compartmentDataList,OutwardId,productdtls);
+                            ProductAdapter adapter = new ProductAdapter(productList, compartmentDataMap, OutwardId, productdtls);
+
                             productRecyclerView.setAdapter(adapter);
                             Log.d("RecyclerView", "Adapter set with " + productList.size() + " products.");
                         }
@@ -459,16 +438,6 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 
                         compartmentArraycount = compartments.size(); // ✅ Store count dynamically
                         Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
-
-                        // 🔹 Fetch and parse compartments, then show dialog
-//                        List<String> compartmentsJson = Arrays.asList(
-//                                data.getProcompartment1(),
-//                                data.getProcompartment2(),
-//                                data.getProcompartment3(),
-//                                data.getProcompartment4(),
-//                                data.getProcompartment5(),
-//                                data.getProcompartment6()
-//                        );
                         boolean hasCompartmentData = false; // Flag to check if at least one compartment has data
 
                         for (String json : compartmentsJson) {
@@ -815,238 +784,96 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 
     }
 
-//    public void update1() {
-//        String outTime = getCurrentTime();
-//        //String nextu = nextdeptvalue.toString().trim();
-//        String ivehicle = vehiclenumber.getText().toString();
-//        String iserialnumber = serialnumber.getText().toString();
-//
-//        // Convert Compartment objects to JSON strings
-//        String compartment1String = (compartmentList.size() > 0) ? convertCompartmentToJson(compartmentList.get(0)) : "";
-//        String compartment2String = (compartmentList.size() > 1) ? convertCompartmentToJson(compartmentList.get(1)) : "";
-//        String compartment3String = (compartmentList.size() > 2) ? convertCompartmentToJson(compartmentList.get(2)) : "";
-//        String compartment4String = (compartmentList.size() > 3) ? convertCompartmentToJson(compartmentList.get(3)) : "";
-//        String compartment5String = (compartmentList.size() > 4) ? convertCompartmentToJson(compartmentList.get(4)) : "";
-//        String compartment6String = (compartmentList.size() > 5) ? convertCompartmentToJson(compartmentList.get(5)) : "";
-//
-//        // Log the compartment strings to check their format
-//        Log.d("Compartment JSON", compartment1String);
-//        Log.d("Compartment JSON", compartment2String);
-//        Log.d("Compartment JSON", compartment3String);
-//        Log.d("Compartment JSON", compartment4String);
-//        Log.d("Compartment JSON", compartment5String);
-//        Log.d("Compartment JSON", compartment6String);
-//
-//        // Creating the update model object
-//        Repet_update_Model updateModel = new Repet_update_Model(
-//                OutwardId,
-//                "",
-//                compartment1String,
-//                compartment2String,
-//                compartment3String,
-//                compartment4String,
-//                compartment5String,
-//                compartment6String,
-//                iserialnumber,
-//                ivehicle,
-//                'L',
-//                inOut,
-//                vehicleType,
-//                EmployeId
-//
-//        );
-//
-//        //Convert the object to JSON for logging
-//        Gson gson = new Gson();
-//        String jsonRequest = gson.toJson(updateModel);
-//        Log.d("API_REQUEST", jsonRequest);
-//
-//        // API call for update
-//        Call<Boolean> call = outwardTankerLab.UpdateOutwardTankerProduction(updateModel);
-//        call.enqueue(new Callback<Boolean>() {
-//            @Override
-//            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                if (response.isSuccessful() && response.body() != null && response.body()) {
-//                    Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
-//                    makeNotification(ivehicle, outTime);
-//                    startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
-//                    finish();
-//                } else {
-//                    Log.e("Retrofit", "Error Response Code: " + response.code());
-//                    try {
-//                        Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    Toasty.error(Outward_Tanker_Production_Multiple.this, "Update Failed!", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Boolean> call, Throwable t) {
-//                Log.e("Retrofit", "Failure: " + t.getMessage());
-//                Toasty.error(Outward_Tanker_Production_Multiple.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//    }
 
-//    public void update() {
-//        String outTime = getCurrentTime();
-//        String ivehicle = vehiclenumber.getText().toString();
-//        String iserialnumber = serialnumber.getText().toString();
-//
-//        int selectedCompartmentIndex = getSelectedCompartmentIndex(); // ✅ Get selected compartment index
-//        if (selectedCompartmentIndex == -1) {
-//            Toast.makeText(this, "Please select a compartment before updating!", Toast.LENGTH_SHORT).show();
-//            return; // ❌ Stop execution if no compartment is selected
-//        }
-//
-//        List<Product> productList = ProductAdapter.getProductList(); // ✅ Get product list
-//        if (selectedCompartmentIndex >= productList.size()) {
-//            Toast.makeText(this, "Invalid selection!", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        Product selectedProduct = productList.get(selectedCompartmentIndex); // ✅ Now safe to access
-//        // ✅ Check if all fields are filled
-//        if (selectedProduct.getBlenderNumber().isEmpty() ||
-//                selectedProduct.getOperatorSign().isEmpty() ||
-//                selectedProduct.getSignOfProduction().isEmpty() ||
-//                selectedProduct.getInTime().isEmpty()) {
-//            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-//            return;
-//        }
-//
-//        // ✅ Convert `Product` to JSON
-//        String selectedProductJson = convertCompartmentToJson(selectedProduct);
-//        Log.d("JSON_DEBUG", "Generated JSON: " + selectedProductJson);
-//
-//        // ✅ Fetch existing compartment data
-//        List<String> existingCompartmentData = getExistingCompartmentData();
-//
-//        // ✅ Preserve old data and update only the selected compartment
-//        existingCompartmentData.set(selectedCompartmentIndex, selectedProductJson);
-//        // ✅ Assign updated values
-//        String compartment1String = existingCompartmentData.get(0);
-//        String compartment2String = existingCompartmentData.get(1);
-//        String compartment3String = existingCompartmentData.get(2);
-//        String compartment4String = existingCompartmentData.get(3);
-//        String compartment5String = existingCompartmentData.get(4);
-//        String compartment6String = existingCompartmentData.get(5);
-//
-//
-////        // ✅ Initialize all compartments as empty
-////        String compartment1String = "", compartment2String = "", compartment3String = "";
-////        String compartment4String = "", compartment5String = "", compartment6String = "";
-//
-////        // ✅ Assign data to the selected compartment
-////        switch (selectedCompartmentIndex) {
-////            case 0: compartment1String = selectedProductJson; break;
-////            case 1: compartment2String = selectedProductJson; break;
-////            case 2: compartment3String = selectedProductJson; break;
-////            case 3: compartment4String = selectedProductJson; break;
-////            case 4: compartment5String = selectedProductJson; break;
-////            case 5: compartment6String = selectedProductJson; break;
-////        }
-//
-//        if (selectedProductJson.isEmpty()) {
-//            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-//        } else {
-//            Repet_update_Model updateModel = new Repet_update_Model(
-//                    OutwardId,
-//                    "",
-//                    compartment1String, compartment2String, compartment3String,
-//                    compartment4String, compartment5String, compartment6String,
-//                    iserialnumber,
-//                    ivehicle,
-//                    'L',
-//                    inOut,
-//                    vehicleType,
-//                    EmployeId
-//            );
-//
-//            Gson gson = new Gson();
-//            String jsonRequest = gson.toJson(updateModel);
-//            Log.d("API_REQUEST", jsonRequest);
-//
-//            Call<Boolean> call = outwardTankerLab.UpdateOutwardTankerProduction(updateModel);
-//            call.enqueue(new Callback<Boolean>() {
-//                @Override
-//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                    if (response.isSuccessful() && response.body() != null && response.body()) {
-//                        Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
-//                        makeNotification(ivehicle, outTime);
-//                        startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
-//                        finish();
-//                    } else {
-//                        Log.e("Retrofit", "Error Response Code: " + response.code());
-//                        try {
-//                            Log.e("API_ERROR", "Error Body: " + response.errorBody().string());
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        Toasty.error(Outward_Tanker_Production_Multiple.this, "Update Failed!", Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Boolean> call, Throwable t) {
-//                    Log.e("Retrofit", "Failure: " + t.getMessage());
-//                    Toasty.error(Outward_Tanker_Production_Multiple.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//        }
-//    }
 
     public void update() {
         String outTime = getCurrentTime();
         String ivehicle = vehiclenumber.getText().toString();
         String iserialnumber = serialnumber.getText().toString();
 
-        int selectedCompartmentIndex = getSelectedCompartmentIndex();
-        if (selectedCompartmentIndex == -1) {
-            Toast.makeText(this, "Please select a compartment before updating!", Toast.LENGTH_SHORT).show();
+//        List<String> updatecompartmentsJson = compartmentsJson;
+//
+//        List<Product> productList = ProductAdapter.getProductList();
+//        if (productList == null || productList.isEmpty()) {
+//            Toast.makeText(this, "Product list is empty!", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+//
+//        List<String> compartmentDataList = new ArrayList<>(Arrays.asList("", "", "", "", "", "")); // ✅ Proper mutable list
+//
+//        for (int i = 0; i < productList.size(); i++) {
+//            Product p = productList.get(i);
+//            boolean isFilled = p != null &&
+//                    !TextUtils.isEmpty(p.getBlenderNumber()) &&
+//                    !TextUtils.isEmpty(p.getSignOfProduction()) &&
+//                    !TextUtils.isEmpty(p.getOperatorSign());
+//
+//            if (isFilled) {
+//                String json = convertCompartmentToJson(p);
+//                compartmentDataList.set(i, json); // ✅ No casting needed
+//                Log.d("UPDATE_COMPARTMENT", "Compartment " + (i + 1) + " added: " + json);
+//            } else {
+//                Log.d("SKIPPED_COMPARTMENT", "Compartment " + (i + 1) + " is empty or incomplete, skipping.");
+//            }
+//        }
+//
+//
+//        Log.d("FINAL_JSON", "Prepared Compartment List: " + new Gson().toJson(compartmentDataList));
+
+        // Start with previous data
+        List<String> updatecompartmentsJson = new ArrayList<>(Arrays.asList("", "", "", "", "", ""));
+
+        if (compartmentsJson != null) {
+            for (int i = 0; i < compartmentsJson.size() && i < 6; i++) {
+                String existing = compartmentsJson.get(i);
+                if (existing != null && !existing.trim().isEmpty()) {
+                    updatecompartmentsJson.set(i, existing); // Preserve old value
+                }
+            }
+        }
+
+// Now update with current product input
+        List<Product> productList = ProductAdapter.getProductList();
+        if (productList == null || productList.isEmpty()) {
+            Toast.makeText(this, "Product list is empty!", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        List<Product> productList = ProductAdapter.getProductList(); // ✅ Get all compartments data
-        if (selectedCompartmentIndex >= productList.size()) {
-            Toast.makeText(this, "Invalid selection!", Toast.LENGTH_SHORT).show();
-            return;
+        for (int i = 0; i < productList.size() && i < 6; i++) {
+            Product p = productList.get(i);
+            boolean isFilled = p != null &&
+                    !TextUtils.isEmpty(p.getBlenderNumber()) &&
+                    !TextUtils.isEmpty(p.getSignOfProduction()) &&
+                    !TextUtils.isEmpty(p.getOperatorSign());
+
+            if (isFilled) {
+                String json = convertCompartmentToJson(p);
+                updatecompartmentsJson.set(i, json); // ✅ Overwrite with new if available
+                Log.d("UPDATE_COMPARTMENT", "Compartment " + (i + 1) + " added: " + json);
+            } else {
+                Log.d("SKIPPED_COMPARTMENT", "Compartment " + (i + 1) + " is empty or incomplete, using existing.");
+            }
         }
 
-        Product selectedProduct = productList.get(selectedCompartmentIndex);
-
-        // ✅ Check if required fields are filled
-        if (selectedProduct.getBlenderNumber().isEmpty() ||
-                selectedProduct.getOperatorSign().isEmpty() ||
-                selectedProduct.getSignOfProduction().isEmpty() ||
-                selectedProduct.getInTime().isEmpty()) {
-            Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String selectedProductJson = convertCompartmentToJson(selectedProduct);
-        Log.d("JSON_DEBUG", "Generated JSON: " + selectedProductJson);
-
-        // ✅ Convert entire `productList` to JSON compartment-wise (Instead of setting empty compartments)
-        List<String> compartmentDataList = new ArrayList<>();
-        for (int i = 0; i <= selectedCompartmentIndex; i++) { // Only convert compartments up to the selected index
-            compartmentDataList.add(convertCompartmentToJson(productList.get(i)));
-        }
-        Log.d("FINAL_JSON", "Compartment List: " + new Gson().toJson(compartmentDataList));
+        Log.d("FINAL_JSON", "Prepared Compartment List: " + new Gson().toJson(updatecompartmentsJson));
 
 
-        // ✅ Create updated model with compartment-wise data
+        // Build update model
         Repet_update_Model updateModel = new Repet_update_Model(
                 OutwardId,
                 "",
-                compartmentDataList.get(0), // Compartment 1
-                compartmentDataList.size() > 1 ? compartmentDataList.get(1) : "",
-                compartmentDataList.size() > 2 ? compartmentDataList.get(2) : "",
-                compartmentDataList.size() > 3 ? compartmentDataList.get(3) : "",
-                compartmentDataList.size() > 4 ? compartmentDataList.get(4) : "",
-                compartmentDataList.size() > 5 ? compartmentDataList.get(5) : "",
+//                compartmentDataList.get(0),
+//                compartmentDataList.get(1),
+//                compartmentDataList.get(2),
+//                compartmentDataList.get(3),
+//                compartmentDataList.get(4),
+//                compartmentDataList.get(5),
+                updatecompartmentsJson.get(0),
+                updatecompartmentsJson.get(1),
+                updatecompartmentsJson.get(2),
+                updatecompartmentsJson.get(3),
+                updatecompartmentsJson.get(4),
+                updatecompartmentsJson.get(5),
                 iserialnumber,
                 ivehicle,
                 'L',
@@ -1055,17 +882,19 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                 EmployeId
         );
 
+        // Make API call
         Gson gson = new Gson();
         String jsonRequest = gson.toJson(updateModel);
         Log.d("API_REQUEST", jsonRequest);
+
         dialogHelper.showConfirmationDialog(this, () -> {
-            dialogHelper.showProgressDialog(this); // Show progress when confirmed
+            dialogHelper.showProgressDialog(this);
             Call<Boolean> call = outwardTankerLab.UpdateOutwardTankerProduction(updateModel);
             call.enqueue(new Callback<Boolean>() {
                 @Override
                 public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-                    if (response.isSuccessful() && response.body() != null && response.body()) {
-                        dialogHelper.hideProgressDialog(); // Hide after response
+                    dialogHelper.hideProgressDialog();
+                    if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
                         Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
                         makeNotification(ivehicle, outTime);
                         startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
@@ -1083,13 +912,14 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 
                 @Override
                 public void onFailure(Call<Boolean> call, Throwable t) {
-                    dialogHelper.hideProgressDialog(); // Hide after response
+                    dialogHelper.hideProgressDialog();
                     Log.e("Retrofit", "Failure: " + t.getMessage());
                     Toasty.error(Outward_Tanker_Production_Multiple.this, "API Call Failed!", Toast.LENGTH_SHORT).show();
                 }
             });
         });
     }
+
 
 
     public void makeNotification(String vehicleNumber, String outTime) {

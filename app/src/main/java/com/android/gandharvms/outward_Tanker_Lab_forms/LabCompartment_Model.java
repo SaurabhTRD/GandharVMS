@@ -64,4 +64,14 @@ public class LabCompartment_Model {
     public void setIremarks(String iremarks) {
         this.iremarks = iremarks;
     }
+
+    private String originalJson;
+
+
+    public String getOriginalJson() {
+        return originalJson;
+    }
+    public void setOriginalJson(String originalJson) {
+        this.originalJson = originalJson;
+    }
 }

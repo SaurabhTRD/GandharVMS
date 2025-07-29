@@ -112,9 +112,11 @@ public class LabCompartmentAdapter extends RecyclerView.Adapter<LabCompartmentAd
 
     public void onBindViewHolder(@NonNull LabCompartmentAdapter.ViewHolder holder, int position) {
         Lab_compartment_model compartment = compartmentList.get(position);
-        Log.d("AdapterBinding", "Binding compartment at position: " + position);
+        int index =compartment.getTargetIndex();
+        Log.d("AdapterBinding", "Binding compartment at position: " + index);
 
 
+        holder.txtCompartmentNumber.setText("Compartment " + (index + 1));
         holder.txtproduct.setText(compartment.getProductName() != null ? "productname: " + compartment.getProductName() : "productName: N/A");
         holder.txtBlender.setText(compartment.getBlenderNumber() != null ? "Blender: " + compartment.getBlenderNumber() : "Blender: N/A");
         holder.txtProductionSign.setText(compartment.getProductionSign() != null ? "Production Sign: " + compartment.getProductionSign() : "Production Sign: N/A");

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -33,6 +36,7 @@ import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
 import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
+import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
@@ -60,7 +64,7 @@ import retrofit2.Response;
 
 public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
 
-    EditText edintime, etvehicle, etinvoice, etsupplier;
+    EditText edintime, etvehicle, etinvoice, etsupplier,etdate,etserial;
     Button submit;
     RadioButton Trasnportyes, transportno, deliveryes, deliveryno, taxyes, taxno, ewayyes, ewayno;
     String vehicltype = Global_Var.getInstance().MenuType;
@@ -74,6 +78,11 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
     private API_In_Tanker_Security apiInTankerSecurity;
     private int InwardId;
     private final String EmployeId = Global_Var.getInstance().EmpId;
+    CheckBox cbGenerateQR;
+    ImageView ivQRCode;
+
+    DatePickerDialog picker;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,6 +95,8 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
         edintime = findViewById(R.id.etintime);
+        etserial = findViewById(R.id.inouttruckserialnumber);
+        etdate = findViewById(R.id.inwardouttruckdate);
         etvehicle = findViewById(R.id.etvehicalnumber);
         etinvoice = findViewById(R.id.etsinvocieno);
         //etmaterial = findViewById(R.id.etsmaterial);
@@ -122,6 +133,27 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
                 edintime.setText(time);
             }
         });
+        etdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+                int month = calendar.get(Calendar.MONTH);
+                int year = calendar.get(Calendar.YEAR);
+                // Array of month abbreviations
+                String[] monthAbbreviations = new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+                picker = new DatePickerDialog(InwardOut_Truck_Security.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        // Use the month abbreviation from the array
+                        String monthAbbreviation = monthAbbreviations[month];
+                        // etdate.setText(dayOfMonth + "/" + monthAbbreviation + "/" + year);
+                        etdate.setText(dateFormat.format(calendar.getTime()).replace("Sept","Sep"));
+                    }
+                }, year, month, day);
+                picker.show();
+            }
+        });
 
         etvehicle.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -134,6 +166,12 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
                 }
             }
         });
+        cbGenerateQR = findViewById(R.id.cbGenerateQR);
+        ivQRCode = findViewById(R.id.ivQRCode);
+        Button btnPrint = findViewById(R.id.btnPrintQR);
+
+        // call reusable QR function
+        QRGeneratorUtil.handleQRCheckbox(this, cbGenerateQR,etvehicle, etserial, etdate,edintime, ivQRCode, btnPrint);
     }
 
     private void FetchVehicleDetails(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {

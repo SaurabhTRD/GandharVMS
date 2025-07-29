@@ -30,6 +30,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".OR_CompletedReport.Outward_Truck_CompletedReport"
+            android:exported="false" />
+        <activity
+            android:name=".IR_VehicleStatus_Grid.ir_departmentscompleted_trackdata"
+            android:exported="false" />
+        <activity
             android:name=".IT_VehicleStatus_Grid.it_departmentscompleted_trackdata"
             android:exported="false" />
         <activity
@@ -424,6 +430,16 @@
                 <action android:name="android.service.notification.NotificationListenerService" />
             </intent-filter>
         </service>
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
     </application>
 
 </manifest>

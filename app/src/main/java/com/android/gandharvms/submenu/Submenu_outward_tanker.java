@@ -33,35 +33,7 @@ public class Submenu_outward_tanker extends NotificationCommonfunctioncls {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_submenu_outward_tanker);
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Submenu_outward_tanker.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Submenu_outward_tanker.this, Menu.class));
-            }
-        });*/
-
         setupHeader();
-
-//        public void Outward_process_Tankerclick(View view){
-//            Intent intent = new Intent(this, Submenu_outward_tanker.class);
-//        }
-
 
     }
     public void tankerinclick(View view){

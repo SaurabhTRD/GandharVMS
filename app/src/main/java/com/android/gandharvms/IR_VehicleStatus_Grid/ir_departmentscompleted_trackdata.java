@@ -1,24 +1,13 @@
-package com.android.gandharvms.IT_VehicleStatus_Grid;
+package com.android.gandharvms.IR_VehicleStatus_Grid;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
-import android.app.DownloadManager;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.icu.text.SimpleDateFormat;
 import android.media.MediaScannerConnection;
-import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.storage.StorageManager;
-import android.os.storage.StorageVolume;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -30,9 +19,6 @@ import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.core.app.NotificationCompat;
-import androidx.core.content.FileProvider;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
@@ -40,9 +26,9 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.IT_VehicleStatus_Grid.it_departmentscompleted_trackdata;
+import com.android.gandharvms.IT_VehicleStatus_Grid.it_deptcomp_trackdata_adapter;
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
-import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
-import com.android.gandharvms.InwardCompletedGrid.gridadaptercompleted;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
@@ -68,14 +54,14 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class it_departmentscompleted_trackdata extends NotificationCommonfunctioncls {
+public class ir_departmentscompleted_trackdata extends NotificationCommonfunctioncls {
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
     int scrollX = 0;
     List<CommonResponseModelForAllDepartment> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
-    it_deptcomp_trackdata_adapter gridadaptercomp;
+    ir_deptcomp_trackdata_adapter gridadaptercomp;
     Button btnFromDate,btnToDate;
     TextView totrec;
     String fromdate;
@@ -83,18 +69,19 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
     ImageButton imgBtnExportToExcel;
     private HSSFWorkbook hssfWorkBook;
     String formattedDate;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_it_departmentscompleted_trackdata);
+        setContentView(R.layout.activity_ir_departmentscompleted_trackdata);
         setupHeader();
-        btnFromDate = findViewById(R.id.ItdepttrackbtnfromDate);
-        btnToDate = findViewById(R.id.ItdepttrackcompbtntoDate);
-        totrec = findViewById(R.id.Itdepttracktotrecord);
+        btnFromDate = findViewById(R.id.IrdepttrackbtnfromDate);
+        btnToDate = findViewById(R.id.IrdepttrackcompbtntoDate);
+        totrec = findViewById(R.id.Irdepttracktotrecord);
         fromdate = getCurrentDateTime();
         todate = getCurrentDateTime();
-        imgBtnExportToExcel=findViewById(R.id.btnItdepttrackcompExportToExcel);
+        imgBtnExportToExcel=findViewById(R.id.btnIrdepttrackcompExportToExcel);
         hssfWorkBook = new HSSFWorkbook();
         initViews();
         getDatabydateselection();
@@ -132,7 +119,7 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
             @Override
             public void onClick(View view) {
                 if (clubList != null && !clubList.isEmpty()) {
-                    new AlertDialog.Builder(it_departmentscompleted_trackdata.this)
+                    new AlertDialog.Builder(ir_departmentscompleted_trackdata.this)
                             .setTitle("Export Data")
                             .setMessage("Do you want to export the data to Excel?")
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -151,7 +138,7 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
     }
 
     private void getDatabydateselection() {
-        ProgressDialog loadingDialog = new ProgressDialog(it_departmentscompleted_trackdata.this);
+        ProgressDialog loadingDialog = new ProgressDialog(ir_departmentscompleted_trackdata.this);
         loadingDialog.setMessage("Syncing data, please wait...");
         loadingDialog.setCancelable(false); // Prevent user from dismissing the dialog
         loadingDialog.show();
@@ -159,12 +146,12 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
     }
 
     private void initViews() {
-        rvClub = findViewById(R.id.recyclerviewitdepttrackgrid);
-        headerscroll = findViewById(R.id.Itdepttrackheaderscroll);
+        rvClub = findViewById(R.id.recyclerviewirdepttrackgrid);
+        headerscroll = findViewById(R.id.Irdepttrackheaderscroll);
     }
 
     private void setUpRecyclerView() {
-        gridadaptercomp = new it_deptcomp_trackdata_adapter(clubList);
+        gridadaptercomp = new ir_deptcomp_trackdata_adapter(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
@@ -180,28 +167,21 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
         call.enqueue(new Callback<List<CommonResponseModelForAllDepartment>>() {
             @Override
             public void onResponse(Call<List<CommonResponseModelForAllDepartment>> call, Response<List<CommonResponseModelForAllDepartment>> response) {
-                loadingDialog.dismiss();
+                loadingDialog.dismiss(); // Always dismiss the dialog
 
-                try {
-                    if (response.isSuccessful() && response.body() != null) {
-                        List<CommonResponseModelForAllDepartment> data = response.body();
-
-                        if (data != null && !data.isEmpty()) {
-                            clubList = data;
-                            totrec.setText("Tot-Rec: " + data.size());
-                            setUpRecyclerView();
-                        } else {
-                            clubList = new ArrayList<>();
-                            totrec.setText("Tot-Rec: 0");
-                            Toasty.info(it_departmentscompleted_trackdata.this, "No records found", Toast.LENGTH_SHORT).show();
-                            // You can also clear RecyclerView if needed
-                        }
+                if (response.isSuccessful() && response.body() != null) {
+                    List<CommonResponseModelForAllDepartment> data = response.body();
+                    if (!data.isEmpty()) {
+                        int totalcount = data.size();
+                        totrec.setText("Tot-Rec: " + totalcount);
+                        clubList = data;
+                        setUpRecyclerView();
                     } else {
-                        Toasty.error(it_departmentscompleted_trackdata.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        totrec.setText("Tot-Rec: 0");
+                        Toasty.info(ir_departmentscompleted_trackdata.this, "No records found", Toast.LENGTH_SHORT).show();
                     }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toasty.error(it_departmentscompleted_trackdata.this, "Something went wrong while processing response", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toasty.error(ir_departmentscompleted_trackdata.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -222,14 +202,14 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
                     }
                 }
 
-                Toasty.error(it_departmentscompleted_trackdata.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
+                Toasty.error(ir_departmentscompleted_trackdata.this, "Failed to fetch data", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void exportToExcel(List<CommonResponseModelForAllDepartment> datalist) {
         try {
-            Sheet sheet = hssfWorkBook.createSheet("InwardTankerDepartmentTrackStatus");
+            Sheet sheet = hssfWorkBook.createSheet("InwardTruckDepartmentTrackStatus");
             // Create header row
             Row headerRow = sheet.createRow(0);
             headerRow.createCell(0).setCellValue("VEHICLE_NO");
@@ -241,21 +221,15 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
             headerRow.createCell(6).setCellValue("WEI_INTIME");
             headerRow.createCell(7).setCellValue("WEI_OUTTIME");
             headerRow.createCell(8).setCellValue("WEI_WAITINGTIME");
-            headerRow.createCell(9).setCellValue("SAM_INTIME");
-            headerRow.createCell(10).setCellValue("SAM_OUTTIME");
-            headerRow.createCell(11).setCellValue("SAM_WAITINGTIME");
-            headerRow.createCell(12).setCellValue("LAB_INTIME");
-            headerRow.createCell(13).setCellValue("LAB_OUTTIME");
-            headerRow.createCell(14).setCellValue("LAB_WAITINGTIME");
-            headerRow.createCell(15).setCellValue("PRO_INTIME");
-            headerRow.createCell(16).setCellValue("PRO_OUTTIME");
-            headerRow.createCell(17).setCellValue("PRO_WAITINGTIME");
-            headerRow.createCell(18).setCellValue("OUTWEI_INTIME");
-            headerRow.createCell(19).setCellValue("OUTWEI_OUTTIME");
-            headerRow.createCell(20).setCellValue("OUTWEI_WAITINGTIME");
-            headerRow.createCell(21).setCellValue("OUTSEC_INTIME");
-            headerRow.createCell(22).setCellValue("OUTSEC_OUTTIME");
-            headerRow.createCell(23).setCellValue("OUTSEC_WAITINGTIME");
+            headerRow.createCell(9).setCellValue("STORE_INTIME");
+            headerRow.createCell(10).setCellValue("STORE_OUTTIME");
+            headerRow.createCell(11).setCellValue("STORE_WAITINGTIME");
+            headerRow.createCell(12).setCellValue("OUTWEI_INTIME");
+            headerRow.createCell(13).setCellValue("OUTWEI_OUTTIME");
+            headerRow.createCell(14).setCellValue("OUTWEI_WAITINGTIME");
+            headerRow.createCell(15).setCellValue("OUTSEC_INTIME");
+            headerRow.createCell(16).setCellValue("OUTSEC_OUTTIME");
+            headerRow.createCell(17).setCellValue("OUTSEC_WAITINGTIME");
 
             // Populate data rows
             for (int i = 0; i < datalist.size(); i++) {
@@ -270,15 +244,9 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
                 String weiintimelength = club.getWeiIntime()!=null ? club.getWeiIntime() : "";
                 String weiouttimelength = club.getWeiOuttime()!=null ? club.getWeiOuttime(): "";
                 String weiwaittimelength = club.getWeiWTTime()!=null ? club.getWeiWTTime(): "";
-                String samintimelength = club.getSamIntime()!=null ? club.getSamIntime() : "";
-                String samouttimelength = club.getSamOuttime()!=null ? club.getSamOuttime(): "";
-                String samwaittimelength = club.getSamWTTime()!=null ? club.getSamWTTime(): "";
-                String prointimelength = club.getProIntime()!=null ? club.getProIntime() : "";
-                String proouttimelength = club.getProOuttime()!=null ? club.getProOuttime(): "";
-                String prowaittimelength = club.getProWTTime()!=null ? club.getProWTTime(): "";
-                String labintimelength = club.getLabIntime()!=null ? club.getLabIntime() : "";
-                String labouttimelength = club.getLabOuttime()!=null ? club.getLabOuttime(): "";
-                String labwaittimelength = club.getLabWTTime()!=null ? club.getLabWTTime(): "";
+                String storeintimelength = club.getStoreIntime()!=null ? club.getStoreIntime() : "";
+                String storeouttimelength = club.getStoreOuttime()!=null ? club.getStoreOuttime(): "";
+                String storewaittimelength = club.getStoreWTTime()!=null ? club.getStoreWTTime(): "";
                 String outweiintimelength = club.getOutWeiInTime()!=null ? club.getOutWeiInTime() : "";
                 String outweiouttimelength = club.getOutWeiOutTime()!=null ? club.getOutWeiOutTime(): "";
                 String outweiwaittimelength = club.getOutWeiWTTime()!=null ? club.getOutWeiWTTime(): "";
@@ -295,23 +263,16 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
                 dataRow.createCell(6).setCellValue(weiintimelength);
                 dataRow.createCell(7).setCellValue(weiouttimelength);
                 dataRow.createCell(8).setCellValue(weiwaittimelength);
-                dataRow.createCell(9).setCellValue(samintimelength);
-                dataRow.createCell(10).setCellValue(samouttimelength);
-                dataRow.createCell(11).setCellValue(samwaittimelength);
-                dataRow.createCell(12).setCellValue(prointimelength);
-                dataRow.createCell(13).setCellValue(proouttimelength);
-                dataRow.createCell(14).setCellValue(prowaittimelength);
-                dataRow.createCell(15).setCellValue(labintimelength);
-                dataRow.createCell(16).setCellValue(labouttimelength);
-                dataRow.createCell(17).setCellValue(labwaittimelength);
-                dataRow.createCell(18).setCellValue(outweiintimelength);
-                dataRow.createCell(19).setCellValue(outweiouttimelength);
-                dataRow.createCell(20).setCellValue(outweiwaittimelength);
-                dataRow.createCell(21).setCellValue(outsecintimelength);
-                dataRow.createCell(22).setCellValue(outsecouttimelength);
-                dataRow.createCell(23).setCellValue(outsecwaittimelength);
+                dataRow.createCell(9).setCellValue(storeintimelength);
+                dataRow.createCell(10).setCellValue(storeouttimelength);
+                dataRow.createCell(11).setCellValue(storewaittimelength);
+                dataRow.createCell(12).setCellValue(outweiintimelength);
+                dataRow.createCell(13).setCellValue(outweiouttimelength);
+                dataRow.createCell(14).setCellValue(outweiwaittimelength);
+                dataRow.createCell(15).setCellValue(outsecintimelength);
+                dataRow.createCell(16).setCellValue(outsecouttimelength);
+                dataRow.createCell(17).setCellValue(outsecwaittimelength);
             }
-
             saveWorkbookToDownloads(hssfWorkBook);
         }catch(Exception ex){
             ex.printStackTrace();
@@ -321,7 +282,7 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
     private void saveWorkbookToDownloads(HSSFWorkbook hssfWorkBook) {
         try {
             String dateTimeSuffix = new SimpleDateFormat("ddMMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
-            String fileName = "InwardTanker_DepartmentTrackData_" + dateTimeSuffix + ".xls";
+            String fileName = "InwardTruck_DepartmentTrackData_" + dateTimeSuffix + ".xls";
 
             File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             File file = new File(downloadsDir, fileName);
@@ -365,7 +326,7 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
                             } else {
                                 todate = selectedDate;
                             }
-                            ProgressDialog loadingDialog = new ProgressDialog(it_departmentscompleted_trackdata.this);
+                            ProgressDialog loadingDialog = new ProgressDialog(ir_departmentscompleted_trackdata.this);
                             loadingDialog.setMessage("Syncing data, please wait...");
                             loadingDialog.setCancelable(false); // Prevent user from dismissing the dialog
                             loadingDialog.show();
@@ -384,7 +345,7 @@ public class it_departmentscompleted_trackdata extends NotificationCommonfunctio
                             });
                         } else {
                             // Show an error message or take appropriate action
-                            Toasty.warning(it_departmentscompleted_trackdata.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(ir_departmentscompleted_trackdata.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },

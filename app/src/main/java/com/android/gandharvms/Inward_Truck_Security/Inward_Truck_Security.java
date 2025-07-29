@@ -52,6 +52,7 @@ import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
+import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
@@ -149,6 +150,9 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
     private int insertnetweight;
     private int insertqtyUom;
     private int insertnetweightUom;
+    CheckBox cbGenerateQR;
+    ImageView ivQRCode;
+    Button btnPrint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -387,6 +391,11 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
             editor.putInt("lastDay", currentDay);
             editor.apply();
         }
+        cbGenerateQR = findViewById(R.id.cbGenerateQR);
+        ivQRCode = findViewById(R.id.ivQRCode);
+        Button btnPrint = findViewById(R.id.btnPrintQR);
+        // call reusable QR function
+        QRGeneratorUtil.handleQRCheckbox(this, cbGenerateQR, etvehicalnumber, etserialnumber, etsdate, etintime, ivQRCode, btnPrint);
     }
 
     public void onClick(View v) {
@@ -552,7 +561,8 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
 // Convert JSONArray to string
             String extraMaterialsString = extraMaterialsArray.toString();
             Request_Model_In_Tanker_Security requestModelInTankerSecurity = new Request_Model_In_Tanker_Security(serialnumber, invoicenumber, vehicalnumber, Date, partyname, "material", pooa, mobnumber, 'W', 'I', Date,
-                    "", vehicltype, intime, outTime, 1, insertnetweightUom, insertnetweight, 1, extraMaterialsString, remark, false, "No", selectregister, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection, EmployeId, "", InwardId);
+                    "", vehicltype, intime, outTime, 1, insertnetweightUom, insertnetweight, 1, extraMaterialsString, remark, false, "No", selectregister, lrCopySelection, deliverySelection, taxInvoiceSelection, ewayBillSelection, EmployeId, "", InwardId,
+            "","",true,true);
 
             apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
             dialogHelper.showConfirmationDialog(this, () -> {

@@ -32,6 +32,7 @@ import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
+import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
@@ -85,6 +86,9 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
     private String token;
     private LoginMethod userDetails;
     private int ukl;
+    CheckBox cbGenerateQR;
+    ImageView ivQRCode;
+    Button btnPrint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -314,6 +318,12 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
             Log.e("MainActivity", "SharedPreferences is null");
         }
 
+        cbGenerateQR = findViewById(R.id.cbGenerateQR);
+        ivQRCode = findViewById(R.id.ivQRCode);
+        Button btnPrint = findViewById(R.id.btnPrintQR);
+
+        // call reusable QR function
+        QRGeneratorUtil.handleQRCheckbox(this, cbGenerateQR, vehiclenum, serialnumber, eddate, intime, ivQRCode, btnPrint);
 
     }
 

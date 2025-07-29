@@ -1,13 +1,7 @@
-package com.android.gandharvms.OT_CompletedReport;
+package com.android.gandharvms.OR_CompletedReport;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.DividerItemDecoration;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,11 +13,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.IT_VehicleStatus_Grid.it_departmentscompleted_trackdata;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
-import com.android.gandharvms.OutwardOut_Tanker_Security.Adapter_OT_complete_OutSecurity;
-import com.android.gandharvms.OutwardOut_Tanker_Security.OT_Complete_Out_security;
+import com.android.gandharvms.OT_CompletedReport.Outward_Tanker_CompReportAdapter;
+import com.android.gandharvms.OT_CompletedReport.Outward_Tanker_CompletedReport;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
@@ -46,13 +47,13 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncls {
+public class Outward_Truck_CompletedReport extends NotificationCommonfunctioncls {
 
     int scrollX = 0;
     List<Common_Outward_model> clubList = new ArrayList<>();
     RecyclerView rvClub;
     HorizontalScrollView headerscroll;
-    Outward_Tanker_CompReportAdapter adapterOtCompleteReport;
+    Outward_Truck_CompletedReportAdapter adapterOrCompleteReport;
     private Outward_Tanker outwardTanker;
 
     private final String vehicleType = Global_Var.getInstance().MenuType;
@@ -67,10 +68,11 @@ public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_outward_tanker_completed_report);
-        btnFromDate = findViewById(R.id.OtdepttrackbtnfromDate);
-        btnToDate = findViewById(R.id.OtdepttrackcompbtntoDate);
-        totrec=findViewById(R.id.Otdepttracktotrecord);
+        EdgeToEdge.enable(this);
+        setContentView(R.layout.activity_outward_truck_completed_report);
+        btnFromDate = findViewById(R.id.OrdepttrackbtnfromDate);
+        btnToDate = findViewById(R.id.OrdepttrackcompbtntoDate);
+        totrec=findViewById(R.id.Ordepttracktotrecord);
         fromdate = getCurrentDateTime();
         todate = getCurrentDateTime();
         //imgBtnExportToExcel=findViewById(R.id.btnOtdepttrackcompExportToExcel);
@@ -110,31 +112,10 @@ public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncl
                 showDatePickerDialog(btnToDate, false);
             }
         });
-
-        /*imgBtnExportToExcel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (clubList != null && !clubList.isEmpty()) {
-                    new AlertDialog.Builder(Outward_Tanker_CompletedReport.this)
-                            .setTitle("Export Data")
-                            .setMessage("Do you want to export the data to Excel?")
-                            .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    // User confirmed, export to Excel
-                                    exportToExcel(clubList);
-                                }
-                            })
-                            .setNegativeButton("No", null) // Dismiss dialog on "No"
-                            .show();
-                } else {
-                    Toasty.warning(getApplicationContext(), "No data to export", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });*/
     }
 
     private void getDatabydateselection() {
-        ProgressDialog loadingDialog = new ProgressDialog(Outward_Tanker_CompletedReport.this);
+        ProgressDialog loadingDialog = new ProgressDialog(Outward_Truck_CompletedReport.this);
         loadingDialog.setMessage("Syncing data, please wait...");
         loadingDialog.setCancelable(false); // Prevent user from dismissing the dialog
         loadingDialog.show();
@@ -144,17 +125,17 @@ public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncl
 
     private void initViews()
     {
-        rvClub = findViewById(R.id.recyclerotcompletereport);
-        headerscroll = findViewById(R.id.hsotcompletereport);
+        rvClub = findViewById(R.id.recyclerorcompletereport);
+        headerscroll = findViewById(R.id.hsorcompletereport);
     }
 
     private void setUpRecyclerView()
     {
-        adapterOtCompleteReport  = new Outward_Tanker_CompReportAdapter(clubList);
+        adapterOrCompleteReport  = new Outward_Truck_CompletedReportAdapter(clubList);
         FixedGridLayoutManager manager = new FixedGridLayoutManager();
         manager.setTotalColumnCount(1);
         rvClub.setLayoutManager(manager);
-        rvClub.setAdapter(adapterOtCompleteReport);
+        rvClub.setAdapter(adapterOrCompleteReport);
         rvClub.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL));
     }
 
@@ -175,15 +156,15 @@ public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncl
                         } else {
                             clubList = new ArrayList<>();
                             totrec.setText("Tot-Rec: 0");
-                            Toasty.info(Outward_Tanker_CompletedReport.this, "No records found", Toast.LENGTH_SHORT).show();
+                            Toasty.info(Outward_Truck_CompletedReport.this, "No records found", Toast.LENGTH_SHORT).show();
                             // You can also clear RecyclerView if needed
                         }
                     } else {
-                        Toasty.error(Outward_Tanker_CompletedReport.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
+                        Toasty.error(Outward_Truck_CompletedReport.this, "Server error: " + response.code(), Toast.LENGTH_SHORT).show();
                     }
                 }catch (Exception e) {
                     e.printStackTrace();
-                    Toasty.error(Outward_Tanker_CompletedReport.this, "Something went wrong while processing response", Toast.LENGTH_SHORT).show();
+                    Toasty.error(Outward_Truck_CompletedReport.this, "Something went wrong while processing response", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -203,7 +184,7 @@ public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncl
                         }
                     }
                 }
-                Toasty.error(Outward_Tanker_CompletedReport.this,"failed..!", Toast.LENGTH_SHORT).show();
+                Toasty.error(Outward_Truck_CompletedReport.this,"failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -228,7 +209,7 @@ public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncl
                             } else {
                                 todate = selectedDate;
                             }
-                            ProgressDialog loadingDialog = new ProgressDialog(Outward_Tanker_CompletedReport.this);
+                            ProgressDialog loadingDialog = new ProgressDialog(Outward_Truck_CompletedReport.this);
                             loadingDialog.setMessage("Syncing data, please wait...");
                             loadingDialog.setCancelable(false); // Prevent user from dismissing the dialog
                             loadingDialog.show();
@@ -247,7 +228,7 @@ public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncl
                             });
                         } else {
                             // Show an error message or take appropriate action
-                            Toasty.warning(Outward_Tanker_CompletedReport.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(Outward_Truck_CompletedReport.this, "Invalid date selection", Toast.LENGTH_SHORT).show();
                         }
                     }
                 },
@@ -267,18 +248,6 @@ public class Outward_Tanker_CompletedReport extends NotificationCommonfunctioncl
         }
         // Show the date picker dialog
         datePickerDialog.show();
-    }
-
-    private String formatDate(String inputDate) {
-        try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("MMM dd yyyy hh:mma", Locale.getDefault());
-            SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
-            Date date = inputFormat.parse(inputDate);
-            return outputFormat.format(date);
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return inputDate;
-        }
     }
 
     private String getCurrentDateTime() {
