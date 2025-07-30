@@ -6,6 +6,7 @@ import androidx.appcompat.widget.AppCompatSpinner;
 
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -76,7 +77,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
     EditText intime, serialnumber, vehiclenumber, transporter, oanumber, date, location,
             remark, etcust, etprod, ethowmuch, euom, kl;
     FirebaseFirestore dbroot;
-    Button submit, completed;
+    Button submit, completed,updatedbtn;
     TimePickerDialog tpicker;
     Calendar calendar = Calendar.getInstance();
     AutoCompleteTextView uom;
@@ -95,6 +96,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
     private String token;
     private LoginMethod userDetails;
     private int uhowmuch;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
         productlinearlayout = findViewById(R.id.productlayout_list);
         productaddbtn = findViewById(R.id.button_addproduct);
         completed = findViewById(R.id.otbillincompleted);
+        updatedbtn = findViewById(R.id.updatebilling);
 
         /*btnlogout = findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
@@ -175,6 +178,12 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
                 startActivity(new Intent(Outward_Tanker_Billing.this, OT_Completed_Billing.class));
             }
         });
+        updatedbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                update();
+            }
+        });
 
         productaddbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -200,8 +209,31 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
             }
         });
 
-        if (getIntent().hasExtra("vehiclenum")) {
-            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+//        if (getIntent().hasExtra("vehiclenum")) {
+//            FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+//        }
+
+        sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
+        if (sharedPreferences != null) {
+            if (getIntent().hasExtra("vehiclenum")) {
+                String action = getIntent().getStringExtra("Action");
+                if (action != null && action.equals("Up")) {
+                    FetchVehicleDetailsforUpdate(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, 'x', 'I');
+                    updatedbtn.setVisibility(View.VISIBLE);
+                    submit.setVisibility(View.GONE);
+                } else {
+                    FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, 'B', 'I');
+                    //button1.setVisibility(View.GONE);
+                    updatedbtn.setVisibility(View.GONE);
+                    submit.setVisibility(View.VISIBLE);
+                }
+//                btnadd.setVisibility(View.GONE);
+            } else {
+                //GetMaxSerialNo(vehicletype+ formattedDate);
+            }
+
+        } else {
+            Log.e("MainActivity", "SharedPreferences is null");
         }
     }
 
@@ -405,6 +437,58 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
         });
     }
 
+    private void FetchVehicleDetailsforUpdate(@NonNull String vehicleNo, String vehicleType, char NextProcess, char inOut) {
+        Call<Respons_Outward_Tanker_Billing> call = outwardTankerBillinginterface.outwardbillingfetching(vehicleNo, vehicleType, NextProcess, inOut);
+        call.enqueue(new Callback<Respons_Outward_Tanker_Billing>() {
+            @Override
+            public void onResponse(Call<Respons_Outward_Tanker_Billing> call, Response<Respons_Outward_Tanker_Billing> response) {
+                if (response.isSuccessful()) {
+                    Respons_Outward_Tanker_Billing data = response.body();
+                    if (data.getVehicleNumber() != "" && data.getVehicleNumber() != null) {
+                        OutwardId = data.getOutwardId();
+                        vehiclenumber.setText(data.getVehicleNumber());
+                        serialnumber.setText(data.getSerialNumber());
+                        date.setText(data.getDate());
+                        transporter.setText(data.getTransportName());
+                        vehiclenumber.setEnabled(false);
+                        serialnumber.setEnabled(false);
+                        date.setEnabled(false);
+                        transporter.setEnabled(false);
+                        kl.setText(String.valueOf(data.getKl()));
+                        kl.setEnabled(false);
+                        holdremark = data.getHoldRemark();
+                        /*intime.callOnClick();
+                        intime.requestFocus();*/
+                        etcust.setText(data.getCustomerName());
+                        location.setText(data.getLocation());
+                    } else {
+                        Toasty.error(Outward_Tanker_Billing.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    Log.e("Retrofit", "Error Response Body: " + response.code());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Respons_Outward_Tanker_Billing> call, Throwable t) {
+
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        });
+    }
+
     private String getCurrentTime() {
         // Get the current time
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -560,6 +644,63 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
                 });
             });
         }
+    }
+
+
+    public void update(){
+        String updatecustname = etcust.getText().toString().trim();
+        JSONArray ProductArray = new JSONArray();
+        for (int i = 0; i < productlinearlayout.getChildCount(); i++) {
+            View childView = productlinearlayout.getChildAt(i);
+            if (childView != null) {
+                EditText etoano = childView.findViewById(R.id.etotbilOANo);
+                EditText etproduct = childView.findViewById(R.id.etotbilProduct);
+                EditText etproductqty = childView.findViewById(R.id.etotbilqty);
+                AppCompatSpinner spnproductqtyuom = childView.findViewById(R.id.etotbilspinner_team);
+
+                dyprooano = etoano.getText().toString().trim();
+                String dyproductname = etproduct.getText().toString().trim();
+                String dyproductqty = etproductqty.getText().toString().trim();
+                String dyproductqtyuom = spnproductqtyuom.getSelectedItem().toString();
+
+                // Check if both material and quantity fields are not empty
+                if (!dyprooano.isEmpty() && !dyproductname.isEmpty() && !dyproductqty.isEmpty() && !dyproductqtyuom.isEmpty()) {
+                    try {
+                        // Create a new JSONObject for each material
+                        JSONObject materialObject = new JSONObject();
+                        materialObject.put("OANumber", dyprooano);
+                        materialObject.put("ProductName", dyproductname);
+                        materialObject.put("ProductQty", Double.parseDouble(dyproductqty));
+                        materialObject.put("ProductQtyuom", dyproductqtyuom);
+
+                        // Add the material JSON object to the array
+                        ProductArray.put(materialObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        String updatelocation = location.getText().toString().trim();
+        String allproductString = ProductArray.toString();
+
+        UpdModel_Billing updModelBilling = new UpdModel_Billing(OutwardId, allproductString, updatecustname, updatelocation);
+        Call<Boolean> call = outwardTankerBillinginterface.updatebilling(updModelBilling);
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful()){
+                    Toasty.success(Outward_Tanker_Billing.this, "Data Updated Successfully", Toast.LENGTH_SHORT, true).show();
+                    startActivity(new Intent(Outward_Tanker_Billing.this, Grid_Outward.class));
+                    finish();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+
+            }
+        });
     }
 
     public void outtankerbillpending(View view) {

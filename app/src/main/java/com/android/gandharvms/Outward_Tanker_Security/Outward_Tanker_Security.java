@@ -775,7 +775,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
         }
     }
 
-        private void updateData() {
+    private void updateData() {
         String serial = serialnumber.getText().toString().trim();
         String uvehicle = vehiclenum.getText().toString().trim();
         String udate = eddate.getText().toString().trim();
