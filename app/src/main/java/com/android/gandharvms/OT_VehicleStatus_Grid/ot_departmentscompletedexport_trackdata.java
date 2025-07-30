@@ -5,7 +5,9 @@ import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.icu.text.SimpleDateFormat;
+import android.media.MediaScannerConnection;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -36,7 +38,11 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -126,7 +132,7 @@ public class ot_departmentscompletedexport_trackdata extends NotificationCommonf
                             .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     // User confirmed, export to Excel
-                                    //exportToExcel(clubList);
+                                    exportToExcel(clubList);
                                 }
                             })
                             .setNegativeButton("No", null) // Dismiss dialog on "No"
@@ -272,6 +278,162 @@ public class ot_departmentscompletedexport_trackdata extends NotificationCommonf
         }
         // Show the date picker dialog
         datePickerDialog.show();
+    }
+
+    private void exportToExcel(List<Common_Outward_model> datalist) {
+        try {
+            Sheet sheet = hssfWorkBook.createSheet("OutwardTankerDepartmentTrackStatus");
+            // Create header row
+            Row headerRow = sheet.createRow(0);
+            headerRow.createCell(0).setCellValue("DATE");
+            headerRow.createCell(1).setCellValue("SERIALNUMBER");
+            headerRow.createCell(2).setCellValue("VEHICLE_NO");
+            headerRow.createCell(3).setCellValue("SEC_INTIME");
+            headerRow.createCell(4).setCellValue("SEC_OUTTIME");
+            headerRow.createCell(5).setCellValue("SEC_WTTIME");
+            headerRow.createCell(6).setCellValue("Bill_INTIME");
+            headerRow.createCell(7).setCellValue("Bill_OUTTIME");
+            headerRow.createCell(8).setCellValue("Bill_WTTIME");
+            headerRow.createCell(9).setCellValue("WEI_INTIME");
+            headerRow.createCell(10).setCellValue("WEI_OUTTIME");
+            headerRow.createCell(11).setCellValue("WEI_WTTIME");
+            headerRow.createCell(12).setCellValue("PRO_INTIME");
+            headerRow.createCell(13).setCellValue("PRO_OUTTIME");
+            headerRow.createCell(14).setCellValue("PRO_WTIME");
+            headerRow.createCell(15).setCellValue("LAB_INTIME");
+            headerRow.createCell(16).setCellValue("LAB_OUTTIME");
+            headerRow.createCell(17).setCellValue("LAB_WTTIME");
+            headerRow.createCell(18).setCellValue("OUTWEI_INTIME");
+            headerRow.createCell(19).setCellValue("OUTWEI_OUTTIME");
+            headerRow.createCell(20).setCellValue("OUTWEI_WTTIME");
+            headerRow.createCell(21).setCellValue("OUTDEINTIME");
+            headerRow.createCell(22).setCellValue("OUTDEOUTTIME");
+            headerRow.createCell(23).setCellValue("OUTDEWTTIME");
+            headerRow.createCell(24).setCellValue("OUTBILL_INTIME");
+            headerRow.createCell(25).setCellValue("OUTBILL_OUTTIME");
+            headerRow.createCell(26).setCellValue("OUTBILL_WTTIME");
+            headerRow.createCell(27).setCellValue("OUTSEC_INTIME");
+            headerRow.createCell(28).setCellValue("OUTSEC_OUTTIME");
+            headerRow.createCell(29).setCellValue("OUTSEC_WTTIME");
+
+            // Populate data rows
+            for (int i = 0; i < datalist.size(); i++) {
+                Row dataRow = sheet.createRow(i + 1); // Start from the second row (index 1) for data
+                Common_Outward_model club = datalist.get(i);
+                String date=club.getDate()!=null?club.getDate().substring(0,12):"";
+                String vehicleno=club.getVehicleNumber()!=null?club.getVehicleNumber():"";
+                String serialno=club.getSerialNumber()!=null?club.getSerialNumber():"";
+                String secintimelength = club.getSecInTime()!=null ? club.getSecInTime() : "";
+                String secouttimelength = club.getSecOutTime()!=null ? club.getSecOutTime(): "";
+                String secwaittimelength = club.getSecWTTime()!=null ? club.getSecWTTime(): "";
+
+                String billintimelength = club.getBilInTime()!=null ? club.getBilInTime() : "";
+                String billouttimelength = club.getBilOutTime()!=null ? club.getBilOutTime(): "";
+                String billwaittimelength = club.getBillWTTime()!=null ? club.getBillWTTime(): "";
+
+                String weiintimelength = club.getWeiInTime()!=null ? club.getWeiInTime() : "";
+                String weiouttimelength = club.getWeiOutTime()!=null ? club.getWeiOutTime(): "";
+                String weiwaittimelength = club.getWeiWTTime()!=null ? club.getWeiWTTime(): "";
+
+                String prointimelength = club.getBLFProInTime()!=null ? club.getBLFProInTime() : "";
+                String proouttimelength = club.getBLFProOutTime()!=null ? club.getBLFProOutTime(): "";
+                String prowaittimelength = club.getBLFProWTTime()!=null ? club.getBLFProWTTime(): "";
+
+                String labintimelength = club.getIPFLabInTime()!=null ? club.getIPFLabInTime() : "";
+                String labouttimelength = club.getIPFLabOutTime()!=null ? club.getIPFLabOutTime(): "";
+                String labwaittimelength = club.getIPFLabWTTime()!=null ? club.getIPFLabWTTime(): "";
+
+                String outweiintimelength = club.getOutWeiInTime()!=null ? club.getOutWeiInTime() : "";
+                String outweiouttimelength = club.getOutWeiOutTime()!=null ? club.getOutWeiOutTime(): "";
+                String outweiwaittimelength = club.getOutWeiWTTime()!=null ? club.getOutWeiWTTime(): "";
+
+                String outdataentryintimelength = club.getOutDataEntryInTime()!=null ? club.getOutDataEntryInTime() : "";
+                String outdataentryouttimelength = club.getOutDataEntryOutTime()!=null ? club.getOutDataEntryOutTime(): "";
+                String outdataentrywaittimelength = club.getOutDataEntryWTTime()!=null ? club.getOutDataEntryWTTime(): "";
+
+                String outbillintimelength = club.getOutBilInTime()!=null ? club.getOutBilInTime() : "";
+                String outbillouttimelength = club.getOutBilOutTime()!=null ? club.getOutBilOutTime(): "";
+                String outbillwaittimelength = club.getOutBilWTTime()!=null ? club.getOutBilWTTime(): "";
+
+                String outsecintimelength = club.getOutSecInTime()!=null ? club.getOutSecInTime() : "";
+                String outsecouttimelength = club.getOutSecOutTime()!=null ? club.getOutSecOutTime(): "";
+                String outsecwaittimelength = club.getOutSecWTTime()!=null ? club.getOutSecWTTime(): "";
+
+                dataRow.createCell(0).setCellValue(formattedDate = formatDate(date));
+                dataRow.createCell(1).setCellValue(serialno);
+                dataRow.createCell(2).setCellValue(vehicleno);
+                dataRow.createCell(3).setCellValue(secintimelength);
+                dataRow.createCell(4).setCellValue(secouttimelength);
+                dataRow.createCell(5).setCellValue(secwaittimelength);
+                dataRow.createCell(6).setCellValue(billintimelength);
+                dataRow.createCell(7).setCellValue(billouttimelength);
+                dataRow.createCell(8).setCellValue(billwaittimelength);
+                dataRow.createCell(9).setCellValue(weiintimelength);
+                dataRow.createCell(10).setCellValue(weiouttimelength);
+                dataRow.createCell(11).setCellValue(weiwaittimelength);
+                dataRow.createCell(12).setCellValue(prointimelength);
+                dataRow.createCell(13).setCellValue(proouttimelength);
+                dataRow.createCell(14).setCellValue(prowaittimelength);
+                dataRow.createCell(15).setCellValue(labintimelength);
+                dataRow.createCell(16).setCellValue(labouttimelength);
+                dataRow.createCell(17).setCellValue(labwaittimelength);
+                dataRow.createCell(18).setCellValue(outweiintimelength);
+                dataRow.createCell(19).setCellValue(outweiouttimelength);
+                dataRow.createCell(20).setCellValue(outweiwaittimelength);
+                dataRow.createCell(21).setCellValue(outdataentryintimelength);
+                dataRow.createCell(22).setCellValue(outdataentryouttimelength);
+                dataRow.createCell(23).setCellValue(outdataentrywaittimelength);
+                dataRow.createCell(24).setCellValue(outbillintimelength);
+                dataRow.createCell(25).setCellValue(outbillouttimelength);
+                dataRow.createCell(26).setCellValue(outbillwaittimelength);
+                dataRow.createCell(27).setCellValue(outsecintimelength);
+                dataRow.createCell(28).setCellValue(outsecouttimelength);
+                dataRow.createCell(29).setCellValue(outsecwaittimelength);
+            }
+
+            saveWorkbookToDownloads(hssfWorkBook);
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+    }
+
+    private void saveWorkbookToDownloads(HSSFWorkbook hssfWorkBook) {
+        try {
+            String dateTimeSuffix = new SimpleDateFormat("ddMMMyyyy_HHmmss", Locale.getDefault()).format(new Date());
+            String fileName = "OutwardTanker_DepartmentTrackData_" + dateTimeSuffix + ".xls";
+
+            File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            File file = new File(downloadsDir, fileName);
+
+            FileOutputStream out = new FileOutputStream(file);
+            hssfWorkBook.write(out);
+            out.flush();
+            out.close();
+            hssfWorkBook.close();
+
+            // Trigger media scan so file appears in file manager
+            MediaScannerConnection.scanFile(this,
+                    new String[]{file.getAbsolutePath()},
+                    new String[]{"application/vnd.ms-excel"},
+                    null);
+
+            Toasty.success(this, "Excel file saved to Downloads", Toast.LENGTH_SHORT).show();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toasty.error(this, "Export failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private String formatDate(String inputDate) {
+        try {
+            SimpleDateFormat inputFormat = new SimpleDateFormat("MMM dd yyyy hh:mma", Locale.getDefault());
+            SimpleDateFormat outputFormat = new SimpleDateFormat("dd MMM yyyy", Locale.getDefault());
+            Date date = inputFormat.parse(inputDate);
+            return outputFormat.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return inputDate;
+        }
     }
 
     private String getCurrentDateTime() {

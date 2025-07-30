@@ -78,12 +78,12 @@ public class or_departmentscompletedexport_trackdataadapter extends RecyclerView
         String ilouttime = club.getIlOutTime()!=null ? club.getIlOutTime() : "";
         holder.ilintime.setText(ilintime);
         holder.ilouttime.setText(ilouttime);
-        holder.ilWTTime.setText(club.getBLFProWTTime());
+        holder.ilWTTime.setText(club.getIndustrialWTTime());
         String splintime = club.getSplInTime()!= null ? club.getSplInTime() :"";
         String splouttime = club.getSplOutTime()!=null ? club.getSplOutTime() : "";
         holder.splintime.setText(splintime);
         holder.splouttime.setText(splouttime);
-        holder.splWTTime.setText(club.getIPFLabWTTime());
+        holder.splWTTime.setText(club.getSmallpackWTTime());
         String outweiintime = club.getOutWeiInTime()!= null ? club.getOutWeiInTime() :"";
         String outweiouttime = club.getOutWeiOutTime()!=null ? club.getOutWeiOutTime() : "";
         holder.outWeiIntime.setText(outweiintime);
