@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OT_VehicleStatus_Grid.ot_statusgrid_livedata;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_GridAdapter;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -38,7 +39,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class or_statusgrid_livedata extends AppCompatActivity {
+public class or_statusgrid_livedata extends NotificationCommonfunctioncls {
 
     RecyclerView rvClub;
     int scrollX = 0;
@@ -65,7 +66,7 @@ public class or_statusgrid_livedata extends AppCompatActivity {
         currdate.setText(getCurrentDateTime().toString().trim());
         fromDate = findViewById(R.id.orbtnfromDateoutwardtanker);
         toDate = findViewById(R.id.orbtntoDateoutwardtanker);
-
+        setupHeader();
         initViews();
         fetchDataFromApiWithProgressDialog();
 //        if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
