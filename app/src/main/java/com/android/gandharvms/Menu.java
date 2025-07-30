@@ -1,5 +1,6 @@
 package com.android.gandharvms;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -64,5 +65,11 @@ public class Menu extends NotificationCommonfunctioncls {
         Global_Var.getInstance().MenuType="OR";
         Intent intent = new Intent(this, Submenu_Outward_Truck.class);
         startActivity(intent);
+    }
+
+    @SuppressLint("MissingSuperCall")
+    @Override
+    public void onBackPressed() {
+        Toasty.info(this, "Back navigation is disabled on this page.", Toast.LENGTH_SHORT).show();
     }
 }

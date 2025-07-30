@@ -2,6 +2,9 @@ package com.android.gandharvms.Outward_Truck_Weighment;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Truck_Logistic.Adapter_Logi_complete;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
@@ -78,6 +82,17 @@ public class Adapter_Weigh_Complete extends RecyclerView.Adapter<Adapter_Weigh_C
       }
         holder.serialnum.setText(obj.getSerialNumber());
         holder.vehicle.setText(obj.getVehicleNumber());
+        holder.vehicle.setTextColor(Color.parseColor("#0000EE")); // Standard link blue
+        holder.vehicle.setPaintFlags(holder.vehicle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        holder.vehicle.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, Outward_Tanker_weighment.class);
+            intent.putExtra("vehiclenumber", obj.VehicleNumber);
+//            intent.putExtra("recordId", obj.getId());
+            intent.putExtra("mode", "update"); // Tell the activity to enter edit mode
+            context.startActivity(intent);
+        });
         holder.customer.setText(obj.getCustomerName());
         holder.oanum.setText(obj.getOAnumber());
         holder.loadedqty.setText(String.valueOf(obj.getHowMuchQuantityFilled()) );

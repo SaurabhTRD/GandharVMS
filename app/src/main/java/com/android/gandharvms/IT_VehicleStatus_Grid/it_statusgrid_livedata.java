@@ -26,6 +26,7 @@ import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_secur
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
@@ -43,7 +44,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class it_statusgrid_livedata extends AppCompatActivity {
+public class it_statusgrid_livedata extends NotificationCommonfunctioncls {
 
     int scrollX = 0;
     List<Respo_Model_In_Tanker_security> clubList = new ArrayList<>();
@@ -67,7 +68,7 @@ public class it_statusgrid_livedata extends AppCompatActivity {
         setContentView(R.layout.activity_it_statusgrid_livedata);
         fromDate = findViewById(R.id.gridbtnfromDateInwardittanker);
         toDate = findViewById(R.id.gridbtntoDateInwardittanker);
-
+        setupHeader();
         initViews();
         fetchDataFromApiWithProgressDialog();
 //        if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)

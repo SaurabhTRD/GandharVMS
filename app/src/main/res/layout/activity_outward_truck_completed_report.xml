@@ -1,95 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context=".OR_CompletedReport.Outward_Truck_CompletedReport">
+
     <include layout="@layout/header_layout"></include>
+
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="left">
+        android:layout_marginTop="5dp"
+        android:gravity="left"
+        android:orientation="horizontal">
+
         <Button
-            android:id="@+id/IttotgridcompletedbtnfromDate"
+            android:id="@+id/OrdepttrackbtnfromDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="From-Date"/>
+            android:text="From-Date" />
 
         <Space
             android:layout_width="15dp"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" />
 
         <Button
-            android:id="@+id/IttotgridcompletedbtntoDate"
+            android:id="@+id/OrdepttrackcompbtntoDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="To-Date"/>
+            android:text="To-Date" />
+
+        <!--<ImageButton
+            android:id="@+id/btnOtdepttrackcompExportToExcel"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:src="@drawable/iconsexportcsv"
+            android:contentDescription="Export To Excel"
+            android:background="@null"
+            android:layout_centerHorizontal="true"/>-->
+
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
         <TextView
-            android:id="@+id/Ittotgridcompletedrecdepartmentwise"
+            android:id="@+id/Ordepttracktotrecord"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:padding="8dp"
             android:text="Tot-Rec: "
             android:textSize="16sp"
-            android:textStyle="bold"
-            android:padding="8dp"/>
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <HorizontalScrollView
+        android:id="@+id/hsorcompletereport"
         android:layout_width="match_parent"
-        android:id="@+id/coitreportheaderscroll"
-        android:layout_marginTop="8dp"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:layout_marginTop="8dp">
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:background="@color/navyblue"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/navyblue"
+            android:orientation="horizontal">
 
+            <!--Security-->
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportSecIntime"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepdate"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SecIntime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportSecOuttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SecOuttime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportdate"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
                 android:text="Date"
                 android:textAllCaps="true"
+                android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textcoitreportSerialNumber"
+                android:id="@+id/orcompvehrepserialno"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -100,40 +96,715 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textcoitreportVehicleNumber"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
+                android:id="@+id/orcompvehrepvehiclenum"
                 android:gravity="center|start"
+                android:layout_marginStart="5dp"
+                android:textStyle="bold"
                 android:text="Vehicle No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportInvoiceNo"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsecintime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Invoice No"
+                android:text="SecInTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsecouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="SecOutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="150dp"
+                android:id="@+id/orcompvehreptransporter"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Transporter"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textcoitreportMaterial"
-                android:gravity="center|start"
-                android:layout_marginStart="5dp"
+                android:id="@+id/orcompvehrepplace"
                 android:textStyle="bold"
-                android:text="Material"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Place"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepmob"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Mobile"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepvehiclepermit"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Vehicle Permit"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehreptransportlrcopy"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LR Copy"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehreppuc"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="PUC"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepinsurance"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Insurance"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepvehfitnessculture"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Vehicle Fit Certificate"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepdriverlicenses"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Driver Licenses"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehreprcbook"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Rc Book"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="SecRemark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <!--Logistic-->
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehreplogintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="LogInTime"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehreplogouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="LogOutTime"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orcompvehrepoanum"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="OA Number"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textcoitreportnetweight"
+                android:id="@+id/orcompvehrepcustname"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Customer Name"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orcompvehreploadedqty"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LoadedQty"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orcompvehreplodedqtyuom"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LoadedQty UOM"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="140dp"
+                android:id="@+id/orcompvehreplogremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="LogRemark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+
+            <!--Weighment-->
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepweintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="WeiInTime"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepweouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="WeiOutTime"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orcompvehrepweintare"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Tare Weight"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InDriverImage"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="InVehicleImage"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepweinremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="WeiRemark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <!--IndustrialPack-->
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepilintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="IndusInTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepilouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilOutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepil10ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilPacking 10Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepil18ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilPacking 18Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepil20ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilPacking 20Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepil26ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilPacking 26Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepil50ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilPacking 50Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepil210ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilPacking 210Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepilBoxbucket"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilPacking of Box/Bucket"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepiltotqty"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilTotal QTY"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepilweight"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilWeight"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orcompvehrepilsign"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="il Sign"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepilnextdept"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilNextDepartment"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepilremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="ilRemark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <!--SmallPack-->
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsplintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splInTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsplouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splOutTime"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl7ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 7Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl7_5ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 7.5Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl8_5ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 8.5Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl10ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 10Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl11ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 11Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl12ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 12Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl13ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 13Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl15ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 15Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl18ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 18Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl20ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 20Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl26ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 26Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl50ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 50Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspl210ltr"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking 210Ltr"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsplBoxbucket"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splPacking of Box/Bucket"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepspltotqty"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splTotal QTY"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsplweight"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splWeight"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orcompvehrepspltrialsign"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="spltrialSign"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsplnextdept"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splNextDept"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsplremark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="splRemark"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <!--OutWeighment-->
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepweioutintime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="WeiOutInTime"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepweoutouttime"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:text="WeiOutOutTime"
+                android:textAllCaps="true"
+                android:gravity="center|start"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orcompvehrepoutnetwe"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -144,117 +815,7 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textcoitreportnetweightuom"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="NetWeightUOM"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <!--<TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportextramaterials"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ExtraMaterials"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>-->
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportsecremark"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SecRemark"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportWeiIntime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="WeiIntime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportWeiOuttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="WeiOuttime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportpartyname"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="PartyName"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportmob"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Driver No"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportoapo"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OA/PO NO"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportqty"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="QTY"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportqtyuom"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="QTYUOM"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportgrossweight"
+                android:id="@+id/orcompvehrepoutgrswt"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -265,451 +826,162 @@
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textcoitreportcontainerno"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Container No"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportweiremark"
+                android:id="@+id/orcompvehrepoutnopck"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="WeiRemark"
+                android:text="Num of Pack"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textcoitreportsighby"
+                android:id="@+id/orcompvehrepsealnum"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="SignBy"
+                android:text="Seal No"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:id="@+id/textitreportInVehicleImage"
                 android:layout_width="120dp"
-                android:layout_height="match_parent"
+                android:id="@+id/orcompvehrepoutshdip"
+                android:textStyle="bold"
                 android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Sh Dip"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/orcompvehrepoutshwe"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Sh Weight"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
                 android:text="InVehicleImage"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:gravity="center|start"/>
+                android:layout_height="match_parent"/>
 
             <TextView
-                android:id="@+id/textitreportInDriverImage"
                 android:layout_width="120dp"
-                android:layout_height="match_parent"
+                android:textStyle="bold"
                 android:layout_marginStart="5dp"
+                android:gravity="center|start"
                 android:text="InDriverImage"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:gravity="center|start"/>
+                android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportSamIntime"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepweioutremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="SamIntime"
+                android:text="Remark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+            <!--OutDataEntry(Production)-->
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportSamOuttime"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutdtprointime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SamOuttime"
+                android:text="DEProInTime"
                 android:textAllCaps="true"
+                android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportLabIntime"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutdtproouttime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="LabIntime"
+                android:text="DEProOutTime"
                 android:textAllCaps="true"
+                android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportLabOuttime"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutdtproremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="LabOuttime"
+                android:text="DEProRemark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+            <!--OutBilling-->
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportApperance"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepbillintime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Apperance"
+                android:text="BillInTime"
                 android:textAllCaps="true"
+                android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportOdor"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepbillouttime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Odor"
+                android:text="BillOutTime"
                 android:textAllCaps="true"
+                android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportColor"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepbillremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="Color"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportLQty"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="LabQty"
+                android:text="BillRemark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
+            <!--OutSecurity-->
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportDensity"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutsecintime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="Density"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportRcsTest"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="RcsTest"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportAnLinePoint"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="AnLinePoint"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportFlashPoint"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="FlashPoint"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreport_40KV"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="40°CKV"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreport_100KV"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="100°CKV"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportAdditionalTest"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="AdditionalTest"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportSampleTest"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SampleReceivingDate"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportSignOf"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="SignOf"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportDateAndTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="DateAndTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportRemarkDescription"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="RemarkDescription"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportViscosityIndex"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ViscosityIndex"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportlabRemark"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="LabRemark"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportProIntime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ProIntime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportProOuttime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ProOuttime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportUnloadAboveMaterialInTK"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="UnloadAboveMaterialInTK"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportProductName"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ProductName"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportAboveMaterialIsUnloadInTK"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="AboveMaterialIsUnloadInTK"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportOperatorName"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OperatorName"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportOutWeiInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OutWeiInTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportOutWeiOutTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="OutWeiOutTime"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreporttareweight"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="TareWeight"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportweinetWeight"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="WeiNetWeight"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportshortagedip"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ShortageDip"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportshortageweight"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="ShortageWeight"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
-
-            <TextView
-                android:id="@+id/textitreportOutVehicleImage"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="OutVehicleImage"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:gravity="center|start"/>
-
-            <TextView
-                android:id="@+id/textitreportOutDriverImage"
-                android:layout_width="120dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="5dp"
-                android:text="OutDriverImage"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:gravity="center|start"/>
-
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportOutSecInTime"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
                 android:text="OutSecInTime"
                 android:textAllCaps="true"
+                android:gravity="center|start"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportOutSecOutTime"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutsecouttime"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
@@ -719,56 +991,78 @@
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportIrCopy"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutsectremcard"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="LrCopy"
+                android:text="Trem card"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutsecewaybill"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="E-Way Bill"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutsectestreport"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Test Report"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepoutsecinvoice"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="SecInvoice"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
                 android:layout_width="120dp"
-                android:id="@+id/textcoitreportDeliveryBill"
+                android:id="@+id/orcompvehrepoutsecsign"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="DeliveryBill"
+                android:text="SecSign"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
             <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportTaxInvoice"
+                android:layout_width="100dp"
+                android:id="@+id/orcompvehrepsecremark"
                 android:textStyle="bold"
                 android:layout_marginStart="5dp"
                 android:gravity="center|start"
-                android:text="TaxInvoice"
+                android:text="OutSecRemark"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
                 android:layout_height="match_parent"/>
 
-            <TextView
-                android:layout_width="120dp"
-                android:id="@+id/textcoitreportEwayBill"
-                android:textStyle="bold"
-                android:layout_marginStart="5dp"
-                android:gravity="center|start"
-                android:text="EwayBill"
-                android:textAllCaps="true"
-                android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
         </LinearLayout>
 
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerorcompletereport"
         android:layout_width="match_parent"
-        android:id="@+id/recyclerviewitreportcogrid"
         android:layout_height="match_parent">
     </androidx.recyclerview.widget.RecyclerView>
-
 </LinearLayout>

@@ -29,6 +29,7 @@ import com.android.gandharvms.LoginWithAPI.Laboratory;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.LoginWithAPI.Store;
 import com.android.gandharvms.LoginWithAPI.Weighment;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
 
@@ -46,7 +47,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class GridCompleted extends AppCompatActivity {
+public class GridCompleted extends NotificationCommonfunctioncls {
     private final String vehicleType = Global_Var.getInstance().MenuType;
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
@@ -82,7 +83,7 @@ public class GridCompleted extends AppCompatActivity {
         samplingdetails = RetroApiClient.getInward_Tanker_Sampling();
         productiondetails = RetroApiclient_In_Tanker_Security.getinproductionApi();
         storedetails = RetroApiClient.getStoreDetails();
-
+        setupHeader();
         btnFromDate = findViewById(R.id.IttotgridcompletedbtnfromDate);
         btnToDate = findViewById(R.id.IttotgridcompletedbtntoDate);
         totrec = findViewById(R.id.Ittotgridcompletedrecdepartmentwise);

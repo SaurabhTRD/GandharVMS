@@ -94,7 +94,10 @@ public interface Outward_Tanker {
                                                                     @Query("inout") char inout);
 
     @GET("api/OutwardCommon/GetOutwardCompDepartmentWiseFactoryOutListing")
-    Call<List<Common_Outward_model>> getVehicleCompReportData(@Query("vehicletype") String vehicletype);
+    Call<List<Common_Outward_model>> getVehicleCompReportData(
+            @Query("FromDate") String fromdate,
+            @Query("ToDate") String todate,
+            @Query("vehicletype") String vehicletype);
 
     //OT_IN_Billing & use OT_Out_Billing also
     @GET("api/OutwardBilling/GetOutwardBillingList")

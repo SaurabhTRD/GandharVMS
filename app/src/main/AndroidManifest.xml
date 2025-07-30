@@ -30,6 +30,15 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".OR_VehicleStatus_Grid.or_departmentscompletedexport_trackdata"
+            android:exported="false" />
+        <activity
+            android:name=".OT_VehicleStatus_Grid.ot_departmentscompletedexport_trackdata"
+            android:exported="false" />
+        <activity
+            android:name=".OR_CompletedReport.Outward_Truck_CompletedReport"
+            android:exported="false" />
+        <activity
             android:name=".IR_VehicleStatus_Grid.ir_departmentscompleted_trackdata"
             android:exported="false" />
         <activity

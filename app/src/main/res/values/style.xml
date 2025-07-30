@@ -31,8 +31,12 @@
         <item name="stRadius">8dp</item>
     </style>
 
-
-
-
+    <style name="DialogSlideAnimation">
+        <item name="android:windowEnterAnimation">@anim/slide_in_bottom</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_bottom</item>
+    </style>
+    <style name="RoundedAlertDialog" parent="ThemeOverlay.Material3.MaterialAlertDialog">
+        <item name="android:background">@drawable/bg_round_alertdialogbox</item>
+    </style>
 
 </resources>
