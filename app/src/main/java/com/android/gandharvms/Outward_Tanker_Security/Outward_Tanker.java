@@ -3,6 +3,7 @@ package com.android.gandharvms.Outward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Security;
+import com.android.gandharvms.VehicleExitResponse;
 
 import java.util.List;
 
@@ -147,4 +148,8 @@ public interface Outward_Tanker {
 
     @GET("api/BillingHoldStatus/GetListofBillingStatusModel")
     Call<List<BillingHoldStatusModel>> getListofBillingHoldStatus();
+
+    @POST("api/OutwardSecurity/verifyvehicleexits")
+    Call<VehicleExitResponse> checkvehicleexits(@Query("vehicleNo") String vehicleNo,
+                                                @Query("vehicleType") String vehicleType);
 }

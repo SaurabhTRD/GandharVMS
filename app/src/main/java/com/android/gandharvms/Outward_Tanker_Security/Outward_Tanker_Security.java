@@ -9,6 +9,8 @@ import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -35,6 +37,7 @@ import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.dialogueprogreesbar;
+import com.android.gandharvms.VehicleExitResponse;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -100,27 +103,8 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 
         FirebaseMessaging.getInstance().subscribeToTopic("all");
 
-//        isReportingCheckBox = findViewById(R.id.isreporting);
-//        reportingRemarkLayout = findViewById(R.id.edtreportingremark);
-//        saveButton = findViewById(R.id.saveButton);
-//         reportingRemarkLayout.setVisibility(View.GONE);
-//         saveButton.setVisibility(View.GONE);
-
         completed = findViewById(R.id.otsecuritycompleted);
         updatebtn = findViewById(R.id.outwardsececupdateclick);
-
-//        isReportingCheckBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
-//            if (isChecked) {
-//                // Show the TextInputLayout and Button
-//                reportingRemarkLayout.setVisibility(View.VISIBLE);
-//                saveButton.setVisibility(View.VISIBLE);
-//            } else {
-//                // Hide the TextInputLayout and Button
-//                reportingRemarkLayout.setVisibility(View.GONE);
-//                saveButton.setVisibility(View.GONE);
-//            }
-//        });
-
         //        listdata button
         completed.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,10 +112,6 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
                 startActivity(new Intent(Outward_Tanker_Security.this, OT_Complete_sec.class));
             }
         });
-
-
-//        saveButton.setOnClickListener(v -> {
-//        });
 
         intime = findViewById(R.id.etintime);
         eddate = findViewById(R.id.etdate);
@@ -158,35 +138,9 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
         rcyes = findViewById(R.id.rcbook_yes);
         rcno = findViewById(R.id.rcbook_no);
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
-//        cbox = findViewById(R.id.isreporting);
-//        reportingremark = findViewById(R.id.edtreportingremark);
-
-
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
 
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_Tanker_Security.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(Outward_Tanker_Security.this, Menu.class));
-            }
-        });*/
         setupHeader();
         String dateFormatPattern = "ddMMyyyy";
         SimpleDateFormat dateFormat = new SimpleDateFormat(dateFormatPattern, Locale.getDefault());
@@ -204,26 +158,9 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 
         if (sharedPreferences != null) {
             if (getIntent().hasExtra("vehiclenum")) {
-//                FetchVehicleDetail(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
-//                etreg.setText(getIntent().getStringExtra("SerialNumber"));
-//                etreg.setEnabled(false);
-//                etvehical.setText(getIntent().getStringExtra("VehicleNumber"));
-//                etvehical.setEnabled(false);
-//            repremark.setText(getIntent().getStringExtra("Remark"));
-//            repremark.setEnabled(false);
-//            etdate.setText(dateFormat.format(getIntent().getStringExtra("Date")));
-//            etdate.setEnabled(false);
-//            etnetweight.setText(getIntent().getStringExtra("NetWt"));
-//            etnetweight.setEnabled(false);
-//            cbox.setChecked(Boolean.parseBoolean(getIntent().getStringExtra("IsReporting")));
-//            cbox.setEnabled(false);
-//                saveButton.setVisibility(View.GONE);
-//                button1.setVisibility(View.GONE);
-//                btnadd.setVisibility(View.GONE);
             } else {
                 GetMaxSerialNo(vehicleType + formattedDate);
             }
-
         } else {
             Log.e("MainActivity", "SharedPreferences is null");
         }
@@ -290,6 +227,8 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
                 picker.show();
             }
         });
+
+
         vehiclenum.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -317,6 +256,31 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
         } else {
             Log.e("MainActivity", "SharedPreferences is null");
         }
+
+        vehiclenum.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not used
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Optional: Debounce or validation can go here
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String vehicleNo = s.toString().trim();
+                String selectedvehicle = vehicleType; // Replace with your actual vehicle type retrieval logic
+                if(vehicleNo.length()==10)
+                {
+                    if (!vehicleNo.isEmpty() && !vehicleType.isEmpty()) {
+                        verifyVehicleExit(vehicleNo, selectedvehicle);
+                    }
+                }
+
+            }
+        });
 
         cbGenerateQR = findViewById(R.id.cbGenerateQR);
         ivQRCode = findViewById(R.id.ivQRCode);
@@ -540,61 +504,6 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
         });
     }
 
-//    private void insertreporting() {
-//        String serial = serialnumber.getText().toString().trim();
-//        String vehicle = vehiclenum.getText().toString().trim();
-//        String date = eddate.getText().toString().trim();
-//        String edremark = "";
-//        Boolean isreporting = false;
-//        if (cbox.isChecked()) {
-//            edremark = reportingremark.getText().toString().trim();
-//            isreporting = true;
-//        }
-//        if (vehicle.isEmpty() || date.isEmpty()) {
-//            Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
-//        } else {
-//            Request_Model_Outward_Tanker_Security requestModelOutwardTankerSecurity = new Request_Model_Outward_Tanker_Security(OutwardId, "", "",
-//                    '0', "", "", "", "", "", "", "", "", "",
-//                    "", "", "", "", "", "", "", "", "", "",
-//                     isreporting, edremark, 'S', serial, vehicle, "", "", "", "",
-//                    date, "", "", "", '0', "", '0', "", 'S', inOut,
-//                    vehicleType, "", "");
-//            Call<Boolean> call = outwardTanker.outwardtankerinsert(requestModelOutwardTankerSecurity);
-//            call.enqueue(new Callback<Boolean>() {
-//                @Override
-//                public void onResponse(Call<Boolean> call, Response<Boolean> response) {
-//                    if (response.isSuccessful() && response.body() != null && response.body() == true) {
-//                        Toasty.success(Outward_Tanker_Security.this, "Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-//                        startActivity(new Intent(Outward_Tanker_Security.this, com.android.gandharvms.Outward_Tanker.class));
-//                        finish();
-//                    }
-//                }
-//
-//                @Override
-//                public void onFailure(Call<Boolean> call, Throwable t) {
-//
-//                    Log.e("Retrofit", "Failure: " + t.getMessage());
-//// Check if there's a response body in case of an HTTP error
-//                    if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
-//                        Response<?> response = ((HttpException) t).response();
-//                        if (response != null) {
-//                            Log.e("Retrofit", "Error Response Code: " + response.code());
-//                            try {
-//                                Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
-//                            } catch (IOException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }
-//                    Toasty.error(Outward_Tanker_Security.this, "failed", Toast.LENGTH_SHORT).show();
-//                }
-//            });
-//
-//        }
-//    }
-
-
-
     private void FetchVehicleDetail(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
 
         Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);
@@ -612,12 +521,6 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
                         vehiclenum.setEnabled(false);
                         eddate.setText(obj.getDate());
                         eddate.setEnabled(false);
-//                        cbox.setChecked(true);
-//                        cbox.setEnabled(false);
-//                        saveButton.setVisibility(View.GONE);
-//                        reportingremark.setEnabled(false);
-//                        reportingremark.setVisibility(View.GONE);
-                        /*intime.callOnClick();*/
                     }
                 } else {
                     Toasty.error(Outward_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
@@ -850,6 +753,32 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
             });
         }
     }
+
+    private void verifyVehicleExit(String vehicleNo, String vehicleType) {
+        Call<VehicleExitResponse> call = outwardTanker.checkvehicleexits(vehicleNo,vehicleType);
+        call.enqueue(new Callback<VehicleExitResponse>() {
+            @Override
+            public void onResponse(Call<VehicleExitResponse> call, Response<VehicleExitResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int status = response.body().getStatus();
+                    if (status == 1) {
+                        //Toasty.success(Outward_Tanker_Security.this, "Vehicle Does Not In Factory", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toasty.warning(Outward_Tanker_Security.this, "Vehicle already exists in factory and has not completed the process flow.", Toast.LENGTH_LONG).show();
+                        vehiclenum.setText("");
+                    }
+                } else {
+                    Log.e("API_ERROR", "Unsuccessful response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VehicleExitResponse> call, Throwable t) {
+                Log.e("API_ERROR", "Failure: " + t.getMessage());
+            }
+        });
+    }
+
     public void outwardolcgridclick(View view) {
         Intent intent = new Intent(this, Grid_Outward.class);
         startActivity(intent);
