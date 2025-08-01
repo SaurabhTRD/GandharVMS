@@ -102,17 +102,17 @@ public class QRGeneratorUtil {
                         "<soap12:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap12=\"http://www.w3.org/2003/05/soap-envelope\">\n" +
                         "  <soap12:Body>\n" +
                         "    <UpdateEmployeeEx xmlns=\"http://tempuri.org/\">\n" +
-                        "      <UserName>" + vehicleNumber + "</UserName>\n" +
-                        "      <Password>" + serialNumber + "</Password>\n" +
-                        "      <EmployeeCode>" + intime + "</EmployeeCode>\n" +
-                        "      <EmployeeName>" + date + "</EmployeeName>\n" +
-                        "      <EmployeeLocation></EmployeeLocation>\n" +
-                        "      <EmployeeRole></EmployeeRole>\n" +
-                        "      <EmployeeVerificationType></EmployeeVerificationType>\n" +
-                        "      <EmployeeExpiryFrom></EmployeeExpiryFrom>\n" +
-                        "      <EmployeeExpiryTo></EmployeeExpiryTo>\n" +
-                        "      <EmployeeCardNumber></EmployeeCardNumber>\n" +
-                        "      <GroupId></GroupId>\n" +
+                        "      <UserName>essl</UserName>\n" +      //Client UserName
+                        "      <Password>essl</Password>\n" +      ////Client Password
+                        "      <EmployeeCode>" + vehicleNumber + "</EmployeeCode>\n" +   //vehicle No
+                        "      <EmployeeName>" + serialNumber + "</EmployeeName>\n" +     // serial no
+                        "      <EmployeeLocation>Mumbai</EmployeeLocation>\n" +       ////Client Location
+                        "      <EmployeeRole>Normal</EmployeeRole>\n" +                //Normal
+                        "      <EmployeeVerificationType>Finger or Face or Card or Password</EmployeeVerificationType>\n" +
+                        "      <EmployeeExpiryFrom> " + date + " " + intime + "</EmployeeExpiryFrom>\n" +
+                        "      <EmployeeExpiryTo>2050-07-31</EmployeeExpiryTo>\n" +
+                        "      <EmployeeCardNumber>123456</EmployeeCardNumber>\n" +        // QRCode
+                        "      <GroupId>1</GroupId>\n" +
                         "      <EmployeePhoto></EmployeePhoto>\n" +
                         "    </UpdateEmployeeEx>\n" +
                         "  </soap12:Body>\n" +

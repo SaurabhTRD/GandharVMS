@@ -302,6 +302,32 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                         }
 
 
+//                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+//                            String proJson = procompartmentsJson.get(i);
+//                            String labJson = (i < LabcompartmentsJson.size()) ? LabcompartmentsJson.get(i) : null;
+//
+//                            if (proJson != null && !proJson.trim().isEmpty()) {
+//                                boolean shouldBind = false;
+//
+//                                if (labJson == null || labJson.trim().isEmpty()) {
+//                                    shouldBind = true;  // ✅ Compartment not filled yet, bind for verification
+//                                }
+//
+//                                if (shouldBind) {
+//                                    Lab_compartment_model model = parseCompartment(proJson);
+//                                    model.setTargetIndex(firstProCompartmentIndex);
+//                                    if (model != null) {
+//                                        model.setTargetIndex(i);
+//                                        model.setOriginalJson(proJson);
+//                                        compartmentList.add(model);
+//                                        Log.d("VERIFY_BIND", "✔ Added proCompartment at index " + i);
+//                                    } else {
+//                                        Log.w("VERIFY_BIND", "⚠ Failed to parse proCompartment at index " + i);
+//                                    }
+//                                }
+//                            }
+//                        }
+
                         for (int i = 0; i < procompartmentsJson.size(); i++) {
                             String proJson = procompartmentsJson.get(i);
                             String labJson = (i < LabcompartmentsJson.size()) ? LabcompartmentsJson.get(i) : null;
@@ -310,14 +336,14 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                                 boolean shouldBind = false;
 
                                 if (labJson == null || labJson.trim().isEmpty()) {
-                                    shouldBind = true;  // ✅ Compartment not filled yet, bind for verification
+                                    shouldBind = true;
                                 }
 
                                 if (shouldBind) {
                                     Lab_compartment_model model = parseCompartment(proJson);
-                                    model.setTargetIndex(firstProCompartmentIndex);
+                                    //model.setTargetIndex(firstProCompartmentIndex);
                                     if (model != null) {
-                                        model.setTargetIndex(i);
+                                        model.setTargetIndex(i); // ✅ Now safe to call
                                         model.setOriginalJson(proJson);
                                         compartmentList.add(model);
                                         Log.d("VERIFY_BIND", "✔ Added proCompartment at index " + i);
@@ -345,6 +371,12 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                         } else {
                             btnupdate.setVisibility(View.GONE);
                             btnsubmit.setVisibility(View.VISIBLE);
+                            newlintime.setVisibility(View.GONE);
+                            newlviscosity.setVisibility(View.GONE);
+                            newldentinity.setVisibility(View.GONE);
+                            newlbatchnum.setVisibility(View.GONE);
+                            newlqcofficer.setVisibility(View.GONE);
+                            newlremarks.setVisibility(View.GONE);
                             newlintime.setVisibility(View.VISIBLE);
                             newlviscosity.setVisibility(View.VISIBLE);
                             newldentinity.setVisibility(View.VISIBLE);

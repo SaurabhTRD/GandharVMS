@@ -664,7 +664,6 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                         etserialnumber.setText(obj.getSerialNo());
                         etserialnumber.setEnabled(false);
                         etvehicalnumber.setText(obj.getVehicleNo());
-                        etvehicalnumber.setEnabled(false);
                         etsdate.setText(obj.getDate());
                         etsdate.setEnabled(false);
                         etsinvocieno.setText(obj.getInvoiceNo());
@@ -878,13 +877,23 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                 e.printStackTrace();
             }
         }
-        if (!etsqty.getText().toString().isEmpty()) {
+//        if (!etsqty.getText().toString().isEmpty()) {
+//            try {
+//                insertqty = Integer.parseInt(etsqty.getText().toString().trim());
+//            } catch (NumberFormatException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        if (etsqty != null && !etsqty.getText().toString().trim().isEmpty()) {
             try {
                 insertqty = Integer.parseInt(etsqty.getText().toString().trim());
             } catch (NumberFormatException e) {
                 e.printStackTrace();
             }
+        } else {
+            Log.e("Validation", "etsqty is null or empty");
         }
+
         if (!qtyUomNumericValue.toString().isEmpty()) {
             try {
                 insertqtyUom = Integer.parseInt(qtyUomNumericValue.toString().trim());

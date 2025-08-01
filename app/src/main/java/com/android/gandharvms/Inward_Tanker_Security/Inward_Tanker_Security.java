@@ -873,15 +873,14 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
                         etreg.setText(obj.getSerialNo());
                         etreg.setEnabled(false);
                         etvehical.setText(obj.getVehicleNo());
-                        etvehical.setEnabled(false);
                         etdate.setText(obj.getDate());
                         etdate.setEnabled(false);
                         etinvoice.setText(obj.getInvoiceNo());
                         etinvoice.setEnabled(true);
                         //etmobilenum.setText(obj.getDriver_MobileNo());
                         //etmobilenum.setEnabled(true);
-                        //etsupplier.setText(obj.getPartyName());
-                        //etsupplier.setEnabled(true);
+                        etsupplier.setText(obj.getPartyName());
+                        etsupplier.setEnabled(true);
                         etmaterial.setText(obj.getMaterial());
                         etmaterial.setEnabled(true);
                         //edpooa.setText(obj.getOA_PO_number());
@@ -934,7 +933,7 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
         String vehicalnumber = etvehical.getText().toString().trim();
         String invoicenumber = etinvoice.getText().toString().trim();
         String Date = etdate.getText().toString().trim();
-        //String partyname = etsupplier.getText().toString().trim();
+        String partyname = etsupplier.getText().toString().trim();
         String material = etmaterial.getText().toString().trim();
         /*if (!etqty.getText().toString().isEmpty()) {
             try {
@@ -994,7 +993,7 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
         }
 
         It_in_updsecbyinwardid_req_model requestModelITSecurity = new It_in_updsecbyinwardid_req_model(InwardId, serialnumber,
-                invoicenumber, vehicalnumber, Date, "", material, "", "", 1, insertnetweightUom,
+                invoicenumber, vehicalnumber, Date, partyname, material, "", "", 1, insertnetweightUom,
                 insertnetweight, 1, materialList.toString(), remark, EmployeId);
 
         Call<Boolean> call = apiInTankerSecurity.itinsecupd(requestModelITSecurity);
