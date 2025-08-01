@@ -98,7 +98,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     private String[] compartmentJsonStrings = new String[6];
     public List<String> procompartmentsJson ;
     public  List<String> LabcompartmentsJson;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +131,9 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         newlremarks = findViewById(R.id.elnewblremark);
         billremark = findViewById(R.id.etbillingremark);
         proremark = findViewById(R.id.etproductionremark);
+        tvAllRemarks = findViewById(R.id.itinlabtv_allremarks);
         labDetailsContainer = findViewById(R.id.labDetailsContainer);
+
 
 
         btnsubmit = findViewById(R.id.etouttankerlabsubmit);
@@ -229,6 +231,12 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             labDetailsContainer.setVisibility(View.GONE);  // ❌ Hide Fields
                         } else {
                             labDetailsContainer.setVisibility(View.VISIBLE);  // ✅ Show Fields
+                            String allRemark = data.getAllOTRemarks();
+                            if (allRemark != null && !allRemark.trim().isEmpty()) {
+                                tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                            } else {
+                                tvAllRemarks.setText("No system remarks.");
+                            }
                         }
                         copartmentcount = data.getCompartmentCount();
                         // ✅ Compartment Count Logic
@@ -343,6 +351,12 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             newlbatchnum.setVisibility(View.VISIBLE);
                             newlqcofficer.setVisibility(View.VISIBLE);
                             newlremarks.setVisibility(View.VISIBLE);
+                            String allRemark = data.getAllOTRemarks();
+                            if (allRemark != null && !allRemark.trim().isEmpty()) {
+                                tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                            } else {
+                                tvAllRemarks.setText("No system remarks.");
+                            }
                             Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
                         }
 

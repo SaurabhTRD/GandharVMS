@@ -119,6 +119,15 @@ public class Response_Outward_Security_Fetching {
     public int splpackofboxbuxketltrqty;
 
     public String OutSRemark;
+    public String AllOTRemarks;
+
+    public String getAllOTRemarks() {
+        return AllOTRemarks;
+    }
+
+    public void setAllOTRemarks(String allOTRemarks) {
+        AllOTRemarks = allOTRemarks;
+    }
 
     public String getOutSRemark() {
         return OutSRemark;

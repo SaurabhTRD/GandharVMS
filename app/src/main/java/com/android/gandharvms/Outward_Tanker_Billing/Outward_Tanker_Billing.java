@@ -95,7 +95,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
     private String token;
     private LoginMethod userDetails;
     private int uhowmuch;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -120,11 +120,10 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
         location = findViewById(R.id.etloca);
         euom = findViewById(R.id.etuombilling);
         kl = findViewById(R.id.etkl);
-
+        tvAllRemarks = findViewById(R.id.itinbilltv_allremarks);
         productlinearlayout = findViewById(R.id.productlayout_list);
         productaddbtn = findViewById(R.id.button_addproduct);
         completed = findViewById(R.id.otbillincompleted);
-
         /*btnlogout = findViewById(R.id.btn_logoutButton);
         btnhome = findViewById(R.id.btn_homeButton);
         username = findViewById(R.id.tv_username);
@@ -375,6 +374,12 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
                         kl.setText(String.valueOf(data.getKl()));
                         kl.setEnabled(false);
                         holdremark = data.getHoldRemark();
+                        String allRemark = data.getAllOTRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         /*intime.callOnClick();
                         intime.requestFocus();*/
                     } else {

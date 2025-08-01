@@ -73,7 +73,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
     private String token;
     private int OutwardId;
     private String odvehiclenum;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,7 +88,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
         odesealnumber = findViewById(R.id.etoutdataentrysealnumber);
         odeetremark = findViewById(R.id.etoutdataentryremakr);
         completd = findViewById(R.id.outdataentrycompletd);
-
+        tvAllRemarks = findViewById(R.id.outotdeprotv_allremarks);
         party = findViewById(R.id.etpartyname);
         location = findViewById(R.id.etlocation);
         oanum = findViewById(R.id.etoanum);
@@ -188,6 +188,12 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
                         product.setEnabled(false);
                         batch.setText(data.getBatch_No());
                         batch.setEnabled(false);
+                        String allRemark = data.getAllOTRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         String extraMaterialsJson = data.getProductQTYUOMOA();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);

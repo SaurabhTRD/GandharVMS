@@ -90,6 +90,8 @@ public class Response_Outward_Tanker_Weighment {
 
     public String labcompartment1;
 
+    public String AllOTRemarks;
+
     public String getLabcompartment1() {
         return labcompartment1;
     }
@@ -756,6 +758,14 @@ public class Response_Outward_Tanker_Weighment {
 
     public void setProcompartment6(String procompartment6) {
         this.procompartment6 = procompartment6;
+    }
+
+    public String getAllOTRemarks() {
+        return AllOTRemarks;
+    }
+
+    public void setAllOTRemarks(String allOTRemarks) {
+        AllOTRemarks = allOTRemarks;
     }
 
     public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage,

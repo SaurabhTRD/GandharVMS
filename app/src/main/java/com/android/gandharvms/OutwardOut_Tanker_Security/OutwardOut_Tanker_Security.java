@@ -90,7 +90,7 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
 
     DatePickerDialog picker;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -118,7 +118,7 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
         complted = findViewById(R.id.otoutseccompletd);
-
+        tvAllRemarks = findViewById(R.id.otoutsectv_allremarks);
         Trasnportyes = findViewById(R.id.outwaoutrb_LRCopyYes);
         transportno = findViewById(R.id.outwaourb_LRCopyNo);
         tremyes = findViewById(R.id.tremcardyes);
@@ -252,6 +252,12 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
                         createExtraMaterialViews(extraMaterials);
 //                        etsealn.setText(obj.getSealNumber());
 //                        etsealn.setEnabled(false);
+                        String allRemark = obj.getAllOTRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                     } else {
                         Toasty.error(OutwardOut_Tanker_Security.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

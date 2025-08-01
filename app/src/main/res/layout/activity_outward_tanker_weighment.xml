@@ -221,6 +221,7 @@
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
             android:layout_marginTop="10dp"
+            android:visibility="gone"
             >
             <EditText
                 android:id="@+id/etBillingRemark"
@@ -289,100 +290,23 @@
                 android:textStyle="bold" />
         </com.google.android.material.textfield.TextInputLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@+id/imglayoutouttanername"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-<!--         <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="20dp"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_marginTop="10dp"-->
-<!--            android:layout_marginLeft="30dp"-->
-<!--            >-->
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:text="In Vehicle"-->
-<!--                android:gravity="start"-->
-<!--                android:layout_gravity="start"-->
-<!--                android:paddingStart="18dp"-->
-<!--                android:paddingEnd="8dp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:textSize="19dp"-->
-<!--                />-->
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="match_parent"-->
-<!--                android:text="In Driver"-->
-<!--                android:gravity="end"-->
-<!--                android:layout_gravity="end"-->
-<!--                android:paddingStart="8dp"-->
-<!--                android:paddingEnd="8dp"-->
-<!--                android:layout_marginLeft="120dp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:textSize="19dp"-->
-<!--                />-->
-<!--             </LinearLayout>-->
-<!--        </LinearLayout>-->
-
-<!--        <LinearLayout-->
-<!--            android:id="@+id/imglayoutouttanerimg"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent">-->
-<!--         <LinearLayout-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="115dp"-->
-<!--            android:weightSum="2"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_marginLeft="30dp">-->
-
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:id="@+id/imgtr"-->
-<!--                android:layout_width="175dp"-->
-<!--                android:layout_height="105dp"-->
-<!--                android:layout_marginLeft="5dp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                >-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/etoutwardotinweighvehicleimg"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:src="@drawable/camera"-->
-<!--                    android:clickable="true"-->
-<!--                    android:onClick="captureImageFromCamera1"-->
-
-<!--                    />-->
-<!--            </androidx.cardview.widget.CardView>-->
-
-<!--            <androidx.cardview.widget.CardView-->
-<!--                android:layout_width="175dp"-->
-<!--                android:layout_height="105dp"-->
-<!--                android:layout_marginTop="5dp"-->
-<!--                android:layout_marginLeft="29dp"-->
-<!--                >-->
-
-<!--                <ImageView-->
-<!--                    android:id="@+id/etoutwardotinweighDriverimg"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:src="@drawable/camera"-->
-<!--                    android:clickable="true"-->
-<!--                    android:onClick="captureImageFromCamera2"-->
-<!--                    />-->
-
-<!--            </androidx.cardview.widget.CardView>-->
-<!--            </LinearLayout>-->
-
-<!--        </LinearLayout>-->
+        <TextView
+            android:id="@+id/itinweitv_allremarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textColor="@android:color/darker_gray"
+            android:padding="4dp"
+            android:textSize="17sp"
+            android:background="@android:color/transparent"
+            android:ellipsize="end" />
         <LinearLayout
             android:id="@+id/mainContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_marginTop="5dp"
             >  <!-- Initially Hidden -->
 
             <!-- First Layout -->

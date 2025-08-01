@@ -95,7 +95,7 @@ public class Lab_Model__Outward_Tanker {
     public String labcompartment4;
     public String labcompartment5;
     public String labcompartment6;
-
+    public String AllOTRemarks;
     public int getCompartmentCount() {
         return CompartmentCount;
     }
@@ -819,6 +819,14 @@ public class Lab_Model__Outward_Tanker {
 
     public void setLabcompartment6(String labcompartment6) {
         this.labcompartment6 = labcompartment6;
+    }
+
+    public String getAllOTRemarks() {
+        return AllOTRemarks;
+    }
+
+    public void setAllOTRemarks(String allOTRemarks) {
+        AllOTRemarks = allOTRemarks;
     }
 
     public Lab_Model__Outward_Tanker(int outwardId, String createdBy, String updatedBy, String serialNumber, String vehicleNumber, char nextProcess, char i_O, String blending_Ratio, String vehicleType) {
