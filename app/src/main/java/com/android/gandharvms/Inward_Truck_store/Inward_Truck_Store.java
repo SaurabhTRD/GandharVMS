@@ -125,49 +125,19 @@ public class Inward_Truck_Store extends NotificationCommonfunctioncls {
     private LoginMethod userDetails;
     private int recqtyoum;
     private int recqty;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_inward_truck_store);
-
         //Send Notification to all
         FirebaseMessaging.getInstance().subscribeToTopic(token);
-
         storedetails = RetroApiClient.getStoreDetails();
         userDetails = RetroApiClient.getLoginApi();
-
         //prince
         //Send Notifications To All
         sharedPreferences = getSharedPreferences("TruckStore", MODE_PRIVATE);
-
-
-        //for recqtyuom
-//        autoCompleteTextViewRecQTYUOM = findViewById(R.id.recqtysuom);
-//        qtyUomMapping = new HashMap<>();
-//        qtyUomMapping.put("NA", 1);
-//        qtyUomMapping.put("Ton", 2);
-//        qtyUomMapping.put("Litre", 3);
-//        qtyUomMapping.put("KL", 4);
-//        qtyUomMapping.put("Kgs", 5);
-//        qtyUomMapping.put("pcs", 6);
-//
-//        qtyuomdrop = new ArrayAdapter<String>(this, R.layout.in_ta_se_qty, new ArrayList<>(qtyUomMapping.keySet()));
-//        autoCompleteTextViewRecQTYUOM.setAdapter(qtyuomdrop);
-//        autoCompleteTextViewRecQTYUOM.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String qtyUomDisplay = parent.getItemAtPosition(position).toString();
-//                // Retrieve the corresponding numerical value from the mapping
-//                qtyUomNumericValue = qtyUomMapping.get(qtyUomDisplay);
-//                if (qtyUomNumericValue != null) {
-//                    Toasty.success(Inward_Truck_Store.this, "RecQty : " + qtyUomDisplay + " Selected", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toasty.warning(Inward_Truck_Store.this, "Default ReceiveQTYUnitofMeasurement : " + "NA" + " Selected", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-
+        tvAllRemarks = findViewById(R.id.irinstoretv_allremarks);
         if (getIntent().hasExtra("VehicleNumber")) {
             String action = getIntent().getStringExtra("Action");
             if (action != null && action.equals("Up")) {
@@ -746,7 +716,12 @@ public class Inward_Truck_Store extends NotificationCommonfunctioncls {
                         etinvnum.setEnabled(false);
                         etinvdate.setText(data.getDate());
                         etinvdate.setEnabled(false);
-
+                        String allRemark = data.getAllIRRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         String extraMaterialsJson = data.getExtramaterials();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);

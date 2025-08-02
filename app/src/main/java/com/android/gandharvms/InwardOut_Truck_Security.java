@@ -83,7 +83,7 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
 
     DatePickerDialog picker;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +102,7 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
         //etmaterial = findViewById(R.id.etsmaterial);
         etsupplier = findViewById(R.id.etssupplier);
         submit = findViewById(R.id.prosubmit);
-
+        tvAllRemarks = findViewById(R.id.itroutsectv_allremarks);
         Trasnportyes = findViewById(R.id.rb_LRCopyYes);
         transportno = findViewById(R.id.rb_LRCopyNo);
         deliveryes = findViewById(R.id.rb_DeliveryYes);
@@ -188,8 +188,16 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
                         etvehicle.setEnabled(false);
                         etinvoice.setText(obj.getInvoiceNo());
                         etinvoice.setEnabled(false);
+                        etserial.setText(obj.getSerialNo());
+                        etserial.setEnabled(false);
                         //etmaterial.setText(obj.getMaterial());
                         //etmaterial.setEnabled(false);
+                        String allRemark = obj.getAllIRRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         String extraMaterialsJson = obj.getExtramaterials();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);

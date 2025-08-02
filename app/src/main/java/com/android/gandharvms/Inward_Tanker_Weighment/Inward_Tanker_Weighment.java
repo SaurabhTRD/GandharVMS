@@ -157,7 +157,7 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
     private LoginMethod userDetails;
     private int insertweighqty;
     private int insertnetweighqtyUom;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,7 +171,7 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
 
         img1 = findViewById(R.id.intanvehimageView1);
         img2 = findViewById(R.id.intandriverimageView2);
-
+        tvAllRemarks = findViewById(R.id.itinweitv_allremarks);
         etint = findViewById(R.id.etintime);
         etserialnumber = findViewById(R.id.etserialnumber);
         etvehicalno = findViewById(R.id.etvehicalno);
@@ -707,6 +707,12 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
                         etweighqty.setEnabled(false);
                         qtyuom.setText(data.getUnitOfNetWeight());
                         qtyuom.setEnabled(false);
+                        String allRemark = data.getAllITRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         String extraMaterialsJson = data.getExtramaterials();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);

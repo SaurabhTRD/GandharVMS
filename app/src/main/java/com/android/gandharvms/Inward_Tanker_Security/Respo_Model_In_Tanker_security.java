@@ -57,6 +57,8 @@ public class   Respo_Model_In_Tanker_security {
     public String SecRemark;
     public String OutWeiTime;
     public String OutSecTime;
+    public String AllITRemarks;
+    public String AllIRRemarks;
 
     public String getOutWeiTime() {
         return OutWeiTime;
@@ -472,5 +474,21 @@ public class   Respo_Model_In_Tanker_security {
 
     public void setCurrStatus(String currStatus) {
         CurrStatus = currStatus;
+    }
+
+    public String getAllIRRemarks() {
+        return AllIRRemarks;
+    }
+
+    public void setAllIRRemarks(String allIRRemarks) {
+        AllIRRemarks = allIRRemarks;
+    }
+
+    public String getAllITRemarks() {
+        return AllITRemarks;
+    }
+
+    public void setAllITRemarks(String allITRemarks) {
+        AllITRemarks = allITRemarks;
     }
 }

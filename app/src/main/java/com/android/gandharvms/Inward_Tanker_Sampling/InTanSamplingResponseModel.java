@@ -30,6 +30,8 @@ public class InTanSamplingResponseModel {
     String VehicleType;
     String UpdatedBy;
     int Qty;
+    public String AllITRemarks;
+    public String AllIRRemarks;
 
     public int getId() {
         return Id;
@@ -261,5 +263,21 @@ public class InTanSamplingResponseModel {
 
     public void setQty(int qty) {
         Qty = qty;
+    }
+
+    public String getAllITRemarks() {
+        return AllITRemarks;
+    }
+
+    public void setAllITRemarks(String allITRemarks) {
+        AllITRemarks = allITRemarks;
+    }
+
+    public String getAllIRRemarks() {
+        return AllIRRemarks;
+    }
+
+    public void setAllIRRemarks(String allIRRemarks) {
+        AllIRRemarks = allIRRemarks;
     }
 }

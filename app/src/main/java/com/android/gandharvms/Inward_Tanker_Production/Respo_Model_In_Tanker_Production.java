@@ -209,4 +209,22 @@ public class Respo_Model_In_Tanker_Production {
     public void setQty(int qty) {
         Qty = qty;
     }
+    public String AllITRemarks;
+    public String AllIRRemarks;
+
+    public String getAllITRemarks() {
+        return AllITRemarks;
+    }
+
+    public void setAllITRemarks(String allITRemarks) {
+        AllITRemarks = allITRemarks;
+    }
+
+    public String getAllIRRemarks() {
+        return AllIRRemarks;
+    }
+
+    public void setAllIRRemarks(String allIRRemarks) {
+        AllIRRemarks = allIRRemarks;
+    }
 }

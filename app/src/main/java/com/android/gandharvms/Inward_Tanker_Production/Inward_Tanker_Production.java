@@ -104,7 +104,7 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
     private LoginMethod userDetails;
     private int reqtounload;
     private int abovematerialtank;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +114,7 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
         userDetails = RetroApiClient.getLoginApi();
-
+        tvAllRemarks = findViewById(R.id.itinprotv_allremarks);
         etVehicleNumber = findViewById(R.id.etvehicleNumber);
         //etMaterial = findViewById(R.id.etMaterial);
         etserno = findViewById(R.id.etpserialnumber);
@@ -393,6 +393,12 @@ public class Inward_Tanker_Production extends NotificationCommonfunctioncls {
                         etconunloadDateTime.setText(data.getDate());
                         etconunloadDateTime.setEnabled(false);
                         viewlabreport.setVisibility(View.VISIBLE);
+                        String allRemark = data.getAllITRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                     } else {
                         Toasty.error(Inward_Tanker_Production.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

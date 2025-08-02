@@ -259,6 +259,18 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/itinprotv_allremarks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:textColor="@android:color/darker_gray"
+                android:padding="4dp"
+                android:textSize="17sp"
+                android:background="@android:color/transparent"
+                android:ellipsize="end" />
+
             <androidx.cardview.widget.CardView
                 android:layout_width="450dp"
                 android:layout_height="55dp"

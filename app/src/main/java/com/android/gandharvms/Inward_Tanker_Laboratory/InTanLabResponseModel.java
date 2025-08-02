@@ -46,6 +46,8 @@ public class InTanLabResponseModel {
     public int SecNetWeight;
     public String UnitOfNetWeight;
     public String Extramaterials;
+    public String AllITRemarks;
+    public String AllIRRemarks;
 
     public String getUnitOfMeasurement() {
         return UnitOfMeasurement;
@@ -369,5 +371,21 @@ public class InTanLabResponseModel {
 
     public void setExtramaterials(String extramaterials) {
         Extramaterials = extramaterials;
+    }
+
+    public String getAllITRemarks() {
+        return AllITRemarks;
+    }
+
+    public void setAllITRemarks(String allITRemarks) {
+        AllITRemarks = allITRemarks;
+    }
+
+    public String getAllIRRemarks() {
+        return AllIRRemarks;
+    }
+
+    public void setAllIRRemarks(String allIRRemarks) {
+        AllIRRemarks = allIRRemarks;
     }
 }

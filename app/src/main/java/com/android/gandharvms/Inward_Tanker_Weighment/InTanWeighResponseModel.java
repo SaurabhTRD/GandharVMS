@@ -49,7 +49,8 @@ public class InTanWeighResponseModel {
     public String Extramaterials;
     public int SecNetWeight;
     public String UnitOfNetWeight;
-
+    public String AllITRemarks;
+    public String AllIRRemarks;
     public int getSecNetWeight() {
         return SecNetWeight;
     }
@@ -352,5 +353,21 @@ public class InTanWeighResponseModel {
 
     public void setExtramaterials(String extramaterials) {
         Extramaterials = extramaterials;
+    }
+
+    public String getAllIRRemarks() {
+        return AllIRRemarks;
+    }
+
+    public void setAllIRRemarks(String allIRRemarks) {
+        AllIRRemarks = allIRRemarks;
+    }
+
+    public String getAllITRemarks() {
+        return AllITRemarks;
+    }
+
+    public void setAllITRemarks(String allITRemarks) {
+        AllITRemarks = allITRemarks;
     }
 }

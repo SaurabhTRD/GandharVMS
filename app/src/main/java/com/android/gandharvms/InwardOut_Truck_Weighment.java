@@ -85,7 +85,7 @@ public class InwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
     private String token;
     private String etSerialNumber;
     private String imgPath1, imgPath2;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,7 +101,7 @@ public class InwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
         ettarewt = findViewById(R.id.ettareweight);
         shdip = findViewById(R.id.irinweishortagedip);
         shwe = findViewById(R.id.irinweishortageweight);
-
+        tvAllRemarks = findViewById(R.id.iroutweitv_allremarks);
         submit = findViewById(R.id.prosubmit);
 
         img1 = findViewById(R.id.inwardtruckoutvehicleimg);
@@ -221,6 +221,12 @@ public class InwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
                         etvehicel.setEnabled(false);
                         inwardid = data.getInwardId();
                         etSerialNumber = data.getSerialNo();
+                        String allRemark = data.getAllIRRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                     } else {
                         Toasty.error(InwardOut_Truck_Weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }
