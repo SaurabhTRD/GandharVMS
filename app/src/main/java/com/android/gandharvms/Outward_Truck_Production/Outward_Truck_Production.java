@@ -73,7 +73,7 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
     private Outward_Truck_Production_interface outwardTruckProductionInterface;
     private LoginMethod userDetails;
     private String token;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +97,7 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
         signweigh = findViewById(R.id.etweighmentofficer);
         dtweigh = findViewById(R.id.etdtweighment);
         etremark = findViewById(R.id.etremark);
-
+        tvAllRemarks = findViewById(R.id.iroutdeprotv_allremarks);
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
 
@@ -194,6 +194,12 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
                         vehiclenumber.setText(data.getVehicleNumber());
                         signdis.setText(data.getSplsign());
                         typepack.setText(data.getIlsign());
+                        String allRemark = data.getAllORRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         /*if(data.ilsign=="" && data.getIlsign()== null)
                         {
                             typepack.setVisibility(View.GONE);

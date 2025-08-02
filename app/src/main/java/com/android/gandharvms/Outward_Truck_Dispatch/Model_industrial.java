@@ -59,7 +59,7 @@ public class Model_industrial {
     public char I_O ;
     public String VehicleType ;
     public String PurposeProcess;
-
+    public String AllORRemarks;
     public int getId() {
         return Id;
     }
@@ -516,8 +516,16 @@ public class Model_industrial {
         VehicleType = vehicleType;
     }
 
+    public String getAllORRemarks() {
+        return AllORRemarks;
+    }
+
+    public void setAllORRemarks(String allORRemarks) {
+        AllORRemarks = allORRemarks;
+    }
+
     public Model_industrial(int outwardId, String ilInTime, String ilOutTime, int ilpackof10ltrqty, int ilpackof18ltrqty, int ilpackof20ltrqty, int ilpackof26ltrqty, int ilpackof50ltrqty, int ilpackof210ltrqty, int ilpackofboxbuxketltrqty, String iltotqty, String ilweight, String ilsign, String ilRemark, String createdBy,
-                            String VehicleNumber,String VehicleType,String SerialNumber,String updatedBy, char nextProcess, char i_O , String purposeProcess) {
+                            String VehicleNumber, String VehicleType, String SerialNumber, String updatedBy, char nextProcess, char i_O , String purposeProcess) {
         OutwardId = outwardId;
         this.ilInTime = ilInTime;
         this.ilOutTime = ilOutTime;

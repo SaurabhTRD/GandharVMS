@@ -107,7 +107,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
     CheckBox cbGenerateQR;
     ImageView ivQRCode;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,7 +131,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
         submit = findViewById(R.id.submit);
         complete = findViewById(R.id.truckotoutsecuritycompleted);
         dbroot = FirebaseFirestore.getInstance();
-
+        tvAllRemarks = findViewById(R.id.iroutsectv_allremarks);
         Trasnportyes = findViewById(R.id.outwaoutrb_LRCopyYes);
         transportno = findViewById(R.id.outwaourb_LRCopyNo);
         tremyes = findViewById(R.id.tremcardyes);
@@ -337,6 +337,12 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
                         erinvoice.setText(obj.getOutInvoiceNumber());
                         erinvoice.setEnabled(false);
                         gooddis.setText("Ok");
+                        String allRemark = obj.getAllORRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         if (obj.iltotqty.isEmpty() || obj.ilweight == "0") {
                             smallpacktitle.setVisibility(View.VISIBLE);
                             lnlsmallpackqty.setVisibility(View.VISIBLE);

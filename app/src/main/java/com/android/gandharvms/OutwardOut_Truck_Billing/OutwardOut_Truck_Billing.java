@@ -93,7 +93,7 @@ public class OutwardOut_Truck_Billing extends NotificationCommonfunctioncls {
     private String token;
     private String bvehicleno;
     private int netweuom;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -123,7 +123,7 @@ public class OutwardOut_Truck_Billing extends NotificationCommonfunctioncls {
         submit = findViewById(R.id.submit);
         billcomp = findViewById(R.id.truckotoutbillingcompleted);
         dbroot = FirebaseFirestore.getInstance();
-
+        tvAllRemarks = findViewById(R.id.oroutbilltv_allremarks);
         indutialpacktitle = findViewById(R.id.txtoroutbindustrailtitle);
         lnlindustrialbarrel = findViewById(R.id.lnloroutbindustrialbarrel);
         ilpack10literqty = findViewById(R.id.oroutbilpack10Liter);
@@ -278,6 +278,12 @@ public class OutwardOut_Truck_Billing extends NotificationCommonfunctioncls {
                         etseal.setEnabled(false);
                         totalqty.setText(data.getSpltotqty());
                         totalqty.setEnabled(false);
+                        String allRemark = data.getAllORRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         etbatch.setText("No BatchNumber");
                         if (data.iltotqty.isEmpty() || data.ilweight == "0") {
                             smallpacktitle.setVisibility(View.VISIBLE);

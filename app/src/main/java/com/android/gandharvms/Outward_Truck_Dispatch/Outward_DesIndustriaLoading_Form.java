@@ -106,7 +106,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
     private int Id;
     private String token;
     private SharedPreferences sharedPreferences;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -149,6 +149,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
         etdesiltypeofpackingid = findViewById(R.id.etdesindusloadserialnumber);
         oa = findViewById(R.id.etoanumberindus);
         party = findViewById(R.id.etpartyname);
+        tvAllRemarks = findViewById(R.id.iriniltv_allremarks);
 //        etdesiltypeofpackingid=findViewById(R.id.autodesindusloadTypeOfPacking);
 
         btndesilsubmit = findViewById(R.id.etdesindusloadsubmit);
@@ -424,6 +425,12 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
                         vehnumber = data.getVehicleNumber();
                         etdesiltransport.setText(data.getTransportName());
                         etdesiltransport.setEnabled(false);
+                        String allRemark = data.getAllORRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         oa.setText(data.getOAnumber());
                         oa.setEnabled(false);
                         party.setText(data.getCustomerName());

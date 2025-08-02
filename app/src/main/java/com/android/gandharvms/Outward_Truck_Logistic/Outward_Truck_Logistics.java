@@ -89,7 +89,7 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
     private LoginMethod userDetails;
     private String token;
     private SharedPreferences sharedPreferences;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -105,7 +105,7 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
         remark = findViewById(R.id.etremark);
         howqty = findViewById(R.id.etloadedmaterqty);
         uomet = findViewById(R.id.etuom);
-
+        tvAllRemarks = findViewById(R.id.irinsectv_allremarks);
         customername = findViewById(R.id.etcustomername);
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
 
@@ -212,6 +212,12 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
                         place.setEnabled(false);
                         intime.requestFocus();
                         intime.callOnClick();
+                        String allRemark = data.getAllORRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                     } else {
                         Toasty.success(Outward_Truck_Logistics.this, "This Vehicle Number Is Not Available", Toast.LENGTH_SHORT).show();
                     }

@@ -68,6 +68,7 @@ public class Respons_Outward_Tanker_Billing {
     public int splpackofboxbuxketltrqty;
     public String Batch_No;
     public String AllOTRemarks;
+    public String AllORRemarks;
     public String HoldRemark;
 
     public String getHoldRemark() {
@@ -611,5 +612,13 @@ public class Respons_Outward_Tanker_Billing {
 
     public void setSplpackofboxbuxketltrqty(int splpackofboxbuxketltrqty) {
         this.splpackofboxbuxketltrqty = splpackofboxbuxketltrqty;
+    }
+
+    public String getAllORRemarks() {
+        return AllORRemarks;
+    }
+
+    public void setAllORRemarks(String allORRemarks) {
+        AllORRemarks = allORRemarks;
     }
 }

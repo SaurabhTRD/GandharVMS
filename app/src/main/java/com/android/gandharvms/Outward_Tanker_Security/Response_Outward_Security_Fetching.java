@@ -120,6 +120,15 @@ public class Response_Outward_Security_Fetching {
 
     public String OutSRemark;
     public String AllOTRemarks;
+    public String AllORRemarks;
+
+    public String getAllORRemarks() {
+        return AllORRemarks;
+    }
+
+    public void setAllORRemarks(String allORRemarks) {
+        AllORRemarks = allORRemarks;
+    }
 
     public String getAllOTRemarks() {
         return AllOTRemarks;

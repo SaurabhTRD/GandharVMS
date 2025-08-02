@@ -898,7 +898,17 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
-
+        <TextView
+            android:id="@+id/oroutbilltv_allremarks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:textColor="@android:color/darker_gray"
+            android:padding="4dp"
+            android:textSize="17sp"
+            android:background="@android:color/transparent"
+            android:ellipsize="end" />
 
 
 

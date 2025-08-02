@@ -91,6 +91,15 @@ public class Response_Outward_Tanker_Weighment {
     public String labcompartment1;
 
     public String AllOTRemarks;
+    public String AllORRemarks;
+
+    public String getAllORRemarks() {
+        return AllORRemarks;
+    }
+
+    public void setAllORRemarks(String allORRemarks) {
+        AllORRemarks = allORRemarks;
+    }
 
     public String getLabcompartment1() {
         return labcompartment1;

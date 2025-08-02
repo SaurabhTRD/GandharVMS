@@ -119,6 +119,7 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
     dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     public static String Tanker;
     public static String Truck;
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -139,7 +140,7 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
         industotwight=findViewById(R.id.etinudustotweight);
         smalltotqty=findViewById(R.id.etsmalltotqty);
         smalltotweight=findViewById(R.id.etsmalltotweight);*/
-
+        tvAllRemarks = findViewById(R.id.iroutweitv_allremarks);
         indutialpacktitle=findViewById(R.id.txtotowindustrailtitle);
         lnlindustrialbarrel=findViewById(R.id.lnlotoutwindustrialbarrel);
         ilpack10literqty=findViewById(R.id.otoutwilpack10Liter);
@@ -329,6 +330,12 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
                         etshdip.setText("0");
                         etshwe.setText("0");
                         etremark.setText("OK");
+                        String allRemark = data.getAllORRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         if(data.iltotqty.isEmpty() || data.ilweight=="0")
                         {
                             smallpacktitle.setVisibility(View.VISIBLE);
