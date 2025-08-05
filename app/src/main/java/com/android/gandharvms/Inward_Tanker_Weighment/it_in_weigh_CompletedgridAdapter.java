@@ -27,6 +27,7 @@ import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepar
 import com.android.gandharvms.InwardCompletedGrid.gridadaptercompleted;
 import com.android.gandharvms.Inward_Truck_Security.Material_Adapter;
 import com.android.gandharvms.Inward_Truck_Security.matriallist;
+import com.android.gandharvms.Inward_Truck_Weighment.Inward_Truck_weighment;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.R;
 import com.squareup.picasso.Picasso;
@@ -102,12 +103,20 @@ public class it_in_weigh_CompletedgridAdapter extends RecyclerView.Adapter<it_in
             @Override
             public void onClick(View view) {
                 Context context = view.getContext();
-                Intent intent = new Intent(context, Inward_Tanker_Weighment.class);
-                intent.putExtra("vehicle_number", club.getVehicleNo());
-                intent.putExtra("mode", "update"); // Important flag
+
+                boolean isTanker = "IT".equalsIgnoreCase(Global_Var.getInstance().MenuType);
+                Class<?> target = isTanker
+                        ? Inward_Tanker_Weighment.class
+                        : Inward_Truck_weighment.class;
+
+                Intent intent = new Intent(context, target);
+                intent.putExtra("vehicle_number", club.getVehicleNo()); // keep your existing getter
+                intent.putExtra("mode", "update");
+                //intent.putExtra("VehicleNumber",club.getVehicleNo());
                 context.startActivity(intent);
             }
         });
+
 
         holder.partyname.setText(club.getPartyName());
         formattedDate = formatDate(club.getDate());

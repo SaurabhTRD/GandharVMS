@@ -87,8 +87,18 @@ public class Response_Outward_Tanker_Weighment {
     public String procompartment5;
     public String procompartment6;
     public boolean IsCheck;
-
+    public String IRInWeiRemark;
     public String labcompartment1;
+    public String OTWeiInTime;
+
+    public String getOTWeiInTime() {
+        return OTWeiInTime;
+    }
+
+    public void setOTWeiInTime(String OTWeiInTime) {
+        this.OTWeiInTime = OTWeiInTime;
+    }
+
 
     public String getLabcompartment1() {
         return labcompartment1;
@@ -756,6 +766,14 @@ public class Response_Outward_Tanker_Weighment {
 
     public void setProcompartment6(String procompartment6) {
         this.procompartment6 = procompartment6;
+    }
+
+    public String getIRInWeiRemark() {
+        return IRInWeiRemark;
+    }
+
+    public void setIRInWeiRemark(String IRInWeiRemark) {
+        this.IRInWeiRemark = IRInWeiRemark;
     }
 
     public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage,

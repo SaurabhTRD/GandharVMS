@@ -112,9 +112,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="Driver Mobile No"
-                            android:focusable="false"
-                            android:clickable="false"
-                            android:cursorVisible="false"
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:cursorVisible="true"
                             android:inputType="number"
                             android:textSize="17dp"
                             android:textStyle="bold" />
@@ -167,9 +167,9 @@
                             android:layout_height="wrap_content"
                             android:hint="Supplier"
                             android:inputType="textCapCharacters"
-                            android:focusable="false"
-                            android:clickable="false"
-                            android:cursorVisible="false"
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:cursorVisible="true"
                             android:textSize="17dp"
                             android:textStyle="bold" />
                     </com.google.android.material.textfield.TextInputLayout>
@@ -231,9 +231,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:hint="OA/PO Number"
-                            android:focusable="false"
-                            android:clickable="false"
-                            android:cursorVisible="false"
+                            android:focusable="true"
+                            android:clickable="true"
+                            android:cursorVisible="true"
                             android:inputType="number"
                             android:textSize="17dp"
                             android:textStyle="bold" />

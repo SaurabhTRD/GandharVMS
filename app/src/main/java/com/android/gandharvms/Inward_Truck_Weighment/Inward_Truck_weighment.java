@@ -2,7 +2,6 @@ package com.android.gandharvms.Inward_Truck_Weighment;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -17,8 +16,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -30,20 +27,16 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
-import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.InwardCompletedGrid.GridCompleted;
-import com.android.gandharvms.Inward_Tanker;
-import com.android.gandharvms.Inward_Tanker_Laboratory.Inward_Tanker_Laboratory;
-import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighRequestModel;
 import com.android.gandharvms.Inward_Tanker_Weighment.InTanWeighResponseModel;
+import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
+import com.android.gandharvms.Inward_Tanker_Weighment.ItUpdweighrequestmodel;
 import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
 import com.android.gandharvms.Inward_Truck_store.ExtraMaterial;
-import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
@@ -52,28 +45,15 @@ import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
 import com.android.gandharvms.Util.dialogueprogreesbar;
-import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.Timestamp;
 
 import com.android.gandharvms.FcmNotificationsSender;
-import com.android.gandharvms.Inward_Tanker_Security.In_Tanker_Security_list;
-import com.android.gandharvms.Inward_Tanker_Weighment.Inward_Tanker_Weighment;
-import com.android.gandharvms.Inward_Truck;
-import com.android.gandharvms.Inward_Truck_Security.In_Truck_security_list;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.R;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
 import com.google.gson.Gson;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
@@ -87,12 +67,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Objects;
-import java.util.UUID;
 
 import es.dmoral.toasty.Toasty;
 import retrofit2.Call;
@@ -171,8 +147,12 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
         img2 = findViewById(R.id.ettrimageView2);
         storage = FirebaseStorage.getInstance();
 
-        if (getIntent().hasExtra("VehicleNumber")) {
-            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+
+        String vehicleNo = getIntent().getStringExtra("vehicle_number");
+        String mode = getIntent().getStringExtra("mode"); // "update" or null
+
+        if (vehicleNo != null && !vehicleNo.isEmpty()) {
+            ReadWeighmentDataIn(vehicleNo,mode);
         }
 
         etdate.setOnClickListener(new View.OnClickListener() {
@@ -197,13 +177,17 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
             }
         });
 
-        etvehicalnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        /*etvehicalnumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     FetchVehicleDetails(etvehicalnumber.getText().toString().trim(), vehicleType, nextProcess, inOut);
                 }
             }
-        });
+        });*/
+
+        if (getIntent().hasExtra("VehicleNumber")) {
+            FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
+        }
 
         intsubmit = findViewById(R.id.wesubmit);
         trwdbroot = FirebaseFirestore.getInstance();
@@ -227,6 +211,137 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
                 } else {
                     UploadImagesAndInsert();
                 }
+            }
+        });
+    }
+
+    public void ReadWeighmentDataIn(@NonNull String vehicleNo, @Nullable String mode) {
+        // Use neutral/wildcard params so the record is found regardless of process filters
+        Call<InTanWeighResponseModel> call = weighmentdetails.getWeighbyfetchVehData(vehicleNo, "x", 'x', 'x');
+        call.enqueue(new Callback<InTanWeighResponseModel>() {
+            @Override
+            public void onResponse(Call<InTanWeighResponseModel> call, Response<InTanWeighResponseModel> response) {
+                if (response.isSuccessful()) {
+                    InTanWeighResponseModel data = response.body();
+                    if (data.getVehicleNo() != null && !data.getVehicleNo().isEmpty()) {
+                        inwardid = data.getInwardId();
+
+                        // Prefill
+                        etserialnumber.setText(data.getSerialNo());
+                        etvehicalnumber.setText(data.getVehicleNo());
+                        etsupplier.setText(data.getPartyName());
+                        etoanumber.setText(data.getOA_PO_number());
+                        etdriver.setText(String.valueOf(data.getDriver_MobileNo()));
+                        etdate.setText(data.getDate());
+                        etgrossweight.setText(data.getGrossWeight());
+                        etcontainer.setText(data.getContainerNo());
+                        etsignby.setText(data.getInWeiSignBy());
+                        etremark.setText(data.getInWeiRemark());
+
+
+                        // Materials list
+                        String extraMaterialsJson = data.getExtramaterials();
+                        List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+                        createExtraMaterialViews(extraMaterials);
+
+                        boolean isUpdate = "update".equalsIgnoreCase(mode);
+
+                        // Hide capture/time in update mode
+                        if (isUpdate) {
+                            img1.setVisibility(View.GONE);
+                            img2.setVisibility(View.GONE);
+                            etint.setVisibility(View.GONE);
+                        }
+
+                        // Always keep serial & date read-only
+                        etserialnumber.setEnabled(false);
+                        etdate.setEnabled(false);
+
+                        // In UPDATE mode, allow editing these:
+                        etvehicalnumber.setEnabled(isUpdate);
+                        etsupplier.setEnabled(isUpdate);
+                        etdriver.setEnabled(isUpdate);
+                        etoanumber.setEnabled(isUpdate);
+
+
+                        if ("update".equals(mode)) {
+                            intsubmit.setVisibility(View.VISIBLE);
+                            intsubmit.setText("Update");
+                            intsubmit.setOnClickListener(v -> {
+                                weupdatedataIn();
+                            });
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<InTanWeighResponseModel> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                // Check if there's a response body in case of an HTTP error
+                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+                    Response<?> response = ((HttpException) t).response();
+                    if (response != null) {
+                        Log.e("Retrofit", "Error Response Code: " + response.code());
+                        try {
+                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+                Toasty.error(Inward_Truck_weighment.this, "failed..!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+
+    private void weupdatedataIn() {
+        String vehicelnumber = etvehicalnumber.getText().toString().trim();
+        String suppliername = etsupplier.getText().toString().trim();
+        String driverno = etdriver.getText().toString().trim();
+        String oan = etoanumber.getText().toString().trim();
+        String grossweight=etgrossweight.getText().toString().trim();
+        String containerno=etcontainer.getText().toString().trim();
+        String signby=etsignby.getText().toString().trim();
+        String remark=etremark.getText().toString().trim();
+
+        if (vehicelnumber.isEmpty() || suppliername.isEmpty() || driverno.isEmpty() || oan.isEmpty() || grossweight.isEmpty()
+                || containerno.isEmpty()|| signby.isEmpty()|| remark.isEmpty()) {
+            Toasty.warning(Inward_Truck_weighment.this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
+            return;
+        }
+
+        ItUpdweighrequestmodel weighReqModel = new ItUpdweighrequestmodel();
+        weighReqModel.setInwardId(inwardid);
+        weighReqModel.setVehicleNo(vehicelnumber);
+        weighReqModel.setPartyName(suppliername);
+        weighReqModel.setOA_PO_number(oan);
+        weighReqModel.setDriver_MobileNo(driverno);
+        weighReqModel.setGrossWeight(grossweight);
+        weighReqModel.setContainerNo(containerno);
+        weighReqModel.setRemark(remark);
+        weighReqModel.setSignBy(signby);
+        weighReqModel.setUpdatedBy(Global_Var.getInstance().Name);
+
+
+        Call<Boolean> call = weighmentdetails.irupdateweighdata(weighReqModel); // use truck-specific API if different
+        call.enqueue(new Callback<Boolean>() {
+            @Override
+            public void onResponse(Call<Boolean> call, Response<Boolean> response) {
+                if (response.isSuccessful() && response.body() != null && response.body()) {
+                    Toasty.success(Inward_Truck_weighment.this, "Data Updated successfully..!", Toast.LENGTH_SHORT).show();
+                    startActivity(new Intent(Inward_Truck_weighment.this, it_in_weigh_Completedgrid.class));
+                    finish();
+                } else {
+                    Toasty.error(Inward_Truck_weighment.this, "Data Update Failed..!", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Boolean> call, Throwable t) {
+                Log.e("Retrofit", "Failure: " + t.getMessage());
+                Toasty.error(Inward_Truck_weighment.this, "Failed..!", Toast.LENGTH_SHORT).show();
             }
         });
     }

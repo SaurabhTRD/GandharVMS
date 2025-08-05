@@ -48,4 +48,7 @@ public interface Weighment {
 
     @POST("api/InwardWeighment/UpdateInwardTankerWeighment")
     Call<Boolean> itupdateweighdata(@Body ItUpdweighrequestmodel updateweighreqmodel);
+
+    @POST("api/InwardWeighment/UpdateInwardTruckWeighmentDetails")
+    Call<Boolean> irupdateweighdata(@Body ItUpdweighrequestmodel updateweighreqmodel);
 }

@@ -1,5 +1,7 @@
 package com.android.gandharvms.Inward_Truck_Weighment;
 
+import android.content.Context;
+import android.content.Intent;
 import android.icu.text.SimpleDateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.R;
 import com.squareup.picasso.Picasso;
 
@@ -42,6 +45,18 @@ public class In_Truck_weighment_Adapter extends RecyclerView.Adapter<In_Truck_we
         holder.etintime.setText(datalist.get(position).getIn_Time());
         holder.etserialnumber.setText(datalist.get(position).getSerial_Number());
         holder.etvehicalnumber.setText(datalist.get(position).getVehicle_Number());
+        holder.etvehicalnumber.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context,Inward_Truck_weighment.class);
+
+            In_Truck_weigment_list obj = datalist.get(position); // ✅ Get the current object
+
+            intent.putExtra("VehicleNumber", obj.getVehicle_Number());
+            intent.putExtra("mode", "update");                         // ✅ Tell activity it's in edit mode
+
+            context.startActivity(intent);
+        });
+
         holder.etsupplier.setText(datalist.get(position).getSupplier());
         holder.etmaterial.setText(datalist.get(position).getMaterial());
         holder.etdriver.setText(datalist.get(position).getDriver_No());
