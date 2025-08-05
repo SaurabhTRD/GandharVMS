@@ -114,7 +114,7 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
     private final String EmployeId = Global_Var.getInstance().EmpId;
     private int inwardid;
     private LoginMethod userDetails;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,7 +127,7 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
         weighmentdetails = RetroApiClient.getWeighmentDetails();
 
         sharedPreferences = getSharedPreferences("TruckWeighment", MODE_PRIVATE);
-
+        tvAllRemarks = findViewById(R.id.irinweitv_allremarks);
         etint = findViewById(R.id.etintime);
         etserialnumber = findViewById(R.id.ettrwserialnumber);
         etvehicalnumber = findViewById(R.id.ettrwvehicalno);
@@ -608,6 +608,12 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
                         etdriver.setEnabled(false);
                         etdate.setText(data.getDate());
                         etdate.setEnabled(false);
+                        String allRemark = data.getAllIRRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                     } else {
                         Toasty.error(Inward_Truck_weighment.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

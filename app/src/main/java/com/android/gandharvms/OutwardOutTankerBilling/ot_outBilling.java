@@ -87,7 +87,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
     private LoginMethod userDetails;
     private String token;
     private String obvehiclenum;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +111,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         oobtotalQuantity = findViewById(R.id.etotoutbiltotalQuantity);
         oobinvoicenumber = findViewById(R.id.etotoutbilinvoicenumber);
         partyname = findViewById(R.id.etpartyname);
-
+        tvAllRemarks = findViewById(R.id.otoutbilltv_allremarks);
         oobsubmit = findViewById(R.id.etotoutbilsubmit);
         completed = findViewById(R.id.otoutbillcompleted);
 
@@ -235,6 +235,12 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
                         oobsealnumber.setEnabled(false);
                         partyname.setText(data.getCustomerName());
                         partyname.setEnabled(false);
+                        String allRemark = data.getAllOTRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         calculateNetWeight();
                         String extraMaterialsJson = data.getProductQTYUOMOA();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);

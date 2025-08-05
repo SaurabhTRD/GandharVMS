@@ -21,6 +21,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.Respo_Model_In_Tanker_security;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
+import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
@@ -45,7 +46,7 @@ import retrofit2.Callback;
 import retrofit2.HttpException;
 import retrofit2.Response;
 
-public class ot_statusgrid_livedata extends AppCompatActivity {
+public class ot_statusgrid_livedata extends NotificationCommonfunctioncls {
 
     RecyclerView rvClub;
     int scrollX = 0;
@@ -78,12 +79,13 @@ public class ot_statusgrid_livedata extends AppCompatActivity {
         edtVehicleNumber = findViewById(R.id.edtVehicleNumber);
         edtCustomerName = findViewById(R.id.edtCustomerName);
         btnSearch = findViewById(R.id.btnSearch);
-
+        setupHeader();
         currdate.setText(getCurrentDateTime().toString().trim());
         fromDate = findViewById(R.id.gridbtnfromDateoutwardtanker);
         toDate = findViewById(R.id.gridbtntoDateoutwardtanker);
         initViews();
         fetchDataFromApiWithProgressDialog();
+
 //        if(Global_Var.getInstance().DeptType!=0 && Integer.valueOf(Global_Var.getInstance().DeptType) !=120)
 //        {
 //            ProgressDialog loadingDialog = new ProgressDialog(ot_statusgrid_livedata.this);

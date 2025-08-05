@@ -72,7 +72,7 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
     Calendar calendar = Calendar.getInstance();
     DatePickerDialog picker;
     SimpleDateFormat datef = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
-    Button saveButton, btcompleted;
+    Button saveButton, btcompleted,btnupdate;
     Date currentDate = Calendar.getInstance().getTime();
     CheckBox cbox;
     ImageView btnlogout, btnhome;
@@ -107,6 +107,7 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
 //        reportingRemarkLayout = findViewById(R.id.edtrsreportingremark);
 //        saveButton = findViewById(R.id.saveButton);
         btcompleted = findViewById(R.id.outwardtrucksecuritycomp);
+        btnupdate = findViewById(R.id.outwardtrucksececupdateclick);
 
 //        reportingRemarkLayout.setVisibility(View.GONE);
 //        saveButton.setVisibility(View.GONE);
@@ -202,6 +203,13 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(Outward_Truck_Security.this, OR_Completesec.class));
+            }
+        });
+
+        btnupdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateData();
             }
         });
 
@@ -376,7 +384,7 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
 //                        saveButton.setVisibility(View.GONE);
 //                        button1.setVisibility(View.GONE);
 //                        btnadd.setVisibility(View.GONE);
-                       // updatebtn.setVisibility(View.VISIBLE);
+                        btnupdate.setVisibility(View.VISIBLE);
                         submit.setVisibility(View.GONE);
 
 

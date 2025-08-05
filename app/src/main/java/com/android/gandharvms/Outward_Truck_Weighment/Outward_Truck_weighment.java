@@ -106,7 +106,7 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
     private String desatotalqty = "0";
     private String splweight = "0";
     private String spltotalqty = "0";
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +129,7 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
         etremark = findViewById(R.id.etremark);
         etloaded = findViewById(R.id.etloadmaterialqty);
         etloadedtyuom = findViewById(R.id.etloadmaterialqtyuom);
-
+        tvAllRemarks = findViewById(R.id.orinweitv_allremarks);
         submit = findViewById(R.id.etssubmit);
         btnweighmenttruck = findViewById(R.id.outwardtruckweighmentcompleted);
         dbroot = FirebaseFirestore.getInstance();
@@ -590,7 +590,12 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
                         customer.setText(data.getCustomerName());
                         customer.setEnabled(false);
                         despatchnext = data.getPurposeProcess();
-
+                        String allRemark = data.getAllORRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
 
                         desaweight = data.getIlweight();
                         desweight.setText(data.getIlweight());

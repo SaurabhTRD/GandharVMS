@@ -148,7 +148,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
 
     int firstProCompartmentIndex;
     public List<String> compartmentsJson ;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -168,6 +168,7 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         tareweight = findViewById(R.id.ettareweight);
         tankernumber = findViewById(R.id.ettankernumber);
         etremark = findViewById(R.id.etremark);
+        tvAllRemarks = findViewById(R.id.itinweitv_allremarks);
 //        product = findViewById(R.id.etproduct);
         transportername = findViewById(R.id.ettransportname);
         howmuchqty = findViewById(R.id.ethowmuchqtyfill);
@@ -354,6 +355,8 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                     tareweight.setText(nonNull(data.TareWeight));
 //                    oanum.setText(nonNull(data.OAnumber));
                     etbillremark.setText(nonNull(data.TankerBillingRemark));
+                    etbillremark.setVisibility(View.VISIBLE);
+                    if (data.Intime != null && !data.Intime.isEmpty())
                     if (data.OTWeiInTime != null && !data.OTWeiInTime.isEmpty())
                     {
                         intime.setText(nonNull(data.OTWeiInTime.substring(12,17)));
@@ -501,6 +504,13 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                         elocation.setEnabled(false);
                         etbillremark.setText(data.getTankerBillingRemark());
                         etbillremark.setEnabled(false);
+                        etbillremark.setVisibility(View.GONE);
+                        String allRemark = data.getAllOTRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         boolean ismultiple = data.isCheck();
 //                        tareweight.setEnabled(false);
                         String extraMaterialsJson = data.getProductQTYUOMOA();

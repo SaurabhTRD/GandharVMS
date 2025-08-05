@@ -105,7 +105,7 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
     private LoginMethod userDetails;
     private String imgPath1, imgPath2;
     private String token;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,7 +122,7 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         etvehicle = findViewById(R.id.etvehicle);
         shdip = findViewById(R.id.shortagedip);
         shwe = findViewById(R.id.shortageweight);
-
+        tvAllRemarks = findViewById(R.id.itoutweitv_allremarks);
         img1 = findViewById(R.id.intaweioutvehicleimage);
         img2 = findViewById(R.id.intaweioutdriverimage);
         autoshortagedipinltr = findViewById(R.id.shortagedipinltr);
@@ -220,6 +220,12 @@ public class InwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         etnetwt.callOnClick();
                         inwardid = data.getInwardId();
                         etSerialNumber = data.getSerialNo();
+                        String allRemark = data.getAllITRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                     } else {
                         Toasty.error(InwardOut_Tanker_Weighment.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

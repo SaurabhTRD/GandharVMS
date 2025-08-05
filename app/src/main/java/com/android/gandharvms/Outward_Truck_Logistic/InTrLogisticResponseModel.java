@@ -27,6 +27,7 @@ public class InTrLogisticResponseModel {
     public char NextProcess;
     public char I_O;
     public String VehicleType;
+    public String AllORRemarks;
 
     public String getPlace() {
         return Place;
@@ -234,5 +235,13 @@ public class InTrLogisticResponseModel {
 
     public void setVehicleType(String vehicleType) {
         VehicleType = vehicleType;
+    }
+
+    public String getAllORRemarks() {
+        return AllORRemarks;
+    }
+
+    public void setAllORRemarks(String allORRemarks) {
+        AllORRemarks = allORRemarks;
     }
 }

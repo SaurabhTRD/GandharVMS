@@ -132,7 +132,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
     private int hundred;
     private int anline;
     private int flash;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,7 +143,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
 
         labdetails = RetroApiClient.getLabDetails();//Call retrofit api
         userDetails = RetroApiClient.getLoginApi();
-
+        tvAllRemarks = findViewById(R.id.itinlabtv_allremarks);
         autoCompleteTextView2 = findViewById(R.id.etPrcstest);
         rcstest = new ArrayAdapter<String>(this, R.layout.in_rcs_test, rcsTest);
         autoCompleteTextView2.setAdapter(rcstest);
@@ -601,7 +601,12 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
                         etfetchlabqtyoum.setText(data.getUnitOfNetWeight());
                         etfetchlabqtyoum.setEnabled(false);
                         viewsamplereporting.setVisibility(View.VISIBLE);
-
+                        String allRemark = data.getAllITRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                     } else {
                         Toasty.error(Inward_Tanker_Laboratory.this, "This Vehicle Is Not Available..!", Toast.LENGTH_SHORT).show();
                     }

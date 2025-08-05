@@ -82,7 +82,7 @@ public class InwardOut_Tanker_Security extends NotificationCommonfunctioncls {
     private int InwardId;
     CheckBox cbGenerateQR;
     ImageView ivQRCode;
-
+    TextView tvAllRemarks;
     DatePickerDialog picker;
     SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss");
     @Override
@@ -103,7 +103,7 @@ public class InwardOut_Tanker_Security extends NotificationCommonfunctioncls {
         //etmaterial = findViewById(R.id.etsmaterial);
         etsupplier = findViewById(R.id.etssupplier);
         submit = findViewById(R.id.etssubmit);
-
+        tvAllRemarks = findViewById(R.id.itoutsectv_allremarks);
         Trasnportyes = findViewById(R.id.rb_LRCopyYes);
         transportno = findViewById(R.id.rb_LRCopyNo);
         deliveryes = findViewById(R.id.rb_DeliveryYes);
@@ -217,6 +217,12 @@ public class InwardOut_Tanker_Security extends NotificationCommonfunctioncls {
                         etvehicle.setEnabled(false);
                         etinvoice.setText(obj.getInvoiceNo());
                         etinvoice.setEnabled(false);
+                        String allRemark = obj.getAllITRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         String extraMaterialsJson = obj.getExtramaterials();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ExtraMaterial> extraMaterials = parseExtraMaterials(extraMaterialsJson);

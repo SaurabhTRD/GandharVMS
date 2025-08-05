@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:background="@color/lightgray"
+    android:layout_width="wrap_content"
+    android:layout_height="50dp">
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportDate"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Ordeptcomptrackexportserialnumber"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Ordeptcomptrackexportvehiclenumber"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportsecInTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportsecOutTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportsecWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportlogIntime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportlogOutTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportlogWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportweiInTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportweiOutTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportweiWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Ordeptcomptrackexportilintime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Ordeptcomptrackexportilouttime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportilWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Ordeptcomptrackexportsplintime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/Ordeptcomptrackexportsplouttime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportsplWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutWeiIntime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutWeiOutTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutweiWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutdataentryIntime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutdataentryOutTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutdataentryWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutbilInTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutbilOutTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutbilWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutsecInTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutsecOutTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/OrdeptcomptrackexportoutsecWTTime"
+        android:layout_width="120dp"
+        android:layout_height="match_parent"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@android:color/black"
+        android:textStyle="bold" />
+
+</LinearLayout>

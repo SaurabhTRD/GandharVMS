@@ -100,6 +100,17 @@ public class Response_Outward_Tanker_Weighment {
     }
 
 
+    public String AllOTRemarks;
+    public String AllORRemarks;
+
+    public String getAllORRemarks() {
+        return AllORRemarks;
+    }
+
+    public void setAllORRemarks(String allORRemarks) {
+        AllORRemarks = allORRemarks;
+    }
+
     public String getLabcompartment1() {
         return labcompartment1;
     }
@@ -774,6 +785,14 @@ public class Response_Outward_Tanker_Weighment {
 
     public void setIRInWeiRemark(String IRInWeiRemark) {
         this.IRInWeiRemark = IRInWeiRemark;
+    }
+
+    public String getAllOTRemarks() {
+        return AllOTRemarks;
+    }
+
+    public void setAllOTRemarks(String allOTRemarks) {
+        AllOTRemarks = allOTRemarks;
     }
 
     public Response_Outward_Tanker_Weighment(int outwardId, String intime, String outTime, String inDriverImage,

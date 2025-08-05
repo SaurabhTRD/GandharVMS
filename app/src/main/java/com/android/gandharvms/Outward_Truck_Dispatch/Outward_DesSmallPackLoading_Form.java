@@ -98,7 +98,7 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
     private int Id;
     private String token;
     private SharedPreferences sharedPreferences;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +115,7 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
         remark = findViewById(R.id.eddesindusloadremark);
         party = findViewById(R.id.etsmallparty);
         oa = findViewById(R.id.etsmalloa);
-
+        tvAllRemarks = findViewById(R.id.irsplintv_allremarks);
         lnlindustrialbarrel = findViewById(R.id.lnlindustrialbarrel);
         ilpack10literqty = findViewById(R.id.ilpack10Liter);
         ilpack18literqty = findViewById(R.id.ilpack18Liter);
@@ -386,6 +386,12 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
                         party.setEnabled(false);
                         oa.setText(data.getOAnumber());
                         oa.setEnabled(false);
+                        String allRemark = data.getAllORRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         if (!data.ilweight.equals("0")) {
                             lnlindustrialbarrel.setVisibility(View.VISIBLE);
                             ilpack10literqty.setText("IndusPack 10 Liter Qty :- " + data.getIlpackof10ltrqty());

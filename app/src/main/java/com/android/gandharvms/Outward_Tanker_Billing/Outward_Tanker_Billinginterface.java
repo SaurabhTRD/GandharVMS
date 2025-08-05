@@ -28,4 +28,7 @@ public interface Outward_Tanker_Billinginterface {
     //outwardout_truck_billing
     @POST("api/OutwardBilling/AddOutTruckBillingData")
     Call<Boolean> updateouttruckbilling(@Body Model_OutwardOut_Truck_Billing request);
+
+    @POST("api/OutwardBilling/UpdateBilllingByOutwardId")
+    Call<Boolean> updatebilling (@Body UpdModel_Billing request);
 }

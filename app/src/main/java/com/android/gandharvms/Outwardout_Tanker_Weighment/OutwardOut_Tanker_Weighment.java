@@ -120,7 +120,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
     private List<Lab_compartment_model> compartmentList;
     private Weighment_compartment_Adapter adapter;
     private RecyclerView recyclerView;
-
+    TextView tvAllRemarks;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,7 +140,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         etremark = findViewById(R.id.etremakr);
         batch = findViewById(R.id.etbatchn);
         product = findViewById(R.id.etproductnam);
-
+        tvAllRemarks = findViewById(R.id.itoutweitv_allremarks);
         img1 = findViewById(R.id.otoutweighvehicleimage);
         img2 = findViewById(R.id.otoutweighdriverimage);
 
@@ -271,6 +271,12 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         fetchdensity.setEnabled(false);
                         tareweight.setText(String.valueOf(data.getTareWeight()));
                         tareweight.setEnabled(false);
+                        String allRemark = data.getAllOTRemarks();
+                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+                            tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                        } else {
+                            tvAllRemarks.setText("No system remarks.");
+                        }
                         String jsonString = data.getLabcompartment1();
                         String ibatchnum = "";
 

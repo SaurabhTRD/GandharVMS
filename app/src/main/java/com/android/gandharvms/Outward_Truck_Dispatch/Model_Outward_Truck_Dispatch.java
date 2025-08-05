@@ -56,6 +56,15 @@ public class Model_Outward_Truck_Dispatch {
     public int TotalCalCulatedWeight;
     public String ilsign;
     public String splsign;
+    public String AllORRemarks;
+
+    public String getAllORRemarks() {
+        return AllORRemarks;
+    }
+
+    public void setAllORRemarks(String allORRemarks) {
+        AllORRemarks = allORRemarks;
+    }
 
     public String getIlsign() {
         return ilsign;

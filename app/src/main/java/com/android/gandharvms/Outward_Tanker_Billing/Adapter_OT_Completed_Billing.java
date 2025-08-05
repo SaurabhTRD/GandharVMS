@@ -2,6 +2,7 @@ package com.android.gandharvms.Outward_Tanker_Billing;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
+import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
+import com.android.gandharvms.Inward_Tanker_Security.Inward_Tanker_Security;
 import com.android.gandharvms.Outward_Tanker_Security.Adapter_OT__Complete_sec;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.ProductOA_Adapter;
@@ -99,6 +102,17 @@ public class Adapter_OT_Completed_Billing extends RecyclerView.Adapter<Adapter_O
         //holder.howqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
         holder.location.setText(club.getLocation());
         holder.remark.setText(club.getRemark());
+
+        holder.vehicelnum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Common_Outward_model club = filteredGridList.get(position);
+                Intent intent = new Intent(view.getContext(), Outward_Tanker_Billing.class);
+                intent.putExtra("vehiclenum", club.getVehicleNumber());
+                intent.putExtra("Action", "Up");
+                view.getContext().startActivity(intent);
+            }
+        });
 
     }
     @Override

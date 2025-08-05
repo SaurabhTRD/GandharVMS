@@ -31,6 +31,7 @@ public class InTruckStoreResponseModel {
     String ReQTYUom;
     String storeRemark;
     String Extramaterials;
+    public String AllIRRemarks;
 
     public String getExtramaterials() {
         return Extramaterials;
@@ -262,5 +263,13 @@ public class InTruckStoreResponseModel {
 
     public void setQty(int qty) {
         Qty = qty;
+    }
+
+    public String getAllIRRemarks() {
+        return AllIRRemarks;
+    }
+
+    public void setAllIRRemarks(String allIRRemarks) {
+        AllIRRemarks = allIRRemarks;
     }
 }
