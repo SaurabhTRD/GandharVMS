@@ -2,6 +2,7 @@ package com.android.gandharvms.Inward_Tanker_Security;
 
 import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepartment;
 import com.android.gandharvms.Inward_Truck_Security.ir_in_updsecbyinwardid_re_model;
+import com.android.gandharvms.VehicleExitResponse;
 
 import java.util.List;
 
@@ -56,6 +57,10 @@ public interface API_In_Tanker_Security {
 
     @POST("api/InwardSecurity/UpdateITInSecurityByInwardId")
     Call<Boolean> itinsecupd(@Body It_in_updsecbyinwardid_req_model updsecititin);
+
+    @POST("api/InwardSecurity/verifyvehicleexits")
+    Call<VehicleExitResponse> checkvehicleexits(@Query("vehicleNo") String vehicleNo,
+                                                @Query("vehicleType") String vehicleType);
 }
 
 

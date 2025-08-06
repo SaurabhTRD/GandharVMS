@@ -92,6 +92,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
     CheckBox cbGenerateQR;
     ImageView ivQRCode;
     Button btnPrint;
+    private boolean isUpdateMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,6 +243,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
             if (getIntent().hasExtra("VehicleNumber")) {
                 String action = getIntent().getStringExtra("Action");
                 if (action != null && action.equals("Up")) {
+                    isUpdateMode = true; // Set flag here
                     FetchVehicleDetailsforUpdate(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'x', 'I');
                 } else {
                     FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'S', 'I');
@@ -270,6 +272,9 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 
             @Override
             public void afterTextChanged(Editable s) {
+                if (isUpdateMode) {
+                    return;
+                }
                 String vehicleNo = s.toString().trim();
                 String selectedvehicle = vehicleType; // Replace with your actual vehicle type retrieval logic
                 if(vehicleNo.length()==10)

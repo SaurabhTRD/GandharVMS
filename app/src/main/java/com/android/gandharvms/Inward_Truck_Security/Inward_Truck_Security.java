@@ -55,6 +55,7 @@ import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.dialogueprogreesbar;
+import com.android.gandharvms.VehicleExitResponse;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -153,7 +154,7 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
     CheckBox cbGenerateQR;
     ImageView ivQRCode;
     Button btnPrint;
-
+    private boolean isUpdateMode = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -335,6 +336,7 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
         if (getIntent().hasExtra("VehicleNumber")) {
             String action = getIntent().getStringExtra("Action");
             if (action != null && action.equals("Up")) {
+                isUpdateMode = true; // Set flag here
                 FetchVehicleDetailsforUpdate(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, 'x', 'I');
             } else {
                 FetchVehicleDetails(getIntent().getStringExtra("VehicleNumber"), Global_Var.getInstance().MenuType, nextProcess, inOut);
@@ -349,6 +351,33 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                 String time = format.format(calendar.getTime());
                 etintime.setText(time);
+            }
+        });
+
+        etvehicalnumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Not used
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                // Optional: Debounce or validation can go here
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (isUpdateMode) {
+                    return;
+                }
+                String vehicleNo = s.toString().trim();
+                String selectedvehicle = vehicleType; // Replace with your actual vehicle type retrieval logic
+                if(vehicleNo.length()==10)
+                {
+                    if (!vehicleNo.isEmpty() && !selectedvehicle.isEmpty()) {
+                        verifyVehicleExit(vehicleNo, selectedvehicle);
+                    }
+                }
             }
         });
 
@@ -1018,6 +1047,32 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                     }
                 }
                 Toasty.error(Inward_Truck_Security.this, "failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void verifyVehicleExit(String vehicleNo, String vehicleType) {
+        apiInTankerSecurity = RetroApiclient_In_Tanker_Security.getinsecurityApi();
+        Call<VehicleExitResponse> call = apiInTankerSecurity.checkvehicleexits(vehicleNo,vehicleType);
+        call.enqueue(new Callback<VehicleExitResponse>() {
+            @Override
+            public void onResponse(Call<VehicleExitResponse> call, Response<VehicleExitResponse> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    int status = response.body().getStatus();
+                    if (status == 1) {
+                        //Toasty.success(Outward_Tanker_Security.this, "Vehicle Does Not In Factory", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toasty.warning(Inward_Truck_Security.this, "Vehicle already exists in factory and has not completed the process flow.", Toast.LENGTH_LONG).show();
+                        etvehicalnumber.setText("");
+                    }
+                } else {
+                    Log.e("API_ERROR", "Unsuccessful response");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VehicleExitResponse> call, Throwable t) {
+                Log.e("API_ERROR", "Failure: " + t.getMessage());
             }
         });
     }
