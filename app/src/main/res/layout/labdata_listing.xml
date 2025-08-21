@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="8dp"
+    android:background="@android:color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="16dp"
+        android:orientation="vertical">
+
+        <!-- Compartment Header -->
+        <TextView
+            android:id="@+id/txtCompartmentNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Compartment "
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"/>
+
+<!--        &lt;!&ndash; Product &ndash;&gt;-->
+<!--        <TextView-->
+<!--            android:id="@+id/txtProduct"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Product Name: X"-->
+<!--            android:textSize="16sp"-->
+<!--            android:textStyle="bold"-->
+<!--            android:textColor="@color/black"/>-->
+
+        <!-- Blender -->
+        <TextView
+            android:id="@+id/txtvisco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Viscosity: X"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"/>
+
+        <!-- Production Sign -->
+        <TextView
+            android:id="@+id/txtdensity"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Density : Y"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Operator Sign -->
+        <TextView
+            android:id="@+id/txtbatchnumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BatchNumber: Z"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"/>
+
+        <!-- Operator Sign -->
+        <TextView
+            android:id="@+id/txtqcofficer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="QCOfficer: Z"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"/>
+
+        <TextView
+            android:id="@+id/txtremark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Remark: Z"
+            android:textSize="14sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="4dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/gray"
+            android:layout_marginTop="6dp"
+            android:layout_marginBottom="6dp"/>
+
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

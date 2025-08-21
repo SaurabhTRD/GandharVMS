@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.HorizontalScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,6 +56,8 @@ public class or_statusgrid_livedata extends NotificationCommonfunctioncls {
     String fromdate;
     String todate;
     String strvehiclenumber = "x";
+    EditText edtVehicleNumber, edtCustomerName;
+    Button btnSearch;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +69,9 @@ public class or_statusgrid_livedata extends NotificationCommonfunctioncls {
         currdate.setText(getCurrentDateTime().toString().trim());
         fromDate = findViewById(R.id.orbtnfromDateoutwardtanker);
         toDate = findViewById(R.id.orbtntoDateoutwardtanker);
+        edtVehicleNumber = findViewById(R.id.edtVehicleNumberor);
+        edtCustomerName = findViewById(R.id.edtCustomerNameor);
+        btnSearch = findViewById(R.id.btnSearchor);
         setupHeader();
         initViews();
         fetchDataFromApiWithProgressDialog();
@@ -120,6 +126,16 @@ public class or_statusgrid_livedata extends NotificationCommonfunctioncls {
             public void onClick(View v) {
                 // Handle the onClick for fromDate button
                 showDatePickerDialog(toDate, false);
+            }
+        });
+        btnSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String vehicleNumber = edtVehicleNumber.getText().toString().trim();
+                String customerName = edtCustomerName.getText().toString().trim();
+
+                // Apply filter in adapter
+                outwardGridAdapter.getFilter().filter(vehicleNumber + "|" + customerName);
             }
         });
     }

@@ -1,11 +1,9 @@
 package com.android.gandharvms.outward_Tanker_Lab_forms;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +16,6 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -29,15 +26,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.FcmNotificationsSender;
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.Inward_Truck_store.Inward_Truck_Store;
 import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
-import com.android.gandharvms.Outward_Tanker;
-import com.android.gandharvms.Outward_Tanker_Production_forms.Compartment;
-import com.android.gandharvms.Outward_Tanker_Production_forms.CompartmentAdapter;
-import com.android.gandharvms.Outward_Tanker_Production_forms.New_Outward_Tanker_Production;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Repet_update_Model;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
@@ -99,6 +91,9 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     public List<String> procompartmentsJson ;
     public  List<String> LabcompartmentsJson;
     TextView tvAllRemarks;
+    private RecyclerView compartmentrecyclerview;
+    private Lab_DisplayCompartmentAdapter labDisplayCompartmentAdapter;
+    List<Display_LabCompartmentModel> LabcompartmentList = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,6 +177,12 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 //        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
+
+        compartmentrecyclerview = findViewById(R.id.recyclerView_compartmenttem);
+        labDisplayCompartmentAdapter = new Lab_DisplayCompartmentAdapter(this, LabcompartmentList);
+        compartmentrecyclerview.setLayoutManager(new LinearLayoutManager(this));
+        compartmentrecyclerview.setAdapter(labDisplayCompartmentAdapter);
+        compartmentrecyclerview.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
     }
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
@@ -266,7 +267,40 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                                 data.getLabcompartment5(),
                                 data.getLabcompartment6()
                         );
-                         procompartmentsJson = Arrays.asList(
+                        LabcompartmentList.clear(); // Clear old data
+
+                        for (int i = 0; i < LabcompartmentsJson.size(); i++) {
+                            String json = LabcompartmentsJson.get(i);
+
+                            if (json != null && !json.trim().isEmpty()) {
+                                try {
+                                    JSONObject obj = new JSONObject(json);
+
+                                    Display_LabCompartmentModel model = new Display_LabCompartmentModel();
+                                    model.setCompartmentNumber(i + 1); // so index 0 = Compartment 1
+//                                    model.setProdcutName(obj.optString("ProdcutName", "-"));
+                                    model.setBlender(obj.optString("Blender", "-"));
+                                    model.setProductionSign(obj.optString("ProductionSign", "-"));
+                                    model.setOperatorSign(obj.optString("OperatorSign", "-"));
+                                    model.setViscosity(obj.optString("Viscosity", "-"));
+                                    model.setDensity(obj.optString("Density", "-"));
+                                    model.setBatchNumber(obj.optString("BatchNumber", "-"));
+                                    model.setQcOfficer(obj.optString("QcOfficer", "-"));
+                                    model.setRemark(obj.optString("Remark", "-"));
+
+                                    //labCompartmentList.add(model);
+                                    LabcompartmentList.add(model);
+
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        // Refresh the RecyclerView
+                        labDisplayCompartmentAdapter.notifyDataSetChanged();
+
+                        procompartmentsJson = Arrays.asList(
                                 data.getProcompartment1(),
                                 data.getProcompartment2(),
                                 data.getProcompartment3(),
@@ -354,6 +388,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             }
                         }
                         adapter.notifyDataSetChanged(); // ✅ Call once after updating all data
+                        //labDisplayCompartmentAdapter.notifyDataSetChanged();
 
 
                         // ✅ Show "Update" Button If More Than One Compartment Exists
