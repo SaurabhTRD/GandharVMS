@@ -321,12 +321,12 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                     serialnumber.setLongClickable(false);
                     serialnumber.setKeyListener(null);
 
-                    vehiclenumber.setFocusable(false);
-                    vehiclenumber.setEnabled(false);
-                    vehiclenumber.setClickable(false);
-                    vehiclenumber.setCursorVisible(false);
-                    vehiclenumber.setLongClickable(false);
-                    vehiclenumber.setKeyListener(null);
+//                    vehiclenumber.setFocusable(false);
+//                    vehiclenumber.setEnabled(false);
+//                    vehiclenumber.setClickable(false);
+//                    vehiclenumber.setCursorVisible(false);
+//                    vehiclenumber.setLongClickable(false);
+//                    vehiclenumber.setKeyListener(null);
 
                     elocation.setFocusable(false);
                     elocation.setEnabled(false);
@@ -350,15 +350,16 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                     custname.setText(nonNull(data.CustomerName));
                     transportername.setText(nonNull(data.TransportName));
                     elocation.setText(nonNull(data.Location));
-                    etremark.setText(nonNull(data.Remark));
+                    etremark.setText(nonNull(data.IRInWeiRemark));
 //                    grossweight1.setText(nonNull(data.GrossWeight));
                     tareweight.setText(nonNull(data.TareWeight));
 //                    oanum.setText(nonNull(data.OAnumber));
                     etbillremark.setText(nonNull(data.TankerBillingRemark));
                     etbillremark.setVisibility(View.VISIBLE);
                     if (data.Intime != null && !data.Intime.isEmpty())
+                    if (data.OTWeiInTime != null && !data.OTWeiInTime.isEmpty())
                     {
-                        intime.setText(nonNull(data.Intime.substring(12,17)));
+                        intime.setText(nonNull(data.OTWeiInTime.substring(12,17)));
                     }
 
                     if (data.InVehicleImage != null && !data.InVehicleImage.isEmpty()) {

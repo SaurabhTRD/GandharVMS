@@ -87,7 +87,7 @@ public class Adapter_Weigh_Complete extends RecyclerView.Adapter<Adapter_Weigh_C
 
         holder.vehicle.setOnClickListener(v -> {
             Context context = v.getContext();
-            Intent intent = new Intent(context, Outward_Tanker_weighment.class);
+            Intent intent = new Intent(context, Outward_Truck_weighment.class);
             intent.putExtra("vehiclenumber", obj.VehicleNumber);
 //            intent.putExtra("recordId", obj.getId());
             intent.putExtra("mode", "update"); // Tell the activity to enter edit mode

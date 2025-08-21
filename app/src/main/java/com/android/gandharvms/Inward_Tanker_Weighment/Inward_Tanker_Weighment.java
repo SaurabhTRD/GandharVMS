@@ -1001,7 +1001,7 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() != null && response.body()) {
                         Log.d("Registration", "Response Body: " + response.body());
                         Toasty.success(Inward_Tanker_Weighment.this, "Data Updated successfully..!", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(Inward_Tanker_Weighment.this, grid.class);
+                        Intent intent = new Intent(Inward_Tanker_Weighment.this, it_in_weigh_Completedgrid.class);
                         startActivity(intent);
                     } else {
                         Toasty.error(Inward_Tanker_Weighment.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();

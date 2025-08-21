@@ -49,6 +49,25 @@ public class InTanWeighResponseModel {
     public String Extramaterials;
     public int SecNetWeight;
     public String UnitOfNetWeight;
+    public String InWeiRemark;
+    public String InWeiSignBy;
+
+    public String getInWeiSignBy() {
+        return InWeiSignBy;
+    }
+
+    public void setInWeiSignBy(String inWeiSignBy) {
+        InWeiSignBy = inWeiSignBy;
+    }
+
+    public String getInWeiRemark() {
+        return InWeiRemark;
+    }
+
+    public void setInWeiRemark(String inWeiRemark) {
+        InWeiRemark = inWeiRemark;
+    }
+
     public String AllITRemarks;
     public String AllIRRemarks;
     public int getSecNetWeight() {
