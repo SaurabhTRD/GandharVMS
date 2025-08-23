@@ -63,6 +63,7 @@ import com.android.gandharvms.R;
 import com.android.gandharvms.RegisterwithAPI.Register;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -871,8 +872,7 @@ public class Inward_Tanker_Weighment extends NotificationCommonfunctioncls {
             }
             Toasty.success(Inward_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
             makeNotification(vehicalnumber, outTime);
-            Intent intent = new Intent(Inward_Tanker_Weighment.this, grid.class);
-            startActivity(intent);
+            NavigationUtil.navigateAndClear(Inward_Tanker_Weighment.this, grid.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

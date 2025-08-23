@@ -54,6 +54,7 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.VehicleExitResponse;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
@@ -605,8 +606,7 @@ public class Inward_Truck_Security extends NotificationCommonfunctioncls {
                             Notificationforall(vehicalnumber);
                             makeNotification(vehicalnumber, outTime);
                             Toasty.success(Inward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Inward_Truck_Security.this, grid.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Inward_Truck_Security.this, grid.class);
                         } else {
                             Toasty.error(Inward_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }

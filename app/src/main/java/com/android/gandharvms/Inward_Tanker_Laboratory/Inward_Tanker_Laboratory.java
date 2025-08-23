@@ -49,6 +49,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -542,8 +543,7 @@ public class Inward_Tanker_Laboratory extends NotificationCommonfunctioncls {
                             makeNotification(vehicle, outTime);
                             Log.d("Registration", "Response Body: " + response.body());
                             Toasty.success(Inward_Tanker_Laboratory.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Inward_Tanker_Laboratory.this, grid.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Inward_Tanker_Laboratory.this, grid.class);
                         } else {
                             Toasty.error(Inward_Tanker_Laboratory.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }
