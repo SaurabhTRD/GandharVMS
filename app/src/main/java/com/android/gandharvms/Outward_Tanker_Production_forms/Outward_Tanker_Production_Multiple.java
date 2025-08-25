@@ -90,7 +90,8 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
     public int compartmentArraycount;
     public int compartmentcount;
     public int currentCompartment;
-    EditText serialnumber, vehiclenumber, oanumber, product, customer, location, howqty, transporter, intime, blendernumber, signproduction, oprator, remark, etbillremark, etproduct;
+    EditText serialnumber, vehiclenumber, oanumber, product, customer, location, howqty, transporter, intime, blendernumber, signproduction, oprator, remark, etbillremark, etproduct
+            ,proformintime;
     Button btnsubmit, btncompletd, btnupdate;
     ArrayAdapter<String> nextdeptdrop;
     Map<String, String> nextdeptmapping = new HashMap<>();
@@ -145,10 +146,12 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         howqty = findViewById(R.id.etnewhowmuch);
         transporter = findViewById(R.id.etnewtransportername);
         intime = findViewById(R.id.etinewntime);
+        proformintime = findViewById(R.id.proformintime);
         blendernumber = findViewById(R.id.elnewblendingno);
         signproduction = findViewById(R.id.etnewsignofproduction);
         oprator = findViewById(R.id.etnewsignofoprator);
-        remark = findViewById(R.id.etnewremark);
+//        remark = findViewById(R.id.etnewremark);
+        remark = findViewById(R.id.etformnewremark);
         etproduct = findViewById(R.id.etproductottankerprodcut);
         etbillremark = findViewById(R.id.etprducBillingRemark);
         btnupdate = findViewById(R.id.etnewsupdate);
@@ -174,6 +177,15 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                 SimpleDateFormat format = new SimpleDateFormat("HH:mm");
                 String time = format.format(calendar.getTime());
                 intime.setText(time);
+            }
+        });
+        proformintime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                proformintime.setText(time);
             }
         });
 
@@ -466,7 +478,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                         }
                         // ✅ Hide fields if more than 1 compartment
                         if (compartmentArraycount >= 1) {
-                            intime.setVisibility(View.GONE);
+                            //intime.setVisibility(View.GONE);
                             blendernumber.setVisibility(View.GONE);
                             signproduction.setVisibility(View.GONE);
                             oprator.setVisibility(View.GONE);
@@ -475,7 +487,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                             Log.d("VISIBILITY_UPDATE", "Hiding fields because compartment count is: " + compartmentArraycount);
                         } else {
                             // ✅ Show fields if only one compartment
-                            intime.setVisibility(View.VISIBLE);
+                            //intime.setVisibility(View.VISIBLE);
                             blendernumber.setVisibility(View.VISIBLE);
                             signproduction.setVisibility(View.VISIBLE);
                             oprator.setVisibility(View.VISIBLE);
@@ -649,7 +661,8 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 
     public void insert() {
         String outTime = getCurrentTime();
-        String inTime = intime.getText().toString();
+        //String inTime = intime.getText().toString();
+        String formintime = proformintime.getText().toString();
         String iserialnum = serialnumber.getText().toString();
         String ivehicle = vehiclenumber.getText().toString();
         String iblender = blendernumber.getText().toString();
@@ -730,10 +743,10 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         }
 
 
-        if (selectedCompartmentJson.isEmpty()) {
+        if (selectedCompartmentJson.isEmpty()|| formintime.isEmpty() ) {
             Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
         } else {
-            New_Production_Model_Outward newproductionoutwardmodel = new New_Production_Model_Outward(OutwardId, inTime,
+            New_Production_Model_Outward newproductionoutwardmodel = new New_Production_Model_Outward(OutwardId, formintime,
                     outTime, "", "", "", "P", iremark, EmployeId, vehicleType,
                     iserialnum, ivehicle, 'L', inOut, EmployeId, "P",
                     compartment1String, compartment2String, compartment3String,

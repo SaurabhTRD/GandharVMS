@@ -10,10 +10,12 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <include layout="@layout/header_layout"></include>
 
             <Button
@@ -31,14 +33,15 @@
                 tools:ignore="MissingConstraints"></Button>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
 
                 >
+
                 <EditText
                     android:id="@+id/etnewlserialnumber"
                     android:layout_width="match_parent"
@@ -50,13 +53,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-                >
+                android:layout_marginRight="30dp">
+
                 <EditText
                     android:id="@+id/etnewlvehicleno"
                     android:layout_width="match_parent"
@@ -64,26 +67,25 @@
                     android:hint="Vehicle Number"
                     android:inputType="textCapCharacters"
                     android:textSize="17dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:id="@+id/layout_productlistitinlaboratory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="5dp">
-            </LinearLayout>
+                android:layout_marginTop="5dp"
+                android:orientation="vertical"></LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
-                >
+                android:layout_marginRight="30dp"
+                android:visibility="gone">
+
                 <EditText
                     android:id="@+id/etnewloanumer"
                     android:layout_width="match_parent"
@@ -91,18 +93,18 @@
                     android:hint="OA Number"
                     android:inputType="textCapCharacters"
                     android:textSize="17dp"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
-                >
+                android:layout_marginRight="30dp"
+                android:visibility="gone">
+
                 <EditText
                     android:id="@+id/etnewlproductname"
                     android:layout_width="match_parent"
@@ -114,15 +116,16 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
 
 
                 >
+
                 <EditText
                     android:id="@+id/etnewlcustname"
                     android:layout_width="match_parent"
@@ -134,12 +137,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp">
+
                 <EditText
                     android:id="@+id/etnewllocation"
                     android:layout_width="match_parent"
@@ -151,13 +155,14 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
                 android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
                 android:visibility="gone">
+
                 <EditText
                     android:id="@+id/etnewlhowmuch"
                     android:layout_width="match_parent"
@@ -169,12 +174,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp">
+
                 <EditText
                     android:id="@+id/etnewltransportername"
                     android:layout_width="match_parent"
@@ -186,12 +192,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp">
+
                 <EditText
                     android:id="@+id/etbillingremark"
                     android:layout_width="match_parent"
@@ -203,12 +210,13 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp">
+
                 <EditText
                     android:id="@+id/etproductionremark"
                     android:layout_width="match_parent"
@@ -219,21 +227,59 @@
                     android:textStyle="bold" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp">
+
+                <EditText
+                    android:id="@+id/etforminewlntime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:hint="Form In Time"
+                    android:inputType="text"
+                    android:textSize="17dp"
+                    android:textStyle="bold"
+                    android:clickable="false"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp">
+
+                <EditText
+                    android:id="@+id/elformnewblremark"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Form Remark"
+                    android:inputType="textCapCharacters"
+                    android:textSize="17dp"
+                    android:textStyle="bold" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <androidx.cardview.widget.CardView
                 android:id="@+id/compartmentCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="12dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="8dp"
                 android:background="@android:color/white"
-                android:visibility="gone">  <!-- Initially Hidden -->
+                android:visibility="gone"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="8dp">  <!-- Initially Hidden -->
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:padding="16dp">
 
                     <!-- Compartment Header -->
                     <TextView
@@ -241,16 +287,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Compartment #1"
+                        android:textColor="@color/black"
                         android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
+                        android:textStyle="bold" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2dp"
-                        android:background="@color/gray"
                         android:layout_marginTop="6dp"
-                        android:layout_marginBottom="6dp"/>
+                        android:layout_marginBottom="6dp"
+                        android:background="@color/gray" />
 
                     <!-- Blender -->
                     <TextView
@@ -258,142 +304,147 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Blender: -"
+                        android:textColor="@color/black"
                         android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:textColor="@color/black"/>
+                        android:textStyle="bold" />
 
                     <!-- Production Sign -->
                     <TextView
                         android:id="@+id/txtProductionSign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="Production Sign: -"
-                        android:textSize="14sp"
-                        android:textStyle="bold"
                         android:textColor="@color/black"
-                        android:layout_marginTop="4dp"/>
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
 
                     <!-- Operator Sign -->
                     <TextView
                         android:id="@+id/txtOperatorSign"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="4dp"
                         android:text="Operator: -"
-                        android:textSize="14sp"
                         android:textColor="@color/black"
-                        android:layout_marginTop="4dp"/>
+                        android:textSize="14sp" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-        <LinearLayout
-            android:id="@+id/labDetailsContainer"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
-                <EditText
-                    android:id="@+id/etinewlntime"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="In Time"
-                    android:inputType="text"
-                    android:textSize="17dp"
-                    android:textStyle="bold"
-                    android:focusable="false"/>
-            </com.google.android.material.textfield.TextInputLayout>
+                    <LinearLayout
+                        android:id="@+id/labDetailsContainer"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
-                <EditText
-                    android:id="@+id/elnewlviscosity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Viscosity@40°C"
-                    android:inputType="textCapCharacters"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp">
+                            <EditText
+                                android:id="@+id/etinewlntime"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="In Time"
+                                android:inputType="text"
+                                android:textSize="17dp"
+                                android:textStyle="bold"
+                                android:focusable="false"/>
+                        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
-                <EditText
-                    android:id="@+id/elnewldensity"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Density"
-                    android:inputType="numberDecimal"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp">
+                            <EditText
+                                android:id="@+id/elnewlviscosity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Viscosity@40°C"
+                                android:inputType="textCapCharacters"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
-                <EditText
-                    android:id="@+id/elnewlbatchnumber"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Batch Number"
-                    android:inputType="textCapCharacters"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp">
+                            <EditText
+                                android:id="@+id/elnewldensity"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Density"
+                                android:inputType="numberDecimal"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
-                <EditText
-                    android:id="@+id/elnewlqcofficer"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Q.C Officer"
-                    android:inputType="textCapCharacters"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp">
+                            <EditText
+                                android:id="@+id/elnewlbatchnumber"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Batch Number"
+                                android:inputType="textCapCharacters"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="10dp">
-                <EditText
-                    android:id="@+id/elnewblremark"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Remark"
-                    android:inputType="textCapCharacters"
-                    android:textSize="17dp"
-                    android:textStyle="bold" />
-            </com.google.android.material.textfield.TextInputLayout>
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp">
+                            <EditText
+                                android:id="@+id/elnewlqcofficer"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Q.C Officer"
+                                android:inputType="textCapCharacters"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_marginLeft="30dp"
+                            android:layout_marginRight="30dp"
+                            android:layout_marginTop="10dp">
+                            <EditText
+                                android:id="@+id/elnewblremark"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:hint="Remark"
+                                android:inputType="textCapCharacters"
+                                android:textSize="17dp"
+                                android:textStyle="bold" />
+                        </com.google.android.material.textfield.TextInputLayout>
+
+
+
+                    </LinearLayout>
 
             <TextView
                 android:id="@+id/itinlabtv_allremarks"
@@ -401,26 +452,24 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:textColor="@android:color/darker_gray"
-                android:padding="4dp"
-                android:textSize="17sp"
                 android:background="@android:color/transparent"
-                android:ellipsize="end" />
-
-        </LinearLayout>
+                android:ellipsize="end"
+                android:padding="4dp"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="17sp" />
 
             <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
                 android:background="#F5F5F5"
+                android:orientation="vertical"
                 android:padding="16dp">
 
-<!--                <Button-->
-<!--                    android:id="@+id/btnAddCompartment"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="Add Compartment" />-->
+                <!--                <Button-->
+                <!--                    android:id="@+id/btnAddCompartment"-->
+                <!--                    android:layout_width="wrap_content"-->
+                <!--                    android:layout_height="wrap_content"-->
+                <!--                    android:text="Add Compartment" />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView_labitem"
@@ -438,43 +487,43 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:layout_marginStart="35dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="35dp"
                 app:cardCornerRadius="10dp"
                 app:cardElevation="5dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
                     android:gravity="center"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/outtankerlabcompleted"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
                         android:layout_weight="1"
-                        android:text="COMPLETED"
                         android:onClick="inprocesprocompletedclick"
+                        android:text="COMPLETED"
+                        android:textColor="@android:color/black"
                         android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:textColor="@android:color/black">
-                    </androidx.appcompat.widget.AppCompatButton>
+                        android:textStyle="bold"></androidx.appcompat.widget.AppCompatButton>
 
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/etouttankerlabsubmit"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
-                        android:layout_weight="1"
                         android:layout_below="@id/OUM."
+                        android:layout_marginStart="10dp"
                         android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
                         android:text="SUBMIT"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
                         android:textColor="@android:color/black"
-                        android:layout_marginStart="10dp">
+                        android:textSize="17sp"
+                        android:textStyle="bold">
 
                     </androidx.appcompat.widget.AppCompatButton>
 
@@ -482,13 +531,13 @@
                         android:id="@+id/updatetankerlab"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_marginStart="10dp"
                         android:layout_weight="1"
-                        android:text="UPDATE"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
                         android:backgroundTint="@color/blue"
+                        android:text="UPDATE"
                         android:textColor="@android:color/white"
-                        android:layout_marginStart="10dp"/>
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

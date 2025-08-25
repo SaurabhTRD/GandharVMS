@@ -74,7 +74,8 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     public First_LabCompartmentAdapter firstLabCompartmentAdapter;
     public LinearLayout labDetailsContainer;
     EditText newlseralnum, newlvehiclenum, newloanum, newlprodcut, newlcustomername, newldestination, newlquantity, newltransporter,
-            newlintime, newlviscosity, newldentinity, newlbatchnum, newlqcofficer, newlremarks, billremark, proremark;
+            newlintime, newlviscosity, newldentinity, newlbatchnum, newlqcofficer, newlremarks, billremark, proremark,
+            newlabfomrintime,newformlabremark;
     Button btnsubmit, btnupdate;
     dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
     private Outward_Tanker_Lab outwardTankerLab;
@@ -88,12 +89,13 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     int selectedCompartmentIndex = 0;
     int firstProCompartmentIndex;
     private String[] compartmentJsonStrings = new String[6];
-    public List<String> procompartmentsJson ;
-    public  List<String> LabcompartmentsJson;
+    public List<String> procompartmentsJson;
+    public List<String> LabcompartmentsJson;
     TextView tvAllRemarks;
-    private RecyclerView compartmentrecyclerview;
-    private Lab_DisplayCompartmentAdapter labDisplayCompartmentAdapter;
-    List<Display_LabCompartmentModel> LabcompartmentList = new ArrayList<>();
+//    private RecyclerView compartmentrecyclerview;
+//    private Lab_DisplayCompartmentAdapter labDisplayCompartmentAdapter;
+//    List<Display_LabCompartmentModel> LabcompartmentList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,16 +121,17 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         newlquantity = findViewById(R.id.etnewlhowmuch);
         newltransporter = findViewById(R.id.etnewltransportername);
         newlintime = findViewById(R.id.etinewlntime);
+        newlabfomrintime = findViewById(R.id.etforminewlntime);
         newlviscosity = findViewById(R.id.elnewlviscosity);
         newldentinity = findViewById(R.id.elnewldensity);
         newlbatchnum = findViewById(R.id.elnewlbatchnumber);
         newlqcofficer = findViewById(R.id.elnewlqcofficer);
         newlremarks = findViewById(R.id.elnewblremark);
+        newformlabremark = findViewById(R.id.elformnewblremark);
         billremark = findViewById(R.id.etbillingremark);
         proremark = findViewById(R.id.etproductionremark);
         tvAllRemarks = findViewById(R.id.itinlabtv_allremarks);
         labDetailsContainer = findViewById(R.id.labDetailsContainer);
-
 
 
         btnsubmit = findViewById(R.id.etouttankerlabsubmit);
@@ -155,6 +158,15 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                 newlintime.setText(time);
             }
         });
+        newlabfomrintime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("HH:mm");
+                String time = format.format(calendar.getTime());
+                newlabfomrintime.setText(time);
+            }
+        });
         if (getIntent().hasExtra("vehiclenum")) {
             FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
@@ -178,12 +190,282 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 //        recyclerView.setAdapter(adapter);
 //        recyclerView.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
 
-        compartmentrecyclerview = findViewById(R.id.recyclerView_compartmenttem);
-        labDisplayCompartmentAdapter = new Lab_DisplayCompartmentAdapter(this, LabcompartmentList);
-        compartmentrecyclerview.setLayoutManager(new LinearLayoutManager(this));
-        compartmentrecyclerview.setAdapter(labDisplayCompartmentAdapter);
-        compartmentrecyclerview.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
+//        compartmentrecyclerview = findViewById(R.id.recyclerView_compartmenttem);
+//        labDisplayCompartmentAdapter = new Lab_DisplayCompartmentAdapter(this, LabcompartmentList);
+//        compartmentrecyclerview.setLayoutManager(new LinearLayoutManager(this));
+//        compartmentrecyclerview.setAdapter(labDisplayCompartmentAdapter);
+//        compartmentrecyclerview.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
     }
+
+//    private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
+//        Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo, vehicleType, nextProcess, inOut);
+//        call.enqueue(new Callback<Lab_Model__Outward_Tanker>() {
+//            @Override
+//            public void onResponse(Call<Lab_Model__Outward_Tanker> call, Response<Lab_Model__Outward_Tanker> response) {
+//                if (response.isSuccessful()) {
+//                    Lab_Model__Outward_Tanker data = response.body();
+//                    if (data.getVehicleNumber() != null && data.getVehicleNumber() != "") {
+//                        oploutwardid = data.getOplOutwardId();
+//                        OutwardId = data.getOutwardId();
+//                        newlseralnum.setText(data.getSerialNumber());
+//                        newlseralnum.setEnabled(false);
+//                        newlvehiclenum.setText(data.getVehicleNumber());
+//                        newlvehiclenum.setEnabled(false);
+//                        newloanum.setText(data.getOAnumber());
+//                        newloanum.setEnabled(false);
+//                        newlprodcut.setText(data.getProductName());
+//                        newlprodcut.setEnabled(false);
+//                        newlcustomername.setText(data.getCustomerName());
+//                        newlcustomername.setEnabled(false);
+//                        newldestination.setText(data.getLocation());
+//                        newldestination.setEnabled(false);
+//                        newlquantity.setText(String.valueOf(data.getHowMuchQuantityFilled()));
+//                        newlquantity.setEnabled(false);
+//                        newltransporter.setText(data.getTransportName());
+//                        newltransporter.setEnabled(false);
+//                        billremark.setText(data.getTankerBillingRemark());
+//                        billremark.setEnabled(false);
+//                        proremark.setText(data.getTankerProRemark());
+//                        proremark.setEnabled(false);
+//                        String allRemark = data.getAllOTRemarks();
+////                        procompartment1 = data.getProcompartment1();
+////                        procompartment2 = data.getProcompartment2();
+////                        procompartment3 = data.getProcompartment3();
+////                        procompartment4 = data.getProcompartment4();
+////                        procompartment5 = data.getProcompartment5();
+////                        procompartment6 = data.getProcompartment6();
+//                        String extraMaterialsJson = data.getProductQTYUOMOA();
+//                        Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
+//                        List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
+//                        Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
+//                        createExtraMaterialViews(extraMaterials);
+//                        isCheck = data.getisCheck();
+//
+////                        if (isCheck) {
+////                            labDetailsContainer.setVisibility(View.GONE);  // ❌ Hide Fields
+////                        } else {
+//                        //labDetailsContainer.setVisibility(View.VISIBLE);  // ✅ Show Fields
+//                        if (allRemark != null && !allRemark.trim().isEmpty()) {
+//                            tvAllRemarks.setText("   " + allRemark.replace(",", "\n")); // line-by-line
+//                        } else {
+//                            tvAllRemarks.setText("No system remarks.");
+//                        }
+//
+//                        copartmentcount = data.getCompartmentCount();
+//                        // ✅ Compartment Count Logic
+//                        List<String> compartments = new ArrayList<>();
+//
+//                        if (data.getProcompartment1() != null && !data.getProcompartment1().isEmpty())
+//                            compartments.add(data.getProcompartment1());
+//                        if (data.getProcompartment2() != null && !data.getProcompartment2().isEmpty())
+//                            compartments.add(data.getProcompartment2());
+//                        if (data.getProcompartment3() != null && !data.getProcompartment3().isEmpty())
+//                            compartments.add(data.getProcompartment3());
+//                        if (data.getProcompartment4() != null && !data.getProcompartment4().isEmpty())
+//                            compartments.add(data.getProcompartment4());
+//                        if (data.getProcompartment5() != null && !data.getProcompartment5().isEmpty())
+//                            compartments.add(data.getProcompartment5());
+//                        if (data.getProcompartment6() != null && !data.getProcompartment6().isEmpty())
+//                            compartments.add(data.getProcompartment6());
+//
+//                        compartmentArraycount = compartments.size(); // ✅ Store count dynamically
+//                        Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
+//
+//                        LabcompartmentsJson = Arrays.asList(
+//                                data.getLabcompartment1(),
+//                                data.getLabcompartment2(),
+//                                data.getLabcompartment3(),
+//                                data.getLabcompartment4(),
+//                                data.getLabcompartment5(),
+//                                data.getLabcompartment6()
+//                        );
+////                        LabcompartmentList.clear(); // Clear old data
+////
+////                        for (int i = 0; i < LabcompartmentsJson.size(); i++) {
+////                            String json = LabcompartmentsJson.get(i);
+////
+////                            if (json != null && !json.trim().isEmpty()) {
+////                                try {
+////                                    JSONObject obj = new JSONObject(json);
+////
+////                                    Display_LabCompartmentModel model = new Display_LabCompartmentModel();
+////                                    model.setCompartmentNumber(i + 1); // so index 0 = Compartment 1
+//////                                    model.setProdcutName(obj.optString("ProdcutName", "-"));
+////                                    model.setBlender(obj.optString("Blender", "-"));
+////                                    model.setProductionSign(obj.optString("ProductionSign", "-"));
+////                                    model.setOperatorSign(obj.optString("OperatorSign", "-"));
+////                                    model.setViscosity(obj.optString("Viscosity", "-"));
+////                                    model.setDensity(obj.optString("Density", "-"));
+////                                    model.setBatchNumber(obj.optString("BatchNumber", "-"));
+////                                    model.setQcOfficer(obj.optString("QcOfficer", "-"));
+////                                    model.setRemark(obj.optString("Remark", "-"));
+////
+////                                    //labCompartmentList.add(model);
+////                                    LabcompartmentList.add(model);
+////
+////
+////                                } catch (JSONException e) {
+////                                    e.printStackTrace();
+////                                }
+////                            }
+////                        }
+////                        // Refresh the RecyclerView
+////                        labDisplayCompartmentAdapter.notifyDataSetChanged();
+//
+//                        procompartmentsJson = Arrays.asList(
+//                                data.getProcompartment1(),
+//                                data.getProcompartment2(),
+//                                data.getProcompartment3(),
+//                                data.getProcompartment4(),
+//                                data.getProcompartment5(),
+//                                data.getProcompartment6()
+//                        );
+//
+//                        compartmentList.clear();
+//
+////                        firstProCompartmentIndex = -1;
+////                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+////                            String proJson = procompartmentsJson.get(i);
+////                            if (proJson != null && !proJson.trim().isEmpty()) {
+////                                firstProCompartmentIndex = i;
+////                                break;
+////                            }
+////                        }
+//                        firstProCompartmentIndex = -1;
+//
+//                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+//                            String proJson = procompartmentsJson.get(i);
+//                            String labJson = (i < LabcompartmentsJson.size()) ? LabcompartmentsJson.get(i) : null;
+//
+//                            if (proJson != null && !proJson.trim().isEmpty()) {
+//                                boolean isNewCompartment = (labJson == null || labJson.trim().isEmpty());
+//
+//                                if (isNewCompartment) {
+//                                    firstProCompartmentIndex = i;
+//                                    break;
+//                                }
+//                            }
+//                        }
+//
+//
+////                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+////                            String proJson = procompartmentsJson.get(i);
+////                            String labJson = (i < LabcompartmentsJson.size()) ? LabcompartmentsJson.get(i) : null;
+////
+////                            if (proJson != null && !proJson.trim().isEmpty()) {
+////                                boolean shouldBind = false;
+////
+////                                if (labJson == null || labJson.trim().isEmpty()) {
+////                                    shouldBind = true;  // ✅ Compartment not filled yet, bind for verification
+////                                }
+////
+////                                if (shouldBind) {
+////                                    Lab_compartment_model model = parseCompartment(proJson);
+////                                    model.setTargetIndex(firstProCompartmentIndex);
+////                                    if (model != null) {
+////                                        model.setTargetIndex(i);
+////                                        model.setOriginalJson(proJson);
+////                                        compartmentList.add(model);
+////                                        Log.d("VERIFY_BIND", "✔ Added proCompartment at index " + i);
+////                                    } else {
+////                                        Log.w("VERIFY_BIND", "⚠ Failed to parse proCompartment at index " + i);
+////                                    }
+////                                }
+////                            }
+////                        }
+//
+//                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+//                            String proJson = procompartmentsJson.get(i);
+//                            String labJson = (i < LabcompartmentsJson.size()) ? LabcompartmentsJson.get(i) : null;
+//
+//                            if (proJson != null && !proJson.trim().isEmpty()) {
+//                                boolean shouldBind = false;
+//
+//                                if (labJson == null || labJson.trim().isEmpty()) {
+//                                    shouldBind = true;
+//                                }
+//
+//                                if (shouldBind) {
+//                                    Lab_compartment_model model = parseCompartment(proJson);
+//                                    //model.setTargetIndex(firstProCompartmentIndex);
+//                                    if (model != null) {
+//                                        model.setTargetIndex(i); // ✅ Now safe to call
+//                                        model.setOriginalJson(proJson);
+//                                        compartmentList.add(model);
+//                                        Log.d("VERIFY_BIND", "✔ Added proCompartment at index " + i);
+//                                    } else {
+//                                        Log.w("VERIFY_BIND", "⚠ Failed to parse proCompartment at index " + i);
+//                                    }
+//                                }
+//                            }
+//                        }
+//                        adapter.notifyDataSetChanged(); // ✅ Call once after updating all data
+//                        //labDisplayCompartmentAdapter.notifyDataSetChanged();
+//
+//
+//                        // ✅ Show "Update" Button If More Than One Compartment Exists
+//                        if (compartmentArraycount > 1) {
+//                            btnupdate.setVisibility(View.VISIBLE);
+//                            btnsubmit.setVisibility(View.GONE);
+//                            newlintime.setVisibility(View.GONE);
+//                            newlviscosity.setVisibility(View.GONE);
+//                            newldentinity.setVisibility(View.GONE);
+//                            newlbatchnum.setVisibility(View.GONE);
+//                            newlqcofficer.setVisibility(View.GONE);
+//                            newlremarks.setVisibility(View.GONE);
+//                            //newlintime,newlviscosity,newldentinity,newlbatchnum,newlqcofficer,newlremarks
+//                            Log.d("BUTTON_DEBUG", "Showing UPDATE button");
+//                        } else {
+//                            btnupdate.setVisibility(View.GONE);
+//                            btnsubmit.setVisibility(View.VISIBLE);
+//                            newlintime.setVisibility(View.GONE);
+//                            newlviscosity.setVisibility(View.GONE);
+//                            newldentinity.setVisibility(View.GONE);
+//                            newlbatchnum.setVisibility(View.GONE);
+//                            newlqcofficer.setVisibility(View.GONE);
+//                            newlremarks.setVisibility(View.GONE);
+//                            newlintime.setVisibility(View.VISIBLE);
+//                            newlviscosity.setVisibility(View.VISIBLE);
+//                            newldentinity.setVisibility(View.VISIBLE);
+//                            newlbatchnum.setVisibility(View.VISIBLE);
+//                            newlqcofficer.setVisibility(View.VISIBLE);
+//                            newlremarks.setVisibility(View.VISIBLE);
+//                            allRemark = data.getAllOTRemarks();
+//                            if (allRemark != null && !allRemark.trim().isEmpty()) {
+//                                tvAllRemarks.setText("   " + allRemark.replace(",", "\n")); // line-by-line
+//                            } else {
+//                                tvAllRemarks.setText("No system remarks.");
+//                            }
+//                            Log.d("BUTTON_DEBUG", "Showing SUBMIT button");
+//                        }
+//
+//                    } else {
+//                        Toasty.error(New_Outward_tanker_Lab.this, "This Vehicle Number Is Not Available..!", Toast.LENGTH_SHORT).show();
+//                    }
+//                } else {
+//                    Log.e("Retrofit", "Error Response Body: " + response.code());
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Lab_Model__Outward_Tanker> call, Throwable t) {
+//
+//                Log.e("Retrofit", "Failure: " + t.getMessage());
+//                // Check if there's a response body in case of an HTTP error
+//                if (call != null && call.isExecuted() && call.isCanceled() && t instanceof HttpException) {
+//                    Response<?> response = ((HttpException) t).response();
+//                    if (response != null) {
+//                        Log.e("Retrofit", "Error Response Code: " + response.code());
+//                        try {
+//                            Log.e("Retrofit", "Error Response Body: " + response.errorBody().string());
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//            }
+//        });
+//    }
 
     private void FetchVehicleDetails(@NonNull String vehicleNo, String vehicleType, char nextProcess, char inOut) {
         Call<Lab_Model__Outward_Tanker> call = outwardTankerLab.fetchlab(vehicleNo, vehicleType, nextProcess, inOut);
@@ -259,7 +541,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                         compartmentArraycount = compartments.size(); // ✅ Store count dynamically
                         Log.d("COMPARTMENT_COUNT", "Total Compartments: " + compartmentArraycount);
 
-                         LabcompartmentsJson = Arrays.asList(
+                        LabcompartmentsJson = Arrays.asList(
                                 data.getLabcompartment1(),
                                 data.getLabcompartment2(),
                                 data.getLabcompartment3(),
@@ -267,39 +549,6 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                                 data.getLabcompartment5(),
                                 data.getLabcompartment6()
                         );
-                        LabcompartmentList.clear(); // Clear old data
-
-                        for (int i = 0; i < LabcompartmentsJson.size(); i++) {
-                            String json = LabcompartmentsJson.get(i);
-
-                            if (json != null && !json.trim().isEmpty()) {
-                                try {
-                                    JSONObject obj = new JSONObject(json);
-
-                                    Display_LabCompartmentModel model = new Display_LabCompartmentModel();
-                                    model.setCompartmentNumber(i + 1); // so index 0 = Compartment 1
-//                                    model.setProdcutName(obj.optString("ProdcutName", "-"));
-                                    model.setBlender(obj.optString("Blender", "-"));
-                                    model.setProductionSign(obj.optString("ProductionSign", "-"));
-                                    model.setOperatorSign(obj.optString("OperatorSign", "-"));
-                                    model.setViscosity(obj.optString("Viscosity", "-"));
-                                    model.setDensity(obj.optString("Density", "-"));
-                                    model.setBatchNumber(obj.optString("BatchNumber", "-"));
-                                    model.setQcOfficer(obj.optString("QcOfficer", "-"));
-                                    model.setRemark(obj.optString("Remark", "-"));
-
-                                    //labCompartmentList.add(model);
-                                    LabcompartmentList.add(model);
-
-
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                        // Refresh the RecyclerView
-                        labDisplayCompartmentAdapter.notifyDataSetChanged();
-
                         procompartmentsJson = Arrays.asList(
                                 data.getProcompartment1(),
                                 data.getProcompartment2(),
@@ -388,7 +637,6 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             }
                         }
                         adapter.notifyDataSetChanged(); // ✅ Call once after updating all data
-                        //labDisplayCompartmentAdapter.notifyDataSetChanged();
 
 
                         // ✅ Show "Update" Button If More Than One Compartment Exists
@@ -547,7 +795,8 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 
     public void insert() {
         String outTime = getCurrentTime();
-        String inTime = newlintime.getText().toString();
+//        String inTime = newlintime.getText().toString();
+        String inTime = newlabfomrintime.getText().toString();
         String iserialnum = newlseralnum.getText().toString();
         String ivehicle = newlvehiclenum.getText().toString();
         String iviscosity = newlviscosity.getText().toString();
@@ -555,7 +804,8 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         BigDecimal objdensity = idensity.isEmpty() ? null : new BigDecimal(idensity);
         String ibatchnum = newlbatchnum.getText().toString();
         String iqcofficer = newlqcofficer.getText().toString();
-        String iremarks = newlremarks.getText().toString();
+//        String iremarks = newlremarks.getText().toString();
+        String iremarks = newformlabremark.getText().toString();
 
         int targetIndex = firstProCompartmentIndex;
 
@@ -574,7 +824,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             for (int i = 0; i < compartmentList.size(); i++) {
                 Lab_compartment_model comp = compartmentList.get(i);
 
-                 targetIndex = comp.getTargetIndex();  // ✅ Use actual target index
+                targetIndex = comp.getTargetIndex();  // ✅ Use actual target index
 
                 if (targetIndex < 0 || targetIndex > 5) {
                     Toast.makeText(this, "Invalid compartment index: " + targetIndex, Toast.LENGTH_SHORT).show();
@@ -598,7 +848,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             LabCompartment_Model model = new LabCompartment_Model(inTime, iviscosity, idensity, ibatchnum, iqcofficer, iremarks);
             String selectedCompartmentJson = convertCompartmentToJson_compartment1(model);
 
-            if (selectedCompartmentJson.isEmpty()) {
+            if (selectedCompartmentJson.isEmpty()|| inTime.isEmpty() || iremarks.isEmpty()) {
                 Toast.makeText(this, "All fields must be filled", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -611,8 +861,8 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 
         // Create the complete outward model
         New_Lab_Model_OutwardTanker newLabModelOutwardTanker = new New_Lab_Model_OutwardTanker(
-                OutwardId, "", outTime, iviscosity, objdensity,
-                "", "", "", EmployeId, "P", iserialnum, ivehicle, 'W', I_O_Value, vehicleType, EmployeId,
+                OutwardId, inTime, outTime, iviscosity, objdensity,
+                "", "", iremarks, EmployeId, "P", iserialnum, ivehicle, 'W', I_O_Value, vehicleType, EmployeId,
                 compartmentJsonStrings[0] == null ? "" : compartmentJsonStrings[0],
                 compartmentJsonStrings[1] == null ? "" : compartmentJsonStrings[1],
                 compartmentJsonStrings[2] == null ? "" : compartmentJsonStrings[2],
@@ -662,7 +912,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             I_O_Value = 'O';  // Default case (fallback)
         }
 
-        List<String> compartmentStrings  = LabcompartmentsJson;
+        List<String> compartmentStrings = LabcompartmentsJson;
 
         int targetIndex = firstProCompartmentIndex;
         Gson gson = new Gson();

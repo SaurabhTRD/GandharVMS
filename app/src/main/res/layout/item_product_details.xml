@@ -118,7 +118,7 @@
                 android:id="@+id/etinewntime_prodcutdetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="In Time"
+                android:hint="Compartment In Time"
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"
