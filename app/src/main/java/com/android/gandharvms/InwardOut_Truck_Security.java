@@ -37,6 +37,7 @@ import com.android.gandharvms.LoginWithAPI.Login;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
@@ -347,8 +348,7 @@ public class InwardOut_Truck_Security extends NotificationCommonfunctioncls {
                             dialogHelper.hideProgressDialog(); // Hide after response
                             Toasty.success(InwardOut_Truck_Security.this, "Data Inserted Succesfully", Toast.LENGTH_SHORT).show();
                             makeNotification(vehiclenumber);
-                            startActivity(new Intent(InwardOut_Truck_Security.this, grid.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(InwardOut_Truck_Security.this, grid.class);
                         } else {
                             Toasty.error(InwardOut_Truck_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }

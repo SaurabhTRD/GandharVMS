@@ -44,6 +44,7 @@ import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.Timestamp;
@@ -566,8 +567,7 @@ public class Inward_Truck_weighment extends NotificationCommonfunctioncls {
             }
             Toasty.success(Inward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
             makeNotification(vehicalnumber, outTime);
-            startActivity(new Intent(Inward_Truck_weighment.this, grid.class));
-            finish();
+            NavigationUtil.navigateAndClear(Inward_Truck_weighment.this, grid.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

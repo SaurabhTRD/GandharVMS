@@ -56,6 +56,7 @@ import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.VehicleExitResponse;
 import com.android.gandharvms.submenu.submenu_Inward_Tanker;
@@ -597,8 +598,7 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
                         if (response.isSuccessful() && Boolean.TRUE.equals(response.body())) {
                             callUpdateEmployeeExSOAP(Inward_Tanker_Security.this, vehicalnumber, serialnumber, intime, Date);
                             Toasty.success(Inward_Tanker_Security.this, "Data Inserted Successfully!", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Inward_Tanker_Security.this, Inward_Tanker.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Inward_Tanker_Security.this, Inward_Tanker.class);
                         } else {
                             Toasty.error(Inward_Tanker_Security.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }

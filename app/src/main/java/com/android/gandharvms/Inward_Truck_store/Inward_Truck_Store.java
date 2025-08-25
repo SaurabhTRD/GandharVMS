@@ -48,6 +48,7 @@ import com.android.gandharvms.LoginWithAPI.Weighment;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.submenu.submenu_Inward_Truck;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -420,8 +421,7 @@ public class Inward_Truck_Store extends NotificationCommonfunctioncls {
                             Log.d("Registration", "Response Body: " + response.body());
                             Toasty.success(Inward_Truck_Store.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
                             makeNotification(vehicalnumber, outTime);
-                            startActivity(new Intent(Inward_Truck_Store.this, grid.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Inward_Truck_Store.this, grid.class);
                         } else {
                             Toasty.error(Inward_Truck_Store.this, "Data Insertion Failed..!", Toast.LENGTH_SHORT).show();
                         }
