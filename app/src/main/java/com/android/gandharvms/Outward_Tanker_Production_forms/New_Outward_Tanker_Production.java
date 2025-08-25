@@ -44,6 +44,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
 import com.android.gandharvms.outward_Tanker_Lab_forms.New_Outward_tanker_Lab;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
@@ -767,6 +768,7 @@ private void showAddCompartmentDialogs(int count) {
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.getWindow().setAttributes(layoutParams);
 
+        EditText edtInTime = dialog.findViewById(R.id.edtintime);
         EditText edtBlender = dialog.findViewById(R.id.edtBlender);
         EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
         EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
@@ -778,13 +780,14 @@ private void showAddCompartmentDialogs(int count) {
             String productionSign = edtProductionSign.getText().toString().trim();
             String operatorSign = edtOperatorSign.getText().toString().trim();
             String productname = edproductname.getText().toString().trim();
+            String intime=edtInTime.getText().toString().trim();
 
 
-            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()||productname.isEmpty()) {
+            if (intime.isEmpty()|| blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty()||productname.isEmpty()) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             } else {
                 // ✅ Add new compartment and update adapter
-                compartmentList.add(new Compartment(blender, productionSign, operatorSign,productname));
+                compartmentList.add(new Compartment(intime,blender, productionSign, operatorSign,productname));
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
 
@@ -812,7 +815,7 @@ private void showAddCompartmentDialogs(int count) {
 
         // Assign each compartment to a separate JSON string
         // ✅ Create Compartment 1 Object
-        Compartment compartment1 = new Compartment(iblender, isignofproduction, isignofoprator,product);
+        Compartment compartment1 = new Compartment(inTime,iblender, isignofproduction, isignofoprator,product);
         String compartment1String = convertCompartmentToJson(compartment1);
 
         // Convert each compartment to a JSON string (up to 6 compartments)
@@ -848,8 +851,7 @@ private void showAddCompartmentDialogs(int count) {
                         //Log.e("API_ERROR", "Error Body: " + response.errorBody().toString());
                         Toasty.success(New_Outward_Tanker_Production.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
                         makeNotification(ivehicle, outTime);
-                        startActivity(new Intent(New_Outward_Tanker_Production.this, Grid_Outward.class));
-                        finish();
+                        NavigationUtil.navigateAndClear(New_Outward_Tanker_Production.this, Grid_Outward.class);
                     }else {
                         Log.e("Retrofit", "Error Response Body: " + response.code());
                         Log.e("API_ERROR", "Error Body: " + response.errorBody().toString());
@@ -933,8 +935,7 @@ private void showAddCompartmentDialogs(int count) {
                 if (response.isSuccessful() && response.body() != null && response.body()) {
                     Toasty.success(New_Outward_Tanker_Production.this, "Data Updated Successfully!", Toast.LENGTH_SHORT, true).show();
                     makeNotification(ivehicle, outTime);
-                    startActivity(new Intent(New_Outward_Tanker_Production.this, Grid_Outward.class));
-                    finish();
+                    NavigationUtil.navigateAndClear(New_Outward_Tanker_Production.this, Grid_Outward.class);
                 } else {
                     Log.e("Retrofit", "Error Response Code: " + response.code());
                     try {
@@ -1046,6 +1047,7 @@ private void showAddCompartmentDialogs(int count) {
     private String convertCompartmentToJson(Compartment compartment) {
         try {
             JSONObject jsonObject = new JSONObject();
+            jsonObject.put("InTime", compartment.getIntime()); // Productname")
             jsonObject.put("Productname", compartment.getProductname()); // Productname")
             jsonObject.put("Blender", compartment.getBlenderNumber()); // Using only Blender
             jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign

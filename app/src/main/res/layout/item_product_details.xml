@@ -118,10 +118,11 @@
                 android:id="@+id/etinewntime_prodcutdetails"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Compartment In Time"
+                android:hint="Compartment InTime"
                 android:inputType="text"
                 android:textSize="17dp"
                 android:textStyle="bold"
+                android:clickable="false"
                 android:focusable="false"/>
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -134,7 +135,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Blender/Tanker/Vessel Number"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>
@@ -148,7 +149,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Sign of Production"
-                android:inputType="text"
+                android:inputType="textCapCharacters"
                 android:textSize="17dp"
                 android:textStyle="bold"/>
         </com.google.android.material.textfield.TextInputLayout>

@@ -630,6 +630,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         layoutParams.height = WindowManager.LayoutParams.WRAP_CONTENT;
         dialog.getWindow().setAttributes(layoutParams);
 
+        EditText edtintime = dialog.findViewById(R.id.edtintime);
         EditText edtBlender = dialog.findViewById(R.id.edtBlender);
         EditText edtProductionSign = dialog.findViewById(R.id.edtProductionSign);
         EditText edtOperatorSign = dialog.findViewById(R.id.edtOperatorSign);
@@ -641,13 +642,14 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
             String productionSign = edtProductionSign.getText().toString().trim();
             String operatorSign = edtOperatorSign.getText().toString().trim();
             String productname = edproductname.getText().toString().trim();
+            String intime=edtintime.getText().toString().trim();
 
 
-            if (blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty() || productname.isEmpty()) {
+            if (intime.isEmpty()|| blender.isEmpty() || productionSign.isEmpty() || operatorSign.isEmpty() || productname.isEmpty()) {
                 Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             } else {
                 // ✅ Add new compartment and update adapter
-                compartmentList.add(new Compartment(blender, productionSign, operatorSign, productname));
+                compartmentList.add(new Compartment(intime, blender, productionSign, operatorSign, productname));
                 adapter.notifyDataSetChanged();
                 dialog.dismiss();
 

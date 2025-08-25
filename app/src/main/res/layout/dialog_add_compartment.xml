@@ -24,6 +24,14 @@
         android:background="@drawable/rounded_edittext"/>
 
     <EditText
+        android:id="@+id/edtintime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter intime"
+        android:padding="10dp"
+        android:background="@drawable/rounded_edittext"/>
+
+    <EditText
         android:id="@+id/edtBlender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

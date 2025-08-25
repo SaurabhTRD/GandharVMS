@@ -20,7 +20,8 @@ public class Compartment {
     private boolean isSelected; // ✅ New field to track selection
     public String InTime;
 
-    public Compartment(String blenderNumber, String productionSign, String operatorSign, String productname) {
+    public Compartment(String intime, String blenderNumber, String productionSign, String operatorSign, String productname) {
+        this.InTime=intime;
         this.blenderNumber = blenderNumber;
         this.productionSign = productionSign;
         this.operatorSign = operatorSign;

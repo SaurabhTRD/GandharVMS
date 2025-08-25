@@ -52,8 +52,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public String Empid = Global_Var.getInstance().EmpId;
     private Map<Integer, Compartment> compartmentDataMap;
 
-    public ProductAdapter(List<Product> productList,Map<Integer, Compartment> compartmentDataMap,int outwardId,String productdtls) {
-        this.productList = productList;
+    public ProductAdapter(List<Product> proList,Map<Integer, Compartment> compartmentDataMap,int outwardId,String productdtls) {
+        this.productList = proList;
 //        this.compartmentDataList = compartmentDataList;
         this.compartmentDataMap = compartmentDataMap;
         this.expandedPosition = expandedPosition; // ✅ Initialize expandedPosition from constructor
@@ -72,12 +72,14 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
         Product product = productList.get(position); // ✅ Use position directly
-
         holder.txtProductName.setText(product.getProductName());
+        holder.etBlenderNumber.setText(product.getBlenderNumber());
+        holder.etprodsign.setText(product.getSignOfProduction());
+        holder.etOperator.setText(product.getOperatorSign());
+        holder.etRemark.setText(product.getRemark());
+        holder.etintime.setText(product.getInTime());
 
         Compartment compartment = compartmentDataMap.get(position);
-
-        holder.txtProductName.setText(product.getProductName());
         if (compartment != null) {
 //            Compartment compartment = compartmentDataList.get(position);
             holder.etBlenderNumber.setText(compartment.getBlenderNumber());
@@ -101,11 +103,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
         }
 
         // ✅ Restore saved values (if any)
-        holder.etBlenderNumber.setText(product.getBlenderNumber());
-        holder.etprodsign.setText(product.getSignOfProduction());
-        holder.etOperator.setText(product.getOperatorSign());
-        holder.etRemark.setText(product.getRemark());
-        holder.etintime.setText(product.getInTime());
+
 
         // ✅ Save user input while typing
         holder.etBlenderNumber.addTextChangedListener(new TextWatcher() {
@@ -131,18 +129,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
-        holder.etintime.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                product.setInTime(s.toString());
-            }
-            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-            @Override public void afterTextChanged(Editable s) {
-
-            }
-        });
         // ✅ Click event to set current time in `inTime` field
         holder.etintime.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();
@@ -150,7 +136,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             String time = format.format(calendar.getTime());
             holder.etintime.setText(time);
             product.setInTime(time);
-            notifyDataSetChanged(); // ✅ Refresh UI to persist changes
         });
 
         // ✅ Ensure selected item is highlighted
@@ -165,7 +150,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
 
             expandedPosition = (expandedPosition == position) ? -1 : position; // Toggle expansion
             notifyDataSetChanged();
-        });
+         });
 
         // ✅ Expand/collapse logic
         holder.productDetailsLayout.setVisibility(expandedPosition == position ? View.VISIBLE : View.GONE);
