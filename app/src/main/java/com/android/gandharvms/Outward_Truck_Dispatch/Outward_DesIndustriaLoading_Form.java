@@ -33,6 +33,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.firebase.messaging.FirebaseMessaging;
 
@@ -544,8 +545,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
                             Toasty.success(Outward_DesIndustriaLoading_Form.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
                             makeNotification(vehnumber, uintime);
                             makeNotificationforsmallpack(vehnumber, uintime);
-                            startActivity(new Intent(Outward_DesIndustriaLoading_Form.this, Grid_Outward.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Outward_DesIndustriaLoading_Form.this, Grid_Outward.class);
                         }
                     }
 

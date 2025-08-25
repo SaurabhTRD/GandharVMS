@@ -39,6 +39,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -476,8 +477,7 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
                             makeNotificationLogistic(etvehiclenumber, outTime);
                             Log.d("Registration", "Response Body: " + response.body());
                             Toasty.success(Outward_Truck_Logistics.this, "Data Inserted Successfully", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Outward_Truck_Logistics.this, Grid_Outward.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Outward_Truck_Logistics.this, Grid_Outward.class);
                         } else {
                             Log.e("Retrofit", "Error Response Body: " + response.code());
                         }
