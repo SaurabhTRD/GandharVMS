@@ -36,6 +36,7 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.VehicleExitResponse;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
@@ -655,8 +656,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
                             makeNotification(etvehiclnum, outTime);
                             productionnotification(etvehiclnum, outTime);
                             Toasty.success(Outward_Tanker_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Outward_Tanker_Security.this, com.android.gandharvms.Outward_Tanker.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Outward_Tanker_Security.this, com.android.gandharvms.Outward_Tanker.class);
                         }
                     }
 

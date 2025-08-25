@@ -45,6 +45,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_Model__Outward_Tanker;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
@@ -765,8 +766,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
                             dialogHelper.hideProgressDialog(); // Hide after response
                             Toasty.success(Outward_Tanker_Production_Multiple.this, "Data Inserted Succesfully...!!", Toast.LENGTH_SHORT, true).show();
                             makeNotification(ivehicle, outTime);
-                            startActivity(new Intent(Outward_Tanker_Production_Multiple.this, Grid_Outward.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Outward_Tanker_Production_Multiple.this, Grid_Outward.class);
                         } else {
                             Log.e("Retrofit", "Error Response Body: " + response.code());
                             Log.e("API_ERROR", "Error Body: " + response.errorBody().toString());

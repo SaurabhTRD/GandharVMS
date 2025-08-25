@@ -35,6 +35,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -466,8 +467,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
                             dialogHelper.hideProgressDialog(); // Hide after response
                             makeNotification(obvehiclenum);
                             Toasty.success(ot_outBilling.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                            startActivity(new Intent(ot_outBilling.this, Grid_Outward.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(ot_outBilling.this, Grid_Outward.class);
                         } else {
                             Log.e("Retrofit", "Error Response Body: " + response.code());
                         }

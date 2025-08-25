@@ -39,6 +39,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -412,8 +413,7 @@ public class OutwardOut_Tanker_Security extends NotificationCommonfunctioncls {
                             dialogHelper.hideProgressDialog(); // Hide after response
                             makeNotification(outsecvehiclenum);
                             Toasty.success(OutwardOut_Tanker_Security.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                            startActivity(new Intent(OutwardOut_Tanker_Security.this, Grid_Outward.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(OutwardOut_Tanker_Security.this, Grid_Outward.class);
                         }
                     }
 

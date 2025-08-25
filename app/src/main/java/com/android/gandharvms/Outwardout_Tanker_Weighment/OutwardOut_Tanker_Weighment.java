@@ -54,6 +54,7 @@ import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Lab_compartment_model;
 import com.google.common.reflect.TypeToken;
@@ -716,8 +717,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
             }
             makeNotification(vehicleNum);
             Toasty.success(OutwardOut_Tanker_Weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-            startActivity(new Intent(OutwardOut_Tanker_Weighment.this, Grid_Outward.class));
-            finish();
+            NavigationUtil.navigateAndClear(OutwardOut_Tanker_Weighment.this, Grid_Outward.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

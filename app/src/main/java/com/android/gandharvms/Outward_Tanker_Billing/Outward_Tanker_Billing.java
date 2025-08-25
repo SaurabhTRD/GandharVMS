@@ -37,6 +37,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Laboratory;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -623,8 +624,7 @@ public class Outward_Tanker_Billing extends NotificationCommonfunctioncls {
                                 });
                             }
                             Toasty.success(Outward_Tanker_Billing.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                            startActivity(new Intent(Outward_Tanker_Billing.this, Grid_Outward.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Outward_Tanker_Billing.this, Grid_Outward.class);
                         } else {
                             Log.e("Retrofit", "Error Response Body: " + response.code());
                         }

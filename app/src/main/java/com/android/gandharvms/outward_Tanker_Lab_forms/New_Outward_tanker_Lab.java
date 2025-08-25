@@ -35,6 +35,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.common.reflect.TypeToken;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -883,8 +884,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                     if (response.isSuccessful() && response.body() != null && response.body()) {
                         Toasty.success(New_Outward_tanker_Lab.this, "Data Inserted Successfully...!!", Toast.LENGTH_SHORT, true).show();
                         makeNotification(ivehicle, outTime);
-                        startActivity(new Intent(New_Outward_tanker_Lab.this, Grid_Outward.class));
-                        finish();
+                        NavigationUtil.navigateAndClear(New_Outward_tanker_Lab.this, Grid_Outward.class);
                     } else {
                         Log.e("Retrofit", "Error Response Code: " + response.code());
                         Toasty.error(New_Outward_tanker_Lab.this, "Server error occurred!", Toast.LENGTH_SHORT, true).show();
