@@ -42,6 +42,7 @@ import com.android.gandharvms.Outward_Truck_Dispatch.Verified_Small_pack;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.ImageUtils;
 import com.android.gandharvms.Util.MultipartTask;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.messaging.FirebaseMessaging;
@@ -1033,8 +1034,7 @@ public class Outward_Truck_weighment extends NotificationCommonfunctioncls {
             makeNotificationforinduscomplted(wvehiclenumber, outTime);
             makeNotificationforsmallcomplted(wvehiclenumber, outTime);
             Toasty.success(Outward_Truck_weighment.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-            startActivity(new Intent(Outward_Truck_weighment.this, Grid_Outward.class));
-            finish();
+            NavigationUtil.navigateAndClear(Outward_Truck_weighment.this, Grid_Outward.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

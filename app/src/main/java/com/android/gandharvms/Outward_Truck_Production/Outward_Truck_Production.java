@@ -33,6 +33,7 @@ import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
 import com.android.gandharvms.Outward_Truck_Logistic.Outward_Truck_Logistics;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -285,8 +286,7 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
                             dialogHelper.hideProgressDialog(); // Hide after response
                             makeNotification(etvehiclnumber, outTime);
                             Toasty.success(Outward_Truck_Production.this, "Data Inserted Successfully", Toast.LENGTH_SHORT, true).show();
-                            startActivity(new Intent(Outward_Truck_Production.this, Grid_Outward.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Outward_Truck_Production.this, Grid_Outward.class);
                         } else {
                             Log.e("Retrofit", "Error Response Body: " + response.code());
                         }

@@ -44,6 +44,7 @@ import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.android.gandharvms.VehicleExitResponse;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -496,8 +497,7 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
                             Notificationforall(etvehiclnum);
                             makeNotification(etvehiclnum, outTime);
                             Toasty.success(Outward_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(Outward_Truck_Security.this, Outward_Truck.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(Outward_Truck_Security.this, Grid_Outward.class);
                         }
                     }
 

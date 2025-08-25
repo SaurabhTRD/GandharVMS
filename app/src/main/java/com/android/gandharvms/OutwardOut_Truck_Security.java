@@ -39,6 +39,7 @@ import com.android.gandharvms.Outward_Truck_Security.Model_OutwardOut_Truck_Secu
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
 import com.android.gandharvms.Outward_Truck_Security.SecOut_OR_Complete;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
+import com.android.gandharvms.Util.NavigationUtil;
 import com.android.gandharvms.Util.dialogueprogreesbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -526,8 +527,7 @@ public class OutwardOut_Truck_Security extends NotificationCommonfunctioncls {
                             makeNotification(svehicleno);
                             makeNotification(svehicleno, outTime);
                             Toasty.success(OutwardOut_Truck_Security.this, "Data Inserted Succesfully !", Toast.LENGTH_SHORT).show();
-                            startActivity(new Intent(OutwardOut_Truck_Security.this, Grid_Outward.class));
-                            finish();
+                            NavigationUtil.navigateAndClear(OutwardOut_Truck_Security.this, Grid_Outward.class);
                         }
                     }
 
