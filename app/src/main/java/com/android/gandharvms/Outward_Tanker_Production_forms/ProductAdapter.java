@@ -131,6 +131,18 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
             @Override public void onTextChanged(CharSequence s, int start, int before, int count) {}
         });
 
+        holder.etintime.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                product.setInTime(s.toString());
+            }
+            @Override public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+            @Override public void afterTextChanged(Editable s) {
+
+            }
+        });
         // ✅ Click event to set current time in `inTime` field
         holder.etintime.setOnClickListener(v -> {
             Calendar calendar = Calendar.getInstance();

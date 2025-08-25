@@ -644,29 +644,26 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                         if (compartmentArraycount > 1) {
                             btnupdate.setVisibility(View.VISIBLE);
                             btnsubmit.setVisibility(View.GONE);
-                            newlintime.setVisibility(View.GONE);
-                            newlviscosity.setVisibility(View.GONE);
-                            newldentinity.setVisibility(View.GONE);
-                            newlbatchnum.setVisibility(View.GONE);
-                            newlqcofficer.setVisibility(View.GONE);
-                            newlremarks.setVisibility(View.GONE);
+
+                            labDetailsContainer.setVisibility(View.GONE);
                             //newlintime,newlviscosity,newldentinity,newlbatchnum,newlqcofficer,newlremarks
                             Log.d("BUTTON_DEBUG", "Showing UPDATE button");
                         } else {
                             btnupdate.setVisibility(View.GONE);
                             btnsubmit.setVisibility(View.VISIBLE);
-                            newlintime.setVisibility(View.GONE);
+                            labDetailsContainer.setVisibility(View.GONE);
+                            /*newlintime.setVisibility(View.GONE);
                             newlviscosity.setVisibility(View.GONE);
                             newldentinity.setVisibility(View.GONE);
                             newlbatchnum.setVisibility(View.GONE);
                             newlqcofficer.setVisibility(View.GONE);
-                            newlremarks.setVisibility(View.GONE);
-                            newlintime.setVisibility(View.VISIBLE);
-                            newlviscosity.setVisibility(View.VISIBLE);
-                            newldentinity.setVisibility(View.VISIBLE);
-                            newlbatchnum.setVisibility(View.VISIBLE);
-                            newlqcofficer.setVisibility(View.VISIBLE);
-                            newlremarks.setVisibility(View.VISIBLE);
+                            newlremarks.setVisibility(View.GONE);*/
+//                            newlintime.setVisibility(View.VISIBLE);
+//                            newlviscosity.setVisibility(View.VISIBLE);
+//                            newldentinity.setVisibility(View.VISIBLE);
+//                            newlbatchnum.setVisibility(View.VISIBLE);
+//                            newlqcofficer.setVisibility(View.VISIBLE);
+//                            newlremarks.setVisibility(View.VISIBLE);
                             String allRemark = data.getAllOTRemarks();
                             if (allRemark != null && !allRemark.trim().isEmpty()) {
                                 tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
