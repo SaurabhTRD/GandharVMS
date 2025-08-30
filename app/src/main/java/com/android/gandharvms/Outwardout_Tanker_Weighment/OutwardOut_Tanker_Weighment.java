@@ -121,7 +121,16 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
     private List<Lab_compartment_model> compartmentList;
     private Weighment_compartment_Adapter adapter;
     private RecyclerView recyclerView;
+    private RecyclerView compartrecyclerView;
     TextView tvAllRemarks;
+    int firstProCompartmentIndex;
+    private List<CompartmentData> compartmentdata = new ArrayList<>();
+    private RecyclerView compartmentrecyclerView;
+    public List<String> compartmentsJson;
+    // Declare globally
+    private List<CompartmentData> compartmentDataList = new ArrayList<>();
+    private CompartmentAdapter compartmentAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -238,6 +247,12 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
+
+        RecyclerView compartmentRecyclerView = findViewById(R.id.recyclerViewCompartments);
+        compartmentAdapter = new CompartmentAdapter(compartmentDataList);
+        compartmentRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        compartmentRecyclerView.setAdapter(compartmentAdapter);
+
     }
 
     public void calculateNetWeight() {
@@ -297,52 +312,8 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
                         Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
                         createExtraMaterialViews(extraMaterials);
-                       /* intime.requestFocus();
-                        intime.callOnClick();*/
-                        //  List<Lab_compartment_model> lstlabcompmodel = new ArrayList<>() ;
-//                        Lab_compartment_model labCompartmentModel1 =  parseCompartment(data.getProcompartment1());
-//                        if (labCompartmentModel1 != null) {
-//                            labCompartmentModel1.setTareweight(String.valueOf(data.getCompartment1()));
-//                            compartmentList.add(labCompartmentModel1);
-//                        }
-//
-//                        Lab_compartment_model labCompartmentModel2 =  parseCompartment(data.getProcompartment2());
-//                        if (labCompartmentModel2 != null) {
-//                            labCompartmentModel2.setTareweight(String.valueOf(data.getCompartment2()));
-//                            compartmentList.add(labCompartmentModel2);
-//                        }
-//
-//                        Lab_compartment_model labCompartmentModel3 =  parseCompartment(data.getProcompartment3());
-//                        if (labCompartmentModel3 != null) {
-//                            labCompartmentModel3.setTareweight(String.valueOf(data.getCompartment3()));
-//                            compartmentList.add(labCompartmentModel3);
-//                        }
-//
-//                        Lab_compartment_model labCompartmentModel4 =  parseCompartment(data.getProcompartment4());
-//                        if (labCompartmentModel4 != null) {
-//                            labCompartmentModel4.setTareweight(String.valueOf(data.getCompartment4()));
-//                            compartmentList.add(labCompartmentModel4);
-//                        }
-//
-//                        Lab_compartment_model labCompartmentModel5 =  parseCompartment(data.getProcompartment5());
-//                        if (labCompartmentModel5 != null) {
-//                            labCompartmentModel5.setTareweight(String.valueOf(data.getCompartment5()));
-//                            compartmentList.add(labCompartmentModel5);
-//                        }
-//
-//                        Lab_compartment_model labCompartmentModel6 =  parseCompartment(data.getProcompartment6());
-//                        if (labCompartmentModel6 != null) {
-//                            labCompartmentModel6.setTareweight(String.valueOf(data.getCompartment6()));
-//                            compartmentList.add(labCompartmentModel6);
-//                        }
-//                        //Weighment_compartment_Adapter adapter = new Weighment_compartment_Adapter(this, lstlabcompmodel);
-//                        //recyclerView.setAdapter(adapter);
-//                        adapter = new Weighment_compartment_Adapter(OutwardOut_Tanker_Weighment.this, compartmentList);
-//                        recyclerView.setAdapter(adapter);
-//                        recyclerView.setLayoutManager(new LinearLayoutManager(OutwardOut_Tanker_Weighment.this));
-//                        adapter.notifyDataSetChanged();
 
-                        List<String> compartmentsJson = Arrays.asList(
+                        compartmentsJson = Arrays.asList(
                                 data.getCompartment1(),
                                 data.getCompartment2(),
                                 data.getCompartment3(),
@@ -358,28 +329,74 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                                 data.getProcompartment5(),
                                 data.getProcompartment6()
                         );
-                        for (String json : compartmentsJson) {
-                            if (json != null && !json.trim().isEmpty()) {
+                        // ✅ ADD THIS LOOP HERE (after compartmentsJson is ready)
+                        compartmentDataList.clear(); // reset before adding new data
 
-                                Lab_compartment_model labCompartmentModel = parseCompartment(json);
-                                if (labCompartmentModel != null) {
-                                    compartmentList.add(labCompartmentModel);
-                                    //adapter.notifyDataSetChanged();
-                                    // 🔹 Show Update or Submit button based on compartment data
+                        for (String labJson : compartmentsJson) {
+                            if (labJson != null && !labJson.trim().isEmpty()) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(labJson);
+                                    CompartmentData compartment = new CompartmentData();
+
+                                    // Map JSON keys to your model
+                                    compartment.setBlender(jsonObject.optString("Blender", "N/A"));
+                                    compartment.setProductionSign(jsonObject.optString("ProductionSign", "N/A"));
+                                    compartment.setOperatorSign(jsonObject.optString("OperatorSign", "N/A"));
+                                    compartment.setTareWeight(jsonObject.optString("TareWeight", "0"));
+                                    compartment.setVerificationRemark(jsonObject.optString("VerificationRemark", ""));
+
+                                    compartmentDataList.add(compartment);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.e("CompartmentParse", "Invalid JSON: " + labJson);
                                 }
                             }
-
                         }
-                        adapter.notifyDataSetChanged();
-                        // If Cluase to get Latest Compartment Data for Weight Verification
-                        String json = procompartmentsJson.get(compartmentList.size());
-                        if (json != null && !json.trim().isEmpty()) {
-                            if (compartmentList.size() < procompartmentsJson.size()) {
-                                Lab_compartment_model labCompartmentModel1 = parseCompartment(procompartmentsJson.get(compartmentList.size()));
-                                compartmentList.add(labCompartmentModel1);
-                                adapter.notifyDataSetChanged();
+
+// refresh adapter
+                        compartmentAdapter.notifyDataSetChanged();
+
+
+
+//////////////////////////////////////////////////////////////////////////////////////////////
+                        firstProCompartmentIndex = -1;
+                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+                            String proJson = procompartmentsJson.get(i);
+                            if (proJson != null && !proJson.trim().isEmpty()) {
+                                firstProCompartmentIndex = i;
+                                break;
                             }
                         }
+
+                        for (int i = 0; i < procompartmentsJson.size(); i++) {
+                            String proJson = procompartmentsJson.get(i);
+                            String labJson = (i < compartmentsJson.size()) ? compartmentsJson.get(i) : null;
+
+                            if (proJson != null && !proJson.trim().isEmpty()) {
+                                boolean shouldBind = false;
+
+                                if (labJson == null || labJson.trim().isEmpty()) {
+                                    shouldBind = true;  // ✅ Compartment not filled yet, bind for verification
+                                }
+
+                                if (shouldBind) {
+                                    Lab_compartment_model model = parseCompartment(proJson);
+                                    model.setTargetIndex(firstProCompartmentIndex);
+                                    if (model != null) {
+                                        model.setTargetIndex(i);
+                                        model.setOriginalJson(proJson);
+                                        compartmentList.add(model);
+                                        Log.d("VERIFY_BIND", "✔ Added proCompartment at index " + i);
+                                    } else {
+                                        Log.w("VERIFY_BIND", "⚠ Failed to parse proCompartment at index " + i);
+                                    }
+                                }
+                            }
+                        }
+
+                        adapter.notifyDataSetChanged();
+
                     } else {
                         Toasty.error(OutwardOut_Tanker_Weighment.this, "This Vehicle Number is Not Availabe", Toast.LENGTH_SHORT).show();
                     }
@@ -762,4 +779,24 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
             return "{}"; // Return empty JSON if an error occurs
         }
     }
+    private CompartmentData parseCompartmentJson(String json) {
+        try {
+            if (json == null || json.trim().isEmpty()) return null;
+
+            JSONObject obj = new JSONObject(json);
+
+            CompartmentData data = new CompartmentData();
+            data.setBlender(obj.optString("Blender", ""));
+            data.setProductionSign(obj.optString("ProductionSign", ""));
+            data.setOperatorSign(obj.optString("OperatorSign", ""));
+            data.setTareWeight(obj.optString("TareWeight", ""));
+            data.setVerificationRemark(obj.optString("VerificationRemark", ""));
+
+            return data;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }
