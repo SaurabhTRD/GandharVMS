@@ -320,7 +320,7 @@ public class Grid_Outward extends NotificationCommonfunctioncls {
         Date now = calendar.getTime();
 
         // Format the date and time as a string
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM/dd/yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM/dd/yyyy", Locale.ENGLISH);
         return dateFormat.format(now);
     }
        /* private void fetchDataFromApi(String vehicleno,String vehicleType,char nextProcess, char inOut) {

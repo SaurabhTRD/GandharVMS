@@ -262,7 +262,7 @@ public class or_statusgrid_livedata extends NotificationCommonfunctioncls {
         Date now = calendar.getTime();
 
         // Format the date and time as a string
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM/dd/yyyy", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM/dd/yyyy", Locale.ENGLISH);
         return dateFormat.format(now);
     }
     private void showDatePickerDialog(final TextView dateTextView, final boolean isFromDate) {
