@@ -464,7 +464,7 @@ public class Outward_Truck_Logistics extends NotificationCommonfunctioncls {
         } else {
             InTrLogisticRequestModel trucklogmodel = new InTrLogisticRequestModel(inwardid, etintime, outTime,
                     EmployeId, EmployeId, etremark, 'G', etserialnumber, etvehiclenumber,
-                    etoanumber, 'W', inOut, vehicleType, ucustoname, uhowqty, unitofm);
+                    etoanumber, 'W', 'I', vehicleType, ucustoname, uhowqty, unitofm);
             dialogHelper.showConfirmationDialog(this, () -> {
                 dialogHelper.showProgressDialog(this); // Show progress when confirmed
                 Call<Boolean> call = logisticdetails.insertLogisticData(trucklogmodel);

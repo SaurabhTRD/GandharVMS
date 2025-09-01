@@ -462,11 +462,11 @@
                 android:background="#F5F5F5"
                 android:padding="16dp">
 
-                <Button
-                    android:id="@+id/btnAddCompartment"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Add Compartment" />
+<!--                <Button-->
+<!--                    android:id="@+id/btnAddCompartment"-->
+<!--                    android:layout_width="wrap_content"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:text="Add Compartment" />-->
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerView"

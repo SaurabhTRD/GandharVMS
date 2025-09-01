@@ -264,7 +264,7 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
 //        });
 
 
-        btnAddCompartment = findViewById(R.id.btnAddCompartment);
+//        btnAddCompartment = findViewById(R.id.btnAddCompartment);
         recyclerView = findViewById(R.id.recyclerView);
 
         compartmentList = new ArrayList<>();
@@ -273,13 +273,13 @@ public class Outward_Tanker_Production_Multiple extends NotificationCommonfuncti
         recyclerView.setAdapter(adapter);
         recyclerView.setItemAnimator(new DefaultItemAnimator()); // Smooth animations
 
-        btnAddCompartment.setOnClickListener(v -> {
-            if (compartmentList.size() < 6) {
-                showAddCompartmentDialogs(compartmentcount);
-            } else {
-                Toast.makeText(this, "Maximum 6 compartments allowed", Toast.LENGTH_SHORT).show();
-            }
-        });
+//        btnAddCompartment.setOnClickListener(v -> {
+//            if (compartmentList.size() < 6) {
+//                showAddCompartmentDialogs(compartmentcount);
+//            } else {
+//                Toast.makeText(this, "Maximum 6 compartments allowed", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         productDetailsLayout = findViewById(R.id.productDetailsLayout);
         etProductName = findViewById(R.id.etproductottankerprodcut);
         EditText etBlenderNumber = findViewById(R.id.elnewblendingno);
