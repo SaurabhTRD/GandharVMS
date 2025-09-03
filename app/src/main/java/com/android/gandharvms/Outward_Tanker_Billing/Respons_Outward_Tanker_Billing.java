@@ -70,6 +70,12 @@ public class Respons_Outward_Tanker_Billing {
     public String AllOTRemarks;
     public String AllORRemarks;
     public String HoldRemark;
+    public String labcompartment1;
+    public String labcompartment2;
+    public String labcompartment3;
+    public String labcompartment4;
+    public String labcompartment5;
+    public String labcompartment6;
 
     public String getHoldRemark() {
         return HoldRemark;
@@ -620,5 +626,53 @@ public class Respons_Outward_Tanker_Billing {
 
     public void setAllORRemarks(String allORRemarks) {
         AllORRemarks = allORRemarks;
+    }
+
+    public String getLabcompartment1() {
+        return labcompartment1;
+    }
+
+    public void setLabcompartment1(String labcompartment1) {
+        this.labcompartment1 = labcompartment1;
+    }
+
+    public String getLabcompartment2() {
+        return labcompartment2;
+    }
+
+    public void setLabcompartment2(String labcompartment2) {
+        this.labcompartment2 = labcompartment2;
+    }
+
+    public String getLabcompartment3() {
+        return labcompartment3;
+    }
+
+    public void setLabcompartment3(String labcompartment3) {
+        this.labcompartment3 = labcompartment3;
+    }
+
+    public String getLabcompartment4() {
+        return labcompartment4;
+    }
+
+    public void setLabcompartment4(String labcompartment4) {
+        this.labcompartment4 = labcompartment4;
+    }
+
+    public String getLabcompartment5() {
+        return labcompartment5;
+    }
+
+    public void setLabcompartment5(String labcompartment5) {
+        this.labcompartment5 = labcompartment5;
+    }
+
+    public String getLabcompartment6() {
+        return labcompartment6;
+    }
+
+    public void setLabcompartment6(String labcompartment6) {
+        this.labcompartment6 = labcompartment6;
     }
 }

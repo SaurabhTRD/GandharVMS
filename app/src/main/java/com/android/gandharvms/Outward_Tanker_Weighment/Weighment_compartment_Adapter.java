@@ -55,10 +55,10 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
         holder.txtCompartmentNumber.setText("Compartment " + (index + 1));
         holder.txtBlender.setText("Blender: " + (compartment.getBlenderNumber().trim()));
         holder.txtProductionSign.setText("Production Sign: " + compartment.getProductionSign());
-        holder.txtOperatorSign.setText("Operator Sign: " + compartment.getOperatorSign());
+        holder.txtOperatorSign.setText("Operator Sign: " + compartment.getOperatorSign());/*
         holder.tareweight.setText(" " + compartment.getTareweight());
         //holder.remark.setText("" + compartment.getRemark());
-        holder.remark.setText("" + compartment.getVerificationRemark());
+        holder.remark.setText("" + compartment.getVerificationRemark());*/
 
 
 
@@ -70,7 +70,7 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
 //            @Override
 //            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 //        });
-        holder.tareweight.addTextChangedListener(new TextWatcher() {
+       /* holder.tareweight.addTextChangedListener(new TextWatcher() {
             @Override
             public void afterTextChanged(Editable s) { compartment.setTareweight(s.toString()); }
             @Override
@@ -85,7 +85,7 @@ public class Weighment_compartment_Adapter extends RecyclerView.Adapter<Weighmen
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {}
-        });
+        });*/
 
     }
 

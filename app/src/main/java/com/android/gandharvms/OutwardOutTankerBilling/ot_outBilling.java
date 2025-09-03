@@ -42,6 +42,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.DecimalFormat;
@@ -89,6 +92,8 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
     private String token;
     private String obvehiclenum;
     TextView tvAllRemarks;
+    LinearLayout layoutLabCompartments;
+    private String density="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,33 +120,10 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         tvAllRemarks = findViewById(R.id.otoutbilltv_allremarks);
         oobsubmit = findViewById(R.id.etotoutbilsubmit);
         completed = findViewById(R.id.otoutbillcompleted);
-
+        layoutLabCompartments = findViewById(R.id.layout_lab_compartments);
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
         setupHeader();
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ot_outBilling.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ot_outBilling.this, Menu.class));
-            }
-        });*/
         oobsubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -242,7 +224,45 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
                         } else {
                             tvAllRemarks.setText("No system remarks.");
                         }
-                        calculateNetWeight();
+                        List<String> labcompartmentsJson = Arrays.asList(
+                                data.getLabcompartment1(),
+                                data.getLabcompartment2(),
+                                data.getLabcompartment3(),
+                                data.getLabcompartment4(),
+                                data.getLabcompartment5(),
+                                data.getLabcompartment6()
+                        );
+
+                        for (int i = 0; i < labcompartmentsJson.size(); i++) {
+                            String labJson = labcompartmentsJson.get(i);
+                            if (labJson != null && !labJson.trim().isEmpty()) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(labJson);
+
+                                    density = jsonObject.optString("Density", "");
+                                    String batchNo = jsonObject.optString("BatchNumber", "");
+
+                                    if (!density.isEmpty() || !batchNo.isEmpty()) {
+                                        // Inflate card
+                                        View cardView = getLayoutInflater().inflate(R.layout.item_labcompartment_card, layoutLabCompartments, false);
+
+                                        TextView tvTitle = cardView.findViewById(R.id.tvCompartmentTitle);
+                                        EditText tvDensity = cardView.findViewById(R.id.tvDensity);
+                                        EditText tvBatchNo = cardView.findViewById(R.id.tvBatchNo);
+
+                                        tvTitle.setText("Compartment " + (i + 1));
+                                        tvDensity.setText((density.isEmpty() ? "-" : density));
+                                        tvBatchNo.setText((batchNo.isEmpty() ? "-" : batchNo));
+                                        layoutLabCompartments.addView(cardView);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.e("LabCompartmentParse", "Invalid JSON in compartment " + (i + 1) + ": " + labJson);
+                                }
+                            }
+                        }
+
+                        //calculateNetWeight(density);
                         String extraMaterialsJson = data.getProductQTYUOMOA();
                         Log.d("JSON Debug", "Extra Materials JSON: " + extraMaterialsJson);
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
@@ -358,10 +378,10 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         }
     }
 
-    public void calculateNetWeight() {
+    /*public void calculateNetWeight(String densityvalue) {
 
         String ntweight = oobnetweight.getText().toString().trim();
-        String density = oobfetchdensity.getText().toString().trim();
+        String density = densityvalue.toString();
 
         double netweigh = ntweight.isEmpty() ? 0.0 : Double.parseDouble(ntweight);
         double dens = density.isEmpty() ? 0.0 : Double.parseDouble(density);
@@ -379,7 +399,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         // Display the formatted value
         oobtotalQuantity.setText(formattedGrossWeight);
 
-    }
+    }*/
 
     private String getCurrentTime() {
         // Get the current time

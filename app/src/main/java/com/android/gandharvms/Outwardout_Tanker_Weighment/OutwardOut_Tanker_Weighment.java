@@ -27,6 +27,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.SpinnerAdapter;
 import android.widget.TextView;
@@ -130,7 +131,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
     // Declare globally
     private List<CompartmentData> compartmentDataList = new ArrayList<>();
     private CompartmentAdapter compartmentAdapter;
-
+    LinearLayout layoutLabCompartments;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -153,39 +154,12 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         tvAllRemarks = findViewById(R.id.itoutweitv_allremarks);
         img1 = findViewById(R.id.otoutweighvehicleimage);
         img2 = findViewById(R.id.otoutweighdriverimage);
-
         submit = findViewById(R.id.etssubmit);
         dbroot = FirebaseFirestore.getInstance();
-//        etotdip = findViewById(R.id.otouttankeretshortdip);
-//        etotwt = findViewById(R.id.otouttankeretshortwt);
         completed = findViewById(R.id.otoutweighcompleted);
-
+        layoutLabCompartments = findViewById(R.id.layout_lab_compartments);
         FirebaseMessaging.getInstance().subscribeToTopic(token);
         setupHeader();
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OutwardOut_Tanker_Weighment.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(OutwardOut_Tanker_Weighment.this, Menu.class));
-            }
-        });*/
-
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -213,6 +187,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
         if (getIntent().hasExtra("vehiclenum")) {
             FetchVehicleDetails(getIntent().getStringExtra("vehiclenum"), Global_Var.getInstance().MenuType, nextProcess, inOut);
         }
+
         netweight.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -283,8 +258,8 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         vehiclenumber.setText(data.getVehicleNumber());
                         vehiclenumber.setEnabled(false);
                         vehicleNum = data.getVehicleNumber();
-                        fetchdensity.setText(data.getDensity_29_5C());
-                        fetchdensity.setEnabled(false);
+                        /*fetchdensity.setText(data.getDensity_29_5C());
+                        fetchdensity.setEnabled(false);*/
                         tareweight.setText(String.valueOf(data.getTareWeight()));
                         tareweight.setEnabled(false);
                         String allRemark = data.getAllOTRemarks();
@@ -293,7 +268,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         } else {
                             tvAllRemarks.setText("No system remarks.");
                         }
-                        String jsonString = data.getLabcompartment1();
+                        /*String jsonString = data.getLabcompartment1();
                         String ibatchnum = "";
 
                         int index = jsonString.indexOf("\"ibatchnum\"");
@@ -304,7 +279,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         }
 
                         batch.setText(ibatchnum);
-                        batch.setEnabled(false);
+                        batch.setEnabled(false);*/
                         product.setText(data.getProductName());
                         product.setEnabled(false);
                         String extraMaterialsJson = data.getProductQTYUOMOA();
@@ -329,6 +304,16 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                                 data.getProcompartment5(),
                                 data.getProcompartment6()
                         );
+
+                        List<String> labcompartmentsJson = Arrays.asList(
+                                data.getLabcompartment1(),
+                                data.getLabcompartment2(),
+                                data.getLabcompartment3(),
+                                data.getLabcompartment4(),
+                                data.getLabcompartment5(),
+                                data.getLabcompartment6()
+                        );
+
                         // ✅ ADD THIS LOOP HERE (after compartmentsJson is ready)
                         compartmentDataList.clear(); // reset before adding new data
 
@@ -353,13 +338,7 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                                 }
                             }
                         }
-
-// refresh adapter
                         compartmentAdapter.notifyDataSetChanged();
-
-
-
-//////////////////////////////////////////////////////////////////////////////////////////////
                         firstProCompartmentIndex = -1;
                         for (int i = 0; i < procompartmentsJson.size(); i++) {
                             String proJson = procompartmentsJson.get(i);
@@ -396,6 +375,35 @@ public class OutwardOut_Tanker_Weighment extends NotificationCommonfunctioncls {
                         }
 
                         adapter.notifyDataSetChanged();
+
+                        for (int i = 0; i < labcompartmentsJson.size(); i++) {
+                            String labJson = labcompartmentsJson.get(i);
+                            if (labJson != null && !labJson.trim().isEmpty()) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(labJson);
+
+                                    String density = jsonObject.optString("Density", "");
+                                    String batchNo = jsonObject.optString("BatchNumber", "");
+
+                                    if (!density.isEmpty() || !batchNo.isEmpty()) {
+                                        // Inflate card
+                                        View cardView = getLayoutInflater().inflate(R.layout.item_labcompartment_card, layoutLabCompartments, false);
+
+                                        TextView tvTitle = cardView.findViewById(R.id.tvCompartmentTitle);
+                                        EditText tvDensity = cardView.findViewById(R.id.tvDensity);
+                                        EditText tvBatchNo = cardView.findViewById(R.id.tvBatchNo);
+
+                                        tvTitle.setText("Compartment " + (i + 1));
+                                        tvDensity.setText((density.isEmpty() ? "-" : density));
+                                        tvBatchNo.setText((batchNo.isEmpty() ? "-" : batchNo));
+                                        layoutLabCompartments.addView(cardView);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.e("LabCompartmentParse", "Invalid JSON in compartment " + (i + 1) + ": " + labJson);
+                                }
+                            }
+                        }
 
                     } else {
                         Toasty.error(OutwardOut_Tanker_Weighment.this, "This Vehicle Number is Not Availabe", Toast.LENGTH_SHORT).show();

@@ -40,6 +40,9 @@ import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
@@ -75,6 +78,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
     private int OutwardId;
     private String odvehiclenum;
     TextView tvAllRemarks;
+    LinearLayout layoutLabCompartments;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,35 +99,12 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
         oanum = findViewById(R.id.etoanum);
         batch = findViewById(R.id.etbatchno);
         product = findViewById(R.id.etproduct);
-
+        layoutLabCompartments = findViewById(R.id.layout_lab_compartments);
         odesubmit = findViewById(R.id.etoutdataentrysubmit);
 
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
-        /*btnlogout=findViewById(R.id.btn_logoutButton);
-        btnhome = findViewById(R.id.btn_homeButton);
-        username=findViewById(R.id.tv_username);
-        empid=findViewById(R.id.tv_employeeId);
-
-        String userName=Global_Var.getInstance().Name;
-        String empId=Global_Var.getInstance().EmpId;
-
-        username.setText(userName);
-        empid.setText(empId);
-
-        btnlogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DataEntryForm_Production.this, Login.class));
-            }
-        });
-        btnhome.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(DataEntryForm_Production.this, Menu.class));
-            }
-        });*/
         odesubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -174,8 +155,8 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
                         odevehiclenumber.setText(data.getVehicleNumber());
                         odevehiclenumber.setEnabled(false);
                         odvehiclenum = data.getVehicleNumber();
-                        odedensity.setText(data.getDensity_29_5C());
-                        odedensity.setEnabled(false);
+                        /*odedensity.setText(data.getDensity_29_5C());
+                        odedensity.setEnabled(false);*/
                         odesealnumber.setText(String.valueOf(data.getSealNumber()));
                         odesealnumber.setEnabled(false);
 
@@ -187,8 +168,8 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
                         oanum.setEnabled(false);
                         product.setText(data.getProductName());
                         product.setEnabled(false);
-                        batch.setText(data.getBatch_No());
-                        batch.setEnabled(false);
+                        /*batch.setText(data.getBatch_No());
+                        batch.setEnabled(false);*/
                         String allRemark = data.getAllOTRemarks();
                         if (allRemark != null && !allRemark.trim().isEmpty()) {
                             tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
@@ -200,7 +181,42 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
                         List<ProductListData> extraMaterials = parseExtraMaterials(extraMaterialsJson);
                         Log.d("JSON Debug", "Parsed Extra Materials Size: " + extraMaterials.size());
                         createExtraMaterialViews(extraMaterials);
+                        List<String> labcompartmentsJson = Arrays.asList(
+                                data.getLabcompartment1(),
+                                data.getLabcompartment2(),
+                                data.getLabcompartment3(),
+                                data.getLabcompartment4(),
+                                data.getLabcompartment5(),
+                                data.getLabcompartment6()
+                        );
+                        for (int i = 0; i < labcompartmentsJson.size(); i++) {
+                            String labJson = labcompartmentsJson.get(i);
+                            if (labJson != null && !labJson.trim().isEmpty()) {
+                                try {
+                                    JSONObject jsonObject = new JSONObject(labJson);
 
+                                    String density = jsonObject.optString("Density", "");
+                                    String batchNo = jsonObject.optString("BatchNumber", "");
+
+                                    if (!density.isEmpty() || !batchNo.isEmpty()) {
+                                        // Inflate card
+                                        View cardView = getLayoutInflater().inflate(R.layout.item_labcompartment_card, layoutLabCompartments, false);
+
+                                        TextView tvTitle = cardView.findViewById(R.id.tvCompartmentTitle);
+                                        EditText tvDensity = cardView.findViewById(R.id.tvDensity);
+                                        EditText tvBatchNo = cardView.findViewById(R.id.tvBatchNo);
+
+                                        tvTitle.setText("Compartment " + (i + 1));
+                                        tvDensity.setText((density.isEmpty() ? "-" : density));
+                                        tvBatchNo.setText((batchNo.isEmpty() ? "-" : batchNo));
+                                        layoutLabCompartments.addView(cardView);
+                                    }
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                    Log.e("LabCompartmentParse", "Invalid JSON in compartment " + (i + 1) + ": " + labJson);
+                                }
+                            }
+                        }
                         /*odeintime.requestFocus();
                         odeintime.callOnClick();*/
                     } else {
