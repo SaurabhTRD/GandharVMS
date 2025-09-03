@@ -74,11 +74,16 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     public String compartment1, compartment2, compartment3, compartment4, compartment5, compartment6;
     public First_LabCompartmentAdapter firstLabCompartmentAdapter;
     public LinearLayout labDetailsContainer;
+    public List<String> procompartmentsJson;
+    public List<String> LabcompartmentsJson;
     EditText newlseralnum, newlvehiclenum, newloanum, newlprodcut, newlcustomername, newldestination, newlquantity, newltransporter,
             newlintime, newlviscosity, newldentinity, newlbatchnum, newlqcofficer, newlremarks, billremark, proremark,
-            newlabfomrintime,newformlabremark;
+            newlabfomrintime, newformlabremark;
     Button btnsubmit, btnupdate;
     dialogueprogreesbar dialogHelper = new dialogueprogreesbar();
+    int selectedCompartmentIndex = 0;
+    int firstProCompartmentIndex;
+    TextView tvAllRemarks;
     private Outward_Tanker_Lab outwardTankerLab;
     private String token;
     private LoginMethod userDetails;
@@ -87,12 +92,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
     private List<Lab_compartment_model> compartmentList;
     private RecyclerView recyclerView;
     private LabCompartmentAdapter adapter;
-    int selectedCompartmentIndex = 0;
-    int firstProCompartmentIndex;
     private String[] compartmentJsonStrings = new String[6];
-    public List<String> procompartmentsJson;
-    public List<String> LabcompartmentsJson;
-    TextView tvAllRemarks;
 //    private RecyclerView compartmentrecyclerview;
 //    private Lab_DisplayCompartmentAdapter labDisplayCompartmentAdapter;
 //    List<Display_LabCompartmentModel> LabcompartmentList = new ArrayList<>();
@@ -517,7 +517,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             labDetailsContainer.setVisibility(View.VISIBLE);  // ✅ Show Fields
                             String allRemark = data.getAllOTRemarks();
                             if (allRemark != null && !allRemark.trim().isEmpty()) {
-                                tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                                tvAllRemarks.setText("   " + allRemark.replace(",", "\n")); // line-by-line
                             } else {
                                 tvAllRemarks.setText("No system remarks.");
                             }
@@ -617,11 +617,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
                             String labJson = (i < LabcompartmentsJson.size()) ? LabcompartmentsJson.get(i) : null;
 
                             if (proJson != null && !proJson.trim().isEmpty()) {
-                                boolean shouldBind = false;
-
-                                if (labJson == null || labJson.trim().isEmpty()) {
-                                    shouldBind = true;
-                                }
+                                boolean shouldBind = labJson == null || labJson.trim().isEmpty();
 
                                 if (shouldBind) {
                                     Lab_compartment_model model = parseCompartment(proJson);
@@ -666,7 +662,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
 //                            newlremarks.setVisibility(View.VISIBLE);
                             String allRemark = data.getAllOTRemarks();
                             if (allRemark != null && !allRemark.trim().isEmpty()) {
-                                tvAllRemarks.setText("   "+allRemark.replace(",", "\n")); // line-by-line
+                                tvAllRemarks.setText("   " + allRemark.replace(",", "\n")); // line-by-line
                             } else {
                                 tvAllRemarks.setText("No system remarks.");
                             }
@@ -818,30 +814,31 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             compartmentJsonStrings = new String[6];
         }
 
-        if (isCheck) {
-            for (int i = 0; i < compartmentList.size(); i++) {
-                Lab_compartment_model comp = compartmentList.get(i);
 
-                targetIndex = comp.getTargetIndex();  // ✅ Use actual target index
+        for (int i = 0; i < compartmentList.size(); i++) {
+            Lab_compartment_model comp = compartmentList.get(i);
 
-                if (targetIndex < 0 || targetIndex > 5) {
-                    Toast.makeText(this, "Invalid compartment index: " + targetIndex, Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            targetIndex = comp.getTargetIndex();  // ✅ Use actual target index
 
-                // ✅ Validate required fields
-                if (comp.getViscosity() == null || comp.getViscosity().isEmpty()
-                        || comp.getDensity() == null || comp.getDensity().isEmpty()
-                        || comp.getBatchNumber() == null || comp.getBatchNumber().isEmpty()
-                        || comp.getQcOfficer() == null || comp.getQcOfficer().isEmpty()) {
-                    Toast.makeText(this, "All fields must be filled for Compartment " + (targetIndex + 1), Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String json = convertCompartmentToJson(comp);
-                compartmentJsonStrings[targetIndex] = json;  // ✅ Assign to correct index
+            if (targetIndex < 0 || targetIndex > 5) {
+                Toast.makeText(this, "Invalid compartment index: " + targetIndex, Toast.LENGTH_SHORT).show();
+                return;
             }
-        } else {
+
+            // ✅ Validate required fields
+            if (comp.getViscosity() == null || comp.getViscosity().isEmpty()
+                    || comp.getDensity() == null || comp.getDensity().isEmpty()
+                    || comp.getBatchNumber() == null || comp.getBatchNumber().isEmpty()
+                    || comp.getQcOfficer() == null || comp.getQcOfficer().isEmpty()) {
+                Toast.makeText(this, "All fields must be filled for Compartment " + (targetIndex + 1), Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            String json = convertCompartmentToJson_compartment(comp);
+            compartmentJsonStrings[targetIndex] = json;  // ✅ Assign to correct index
+        }
+
+        /*else {
             // ✅ Handle Single Compartment
             LabCompartment_Model model = new LabCompartment_Model(inTime, iviscosity, idensity, ibatchnum, iqcofficer, iremarks);
             String selectedCompartmentJson = convertCompartmentToJson_compartment1(model);
@@ -852,7 +849,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             }
 
             compartmentJsonStrings[targetIndex] = selectedCompartmentJson;
-        }
+        }*/
 
         // Decide Inward/Outward Value
         char I_O_Value = (isCheck && compartmentArraycount < copartmentcount) ? 'I' : 'O';
@@ -917,7 +914,7 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         for (int i = 0; i < 6; i++) {
             if (i == firstProCompartmentIndex && compartmentList.size() > 0 && compartmentList.get(0) != null) {
                 // ✅ Only update the target index with latest value from compartmentList[0]
-                finalCompartmentJsons.add(convertCompartmentToJson(compartmentList.get(0)));
+                finalCompartmentJsons.add(convertCompartmentToJson_compartment(compartmentList.get(0)));
             } else if (i < LabcompartmentsJson.size() && LabcompartmentsJson.get(i) != null && !LabcompartmentsJson.get(i).isEmpty()) {
                 // ✅ Preserve existing compartment data
                 finalCompartmentJsons.add(LabcompartmentsJson.get(i));
@@ -1131,12 +1128,9 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
         dialog.show();
     }
 
-    private String convertCompartmentToJson(Lab_compartment_model compartment) {
+  /*  private String convertCompartmentToJson(Lab_compartment_model compartment) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("Blender", compartment.getBlenderNumber()); // Using only Blender
-            jsonObject.put("ProductionSign", compartment.getProductionSign()); // Production Sign
-            jsonObject.put("OperatorSign", compartment.getOperatorSign()); // Operator Sign
             jsonObject.put("Viscosity", compartment.getViscosity());
             jsonObject.put("Density", compartment.getDensity());
             jsonObject.put("BatchNumber", compartment.getBatchNumber());
@@ -1147,17 +1141,16 @@ public class New_Outward_tanker_Lab extends NotificationCommonfunctioncls {
             e.printStackTrace();
             return "{}"; // Return empty JSON if an error occurs
         }
-    }
+    }*/
 
-    private String convertCompartmentToJson_compartment1(LabCompartment_Model compartment) {
+    private String convertCompartmentToJson_compartment(Lab_compartment_model compartment) {
         try {
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("inTime", compartment.getInTime());
-            jsonObject.put("iviscosity", compartment.getIviscosity());
-            jsonObject.put("identinity", compartment.getIdentinity());
-            jsonObject.put("ibatchnum", compartment.getIbatchnum());
-            jsonObject.put("iqcofficer", compartment.getIqcofficer());
-            jsonObject.put("iremarks", compartment.getIremarks());
+            jsonObject.put("Viscosity", compartment.getViscosity());
+            jsonObject.put("Density", compartment.getDensity());
+            jsonObject.put("BatchNumber", compartment.getBatchNumber());
+            jsonObject.put("QcOfficer", compartment.getQcOfficer());
+            jsonObject.put("Remark", compartment.getRemark());
             return jsonObject.toString();
         } catch (JSONException e) {
             e.printStackTrace();

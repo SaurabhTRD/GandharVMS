@@ -20,6 +20,7 @@ import com.android.gandharvms.Outward_Tanker_Production_forms.Adapter_OT_complet
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.ProductOA_Adapter;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.CompartmnetBindClass;
 import com.android.gandharvms.productlistwithoanumber;
 
 import org.json.JSONArray;
@@ -41,6 +42,7 @@ public class Adapter_OT_completed_bulkload_laboratory extends RecyclerView.Adapt
     private final char inOut = Global_Var.getInstance().InOutType;
     private Context context;
     String formattedDate;
+    private CompartmnetBindClass compartmentbinder= new CompartmnetBindClass();
     public Adapter_OT_completed_bulkload_laboratory(List<Common_Outward_model> gridmodel) {
         Gridmodel = gridmodel;
         this.filteredGridList = gridmodel;
@@ -92,10 +94,16 @@ public class Adapter_OT_completed_bulkload_laboratory extends RecyclerView.Adapt
         //holder.howqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
         holder.customer.setText(club.getCustomerName());
         holder.location.setText(club.getLocation());
-        holder.viscosityindex.setText(String.valueOf(club.getViscosity_Index()));
+        compartmentbinder.bindLabCompartment(holder.txtlabcompartment1, club.getLabcompartment1(),"Compartment 1");
+        compartmentbinder.bindLabCompartment(holder.txtlabcompartment2, club.getLabcompartment2(),"Compartment 2");
+        compartmentbinder.bindLabCompartment(holder.txtlabcompartment4, club.getLabcompartment4(),"Compartment 4");
+        compartmentbinder.bindLabCompartment(holder.txtlabcompartment5, club.getLabcompartment5(),"Compartment 5");
+        compartmentbinder.bindLabCompartment(holder.txtlabcompartment3, club.getLabcompartment3(),"Compartment 3");
+        compartmentbinder.bindLabCompartment(holder.txtlabcompartment6, club.getLabcompartment6(),"Compartment 6");
+       /* holder.viscosityindex.setText(String.valueOf(club.getViscosity_Index()));
         holder.density29.setText(String.valueOf(club.getDensity_29_5C()));
         holder.batchno.setText(club.getBatchNo());
-        holder.qcsign.setText(club.getSignatureofOfficer());
+        holder.qcsign.setText(club.getSignatureofOfficer());*/
         holder.proremark.setText(club.getProRemark());
         holder.billremark.setText(club.getTankerBillingRemark());
         holder.remark.setText(club.getLabRemark());
@@ -140,6 +148,7 @@ public class Adapter_OT_completed_bulkload_laboratory extends RecyclerView.Adapt
     public class myviewHolder extends RecyclerView.ViewHolder {
         public TextView serialnum,vehiclenum,productoano,density29,transporter,qcsign,
                 customer,location,viscosityindex,intime,outtime,batchno,remark,proremark,billremark;
+        TextView txtlabcompartment1,txtlabcompartment2,txtlabcompartment3,txtlabcompartment4,txtlabcompartment5,txtlabcompartment6;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             intime = itemView.findViewById(R.id.otinbulklabintime);
@@ -153,13 +162,19 @@ public class Adapter_OT_completed_bulkload_laboratory extends RecyclerView.Adapt
             //howqty = itemView.findViewById(R.id.otbulkinlabchowqty);
             customer = itemView.findViewById(R.id.otbulkinlabccustomer);
             location = itemView.findViewById(R.id.otbulkinlablocation);
-            viscosityindex=itemView.findViewById(R.id.otbulkviscosityindex);
+            /*viscosityindex=itemView.findViewById(R.id.otbulkviscosityindex);
             density29 = itemView.findViewById(R.id.otbilklabdensity);
             batchno = itemView.findViewById(R.id.otinbulklabbatchno);
-            qcsign=itemView.findViewById(R.id.otbulklabqcsign);
+            qcsign=itemView.findViewById(R.id.otbulklabqcsign);*/
             proremark=itemView.findViewById(R.id.otbulkproremark);
             billremark=itemView.findViewById(R.id.otbulkbillremark);
             remark = itemView.findViewById(R.id.otinbulklabremark);
+            txtlabcompartment1=itemView.findViewById(R.id.otbulkinlabcompartment1);
+            txtlabcompartment2=itemView.findViewById(R.id.otbulkinlabcompartment2);
+            txtlabcompartment3=itemView.findViewById(R.id.otbulkinlabcompartment3);
+            txtlabcompartment4=itemView.findViewById(R.id.otbulkinlabcompartment4);
+            txtlabcompartment5=itemView.findViewById(R.id.otbulkinlabcompartment5);
+            txtlabcompartment6=itemView.findViewById(R.id.otbulkinlabcompartment6);
         }
     }
 

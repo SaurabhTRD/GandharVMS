@@ -478,9 +478,12 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
                         transname.setText(out.getTransportName());
                         place.setText(out.getPlace());
                         mobilenum.setText(out.getMobileNumber());
+                        edremark.setText(out.getInSecRemark());
+                        intime.setVisibility(View.GONE);
 //                        saveButton.setVisibility(View.GONE);
 //                        button1.setVisibility(View.GONE);
 //                        btnadd.setVisibility(View.GONE);
+
                         updatebtn.setVisibility(View.VISIBLE);
                         submit.setVisibility(View.GONE);
 
@@ -687,7 +690,6 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
         String serial = serialnumber.getText().toString().trim();
         String uvehicle = vehiclenum.getText().toString().trim();
         String udate = eddate.getText().toString().trim();
-        String uintime = intime.getText().toString().trim();
         if(!kl.getText().toString().isEmpty())
         {
             try {
@@ -713,16 +715,16 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
         String licselection = licye.isChecked() ? "Yes" : "No";
         String rcselection = rcyes.isChecked() ? "Yes" : "No";
 
-        if (serial.isEmpty()||uvehicle.isEmpty()||udate.isEmpty()||uintime.isEmpty()||utransporter.isEmpty()||uplace.isEmpty()||
+        if (serial.isEmpty()||uvehicle.isEmpty()||udate.isEmpty()|| utransporter.isEmpty()||uplace.isEmpty()||
         umobile.isEmpty()||uremark.isEmpty()||permitselection.isEmpty()||pucselection.isEmpty()||insuranceselection.isEmpty()||
         vehfitnesselection.isEmpty()||licselection.isEmpty()||rcselection.isEmpty()){
             Toasty.warning(this,"All fields must be filled",Toast.LENGTH_SHORT,true).show();
         }else {
-            Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId,uintime,outTime,
+            Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId,"",outTime,
                     ukl,uplace,permitselection,pucselection,insuranceselection,vehfitnesselection,licselection,rcselection,"",
                     "","","",uremark,"",EmployeId,"","","",
                     "","",'S',serial,uvehicle,utransporter,umobile,"","","","","",0,
-                    "",0,"",'B',inOut,vehicleType,uintime,"");
+                    "",0,"",'B',inOut,vehicleType,"","");
 
             Call<Boolean> call = outwardTanker.updateoutwardsecurity(isreportingupdateSecurityModel);
             call.enqueue(new Callback<Boolean>() {

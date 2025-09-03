@@ -106,7 +106,7 @@
         android:textColor="@android:color/black"
         android:layout_height="match_parent"/>
 
-    <TextView
+    <!--<TextView
         android:layout_width="120dp"
         android:id="@+id/otbulkviscosityindex"
         android:textStyle="bold"
@@ -140,6 +140,60 @@
         android:layout_marginStart="5dp"
         android:gravity="center|start"
         android:textColor="@android:color/black"
+        android:layout_height="match_parent"/>-->
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabcompartment1"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabcompartment2"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabcompartment3"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabcompartment4"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabcompartment5"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_height="match_parent"/>
+
+    <TextView
+        android:layout_width="120dp"
+        android:id="@+id/otbulkinlabcompartment6"
+        android:textStyle="bold"
+        android:layout_marginStart="5dp"
+        android:gravity="center|start"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_height="match_parent"/>
 
     <TextView

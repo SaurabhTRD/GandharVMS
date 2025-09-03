@@ -117,7 +117,7 @@ public class Response_Outward_Security_Fetching {
     public int splpackof50ltrqty;
     public int splpackof210ltrqty;
     public int splpackofboxbuxketltrqty;
-
+    public String InSecRemark;
     public String OutSRemark;
     public String AllOTRemarks;
     public String AllORRemarks;
@@ -1056,5 +1056,13 @@ public class Response_Outward_Security_Fetching {
 
     public void setSplpackofboxbuxketltrqty(int splpackofboxbuxketltrqty) {
         this.splpackofboxbuxketltrqty = splpackofboxbuxketltrqty;
+    }
+
+    public String getInSecRemark() {
+        return InSecRemark;
+    }
+
+    public void setInSecRemark(String inSecRemark) {
+        InSecRemark = inSecRemark;
     }
 }
