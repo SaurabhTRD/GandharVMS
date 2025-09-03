@@ -24,6 +24,7 @@ import com.android.gandharvms.BillingHoldListingGrid.gridbillingholdvehiclelisti
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.Inward_Tanker_Security.gridAdapter;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OR_VehicleStatus_Grid.or_statusgrid_livedata;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
@@ -196,7 +197,7 @@ public class Grid_Outward extends NotificationCommonfunctioncls {
     }
 
     private void fetchDataFromApi(String fromdate, String todate, String vehicleno, String vehicleType, char nextProcess, char inOut, ProgressDialog loadingDialog) {
-        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient
+        Call<List<Response_Outward_Security_Fetching>> call = RetroApiClient
                 .insertoutwardtankersecurity()
                 .getOutwardDatabyDateFilter(fromdate,todate,vehicleno, vehicleType, nextProcess, inOut);
 

@@ -29,7 +29,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.R;
@@ -104,7 +104,7 @@ public class Outward_DesSmallPackLoading_Form extends NotificationCommonfunction
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_des_small_pack_loading_form);
-        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+        outwardTruckInterface = RetroApiClient.outwardtruckdispatch();
         userDetails = RetroApiClient.getLoginApi();
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
         serial = findViewById(R.id.etsmallserialnumber);

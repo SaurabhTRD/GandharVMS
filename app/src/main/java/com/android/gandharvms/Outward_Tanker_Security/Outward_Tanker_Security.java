@@ -99,8 +99,8 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_tanker_security);
-        getmaxserialno = Outward_RetroApiclient.insertoutwardtankersecurity();
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        getmaxserialno = RetroApiClient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
         userDetails = RetroApiClient.getLoginApi();
 
         FirebaseMessaging.getInstance().subscribeToTopic("all");
@@ -410,7 +410,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 
 
     private void FetchVehicleDetails(String vehicleNumber, String menuType, char s, char i) {
-        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNumber, menuType, s, i);
+        Call<List<Response_Outward_Security_Fetching>> call = RetroApiClient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNumber, menuType, s, i);
         call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
             @Override
             public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
@@ -460,7 +460,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
     }
 
     private void FetchVehicleDetailsforUpdate(String vehicleNumber, String menuType, char x, char i) {
-        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNumber, menuType, x, i);
+        Call<List<Response_Outward_Security_Fetching>> call = RetroApiClient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleNumber, menuType, x, i);
         call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
             @Override
             public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
@@ -515,7 +515,7 @@ public class Outward_Tanker_Security extends NotificationCommonfunctioncls {
 
     private void FetchVehicleDetail(@NonNull String VehicleNo, String vehicltype, char DeptType, char InOutType) {
 
-        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);
+        Call<List<Response_Outward_Security_Fetching>> call = RetroApiClient.insertoutwardtankersecurity().outwardsecurityfetching(VehicleNo, vehicltype, DeptType, InOutType);
         call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
             @Override
             public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {

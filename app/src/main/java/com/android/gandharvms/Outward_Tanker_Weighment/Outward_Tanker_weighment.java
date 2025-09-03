@@ -50,7 +50,7 @@ import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Compartment;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker_Security;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
@@ -155,10 +155,10 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_tanker_weighment);
         setupHeader();
-        outwardWeighment = Outward_RetroApiclient.outwardWeighment();
+        outwardWeighment = RetroApiClient.outwardWeighment();
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
-        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+        outwardTruckInterface = RetroApiClient.outwardtruckdispatch();
 
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);

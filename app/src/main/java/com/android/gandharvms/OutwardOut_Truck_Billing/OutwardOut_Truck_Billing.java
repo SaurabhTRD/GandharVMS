@@ -31,7 +31,7 @@ import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck_Billing.Model_OutwardOut_Truck_Billing;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.NavigationUtil;
@@ -102,7 +102,7 @@ public class OutwardOut_Truck_Billing extends NotificationCommonfunctioncls {
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 
-        outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
+        outwardTankerBillinginterface = RetroApiClient.outwardTankerBillinginterface();
         userDetails = RetroApiClient.getLoginApi();
 
         intime = findViewById(R.id.etintime);

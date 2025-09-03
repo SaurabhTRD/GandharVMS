@@ -23,7 +23,7 @@ import com.android.gandharvms.Inward_Tanker_Security.grid;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
@@ -73,7 +73,7 @@ public class ot_statusgrid_livedata extends NotificationCommonfunctioncls {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //EdgeToEdge.enable(this);
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
         setContentView(R.layout.activity_ot_statusgrid_livedata);
         currdate=findViewById(R.id.otgridcurrrentdate);
         edtVehicleNumber = findViewById(R.id.edtVehicleNumber);
@@ -218,7 +218,7 @@ public class ot_statusgrid_livedata extends NotificationCommonfunctioncls {
         }
     }
     private void fetchDataFromApi(String fromdate, String todate, String vehicleno, String vehicleType, char nextProcess, char inOut, ProgressDialog loadingDialog) {
-        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient
+        Call<List<Response_Outward_Security_Fetching>> call = RetroApiClient
                 .insertoutwardtankersecurity()
                 .getOutwardDatabyDateFilter(fromdate,todate,vehicleno, vehicleType, nextProcess, inOut);
 

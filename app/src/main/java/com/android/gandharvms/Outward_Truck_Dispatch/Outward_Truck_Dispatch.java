@@ -29,7 +29,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
 import com.android.gandharvms.Outward_Truck;
@@ -91,7 +91,7 @@ public class Outward_Truck_Dispatch extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck_dispatch);
-        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+        outwardTruckInterface = RetroApiClient.outwardtruckdispatch();
         userDetails = RetroApiClient.getLoginApi();
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);

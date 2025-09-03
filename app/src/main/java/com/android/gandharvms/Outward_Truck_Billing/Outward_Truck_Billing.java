@@ -22,7 +22,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Dispatch.Model_Outward_Truck_Dispatch;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_Dispatch;
@@ -76,10 +76,10 @@ public class Outward_Truck_Billing extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck_billing);
-        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+        outwardTruckInterface = RetroApiClient.outwardtruckdispatch();
         userDetails = RetroApiClient.getLoginApi();
 
-        outwardTruckProductionInterface = Outward_RetroApiclient.outwardTruckProductionInterface();
+        outwardTruckProductionInterface = RetroApiClient.outwardTruckProductionInterface();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
         intime = findViewById(R.id.etintime);
         serialnumber = findViewById(R.id.etserialnumber);

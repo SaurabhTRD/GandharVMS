@@ -27,7 +27,7 @@ import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepar
 import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_Completedgrid;
 import com.android.gandharvms.Inward_Tanker_Weighment.it_in_weigh_CompletedgridAdapter;
 import com.android.gandharvms.LoginWithAPI.Weighment;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
@@ -76,7 +76,7 @@ public class OR_Completesec extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
 //        EdgeToEdge.enable();
         setContentView(R.layout.activity_or_completesec);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

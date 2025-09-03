@@ -21,7 +21,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OT_VehicleStatus_Grid.ot_statusgrid_livedata;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_GridAdapter;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
@@ -209,7 +209,7 @@ public class or_statusgrid_livedata extends NotificationCommonfunctioncls {
     }
 
     private void fetchDataFromApi(String fromdate, String todate, String vehicleno, String vehicleType, char nextProcess, char inOut, ProgressDialog loadingDialog) {
-        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient
+        Call<List<Response_Outward_Security_Fetching>> call = RetroApiClient
                 .insertoutwardtankersecurity()
                 .getOutwardDatabyDateFilter(fromdate,todate,vehicleno, vehicleType, nextProcess, inOut);
 

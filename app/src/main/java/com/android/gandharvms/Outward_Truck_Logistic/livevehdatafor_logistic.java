@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.OR_VehicleStatus_Grid.or_statusgrid_adapter;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Response_Outward_Security_Fetching;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.FixedGridLayoutManager;
@@ -88,7 +88,7 @@ public class livevehdatafor_logistic extends AppCompatActivity {
 
 
     private void fetchDataFromApi(String vehicleno,String vehicleType,char nextProcess, char inOut) {
-        Call<List<Response_Outward_Security_Fetching>> call = Outward_RetroApiclient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleno, vehicleType, nextProcess, inOut);
+        Call<List<Response_Outward_Security_Fetching>> call = RetroApiClient.insertoutwardtankersecurity().outwardsecurityfetching(vehicleno, vehicleType, nextProcess, inOut);
         call.enqueue(new Callback<List<Response_Outward_Security_Fetching>>() {
             @Override
             public void onResponse(Call<List<Response_Outward_Security_Fetching>> call, Response<List<Response_Outward_Security_Fetching>> response) {
