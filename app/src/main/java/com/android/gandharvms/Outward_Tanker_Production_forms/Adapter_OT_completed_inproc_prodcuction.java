@@ -24,6 +24,7 @@ import com.android.gandharvms.Outward_Tanker_Weighment.Adapter_OT_completed_Weig
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.ProductOA_Adapter;
 import com.android.gandharvms.R;
+import com.android.gandharvms.Util.CompartmnetBindClass;
 import com.android.gandharvms.productlistwithoanumber;
 
 import org.json.JSONArray;
@@ -44,7 +45,7 @@ public class Adapter_OT_completed_inproc_prodcuction extends RecyclerView.Adapte
     private final char nextProcess = Global_Var.getInstance().DeptType;
     private final char inOut = Global_Var.getInstance().InOutType;
     private Context context;
-
+    private CompartmnetBindClass compartmentbinder= new CompartmnetBindClass();
     String formattedDate;
     public Adapter_OT_completed_inproc_prodcuction(List<Common_Outward_model> gridmodel) {
         Gridmodel = gridmodel;
@@ -104,15 +105,19 @@ public class Adapter_OT_completed_inproc_prodcuction extends RecyclerView.Adapte
                 showMaterialDialog_OutwardTanker(view, club.getProductQTYUOMOA());
             }
         });
-        //holder.oanum.setText(club.getOAnumber());
+
+        compartmentbinder.bindProCompartment(holder.txtprocompartment1, club.getProcompartment1(),"Compartment 1");
+        compartmentbinder.bindProCompartment(holder.txtprocompartment2, club.getProcompartment2(),"Compartment 2");
+        compartmentbinder.bindProCompartment(holder.txtprocompartment3, club.getProcompartment3(),"Compartment 3");
+        compartmentbinder.bindProCompartment(holder.txtprocompartment4, club.getProcompartment4(),"Compartment 4");
+        compartmentbinder.bindProCompartment(holder.txtprocompartment5, club.getProcompartment5(),"Compartment 5");
+        compartmentbinder.bindProCompartment(holder.txtprocompartment6, club.getProcompartment6(),"Compartment 6");
         holder.transporter.setText(club.getTransportName());
-        //holder.product.setText(club.getProductName());
-        //holder.howqty.setText(String.valueOf(club.getHowMuchQuantityFilled()));
         holder.customer.setText(club.getCustomerName());
         holder.location.setText(club.getLocation());
-        holder.tankerorblenderno.setText(club.getTankOrBlenderNo());
+       /* holder.tankerorblenderno.setText(club.getTankOrBlenderNo());
         holder.psign.setText(club.getPsign());
-        holder.operatorsign.setText(club.getOperatorSign());
+        holder.operatorsign.setText(club.getOperatorSign());*/
         holder.remark.setText(club.getProRemark());
     }
 
@@ -155,6 +160,7 @@ public class Adapter_OT_completed_inproc_prodcuction extends RecyclerView.Adapte
 
     public class myviewHolder extends RecyclerView.ViewHolder {
         public TextView intime, outtime,serialnum,vehiclenum,prodOaNo,transporter,customer,location,tankerorblenderno,psign,operatorsign,remark;
+        TextView txtprocompartment1,txtprocompartment2,txtprocompartment3,txtprocompartment4,txtprocompartment5,txtprocompartment6;
         public myviewHolder(@NonNull View itemView) {
             super(itemView);
             intime =itemView.findViewById(R.id.otinprointime);
@@ -162,17 +168,19 @@ public class Adapter_OT_completed_inproc_prodcuction extends RecyclerView.Adapte
             serialnum = itemView.findViewById(R.id.otinprocserial);
             vehiclenum = itemView.findViewById(R.id.otinprocvehicle);
             prodOaNo=itemView.findViewById(R.id.otinprocProOANo);
-            //flushingno = itemView.findViewById(R.id.otinprocflushing);
-            //oanum = itemView.findViewById(R.id.otinprocoanum);
             transporter = itemView.findViewById(R.id.otinproctransporter);
-            //product = itemView.findViewById(R.id.otinprocprodcut);
-            //howqty = itemView.findViewById(R.id.otinprochowqty);
             customer = itemView.findViewById(R.id.otinproccustomer);
             location = itemView.findViewById(R.id.otinproclocation);
-            tankerorblenderno = itemView.findViewById(R.id.otinprocpackingstatus);
+            /*tankerorblenderno = itemView.findViewById(R.id.otinprocpackingstatus);
             psign = itemView.findViewById(R.id.otinprocblendingstatus);
-            operatorsign = itemView.findViewById(R.id.otinprocsigh);
+            operatorsign = itemView.findViewById(R.id.otinprocsigh);*/
             remark = itemView.findViewById(R.id.otinprocremark);
+            txtprocompartment1=itemView.findViewById(R.id.otinproccompartment1);
+            txtprocompartment2=itemView.findViewById(R.id.otinproccompartment2);
+            txtprocompartment3=itemView.findViewById(R.id.otinproccompartment3);
+            txtprocompartment4=itemView.findViewById(R.id.otinproccompartment4);
+            txtprocompartment5=itemView.findViewById(R.id.otinproccompartment5);
+            txtprocompartment6=itemView.findViewById(R.id.otinproccompartment6);
 
         }
     }

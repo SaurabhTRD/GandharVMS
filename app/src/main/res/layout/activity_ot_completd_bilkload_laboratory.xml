@@ -185,6 +185,71 @@
 
             <TextView
                 android:layout_width="120dp"
+                android:id="@+id/otbulkinlabcompartment1"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Compartment1"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabcompartment2"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Compartment2"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabcompartment3"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Compartment3"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabcompartment4"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Compartment4"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabcompartment5"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Compartment5"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="120dp"
+                android:id="@+id/otbulkinlabcompartment6"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:gravity="center|start"
+                android:text="Compartment6"
+                android:textAllCaps="true"
+                android:textColor="@android:color/white"
+                android:layout_height="match_parent"/>
+            <!--<TextView
+                android:layout_width="120dp"
                 android:id="@+id/otbulkviscosityindex"
                 android:gravity="center|start"
                 android:layout_marginStart="5dp"
@@ -225,7 +290,7 @@
                 android:text="Q.C Officer"
                 android:textAllCaps="true"
                 android:textColor="@android:color/white"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"/>-->
 
             <TextView
                 android:layout_width="150dp"

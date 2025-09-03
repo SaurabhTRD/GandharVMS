@@ -227,14 +227,6 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
             readWeighmentDataOutward(vehicleNo,vehicleType);
         }
 
-//        String mode = getIntent().getStringExtra("mode"); // Get the "mode" value
-//        if ("update".equals(mode)) {
-//            submit.setText("Update");  // ✅ change text
-//        }
-//// Fetch record and pre-fill form
-//        if (vehiclenumber.getText() != null) {
-//            readWeighmentDataOutward(String.valueOf(vehiclenumber), mode);
-//        }
         Intent in = getIntent();                       // comes from adapter
         if (in != null && "update".equals(in.getStringExtra("mode"))) {
             // We’re editing an existing record – flip the button text
@@ -309,41 +301,18 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
 
     private void readWeighmentDataOutward(String vehicleNo,String vehicleType) {
         Call<Response_Outward_Tanker_Weighment> call = outwardWeighment.fetchweighmentbyvehicleno(vehicleNo, vehicleType);
-
         call.enqueue(new Callback<Response_Outward_Tanker_Weighment>() {
             @Override
             public void onResponse(Call<Response_Outward_Tanker_Weighment> call, Response<Response_Outward_Tanker_Weighment> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     Response_Outward_Tanker_Weighment data = response.body();
-                    serialnumber.setFocusable(false);
                     serialnumber.setEnabled(false);
-                    serialnumber.setClickable(false);
-                    serialnumber.setCursorVisible(false);
-                    serialnumber.setLongClickable(false);
-                    serialnumber.setKeyListener(null);
-
-//                    vehiclenumber.setFocusable(false);
-//                    vehiclenumber.setEnabled(false);
-//                    vehiclenumber.setClickable(false);
-//                    vehiclenumber.setCursorVisible(false);
-//                    vehiclenumber.setLongClickable(false);
-//                    vehiclenumber.setKeyListener(null);
-
-                    elocation.setFocusable(false);
-                    elocation.setEnabled(false);
-                    elocation.setClickable(false);
-                    elocation.setCursorVisible(false);
-                    elocation.setLongClickable(false);
-                    elocation.setKeyListener(null);
-
-                    intime.setFocusable(false);
-                    intime.setEnabled(false);
-                    intime.setClickable(false);
-                    intime.setCursorVisible(false);
-                    intime.setLongClickable(false);
-                    intime.setKeyListener(null);
-
-
+                    elocation.setEnabled(true);
+                    if (data.OTWeiInTime != null && !data.OTWeiInTime.isEmpty())
+                    {
+                        intime.setText(data.OTWeiInTime.substring(12,17));
+                        intime.setEnabled(false);
+                    }
                     // Populate UI fields
                     OutwardId = data.getOutwardId();
                     serialnumber.setText(nonNull(data.SerialNumber));
@@ -352,17 +321,9 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
                     transportername.setText(nonNull(data.TransportName));
                     elocation.setText(nonNull(data.Location));
                     etremark.setText(nonNull(data.IRInWeiRemark));
-//                    grossweight1.setText(nonNull(data.GrossWeight));
                     tareweight.setText(nonNull(data.TareWeight));
-//                    oanum.setText(nonNull(data.OAnumber));
                     etbillremark.setText(nonNull(data.TankerBillingRemark));
                     etbillremark.setVisibility(View.VISIBLE);
-                    if (data.Intime != null && !data.Intime.isEmpty())
-                    if (data.OTWeiInTime != null && !data.OTWeiInTime.isEmpty())
-                    {
-                        intime.setText(nonNull(data.OTWeiInTime.substring(12,17)));
-                    }
-
                     if (data.InVehicleImage != null && !data.InVehicleImage.isEmpty()) {
                         Picasso.get()
                                 .load(RetroApiClient.BASE_URL + data.InVehicleImage)
@@ -404,18 +365,6 @@ public class Outward_Tanker_weighment extends NotificationCommonfunctioncls {
     }
 
     private void weupdatedata() {
-//        String FileInitial = "OutwardVeh_In_";
-//        arrayOfByteArrays[0] = ImgVehicle;
-//        arrayOfByteArrays[1] = ImgDriver;
-//        imgPath1 = "GAimages/" + FileInitial + serialNo + ".jpeg";
-//        for (byte[] byteArray : arrayOfByteArrays) {
-//
-//            MultipartTask multipartTask = new MultipartTask(byteArray, FileInitial + serialNo + ".jpeg", "");
-//            multipartTask.execute();
-//            FileInitial = "OutwardDrv_In_";
-//        }
-//        imgPath2 = "GAimages/" + FileInitial + serialNo + ".jpeg";
-//        FileInitial = "";
         update();
     }
 

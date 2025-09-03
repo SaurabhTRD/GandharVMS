@@ -286,6 +286,20 @@ public class Common_Outward_model {
     public String OutBilWTTime;
     public String OutSecWTTime;
 
+    public String procompartment1;
+    public String procompartment2;
+    public String procompartment3;
+    public String procompartment4;
+    public String procompartment5;
+    public String procompartment6;
+
+    public String labcompartment1;
+    public String labcompartment2;
+    public String labcompartment3;
+    public String labcompartment4;
+    public String labcompartment5;
+    public String labcompartment6;
+
     public String getProductQTYUOMOA() {
         return ProductQTYUOMOA;
     }
@@ -2428,5 +2442,101 @@ public class Common_Outward_model {
 
     public void setOutSecWTTime(String outSecWTTime) {
         OutSecWTTime = outSecWTTime;
+    }
+
+    public String getProcompartment1() {
+        return procompartment1;
+    }
+
+    public void setProcompartment1(String procompartment1) {
+        this.procompartment1 = procompartment1;
+    }
+
+    public String getProcompartment2() {
+        return procompartment2;
+    }
+
+    public void setProcompartment2(String procompartment2) {
+        this.procompartment2 = procompartment2;
+    }
+
+    public String getProcompartment3() {
+        return procompartment3;
+    }
+
+    public void setProcompartment3(String procompartment3) {
+        this.procompartment3 = procompartment3;
+    }
+
+    public String getProcompartment4() {
+        return procompartment4;
+    }
+
+    public void setProcompartment4(String procompartment4) {
+        this.procompartment4 = procompartment4;
+    }
+
+    public String getProcompartment5() {
+        return procompartment5;
+    }
+
+    public void setProcompartment5(String procompartment5) {
+        this.procompartment5 = procompartment5;
+    }
+
+    public String getProcompartment6() {
+        return procompartment6;
+    }
+
+    public void setProcompartment6(String procompartment6) {
+        this.procompartment6 = procompartment6;
+    }
+
+    public String getLabcompartment1() {
+        return labcompartment1;
+    }
+
+    public void setLabcompartment1(String labcompartment1) {
+        this.labcompartment1 = labcompartment1;
+    }
+
+    public String getLabcompartment2() {
+        return labcompartment2;
+    }
+
+    public void setLabcompartment2(String labcompartment2) {
+        this.labcompartment2 = labcompartment2;
+    }
+
+    public String getLabcompartment3() {
+        return labcompartment3;
+    }
+
+    public void setLabcompartment3(String labcompartment3) {
+        this.labcompartment3 = labcompartment3;
+    }
+
+    public String getLabcompartment4() {
+        return labcompartment4;
+    }
+
+    public void setLabcompartment4(String labcompartment4) {
+        this.labcompartment4 = labcompartment4;
+    }
+
+    public String getLabcompartment5() {
+        return labcompartment5;
+    }
+
+    public void setLabcompartment5(String labcompartment5) {
+        this.labcompartment5 = labcompartment5;
+    }
+
+    public String getLabcompartment6() {
+        return labcompartment6;
+    }
+
+    public void setLabcompartment6(String labcompartment6) {
+        this.labcompartment6 = labcompartment6;
     }
 }
