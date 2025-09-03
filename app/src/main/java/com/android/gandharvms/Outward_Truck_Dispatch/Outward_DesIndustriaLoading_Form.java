@@ -29,7 +29,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Weighment.Outward_Truck_weighment;
 import com.android.gandharvms.R;
@@ -112,7 +112,7 @@ public class Outward_DesIndustriaLoading_Form extends NotificationCommonfunction
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_des_industria_loading_form);
-        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+        outwardTruckInterface = RetroApiClient.outwardtruckdispatch();
         userDetails = RetroApiClient.getLoginApi();
         sharedPreferences = getSharedPreferences("VehicleManagementPrefs", MODE_PRIVATE);
 //        typeofpackingautoCompleteTextView1 = findViewById(R.id.autodesindusloadTypeOfPacking);

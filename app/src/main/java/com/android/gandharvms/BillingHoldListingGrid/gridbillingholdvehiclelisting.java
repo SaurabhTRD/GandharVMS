@@ -17,7 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.Outward_Tanker_Security.Adapter_OT__Complete_sec;
 import com.android.gandharvms.Outward_Tanker_Security.BillingHoldStatusModel;
 import com.android.gandharvms.Outward_Tanker_Security.OT_Complete_sec;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
@@ -46,7 +46,7 @@ public class gridbillingholdvehiclelisting extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gridbillingholdvehiclelisting);
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
         totrec=findViewById(R.id.totrecordsbillholdveh);
         initViews();
         fetchlistofbillholdstatus();

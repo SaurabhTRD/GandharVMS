@@ -32,7 +32,7 @@ import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
 import com.android.gandharvms.Outward_Tanker_Billing.Respons_Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.NavigationUtil;
@@ -94,7 +94,7 @@ public class ot_outBilling extends NotificationCommonfunctioncls {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ot_out_billing);
 
-        outwardTankerBillinginterface = Outward_RetroApiclient.outwardTankerBillinginterface();
+        outwardTankerBillinginterface = RetroApiClient.outwardTankerBillinginterface();
 
         oobintime = findViewById(R.id.etotoutbilintime);
         oobserialnumber = findViewById(R.id.etotoutbilserialnumber);

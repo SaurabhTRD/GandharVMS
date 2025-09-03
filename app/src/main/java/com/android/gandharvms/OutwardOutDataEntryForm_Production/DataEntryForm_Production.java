@@ -28,7 +28,7 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.NavigationUtil;
@@ -80,7 +80,7 @@ public class DataEntryForm_Production extends NotificationCommonfunctioncls {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_entry_form_production);
         setupHeader();
-        outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+        outwardTankerLab = RetroApiClient.outwardTankerLab();
 
         odeintime = findViewById(R.id.etoutdataentryintime);
         odeserialnumber = findViewById(R.id.etoutdataentryserialnumber);

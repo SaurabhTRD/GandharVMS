@@ -21,7 +21,7 @@ import com.android.gandharvms.LoginWithAPI.LoginMethod;
 import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Dispatch.Model_Outward_Truck_Dispatch;
@@ -74,8 +74,8 @@ public class Outward_Truck_Laboratory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck_laboratory);
-        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
-        outwardTruckProductionInterface = Outward_RetroApiclient.outwardTruckProductionInterface();
+        outwardTruckInterface = RetroApiClient.outwardtruckdispatch();
+        outwardTruckProductionInterface = RetroApiClient.outwardTruckProductionInterface();
         userDetails = RetroApiClient.getLoginApi();
 
         intime = findViewById(R.id.etintime);

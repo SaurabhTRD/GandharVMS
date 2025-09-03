@@ -4,6 +4,12 @@ import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_SamplingMetho
 import com.android.gandharvms.Inward_Tanker_Sampling.Inward_Tanker_SamplingRequestModel;
 import com.android.gandharvms.Inward_Tanker_Security.API_In_Tanker_Security;
 import com.android.gandharvms.NotificationAlerts.NotificationAlertsInterface;
+import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billinginterface;
+import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
+import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
+import com.android.gandharvms.Outward_Truck_Dispatch.Outward_Truck_interface;
+import com.android.gandharvms.Outward_Truck_Production.Outward_Truck_Production_interface;
+import com.android.gandharvms.outward_Tanker_Lab_forms.Outward_Tanker_Lab;
 import com.google.api.Http;
 
 import java.util.concurrent.TimeUnit;
@@ -68,5 +74,33 @@ public class RetroApiClient {
 
     public static Logistic getLogisticDetails() {return getClient().create(Logistic.class);}
     public static NotificationAlertsInterface NotificationInterface(){return  getClient().create(NotificationAlertsInterface.class);}
+
+
+
+               ////////// Outward Tanker Truck //////////
+
+    public static Outward_Tanker insertoutwardtankersecurity(){
+        return getClient().create(Outward_Tanker.class);
+    }
+    public static Outward_Tanker_Billinginterface outwardTankerBillinginterface(){
+        return getClient().create(Outward_Tanker_Billinginterface.class);
+    }
+
+    public static Outward_weighment outwardWeighment(){
+        return getClient().create(Outward_weighment.class);
+    }
+    /*public static Outward_weighment outwardWeighment(){
+        return getClient().create(Outward_weighment.class);
+    }*/
+    public static Outward_Tanker_Lab outwardTankerLab(){
+        return getClient().create(Outward_Tanker_Lab.class);
+    }
+    public static Outward_Truck_interface outwardtruckdispatch(){
+        return getClient().create(Outward_Truck_interface.class);
+    }
+
+    public static Outward_Truck_Production_interface outwardTruckProductionInterface(){
+        return getClient().create(Outward_Truck_Production_interface.class);
+    }
 
 }

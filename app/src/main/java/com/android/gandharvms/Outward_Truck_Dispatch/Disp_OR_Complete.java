@@ -23,7 +23,7 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.gandharvms.Global_Var;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.Outward_Truck_Weighment.Adapter_Weigh_Complete;
@@ -75,7 +75,7 @@ public class Disp_OR_Complete extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_disp_or_complete);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

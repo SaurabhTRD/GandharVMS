@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Outward_Tanker_Security.Adapter_OT__Complete_sec;
 import com.android.gandharvms.Outward_Tanker_Security.OT_Complete_sec;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
@@ -63,7 +63,7 @@ public class OT_Complete_Out_security extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
         //EdgeToEdge.enable(this);
         setContentView(R.layout.activity_ot_complete_out_security);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

@@ -23,7 +23,7 @@ import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.OutwardOut_Truck_Billing.Adapter_Billing_Out_Complete;
 import com.android.gandharvms.OutwardOut_Truck_Billing.Billing_Out_OR_Complete;
 import com.android.gandharvms.Outward_Tanker_Billing.OT_Completed_Billing;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
@@ -63,7 +63,7 @@ public class OT_out_Billing_Completed extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_ot_out_billing_completed);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

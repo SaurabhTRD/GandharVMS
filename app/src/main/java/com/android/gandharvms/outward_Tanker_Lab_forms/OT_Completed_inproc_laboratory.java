@@ -25,7 +25,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.gandharvms.Global_Var;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Adapter_OT_completed_inproc_prodcuction;
 import com.android.gandharvms.Outward_Tanker_Production_forms.OT_Completed_inproc_production;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
@@ -75,7 +75,7 @@ public class OT_Completed_inproc_laboratory extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_ot_completed_inproc_laboratory);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

@@ -36,7 +36,7 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Production_forms.Outward_Tanker_Production;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -107,7 +107,7 @@ public class Outward_Tanker_Laboratory extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_tanker_laboratory);
-        outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+        outwardTankerLab = RetroApiClient.outwardTankerLab();
 
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);

@@ -31,7 +31,7 @@ import com.android.gandharvms.InwardCompletedGrid.CommonResponseModelForAllDepar
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OT_CompletedReport.Outward_Tanker_CompReportAdapter;
 import com.android.gandharvms.OT_CompletedReport.Outward_Tanker_CompletedReport;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Security.Outward_Tanker;
 import com.android.gandharvms.Outward_Truck_Security.Common_Outward_model;
 import com.android.gandharvms.R;
@@ -85,7 +85,7 @@ public class ot_departmentscompletedexport_trackdata extends NotificationCommonf
         todate = getCurrentDateTime();
         imgBtnExportToExcel=findViewById(R.id.btnOtdeptdeptcomptrackexportToExcel);
         hssfWorkBook = new HSSFWorkbook();
-        outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+        outwardTanker = RetroApiClient.insertoutwardtankersecurity();
         setupHeader();
         initViews();
         getDatabydateselection();

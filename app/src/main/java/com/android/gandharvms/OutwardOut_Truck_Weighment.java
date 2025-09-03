@@ -35,7 +35,7 @@ import com.android.gandharvms.LoginWithAPI.ResponseModel;
 import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Tanker_Weighment.Model_OutwardOut_Truck_Weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_Tanker_weighment;
 import com.android.gandharvms.Outward_Tanker_Weighment.Outward_weighment;
@@ -125,7 +125,7 @@ public class OutwardOut_Truck_Weighment extends NotificationCommonfunctioncls {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_out_truck_weighment);
-        outwardWeighment = Outward_RetroApiclient.outwardWeighment();
+        outwardWeighment = RetroApiClient.outwardWeighment();
         userDetails = RetroApiClient.getLoginApi();
 
         intime=findViewById(R.id.etintime);

@@ -25,7 +25,7 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.OutwardOut_Truck;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck;
 import com.android.gandharvms.Outward_Truck_Billing.Outward_Truck_Billing;
 import com.android.gandharvms.Outward_Truck_Dispatch.Model_Outward_Truck_Dispatch;
@@ -79,11 +79,11 @@ public class Outward_Truck_Production extends NotificationCommonfunctioncls {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_outward_truck_production);
-        outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
-        outwardTruckInterface = Outward_RetroApiclient.outwardtruckdispatch();
+        outwardTankerLab = RetroApiClient.outwardTankerLab();
+        outwardTruckInterface = RetroApiClient.outwardtruckdispatch();
         userDetails = RetroApiClient.getLoginApi();
 
-        outwardTruckProductionInterface = Outward_RetroApiclient.outwardTruckProductionInterface();
+        outwardTruckProductionInterface = RetroApiClient.outwardTruckProductionInterface();
 
         FirebaseMessaging.getInstance().subscribeToTopic(token);
 

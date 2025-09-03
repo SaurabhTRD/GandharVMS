@@ -171,7 +171,7 @@ public class Outward_GridAdapter extends RecyclerView.Adapter<Outward_GridAdapte
                             billstatusmodel.HoldRemark=remark;
                             billstatusmodel.CreatedBy= Global_Var.getInstance().Name;
                             billstatusmodel.UpdatedBy=Global_Var.getInstance().Name;
-                            outwardTanker = Outward_RetroApiclient.insertoutwardtankersecurity();
+                            outwardTanker = RetroApiClient.insertoutwardtankersecurity();
                             Call<Boolean> call=outwardTanker.AddBillingHoldStatus(billstatusmodel);
                             call.enqueue(new Callback<Boolean>() {
                                 @Override

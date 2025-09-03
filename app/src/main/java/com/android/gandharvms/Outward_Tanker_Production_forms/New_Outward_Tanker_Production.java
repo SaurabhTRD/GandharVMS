@@ -40,7 +40,7 @@ import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker;
 import com.android.gandharvms.Outward_Tanker_Security.Grid_Outward;
-import com.android.gandharvms.Outward_Tanker_Security.Outward_RetroApiclient;
+import com.android.gandharvms.LoginWithAPI.RetroApiClient;
 import com.android.gandharvms.Outward_Truck_Dispatch.Outward_DesIndustriaLoading_Form;
 import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.R;
@@ -121,7 +121,7 @@ public class New_Outward_Tanker_Production extends NotificationCommonfunctioncls
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_new_outward_tanker_production);
         setupHeader();
-        outwardTankerLab = Outward_RetroApiclient.outwardTankerLab();
+        outwardTankerLab = RetroApiClient.outwardTankerLab();
         userDetails = RetroApiClient.getLoginApi();
         FirebaseMessaging.getInstance().subscribeToTopic(token);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
