@@ -54,6 +54,7 @@ import com.android.gandharvms.Menu;
 import com.android.gandharvms.NotificationAlerts.NotificationCommonfunctioncls;
 import com.android.gandharvms.Outward_Tanker_Billing.Outward_Tanker_Billing;
 import com.android.gandharvms.Outward_Truck_Security.Outward_Truck_Security;
+import com.android.gandharvms.ProductListData;
 import com.android.gandharvms.QR_Code.QRGeneratorUtil;
 import com.android.gandharvms.R;
 import com.android.gandharvms.Util.NavigationUtil;
@@ -87,6 +88,7 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
@@ -702,6 +704,13 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
                         updbtnclick.setVisibility(View.VISIBLE);
                         etintime.setVisibility(View.GONE);
                         btnadd.setVisibility(View.GONE);
+                        button1.setVisibility(View.GONE);
+
+                        String extraMaterialsJson = obj.getExtramaterials();
+                        if (extraMaterialsJson != null && !extraMaterialsJson.trim().isEmpty()) {
+                            bindExtraMaterialsToLayout(extraMaterialsJson);
+                        }
+
                     }else {
                         Toasty.error(Inward_Tanker_Security.this, "This Vehicle Number Is Out From Factory.\n You Can Not Update", Toast.LENGTH_LONG).show();
                         startActivity(new Intent(Inward_Tanker_Security.this, it_in_sec_Completedgrid.class));
@@ -750,7 +759,31 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
             }
         }
         String remark = etremark.getText().toString().trim();
-        List<Map<String, String>> materialList = new ArrayList<>();
+//        List<Map<String, String>> materialList = new ArrayList<>();
+
+//        for (int i = 0; i < linearLayout.getChildCount(); i++) {
+//            View childView = linearLayout.getChildAt(i);
+//            if (childView != null) {
+//                EditText materialEditText = childView.findViewById(R.id.editmaterial);
+//                EditText qtyEditText = childView.findViewById(R.id.editqty);
+//                AppCompatSpinner uomSpinner = childView.findViewById(R.id.spinner_team);
+//
+//                String dynamaterial = materialEditText.getText().toString().trim();
+//                String dynaqty = qtyEditText.getText().toString().trim();
+//                String dynaqtyuom = uomSpinner.getSelectedItem().toString();
+//
+//                // Check if both material and quantity fields are not empty
+//                if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
+//                    Map<String, String> materialMap = new HashMap<>();
+//                    materialMap.put("Material", dynamaterial);
+//                    materialMap.put("Qty", dynaqty);
+//                    materialMap.put("Qtyuom", dynaqtyuom);
+//                    // Add material data to the list
+//                    materialList.add(materialMap);
+//                }
+//            }
+//        }
+        JSONArray extraMaterialsArray = new JSONArray();
 
         for (int i = 0; i < linearLayout.getChildCount(); i++) {
             View childView = linearLayout.getChildAt(i);
@@ -763,21 +796,39 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
                 String dynaqty = qtyEditText.getText().toString().trim();
                 String dynaqtyuom = uomSpinner.getSelectedItem().toString();
 
-                // Check if both material and quantity fields are not empty
                 if (!dynamaterial.isEmpty() && !dynaqty.isEmpty() && !dynaqtyuom.isEmpty()) {
-                    Map<String, String> materialMap = new HashMap<>();
-                    materialMap.put("Material", dynamaterial);
-                    materialMap.put("Qty", dynaqty);
-                    materialMap.put("Qtyuom", dynaqtyuom);
-                    // Add material data to the list
-                    materialList.add(materialMap);
+                    try {
+                        JSONObject materialObject = new JSONObject();
+                        materialObject.put("Material", dynamaterial);
+                        //materialObject.put("Qty", Integer.parseInt(dynaqty)); // keep as number
+                        try {
+                            double qtyValue = Double.parseDouble(dynaqty);
+
+                            if (qtyValue == Math.floor(qtyValue)) {
+                                // No decimal part → save as integer
+                                materialObject.put("Qty", (int) qtyValue);
+                            } else {
+                                // Has decimals → save as double
+                                materialObject.put("Qty", qtyValue);
+                            }
+                        } catch (NumberFormatException e) {
+                            materialObject.put("Qty", 0);
+                        }
+
+                        materialObject.put("Qtyuom", dynaqtyuom);
+
+                        extraMaterialsArray.put(materialObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
 
+
         It_in_updsecbyinwardid_req_model requestModelITSecurity = new It_in_updsecbyinwardid_req_model(InwardId, serialnumber,
                 invoicenumber, vehicalnumber, Date, partyname, material, "", "", 1, insertnetweightUom,
-                insertnetweight, 1, materialList.toString(), remark, EmployeId);
+                insertnetweight, 1, extraMaterialsArray.toString(), remark, EmployeId);
 
         Call<Boolean> call = apiInTankerSecurity.itinsecupd(requestModelITSecurity);
         call.enqueue(new Callback<Boolean>() {
@@ -891,5 +942,60 @@ public class Inward_Tanker_Security extends NotificationCommonfunctioncls implem
         Intent intent = new Intent(this, it_in_sec_Completedgrid.class);
         startActivity(intent);
     }
+private void bindExtraMaterialsToLayout(String extraMaterialsJson) {
+    try {
+        JSONArray jsonArray = new JSONArray(extraMaterialsJson);
+
+        // Clear old views before binding new ones
+        linearLayout.removeAllViews();
+
+        for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject obj = jsonArray.getJSONObject(i);
+
+            String material = obj.optString("Material", "");
+            double qty = obj.optDouble("Qty", 0);
+            String qtyuom = obj.optString("Qtyuom", "");
+
+            // Inflate row layout
+            View rowView = getLayoutInflater().inflate(R.layout.item_extra_material, linearLayout, false);
+
+            EditText editMaterial = rowView.findViewById(R.id.editmaterial);
+            EditText editQty = rowView.findViewById(R.id.editqty);
+            AppCompatSpinner spinnerUom = rowView.findViewById(R.id.spinner_team);
+
+            // Set values
+            editMaterial.setText(material);
+            editQty.setText(String.valueOf(qty));
+
+            // Example UOM list
+            List<String> uomList = Arrays.asList("NA", "Litre", "Feet", "Meter","M3","pcs","Kgs","KL");
+
+// Create adapter
+            ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(
+                    this,
+                    android.R.layout.simple_spinner_item,
+                    uomList
+            );
+            spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+// Attach adapter to spinner
+            spinnerUom.setAdapter(spinnerAdapter);
+
+// Now set selection from JSON value
+            if (qtyuom != null && !qtyuom.isEmpty()) {
+                int pos = spinnerAdapter.getPosition(qtyuom);
+                if (pos >= 0) {
+                    spinnerUom.setSelection(pos);
+                }
+            }
+
+
+            // Add row to parent layout
+            linearLayout.addView(rowView);
+        }
+    } catch (JSONException e) {
+        e.printStackTrace();
+    }
+}
 }
 
