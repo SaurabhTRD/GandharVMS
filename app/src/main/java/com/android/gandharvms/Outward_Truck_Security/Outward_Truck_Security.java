@@ -361,7 +361,8 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
                         place.setText(out.getPlace());
                         transporter.setText(out.getTransportName());
                         mobilenumber.setText(out.getMobileNumber());
-                        remark.setText(out.getRemark());
+                        remark.setText(out.getInSecRemark());
+                        intime.setVisibility(View.GONE);
 //                        saveButton.setVisibility(View.GONE);
 //                        button1.setVisibility(View.GONE);
 //                        btnadd.setVisibility(View.GONE);
@@ -579,7 +580,6 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
         String serial = serialnumber.getText().toString().trim();
         String uvehicle = vehiclenumber.getText().toString().trim();
         String udate = date.getText().toString().trim();
-        String uintime = intime.getText().toString().trim();
         String utransporter = transporter.getText().toString().trim();
         String uplace = place.getText().toString().trim();
         String umobile = mobilenumber.getText().toString().trim();
@@ -594,15 +594,15 @@ public class Outward_Truck_Security extends NotificationCommonfunctioncls {
         String drlicselection = rbdriverlicyes.isChecked() ? "Yes" : "No";
         String rcselection = rbrcbookyes.isChecked() ? "Yes" : "No";
 
-        if (serial.isEmpty() || uvehicle.isEmpty() || udate.isEmpty() || uintime.isEmpty() || utransporter.isEmpty() || uplace.isEmpty() ||
+        if (serial.isEmpty() || uvehicle.isEmpty() || udate.isEmpty() || utransporter.isEmpty() || uplace.isEmpty() ||
                 umobile.isEmpty() || uremark.isEmpty()) {
             Toasty.warning(this, "All fields must be filled", Toast.LENGTH_SHORT, true).show();
         } else {
-            Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId, uintime, outTime,
+            Isreportingupdate_Security_model isreportingupdateSecurityModel = new Isreportingupdate_Security_model(OutwardId, "", outTime,
                     0, uplace, vehpermitselection, pucselection, insuranceselection, vehfitnesselection, drlicselection, rcselection, "",
                     "", "", "", uremark, vehlrcopy, EmployeId, "", "", "",
                     "", "", 'S', serial, uvehicle, utransporter, umobile, "", "", "", "", "", 0,
-                    "", 0, "", 'L', inOut, vehicleType, uintime, "");
+                    "", 0, "", 'L', inOut, vehicleType, "", "");
 
             Call<Boolean> call = outwardTanker.updateoutwardsecurity(isreportingupdateSecurityModel);
             call.enqueue(new Callback<Boolean>() {
